@@ -351,16 +351,7 @@ def handle_target_add_small_lubrication(
     change_data -- 状态变更信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if character_data.dead:
-        return
-
-    now_add_lust = 300
-    target_data.status_data[8] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(8, 0)
-    target_change.status_data[8] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, 0, 8, 300, tenths_add = False, change_data_to_target_change = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.TARGET_ADD_MIDDLE_LUBRICATION)
 def handle_target_add_middle_lubrication(
@@ -374,16 +365,7 @@ def handle_target_add_middle_lubrication(
     change_data -- 状态变更信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if character_data.dead:
-        return
-
-    now_add_lust = 900
-    target_data.status_data[8] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(8, 0)
-    target_change.status_data[8] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, 0, 8, 900, tenths_add = False, change_data_to_target_change = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.TARGET_ADD_LARGE_LUBRICATION)
 def handle_target_add_large_lubrication(
@@ -397,16 +379,7 @@ def handle_target_add_large_lubrication(
     change_data -- 状态变更信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if character_data.dead:
-        return
-
-    now_add_lust = 3000
-    target_data.status_data[8] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(8, 0)
-    target_change.status_data[8] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, 0, 8, 3000, tenths_add = False, change_data_to_target_change = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_LUBRICATION)
 def handle_add_small_lubrication(
@@ -419,16 +392,7 @@ def handle_add_small_lubrication(
     character_id -- 角色id
     change_data -- 状态变更信息记录对象
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
-        return
-
-    now_add_lust = 300
-    character_data.status_data.setdefault(8, 0)
-    character_data.status_data[8] += now_add_lust
-    character_data.status_data[8] = min(99999, character_data.status_data[8])
-    change_data.status_data.setdefault(8, 0)
-    change_data.status_data[8] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 8, 300, tenths_add = False, change_data = change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_LUBRICATION)
@@ -442,16 +406,7 @@ def handle_add_middle_lubrication(
     character_id -- 角色id
     change_data -- 状态变更信息记录对象
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
-        return
-
-    now_add_lust = 900
-    character_data.status_data.setdefault(8, 0)
-    character_data.status_data[8] += now_add_lust
-    character_data.status_data[8] = min(99999, character_data.status_data[8])
-    change_data.status_data.setdefault(8, 0)
-    change_data.status_data[8] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 8, 900, tenths_add = False, change_data = change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_LUBRICATION)
@@ -465,16 +420,7 @@ def handle_add_large_lubrication(
     character_id -- 角色id
     change_data -- 状态变更信息记录对象
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
-        return
-
-    now_add_lust = 3000
-    character_data.status_data.setdefault(8, 0)
-    character_data.status_data[8] += now_add_lust
-    character_data.status_data[8] = min(99999, character_data.status_data[8])
-    change_data.status_data.setdefault(8, 0)
-    change_data.status_data[8] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 8, 3000, tenths_add = False, change_data = change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_SMALL_HIT_POINT)
@@ -582,19 +528,7 @@ def handle_add_small_s_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[0]
-    now_add_lust = 20
-    adjust = handle_ability.get_ability_adjust(character_data.ability[0])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[0] += now_add_lust
-    character_data.status_data[0] = min(99999, character_data.status_data[0])
-    change_data.status_data.setdefault(0, 0)
-    change_data.status_data[0] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 0, 20, ability_level=character_data.ability[0], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_B_FEEL)
 def handle_add_small_b_feel(
@@ -611,19 +545,7 @@ def handle_add_small_b_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[1]
-    now_add_lust = 20
-    adjust = handle_ability.get_ability_adjust(character_data.ability[1])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[1] += now_add_lust
-    character_data.status_data[1] = min(99999, character_data.status_data[1])
-    change_data.status_data.setdefault(1, 0)
-    change_data.status_data[1] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 1, 20, ability_level=character_data.ability[1], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_C_FEEL)
 def handle_add_small_c_feel(
@@ -640,19 +562,7 @@ def handle_add_small_c_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[2]
-    now_add_lust = 20
-    adjust = handle_ability.get_ability_adjust(character_data.ability[2])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[2] += now_add_lust
-    character_data.status_data[2] = min(99999, character_data.status_data[2])
-    change_data.status_data.setdefault(2, 0)
-    change_data.status_data[2] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 2, 20, ability_level=character_data.ability[2], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_P_FEEL)
 def handle_add_small_p_feel(
@@ -694,18 +604,7 @@ def handle_add_small_v_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[4]
-    now_add_lust = 20
-    adjust = handle_ability.get_ability_adjust(character_data.ability[4])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[4] += now_add_lust
-    character_data.status_data[4] = min(99999, character_data.status_data[4])
-    change_data.status_data.setdefault(4, 0)
-    change_data.status_data[4] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 4, 20, ability_level=character_data.ability[4], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_A_FEEL)
 def handle_add_small_a_feel(
@@ -722,18 +621,7 @@ def handle_add_small_a_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[5]
-    now_add_lust = 20
-    adjust = handle_ability.get_ability_adjust(character_data.ability[5])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[5] += now_add_lust
-    character_data.status_data[5] = min(99999, character_data.status_data[5])
-    change_data.status_data.setdefault(5, 0)
-    change_data.status_data[5] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 5, 20, ability_level=character_data.ability[5], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_U_FEEL)
 def handle_add_small_u_feel(
@@ -750,18 +638,7 @@ def handle_add_small_u_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[6]
-    now_add_lust = 20
-    adjust = handle_ability.get_ability_adjust(character_data.ability[6])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[6] += now_add_lust
-    character_data.status_data[6] = min(99999, character_data.status_data[6])
-    change_data.status_data.setdefault(6, 0)
-    change_data.status_data[6] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 6, 20, ability_level=character_data.ability[6], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_W_FEEL)
 def handle_add_small_w_feel(
@@ -778,19 +655,7 @@ def handle_add_small_w_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[7]
-    now_add_lust = 20
-    adjust = handle_ability.get_ability_adjust(character_data.ability[7])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[7] += now_add_lust
-    character_data.status_data[7] = min(99999, character_data.status_data[7])
-    change_data.status_data.setdefault(7, 0)
-    change_data.status_data[7] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 7, 20, ability_level=character_data.ability[7], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_M_FEEL)
 def handle_add_small_m_feel(
@@ -806,25 +671,8 @@ def handle_add_small_m_feel(
         None
     功能描述：为角色增加少量口喉快感。
     """
-    # 获取角色数据
     character_data: game_type.Character = cache.character_data[character_id]
-    # 读取当前口喉快感值
-    now_lust = character_data.status_data[21]
-    # 设定基础增加量
-    now_add_lust = 20
-    # 计算能力修正
-    adjust = handle_ability.get_ability_adjust(character_data.ability[100])
-    now_add_lust *= adjust
-    # 按当前快感值微调
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-    # 增加快感并限制最大值
-    character_data.status_data[21] += now_add_lust
-    character_data.status_data[21] = min(99999, character_data.status_data[21])
-    # 记录变更
-    change_data.status_data.setdefault(21, 0)
-    change_data.status_data[21] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 21, 20, ability_level=character_data.ability[100], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_M_FEEL)
 def handle_add_middle_m_feel(
@@ -841,17 +689,7 @@ def handle_add_middle_m_feel(
     功能描述：为角色增加中量口喉快感。
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    now_lust = character_data.status_data[21]
-    now_add_lust = 100
-    adjust = handle_ability.get_ability_adjust(character_data.ability[100])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-    character_data.status_data[21] += now_add_lust
-    character_data.status_data[21] = min(99999, character_data.status_data[21])
-    change_data.status_data.setdefault(21, 0)
-    change_data.status_data[21] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 21, 100, ability_level=character_data.ability[100], tenths_add = True, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_F_FEEL)
 def handle_add_small_f_feel(
@@ -868,16 +706,7 @@ def handle_add_small_f_feel(
     功能描述：为角色增加少量兽部快感。
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    now_lust = character_data.status_data[22]
-    now_add_lust = 20
-    adjust = handle_ability.get_ability_adjust(character_data.ability[101])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-    character_data.status_data[22] += now_add_lust
-    character_data.status_data[22] = min(99999, character_data.status_data[22])
-    change_data.status_data.setdefault(22, 0)
-    change_data.status_data[22] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 22, 20, ability_level=character_data.ability[101], tenths_add = False, change_data = change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_F_FEEL)
@@ -895,16 +724,7 @@ def handle_add_middle_f_feel(
     功能描述：为角色增加中量兽部快感。
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    now_lust = character_data.status_data[22]
-    now_add_lust = 100
-    adjust = handle_ability.get_ability_adjust(character_data.ability[101])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-    character_data.status_data[22] += now_add_lust
-    character_data.status_data[22] = min(99999, character_data.status_data[22])
-    change_data.status_data.setdefault(22, 0)
-    change_data.status_data[22] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 22, 100, ability_level=character_data.ability[101], tenths_add = True, change_data = change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_H_FEEL)
@@ -922,16 +742,7 @@ def handle_add_small_h_feel(
     功能描述：为角色增加少量心理快感。
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    now_lust = character_data.status_data[23]
-    now_add_lust = 20
-    adjust = handle_ability.get_ability_adjust(character_data.ability[102])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-    character_data.status_data[23] += now_add_lust
-    character_data.status_data[23] = min(99999, character_data.status_data[23])
-    change_data.status_data.setdefault(23, 0)
-    change_data.status_data[23] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 23, 20, ability_level=character_data.ability[102], tenths_add = False, change_data = change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_H_FEEL)
@@ -949,16 +760,7 @@ def handle_add_middle_h_feel(
     功能描述：为角色增加中量心理快感。
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    now_lust = character_data.status_data[23]
-    now_add_lust = 100
-    adjust = handle_ability.get_ability_adjust(character_data.ability[102])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-    character_data.status_data[23] += now_add_lust
-    character_data.status_data[23] = min(99999, character_data.status_data[23])
-    change_data.status_data.setdefault(23, 0)
-    change_data.status_data[23] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 23, 100, ability_level=character_data.ability[102], tenths_add = True, change_data = change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_LUBRICATION_PLUS)
@@ -976,19 +778,7 @@ def handle_add_small_lubrication_plus(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[8]
-    now_add_lust = 20
-    adjust = handle_ability.get_ability_adjust(character_data.ability[33])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[8] += now_add_lust
-    character_data.status_data[8] = min(99999, character_data.status_data[8])
-    change_data.status_data.setdefault(8, 0)
-    change_data.status_data[8] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 8, 20, ability_level=character_data.ability[33], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_LEARN)
 def handle_add_small_learn_plus(
@@ -1005,19 +795,7 @@ def handle_add_small_learn_plus(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[9]
-    now_add_lust = 20
-    adjust = handle_ability.get_ability_adjust(character_data.ability[30])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[9] += now_add_lust
-    character_data.status_data[9] = min(99999, character_data.status_data[9])
-    change_data.status_data.setdefault(9, 0)
-    change_data.status_data[9] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 9, 20, ability_level=character_data.ability[30], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_RESPECT)
 def handle_add_small_respect_plus(
@@ -1034,19 +812,7 @@ def handle_add_small_respect_plus(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[10]
-    now_add_lust = 20
-    adjust = handle_ability.get_ability_adjust(character_data.ability[31])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[10] += now_add_lust
-    character_data.status_data[10] = min(99999, character_data.status_data[10])
-    change_data.status_data.setdefault(10, 0)
-    change_data.status_data[10] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 10, 20, ability_level=character_data.ability[31], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_FRIENDLY)
 def handle_add_small_friendly(
@@ -1063,18 +829,7 @@ def handle_add_small_friendly(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[11]
-    now_add_lust = 20
-    adjust = handle_ability.get_ability_adjust(character_data.ability[32])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[11] += now_add_lust
-    character_data.status_data[11] = min(99999, character_data.status_data[11])
-    change_data.status_data.setdefault(11, 0)
-    change_data.status_data[11] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 11, 20, ability_level=character_data.ability[32], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_DESIRE)
 def handle_add_small_desire(
@@ -1091,19 +846,7 @@ def handle_add_small_desire(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[12]
-    now_add_lust = 20
-    adjust = handle_ability.get_ability_adjust(character_data.ability[33])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[12] += now_add_lust
-    character_data.status_data[12] = min(99999, character_data.status_data[12])
-    change_data.status_data.setdefault(12, 0)
-    change_data.status_data[12] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 12, 20, ability_level=character_data.ability[33], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_HAPPY)
 def handle_add_small_happy(
@@ -1120,19 +863,7 @@ def handle_add_small_happy(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[13]
-    now_add_lust = 20
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[13])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[13] += now_add_lust
-    character_data.status_data[13] = min(99999, character_data.status_data[13])
-    change_data.status_data.setdefault(13, 0)
-    change_data.status_data[13] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 13, 20, ability_level=character_data.ability[13], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_LEAD)
 def handle_add_small_lead(
@@ -1149,19 +880,7 @@ def handle_add_small_lead(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[14]
-    now_add_lust = 20
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[35])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[14] += now_add_lust
-    character_data.status_data[14] = min(99999, character_data.status_data[14])
-    change_data.status_data.setdefault(14, 0)
-    change_data.status_data[14] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 14, 20, ability_level=character_data.ability[35], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_SUBMIT)
 def handle_add_small_submit(
@@ -1178,19 +897,7 @@ def handle_add_small_submit(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[15]
-    now_add_lust = 1000
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[14])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[15] += now_add_lust
-    character_data.status_data[15] = min(99999, character_data.status_data[15])
-    change_data.status_data.setdefault(15, 0)
-    change_data.status_data[15] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 15, 20, ability_level=character_data.ability[14], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_SHY)
 def handle_add_small_shy(
@@ -1207,19 +914,7 @@ def handle_add_small_shy(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[16]
-    now_add_lust = 20
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[34])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[16] += now_add_lust
-    character_data.status_data[16] = min(99999, character_data.status_data[16])
-    change_data.status_data.setdefault(16, 0)
-    change_data.status_data[16] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 16, 20, ability_level=character_data.ability[34], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_PAIN)
 def handle_add_small_pain(
@@ -1236,19 +931,7 @@ def handle_add_small_pain(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[17]
-    now_add_lust = 20
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[17] += now_add_lust
-    character_data.status_data[17] = min(99999, character_data.status_data[17])
-    change_data.status_data.setdefault(17, 0)
-    change_data.status_data[17] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 17, 20, ability_level = character_data.ability[15], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_TERROR)
 def handle_add_small_terror(
@@ -1265,19 +948,7 @@ def handle_add_small_terror(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[18]
-    now_add_lust = 20
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[17])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[18] += now_add_lust
-    character_data.status_data[18] = min(99999, character_data.status_data[18])
-    change_data.status_data.setdefault(18, 0)
-    change_data.status_data[18] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 18, 20, ability_level = character_data.ability[17], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_DEPRESSION)
 def handle_add_small_depression(
@@ -1294,16 +965,7 @@ def handle_add_small_depression(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[19]
-    now_add_lust = 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[19] += now_add_lust
-    character_data.status_data[19] = min(99999, character_data.status_data[19])
-    change_data.status_data.setdefault(19, 0)
-    change_data.status_data[19] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 19, 20, tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_DISGUST)
 def handle_add_small_disgust(
@@ -1339,19 +1001,7 @@ def handle_add_middle_n_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[0]
-    now_add_lust = 100
-    adjust = handle_ability.get_ability_adjust(character_data.ability[0])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[0] += now_add_lust
-    character_data.status_data[0] = min(99999, character_data.status_data[0])
-    change_data.status_data.setdefault(0, 0)
-    change_data.status_data[0] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 0, 100, ability_level = character_data.ability[0], change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_B_FEEL)
 def handle_add_middle_b_feel(
@@ -1368,19 +1018,7 @@ def handle_add_middle_b_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[1]
-    now_add_lust = 100
-    adjust = handle_ability.get_ability_adjust(character_data.ability[1])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[1] += now_add_lust
-    character_data.status_data[1] = min(99999, character_data.status_data[1])
-    change_data.status_data.setdefault(1, 0)
-    change_data.status_data[1] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 1, 100, ability_level = character_data.ability[1], change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_C_FEEL)
 def handle_add_middle_c_feel(
@@ -1397,19 +1035,7 @@ def handle_add_middle_c_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[2]
-    now_add_lust = 100
-    adjust = handle_ability.get_ability_adjust(character_data.ability[2])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[2] += now_add_lust
-    character_data.status_data[2] = min(99999, character_data.status_data[2])
-    change_data.status_data.setdefault(2, 0)
-    change_data.status_data[2] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 2, 100, ability_level = character_data.ability[2], change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_P_FEEL)
 def handle_add_middle_p_feel(
@@ -1426,19 +1052,7 @@ def handle_add_middle_p_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[3]
-    now_add_lust = 100
-    adjust = handle_ability.get_ability_adjust(character_data.ability[3])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[3] += now_add_lust
-    character_data.status_data[3] = min(99999, character_data.status_data[3])
-    change_data.status_data.setdefault(3, 0)
-    change_data.status_data[3] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 3, 100, ability_level = character_data.ability[3], change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_V_FEEL)
 def handle_add_middle_v_feel(
@@ -1455,18 +1069,13 @@ def handle_add_middle_v_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[4]
-    now_add_lust = 100
-    adjust = handle_ability.get_ability_adjust(character_data.ability[4])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
+    now_add_lust = 300 + character_data.eja_point*0.4
+    # adjust = handle_ability.get_ability_adjust(character_data.ability[3])
+    # now_add_lust *= adjust
     now_add_lust = int(now_add_lust)
-
-    character_data.status_data[4] += now_add_lust
-    character_data.status_data[4] = min(99999, character_data.status_data[4])
-    change_data.status_data.setdefault(4, 0)
-    change_data.status_data[4] += now_add_lust
+    character_data.eja_point += now_add_lust
+    change_data.eja_point += now_add_lust
+    character_data.action_info.last_eaj_add_time = cache.game_time
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_A_FEEL)
 def handle_add_middle_a_feel(
@@ -1483,18 +1092,7 @@ def handle_add_middle_a_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[5]
-    now_add_lust = 100
-    adjust = handle_ability.get_ability_adjust(character_data.ability[5])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[5] += now_add_lust
-    character_data.status_data[5] = min(99999, character_data.status_data[5])
-    change_data.status_data.setdefault(5, 0)
-    change_data.status_data[5] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 5, 100, ability_level = character_data.ability[5], change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_U_FEEL)
 def handle_add_middle_u_feel(
@@ -1511,18 +1109,7 @@ def handle_add_middle_u_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[6]
-    now_add_lust = 100
-    adjust = handle_ability.get_ability_adjust(character_data.ability[6])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[6] += now_add_lust
-    character_data.status_data[6] = min(99999, character_data.status_data[6])
-    change_data.status_data.setdefault(6, 0)
-    change_data.status_data[6] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 6, 100, ability_level = character_data.ability[6], change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_W_FEEL)
 def handle_add_middle_w_feel(
@@ -1539,19 +1126,7 @@ def handle_add_middle_w_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[7]
-    now_add_lust = 100
-    adjust = handle_ability.get_ability_adjust(character_data.ability[7])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[7] += now_add_lust
-    character_data.status_data[7] = min(99999, character_data.status_data[7])
-    change_data.status_data.setdefault(7, 0)
-    change_data.status_data[7] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 7, 100, ability_level = character_data.ability[7], change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_LUBRICATION_PLUS)
 def handle_add_middle_lubrication_plus(
@@ -1568,19 +1143,7 @@ def handle_add_middle_lubrication_plus(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[8]
-    now_add_lust = 100
-    adjust = handle_ability.get_ability_adjust(character_data.ability[33])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[8] += now_add_lust
-    character_data.status_data[8] = min(99999, character_data.status_data[8])
-    change_data.status_data.setdefault(8, 0)
-    change_data.status_data[8] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 8, 100, ability_level = character_data.ability[33], change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_LEARN)
 def handle_add_middle_learn_plus(
@@ -1597,19 +1160,7 @@ def handle_add_middle_learn_plus(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[9]
-    now_add_lust = 100
-    adjust = handle_ability.get_ability_adjust(character_data.ability[30])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[9] += now_add_lust
-    character_data.status_data[9] = min(99999, character_data.status_data[9])
-    change_data.status_data.setdefault(9, 0)
-    change_data.status_data[9] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 9, 100, ability_level = character_data.ability[30], change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_RESPECT)
 def handle_add_middle_respect_plus(
@@ -1626,19 +1177,7 @@ def handle_add_middle_respect_plus(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[10]
-    now_add_lust = 100
-    adjust = handle_ability.get_ability_adjust(character_data.ability[31])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[10] += now_add_lust
-    character_data.status_data[10] = min(99999, character_data.status_data[10])
-    change_data.status_data.setdefault(10, 0)
-    change_data.status_data[10] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 10, 100, ability_level = character_data.ability[31], change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_FRIENDLY)
 def handle_add_middle_friendly(
@@ -1655,18 +1194,7 @@ def handle_add_middle_friendly(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[11]
-    now_add_lust = 100
-    adjust = handle_ability.get_ability_adjust(character_data.ability[32])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[11] += now_add_lust
-    character_data.status_data[11] = min(99999, character_data.status_data[11])
-    change_data.status_data.setdefault(11, 0)
-    change_data.status_data[11] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 11, 100, ability_level = character_data.ability[32], change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_DESIRE)
 def handle_add_middle_desire(
@@ -1683,19 +1211,7 @@ def handle_add_middle_desire(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[12]
-    now_add_lust = 100
-    adjust = handle_ability.get_ability_adjust(character_data.ability[33])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[12] += now_add_lust
-    character_data.status_data[12] = min(99999, character_data.status_data[12])
-    change_data.status_data.setdefault(12, 0)
-    change_data.status_data[12] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 12, 100, ability_level = character_data.ability[33], change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_HAPPY)
 def handle_add_middle_happy(
@@ -1712,19 +1228,7 @@ def handle_add_middle_happy(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[13]
-    now_add_lust = 100
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[13])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[13] += now_add_lust
-    character_data.status_data[13] = min(99999, character_data.status_data[13])
-    change_data.status_data.setdefault(13, 0)
-    change_data.status_data[13] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 13, 100, ability_level = character_data.ability[13], change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_LEAD)
 def handle_add_middle_lead(
@@ -1741,19 +1245,7 @@ def handle_add_middle_lead(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[14]
-    now_add_lust = 100
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[35])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[14] += now_add_lust
-    character_data.status_data[14] = min(99999, character_data.status_data[14])
-    change_data.status_data.setdefault(14, 0)
-    change_data.status_data[14] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 14, 100, ability_level = character_data.ability[35], change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_SUBMIT)
 def handle_add_middle_submit(
@@ -1770,19 +1262,7 @@ def handle_add_middle_submit(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[15]
-    now_add_lust = 5000
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[14])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[15] += now_add_lust
-    character_data.status_data[15] = min(99999, character_data.status_data[15])
-    change_data.status_data.setdefault(15, 0)
-    change_data.status_data[15] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 15, 100, ability_level = character_data.ability[14], change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_SHY)
 def handle_add_middle_shy(
@@ -1799,19 +1279,7 @@ def handle_add_middle_shy(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[16]
-    now_add_lust = 100
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[34])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[16] += now_add_lust
-    character_data.status_data[16] = min(99999, character_data.status_data[16])
-    change_data.status_data.setdefault(16, 0)
-    change_data.status_data[16] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 16, 100, ability_level = character_data.ability[34], change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_PAIN)
 def handle_add_middle_pain(
@@ -1828,19 +1296,7 @@ def handle_add_middle_pain(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[17]
-    now_add_lust = 100
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[17] += now_add_lust
-    character_data.status_data[17] = min(99999, character_data.status_data[17])
-    change_data.status_data.setdefault(17, 0)
-    change_data.status_data[17] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 17, 100, ability_level = character_data.ability[15], tenths_add = True, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_TERROR)
 def handle_add_middle_terror(
@@ -1857,19 +1313,7 @@ def handle_add_middle_terror(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[18]
-    now_add_lust = 100
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[17])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[18] += now_add_lust
-    character_data.status_data[18] = min(99999, character_data.status_data[18])
-    change_data.status_data.setdefault(18, 0)
-    change_data.status_data[18] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 18, 100, ability_level = character_data.ability[17], tenths_add = True, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_DEPRESSION)
 def handle_add_middle_depression(
@@ -1886,15 +1330,7 @@ def handle_add_middle_depression(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[19]
-    now_add_lust = 100
-
-    character_data.status_data[19] += now_add_lust
-    character_data.status_data[19] = min(99999, character_data.status_data[19])
-    change_data.status_data.setdefault(19, 0)
-    change_data.status_data[19] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 19, 100, tenths_add = True, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_DISGUST)
 def handle_add_middle_disgust(
@@ -1930,19 +1366,7 @@ def handle_add_large_n_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[0]
-    now_add_lust = 200
-    adjust = handle_ability.get_ability_adjust(character_data.ability[0])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[0] += now_add_lust
-    character_data.status_data[0] = min(99999, character_data.status_data[0])
-    change_data.status_data.setdefault(0, 0)
-    change_data.status_data[0] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 0, 200, ability_level = character_data.ability[0], tenths_add = True, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_B_FEEL)
 def handle_add_large_b_feel(
@@ -1959,19 +1383,7 @@ def handle_add_large_b_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[1]
-    now_add_lust = 200
-    adjust = handle_ability.get_ability_adjust(character_data.ability[1])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[1] += now_add_lust
-    character_data.status_data[1] = min(99999, character_data.status_data[1])
-    change_data.status_data.setdefault(1, 0)
-    change_data.status_data[1] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 1, 200, ability_level = character_data.ability[1], tenths_add = True, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_C_FEEL)
 def handle_add_large_c_feel(
@@ -1988,19 +1400,7 @@ def handle_add_large_c_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[2]
-    now_add_lust = 200
-    adjust = handle_ability.get_ability_adjust(character_data.ability[2])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[2] += now_add_lust
-    character_data.status_data[2] = min(99999, character_data.status_data[2])
-    change_data.status_data.setdefault(2, 0)
-    change_data.status_data[2] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 2, 200, ability_level = character_data.ability[2], tenths_add = True, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_P_FEEL)
 def handle_add_large_p_feel(
@@ -2017,19 +1417,13 @@ def handle_add_large_p_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[3]
-    now_add_lust = 200
-    adjust = handle_ability.get_ability_adjust(character_data.ability[3])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
+    now_add_lust = 1000 + character_data.eja_point*0.4
+    # adjust = handle_ability.get_ability_adjust(character_data.ability[3])
+    # now_add_lust *= adjust
     now_add_lust = int(now_add_lust)
-
-    character_data.status_data[3] += now_add_lust
-    character_data.status_data[3] = min(99999, character_data.status_data[3])
-    change_data.status_data.setdefault(3, 0)
-    change_data.status_data[3] += now_add_lust
-
+    character_data.eja_point += now_add_lust
+    change_data.eja_point += now_add_lust
+    character_data.action_info.last_eaj_add_time = cache.game_time
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_V_FEEL)
 def handle_add_large_v_feel(
@@ -2046,18 +1440,7 @@ def handle_add_large_v_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[4]
-    now_add_lust = 200
-    adjust = handle_ability.get_ability_adjust(character_data.ability[4])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[4] += now_add_lust
-    character_data.status_data[4] = min(99999, character_data.status_data[4])
-    change_data.status_data.setdefault(4, 0)
-    change_data.status_data[4] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 4, 200, ability_level = character_data.ability[4], tenths_add = True, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_A_FEEL)
 def handle_add_large_a_feel(
@@ -2074,18 +1457,7 @@ def handle_add_large_a_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[5]
-    now_add_lust = 200
-    adjust = handle_ability.get_ability_adjust(character_data.ability[5])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[5] += now_add_lust
-    character_data.status_data[5] = min(99999, character_data.status_data[5])
-    change_data.status_data.setdefault(5, 0)
-    change_data.status_data[5] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 5, 200, ability_level = character_data.ability[5], tenths_add = True, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_U_FEEL)
 def handle_add_large_u_feel(
@@ -2102,18 +1474,7 @@ def handle_add_large_u_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[6]
-    now_add_lust = 200
-    adjust = handle_ability.get_ability_adjust(character_data.ability[6])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[6] += now_add_lust
-    character_data.status_data[6] = min(99999, character_data.status_data[6])
-    change_data.status_data.setdefault(6, 0)
-    change_data.status_data[6] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 6, 200, ability_level = character_data.ability[6], tenths_add = True, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_W_FEEL)
 def handle_add_large_w_feel(
@@ -2130,19 +1491,7 @@ def handle_add_large_w_feel(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_lust = character_data.status_data[7]
-    now_add_lust = 200
-    adjust = handle_ability.get_ability_adjust(character_data.ability[7])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[7] += now_add_lust
-    character_data.status_data[7] = min(99999, character_data.status_data[7])
-    change_data.status_data.setdefault(7, 0)
-    change_data.status_data[7] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 7, 200, ability_level = character_data.ability[7], tenths_add = True, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_M_FEEL)
 def handle_add_large_m_feel(
@@ -2159,17 +1508,7 @@ def handle_add_large_m_feel(
     功能描述：为角色增加大量口喉快感。
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    now_lust = character_data.status_data[21]
-    now_add_lust = 200
-    adjust = handle_ability.get_ability_adjust(character_data.ability[100])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-    character_data.status_data[21] += now_add_lust
-    character_data.status_data[21] = min(99999, character_data.status_data[21])
-    change_data.status_data.setdefault(21, 0)
-    change_data.status_data[21] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 21, 200, ability_level = character_data.ability[100], tenths_add = True, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_F_FEEL)
 def handle_add_large_f_feel(
@@ -2186,17 +1525,7 @@ def handle_add_large_f_feel(
     功能描述：为角色增加大量兽部快感。
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    now_lust = character_data.status_data[22]
-    now_add_lust = 200
-    adjust = handle_ability.get_ability_adjust(character_data.ability[101])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-    character_data.status_data[22] += now_add_lust
-    character_data.status_data[22] = min(99999, character_data.status_data[22])
-    change_data.status_data.setdefault(22, 0)
-    change_data.status_data[22] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 22, 200, ability_level = character_data.ability[101], tenths_add = True, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_H_FEEL)
 def handle_add_large_h_feel(
@@ -2213,16 +1542,7 @@ def handle_add_large_h_feel(
     功能描述：为角色增加大量心理快感。
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    now_lust = character_data.status_data[23]
-    now_add_lust = 200
-    adjust = handle_ability.get_ability_adjust(character_data.ability[102])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    now_add_lust = int(now_add_lust)
-    character_data.status_data[23] += now_add_lust
-    character_data.status_data[23] = min(99999, character_data.status_data[23])
-    change_data.status_data.setdefault(23, 0)
-    change_data.status_data[23] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 23, 200, ability_level = character_data.ability[102], tenths_add = True, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_B_FEEL_REMOTE_TOY)
 def handle_add_b_feel_remote_toy(
@@ -2245,19 +1565,7 @@ def handle_add_b_feel_remote_toy(
     # 如果补正为0，则直接返回
     if toy_adjust <= 0:
         return
-
-    now_lust = character_data.status_data[1]
-    now_add_lust = 20
-    abi_adjust = handle_ability.get_ability_adjust(character_data.ability[1])
-    final_adjust = abi_adjust * toy_adjust
-    now_add_lust *= final_adjust
-    # now_add_lust += now_lust / 20
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[1] += now_add_lust
-    character_data.status_data[1] = min(99999, character_data.status_data[1])
-    change_data.status_data.setdefault(1, 0)
-    change_data.status_data[1] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 1, 20, ability_level = character_data.ability[1], extra_adjust = toy_adjust, tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_C_FEEL_REMOTE_TOY)
 def handle_add_c_feel_remote_toy(
@@ -2274,16 +1582,7 @@ def handle_add_c_feel_remote_toy(
     toy_adjust = character_data.sp_flag.sex_toy_level * 0.5
     if toy_adjust <= 0:
         return
-    now_lust = character_data.status_data[2]
-    now_add_lust = 20
-    abi_adjust = handle_ability.get_ability_adjust(character_data.ability[2])
-    final_adjust = abi_adjust * toy_adjust
-    now_add_lust *= final_adjust
-    now_add_lust = int(now_add_lust)
-    character_data.status_data[2] += now_add_lust
-    character_data.status_data[2] = min(99999, character_data.status_data[2])
-    change_data.status_data.setdefault(2, 0)
-    change_data.status_data[2] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 2, 20, ability_level = character_data.ability[2], extra_adjust = toy_adjust, tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_V_FEEL_REMOTE_TOY)
 def handle_add_v_feel_remote_toy(
@@ -2300,16 +1599,7 @@ def handle_add_v_feel_remote_toy(
     toy_adjust = character_data.sp_flag.sex_toy_level * 0.5
     if toy_adjust <= 0:
         return
-    now_lust = character_data.status_data[4]
-    now_add_lust = 20
-    abi_adjust = handle_ability.get_ability_adjust(character_data.ability[4])
-    final_adjust = abi_adjust * toy_adjust
-    now_add_lust *= final_adjust
-    now_add_lust = int(now_add_lust)
-    character_data.status_data[4] += now_add_lust
-    character_data.status_data[4] = min(99999, character_data.status_data[4])
-    change_data.status_data.setdefault(4, 0)
-    change_data.status_data[4] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 4, 20, ability_level = character_data.ability[4], extra_adjust = toy_adjust, tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_A_FEEL_REMOTE_TOY)
 def handle_add_a_feel_remote_toy(
@@ -2326,16 +1616,7 @@ def handle_add_a_feel_remote_toy(
     toy_adjust = character_data.sp_flag.sex_toy_level * 0.5
     if toy_adjust <= 0:
         return
-    now_lust = character_data.status_data[5]
-    now_add_lust = 20
-    abi_adjust = handle_ability.get_ability_adjust(character_data.ability[5])
-    final_adjust = abi_adjust * toy_adjust
-    now_add_lust *= final_adjust
-    now_add_lust = int(now_add_lust)
-    character_data.status_data[5] += now_add_lust
-    character_data.status_data[5] = min(99999, character_data.status_data[5])
-    change_data.status_data.setdefault(5, 0)
-    change_data.status_data[5] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 5, 20, ability_level = character_data.ability[5], extra_adjust = toy_adjust, tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_U_FEEL_REMOTE_TOY)
 def handle_add_u_feel_remote_toy(
@@ -2352,16 +1633,7 @@ def handle_add_u_feel_remote_toy(
     toy_adjust = character_data.sp_flag.sex_toy_level * 0.5
     if toy_adjust <= 0:
         return
-    now_lust = character_data.status_data[6]
-    now_add_lust = 20
-    abi_adjust = handle_ability.get_ability_adjust(character_data.ability[6])
-    final_adjust = abi_adjust * toy_adjust
-    now_add_lust *= final_adjust
-    now_add_lust = int(now_add_lust)
-    character_data.status_data[6] += now_add_lust
-    character_data.status_data[6] = min(99999, character_data.status_data[6])
-    change_data.status_data.setdefault(6, 0)
-    change_data.status_data[6] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 6, 20, ability_level = character_data.ability[6], extra_adjust = toy_adjust, tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_LUBRICATION_PLUS)
 def handle_add_large_lubrication_plus(
@@ -2378,17 +1650,7 @@ def handle_add_large_lubrication_plus(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_add_lust = 1000
-    adjust = handle_ability.get_ability_adjust(character_data.ability[33])
-    now_add_lust *= adjust
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[8] += now_add_lust
-    character_data.status_data[8] = min(99999, character_data.status_data[8])
-    change_data.status_data.setdefault(8, 0)
-    change_data.status_data[8] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 8, 1000, ability_level = character_data.ability[33], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_LEARN)
 def handle_add_large_learn_plus(
@@ -2405,17 +1667,7 @@ def handle_add_large_learn_plus(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_add_lust = 1000
-    adjust = handle_ability.get_ability_adjust(character_data.ability[30])
-    now_add_lust *= adjust
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[9] += now_add_lust
-    character_data.status_data[9] = min(99999, character_data.status_data[9])
-    change_data.status_data.setdefault(9, 0)
-    change_data.status_data[9] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 9, 1000, ability_level = character_data.ability[30], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_RESPECT)
 def handle_add_large_respect_plus(
@@ -2432,17 +1684,7 @@ def handle_add_large_respect_plus(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_add_lust = 1000
-    adjust = handle_ability.get_ability_adjust(character_data.ability[31])
-    now_add_lust *= adjust
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[10] += now_add_lust
-    character_data.status_data[10] = min(99999, character_data.status_data[10])
-    change_data.status_data.setdefault(10, 0)
-    change_data.status_data[10] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 10, 1000, ability_level = character_data.ability[31], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_FRIENDLY)
 def handle_add_large_friendly(
@@ -2459,16 +1701,7 @@ def handle_add_large_friendly(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_add_lust = 1000
-    adjust = handle_ability.get_ability_adjust(character_data.ability[32])
-    now_add_lust *= adjust
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[11] += now_add_lust
-    character_data.status_data[11] = min(99999, character_data.status_data[11])
-    change_data.status_data.setdefault(11, 0)
-    change_data.status_data[11] += now_add_lust
+    base_chara_state_common_settle(character_id, 0, 11, 1000, ability_level = character_data.ability[32], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_DESIRE)
 def handle_add_large_desire(
@@ -2485,17 +1718,7 @@ def handle_add_large_desire(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_add_lust = 1000
-    adjust = handle_ability.get_ability_adjust(character_data.ability[33])
-    now_add_lust *= adjust
-    now_add_lust = int(now_add_lust)
-
-    character_data.status_data[12] += now_add_lust
-    character_data.status_data[12] = min(99999, character_data.status_data[12])
-    change_data.status_data.setdefault(12, 0)
-    change_data.status_data[12] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 12, 1000, ability_level = character_data.ability[33], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_HAPPY)
 def handle_add_large_happy(
@@ -2512,16 +1735,7 @@ def handle_add_large_happy(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_add_lust = 1000
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[13])
-    now_add_lust *= adjust
-
-    character_data.status_data[13] += now_add_lust
-    character_data.status_data[13] = min(99999, character_data.status_data[13])
-    change_data.status_data.setdefault(13, 0)
-    change_data.status_data[13] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 13, 1000, ability_level = character_data.ability[13], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_LEAD)
 def handle_add_large_lead(
@@ -2538,16 +1752,7 @@ def handle_add_large_lead(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_add_lust = 1000
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[25])
-    now_add_lust *= adjust
-
-    character_data.status_data[14] += now_add_lust
-    character_data.status_data[14] = min(99999, character_data.status_data[14])
-    change_data.status_data.setdefault(14, 0)
-    change_data.status_data[14] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 14, 1000, ability_level = character_data.ability[25], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_SUBMIT)
 def handle_add_large_submit(
@@ -2564,16 +1769,7 @@ def handle_add_large_submit(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_add_lust = 10000
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[14])
-    now_add_lust *= adjust
-
-    character_data.status_data[15] += now_add_lust
-    character_data.status_data[15] = min(99999, character_data.status_data[15])
-    change_data.status_data.setdefault(15, 0)
-    change_data.status_data[15] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 15, 1000, ability_level = character_data.ability[14], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_SHY)
 def handle_add_large_shy(
@@ -2590,16 +1786,7 @@ def handle_add_large_shy(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_add_lust = 1000
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[34])
-    now_add_lust *= adjust
-
-    character_data.status_data[16] += now_add_lust
-    character_data.status_data[16] = min(99999, character_data.status_data[16])
-    change_data.status_data.setdefault(16, 0)
-    change_data.status_data[16] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 16, 1000, ability_level = character_data.ability[34], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_PAIN)
 def handle_add_large_pain(
@@ -2616,16 +1803,7 @@ def handle_add_large_pain(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_add_lust = 1000
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
-    now_add_lust *= adjust
-
-    character_data.status_data[17] += now_add_lust
-    character_data.status_data[17] = min(99999, character_data.status_data[17])
-    change_data.status_data.setdefault(17, 0)
-    change_data.status_data[17] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 17, 1000, ability_level = character_data.ability[15], tenths_add = True, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_TERROR)
 def handle_add_large_terror(
@@ -2642,16 +1820,7 @@ def handle_add_large_terror(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_add_lust = 1000
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[17])
-    now_add_lust *= adjust
-
-    character_data.status_data[18] += now_add_lust
-    character_data.status_data[18] = min(99999, character_data.status_data[18])
-    change_data.status_data.setdefault(18, 0)
-    change_data.status_data[18] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 18, 1000, ability_level = character_data.ability[17], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_DEPRESSION)
 def handle_add_large_depression(
@@ -2668,14 +1837,7 @@ def handle_add_large_depression(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_add_lust = 1000
-
-    character_data.status_data[19] += now_add_lust
-    character_data.status_data[19] = min(99999, character_data.status_data[19])
-    change_data.status_data.setdefault(19, 0)
-    change_data.status_data[19] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 19, 1000, tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_DISGUST)
 def handle_add_large_disgust(
@@ -2692,16 +1854,7 @@ def handle_add_large_disgust(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-
-    now_add_lust = 1000
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[18])
-    now_add_lust *= adjust
-
-    character_data.status_data[20] += now_add_lust
-    character_data.status_data[20] = min(99999, character_data.status_data[20])
-    change_data.status_data.setdefault(20, 0)
-    change_data.status_data[20] += now_add_lust
-
+    base_chara_state_common_settle(character_id, 0, 20, 1000, ability_level = character_data.ability[18], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_SMALL_PAIN)
 def handle_down_small_pain(
@@ -2763,8 +1916,6 @@ def handle_down_middle_pain(
     now_add_lust = int(now_add_lust)
 
     base_chara_state_common_settle(character_id, now_add_lust, 17, base_value = 0, ability_level = character_data.ability[15], tenths_add = False, change_data = change_data)
-
-
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_MIDDLE_DISGUST)
 def handle_down_middle_disgust(
@@ -3184,25 +2335,10 @@ def handle_extra_orgasm(
     # 如果有额外高潮次数，则进行苦痛和恐怖结算
     if all_extra_count > 0:
         # 额外高潮次数的苦痛和恐怖
-        extra_pain = 100 * (1.2 ** all_extra_count)
-        extra_terror = 100 * (1.2 ** all_extra_count)
-        # 痛苦刻印修正
-        adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
-        extra_pain *= adjust
-        extra_pain = int(extra_pain)
-        # 恐怖刻印修正
-        adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[17])
-        extra_terror *= adjust
-        extra_terror = int(extra_terror)
-        # 结算苦痛和恐怖
-        character_data.status_data[17] += extra_pain
-        character_data.status_data[17] = min(99999, character_data.status_data[17])
-        change_data.status_data.setdefault(17, 0)
-        change_data.status_data[17] += extra_pain
-        character_data.status_data[18] += extra_terror
-        character_data.status_data[18] = min(99999, character_data.status_data[18])
-        change_data.status_data.setdefault(18, 0)
-        change_data.status_data[18] += extra_terror
+        extra_pain = int(100 * (1.2 ** all_extra_count))
+        extra_terror = int(100 * (1.2 ** all_extra_count))
+        base_chara_state_common_settle(character_id, 0, 17, extra_pain, ability_level = character_data.ability[15], tenths_add = False, change_data = change_data)
+        base_chara_state_common_settle(character_id, 0, 18, extra_terror, ability_level = character_data.ability[17], tenths_add = False, change_data = change_data)
         # 绘制信息
         now_draw = draw.NormalDraw()
         now_text = _("\n{0}因为第{1}次的连续额外绝顶而被迫感受到了更多的苦痛和恐怖\n").format(character_data.name, all_extra_count)
