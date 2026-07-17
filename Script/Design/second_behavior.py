@@ -604,7 +604,7 @@ def judge_orgasm_edge_success(character_id: int, orgasm_edge_count: dict = None,
     Keyword arguments:
     character_id -- 角色id
     orgasm_edge_count -- 用于本次判定的寸止计数字典，None时使用角色实时寸止计数
-    crossed_part_count -- 本次同时跨过绝顶阈值的部位数，成功率按该数取幂，多部位同时寸止更难
+    crossed_part_count -- 本次同时跨过绝顶阈值的部位数，成功率按max(1, 该数/2)取幂，多部位同时寸止更难
     Return arguments:
     bool -- 是否成功
     """
@@ -631,9 +631,9 @@ def judge_orgasm_edge_success(character_id: int, orgasm_edge_count: dict = None,
     # 否则，每超出一次，则有20%的概率失败
     else:
         fail_rate = 0.2 * over_count * -1
-        # 多部位同时寸止时，单部位成功率按跨阈部位数取幂（p^k），据此换算总失败率
+        # 多部位同时寸止时，单部位成功率按max(1, 跨阈部位数/2)取幂（p^max(1,k/2)），据此换算总失败率
         # 先把单部位成功率夹到[0,1]，避免fail_rate>1时负底数取偶次幂反而降低失败率
-        success_rate = max(0.0, 1 - fail_rate) ** crossed_part_count
+        success_rate = max(0.0, 1 - fail_rate) ** max(1, crossed_part_count / 2)
         fail_rate = 1 - success_rate
         random_num = random.uniform(0, 1)
         if random_num < fail_rate:
