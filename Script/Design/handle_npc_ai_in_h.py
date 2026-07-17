@@ -581,6 +581,11 @@ def npc_ai_in_group_sex(character_id: int):
     if handle_premise.handle_self_now_bondage(character_id):
         return
 
+    # 本次行动内已多重绝顶的NPC，不再写入自慰意图或模板占位；
+    # 保留其现有群交参与关系，随后同一角色仍会到普通入口完成被动结算尾部
+    if character_data.sp_flag.multi_orgasm_this_player_action:
+        return
+
     # 如果设定NPC为仅自慰，则进入要自慰后返回
     if handle_premise.handle_npc_ai_type_1_in_group_sex(character_id):
         character_data.sp_flag.masturebate = 3

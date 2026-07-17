@@ -236,6 +236,11 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    # 本次行动内已多重绝顶的NPC，不再生成新的自主行为；直接加入结束列表，
+    # 由character_behavior()继续走judge_character_status()等被动结算尾部
+    if character_data.sp_flag.multi_orgasm_this_player_action:
+        cache.over_behavior_character.add(character_id)
+        return
     start_time = character_data.behavior.start_time
     all_target_list = list(game_config.config_target.keys())
     premise_data = {}

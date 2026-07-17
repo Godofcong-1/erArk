@@ -541,6 +541,12 @@ def orgasm_settle(
                 draw_flag = True
             store_power_by_human_power(part_count + 3, character_id, draw_flag)
 
+    # 完整释放事务结束后，仅当本次为多重绝顶（>=2个部位同时高潮）才标记该NPC本次行动内已多重绝顶：
+    # 只有会展示大量口上的多重绝顶后的再调度才拦截，单部位高潮不受影响。
+    # 玩家（character_id为0）、成功寸止与时停蓄积（循环内continue使part_count保持0）也都不会走到这里。
+    if character_id and part_count >= 2:
+        character_data.sp_flag.multi_orgasm_this_player_action = True
+
 def judge_orgasm_degree(level_count: int) -> int:
     """
     判断高潮程度
