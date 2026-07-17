@@ -628,9 +628,9 @@ def judge_orgasm_edge_success(character_id: int, orgasm_edge_count: dict = None,
             info_draw_text += _("成功寸止了{0}的绝顶，但差不多也到了能控制住的极限了，还是尽快释放出来比较好\n").format(character_data.name)
         else:
             info_draw_text += _("成功寸止了{0}的绝顶\n").format(character_data.name)
-    # 否则，每超出一次，则有20%的概率失败
+    # 否则，每超出一次，则有15%的概率失败
     else:
-        fail_rate = 0.2 * over_count * -1
+        fail_rate = 0.15 * over_count * -1
         # 多部位同时寸止时，单部位成功率按max(1, 跨阈部位数/2)取幂（p^max(1,k/2)），据此换算总失败率
         # 先把单部位成功率夹到[0,1]，避免fail_rate>1时负底数取偶次幂反而降低失败率
         success_rate = max(0.0, 1 - fail_rate) ** max(1, crossed_part_count / 2)
