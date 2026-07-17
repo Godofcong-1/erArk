@@ -126,7 +126,6 @@ def second_behavior_effect(
 
     # 检测是否与玩家处于同一位置，进行必须显示和必须结算的二段行为处理
     if (
-            second_behavior_list == [] and
             character_data.position != cache.character_data[0].position
             and character_data.behavior.move_src != cache.character_data[0].position
     ):
