@@ -724,6 +724,9 @@ class Edit_Group_Sex_Temple_Panel:
                 # 判断实行值是否足够，不够的也跳过
                 if instuct_judege.calculation_instuct_judege(0, chara_id, _("群交"), not_draw_flag = True)[0] == False:
                     continue
+                # 力竭/疲劳/重度困倦者不再提供邀请
+                if handle_premise.handle_self_exhausted(chara_id):
+                    continue
                 # 判断是否被选择过
                 if handle_premise.handle_self_now_go_to_join_group_sex(chara_id):
                     selected_id_list.append(chara_id)
@@ -811,6 +814,9 @@ class Edit_Group_Sex_Temple_Panel:
             # 结算等待
             instuct_judege.init_character_behavior_start_time(character_id, cache.game_time)
             constant.handle_state_machine_data[0](character_id)
+        # 力竭/疲劳/重度困倦者无法被邀请加入群交
+        elif handle_premise.handle_self_exhausted(character_id):
+            info_draw_text = _("***{0}过于疲劳，无法参加群交***\n").format(character_data.name)
         # 否则邀请
         else:
             character_data.sp_flag.go_to_join_group_sex = True
