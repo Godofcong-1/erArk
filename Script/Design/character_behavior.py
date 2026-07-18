@@ -111,11 +111,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
 
     # 处理特殊模式
     if character_id != 0:
-        handle_npc_ai.judge_character_tired_sleep(character_id) # 判断疲劳和睡眠
-        handle_npc_ai.judge_character_cant_move(character_id) # 无法自由移动的角色
-        handle_npc_ai.judge_assistant_character(character_id) # 助理
-        handle_npc_ai.judge_character_follow(character_id) # 跟随模式
-        handle_npc_ai_in_h.judge_character_h_obscenity_unconscious(character_id, pl_start_time) # H状态、猥亵与无意识
+        handle_npc_ai.run_npc_pre_behavior_checks(character_id, pl_start_time) # NPC行动前检查序列
 
     # 处理公共资源
     # update_cafeteria() # 刷新食堂的饭，不需要了，改为NPC在没有饭的时候自动刷新
