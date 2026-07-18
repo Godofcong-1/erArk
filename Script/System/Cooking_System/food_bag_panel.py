@@ -257,6 +257,9 @@ class FoodGroupDraw:
         recipe_difficulty_str = ""
         if recipe_id != -1 and recipe_id in cache.recipe_data:
             recipe_difficulty = cache.recipe_data[recipe_id].difficulty
+            # 食谱等级大于8的按0级显示
+            if recipe_difficulty > 8:
+                recipe_difficulty = 0
             recipe_difficulty_str = _("(食谱等级：{recipe_difficulty})").format(recipe_difficulty=recipe_difficulty)
 
         button_text = f"  {self.food_name}{seasoning_str} {recipe_difficulty_str} {quality_text} x{count}"

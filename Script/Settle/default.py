@@ -7556,6 +7556,9 @@ def handle_eat_add_just(
 
     # 根据食物品质获得调整系数
     food_quality = now_food.quality if now_food is not None else 1
+    # 食谱等级大于8的按1级结算
+    if food_quality > 8:
+        food_quality = 1
     # 品质最小为1
     food_quality = max(food_quality, 1)
     quality_adjust = (food_quality / 2) ** 2
@@ -7589,6 +7592,9 @@ def handle_eat_add_just(
             food_recipe_data = game_config.config_recipes[food_recipe_id]
             # 获取食谱的制作时间
             food_recipe_time = food_recipe_data.time
+            # 如果时间为999，则按15分钟计算
+            if food_recipe_time == 999:
+                food_recipe_time = 15
             # 根据该时间与60分钟的比例来计算加成时间
             add_time_adjust = food_recipe_time / 60
 
