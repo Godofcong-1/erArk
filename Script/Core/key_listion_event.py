@@ -68,9 +68,16 @@ def mouse_left_check(event: Event):
     Keyword arguments:
     event -- 鼠标事件
     """
+    # 渲染期输入门禁：未上膛时（黑屏/渲染中、界面未定型）直接丢弃左键，
+    # 避免滞留点击在 w_frame_up==0 时提前把逐字等待推进（提前吃掉下一个"按任意键继续"）。
+    if not main_frame.input_armed:
+        return
     py_cmd.focus_cmd()
     if not cache.wframe_mouse.w_frame_up:
         set_wframe_up()
+        # 一次性门：推进逐字等待同样视作消费一次输入，立即撤膛，防止连点残留；
+        # 下一次 order_deal 入口的标记会重新上膛。
+        main_frame.input_armed = False
     else:
         mouse_check_push()
 
@@ -84,6 +91,10 @@ def mouse_right_check(event: Event):
     cache.wframe_mouse.mouse_right = 1
     cache.text_wait = 0
     cache.wframe_mouse.w_frame_skip_wait_mouse = 1
+    # 渲染期输入门禁：右键"催渲染跳过"是其本职（上方三个标志），渲染期必须保留，故不设门；
+    # 但未上膛时不推进逐字等待、也不注入输入，避免右键在渲染期提前推进/打出未见过的命令。
+    if not main_frame.input_armed:
+        return
     if not cache.wframe_mouse.w_frame_up:
         set_wframe_up()
     else:

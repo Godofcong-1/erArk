@@ -395,6 +395,11 @@ def order_deal(flag="order", print_order=True, donot_return_null_str=True):
     # 原始逻辑 - tkinter模式
     global __skip_flag__
     __skip_flag__ = False
+    # 渲染期输入门禁：本次输入等待的一屏内容此时已全部入队，在进入轮询前 push 一次上膛标记。
+    # 该标记恒排在本屏内容之后，read_queue 处理到它时才置为已上膛。每次进入 order_deal 只 push 一次，
+    # 绝不放进下方轮询循环，避免渲染队列被标记刷屏；askfor_all/askfor_wait 因无效输入重进本函数时
+    # 会再次 push，即"重新上膛"，是允许且正确的。
+    io_init.arm_input()
     while True:
         time.sleep(0.01)
         if not donot_return_null_str and cache.wframe_mouse.w_frame_up:

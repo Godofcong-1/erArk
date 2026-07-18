@@ -361,6 +361,15 @@ input_event_func = None
 send_order_state = False
 # when false, send 'skip'; when true, send cmd
 
+# 渲染期输入门禁标志：仅本 GUI 线程读写（read_queue 与各 Tk 事件回调均在 GUI 线程），故无需加锁。
+# False = 未上膛：当前正在渲染新一屏、界面尚未定型，此时到来的输入（滞留点击/回车）一律丢弃；
+# True = 已上膛：flow 侧在某个提示的输入等待入口 push 了标记、该标记已被 read_queue 处理、
+#        且 Tk 事件队列中批处理期间滞留的事件已全部派发完毕（经 after_idle 保证），界面已定型可接受输入。
+# 门是一次性的：每接受一次输入即撤膛，下一次 order_deal 入口的标记重新上膛。
+input_armed = False
+_arm_after_id = None
+""" 挂起未执行的 after_idle 上膛回调 id，None 表示无挂起回调 """
+
 
 from Script.Core import era_image
 
@@ -369,7 +378,14 @@ def send_input(*args):
     """
     发送一条指令
     """
-    global input_event_func
+    global input_event_func, input_armed
+    # 渲染期输入门禁：未上膛时（界面尚在渲染/未定型）直接丢弃本次输入注入，
+    # 拦截滞留点击命中新按钮触发的 send_cmd 命令注入，以及黑屏/渲染期回车的提前推进。
+    if not input_armed:
+        return
+    # 一次性门：接受本次输入即撤膛，防止双击按钮/连按回车的第二条输入残留、被下一个提示误消费；
+    # 下一次 order_deal 入口 push 的上膛标记会重新开门。
+    input_armed = False
     order = get_order()
     if len(cache.input_cache) >= 21:
         if not (order) == "":
@@ -391,13 +407,48 @@ def send_input(*args):
 flow_thread = None
 
 
+def _do_arm():
+    """
+    真正执行输入上膛
+
+    参数：无
+
+    返回值类型：无
+    功能描述：由 read_queue 处理上膛标记时经 root.after_idle 挂起，在 Tk 事件队列
+              无待派发事件（滞留点击均已被派发并丢弃）后才运行；幂等且异常安全。
+    """
+    global input_armed, _arm_after_id
+    _arm_after_id = None
+    input_armed = True
+
+
 def read_queue():
     """
     从队列中获取在前端显示的信息
     """
+    global input_armed, _arm_after_id
     while not main_queue.empty():
         quene_str = main_queue.get()
         json_data = json.loads(quene_str)
+
+        # 渲染期输入门禁：逐条按批内顺序判定。上膛标记恒在一屏内容之后入队，
+        # 逐条处理时"内容先撤膛、末尾标记再上膛"天然正确，无需批末统一置位。
+        # 独立的上膛标记消息（无 content）→ 挂起 idle 上膛后跳过后续内容处理。
+        if json_data.get("input_arm"):
+            # 不能在此直接置 True：标记常与一屏内容落在同一 read_queue 批（微秒级紧跟入队），
+            # 批处理期间玩家的点击滞留在 Tk 事件队列，批返回后才派发；若此刻门已开则照常注入。
+            # after_idle 回调只在事件队列无待派发事件时才运行，故滞留点击必先被派发
+            # （此刻仍未上膛 → 被门丢弃），之后才真正上膛。
+            if _arm_after_id is not None:
+                root.after_cancel(_arm_after_id)
+            _arm_after_id = root.after_idle(_do_arm)
+            continue
+        # 任何其它内容消息（文本/按钮/图片/清屏等）都意味着新一屏正在渲染 → 撤膛，
+        # 并取消挂起未执行的上膛回调，防止"标记批之后又来内容批"时旧回调迟到误开门。
+        input_armed = False
+        if _arm_after_id is not None:
+            root.after_cancel(_arm_after_id)
+            _arm_after_id = None
 
         if "clear_cmd" in json_data and json_data["clear_cmd"] == "true":
             clear_screen()
