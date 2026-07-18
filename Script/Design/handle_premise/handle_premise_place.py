@@ -371,14 +371,14 @@ def handle_scene_someone_no_fall(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SCENE_SOMEONE_HP_1)
 def handle_scene_someone_hp_1(character_id: int) -> int:
     """
-    该地点有HP1或太疲劳的角色
+    该地点有力竭、疲劳或重度困倦的角色（体力≤1、疲劳标记、或困倦等级≥2）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     from Script.Design.handle_premise import (
-        handle_self_tired,
+        handle_self_exhausted,
     )
     character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
@@ -389,7 +389,7 @@ def handle_scene_someone_hp_1(character_id: int) -> int:
         # 跳过玩家
         if chara_id == 0:
             continue
-        if handle_self_tired(chara_id):
+        if handle_self_exhausted(chara_id):
             return 1
     return 0
 
@@ -693,14 +693,14 @@ def handle_scene_all_fall_ge_2(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SCENE_ALL_NOT_TIRED)
 def handle_scene_all_not_tired(character_id: int) -> int:
     """
-    该地点有玩家以外的角色，且所有角色都未疲劳
+    该地点有玩家以外的角色，且所有角色都可参加群交（未力竭、疲劳或重度困倦）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     from Script.Design.handle_premise import (
-        handle_self_tired,
+        handle_self_exhausted,
     )
     character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
@@ -711,7 +711,7 @@ def handle_scene_all_not_tired(character_id: int) -> int:
         # 跳过玩家
         if chara_id == 0:
             continue
-        if handle_self_tired(chara_id):
+        if handle_self_exhausted(chara_id):
             return 0
     return 1
 
