@@ -294,6 +294,9 @@ class Chose_Hypnosis_Type_Panel:
             now_draw.draw()
             # 如果当前有交互对象
             if self.instruct_flag and pl_character_data.target_character_id:
+                # 依当前催眠类型对目标结算并套用催眠状态；未通过（催眠深度不足、或空气催眠地点不可锁门）则中止，不再向下宣告切换结果
+                if not evaluate_hypnosis_completion(pl_character_data.target_character_id):
+                    return
                 now_draw = draw.WaitDraw()
                 now_draw.style = "pink"
                 if hypnosis_type_cid == 1:
