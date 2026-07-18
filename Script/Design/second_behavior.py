@@ -366,10 +366,6 @@ def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange
             normal_orgasm_dict[orgasm] = now_data - pre_data
         # 高潮结算函数
         orgasm_settle(character_id, change_data, normal_orgasm_dict, extra_orgasm_dict, un_count_orgasm_dict)
-        # 寸止失败解放
-        if character_data.h_state.orgasm_edge == 3:
-            character_data.h_state.orgasm_edge = 2
-            orgasm_settle(character_id, change_data, normal_orgasm_dict, extra_orgasm_dict, character_data.h_state.orgasm_edge_count)
 
 
 def orgasm_settle(
@@ -396,6 +392,39 @@ def orgasm_settle(
     # print(f"进入{character_data.name}的高潮结算")
     part_dict = {0 : "s", 1 : "b", 2 : "c", 3 : "p", 4 : "v", 5 : "a", 6 : "u", 7 : "w", 21 : "m", 22 : "f", 23 : "h"}
     degree_dict = {0 : "small", 1 : "normal", 2 : "strong", 3 : "super"}
+
+    # 在修改任何部位状态前收集本次高潮计数；若处于寸止状态，则只做一次共同寸止判定
+    supported_orgasm_list = [orgasm for orgasm in part_dict if orgasm != 3]
+    orgasm_work_flag = any(
+        normal_orgasm_dict.get(orgasm, 0) > 0
+        or extra_orgasm_dict.get(orgasm, 0) > 0
+        or un_count_orgasm_dict.get(orgasm, 0) > 0
+        for orgasm in supported_orgasm_list
+    )
+    time_stop_flag = orgasm_work_flag and handle_premise.handle_unconscious_flag_3(character_id)
+    orgasm_edge_flag = orgasm_work_flag and not time_stop_flag and handle_premise.handle_self_orgasm_edge(character_id)
+    orgasm_edge_success_flag = False
+    if orgasm_edge_flag:
+        candidate_orgasm_edge_count = character_data.h_state.orgasm_edge_count.copy()
+        crossed_part_count = 0
+        for orgasm in supported_orgasm_list:
+            normal_orgasm_data = normal_orgasm_dict.get(orgasm, 0)
+            extra_orgasm_data = extra_orgasm_dict.get(orgasm, 0)
+            un_count_orgasm_data = un_count_orgasm_dict.get(orgasm, 0)
+            if normal_orgasm_data > 0 or extra_orgasm_data > 0 or un_count_orgasm_data > 0:
+                candidate_orgasm_edge_count[orgasm] = candidate_orgasm_edge_count.get(orgasm, 0) + normal_orgasm_data + un_count_orgasm_data
+                crossed_part_count += 1
+        orgasm_edge_success_flag = judge_orgasm_edge_success(character_id, candidate_orgasm_edge_count, crossed_part_count)
+        # 共同寸止失败时，将已累积的寸止计数并入本次不计数高潮一起解放，清空寸止计数并进入解放状态
+        if not orgasm_edge_success_flag:
+            release_orgasm_dict = un_count_orgasm_dict.copy()
+            for orgasm in supported_orgasm_list:
+                held_count = character_data.h_state.orgasm_edge_count.get(orgasm, 0)
+                if held_count > 0:
+                    release_orgasm_dict[orgasm] = release_orgasm_dict.get(orgasm, 0) + held_count
+            character_data.h_state.orgasm_edge_count.clear()
+            character_data.h_state.orgasm_edge = 2
+            un_count_orgasm_dict = release_orgasm_dict
 
     part_count = 0  # 部位高潮计数
     tem_orgasm_set = set()  # 临时高潮部位集合
@@ -430,20 +459,13 @@ def orgasm_settle(
             # 刷新记录
             character_data.h_state.orgasm_level[orgasm] = now_data
             # 时停状态下
-            if handle_premise.handle_unconscious_flag_3(character_id):
-                # 绝顶计入寸止计数
+            if time_stop_flag:
+                # 绝顶计入时停计数
                 character_data.h_state.time_stop_orgasm_count.setdefault(orgasm, 0)
                 character_data.h_state.time_stop_orgasm_count[orgasm] += climax_count
                 continue
-            # 如果开启了绝顶寸止，则进行寸止结算，然后跳过
-            if handle_premise.handle_self_orgasm_edge(character_id):
-                # 根据技巧而绝顶的能够进行寸止的次数限制
-                orgasm_edge_success_flag = judge_orgasm_edge_success(character_id)
-                # 寸止失败
-                if not orgasm_edge_success_flag:
-                    # 进入解放状态，返回以便重新进行结算
-                    character_data.h_state.orgasm_edge = 3
-                    return
+            # 如果本次共同寸止成功，则记录该部位并跳过普通结算
+            if orgasm_edge_success_flag:
                 # 绝顶计入寸止计数
                 character_data.h_state.orgasm_edge_count.setdefault(orgasm, 0)
                 character_data.h_state.orgasm_edge_count[orgasm] += climax_count
@@ -575,11 +597,13 @@ def judge_orgasm_degree(level_count: int) -> int:
         return 2
 
 
-def judge_orgasm_edge_success(character_id: int) -> bool:
+def judge_orgasm_edge_success(character_id: int, orgasm_edge_count: dict = None, crossed_part_count: int = 1) -> bool:
     """
     判断高潮寸止是否成功
     Keyword arguments:
     character_id -- 角色id
+    orgasm_edge_count -- 用于本次判定的寸止计数字典，None时使用角色实时寸止计数
+    crossed_part_count -- 本次同时跨过绝顶阈值的部位数，成功率按max(1, 该数/2)取幂，多部位同时寸止更难
     Return arguments:
     bool -- 是否成功
     """
@@ -587,7 +611,9 @@ def judge_orgasm_edge_success(character_id: int) -> bool:
     character_data: game_type.Character = cache.character_data[character_id]
     # 目前的高潮寸止数量，同一部位寸止次数越多，成功率越低
     all_orgasm_edge_count = 0
-    for key, value in character_data.h_state.orgasm_edge_count.items():
+    if orgasm_edge_count is None:
+        orgasm_edge_count = character_data.h_state.orgasm_edge_count
+    for key, value in orgasm_edge_count.items():
         all_orgasm_edge_count += value * value
     # 玩家的高潮寸止技巧
     pl_character_data: game_type.Character = cache.character_data[0]
@@ -601,9 +627,13 @@ def judge_orgasm_edge_success(character_id: int) -> bool:
             info_draw_text += _("成功寸止了{0}的绝顶，但差不多也到了能控制住的极限了，还是尽快释放出来比较好\n").format(character_data.name)
         else:
             info_draw_text += _("成功寸止了{0}的绝顶\n").format(character_data.name)
-    # 否则，每超出一次，则有20%的概率失败
+    # 否则，每超出一次，则有15%的概率失败
     else:
-        fail_rate = 0.2 * over_count * -1
+        fail_rate = 0.15 * over_count * -1
+        # 多部位同时寸止时，单部位成功率按max(1, 跨阈部位数/2)取幂（p^max(1,k/2)），据此换算总失败率
+        # 先把单部位成功率夹到[0,1]，避免fail_rate>1时负底数取偶次幂反而降低失败率
+        success_rate = max(0.0, 1 - fail_rate) ** max(1, crossed_part_count / 2)
+        fail_rate = 1 - success_rate
         random_num = random.uniform(0, 1)
         if random_num < fail_rate:
             orgasm_edge_success_flag = False
