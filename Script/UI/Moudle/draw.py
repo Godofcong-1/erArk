@@ -318,6 +318,8 @@ class InfoBarDraw:
         """ 是否为人物状态 """
         self.tooltip: str = ""
         """ 悬浮提示文本，供 Tk / Web 端展示额外说明 """
+        self.name_style: str = ""
+        """ 描述文本(标签)的字体样式，为空时用默认色 """
 
     def set(self, bar_id: str, max_value: int, value: int, text: str, tooltip: str = ""):
         """
@@ -343,6 +345,9 @@ class InfoBarDraw:
             info_draw.text = status_text
             lv_text = "lv" + text.split("lv")[1] + " "
             status_draw = StatusLevelDraw(value=value, text=lv_text)
+        # 按需给标签(描述文本)上色
+        if self.name_style:
+            info_draw.style = self.name_style
         value_draw = NormalDraw()
         value_draw.width = int(now_max_width / 3)
         value_draw.text = f"]({value}/{max_value})"
