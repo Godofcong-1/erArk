@@ -390,10 +390,40 @@ def send_input(*args):
 # 运行函数
 flow_thread = None
 
+# 批末合并滚动标志：一批输出仅在批末滚动一次，避免逐条输出都触发昂贵的 see(END) 重排版。
+# _defer_see_end 为真时，see_end() 只记录“待滚动”，不立即滚动；批末再统一滚动一次。
+# 等待点（WaitDraw）天然是批边界，队列在等待前已排空并批末滚动，逐行阅读节奏不受影响。
+_defer_see_end = False
+_see_end_pending = False
+
 
 def read_queue():
     """
-    从队列中获取在前端显示的信息
+    从队列中获取在前端显示的信息。
+    一次调度会排空整条输出队列；期间开启批末合并滚动，
+    使这一批中所有输出仅在批末真正滚动一次（而非每条各滚一次）。
+    无输入参数，无返回值。
+    """
+    global _defer_see_end, _see_end_pending
+    # 进入批处理：本批内各输出调用的 see_end() 仅记录待滚动标志
+    _defer_see_end = True
+    try:
+        _read_queue_drain()
+    finally:
+        # 异常安全：无论是否抛异常都复位延迟标志，避免一次异常把滚动永久关掉
+        _defer_see_end = False
+        if _see_end_pending:
+            # 本批确有输出请求过滚动，批末统一滚动一次；重绘由事件循环在下一空闲时刻自然完成，
+            # 不显式冲刷 idle 队列（update_idletasks 会提前执行其他挂起的 idle 回调，产生越权副作用）
+            see_end()
+            _see_end_pending = False
+    root.after(1, read_queue)
+
+
+def _read_queue_drain():
+    """
+    排空输出队列并逐条渲染的内部实现，无输入参数，无返回值。
+    独立成函数，供 read_queue 用 try/finally 包裹以实现批末合并滚动逻辑。
     """
     while not main_queue.empty():
         quene_str = main_queue.get()
@@ -445,7 +475,6 @@ def read_queue():
             if "\n" in c["text"]:
                 if textbox.get("1.0", END).count("\n") > normal_config.config_normal.text_hight * 10:
                     textbox.delete("1.0", str(normal_config.config_normal.text_hight * 5) + ".0")
-    root.after(1, read_queue)
 
 
 def run():
@@ -458,8 +487,15 @@ def run():
 
 def see_end():
     """
-    输出END信息
+    滚动到输出末尾，无输入参数，无返回值。
+    批末合并滚动开启时（_defer_see_end 为真），仅记录待滚动标志并返回，
+    由 read_queue 在批末统一滚动一次；否则立即滚动到末尾。
     """
+    global _see_end_pending
+    if _defer_see_end:
+        # 处于一批输出中，推迟到批末再滚动
+        _see_end_pending = True
+        return
     textbox.see(END)
 
 
