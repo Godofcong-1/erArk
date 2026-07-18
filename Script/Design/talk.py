@@ -303,7 +303,7 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
         if special_code[0]:
             now_draw = draw.NormalDraw()
         # 获取最终输出文本
-        now_talk_text = code_text_to_draw_text(talk_text, character_id, common_behavior_id is not None)
+        now_talk_text = code_text_to_draw_text(talk_text, character_id, common_behavior_id is not None, second_behavior_id != "")
         now_draw.text = now_talk_text
         now_draw.width = normal_config.config_normal.text_width
         # 角色口上
@@ -733,13 +733,14 @@ def talk_common_judge(now_talk: str, character_id: int) -> str:
                     now_talk = pattern.sub(_replacer, now_talk)
     return now_talk
 
-def code_text_to_draw_text(talk_text: str, character_id: int, common_talk_flag: bool = False):
+def code_text_to_draw_text(talk_text: str, character_id: int, common_talk_flag: bool = False, second_behavior_flag: bool = False):
     """
     将文本中的代码转化为对应的文本 \n
     Keyword arguments: \n
     talk_text -- 输入的原文本 \n
     character_id -- 角色id \n
     common_talk_flag -- 是否为选择器生成的纸娃娃地文，默认为False \n
+    second_behavior_flag -- 是否为二段结算地文（如绝顶），默认为False \n
     Return arguments:
     now_talk_text -- 转化后的文本
     """
@@ -754,7 +755,9 @@ def code_text_to_draw_text(talk_text: str, character_id: int, common_talk_flag: 
     now_talk_text = talk_common_judge(now_talk_text, character_id)
 
     # 如果是纸娃娃地文文本，则将当前id改为玩家id
-    if common_talk_flag:
+    # 但二段结算地文（如绝顶）描写的是被结算角色本人，其{Name}应为该角色，不能强制改为玩家，
+    # 否则会出现“干员绝顶、结算文本却显示玩家名”的主谓错误
+    if common_talk_flag and not second_behavior_flag:
         character_id = 0
         character_data = cache.character_data[character_id]
         target_data = cache.character_data[character_data.target_character_id]
