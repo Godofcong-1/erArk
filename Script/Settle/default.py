@@ -6707,7 +6707,8 @@ def handle_time_stop_orgasm_release(
         # 变为时停解放状态
         character_data.h_state.time_stop_release = True
         # 将时停绝顶计数转化为绝顶
-        second_behavior.orgasm_settle(chara_id, change_data, un_count_orgasm_dict = character_data.h_state.time_stop_orgasm_count)
+        settlement_change = change_data.target_change.setdefault(chara_id, game_type.TargetChange()) if any(character_data.h_state.time_stop_orgasm_count.values()) else change_data
+        second_behavior.orgasm_settle(chara_id, settlement_change, un_count_orgasm_dict = character_data.h_state.time_stop_orgasm_count)
         # 清零时停绝顶计数
         for state_id in game_config.config_character_state:
             if game_config.config_character_state[state_id].type == 0:

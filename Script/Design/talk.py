@@ -662,6 +662,7 @@ def talk_common_judge(now_talk: str, character_id: int) -> str:
                 if "_s" in key and "penis" not in key and "hair" not in key:
                     common_s_A_list = game_config.config_talk_common_cid_list_by_part["common_s"]["A"]
                     if "A" in part_dict:
+                        part_dict = {**part_dict, "A": part_dict["A"].copy()}
                         part_dict["A"] += common_s_A_list
                 # 定义替换函数：每次匹配都随机挑选每个部位一条文本进行拼接
                 def _part_replacer(match):
@@ -751,13 +752,18 @@ def code_text_to_draw_text(talk_text: str, character_id: int, common_talk_flag: 
     now_talk_text, special_code = special_code_judge(talk_text)
 
     # 替换通用文本
-    now_talk_text = talk_common_judge(now_talk_text, character_id)
+    original_target_character_id = player_data.target_character_id
+    try:
+        now_talk_text = talk_common_judge(now_talk_text, character_id)
+        common_target_character_id = player_data.target_character_id
+    finally:
+        player_data.target_character_id = original_target_character_id
 
     # 如果是纸娃娃地文文本，则将当前id改为玩家id
     if common_talk_flag:
         character_id = 0
         character_data = cache.character_data[character_id]
-        target_data = cache.character_data[character_data.target_character_id]
+        target_data = cache.character_data[common_target_character_id]
 
     # 专属称呼处理
     # 他人对自己的称呼
@@ -774,7 +780,7 @@ def code_text_to_draw_text(talk_text: str, character_id: int, common_talk_flag: 
     # 玩家的称呼
     if character_id != 0 and character_data.nick_name_to_pl != "":
         pl_nick_name = character_data.nick_name_to_pl
-    elif character_data.target_character_id != 0 and target_data.nick_name_to_pl != "":
+    elif (common_target_character_id if common_talk_flag else character_data.target_character_id) != 0 and target_data.nick_name_to_pl != "":
         pl_nick_name = target_data.nick_name_to_pl
     elif player_data.nick_name != "":
         pl_nick_name = player_data.nick_name
@@ -791,7 +797,7 @@ def code_text_to_draw_text(talk_text: str, character_id: int, common_talk_flag: 
         target_nick_name_to_pl = player_data.nick_name
 
     # 玩家的交互对象
-    pl_target_id = player_data.target_character_id
+    pl_target_id = common_target_character_id
     pl_target_name = ""
     if pl_target_id != 0:
         pl_target_data: game_type.Character = cache.character_data[pl_target_id]

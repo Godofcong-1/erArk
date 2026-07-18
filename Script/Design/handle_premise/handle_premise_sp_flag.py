@@ -43,6 +43,31 @@ def handle_self_tired(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.SELF_EXHAUSTED)
+def handle_self_exhausted(character_id: int) -> int:
+    """
+    自身力竭、疲劳或重度困倦（体力≤1、带疲劳标记、或困倦等级≥2）
+    是 handle_self_tired（仅疲劳标记）的广义版本，供群交准入等需要"体力不支"判断处复用
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重，1为力竭/疲劳/重度困倦，0为正常
+    """
+    from Script.Design import attr_calculation
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 体力耗尽（力竭）
+    if character_data.hit_point <= 1:
+        return 1
+    # 疲劳状态
+    if character_data.sp_flag.tired:
+        return 1
+    # 重度困倦（困倦等级≥2）
+    if attr_calculation.get_tired_level(character_data.tired_point) >= 2:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.SELF_NOT_TIRED)
 def handle_self_not_tired(character_id: int) -> int:
     """

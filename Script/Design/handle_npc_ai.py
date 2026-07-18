@@ -67,31 +67,9 @@ def judge_character_tired_sleep(character_id : int):
                     character_data.sp_flag.is_follow = 0
                 # 群交时
                 elif handle_premise.handle_group_sex_mode_on(character_id):
-                    # 自己退出
-                    character_data.target_character_id = character_id
-                    handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.GROUP_SEX_NPC_HP_0_END, character_id)
-                    # 检测当前场景中的NPC角色数量
-                    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-                    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-                    # 去掉自己和玩家
-                    last_character_list = scene_data.character_list.copy()
-                    last_character_list.discard(0)
-                    last_character_list.discard(character_id)
-                    # 去掉HP为1和疲劳的角色
-                    for chara_id in last_character_list.copy():
-                        tem_character_data = cache.character_data[chara_id]
-                        if tem_character_data.hit_point <= 1 or tem_character_data.sp_flag.tired:
-                            last_character_list.discard(chara_id)
-                    # 如果自己退出后，剩余NPC角色数量小于等于1，则转为普通H
-                    if len(last_character_list) == 1:
-                        new_traget_id = last_character_list.pop()
-                        pl_character_data.target_character_id = new_traget_id
-                        pl_character_data.behavior.behavior_id = constant.Behavior.GROUP_SEX_TO_H
-                        pl_character_data.state = constant.CharacterStatus.STATUS_GROUP_SEX_TO_H
-                        character_behavior.judge_character_status(0)
-                    # 如果没有人了，则结束H
-                    elif len(last_character_list) == 0:
-                        handle_instruct.handle_group_sex_end()
+                    # 力竭退出只返回窄决定，交由调度器提交这一次转换；
+                    # 疲劳检查会被状态结算重入，若在此就地结算会造成嵌套周期与重复结算
+                    return constant.Behavior.GROUP_SEX_NPC_HP_0_END
 
                 # H时，有意识H则正常检测，无意识H则不检测疲劳，只检测HP
                 elif (
@@ -132,6 +110,64 @@ def judge_character_tired_sleep(character_id : int):
                 character_data.state = constant.CharacterStatus.STATUS_H_HP_0
                 # 调用结束H的指令
                 handle_instruct.handle_h_end()
+
+
+def run_npc_pre_behavior_checks(character_id: int, pl_start_time: datetime.datetime):
+    """
+    依次执行NPC的行动前检查序列\n
+    疲劳/睡眠检查判定为群交力竭退出时，由本序列提交这一次退出转换并跳过其余检查，\n
+    避免随后的H状态检查把退出行为覆盖为原地等待。\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    pl_start_time -- 玩家行动开始时间\n
+    """
+    from Script.Design import handle_npc_ai_in_h
+
+    # 判断疲劳和睡眠；群交力竭退出时返回退出行为id，交由本序列提交转换
+    if judge_character_tired_sleep(character_id) == constant.Behavior.GROUP_SEX_NPC_HP_0_END:
+        commit_group_sex_tired_exit(character_id)
+        return
+    judge_character_cant_move(character_id) # 无法自由移动的角色
+    judge_assistant_character(character_id) # 助理
+    judge_character_follow(character_id) # 跟随模式
+    handle_npc_ai_in_h.judge_character_h_obscenity_unconscious(character_id, pl_start_time) # H状态、猥亵与无意识
+
+
+def commit_group_sex_tired_exit(character_id: int):
+    """
+    调度器提交群交力竭退出\n
+    配置退出行为并恰好结算一次退出效果链（清is_h、将角色移出群交模板等），\n
+    再按玩家所在场景仍在H的群交成员数沿用原有收尾：仅剩1人时转为普通H，\n
+    无人时由结束群交指令收尾，2人及以上则保持群交模式不变。\n
+    Keyword arguments:\n
+    character_id -- 力竭退出的NPC角色id\n
+    """
+    from Script.System.Instruct_System import handle_instruct
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 目标指向自己并配置退出行为
+    character_data.target_character_id = character_id
+    handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.GROUP_SEX_NPC_HP_0_END, character_id)
+    # 恰好结算一次，执行退出行为的清理效果链（1503欲望清零/528补HPMP上限/403重置H状态/635穿回衣服）
+    character_behavior.judge_character_status(character_id)
+    # 退出者is_h已被403清零；统计玩家所在场景仍在H的群交成员（不再误算非群交旁观者）
+    pl_character_data: game_type.Character = cache.character_data[0]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(pl_character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    remaining_ids = [
+        chara_id for chara_id in scene_data.character_list
+        if chara_id and cache.character_data[chara_id].sp_flag.is_h
+    ]
+    # 沿用原有收尾逻辑：仅剩1人转为普通H
+    if len(remaining_ids) == 1:
+        new_target_id = remaining_ids[0]
+        pl_character_data.target_character_id = new_target_id
+        pl_character_data.behavior.behavior_id = constant.Behavior.GROUP_SEX_TO_H
+        pl_character_data.state = constant.CharacterStatus.STATUS_GROUP_SEX_TO_H
+        character_behavior.judge_character_status(0)
+    # 已无仍在H的成员，由结束群交指令收尾
+    elif len(remaining_ids) == 0:
+        handle_instruct.handle_group_sex_end()
 
 
 def judge_assistant_character(character_id: int) -> int:

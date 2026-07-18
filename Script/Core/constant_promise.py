@@ -1341,6 +1341,8 @@
 
     SELF_TIRED = "self_tired"
     """ 特殊flag_生活 自身疲劳 """
+    SELF_EXHAUSTED = "self_exhausted"
+    """ 特殊flag_生活 自身力竭、疲劳或重度困倦（体力≤1、疲劳标记、或困倦等级≥2） """
     SELF_NOT_TIRED = "self_not_tired"
     """ 特殊flag_生活 自身未疲劳 """
     TARGET_HP_1 = "target_hp_1"

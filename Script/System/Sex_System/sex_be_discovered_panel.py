@@ -236,8 +236,8 @@ class Sex_Be_Discovered_Panel:
     def _invite_find_char_to_join(self) -> None:
         """选择邀请对方加入群交"""
         from Script.Design import character_behavior
-        # 判断是否满足加入群交条件
-        if handle_premise.handle_instruct_judge_group_sex(self.character_id):
+        # 判断是否满足加入群交条件（意愿达标且未力竭/疲劳/重度困倦）
+        if handle_premise.handle_instruct_judge_group_sex(self.character_id) and not handle_premise.handle_self_exhausted(self.character_id):
             # 如果当前在群交中，则直接加入
             if handle_premise.handle_group_sex_mode_on(0):
                 self.find_chara_data.behavior.behavior_id = constant.Behavior.JOIN_GROUP_SEX
