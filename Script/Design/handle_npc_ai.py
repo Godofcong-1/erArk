@@ -280,9 +280,19 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
 
     # 如果该NPC在H模式
     if character_data.sp_flag.is_h:
-        # 群交中+要群交自慰时，才能继续下去
+        # 群交自慰参与者只在群交自慰目标(default91)内取行动并原地结算，不进入下面的
+        # 普通AI搜索：H中的角色走普通搜索可能被排去工作或娱乐场所而离开会场。
+        # 命中则原地自慰，否则原地等待。
         if handle_premise.handle_group_sex_mode_on(character_id) and handle_premise.handle_masturebate_flag_3(character_id):
-            pass
+            target, weight, judge, new_premise_data = search_target(
+                character_id, ["default91"], null_target_set, premise_data, target_weight_data
+            )
+            if judge:
+                state_machine_id = game_config.config_target[target].state_machine_id
+                constant.handle_state_machine_data[state_machine_id](character_id)
+            else:
+                cache.over_behavior_character.add(character_id)
+            return
         # 否则不赋予新活动，且直接加入结束列表
         else:
             cache.over_behavior_character.add(character_id)

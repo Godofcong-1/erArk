@@ -5117,6 +5117,9 @@ def handle_h_flag_to_1(
     if not character_data.sp_flag.is_h:
         character_move.cancel_movement_plan(character_id)
     character_data.sp_flag.is_h = True
+    # 进入H即视为已目击本场H：即使之后合法离场(如力竭)清了is_h，回场也不会被当作
+    # 新旁观者而重复触发"H中被发现"面板
+    character_data.sp_flag.see_pl_h = True
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_H_FLAG_TO_0)
