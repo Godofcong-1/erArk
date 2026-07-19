@@ -789,7 +789,6 @@ def io_print_cmd(
             textbox.tag_ranges(cmd_tag_name)[0],
             textbox.tag_ranges(cmd_tag_name)[1],
         )
-        cache.wframe_mouse.mouse_leave_cmd = 0
         if tooltip_text:
             coords = (event.x_root, event.y_root) if event is not None else None
             _schedule_tooltip(tooltip_text, coords)
@@ -808,7 +807,6 @@ def io_print_cmd(
             textbox.tag_ranges(cmd_tag_name)[1],
         )
         textbox.configure(cursor="")
-        cache.wframe_mouse.mouse_leave_cmd = 1
         _hide_tooltip()
 
     def motion_func(event=None):
