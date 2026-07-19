@@ -214,7 +214,7 @@ def get_character_status_list(character_id: int) -> Tuple[List[draw.LeftDraw], L
     orgasm_edge_draw = draw.LeftDraw()
     if handle_premise.handle_self_orgasm_edge(character_id):
         skill_ability_lv = cache.character_data[0].ability[30]
-        orgasm_edge_margin = attr_calculation.get_orgasm_edge_margin(skill_ability_lv, character_data.h_state.orgasm_edge_count)
+        orgasm_edge_margin = skill_ability_lv * 3 - sum(value * value for value in character_data.h_state.orgasm_edge_count.values())
         orgasm_edge_draw.tooltip = _("被进行了绝顶寸止，会无法绝顶高潮")
         if orgasm_edge_margin >= 3:
             orgasm_edge_text = _(" <寸止>")

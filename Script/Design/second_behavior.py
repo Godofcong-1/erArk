@@ -609,13 +609,17 @@ def judge_orgasm_edge_success(character_id: int, orgasm_edge_count: dict = None,
     """
     orgasm_edge_success_flag = False
     character_data: game_type.Character = cache.character_data[character_id]
+    # 目前的高潮寸止数量，同一部位寸止次数越多，成功率越低
+    all_orgasm_edge_count = 0
     if orgasm_edge_count is None:
         orgasm_edge_count = character_data.h_state.orgasm_edge_count
+    for key, value in orgasm_edge_count.items():
+        all_orgasm_edge_count += value * value
     # 玩家的高潮寸止技巧
     pl_character_data: game_type.Character = cache.character_data[0]
     skill_ability_lv = pl_character_data.ability[30]
     info_draw_text = "\n"
-    over_count = attr_calculation.get_orgasm_edge_margin(skill_ability_lv, orgasm_edge_count)
+    over_count = skill_ability_lv * 3 - all_orgasm_edge_count
     # 如果次数小于技巧等级*3，则成功
     if over_count >= 0:
         orgasm_edge_success_flag = True
