@@ -15,6 +15,18 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 
+def cancel_movement_plan(character_id: int):
+    """
+    撤销角色尚未完成的移动计划，同时保留最后一次移动的起点和目标点
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    None -- 无返回值
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.move_final_target = []
+
+
 def own_charcter_move(target_scene: list):
     """
     主角寻路至目标场景
@@ -49,6 +61,11 @@ def own_charcter_move(target_scene: list):
             character_data.action_info.ask_close_door_flag = False
             # print(f"debug pl start_time = {character_data.behavior.start_time}")
             update.game_update_flow(now_need_time)
+            # 若本段结算过程中移动计划被撤销（move_final_target 已不再指向 target_scene）
+            # 且尚未抵达目标，则停止寻路，不再走下一段
+            character_data = cache.character_data[0]
+            if character_data.position != target_scene and character_data.behavior.move_final_target != target_scene:
+                break
         else:
             break
     cache.character_data[0].target_character_id = 0
