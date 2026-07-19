@@ -296,6 +296,10 @@ textbox = Text(
     highlightbackground=normal_config.config_normal.background,
     bd=0,
     cursor="",
+    # 选区背景与正文背景同色：正文里嵌有透明 PNG（立绘、状态条小图），玩家用任意方式
+    # （双击选词、三击选行、按住左右拖选）建立的选区若用醒目色，会从透明像素处透出
+    # （露红底）。设为背景色后选区不可见、露红根除，拖选复制文本仍可用。
+    selectbackground=normal_config.config_normal.background,
     #123分别是，\n的上行间距，自动换行行间距，\n的下行间距
     spacing1 = 1,
     spacing2 = 1,
@@ -521,7 +525,8 @@ def set_background(color):
     color -- 背景颜色
     """
     textbox.config(insertbackground=color)
-    textbox.configure(background=color, selectbackground="red")
+    # selectbackground 跟随背景色，避免选区从正文透明 PNG 处透出（见 textbox 创建处说明）
+    textbox.configure(background=color, selectbackground=color)
 
 
 # ######################################################################
