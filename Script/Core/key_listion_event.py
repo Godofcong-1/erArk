@@ -72,7 +72,7 @@ def mouse_left_check(event: Event):
     if not cache.wframe_mouse.w_frame_up:
         set_wframe_up()
     else:
-        mouse_check_push()
+        mouse_check_push(event)
 
 
 def mouse_right_check(event: Event):
@@ -87,7 +87,7 @@ def mouse_right_check(event: Event):
     if not cache.wframe_mouse.w_frame_up:
         set_wframe_up()
     else:
-        mouse_check_push()
+        mouse_check_push(event)
 
 
 def key_up(event: Event):
@@ -151,10 +151,29 @@ def set_wframe_up():
     cache.wframe_mouse.w_frame_lines_up = 1
 
 
-def mouse_check_push():
+def mouse_check_push(event: Event = None):
     """
-    更正鼠标点击状态数据映射
+    点击时现场判断落点是否命中指令按钮 tag，据此决定是否推进"按任意键继续"等待
+    Keyword arguments:
+    event -- 鼠标事件对象；用其屏幕坐标换算 textbox 内坐标做命中查询，None 时直接推进"按任意键继续"等待
     """
-    if not cache.wframe_mouse.mouse_leave_cmd == 0:
+    # 无事件对象时无法做命中查询，直接推进等待输入
+    if event is None:
         main_frame.send_input()
-        cache.wframe_mouse.mouse_leave_cmd = 1
+        return
+    textbox = main_frame.textbox
+    # 窗口级绑定的 event.x/y 相对 event.widget，不可直接用，故以屏幕坐标换算 textbox 内部坐标
+    tx = event.x_root - textbox.winfo_rootx()
+    ty = event.y_root - textbox.winfo_rooty()
+    # 落点若在 textbox 边界外，视作空白点击，推进等待输入
+    if tx < 0 or ty < 0 or tx >= textbox.winfo_width() or ty >= textbox.winfo_height():
+        main_frame.send_input()
+        return
+    # 取落点处的所有 tag，与已登记的指令按钮 tag（含文字与图片按钮，均登记在 cmd_tag_map）求交
+    point_tags = set(textbox.tag_names(f"@{tx},{ty}"))
+    cmd_tags = set(main_frame.cmd_tag_map.values())
+    # 命中任一指令按钮 tag → 本次为按钮点击，已由按钮回调处理，不再重复注入输入
+    if point_tags & cmd_tags:
+        return
+    # 未命中按钮 → 推进等待输入
+    main_frame.send_input()

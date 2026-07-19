@@ -230,7 +230,7 @@ def recover_from_unconscious_h(character_id: int, info_text: str = ""):
 
     # 如果继续H
     if continue_h:
-        target_data.sp_flag.is_h = True
+        default.handle_h_flag_to_1(target_data.cid, 1, game_type.CharacterStatusChange(), cache.game_time)
         character_data.behavior.behavior_id = constant.Behavior.WAIT
         character_data.state = constant.CharacterStatus.STATUS_WAIT
         # 对方的行为时间设为10分钟

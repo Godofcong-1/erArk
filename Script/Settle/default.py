@@ -16,6 +16,7 @@ from Script.Design import (
     clothing,
     handle_ability,
     second_behavior,
+    character_move,
 )
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
@@ -5111,6 +5112,10 @@ def handle_h_flag_to_1(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    # 只在从非H状态首次进入H时撤销旧移动计划；H状态中本effect仍会被反复结算，
+    # 此时is_h已为真而跳过，避免误删进入H后角色新下达的移动指令
+    if not character_data.sp_flag.is_h:
+        character_move.cancel_movement_plan(character_id)
     character_data.sp_flag.is_h = True
 
 

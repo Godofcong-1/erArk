@@ -22,8 +22,6 @@ class WFrameMouse:
     """ 鼠标右键按下 """
     w_frame_lines_up: int = 2
     """ 逐行输出状态 """
-    mouse_leave_cmd: int = 1
-    """ 鼠标左键事件 """
     w_frame_re_print: int = 0
     """ 再次载入游戏界面 """
     w_frame_lines_state: int = 2
