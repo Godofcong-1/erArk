@@ -557,6 +557,18 @@ def judge_grade(value: int) -> str:
     return grade
 
 
+def get_orgasm_edge_margin(skill_ability_lv: int, orgasm_edge_count: dict) -> int:
+    """
+    计算绝顶寸止的安全余量
+    Keyword arguments:
+    skill_ability_lv (int) -- 玩家的绝顶寸止技巧等级
+    orgasm_edge_count (dict[int, int]) -- 各部位已累积的绝顶寸止次数
+    Return arguments:
+    int -- 安全余量，负数表示已超过能控制住的极限
+    """
+    return skill_ability_lv * 3 - sum(value * value for value in orgasm_edge_count.values())
+
+
 def get_status_level(value: int) -> int:
     """
     按状态数值评定数字等级
