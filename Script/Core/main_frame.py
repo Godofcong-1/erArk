@@ -296,6 +296,12 @@ textbox = Text(
     highlightbackground=normal_config.config_normal.background,
     bd=0,
     cursor="",
+    # 显示区并非可编辑控件，去掉文本插入符（光标竖条）：insertwidth=0。
+    # 否则单击指令按钮的瞬间，Text 类绑定会短暂把键盘焦点给 textbox 并在点击处放置
+    # 插入符，紧接着 key_listion_event 的窗口级处理经 py_cmd.focus_cmd() 把焦点抢到
+    # 底部输入框、插入符一闪即逝。黑色插入符在黑底上不可见，但正好落在鼠标悬停高亮
+    # （on_style 亮底）的那个按钮上时，会显出一条黑色竖条，即“点击一刹那的 I 字光标”。
+    insertwidth=0,
     #123分别是，\n的上行间距，自动换行行间距，\n的下行间距
     spacing1 = 1,
     spacing2 = 1,
