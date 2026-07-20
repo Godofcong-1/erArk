@@ -207,6 +207,23 @@ def put_queue(message: str):
         _send_queue.put_nowait(message)
 
 
+def arm_input():
+    """
+    向输出队列推送一个"输入上膛"标记
+
+    参数：无
+
+    返回值类型：无
+    功能描述：Tk 模式下在某个提示的输入等待入口调用，把独立的 {"input_arm": true} 标记入队，
+              待 read_queue 处理到该标记时把 GUI 侧输入门禁置为已上膛，此后才接受该屏输入。
+              Web 模式无渲染期滞留点击问题，此处不入队。
+    """
+    # 隐性前提：绘制队列为单生产者（flow 线程），标记 push 后 flow 即阻塞等待输入，
+    # 故标记恒为该屏消息的批尾；若未来出现后台绘制生产者需重新评估此假设。
+    if not _is_web_mode():
+        _send_queue.put_nowait(json.dumps({"input_arm": True}))
+
+
 def put_order(message: str):
     """
     向命令队列中推送信息
