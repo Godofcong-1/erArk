@@ -202,9 +202,8 @@ def common_ejaculation():
         if character_data.tem_extra_semen_point > semen_count:
             character_data.tem_extra_semen_point -= semen_count
         else:
-            semen_count -= character_data.tem_extra_semen_point
+            character_data.semen_point -= semen_count - character_data.tem_extra_semen_point
             character_data.tem_extra_semen_point = 0
-            character_data.semen_point -= semen_count
         character_data.semen_point = max(0, character_data.semen_point)
 
         return semen_text,semen_count
