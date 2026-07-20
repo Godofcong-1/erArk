@@ -303,6 +303,7 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
     if not add_time:
         # 如果是H状态，则直接可以跳出
         if handle_premise.handle_self_is_h(character_id):
+            character_data.behavior.start_time = now_time
             return 1
         character_data.behavior = game_type.Behavior()
         character_data.behavior.start_time = now_time
