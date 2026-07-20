@@ -291,9 +291,14 @@ def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange
     # 检测射精
     if character_id == 0:
         if character_data.eja_point >= character_data.eja_point_max or skip_undure:
-            # 如果已经没有精液了则只能进行普通射精
+            # 无精液高潮：基础精液与临时精液合计不超过2ml时，作为高潮而非射精结算
             if handle_premise.handle_pl_semen_le_2(0):
-                character_get_second_behavior(0, "p_orgasm_small")
+                # 登记专用二段行为，不打开射精对象/部位选择面板，也不进行射精统计与目标效果
+                character_get_second_behavior(0, "p_no_semen_climax")
+                # 清空射精槽与忍住不射次数，避免同一次高潮被“停止忍耐”或普通H结束释放重复触发
+                character_data.eja_point = 0
+                character_data.h_state.endure_not_shot_count = 0
+                return
             else:
                 # 忍住射精
                 if not skip_undure:

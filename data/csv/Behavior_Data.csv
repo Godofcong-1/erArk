@@ -478,6 +478,7 @@ int,str,str,int,str,str
 1012,p_orgasm_small,结算射精,0,pl,二段结算
 1013,p_orgasm_normal,结算大量射精,0,pl,二段结算
 1014,p_orgasm_strong,结算超大量射精,0,pl,二段结算
+1015,p_no_semen_climax,结算无精液高潮,0,pl,二段结算
 1016,v_orgasm_small,结算V小绝顶,0,npc,二段结算
 1017,v_orgasm_normal,结算V普绝顶,0,npc,二段结算
 1018,v_orgasm_strong,结算V强绝顶,0,npc,二段结算
