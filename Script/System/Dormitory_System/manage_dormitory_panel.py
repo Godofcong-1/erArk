@@ -398,7 +398,8 @@ class Manage_Dormitory_Panel:
                 room_text = _("[{0}层] {1} ({2}/{3})").format(layer, room_name, room_count, room_capacity)
                 # 如果该宿舍有角色，则显示这些角色的名字
                 if room_path in occupancy and occupancy[room_path] > 0:
-                    occupants = [cache.character_data[cid].name for cid in cache.character_data if cache.character_data[cid].dormitory == room_path]
+                    resident_id_set = common.get_dormitory_resident_id_set()
+                    occupants = [cache.character_data[cid].name for cid in resident_id_set if cache.character_data[cid].dormitory == room_path]
                     room_text += " - " + "、".join(occupants)
                 room_draw = draw.LeftButton(
                     room_text,
@@ -532,7 +533,9 @@ class Manage_Dormitory_Panel:
                 open_room_paths.append(room_path)
 
         room_character_ids: Dict[str, List[int]] = {room_path: [] for room_path in open_room_paths}
-        sorted_character_ids = sorted([cid for cid in cache.npc_id_got if cid != 0 and cid in cache.character_data], key=lambda x: cache.character_data[x].adv)
+        # 统一使用通用函数获取需要纳入统计的角色id集合（拥有干员 + 异常7离岛角色）
+        resident_id_set = common.get_dormitory_resident_id_set()
+        sorted_character_ids = sorted([cid for cid in resident_id_set if cid in cache.character_data], key=lambda x: cache.character_data[x].adv)
         for character_id in sorted_character_ids:
             dormitory_path = cache.character_data[character_id].dormitory
             if dormitory_path in room_character_ids:
@@ -787,9 +790,8 @@ class Manage_Dormitory_Panel:
         功能: 统计每个宿舍路径当前住了几名干员
         """
         occupancy: Dict[str, int] = {}
-        for character_id in cache.npc_id_got:
-            if character_id == 0:
-                continue
+        # 统一使用通用函数获取需要纳入统计的角色id集合（拥有干员 + 异常7离岛角色）
+        for character_id in common.get_dormitory_resident_id_set():
             dormitory_path = cache.character_data[character_id].dormitory
             if dormitory_path:
                 occupancy[dormitory_path] = occupancy.get(dormitory_path, 0) + 1

@@ -1337,7 +1337,7 @@
     """ 属性_身体部位 自身阴茎大小为巨根 """
 
     CAN_MANUAL_CHANGE_DORMITORY = "can_manual_change_dormitory"
-    """ 属性_宿舍 该角色当前可被手动更换宿舍（未处于同居/监禁等特殊状态） """
+    """ 属性_宿舍 该角色当前可被手动更换宿舍（未处于同居/监禁/监狱长/异常7等特殊状态） """
 
     SELF_TIRED = "self_tired"
     """ 特殊flag_生活 自身疲劳 """

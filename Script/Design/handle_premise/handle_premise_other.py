@@ -1970,18 +1970,22 @@ def handle_jj_3(character_id: int) -> int:
 @add_premise(constant_promise.Premise.CAN_MANUAL_CHANGE_DORMITORY)
 def handle_can_manual_change_dormitory(character_id: int) -> int:
     """
-    该角色当前可被手动更换宿舍（未处于同居/监禁/监狱长等特殊状态）
+    该角色当前可被手动更换宿舍（未处于同居/监禁/监狱长/异常7等特殊状态）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
+    from Script.Design.handle_premise import handle_normal_7
     character_data: game_type.Character = cache.character_data[character_id]
     # pre_dormitory 非空且与 dormitory 不同，说明正处于助理同居或监禁中
     if character_data.pre_dormitory != "" and character_data.pre_dormitory != character_data.dormitory:
         return 0
     # 玩家角色本身不允许手动换宿
     if character_id == 0:
+        return 0
+    # 异常为7的角色不允许换宿舍
+    if not handle_normal_7(character_id):
         return 0
     return 1
 

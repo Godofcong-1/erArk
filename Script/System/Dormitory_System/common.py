@@ -1,7 +1,7 @@
 import re
 from types import FunctionType
 from collections import defaultdict
-from typing import Dict, List, Tuple
+from typing import Dict, List, Set, Tuple
 
 from Script.Core import cache_control, game_type, constant, get_text
 from Script.Config import game_config
@@ -139,6 +139,28 @@ def get_open_dormitory_room_paths_by_layer(layer: int) -> List[str]:
 
     return [room_path for _, room_path in open_rooms_by_layer[layer]]
 
+def get_dormitory_resident_id_set() -> Set[int]:
+    """
+    获取需要纳入宿舍统计的角色id集合
+    输入类型: 无
+    输出类型: Set[int]
+    功能: 在当前拥有干员(cache.npc_id_got)基础上，追加所有异常状态为7(离岛)的角色id，作为宿舍居住统计的统一角色来源
+    """
+    from Script.Design.handle_premise import handle_normal_7
+    resident_id_set: Set[int] = set(cache.npc_id_got)
+    resident_id_set.discard(0)
+    # 遍历所有角色，追加处于异常7(离岛)状态但不在拥有干员列表中的角色
+    for character_id in cache.character_data:
+        if character_id == 0:
+            continue
+        if character_id in resident_id_set:
+            continue
+        # handle_normal_7 返回0表示角色处于异常7(离岛)状态
+        if not handle_normal_7(character_id):
+            resident_id_set.add(character_id)
+    return resident_id_set
+
+
 def get_dormitory_occupants_text() -> str:
     """
     获取当前宿舍区内角色分布文本
@@ -147,7 +169,11 @@ def get_dormitory_occupants_text() -> str:
     功能: 遍历所有宿舍，统计每个宿舍内的角色，并生成格式化文本显示宿舍分布情况
     """
     now_text = ""
-    live_npc_id_set = cache.npc_id_got.copy()
+    # 统一使用通用函数获取需要纳入统计的角色id集合
+    resident_id_set = get_dormitory_resident_id_set()
+    live_npc_id_set = resident_id_set.copy()
+    # 处于异常7(离岛)状态的角色即为居住集合中不在拥有干员列表内的角色
+    unnormal_7_npc_id_set = resident_id_set - set(cache.npc_id_got)
     Dormitory_all = constant.place_data["Dormitory"] + constant.place_data["Special_Dormitory"] # 合并普通和特殊宿舍
     # 遍历所有宿舍
     dormitory_count = 0 # 用来计数宿舍总数量
@@ -163,9 +189,13 @@ def get_dormitory_occupants_text() -> str:
             live_dormitory = cache.character_data[npc_id].dormitory
             # 如果该角色住在该宿舍，则在text中加入名字信息
             if live_dormitory == dormitory_place:
-                dormitory_npc_name += f"{cache.character_data[npc_id].name}  "
+                chara_name = cache.character_data[npc_id].name
+                # 如果是异常7的角色，则在名字后加上离岛
+                if npc_id in unnormal_7_npc_id_set:
+                    chara_name += _("(离岛)")
+                dormitory_npc_name += f"{chara_name}  "
                 # W的名字需要单独处理，减掉一个空格
-                if cache.character_data[npc_id].name == "W":
+                if chara_name == "W":
                     dormitory_npc_name = dormitory_npc_name[:-1]
                 count += 1
                 tem_remove_id_set.add(npc_id)
