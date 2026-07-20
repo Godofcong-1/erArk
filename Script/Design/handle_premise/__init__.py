@@ -221,8 +221,8 @@ def get_weight_from_premise_dict(talk_premise_dict: set, character_id: int, calc
     premise_handlers = constant.handle_premise_data
 
     # 无意识模式判定
-    # 平然催眠下目标仍正常与博士互动，口上照常放行
-    if unconscious_pass_flag == False and handle_unconscious_flag_ge_1(target_character_id) and not handle_unconscious_flag_4(target_character_id):
+    # 催眠类无意识下目标仍在与博士互动，口上照常放行
+    if unconscious_pass_flag == False and handle_unconscious_flag_ge_1(target_character_id) and not handle_unconscious_hypnosis_flag(target_character_id):
         # 有技艺tag的行为则直接通过
         behavior_data = game_config.config_behavior[behavior_id]
         if _("技艺") in behavior_data.tag:
