@@ -36,6 +36,7 @@ data/talk/ai
 .claude/agent-memory
 .claude/settings.json
 yolo11x-pose.pt
+.claude/skills
 
 # 地图数据
 data/MapData
