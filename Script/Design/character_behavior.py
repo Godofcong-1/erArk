@@ -260,8 +260,8 @@ def judge_character_status(character_id: int) -> int:
             first_settle_panel.draw()
             if second_settle_panel != None:
                 second_settle_panel.draw()
-            #进行一次暂停以便玩家看输出信息
-            if character_id == 0:
+            # 进行一次暂停以便玩家看输出信息，非玩家的信息显示由设置控制
+            if character_id == 0 or cache.all_system_setting.draw_setting[19]:
                 wait_draw = draw.WaitDraw()
                 wait_draw.text = "\n"
                 wait_draw.width = window_width
