@@ -1,7 +1,7 @@
 from typing import Tuple, Dict, List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle, attr_calculation, update, attr_text
+from Script.Design import map_handle, attr_calculation, update, attr_text, handle_premise
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import ejaculation_panel
@@ -165,6 +165,7 @@ class FindDraw:
         cloth_show_draw = draw.NormalDraw()
         self.pl_data.target_character_id = self.npc_id
         while 1:
+            return_list.clear()
             line = draw.LineDraw("-", window_width)
             line.draw()
             cloth_show_text = _("\n{0}的衣柜里放着刚脱下来的：\n").format(self.character_data.name)
@@ -234,17 +235,19 @@ class FindDraw:
                 button2_draw.draw()
                 return_list.append(button2_draw.return_text)
 
-            button3_text = _("[004]用衣服冲，射在上面")
-            button3_draw = draw.LeftButton(
-                _(button3_text),
-                _("4"),
-                window_width,
-                cmd_func=self.shoot_in_cloth,
-                args=(),
-                )
-            line_feed.draw()
-            button3_draw.draw()
-            return_list.append(button3_draw.return_text)
+            # 仅在玩家合计精液大于2ml时显示衣柜射精选项
+            if handle_premise.handle_pl_semen_g_2(0):
+                button3_text = _("[004]用衣服冲，射在上面")
+                button3_draw = draw.LeftButton(
+                    _(button3_text),
+                    _("4"),
+                    window_width,
+                    cmd_func=self.shoot_in_cloth,
+                    args=(),
+                    )
+                line_feed.draw()
+                button3_draw.draw()
+                return_list.append(button3_draw.return_text)
 
             # return_list.append(button0_draw.return_text)
             # button_all_draw.draw_list.append(button0_draw)
