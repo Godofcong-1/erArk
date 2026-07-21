@@ -127,7 +127,7 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
             return 1
         # 群交时
         if handle_premise.handle_group_sex_mode_on(character_id):
-            # 仅自慰类型和部位类型由群交AI判断处理
+            # 仅自慰类型和补位类型由群交AI判断处理
             if(
                 handle_premise.handle_npc_ai_type_1_in_group_sex(character_id) or handle_premise.handle_npc_ai_type_2_in_group_sex(character_id)
             ):
