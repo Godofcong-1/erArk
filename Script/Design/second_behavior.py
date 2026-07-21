@@ -13,6 +13,16 @@ width = normal_config.config_normal.text_width
 _: FunctionType = get_text._
 """ 翻译api """
 
+ORGASM_PART_ORDER = ("s", "b", "c", "v", "a", "u", "w", "m", "f", "h")
+""" NPC部位绝顶的显示排序，与orgasm_settle的部位遍历顺序保持一致 """
+ORGASM_PART_NAME = {"s": "皮肤", "b": "胸部", "c": "阴蒂", "v": "阴道", "a": "肛肠", "u": "尿道", "w": "子宫", "m": "口喉", "f": "兽部", "h": "心理"}
+""" NPC部位绝顶显示名 """
+ORGASM_DEGREE_RANK = {"small": 0, "normal": 1, "strong": 2, "super": 3}
+""" NPC部位绝顶二段行为名后缀到强度顺序的映射 """
+ORGASM_DEGREE_TEXT = {0: "小绝顶", 1: "绝顶", 2: "强绝顶", 3: "超强绝顶"}
+""" NPC部位绝顶强度顺序到汇总显示名的映射 """
+
+
 def character_get_second_behavior(character_id: int, second_behavior_id: str, reset: bool = False):
     """
     角色获得二段行为
@@ -106,6 +116,112 @@ def check_second_effect(
         second_behavior_effect(character_id, change_data, mark_list)
 
 
+def _parse_part_orgasm_behavior(second_behavior_id: str) -> tuple | None:
+    """
+    解析NPC部位绝顶二段行为
+    Keyword arguments:
+    second_behavior_id -- 二段行为id
+    Return arguments:
+    tuple | None -- 部位前缀与强度顺序，非部位绝顶时返回None
+    """
+    if "_orgasm_" not in second_behavior_id:
+        return None
+    part_prefix, degree_name = second_behavior_id.split("_orgasm_", 1)
+    if part_prefix not in ORGASM_PART_ORDER or degree_name not in ORGASM_DEGREE_RANK:
+        return None
+    return part_prefix, ORGASM_DEGREE_RANK[degree_name]
+
+
+def _draw_orgasm_info_text(text: str):
+    """
+    绘制高潮批次的黄色提示文本
+    Keyword arguments:
+    text -- 提示正文
+    Return arguments:
+    None
+    """
+    info_draw = draw.WaitDraw()
+    info_draw.style = "gold_enrod"
+    info_draw.width = width
+    info_draw.text = text
+    info_draw.draw()
+
+
+def _draw_orgasm_batch(character_id: int, active_behavior_ids: list) -> set:
+    """
+    绘制一次NPC高潮批的代表口上、汇总与合并寸止
+    Keyword arguments:
+    character_id -- 角色id
+    active_behavior_ids -- 本次将要结算的非零二段行为id列表
+    Return arguments:
+    set -- 已由批次绘制接管的二段行为id集合
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 收藏模式下不在收藏名单内的角色不显示口上，交回原循环由其内部检查静默处理
+    if cache.is_collection and character_id:
+        player_data: game_type.Character = cache.character_data[0]
+        if character_id not in player_data.collection_character:
+            return set()
+    handled_behavior_ids = set()
+
+    # 多重绝顶先于各部位代表显示
+    for behavior_id in active_behavior_ids:
+        if behavior_id.startswith("plural_orgasm_"):
+            talk.handle_second_talk(character_id, behavior_id)
+            handled_behavior_ids.add(behavior_id)
+
+    # 同一部位只保留最高等级参与显示
+    highest_rank_by_part = {}
+    for behavior_id in active_behavior_ids:
+        parse_data = _parse_part_orgasm_behavior(behavior_id)
+        if parse_data is None:
+            continue
+        part_prefix, degree_rank = parse_data
+        handled_behavior_ids.add(behavior_id)
+        old_data = highest_rank_by_part.get(part_prefix)
+        if old_data is None or degree_rank > old_data[1]:
+            highest_rank_by_part[part_prefix] = (behavior_id, degree_rank)
+
+    # 按强度从高到低排序，同强度随机打破平局
+    ordered_part_data = []
+    grouped_part_data = {}
+    for part_prefix, (behavior_id, degree_rank) in highest_rank_by_part.items():
+        grouped_part_data.setdefault(degree_rank, []).append((part_prefix, behavior_id))
+    for degree_rank in sorted(grouped_part_data, reverse=True):
+        same_rank_data = grouped_part_data[degree_rank]
+        if len(same_rank_data) > 1:
+            random.shuffle(same_rank_data)
+        ordered_part_data.extend((part_prefix, behavior_id, degree_rank) for part_prefix, behavior_id in same_rank_data)
+
+    # 前三个部位显示完整代表口上
+    for part_prefix, behavior_id, degree_rank in ordered_part_data[:3]:
+        talk.handle_second_talk(character_id, behavior_id)
+
+    # 未入前三的部位按强度分组汇总成一行
+    summary_groups = {}
+    for part_prefix, behavior_id, degree_rank in ordered_part_data[3:]:
+        summary_groups.setdefault(degree_rank, []).append(_(ORGASM_PART_NAME[part_prefix]))
+    if summary_groups:
+        summary_text_list = []
+        for degree_rank in sorted(summary_groups, reverse=True):
+            summary_text_list.append("{0}{1}".format("、".join(summary_groups[degree_rank]), _(ORGASM_DEGREE_TEXT[degree_rank])))
+        _draw_orgasm_info_text(_("\n{0}{1}\n\n").format(character_data.name, "，".join(summary_text_list)))
+
+    # 多部位寸止合并标题，并只从有正文的部位中随机选择一个代表正文
+    edge_behavior_ids = [behavior_id for behavior_id in active_behavior_ids if behavior_id.endswith("_orgasm_edge")]
+    if len(edge_behavior_ids) > 1:
+        handled_behavior_ids.update(edge_behavior_ids)
+        edge_behavior_by_part = {behavior_id.split("_orgasm_edge", 1)[0]: behavior_id for behavior_id in edge_behavior_ids}
+        ordered_edge_ids = [edge_behavior_by_part[part_prefix] for part_prefix in ORGASM_PART_ORDER if part_prefix in edge_behavior_by_part]
+        part_names = "、".join(_(ORGASM_PART_NAME[behavior_id.split("_orgasm_edge", 1)[0]]) for behavior_id in ordered_edge_ids)
+        _draw_orgasm_info_text(_("\n{0}{1}{2}\n\n").format(character_data.name, part_names, _("绝顶寸止")))
+        available_edge_ids = [behavior_id for behavior_id in ordered_edge_ids if talk.handle_talk_sub(character_id, behavior_id, {})[0]]
+        if available_edge_ids:
+            talk.handle_second_talk(character_id, random.choice(available_edge_ids), draw_title=False)
+
+    return handled_behavior_ids
+
+
 def second_behavior_effect(
         character_id: int,
         change_data: game_type.CharacterStatusChange,
@@ -137,13 +253,24 @@ def second_behavior_effect(
     if not any(character_data.second_behavior.values()):
         return
 
+    # 对NPC，先把本次将要结算的高潮批合并显示；各行为的结算效果仍由下方循环逐项执行
+    handled_talk_behavior_ids = set()
+    if character_id != 0:
+        pending_behavior_ids = [
+            behavior_id
+            for behavior_id, behavior_value in character_data.second_behavior.items()
+            if behavior_value and (not second_behavior_list or behavior_id in second_behavior_list)
+        ]
+        handled_talk_behavior_ids = _draw_orgasm_batch(character_id, pending_behavior_ids)
+
     # 遍历二段行为id，进行结算
     for second_behavior_id, behavior_data in character_data.second_behavior.items():
         if behavior_data != 0:
             if second_behavior_list and second_behavior_id not in second_behavior_list:
                 continue
-            # 触发二段行为的口上
-            talk.handle_second_talk(character_id, second_behavior_id)
+            # 口上未被高潮批接管的行为在此逐项显示
+            if second_behavior_id not in handled_talk_behavior_ids:
+                talk.handle_second_talk(character_id, second_behavior_id)
             # 如果没找到对应的结算效果，则直接跳过
             if second_behavior_id not in game_config.config_behavior_effect_data:
                 print(f"debug second_behavior_id = {second_behavior_id}没有找到对应的结算效果")
