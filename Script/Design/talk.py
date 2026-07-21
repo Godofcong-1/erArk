@@ -654,22 +654,26 @@ def talk_common_judge(now_talk: str, character_id: int) -> str:
             # 该角色非玩家，非玩家交互对象，与玩家在同一地点，则将玩家的交互对象设置为该角色
             if character_id != 0 and pl_character_data.target_character_id != character_id and handle_premise.handle_in_player_scene(character_id):
                 pl_character_data.target_character_id = character_id
+                # 交互对象已变更，前提均是针对交互对象求值的，缓存结论全部失效，需清空以免跨角色误用
+                calculated_premise_dict = {}
             # 如果该key存在于部位列表中
             if key in game_config.config_talk_common_cid_list_by_part:
                 # 获取对应的部位字典
                 part_dict = game_config.config_talk_common_cid_list_by_part[key]
                 # 如果是部位的短词，则把通用A也加到A键里
-                if "_s" in key and "penis" not in key and "hair" not in key:
+                # 此处必须用endswith而非in，否则a_orgasm_small等含"_s"子串的高潮类key会被误判为部位短词
+                if key.endswith("_s") and "penis" not in key and "hair" not in key:
                     common_s_A_list = game_config.config_talk_common_cid_list_by_part["common_s"]["A"]
                     if "A" in part_dict:
                         part_dict = {**part_dict, "A": part_dict["A"].copy()}
                         part_dict["A"] += common_s_A_list
                 # 定义替换函数：每次匹配都随机挑选每个部位一条文本进行拼接
-                def _part_replacer(match):
+                def _part_replacer(match, part_dict=part_dict):
                     """
                     部位占位符替换函数，每次匹配都随机挑选每个部位一条文本进行拼接
                     参数:
                         match: 正则匹配对象（未使用）
+                        part_dict (dict): 部位字典，以默认参数固化当前循环的取值，避免闭包晚绑定
                     返回:
                         str: 替换后的文本
                     """
@@ -726,7 +730,15 @@ def talk_common_judge(now_talk: str, character_id: int) -> str:
                 # 如果有可替换的候选文本
                 if now_talk_data:
                     # 定义替换函数：每次匹配都随机挑选一条文本
-                    def _replacer(match):
+                    def _replacer(match, now_talk_data=now_talk_data):
+                        """
+                        非部位占位符替换函数，每次匹配都随机挑选一条文本
+                        参数:
+                            match: 正则匹配对象（未使用）
+                            now_talk_data (dict): 权重->cid列表，以默认参数固化当前循环的取值，避免闭包晚绑定
+                        返回:
+                            str: 替换后的文本
+                        """
                         w = value_handle.get_rand_value_for_value_region(list(now_talk_data.keys()))
                         cid = random.choice(now_talk_data[w])
                         return game_config.config_talk_common_data[cid].context
