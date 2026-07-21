@@ -172,3 +172,4 @@ str,str,int,str,str
 1501,has_been_primary_hypnosis,0,high_1,\n{Name}获得了[已催眠·浅]，在催眠状态下，{Name}不会抵抗性骚扰等级的行为了
 1502,has_been_deep_hypnosis,0,high_1,\n{Name}获得了[已催眠·深]，在催眠状态下，{Name}不会抵抗性任何性行为了
 1503,has_been_complete_hypnosis,0,high_1,\n{Name}获得了[已催眠·极]，可以对{Name}进行最深度的体控催眠或者心控催眠了
+1504,p_no_semen_climax,0,high_1,{Name}的阴茎剧烈地颤抖着，达到了高潮，然而精囊早已空空如也，再也射不出一滴精液，只有一阵阵空虚的痉挛传遍全身
