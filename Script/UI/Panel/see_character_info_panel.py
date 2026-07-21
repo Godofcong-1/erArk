@@ -379,8 +379,9 @@ class SeeCharacterStatusPanel:
         next_level_value = game_config.config_character_state_level[status_level].max_value
         now_text = f"{status_text}lv{status_level}"
         
-        # 寸止次数着色：该部位累积的绝顶寸止次数越多，部位名颜色越深(亮粉→深粉→红→紫 对应 1/2/3/4+次)
-        edge_count = character_data.h_state.orgasm_edge_count.get(status_id, 0)
+        # 高潮积累着色：该部位待结算的绝顶次数越多，部位名颜色越深(亮粉→深粉→红→紫 对应 1/2/3/4+次)
+        # 寸止(orgasm_edge_count)与时停(time_stop_orgasm_count)本质是同一种"快感越过阈值但未结算"的积累，一并计入
+        edge_count = character_data.h_state.orgasm_edge_count.get(status_id, 0) + character_data.h_state.time_stop_orgasm_count.get(status_id, 0)
         edge_style = ""
         part_tooltip = game_config.config_character_state[status_id].info
         if edge_count >= 4:
@@ -392,7 +393,7 @@ class SeeCharacterStatusPanel:
         elif edge_count == 1:
             edge_style = "hot_pink"
         if edge_count >= 1:
-            part_tooltip += _("绝顶寸止{0}次").format(edge_count)
+            part_tooltip += _("(绝顶寸止{0}次)").format(edge_count)
 
         # 绘制状态条
         bar_draw = draw.InfoBarDraw()
