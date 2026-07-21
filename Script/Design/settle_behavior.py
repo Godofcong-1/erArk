@@ -396,11 +396,15 @@ def handle_instruct_data(
     now_character_data: game_type.Character = cache.character_data[character_id]
     # 进行一段结算
     if behavior_id in game_config.config_behavior_effect_data:
+        # 玩家移动时，其口上（自身移动叙述与到场NPC招呼）在挪位effect之后绘制，使场景token指向目的地
+        defer_player_move_talk = character_id == 0 and behavior_id == constant.Behavior.MOVE
         # 先结算口上，并判断是否需要跳过，跳过来源于事件的特殊结算
         if now_character_data.event.skip_instruct_talk == False:
-            talk.handle_talk(character_id)
+            if not defer_player_move_talk:
+                talk.handle_talk(character_id)
         else:
             now_character_data.event.skip_instruct_talk = False
+            defer_player_move_talk = False
         for effect_id in game_config.config_behavior_effect_data[behavior_id]:
             # 综合数值结算判定
             # 如果effect_id是str类型，则说明是综合数值结算
@@ -412,6 +416,9 @@ def handle_instruct_data(
                     print(f"error 不存在的结算 = {effect_id}")
                     continue
                 constant.settle_behavior_effect_data[effect_id](character_id, add_time, change_data, now_time)
+        # 玩家移动的口上在此绘制：挪位effect已将玩家移到目的地，场景token（{SceneName}等）解析为目的地场景
+        if defer_player_move_talk:
+            talk.handle_talk(character_id)
         # 如果是对他人的行为，则将自己的id与行动结束时间记录到对方的数据中
         if now_character_data.target_character_id != character_id:
             end_time = game_time.get_sub_date(minute=now_character_data.behavior.duration, old_date=now_character_data.behavior.start_time)

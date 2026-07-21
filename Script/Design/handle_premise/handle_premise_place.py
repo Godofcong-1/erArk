@@ -283,7 +283,10 @@ def handle_move_to_same_target_with_pl(character_id: int) -> int:
     pl_character_data: game_type.Character = cache.character_data[0]
     now_character_data: game_type.Character = cache.character_data[character_id]
     if (
-            now_character_data.behavior.move_final_target == pl_character_data.behavior.move_final_target
+            (
+                len(now_character_data.behavior.move_final_target)
+                and now_character_data.behavior.move_final_target == pl_character_data.behavior.move_final_target
+            )
             or now_character_data.behavior.move_target == pl_character_data.behavior.move_target
     ):
         return 1
