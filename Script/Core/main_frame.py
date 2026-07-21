@@ -364,6 +364,25 @@ inputbox = Entry(
     width=normal_config.config_normal.inputbox_width,
 )
 inputbox.grid(column=1, row=0, sticky=(N, E, S))
+
+
+def _return_focus_to_inputbox(event=None):
+    """
+    将键盘焦点交还给底部输入框。
+    输入：event —— Tk 事件对象，可为 None；返回值：None。
+    """
+    inputbox.focus_set()
+
+
+# 输出显示区（textbox）是纯展示控件，绝不应持有键盘焦点。
+# 一旦它拿到焦点，Tk Text 的类绑定会让“拖选文本后按回车/任意键”把选区内容当作输入
+# 直接删除，破坏界面布局，甚至在需要文本输入的场景（如输入购买数量再回车）删掉提示后
+# 卡住无法推进（issue #247）。此处令 textbox 永不持有键盘焦点：任何使其获得焦点的操作
+# （点击、Tab）都立即把焦点交还输入框，从根源杜绝在显示区用键盘编辑/删除文本。
+# 鼠标滚轮滚动、拖选、复制均不依赖键盘焦点，故都不受影响；真正的文本输入走独立的 inputbox。
+textbox.configure(takefocus=0)
+textbox.bind("<FocusIn>", _return_focus_to_inputbox)
+
 normal_font = font.Font(family=order_font_data.font, size=normal_config.config_normal.font_size)
 
 
