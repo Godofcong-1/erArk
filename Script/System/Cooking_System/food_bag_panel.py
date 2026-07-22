@@ -351,14 +351,19 @@ class FoodGroupDraw:
         from Script.System.Cooking_System import cooking
         from Script.UI.Panel import achievement_panel
         from Script.Design import update
+        from Script.System.Sex_System import drunk_sex_common
         character_data: game_type.Character = cache.character_data[0]
         now_food: game_type.Food = character_data.food_bag[uid]
         character_data.behavior.target_food = now_food
         character_data.behavior.duration = 5
         character_data.behavior.behavior_id = constant.Behavior.EAT
         character_data.state = constant.CharacterStatus.STATUS_EAT
+        # 酒类判定，位于特殊调味判定之前，判定失败则变为拒绝饮酒
+        if not drunk_sex_common.judge_accept_alcohol_food(character_data.target_character_id, now_food):
+            character_data.behavior.behavior_id = constant.Behavior.REFUSE_DRINK
+            character_data.state = constant.CharacterStatus.STATUS_REFUSE_DRINK
         # 特殊调味的食物则需要进行食用判定，失败则变为拒绝食用
-        if now_food.special_seasoning != 0:
+        elif now_food.special_seasoning != 0:
             if not cooking.judge_accept_special_seasoning_food(character_data.target_character_id):
                 # 味道调味则仅生气
                 if now_food.special_seasoning in [1, 2, 3, 4]:

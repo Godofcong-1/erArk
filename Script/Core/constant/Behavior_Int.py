@@ -53,7 +53,9 @@ class Behavior_Int:
     """ 进食 """
     REFUSE_EAT = 136
     """ 拒绝进食 """
-    BUY_FOOD = 137
+    REFUSE_DRINK = 137
+    """ 拒绝饮酒 """
+    BUY_FOOD = 138
     """ 购买食物 """
     PEE = 140
     """ 解手 """

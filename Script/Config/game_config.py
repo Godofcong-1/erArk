@@ -333,6 +333,10 @@ config_event_effect_target_data: Dict[int, Set] = {}
 """ 能达成效果的目标集合 """
 config_sleep_level: Dict[int, config_def.Sleep_Level] = {}
 """ 睡眠等级数据 """
+config_drunk_level: Dict[int, config_def.Drunk_Level] = {}
+""" 醉酒等级数据 """
+config_alcohol_level: Dict[int, config_def.Alcohol_Level] = {}
+""" 酒精等级数据 """
 config_hidden_level: Dict[int, config_def.Hidden_Level] = {}
 """ 隐蔽等级数据 """
 config_favorability_level: Dict[int, config_def.Favorability_Level] = {}
@@ -1565,6 +1569,26 @@ def load_sleep_level():
         config_sleep_level[now_tem.cid] = now_tem
 
 
+def load_drunk_level():
+    """载入醉酒等级数据"""
+    now_data = config_data["Drunk_Level"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Drunk_Level()
+        now_tem.__dict__ = tem_data
+        config_drunk_level[now_tem.cid] = now_tem
+
+
+def load_alcohol_level():
+    """载入酒精等级数据"""
+    now_data = config_data["Alcohol_Level"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Alcohol_Level()
+        now_tem.__dict__ = tem_data
+        config_alcohol_level[now_tem.cid] = now_tem
+
+
 def load_hidden_level():
     """载入隐蔽等级数据"""
     now_data = config_data["Hidden_Level"]
@@ -2240,6 +2264,8 @@ def init():
     load_event()
     # load_event_target()
     load_sleep_level()
+    load_drunk_level()
+    load_alcohol_level()
     load_hidden_level()
     load_food_quality()
     load_cook_question()

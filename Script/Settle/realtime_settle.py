@@ -63,6 +63,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     character_id -- 角色id
     now_time -- 指定时间
     """
+    from Script.System.Sex_System import drunk_sex_common
     now_character_data: game_type.Character = cache.character_data[character_id]
     now_behavior_id = now_character_data.behavior.behavior_id
     if now_character_data.target_character_id not in cache.character_data:
@@ -102,6 +103,9 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     add_hunger = int(add_hunger * hit_adjust_coefficient * mana_adjust_coefficient)
     new_hunger = min(now_character_data.hunger_point + add_hunger, 240)
     now_character_data.hunger_point = new_hunger
+
+    # 结算醉酒值
+    drunk_sex_common.reduce_drunk_point(character_id, true_add_time)
 
     # 结算玩家
     if character_id == 0:

@@ -101,6 +101,17 @@ class Ai_Chat_Setting:
     """ 各个选项 """
 
 
+class Alcohol_Level:
+    """ 酒精等级 """
+
+    cid: int
+    """ 酒精等级cid """
+    name: str
+    """ 等级名 """
+    drunk_change: int
+    """ 醉酒值变化量 """
+
+
 class Aromatherapy_Recipes:
     """ 香薰疗愈配方 """
 
@@ -517,6 +528,17 @@ class Diplomatic_Policy:
     """ 其他需求 """
     info: str
     """ 政策介绍 """
+
+
+class Drunk_Level:
+    """ 醉酒等级 """
+
+    cid: int
+    """ 醉酒等级cid """
+    name: str
+    """ 等级名 """
+    drunk_point: int
+    """ 当前等级醉酒值上限 """
 
 
 class Entertainment:
@@ -1282,6 +1304,8 @@ class Recipes:
     """ 价格 """
     restaurant: int
     """ 餐馆id """
+    alcohol: int
+    """ 酒精度数 """
     introduce: str
     """ 说明介绍 """
 

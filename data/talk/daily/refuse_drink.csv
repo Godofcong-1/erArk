@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1,refuse_drink,0,high_1,{TargetName}看了看{Name}递来的{FoodName}，摇了摇头，还是拒绝了饮用
+2,refuse_drink,0,high_1,{TargetName}闻到{FoodName}里浓烈的酒气，皱起眉头把杯子推了回去，拒绝饮用
+3,refuse_drink,0,high_1,“抱歉，我现在不太想喝酒。”{TargetName}婉拒了{Name}递来的{FoodName}

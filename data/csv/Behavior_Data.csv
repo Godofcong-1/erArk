@@ -33,7 +33,8 @@ int,str,str,int,str,str
 134,make_food,做饭,-1,both,日常
 135,eat,进食,5,both,日常
 136,refuse_eat,拒绝进食,5,pl,日常
-137,buy_food,购买食物,1,pl,日常
+137,refuse_drink,拒绝饮酒,5,pl,日常
+138,buy_food,购买食物,1,pl,日常
 140,pee,解手,5,both,日常
 
 151,singing,唱歌,10,both,娱乐

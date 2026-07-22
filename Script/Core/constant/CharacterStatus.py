@@ -55,7 +55,9 @@ class CharacterStatus:
     """ 进食状态 """
     STATUS_REFUSE_EAT = 136
     """ 拒绝进食 """
-    STATUS_BUY_FOOD = 137
+    STATUS_REFUSE_DRINK = 137
+    """ 拒绝饮酒 """
+    STATUS_BUY_FOOD = 138
     """ 购买食物 """
     STATUS_PEE = 140
     """ 解手 """

@@ -61,6 +61,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     int -- 实行值\n
     float -- 实行值与目标值的比值\n
     """
+    from Script.System.Sex_System import drunk_sex_common
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[target_character_id]
 
@@ -157,6 +158,18 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     judge += judge_daughter
     if judge_daughter:
         calculation_text += _("+女儿(+") + str(judge_daughter) + ")"
+
+    # 醉酒修正
+    drunk_level, drunk_name = drunk_sex_common.get_drunk_level(target_data.cid)
+    if drunk_level:
+        if drunk_level == 1:
+            judge_drunk = 20
+        elif drunk_level == 2:
+            judge_drunk = 100
+        elif drunk_level == 3:
+            judge_drunk = 9999
+        judge += judge_drunk
+        calculation_text += _("+醉酒修正(") + str(judge_drunk) + ")"
 
     # 仅性爱指令
     if judge_data_type == "S":

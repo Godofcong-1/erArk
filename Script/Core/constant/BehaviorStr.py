@@ -53,6 +53,8 @@ class BehaviorStr:
     """ 进食 """
     REFUSE_EAT = "refuse_eat"
     """ 拒绝进食 """
+    REFUSE_DRINK = "refuse_drink"
+    """ 拒绝饮酒 """
     BUY_FOOD = "buy_food"
     """ 购买食物 """
     PEE = "pee"
