@@ -503,8 +503,11 @@ def orgasm_settle(
             part_count += 1
             # 加入高潮部位记录
             tem_orgasm_set.add(orgasm)
+            # 解放状态（含寸止解放与时停解放）下每部位只结算一次绝顶：累计≥3次由下方超强/强分支结算并跳过掷骰循环，1-2次掷骰一次；其余状态按累计次数逐次掷骰
+            release_flag = handle_premise.handle_self_orgasm_edge_relase_or_time_stop_orgasm_relase(character_id)
+            roll_count = (0 if climax_count >= 3 else 1) if release_flag else climax_count
             # 开始根据概率计算
-            for i in range(climax_count):
+            for i in range(roll_count):
                 # 判断高潮程度
                 now_degree = judge_orgasm_degree(now_data)
                 # 强绝顶需要该部位敏感度至少为3级
@@ -519,7 +522,7 @@ def orgasm_settle(
                 second_behavior_id = f"{part_dict[orgasm]}_orgasm_{degree_dict[now_degree]}"
                 character_get_second_behavior(character_id, second_behavior_id)
             # 绝顶解放状态下（含寸止解放与时停解放），如果次数大于等于3，则触发超强绝顶
-            if handle_premise.handle_self_orgasm_edge_relase_or_time_stop_orgasm_relase(character_id) and climax_count >= 3:
+            if release_flag and climax_count >= 3:
                 # 超强绝顶需要该部位敏感度至少为6级，否则变为强绝顶
                 now_degree = 3
                 if orgasm <= 7:

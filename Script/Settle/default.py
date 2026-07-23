@@ -6650,6 +6650,30 @@ def handle_dirty_reset_in_shower(
         character_data.dirty.body_semen[body_cid] = keep_data[body_cid]
 
 
+def release_orgasm_edge_now(character_id: int, change_data) -> None:
+    """
+    将该角色累计的寸止计数解放为绝顶，清零寸止计数后，在当前H阶段内立即结算本次新增绝顶的口上与数值
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象（自身结算传根对象，交互对象或群交成员传其TargetChange）
+    """
+    from Script.Design import second_behavior
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 未处于寸止累计时无需解放
+    if character_data.h_state.orgasm_edge == 0:
+        return
+    # 变为寸止解放状态
+    character_data.h_state.orgasm_edge = 2
+    # 将寸止计数转化为绝顶
+    second_behavior.orgasm_settle(character_id, change_data, un_count_orgasm_dict=character_data.h_state.orgasm_edge_count)
+    # 清零寸止计数
+    for state_id in game_config.config_character_state:
+        if game_config.config_character_state[state_id].type == 0:
+            character_data.h_state.orgasm_edge_count[state_id] = 0
+    # 立即结算刚解放绝顶的口上与数值，使其落在退出重置与退出奖励之前
+    second_behavior.second_behavior_effect(character_id, change_data)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ORGASM_EDGE_RELEASE)
 def handle_orgasm_edge_release(
         character_id: int,
@@ -6658,7 +6682,7 @@ def handle_orgasm_edge_release(
         now_time: datetime.datetime,
 ):
     """
-    （绝顶解放）交互对象变为寸止解放状态，将寸止计数转化为绝顶
+    （绝顶解放）交互对象变为寸止解放状态，将寸止计数转化为绝顶并立即结算
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -6667,25 +6691,14 @@ def handle_orgasm_edge_release(
     """
     if not add_time:
         return
-    from Script.Design import second_behavior
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_id = character_data.target_character_id
     # 如果没有交互对象
-    if character_data.target_character_id == character_id:
+    if target_id == character_id:
         return
-    # 如果对方没有在寸止
-    if target_data.h_state.orgasm_edge == 0:
-        return
-    change_data.target_change.setdefault(character_data.target_character_id, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[character_data.target_character_id]
-    # 变为寸止解放状态
-    target_data.h_state.orgasm_edge = 2
-    # 将寸止计数转化为绝顶
-    second_behavior.orgasm_settle(character_data.target_character_id, target_change, un_count_orgasm_dict = target_data.h_state.orgasm_edge_count)
-    # 清零寸止计数
-    for state_id in game_config.config_character_state:
-        if game_config.config_character_state[state_id].type == 0:
-            target_data.h_state.orgasm_edge_count[state_id] = 0
+    # 仅在交互对象确有寸止累计时才建立其TargetChange并解放，避免空条目影响显示判定
+    if cache.character_data[target_id].h_state.orgasm_edge != 0:
+        release_orgasm_edge_now(target_id, change_data.target_change.setdefault(target_id, game_type.TargetChange()))
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TIME_STOP_ORGASM_RELEASE)
@@ -6741,6 +6754,8 @@ def handle_end_h_add_hpmp_max(
     if not add_time:
         return
     from Script.Design import handle_ability
+    # 计奖前先释放行为者憋住的累计寸止绝顶，使其计入下方奖励统计（无累计时空转）
+    release_orgasm_edge_now(character_id, change_data)
     character_data: game_type.Character = cache.character_data[character_id]
     id_list = [character_id]
     if character_data.target_character_id != character_id:
@@ -6810,6 +6825,10 @@ def handle_group_sex_end_h_add_hpmp_max(
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 退出奖励前，先为在场有寸止累计的参与者解放并结算各自绝顶，使其计入退出奖励；无累计者不建立空TargetChange条目
+    for chara_id in scene_data.character_list:
+        if cache.character_data[chara_id].h_state.orgasm_edge != 0:
+            release_orgasm_edge_now(chara_id, change_data.target_change.setdefault(chara_id, game_type.TargetChange()))
     for chara_id in scene_data.character_list:
         now_character_data: game_type.Character = cache.character_data[chara_id]
         orgasm_count = 0
