@@ -614,6 +614,8 @@ class ACTION_INFO:
         """ 角色睡醒后第一发精液，True为未射精，False为已射精 """
         self.find_another_toilet: List = []
         """ 角色是否需要找一个非当前区块的厕所，需要的话则记录在这里 """
+        self.carry_chara_id: int = 0
+        """ 正在搬运的角色id """
 
 
 class AUTHOR_FLAG:
@@ -914,6 +916,8 @@ class ACHIEVEMENT:
         """ 露出记录，1为露出模式，2为在场其他干员人数，3为射精次数，4为露出干员绝顶次数 """
         self.sleep_sex_record: Dict[int, int] = {}
         """ 睡奸记录，1为睡奸模式0正常1装睡，2为射精次数，3为被睡奸干员绝顶次数 """
+        self.drunk_sex_record: Dict[int, int] = {}
+        """ 醉奸记录，1为醉奸模式0正常1装醉，2为射精次数，3为被醉奸干员绝顶次数 """
         self.h_with_daughter_count: int = 0
         """ 与女儿乱伦H的次数 """
 
@@ -939,7 +943,7 @@ class PLAYER_ABILITY:
         self.air_hypnosis_position: str = ""
         """ 空气催眠地点 """
         self.carry_chara_id_in_time_stop: int = 0
-        """ 时停中正在搬运的角色id """
+        """ 时停中正在搬运的角色id，已废弃，由 action_info.carry_chara_id 代替 """
         self.free_in_time_stop_chara_id: int = 0
         """ 时停中允许自由活动的角色id """
 

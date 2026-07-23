@@ -29,6 +29,7 @@ ai的目标,,,,
 29,44,self_sleep_pills|action_not_sleep,0,自己已服用安眠药，且没有在睡觉，则睡觉
 30,95,ask_masturbation_before_sleep|sleep_flag_1|in_dor|masturebate_bofore_sleep_flag_0,12,自己被要求每天晚上睡前都要自慰，要睡觉状态下，且已在宿舍，自身没有要睡前自慰状态，则进入要睡前自慰状态
 31,92,sleep_flag_1|in_dor|masturebate_bofore_sleep_flag_1,12,要睡觉状态下，且已在宿舍，自身要睡前自慰状态，则自慰
+32,44,handle_drunk_level_3,0,醉酒值到烂醉，则当场直接爆睡
 
 41,75,normal_1267|hunger_ge_80|eat_time|assistant_send_food_of_ai_disable|assistant_salutation_of_ai_disable,11,1267正常（可能AI跟随、服装异常或意识模糊），饥饿值到80%，且在饭点，且不满足助理送饭，且不满足助理问候，则进入要取餐状态
 42,522,eat_food_flag_1|not_in_ai_food_shop,12,要取餐状态下，且不在AI要去吃饭的食物商店里，则去食物商店

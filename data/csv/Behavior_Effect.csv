@@ -456,8 +456,8 @@ int,str,str
 932,hypnosis_pain_as_pleasure,1511 - 1512 - 1230
 941,time_stop_on,1241
 942,time_stop_off,1244 - 1246 - 536 - 1242 - 527
-943,carry_target,1243
-944,stop_carry_target,1244
+943,carry_target,1723
+944,stop_carry_target,1724
 945,target_free_in_time_stop,1245
 946,target_stop_in_time_stop,1246
 

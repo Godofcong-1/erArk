@@ -977,6 +977,10 @@ class BehaviorEffect:
     """ 行动 自己前往自己的宿舍 """
     STOP_ENDURANCE_SHOOT = 1722
     """ 行动 射出忍耐的射精次数 """
+    TARGET_BE_CARRIED = 1723
+    """ 行动 将交互对象设为当前搬运对象 """
+    TARGET_NOT_BE_CARRIED = 1724
+    """ 行动 清零自己的当前搬运对象 """
 
     FACILITY_DAMAGE_CHECK = 1751
     """ 设施 几率判定自己所在地点是否造成损坏 """

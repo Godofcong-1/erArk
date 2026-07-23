@@ -501,6 +501,8 @@ cid,effect_name,effect_type,effect
 1712,CLEAR_TARGET_TOILET_PATH,行动,清空自己记录的目标厕所位置路径
 1721,MOVE_TO_OWN_DORMITORY,行动,自己前往自己的宿舍
 1722,STOP_ENDURANCE_SHOOT,行动,射出忍耐的射精次数
+1723,TARGET_BE_CARRIED,行动,将交互对象设为当前搬运对象
+1724,TARGET_NOT_BE_CARRIED,行动,清零自己的当前搬运对象
 
 1751,FACILITY_DAMAGE_CHECK,设施,几率判定自己所在地点是否造成损坏
 

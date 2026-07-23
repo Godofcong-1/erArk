@@ -167,9 +167,35 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         elif drunk_level == 2:
             judge_drunk = 100
         elif drunk_level == 3:
-            judge_drunk = 9999
+            judge_drunk = 500
         judge += judge_drunk
         calculation_text += _("+醉酒修正(") + str(judge_drunk) + ")"
+    # 饮酒修正
+    if _("饮酒") in instruct_name:
+        # 工作时间内饮酒修正
+        if handle_premise.handle_have_work(target_data.cid) and handle_premise.handle_to_work_time_or_work_time(target_data.cid):
+            judge -= 50
+            calculation_text += _("+工作时间饮酒(-50)")
+        # 未成年饮酒
+        if handle_premise.handle_self_underage(target_data.cid):
+            judge -= 100
+            calculation_text += _("+未成年饮酒(-100)")
+        # 酒量好饮酒
+        if handle_premise.handle_self_have_good_alcohol_tolerance(target_data.cid):
+            judge += 30
+            calculation_text += _("+酒量好(+30)")
+        # 酒量差饮酒
+        if handle_premise.handle_self_have_bad_alcohol_tolerance(target_data.cid):
+            judge -= 30
+            calculation_text += _("+酒量差(-30)")
+        # 千杯不醉饮酒
+        if handle_premise.handle_self_have_never_drunk(target_data.cid):
+            judge += 100
+            calculation_text += _("+千杯不醉(+100)")
+        # 一杯就倒饮酒
+        if handle_premise.handle_self_have_easily_drunk(target_data.cid):
+            judge -= 100
+            calculation_text += _("+一杯就倒(-100)")
 
     # 仅性爱指令
     if judge_data_type == "S":

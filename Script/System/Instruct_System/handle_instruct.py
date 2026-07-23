@@ -1302,8 +1302,11 @@ def handle_imprisonment_h():
     handle_do_h()
 
 @add_instruct(constant.Instruct.UNCONSCIOUS_H)
-def handle_unconscious_h():
-    """处理无意识奸指令"""
+def handle_unconscious_h(type_name:str = ""):
+    """
+    处理无意识奸指令
+    type_name: str = ""  # 用于区分无意识奸类型
+    """
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
     now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
@@ -1312,18 +1315,48 @@ def handle_unconscious_h():
         door_return = now_draw.draw()
         if door_return == -1:
             return
-    target_data.sp_flag.is_follow = 0
     target_data.action_info.last_unconscious_h_time = cache.game_time
+    target_data.sp_flag.is_follow = 0
     handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 3)
     now_draw = draw.WaitDraw()
     now_draw.width = width
-    now_draw.text = _("\n进入无意识奸模式\n")
+    if type_name == "sleep":
+        now_draw.text = _("\n进入睡奸模式\n")
+    elif type_name == "drunk":
+        now_draw.text = _("\n进入醉奸模式\n")
+    elif type_name == "time_stop":
+        now_draw.text = _("\n进入时停奸模式\n")
+    elif type_name == "hypnosis":
+        now_draw.text = _("\n进入催眠奸模式\n")
+    else:
+        now_draw.text = _("\n进入无意识奸模式\n")
     now_draw.draw()
     # 成就初始化
     if handle_premise.handle_unconscious_flag_1(character_data.target_character_id):
         cache.achievement.sleep_sex_record = {1: 0, 2: 0, 3: 0}
+    if handle_premise.handle_unconscious_flag_2(character_data.target_character_id):
+        cache.achievement.drunk_sex_record = {1: 0, 2: 0, 3: 0}
     chara_handle_instruct_common_settle(constant.Behavior.H)
 
+@add_instruct(constant.Instruct.SLEEP_H)
+def handle_sleep_h():
+    """处理睡奸指令"""
+    handle_unconscious_h("sleep")
+
+@add_instruct(constant.Instruct.DRUNK_H)
+def handle_drunk_h():
+    """处理醉奸指令"""
+    handle_unconscious_h("drunk")
+
+@add_instruct(constant.Instruct.TIME_STOP_H)
+def handle_time_stop_h():
+    """处理时停奸指令"""
+    handle_unconscious_h("time_stop")
+
+@add_instruct(constant.Instruct.HYPNOSIS_H)
+def handle_hypnosis_h():
+    """处理催眠奸指令"""
+    handle_unconscious_h("hypnosis")
 
 @add_instruct(constant.Instruct.ASK_HIDDEN_SEX)
 def handle_ask_hidden_sex():

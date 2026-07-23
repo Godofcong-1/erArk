@@ -1,7 +1,7 @@
 from types import FunctionType
-from Script.Core import cache_control, game_type, get_text, constant
+from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config
-from Script.Design import instuct_judege
+from Script.Design import instuct_judege, handle_premise
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -21,14 +21,17 @@ def get_drunk_level(character_id: int):
     character_data = cache.character_data[character_id]
     value = character_data.drunk_point
     # 如果角色千杯不醉，则醉酒值*0.1
-    if character_data.talent[355]:
+    if handle_premise.handle_self_have_never_drunk(character_id):
         value *= 0.1
-    # 如果角色酒量差，则醉酒值*1.5
-    elif character_data.talent[353]:
-        value *= 1.5
     # 如果角色酒量好，则醉酒值*0.8
-    elif character_data.talent[354]:
+    elif handle_premise.handle_self_have_good_alcohol_tolerance(character_id):
         value *= 0.8
+    # 如果角色酒量差，则醉酒值*1.5
+    elif handle_premise.handle_self_have_bad_alcohol_tolerance(character_id):
+        value *= 1.5
+    # 如果角色一杯就倒，则醉酒值*5
+    elif handle_premise.handle_self_have_easily_drunk(character_id):
+        value *= 5
     # 遍历醉酒等级配置，找到第一个醉酒值上限大于等于当前值的等级
     for now_cid in game_config.config_drunk_level:
         now_data = game_config.config_drunk_level[now_cid]
@@ -74,6 +77,8 @@ def add_drunk_point(character_id: int, food: game_type.Food):
     add_value = get_food_drunk_value(food)
     # 增加角色的醉酒值，并确保不超过100
     character_data.drunk_point = min(100, character_data.drunk_point + add_value)
+    handle_premise.settle_chara_unnormal_flag(character_id, 5)
+    handle_premise.settle_chara_unnormal_flag(character_id, 6)
 
 
 def reduce_drunk_point(character_id: int, time: int):
@@ -97,24 +102,26 @@ def reduce_drunk_point(character_id: int, time: int):
         base_reduce = 1
     else:
         base_reduce = round(time / 10)
-    # 根据当前醉酒程度获取修正系数：醉酒×0.8，烂醉×0.5，其他状态不影响
-    _cid, drunk_name = get_drunk_level(character_id)
     coefficient = 1.0
-    if drunk_name == _("醉酒"):
-        coefficient = 0.8
-    elif drunk_name == _("烂醉"):
-        coefficient = 0.5
+    # 根据当前醉酒程度获取修正系数：醉酒×0.8，烂醉×0.5，其他状态不影响
+    drunk_cid, drunk_name = get_drunk_level(character_id)
+    if drunk_cid == 2:
+        coefficient *= 0.8
+    elif drunk_cid == 3:
+        coefficient *= 0.5
     # 根据当前空腹程度获取修正系数：饥饿×1.2，饱腹×0.8，其他状态不影响
-    if character_data.hunger_point < 0.2 * 240:
+    if handle_premise.handle_hunger_ge_80(character_id):
         coefficient *= 1.2
-    elif character_data.hunger_point > 0.8 * 240:
+    elif handle_premise.handle_hunger_le_20(character_id):
         coefficient *= 0.8
     # 如果当前正在睡觉，则醉酒值减少速度加快，按1.5倍计算
-    if character_data.behavior.behavior_id == constant.Behavior.SLEEP:
+    if handle_premise.handle_action_sleep(character_id):
         coefficient *= 1.5
     # 计算最终减少值（保留浮点，最终对醉酒值取整），并确保醉酒值不低于0
     reduce_value = base_reduce * coefficient
     character_data.drunk_point = max(0, round(character_data.drunk_point - reduce_value))
+    handle_premise.settle_chara_unnormal_flag(character_id, 5)
+    handle_premise.settle_chara_unnormal_flag(character_id, 6)
 
 
 def judge_accept_alcohol_food(character_id: int, food: game_type.Food) -> bool:

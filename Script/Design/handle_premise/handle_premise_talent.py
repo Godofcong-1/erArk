@@ -229,6 +229,19 @@ def handle_t_child_or_loli_1(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     return handle_self_child_or_loli_1(character_data.target_character_id)
 
+@add_premise(constant_promise.Premise.SELF_UNDERAGE)
+def handle_self_underage(character_id: int) -> int:
+    """
+    校验自己是否未成年
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[102] == 1:
+        return 1
+    return 0
 
 @add_premise(constant_promise.Premise.SELF_CHEST_IS_CLIFF)
 def handle_self_chest_is_cliff(character_id: int) -> int:
@@ -886,3 +899,99 @@ def handle_target_have_open(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     return target_data.talent[278]
+
+@add_premise(constant_promise.Premise.SELF_HAVE_GOOD_ALCOHOL_TOLERANCE)
+def handle_self_have_good_alcohol_tolerance(character_id: int) -> int:
+    """
+    自己有酒量好
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[354]
+
+@add_premise(constant_promise.Premise.TARGET_HAVE_GOOD_ALCOHOL_TOLERANCE)
+def handle_target_have_good_alcohol_tolerance(character_id: int) -> int:
+    """
+    交互对象有酒量好
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_self_have_good_alcohol_tolerance(character_data.target_character_id)
+
+@add_premise(constant_promise.Premise.SELF_HAVE_BAD_ALCOHOL_TOLERANCE)
+def handle_self_have_bad_alcohol_tolerance(character_id: int) -> int:
+    """
+    自己有酒量差
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[353]
+
+@add_premise(constant_promise.Premise.TARGET_HAVE_BAD_ALCOHOL_TOLERANCE)
+def handle_target_have_bad_alcohol_tolerance(character_id: int) -> int:
+    """
+    交互对象有酒量差
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_self_have_bad_alcohol_tolerance(character_data.target_character_id)
+
+@add_premise(constant_promise.Premise.SELF_HAVE_NEVER_DRUNK)
+def handle_self_have_never_drunk(character_id: int) -> int:
+    """
+    自己有千杯不醉
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[355]
+
+@add_premise(constant_promise.Premise.TARGET_HAVE_NEVER_DRUNK)
+def handle_target_have_never_drunk(character_id: int) -> int:
+    """
+    交互对象有千杯不醉
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_self_have_never_drunk(character_data.target_character_id)
+
+@add_premise(constant_promise.Premise.SELF_HAVE_EASILY_DRUNK)
+def handle_self_have_easily_drunk(character_id: int) -> int:
+    """
+    自己有一杯就倒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[360]
+
+@add_premise(constant_promise.Premise.TARGET_HAVE_EASILY_DRUNK)
+def handle_target_have_easily_drunk(character_id: int) -> int:
+    """
+    交互对象有一杯就倒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_self_have_easily_drunk(character_data.target_character_id)

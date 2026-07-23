@@ -2694,6 +2694,28 @@ def handle_stop_endurance_shoot(
     second_behavior.orgasm_judge(character_id, change_data, skip_undure = True)
     second_behavior.second_behavior_effect(character_id, change_data)
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_BE_CARRIED)
+def handle_target_be_carried(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    将交互对象设为当前搬运对象
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.target_character_id == character_id:
+        return
+    character_data.action_info.carry_chara_id = character_data.target_character_id
+
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FACILITY_DAMAGE_CHECK)
 def handle_facility_damage_check(
@@ -5381,6 +5403,7 @@ def handle_unconscious_flag_to_2(
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.unconscious_h = 2
     handle_premise.settle_chara_unnormal_flag(character_id, 5)
+    handle_premise.settle_chara_unnormal_flag(character_id, 6)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_3)

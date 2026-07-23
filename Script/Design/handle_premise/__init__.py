@@ -1022,8 +1022,9 @@ def handle_normal_5(character_id: int) -> int:
     if quick_result is not None:
         return quick_result
     if(
-        (handle_sleep_level_0(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id)))
-        or handle_unconscious_flag_4(character_id)
+        (handle_sleep_level_0(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id))) or
+        handle_drunk_level_2(character_id) or
+        handle_unconscious_flag_4(character_id)
     ):
         result = 0
     else:
@@ -1036,7 +1037,7 @@ def handle_normal_5(character_id: int) -> int:
 def handle_normal_6(character_id: int) -> int:
     """
     6正常的普通状态
-    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
+    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），烂醉，时停，空气
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1046,9 +1047,10 @@ def handle_normal_6(character_id: int) -> int:
     if quick_result is not None:
         return quick_result
     if(
-         (handle_sleep_level_ge_1(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id)))
-        or handle_unconscious_flag_5(character_id)
-        or (handle_time_stop_on(character_id) or handle_unconscious_flag_3(character_id))
+         (handle_sleep_level_ge_1(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id))) or
+        handle_unconscious_flag_5(character_id) or
+        handle_drunk_level_3(character_id) or
+        (handle_time_stop_on(character_id) or handle_unconscious_flag_3(character_id))
     ):
         result = 0
     else:
