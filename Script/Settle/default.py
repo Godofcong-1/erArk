@@ -7569,11 +7569,16 @@ def handle_eat_add_just(
     """
     if not add_time:
         return
+    from Script.System.Cooking_System.food_bag_panel import calculate_food_effects
+
     # 获取角色数据
     character_data: game_type.Character = cache.character_data[character_id]
 
+    # 获取食物数据
     now_food = character_data.behavior.target_food
     food_seasoning = now_food.special_seasoning if now_food is not None else 0
+    food_quality = now_food.quality if now_food is not None else 1
+    food_maker = now_food.maker if now_food is not None else ""
     # 判断是谁要吃食物
     eat_food_chara_id_list = []
     if food_seasoning == 0:
@@ -7582,52 +7587,15 @@ def handle_eat_add_just(
             eat_food_chara_id_list.append(character_data.target_character_id)
     else:
         eat_food_chara_id_list.append(character_data.target_character_id)
-
-    # 根据食物品质获得调整系数
-    food_quality = now_food.quality if now_food is not None else 1
-    # 食谱等级大于8的按1级结算
-    if food_quality > 8:
-        food_quality = 1
-    # 品质最小为1
-    food_quality = max(food_quality, 1)
-    quality_adjust = (food_quality / 2) ** 2
-    # 高品质食物额外加系数
-    if food_quality == 8:
-        quality_adjust *= 2
-    elif food_quality >= 7:
-        quality_adjust += 1
-    # 获取食物菜谱难度等级
-    cook_difficulty = 1
-    if now_food is not None and now_food.recipe in game_config.config_recipes:
-        cook_difficulty = max(game_config.config_recipes[now_food.recipe].difficulty, 1)
-    # 时间加成
-    add_time_adjust = 1
-
-    # 检测是否是手制的食物
+    # 判断是否是玩家制作的
     pl_make_flag = False
-    if now_food is not None:
-        food_maker = now_food.maker
-        if len(food_maker):
-            # 手动制作的食物则额外加成
-            quality_adjust *= 2
-            # 检测是否是玩家制作的食物
-            pl_character_name = cache.character_data[0].name
-            if food_maker == pl_character_name:
-                pl_make_flag = True
-        # 获取食谱id
-        food_recipe_id = now_food.recipe
-        # 获取食谱数据
-        if food_recipe_id in game_config.config_recipes:
-            food_recipe_data = game_config.config_recipes[food_recipe_id]
-            # 获取食谱的制作时间
-            food_recipe_time = food_recipe_data.time
-            # 如果时间为999，则按15分钟计算
-            if food_recipe_time == 999:
-                food_recipe_time = 15
-            # 根据该时间与60分钟的比例来计算加成时间
-            add_time_adjust = food_recipe_time / 60
+    if food_maker == cache.character_data[0].name:
+        pl_make_flag = True
 
-    # 吃掉该食物
+    # 计算食物效果
+    state_add, hpmp_add = calculate_food_effects(character_id, add_time)
+
+    # 删除该食物
     handle_delete_food(character_id,add_time=add_time,change_data=change_data,now_time=now_time)
     # 对要吃食物的人进行结算
     for chara_id in eat_food_chara_id_list:
@@ -7637,28 +7605,25 @@ def handle_eat_add_just(
 
         # NPC吃的时候
         if chara_id:
-            now_add = int(add_time * quality_adjust * cook_difficulty * add_time_adjust * random.uniform(0.8, 1.2))
             # 加好感
-            base_chara_favorability_and_trust_common_settle(character_id, now_add, True, 0, 0, change_data, chara_id)
+            base_chara_favorability_and_trust_common_settle(character_id, state_add, True, 0, 0, change_data, chara_id)
             # 加好意
-            base_chara_state_common_settle(chara_id, now_add * 4, 11, 0, change_data_to_target_change = change_data)
+            base_chara_state_common_settle(chara_id, state_add * 4, 11, 0, change_data_to_target_change = change_data)
             # 玩家做的饭的情况下，额外加信赖
             if pl_make_flag:
-                base_chara_favorability_and_trust_common_settle(character_id, now_add, False, 0, 0, change_data, chara_id)
+                base_chara_favorability_and_trust_common_settle(character_id, state_add, False, 0, 0, change_data, chara_id)
             # 高品质食物
             if food_quality >= 7:
                 # 变为好心情
                 handle_mood_to_good(chara_id, add_time, change_data, now_time)
                 # 增加口喉快感
-                base_chara_state_common_settle(chara_id, now_add * 3, 21, 0, change_data_to_target_change = change_data)
+                base_chara_state_common_settle(chara_id, state_add * 3, 21, 0, change_data_to_target_change = change_data)
                 # 增加心理快感
-                base_chara_state_common_settle(chara_id, now_add * 2, 23, 0, change_data_to_target_change = change_data)
+                base_chara_state_common_settle(chara_id, state_add * 2, 23, 0, change_data_to_target_change = change_data)
 
         # 加体力气力，清零饥饿值和进食状态
-        # 为了增加更多的体力气力，将时间设为25
-        now_add = int(25 * cook_difficulty * add_time_adjust * random.uniform(0.8, 1.2))
-        handle_add_small_hit_point(chara_id,add_time=now_add,change_data=target_change,now_time=now_time)
-        handle_add_small_mana_point(chara_id,add_time=now_add,change_data=target_change,now_time=now_time)
+        handle_add_small_hit_point(chara_id,add_time=hpmp_add,change_data=target_change,now_time=now_time)
+        handle_add_small_mana_point(chara_id,add_time=hpmp_add,change_data=target_change,now_time=now_time)
         handle_hunger_point_zero(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
         handle_eat_food_flag_to_0(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
 
@@ -7670,8 +7635,10 @@ def handle_eat_add_just(
             # 获取精液量
             semen_ml = now_food.special_seasoning_amount if now_food is not None else 0
             # 加精液到口腔
+            temp_position = cache.shoot_position
             cache.shoot_position = 2    # 口腔
             ejaculation_panel.update_semen_dirty(chara_id, 2, 0, semen_ml, update_shoot_position_flag=False)
+            cache.shoot_position = temp_position
         # 药物食物则获得对应药物效果
         elif food_seasoning == 102: # 事后避孕药
             handle_target_no_pregnancy_from_last_h(0,add_time=add_time,change_data=change_data,now_time=now_time)
