@@ -1147,6 +1147,8 @@
     """ 属性_基础 醉酒等级：醉酒 """
     DRUNK_LEVEL_3 = "drunk_level_3"
     """ 属性_基础 醉酒等级：烂醉 """
+    DRUNK_LEVEL_NOT_3 = "drunk_level_not_3"
+    """ 属性_基础 醉酒等级非烂醉 """
     DRUNK_LEVEL_GE_1 = "drunk_level_ge_1"
     """ 属性_基础 醉酒等级≥1 """
     T_DRUNK_LEVEL_GE_1 = "t_drunk_level_ge_1"
@@ -3843,4 +3845,6 @@
     """ 复合 在厨房或者在等级大于等于2级的博士房间 """
     PLAYER_NOT_H_OR_HIDDEN_SEX_MODE = "player_not_h_or_hidden_sex_mode"
     """ 复合 当前玩家不在H中或在隐奸模式中 """
+    TIRED_LE_84_AND_DRUNK_LEVEL_NOT_3 = "tired_le_84_and_drunk_level_not_3"
+    """ 复合 疲劳条≤84%且醉酒等级非烂醉 """
 

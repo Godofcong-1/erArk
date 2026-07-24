@@ -572,6 +572,7 @@ drunk_level_0,DRUNK_LEVEL_0,属性_基础,醉酒等级：清醒
 drunk_level_1,DRUNK_LEVEL_1,属性_基础,醉酒等级：微醺
 drunk_level_2,DRUNK_LEVEL_2,属性_基础,醉酒等级：醉酒
 drunk_level_3,DRUNK_LEVEL_3,属性_基础,醉酒等级：烂醉
+drunk_level_not_3,DRUNK_LEVEL_NOT_3,属性_基础,醉酒等级非烂醉
 drunk_level_ge_1,DRUNK_LEVEL_GE_1,属性_基础,醉酒等级≥1
 t_drunk_level_ge_1,T_DRUNK_LEVEL_GE_1,属性_基础,交互对象醉酒等级≥1
 sanity_point_0,SANITY_POINT_0,属性_基础,理智值为0
@@ -1949,4 +1950,5 @@ t_work_is_warden_or_t_assistant,T_WORK_IS_WARDEN_OR_T_ASSISTANT,复合,交互对
 dr_have_sex_position_or_penis_in_t_anypart,DR_HAVE_SEX_POSITION_OR_PENIS_IN_T_ANYPART,复合,博士有任意体位或当前阴茎位置为交互对象_任意存在位置
 in_kitchen_or_in_dr_room_and_dr_room_level_ge_2,IN_KITCHEN_OR_IN_DR_ROOM_AND_DR_ROOM_LEVEL_GE_2,复合,在厨房或者在等级大于等于2级的博士房间
 player_not_h_or_hidden_sex_mode,PLAYER_NOT_H_OR_HIDDEN_SEX_MODE,复合,当前玩家不在H中或在隐奸模式中
+tired_le_84_and_drunk_level_not_3,TIRED_LE_84_AND_DRUNK_LEVEL_NOT_3,复合,疲劳条≤84%且醉酒等级非烂醉
 

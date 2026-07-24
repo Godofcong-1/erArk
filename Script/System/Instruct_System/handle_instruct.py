@@ -130,6 +130,26 @@ def add_instruct(
                     premise_name = premise_name.strip()
                     if premise_name and hasattr(constant_promise.Premise, premise_name):
                         actual_premise_set.add(getattr(constant_promise.Premise, premise_name))
+                # 根据H模式显示类型、疲劳类型增加前提
+                h_mode_show_type = getattr(csv_config, 'h_mode_show_type', None)
+                # 非H显示
+                if h_mode_show_type == 1:
+                    actual_premise_set.add(constant_promise.Premise.NOT_H)
+                    actual_premise_set.add(constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX)
+                # H显示
+                elif h_mode_show_type == 2:
+                    actual_premise_set.add(constant_promise.Premise.TARGET_IS_H)
+                tired_type = getattr(csv_config, 'tired_type', None)
+                # 轻度疲劳
+                if tired_type == 1:
+                    actual_premise_set.add(constant_promise.Premise.TIRED_LE_84)
+                    actual_premise_set.add(constant_promise.Premise.HP_G_1)
+                    actual_premise_set.add(constant_promise.Premise.DRUNK_LEVEL_NOT_3)
+                # 重度疲劳
+                elif tired_type == 2:
+                    actual_premise_set.add(constant_promise.Premise.TIRED_LE_74)
+                    actual_premise_set.add(constant_promise.Premise.HP_G_1)
+                    actual_premise_set.add(constant_promise.Premise.DRUNK_LEVEL_NOT_3)
             else:
                 actual_premise_set = set()
         if actual_premise_set is None:

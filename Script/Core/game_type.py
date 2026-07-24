@@ -1747,7 +1747,7 @@ class Cache:
         """ 玩家操作指令面板中，H类的指令过滤状态数据 指令类型:是否展示"""
         self.instruct_type_filter_cache: Dict[int, bool] = {}
         """ （已弃用）玩家操作指令面板指令过滤状态数据_的缓存 指令类型:是否展示"""
-        self.instruct_index_filter: Dict[int, bool] = {}
+        self.instruct_index_filter: Dict[str, bool] = {}
         """ 玩家各编号指令过滤状态数据 指令编号:是否展示"""
         self.show_non_h_in_hidden_sex: bool = False
         """ 是否在隐奸中显示非H类指令 """

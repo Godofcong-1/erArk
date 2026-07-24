@@ -72,7 +72,7 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
             default.handle_both_h_state_reset(0, 1, change_data=game_type.CharacterStatusChange(), now_time=datetime.datetime(1, 1, 1))
         # 如果在搬运角色，则直接移动到玩家同一地点
         if (
-            handle_premise.handle_carry_somebody(character_id)
+            handle_premise.handle_carry_somebody(0)
             ):
             now_carry_chara_id = pl_character_data.action_info.carry_chara_id
             now_carry_character_data = cache.character_data[now_carry_chara_id]

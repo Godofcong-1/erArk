@@ -1614,3 +1614,15 @@ def handle_player_not_h_or_hidden_sex_mode(character_id: int) -> int:
         return 1
     return 0
 
+@add_premise(constant_promise.Premise.TIRED_LE_84_AND_DRUNK_LEVEL_NOT_3)
+def handle_tired_le_84_and_drunk_level_not_3(character_id: int) -> int:
+    """
+    疲劳值小于等于84且醉酒等级不为3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_tired_le_84(character_id) and not handle_drunk_level_3(character_id):
+        return 1
+    return 0

@@ -31,7 +31,7 @@ class Instruct_filter_Panel:
         """绘制对象"""
         title_draw = draw.TitleLineDraw(_("指令过滤"), self.width)
 
-        self.handle_panel = panel.PageHandlePanel([], HandleFilterButtonList, 999, 8, self.width, 1, 1, 0)
+        self.handle_panel = panel.PageHandlePanel([], HandleFilterButtonList, 999, 8, self.width, True, True, 0)
 
         instruct_index_list = []
         
@@ -74,11 +74,11 @@ class HandleFilterButtonList:
     """
 
     def __init__(
-        self, index: int, width: int, is_button: bool, num_button: bool, button_id: int
+        self, index: str, width: int, is_button: bool, num_button: bool, button_id: int
     ):
         """初始化绘制对象"""
 
-        self.index: int = index
+        self.index: str = index
         """ 指令编号 """
         self.draw_text: str = ""
         """ 绘制文本 """
@@ -98,7 +98,7 @@ class HandleFilterButtonList:
         button_text = f"[{self.index}]{instruct_name}"
 
         if self.index not in cache.instruct_index_filter:
-            cache.instruct_index_filter[self.index] = 1
+            cache.instruct_index_filter[self.index] = True
         text_style = "standard" if cache.instruct_index_filter[self.index] else "deep_gray"
 
         name_draw = draw.LeftButton(
@@ -113,7 +113,7 @@ class HandleFilterButtonList:
 
     def chose_button(self):
         """玩家点击了选项"""
-        cache.instruct_index_filter[self.index] = 1 if cache.instruct_index_filter[self.index] == 0 else 0
+        cache.instruct_index_filter[self.index] = not cache.instruct_index_filter[self.index]
 
     def draw(self):
         """绘制对象"""

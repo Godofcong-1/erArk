@@ -1184,6 +1184,17 @@ def handle_drunk_level_3(character_id: int) -> int:
     else:
         return 0
 
+@add_premise(constant_promise.Premise.DRUNK_LEVEL_NOT_3)
+def handle_drunk_level_not_3(character_id: int) -> int:
+    """
+    醉酒等级≠烂醉
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_drunk_level_3(character_id)
+
 @add_premise(constant_promise.Premise.DRUNK_LEVEL_GE_1)
 def handle_drunk_level_ge_1(character_id: int) -> int:
     """
