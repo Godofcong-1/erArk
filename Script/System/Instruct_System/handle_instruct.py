@@ -1327,6 +1327,7 @@ def handle_unconscious_h(type_name:str = ""):
     处理无意识奸指令
     type_name: str = ""  # 用于区分无意识奸类型
     """
+    from Script.Settle import default
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
     now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
@@ -1342,8 +1343,12 @@ def handle_unconscious_h(type_name:str = ""):
     now_draw.width = width
     if type_name == "sleep":
         now_draw.text = _("\n进入睡奸模式\n")
+        default.handle_unconscious_flag_to_1(character_data.target_character_id, 1, game_type.CharacterStatusChange(), cache.game_time)
+        cache.achievement.sleep_sex_record = {1: 0, 2: 0, 3: 0}
     elif type_name == "drunk":
         now_draw.text = _("\n进入醉奸模式\n")
+        default.handle_unconscious_flag_to_2(character_data.target_character_id, 1, game_type.CharacterStatusChange(), cache.game_time)
+        cache.achievement.drunk_sex_record = {1: 0, 2: 0, 3: 0}
     elif type_name == "time_stop":
         now_draw.text = _("\n进入时停奸模式\n")
     elif type_name == "hypnosis":
@@ -1351,11 +1356,7 @@ def handle_unconscious_h(type_name:str = ""):
     else:
         now_draw.text = _("\n进入无意识奸模式\n")
     now_draw.draw()
-    # 成就初始化
-    if handle_premise.handle_unconscious_flag_1(character_data.target_character_id):
-        cache.achievement.sleep_sex_record = {1: 0, 2: 0, 3: 0}
-    if handle_premise.handle_unconscious_flag_2(character_data.target_character_id):
-        cache.achievement.drunk_sex_record = {1: 0, 2: 0, 3: 0}
+
     chara_handle_instruct_common_settle(constant.Behavior.H)
 
 @add_instruct(constant.Instruct.SLEEP_H)
