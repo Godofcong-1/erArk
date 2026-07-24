@@ -2726,6 +2726,29 @@ def handle_target_be_carried(
     character_data.action_info.carry_chara_id = character_data.target_character_id
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_NOT_BE_CARRIED)
+def handle_target_not_be_carried(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    清零自己的当前搬运对象
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.target_character_id == character_id:
+        return
+    character_data.action_info.carry_chara_id = 0
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FACILITY_DAMAGE_CHECK)
 def handle_facility_damage_check(
         character_id: int,
