@@ -59,12 +59,13 @@ def handle_talk(character_id: int):
                 handle_talk_draw(chara_id, talk_text, now_talk_id, common_behavior_id=common_behavior_id)
 
 
-def handle_second_talk(character_id: int, behavior_id: str = "share_blankly"):
+def handle_second_talk(character_id: int, behavior_id: str = "share_blankly", draw_title: bool = True):
     """
     处理二段行为结算对话\n
     Keyword arguments:\n
     character_id -- 角色id\n
     behavior_id -- 行为id，默认为0\n
+    draw_title -- 是否绘制二段行为的标题地文，为False时只绘制正文\n
     """
     character_data: game_type.Character = cache.character_data[character_id]
     # 已计算过的前提字典
@@ -85,7 +86,8 @@ def handle_second_talk(character_id: int, behavior_id: str = "share_blankly"):
     else:
         now_talk_data, calculated_premise_dict = handle_talk_sub(character_id, behavior_id, calculated_premise_dict)
         talk_text, now_talk_id, common_behavior_id = choice_talk_from_talk_data(now_talk_data, behavior_id)
-        handle_talk_draw(character_id, talk_text, now_talk_id, behavior_id, common_behavior_id)
+        # 标题地文由handle_talk_draw的second_behavior_id参数触发，置空即只绘制正文
+        handle_talk_draw(character_id, talk_text, now_talk_id, behavior_id if draw_title else "", common_behavior_id)
 
     # 交互对象
     # if character_id == 0 and character_data.target_character_id:
