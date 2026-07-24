@@ -1037,6 +1037,7 @@ class Debug_Panel:
                 draw_text_list.append(f"[021]:欲望值：{target_data.desire_point}")
                 draw_text_list.append(f"[022]:精液值：{target_data.semen_point}")
                 draw_text_list.append(f"[023]:精液值上限：{target_data.semen_point_max}")
+                draw_text_list.append(f"[024]:醉酒值 0~100点(max)：{target_data.drunk_point}")
 
                 # 进行显示
                 for i in range(len(draw_text_list)):
@@ -1096,6 +1097,8 @@ class Debug_Panel:
                         target_data.semen_point = new_value
                     elif value_index == 23:
                         target_data.semen_point_max = new_value
+                    elif value_index == 24:
+                        target_data.drunk_point = new_value
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False
