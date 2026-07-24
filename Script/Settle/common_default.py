@@ -277,6 +277,7 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
     pl_character_data: game_type.Character = cache.character_data[0]
 
     from Script.Design import handle_talent
+    from Script.System.Sex_System import drunk_sex_common
 
     # 系数加成
     final_adjust = 0
@@ -329,6 +330,9 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
     # 无觉刻印会增加无意识状态下的部位快感系数
     if handle_premise.handle_unconscious_flag_ge_1(character_id):
         final_adjust += (handle_ability.get_ability_adjust(character_data.ability[19]) - 1) * 2
+    # 醉酒程度会增加全部快感
+    drunk_level, drunk_name = drunk_sex_common.get_drunk_level(character_id)
+    final_adjust += 0.2 * drunk_level
     # 信物调整值
     now_token = pl_character_data.pl_collection.eqip_token[1]
     if len(now_token):

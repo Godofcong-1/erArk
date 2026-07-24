@@ -375,14 +375,23 @@ def chara_settle_drink_talent(character_id: int):
     character_id -- 角色id\n
     """
     character_data = cache.character_data[character_id]
-    if character_data.talent[353] and character_data.experience[94] >= 100:
+    if handle_premise.handle_self_have_easily_drunk(character_id) and character_data.experience[94] >= 30:
+        character_data.talent[360] = 0
+        character_data.talent[353] = 1
+        now_draw_text = _("\n{0}因为稍微习惯了酒精（饮酒经验>=30），因此对酒精的耐受力稍微提高了\n").format(character_data.name)
+        now_draw_text += _("{0}失去了[酒量差]\n").format(character_data.name)
+        now_draw_text += _("{0}获得了[酒量差]\n").format(character_data.name)
+        now_draw_succed = draw.WaitDraw()
+        now_draw_succed.text = now_draw_text
+        now_draw_succed.draw()
+    if handle_premise.handle_self_have_bad_alcohol_tolerance(character_id) and character_data.experience[94] >= 100:
         character_data.talent[353] = 0
         now_draw_text = _("\n{0}因为经常饮酒（饮酒经验>=100），因此对酒精的耐受力提高了\n").format(character_data.name)
         now_draw_text += _("{0}失去了[酒量差]\n").format(character_data.name)
         now_draw_succed = draw.WaitDraw()
         now_draw_succed.text = now_draw_text
         now_draw_succed.draw()
-    if not character_data.talent[354] and character_data.experience[94] >= 300:
+    if not handle_premise.handle_self_have_good_alcohol_tolerance(character_id) and character_data.experience[94] >= 300:
         character_data.talent[354] = 1
         now_draw_text = _("\n{0}因为长期性地饮酒（饮酒经验>=300），因此对酒精的耐受力大大提高了\n").format(character_data.name)
         now_draw_text += _("{0}获得了[好酒量]\n").format(character_data.name)
