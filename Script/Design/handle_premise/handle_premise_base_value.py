@@ -1136,6 +1136,18 @@ def handle_drunk_level_0(character_id: int) -> int:
     else:
         return 0
 
+@add_premise(constant_promise.Premise.T_DRUNK_LEVEL_0)
+def handle_t_drunk_level_0(character_id: int) -> int:
+    """
+    交互对象酒精等级：清醒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_drunk_level_0(character_data.target_character_id)
+
 @add_premise(constant_promise.Premise.DRUNK_LEVEL_1)
 def handle_drunk_level_1(character_id: int) -> int:
     """

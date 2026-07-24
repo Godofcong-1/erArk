@@ -1141,6 +1141,8 @@
     """ 属性_基础 交互对象睡眠等级≥1 """
     DRUNK_LEVEL_0 = "drunk_level_0"
     """ 属性_基础 醉酒等级：清醒 """
+    T_DRUNK_LEVEL_0 = "t_drunk_level_0"
+    """ 属性_基础 交互对象醉酒等级：清醒 """
     DRUNK_LEVEL_1 = "drunk_level_1"
     """ 属性_基础 醉酒等级：微醺 """
     DRUNK_LEVEL_2 = "drunk_level_2"
