@@ -571,6 +571,30 @@ def orgasm_settle(
                 draw_flag = True
             store_power_by_human_power(part_count + 3, character_id, draw_flag)
 
+
+def release_orgasm_edge_now(character_id: int, change_data) -> None:
+    """
+    将该角色累计的寸止计数解放为绝顶，清零寸止计数后，在当前H阶段内立即结算本次新增绝顶的口上与数值
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象（自身结算传根对象，交互对象或群交成员传其TargetChange）
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 未处于寸止累计时无需解放
+    if character_data.h_state.orgasm_edge == 0:
+        return
+    # 变为寸止解放状态
+    character_data.h_state.orgasm_edge = 2
+    # 将寸止计数转化为绝顶
+    orgasm_settle(character_id, change_data, un_count_orgasm_dict=character_data.h_state.orgasm_edge_count)
+    # 清零寸止计数
+    for state_id in game_config.config_character_state:
+        if game_config.config_character_state[state_id].type == 0:
+            character_data.h_state.orgasm_edge_count[state_id] = 0
+    # 立即结算刚解放绝顶的口上与数值，使其落在退出重置与退出奖励之前
+    second_behavior_effect(character_id, change_data)
+
+
 def judge_orgasm_degree(level_count: int) -> int:
     """
     判断高潮程度
