@@ -1742,8 +1742,10 @@ def handle_target_hypnosis_blockhead_switch_change(
         return
     if target_character_data.hypnosis.blockhead:
         target_character_data.hypnosis.blockhead = False
+        target_character_data.sp_flag.unconscious_h = 0
     else:
         target_character_data.hypnosis.blockhead = True
+        target_character_data.sp_flag.unconscious_h = 6
         santi_down = 10
         character_data.sanity_point = max(character_data.sanity_point - santi_down, 0)
         change_data.sanity_point -= santi_down
@@ -1771,7 +1773,9 @@ def handle_target_hypnosis_blockhead_off(
     target_character_data = cache.character_data[character_data.target_character_id]
     if character_data.dead:
         return
-    target_character_data.hypnosis.blockhead = False
+    if target_character_data.hypnosis.blockhead:
+        target_character_data.hypnosis.blockhead = False
+        target_character_data.sp_flag.unconscious_h = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_ACTIVE_H_SWITCH_CHANGE)
@@ -1798,9 +1802,11 @@ def handle_target_hypnosis_active_h_switch_change(
     if target_character_data.hypnosis.active_h:
         target_character_data.hypnosis.active_h = False
         target_character_data.h_state.npc_active_h = False
+        target_character_data.sp_flag.unconscious_h = 0
     else:
         target_character_data.hypnosis.active_h = True
         target_character_data.h_state.npc_active_h = True
+        target_character_data.sp_flag.unconscious_h = 6
         santi_down = 10
         character_data.sanity_point = max(character_data.sanity_point - santi_down, 0)
         change_data.sanity_point -= santi_down
@@ -1829,7 +1835,10 @@ def handle_target_hypnosis_active_h_off(
     target_character_data = cache.character_data[character_data.target_character_id]
     if character_data.dead:
         return
-    target_character_data.hypnosis.active_h = False
+    if target_character_data.hypnosis.active_h:
+        target_character_data.hypnosis.active_h = False
+        target_character_data.h_state.npc_active_h = False
+        target_character_data.sp_flag.unconscious_h = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_PAIN_AS_PLEASURE_SWITCH_CHANGE)

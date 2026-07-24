@@ -141,10 +141,8 @@ def evaluate_hypnosis_completion(character_id: int):
                 now_draw.draw()
             # 更新记录当前地点
             pl_character_data.pl_ability.air_hypnosis_position = pl_character_data.position
-        if now_hypnosis_type != 0:
+        if now_hypnosis_type == 1 or now_hypnosis_type == 2:
             character_data.sp_flag.unconscious_h = now_hypnosis_type + 3
-        else:
-            character_data.sp_flag.unconscious_h = 0
         handle_premise.settle_chara_unnormal_flag(character_id, 5)
         handle_premise.settle_chara_unnormal_flag(character_id, 6)
         # print(f"debug {character_data.name} unconscious_h = {character_data.sp_flag.unconscious_h}")
@@ -831,10 +829,15 @@ class Chose_Roleplay_Type_Panel:
         info_text = _("\n已为{0}开始进行以下的角色扮演了：").format(target_data.name)
         if not target_data.hypnosis.roleplay:
             info_text += _( "无\n")
+            # 如果原本是心控催眠，则取消心控催眠状态
+            if target_data.sp_flag.unconscious_h == 7:
+                target_data.sp_flag.unconscious_h = 0
         else:
             for cid in target_data.hypnosis.roleplay:
                 if cid in game_config.config_roleplay:
                     info_text += _("{0} ").format(game_config.config_roleplay[cid].name)
             info_text += "\n"
+            # 设置目标角色的催眠状态为心控催眠
+            target_data.sp_flag.unconscious_h = 7
         info_draw.text = info_text
         info_draw.draw()
