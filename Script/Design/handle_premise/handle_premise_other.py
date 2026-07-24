@@ -2902,6 +2902,46 @@ def ai_not_eat_in_restaurant(character_id: int) -> int:
         return 0
     return 1
 
+@add_premise(constant_promise.Premise.NOT_CARRY_ANYBODY)
+def handle_not_carry(character_id: int) -> int:
+    """
+    玩家没有在搬运干员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_carry_somebody(character_id)
+
+@add_premise(constant_promise.Premise.CARRY_SOMEBODY)
+def handle_carry_somebody(character_id: int) -> int:
+    """
+    玩家正在搬运干员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    if pl_character_data.action_info.carry_chara_id > 0:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.TARGET_IS_CARRIED)
+def handle_target_is_carried(character_id: int) -> int:
+    """
+    交互对象是自己正搬运的干员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    if pl_character_data.action_info.carry_chara_id > 0:
+        if pl_character_data.target_character_id == pl_character_data.action_info.carry_chara_id:
+            return 1
+    return 0
+
 
 @add_premise(constant_promise.Premise.T_BABY_1)
 def handle_t_baby_1(character_id: int) -> int:

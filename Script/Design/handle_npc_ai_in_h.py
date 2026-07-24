@@ -70,12 +70,11 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
         special_end_list = constant.special_end_H_list
         if len(cache.pl_pre_behavior_instruce) and cache.pl_pre_behavior_instruce[-1] in special_end_list and character_data.behavior.behavior_id not in special_end_list:
             default.handle_both_h_state_reset(0, 1, change_data=game_type.CharacterStatusChange(), now_time=datetime.datetime(1, 1, 1))
-        # 如果在时停中搬运角色，则直接移动到玩家同一地点
+        # 如果在搬运角色，则直接移动到玩家同一地点
         if (
-            handle_premise.handle_time_stop_on(character_id) and 
-            handle_premise.handle_carry_somebody_in_time_stop(character_id)
+            handle_premise.handle_carry_somebody(0)
             ):
-            now_carry_chara_id = pl_character_data.pl_ability.carry_chara_id_in_time_stop
+            now_carry_chara_id = pl_character_data.action_info.carry_chara_id
             now_carry_character_data = cache.character_data[now_carry_chara_id]
             map_handle.character_move_scene(now_carry_character_data.position, pl_character_data.position, now_carry_chara_id)
 

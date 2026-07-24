@@ -539,6 +539,8 @@ class Drunk_Level:
     """ 等级名 """
     drunk_point: int
     """ 当前等级醉酒值上限 """
+    info: str
+    """ 说明 """
 
 
 class Entertainment:
@@ -864,6 +866,10 @@ class InstructConfig:
     """ 指令类型 """
     instruct_sub_type: str
     """ 指令子类型 """
+    h_mode_show_type: int
+    """ H模式显示类型(0全显示，1非H显示，2H显示) """
+    tired_type: int
+    """ 疲劳类型(0无关，1轻疲劳消耗小，2重疲劳消耗大) """
     premise_set: str
     """ 前提条件集 """
     behavior_id: str

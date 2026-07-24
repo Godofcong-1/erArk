@@ -774,6 +774,22 @@ def handle_target_urinate_ge_80(character_id: int) -> int:
     else:
         return 0
 
+@add_premise(constant_promise.Premise.HUNGER_LE_20)
+def handle_hunger_le_20(character_id: int) -> int:
+    """
+    饥饿值≤20%，很饱
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.hunger_point / 240
+    if value <= 0.20:
+        return 1
+    else:
+        return 0
 
 @add_premise(constant_promise.Premise.HUNGER_LE_79)
 def handle_hunger_le_79(character_id: int) -> int:
@@ -1092,6 +1108,132 @@ def handle_sleep_level_ge_1(character_id: int) -> int:
     else:
         return 0
 
+@add_premise(constant_promise.Premise.T_SLEEP_LEVEL_GE_1)
+def handle_t_sleep_level_ge_1(character_id: int) -> int:
+    """
+    交互对象睡眠等级≥1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_sleep_level_ge_1(character_data.target_character_id)
+
+@add_premise(constant_promise.Premise.DRUNK_LEVEL_0)
+def handle_drunk_level_0(character_id: int) -> int:
+    """
+    酒精等级：清醒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Sex_System import drunk_sex_common
+    level,tem = drunk_sex_common.get_drunk_level(character_id)
+    if level == 0:
+        return 1
+    else:
+        return 0
+
+@add_premise(constant_promise.Premise.T_DRUNK_LEVEL_0)
+def handle_t_drunk_level_0(character_id: int) -> int:
+    """
+    交互对象酒精等级：清醒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_drunk_level_0(character_data.target_character_id)
+
+@add_premise(constant_promise.Premise.DRUNK_LEVEL_1)
+def handle_drunk_level_1(character_id: int) -> int:
+    """
+    醉酒等级：微醺
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Sex_System import drunk_sex_common
+    level,tem = drunk_sex_common.get_drunk_level(character_id)
+    if level == 1:
+        return 1
+    else:
+        return 0
+
+@add_premise(constant_promise.Premise.DRUNK_LEVEL_2)
+def handle_drunk_level_2(character_id: int) -> int:
+    """
+    醉酒等级：醉酒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Sex_System import drunk_sex_common
+    level,tem = drunk_sex_common.get_drunk_level(character_id)
+    if level == 2:
+        return 1
+    else:
+        return 0
+
+@add_premise(constant_promise.Premise.DRUNK_LEVEL_3)
+def handle_drunk_level_3(character_id: int) -> int:
+    """
+    醉酒等级：烂醉
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Sex_System import drunk_sex_common
+    level,tem = drunk_sex_common.get_drunk_level(character_id)
+    if level == 3:
+        return 1
+    else:
+        return 0
+
+@add_premise(constant_promise.Premise.DRUNK_LEVEL_NOT_3)
+def handle_drunk_level_not_3(character_id: int) -> int:
+    """
+    醉酒等级≠烂醉
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_drunk_level_3(character_id)
+
+@add_premise(constant_promise.Premise.DRUNK_LEVEL_GE_1)
+def handle_drunk_level_ge_1(character_id: int) -> int:
+    """
+    醉酒等级≥1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Sex_System import drunk_sex_common
+    level,tem = drunk_sex_common.get_drunk_level(character_id)
+    if level >= 1:
+        return 1
+    else:
+        return 0
+
+@add_premise(constant_promise.Premise.T_DRUNK_LEVEL_GE_1)
+def handle_t_drunk_level_ge_1(character_id: int) -> int:
+    """
+    交互对象醉酒等级≥1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_drunk_level_ge_1(character_data.target_character_id)
 
 @add_premise(constant_promise.Premise.SANITY_POINT_0)
 def handle_sanity_point_0(character_id: int) -> int:

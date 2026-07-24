@@ -21,6 +21,7 @@ def use_drug(item_id: int):
     Keyword arguments:
     item_id -- 道具id
     """
+    from Script.System.Sex_System import drunk_sex_common
     pl_character_data = cache.character_data[0]
     # 根据道具id获取道具效果
     item_data = game_config.config_item[item_id]
@@ -45,6 +46,19 @@ def use_drug(item_id: int):
         semen_add = int(pl_character_data.semen_point_max * (effect_add / 100))
         pl_character_data.semen_point = min(pl_character_data.semen_point + semen_add, pl_character_data.semen_point_max)
         now_draw_text = _("\n{0}使用了{1}，精液量增加了{2}，现在为{3}/{4}\n\n").format(pl_character_data.name, item_data.name, effect_add, pl_character_data.semen_point, pl_character_data.semen_point_max)
+    # 解酒药
+    elif item_id == 12:
+        drunk_level, drunk_name = drunk_sex_common.get_drunk_level(0)
+        # 如果没有醉酒则不需使用
+        if drunk_level == 0:
+            now_draw_text = _("\n{0}当前没有醉酒，不需要使用\n\n").format(pl_character_data.name, item_data.name)
+            pl_character_data.item[item_id] += 1
+        else:
+            # 药的效果随醉酒程度递减
+            now_drunk_value = pl_character_data.drunk_point
+            effect_add = int(effect_add * (1 - (now_drunk_value / 100) * 0.7))
+            pl_character_data.drunk_point = max(pl_character_data.drunk_point - effect_add, 0)
+            now_draw_text = _("\n{0}使用了{1}，醉酒值减少了{2}，现在为{3}\n\n").format(pl_character_data.name, item_data.name, effect_add, pl_character_data.drunk_point)
     # 阴茎增大
     elif item_id == 16:
         pl_character_data.pl_ability.jj_size += 1

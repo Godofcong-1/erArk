@@ -24,14 +24,14 @@ line_feed = draw.NormalDraw()
 line_feed.text = "\n"
 line_feed.width = 1
 
-def judge_single_instruct_filter(instruct_id: int, now_premise_data: dict, now_type: int, use_type_filter_flag: bool = True, skip_h_judge: bool = False, skip_not_h_judge: bool = False) -> tuple:
+def judge_single_instruct_filter(instruct_id: str, now_premise_data: dict, now_type: int, use_type_filter_flag: bool = True, skip_h_judge: bool = False, skip_not_h_judge: bool = False) -> tuple:
     """
     判断单个指令是否通过过滤\n
     Keyword arguments：\n
     instruct_id -- 指令id\n
     now_premise_data -- 当前记录的前提数据\n
     now_type -- 当前指令类型\n
-    use_sub_type -- 是否使用子类过滤\n
+    use_type_filter_flag -- 是否使用类型过滤\n
     skip_h_judge -- 是否跳过H类指令判断\n
     skip_not_h_judge -- 是否跳过非H类指令判断\n
     Returns：\n
