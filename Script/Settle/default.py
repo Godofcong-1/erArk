@@ -7570,6 +7570,7 @@ def handle_eat_add_just(
     if not add_time:
         return
     from Script.System.Cooking_System.food_bag_panel import calculate_food_effects
+    from Script.System.Sex_System.drunk_sex_common import add_drunk_point
 
     # 获取角色数据
     character_data: game_type.Character = cache.character_data[character_id]
@@ -7579,6 +7580,8 @@ def handle_eat_add_just(
     food_seasoning = now_food.special_seasoning if now_food is not None else 0
     food_quality = now_food.quality if now_food is not None else 1
     food_maker = now_food.maker if now_food is not None else ""
+    recipe_id = now_food.recipe if now_food is not None else 0
+    recipe_data = game_config.config_recipes[recipe_id]
     # 判断是谁要吃食物
     eat_food_chara_id_list = []
     if food_seasoning == 0:
@@ -7626,6 +7629,13 @@ def handle_eat_add_just(
         handle_add_small_mana_point(chara_id,add_time=hpmp_add,change_data=target_change,now_time=now_time)
         handle_hunger_point_zero(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
         handle_eat_food_flag_to_0(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
+
+        # 酒类食物
+        if recipe_data.type == 3:
+            # 增加醉酒值
+            add_drunk_point(chara_id, food=now_food)
+            # 增加饮酒经验
+            base_chara_experience_common_settle(chara_id, 94, change_data=target_change)
 
         # 精液食物则将精液加到口腔污浊，并加精液经验
         if food_seasoning in {11,12}:

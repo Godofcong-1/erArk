@@ -539,6 +539,8 @@ class Drunk_Level:
     """ 等级名 """
     drunk_point: int
     """ 当前等级醉酒值上限 """
+    info: str
+    """ 说明 """
 
 
 class Entertainment:

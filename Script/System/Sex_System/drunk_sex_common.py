@@ -75,6 +75,8 @@ def add_drunk_point(character_id: int, food: game_type.Food):
     # 获取该食物会增加的醉酒值
     character_data = cache.character_data[character_id]
     add_value = get_food_drunk_value(food)
+    if add_value <= 0:
+        return
     # 增加角色的醉酒值，并确保不超过100
     character_data.drunk_point = min(100, character_data.drunk_point + add_value)
     handle_premise.settle_chara_unnormal_flag(character_id, 5)
@@ -120,6 +122,8 @@ def reduce_drunk_point(character_id: int, time: int):
     # 计算最终减少值（保留浮点，最终对醉酒值取整），并确保醉酒值不低于0
     reduce_value = base_reduce * coefficient
     character_data.drunk_point = max(0, round(character_data.drunk_point - reduce_value))
+    # 减少的醉酒值同比转化为尿意值
+    character_data.urinate_point = min(300, character_data.urinate_point + round(reduce_value * 1.5))
     handle_premise.settle_chara_unnormal_flag(character_id, 5)
     handle_premise.settle_chara_unnormal_flag(character_id, 6)
 

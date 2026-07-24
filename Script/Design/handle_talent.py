@@ -82,6 +82,7 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
         npc_gain_and_lost_cumflation(character_id)
         npc_gain_semen_drinking_climax_talent(character_id)
         npc_b_talent_change_for_lactation_flag(character_id)
+        chara_settle_drink_talent(character_id)
     if now_gain_type == 3:
         npc_lost_no_menarche_talent(character_id)
         settle_favorite_sex_position(character_id)
@@ -366,3 +367,25 @@ def settle_favorite_sex_position(character_id: int) -> int:
         now_draw_succed.text = _("\n○{0}因为经常使用{1}体位，获得了【{2}】\n").format(character_data.name, sex_position_name, talent_name)
         now_draw_succed.draw()
     return favorite_position_id
+
+def chara_settle_drink_talent(character_id: int):
+    """
+    角色结算酒量相关素质\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[353] and character_data.experience[94] >= 100:
+        character_data.talent[353] = 0
+        now_draw_text = _("\n{0}因为经常饮酒（饮酒经验>=100），因此对酒精的耐受力提高了\n").format(character_data.name)
+        now_draw_text += _("{0}失去了[酒量差]\n").format(character_data.name)
+        now_draw_succed = draw.WaitDraw()
+        now_draw_succed.text = now_draw_text
+        now_draw_succed.draw()
+    if not character_data.talent[354] and character_data.experience[94] >= 300:
+        character_data.talent[354] = 1
+        now_draw_text = _("\n{0}因为长期性地饮酒（饮酒经验>=300），因此对酒精的耐受力大大提高了\n").format(character_data.name)
+        now_draw_text += _("{0}获得了[好酒量]\n").format(character_data.name)
+        now_draw_succed = draw.WaitDraw()
+        now_draw_succed.text = now_draw_text
+        now_draw_succed.draw()

@@ -35,7 +35,8 @@ def get_character_status_list(character_id: int) -> Tuple[List[draw.LeftDraw], L
     Tuple[List[draw.LeftDraw], List[str]] -- (状态标识的绘制对象列表, 状态文本列表)
     """
     from Script.Design import handle_premise
-    
+    from Script.System.Sex_System import drunk_sex_common
+
     character_data: game_type.Character = cache.character_data[character_id]
     status_list = []
     status_text_list = []
@@ -118,7 +119,24 @@ def get_character_status_list(character_id: int) -> Tuple[List[draw.LeftDraw], L
     sleep_draw.text = sleep_text
     status_list.append(sleep_draw)
     status_text_list.append(sleep_text)
-    
+
+    # 醉酒状态，三种醉的等级分别有对应颜色
+    drunk_draw = draw.LeftDraw()
+    drunk_text = ""
+    drunk_level, drunk_name = drunk_sex_common.get_drunk_level(character_id)
+    if drunk_level > 0:
+        drunk_text = " " + drunk_name
+        drunk_draw.tooltip = game_config.config_drunk_level[drunk_level].info
+        if drunk_level == 1:
+            drunk_draw.style = "pink"
+        elif drunk_level == 2:
+            drunk_draw.style = "hot_pink"
+        elif drunk_level == 3:
+            drunk_draw.style = "deep_pink"
+    drunk_draw.text = drunk_text
+    status_list.append(drunk_draw)
+    status_text_list.append(drunk_text)
+
     # hp1的完全疲劳状态
     tired_draw = draw.LeftDraw()
     tired_draw.style = "little_dark_slate_blue"
