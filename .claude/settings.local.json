@@ -3,7 +3,11 @@
     "allow": [
       "Bash(while read line)",
       "Bash(do echo \"$line\")",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash",
+      "Agent",
+      "Bash(/c/code/erArk/.conda/python.exe -c ' *)",
+      "Bash(cat > *)"
     ]
   }
 }
