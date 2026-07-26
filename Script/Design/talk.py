@@ -54,7 +54,8 @@ def handle_talk(character_id: int):
         for chara_id in cache.scene_data[scene_path_str].character_list:
             # 要求对象是NPC，且没有跟随玩家
             if chara_id > 0 and handle_premise.handle_not_follow(chara_id):
-                now_talk_data, calculated_premise_dict = handle_talk_sub(chara_id, behavior_id, calculated_premise_dict)
+                # 每个NPC用独立的前提字典，避免复用玩家的缓存把sys_0(是否玩家)误判为1而刷屏
+                now_talk_data, _ = handle_talk_sub(chara_id, behavior_id, {})
                 talk_text, now_talk_id, common_behavior_id = choice_talk_from_talk_data(now_talk_data, behavior_id)
                 handle_talk_draw(chara_id, talk_text, now_talk_id, common_behavior_id=common_behavior_id)
 
