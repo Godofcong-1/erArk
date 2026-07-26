@@ -2700,7 +2700,8 @@ def handle_stop_endurance_shoot(
     """
     if not add_time:
         return
-    second_behavior.orgasm_judge(character_id, change_data, skip_undure = True)
+    from Script.Settle import orgasm_settle
+    orgasm_settle.orgasm_judge(character_id, change_data, skip_undure = True)
     second_behavior.second_behavior_effect(character_id, change_data)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_BE_CARRIED)
@@ -6720,6 +6721,7 @@ def handle_orgasm_edge_release(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
+    from Script.Settle import orgasm_settle
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
@@ -6729,7 +6731,7 @@ def handle_orgasm_edge_release(
         return
     # 仅在交互对象确有寸止累计时才建立其TargetChange并解放，避免空条目影响显示判定
     if cache.character_data[target_id].h_state.orgasm_edge != 0:
-        second_behavior.release_orgasm_edge_now(target_id, change_data.target_change.setdefault(target_id, game_type.TargetChange()))
+        orgasm_settle.release_orgasm_edge_now(target_id, change_data.target_change.setdefault(target_id, game_type.TargetChange()))
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TIME_STOP_ORGASM_RELEASE)
@@ -6747,9 +6749,9 @@ def handle_time_stop_orgasm_release(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
+    from Script.Settle import orgasm_settle
     if not add_time:
         return
-    from Script.Design import second_behavior
     for chara_id in cache.npc_id_got:
         if chara_id == 0:
             continue
@@ -6758,7 +6760,7 @@ def handle_time_stop_orgasm_release(
         character_data.h_state.time_stop_release = True
         # 将时停绝顶计数转化为绝顶
         settlement_change = change_data.target_change.setdefault(chara_id, game_type.TargetChange()) if any(character_data.h_state.time_stop_orgasm_count.values()) else change_data
-        second_behavior.orgasm_settle(chara_id, settlement_change, un_count_orgasm_dict = character_data.h_state.time_stop_orgasm_count)
+        orgasm_settle.orgasm_settle_in_second_behavior(chara_id, settlement_change, un_count_orgasm_dict = character_data.h_state.time_stop_orgasm_count)
         # 清零时停绝顶计数
         for state_id in game_config.config_character_state:
             if game_config.config_character_state[state_id].type == 0:
@@ -6785,8 +6787,9 @@ def handle_end_h_add_hpmp_max(
     if not add_time:
         return
     from Script.Design import handle_ability
+    from Script.Settle import orgasm_settle
     # 计奖前先释放行为者憋住的累计寸止绝顶，使其计入下方奖励统计（无累计时空转）
-    second_behavior.release_orgasm_edge_now(character_id, change_data)
+    orgasm_settle.release_orgasm_edge_now(character_id, change_data)
     character_data: game_type.Character = cache.character_data[character_id]
     id_list = [character_id]
     if character_data.target_character_id != character_id:
@@ -6853,6 +6856,7 @@ def handle_group_sex_end_h_add_hpmp_max(
     if not add_time:
         return
     from Script.Design import handle_ability
+    from Script.Settle import orgasm_settle
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -6860,7 +6864,7 @@ def handle_group_sex_end_h_add_hpmp_max(
         now_character_data: game_type.Character = cache.character_data[chara_id]
         # 统计绝顶奖励前，先为该在场参与者解放并结算其累计的寸止绝顶，使其计入退出奖励；无累计者不建立空TargetChange条目
         if now_character_data.h_state.orgasm_edge != 0:
-            second_behavior.release_orgasm_edge_now(chara_id, change_data.target_change.setdefault(chara_id, game_type.TargetChange()))
+            orgasm_settle.release_orgasm_edge_now(chara_id, change_data.target_change.setdefault(chara_id, game_type.TargetChange()))
         orgasm_count = 0
         info_text = now_character_data.name
         for state_id in game_config.config_character_state:
