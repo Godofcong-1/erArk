@@ -670,6 +670,7 @@ class SeeFoodListByFoodNameDraw:
             confirm_text += _("制作数量: {0} （最多 {1}）\n").format(make_count, max_count)
             confirm_text += _("预计耗时: {0} 分钟{1}\n").format(make_food_time, facility_adjust_str)
             confirm_text += _("当前调味: {0}\n").format(seasoning_name)
+            confirm_text += _("介绍    : {0}\n").format(food_recipe.introduce)
             info_draw = draw.NormalDraw()
             info_draw.text = confirm_text
             info_draw.draw()
