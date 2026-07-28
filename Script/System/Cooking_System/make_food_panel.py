@@ -594,7 +594,7 @@ class SeeFoodListByFoodNameDraw:
         # 延迟创建：此处仅根据菜谱id读取菜谱信息，不创建食物对象
         self.food_cid: str = self.cid
         """ 菜谱id字符串 """
-        food_recipe: game_type.Recipes = cache.recipe_data[int(self.food_cid)]
+        food_recipe = game_config.config_recipes[int(self.food_cid)]
         self.food_name = food_recipe.name
         self.make_food_time = food_recipe.time
         if food_recipe.type == 8:
@@ -629,7 +629,7 @@ class SeeFoodListByFoodNameDraw:
         from Script.Design import basement
 
         character_data: game_type.Character = cache.character_data[0]
-        food_recipe = cache.recipe_data[int(self.food_cid)]
+        food_recipe = game_config.config_recipes[int(self.food_cid)]
         food_name = self.food_name
         food_diffucty = food_recipe.difficulty
         seasoning_name = game_config.config_seasoning[self.special_seasoning].name
@@ -662,6 +662,11 @@ class SeeFoodListByFoodNameDraw:
             confirm_text = ""
             confirm_text += _("食物名字: {0}\n").format(food_name)
             confirm_text += _("菜谱难度: {0}\n").format(food_diffucty)
+            # 如果是酒类，则显示酒精程度
+            if food_recipe.type == 3:
+                alcohol_level = food_recipe.alcohol
+                alcohol_name = game_config.config_alcohol_level[alcohol_level].name
+                confirm_text += _("酒精程度: {0}\n").format(alcohol_name)
             confirm_text += _("制作数量: {0} （最多 {1}）\n").format(make_count, max_count)
             confirm_text += _("预计耗时: {0} 分钟{1}\n").format(make_food_time, facility_adjust_str)
             confirm_text += _("当前调味: {0}\n").format(seasoning_name)

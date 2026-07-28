@@ -317,12 +317,17 @@ class SeeFoodListByFoodNameDraw:
                     food_data: game_type.Food = cache.rhodes_island.restaurant_data[self.now_restaurant_id][now_cid][now_uid]
                 self.food_name = ""
                 if isinstance(now_cid, str):
-                    food_recipe: game_type.Recipes = cache.recipe_data[int(now_cid)]
+                    food_recipe = game_config.config_recipes[int(now_cid)]
                     self.food_name = food_recipe.name
                     food_money = food_recipe.money
                 food_quality_level, food_quality_str = attr_calculation.get_food_quality(food_data.quality)
                 button_text = f"[{now_cid}]{self.food_name}"
                 button_text += f"({food_quality_str})"
+                # 如果是酒类，则显示酒精程度
+                if food_recipe.type == 3:
+                    alcohol_level = food_recipe.alcohol
+                    alcohol_name = game_config.config_alcohol_level[alcohol_level].name
+                    button_text += f"({alcohol_name})"
                 if food_data.maker != "":
                     button_text += f"(by {food_data.maker})"
                 button_text += _("(博士免费)")

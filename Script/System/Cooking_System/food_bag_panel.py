@@ -384,6 +384,7 @@ class FoodGroupDraw:
             for uid in valid_uids:
                 food_data: game_type.Food = character_data.food_bag[uid]
                 _quality_level, food_quality_str = attr_calculation.get_food_quality(food_data.quality)
+                food_recipe = game_config.config_recipes[food_data.recipe]
 
                 # 构建单个食物的显示文本
                 item_text = f"  {self.food_name}"
@@ -391,6 +392,11 @@ class FoodGroupDraw:
                     item_text += f"({food_data.milk_ml}ml)"
                 else:
                     item_text += f"({food_quality_str})"
+                # 如果是酒类，则显示酒精程度
+                if food_recipe.type == 3:
+                    alcohol_level = food_recipe.alcohol
+                    alcohol_name = game_config.config_alcohol_level[alcohol_level].name
+                    item_text += f"({alcohol_name})"
                 if food_data.maker != "":
                     item_text += f" (by {food_data.maker})"
                 if self.special_seasoning != 0 and self.special_seasoning in game_config.config_seasoning:
