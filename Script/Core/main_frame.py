@@ -472,12 +472,15 @@ def read_queue():
     finally:
         # 异常安全：无论是否抛异常都复位延迟标志，避免一次异常把滚动永久关掉
         _defer_see_end = False
+        # 排空或批末滚动抛出异常时也必须调度下一轮，否则输出泵停转、画面永久定格在最后一屏
+        # （异常本身不拦截，照常向 Tk 传播）
+        root.after(1, read_queue)
         if _see_end_pending:
+            # 先清标志再滚动：滚动若持续失败，标志滞留会让此后每一轮重排都再试一次
+            _see_end_pending = False
             # 本批确有输出请求过滚动，批末统一滚动一次；重绘由事件循环在下一空闲时刻自然完成，
             # 不显式冲刷 idle 队列（update_idletasks 会提前执行其他挂起的 idle 回调，产生越权副作用）
             see_end()
-            _see_end_pending = False
-    root.after(1, read_queue)
 
 
 def _read_queue_drain():
