@@ -4,7 +4,7 @@
   "Exposed":"1",
   "Have_Furniture":"2",
   "Close_Type":"0",
-  "SceneTag":"Bar",
+  "SceneTag":"Bar|Restaurant|Food_Shop",
   "Room_Area":"1",
   "Scene_Img":"酒吧_1"
 }
