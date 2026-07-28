@@ -45,6 +45,8 @@ class New_Round_Handle:
         """ 继承干员好感和信任 """
         self.chara_abi_and_exp_count = 0
         """ 继承干员能力和经验 """
+        self.chara_hypnosis_count = 0
+        """ 继承干员催眠程度 """
         self.round_point_all = 0
         """ 总周目点数 """
         self.round_point_cost = 0
@@ -326,6 +328,30 @@ class New_Round_Handle:
             reduce_button.draw()
             line_feed_draw.draw()
 
+            # 干员催眠进度
+            info_text = _("\n[6]干员的催眠进度")
+            info_draw.text = info_text
+            info_draw.draw()
+            # 继承选项
+            now_inherit_data_cid = game_config.config_new_round_inherit_type_data[6][self.chara_hypnosis_count]
+            now_inherit_data = game_config.config_new_round_inherit[now_inherit_data_cid]
+            now_rate = now_inherit_data.inherit_rate
+            now_cost = now_inherit_data.point_cost
+            self.round_point_cost += now_cost
+            info_text = _("\n   当前继承等级{0}，继承比例{1}%，点数消耗{2}\n  ").format(self.chara_hypnosis_count, now_rate, now_cost)
+            info_draw.text = info_text
+            info_draw.draw()
+            # 提高和降低按钮
+            add_button_text = _(" [提高] ")
+            add_button = draw.CenterButton(add_button_text, add_button_text + "_6", len(add_button_text) * 2, cmd_func=self.value_change_buton, args=(1,6))
+            self.return_list.append(add_button.return_text)
+            add_button.draw()
+            reduce_button_text = _(" [降低] ")
+            reduce_button = draw.CenterButton(reduce_button_text, reduce_button_text + "_6", len(reduce_button_text) * 2, cmd_func=self.value_change_buton, args=(-1,6))
+            self.return_list.append(reduce_button.return_text)
+            reduce_button.draw()
+            line_feed_draw.draw()
+
             # 输出总点数的花费与剩余
             info_text = _("\n总点数消耗：{0}，剩余：{1}\n").format(self.round_point_cost, self.round_point_all - self.round_point_cost)
             info_draw.text = info_text
@@ -501,6 +527,12 @@ class New_Round_Handle:
                 self.chara_abi_and_exp_count = 0
             elif self.chara_abi_and_exp_count > len(game_config.config_new_round_inherit_type_data[5]) - 1:
                 self.chara_abi_and_exp_count = len(game_config.config_new_round_inherit_type_data[5]) - 1
+        elif type == 6:
+            self.chara_hypnosis_count += value
+            if self.chara_hypnosis_count < 0:
+                self.chara_hypnosis_count = 0
+            elif self.chara_hypnosis_count > len(game_config.config_new_round_inherit_type_data[6]) - 1:
+                self.chara_hypnosis_count = len(game_config.config_new_round_inherit_type_data[6]) - 1
 
     def farewell_npc_change(self):
         """
@@ -718,6 +750,10 @@ class New_Round_Handle:
                 character_handle.init_character(now_id, now_npc_data, collect_reset=False)
                 new_npc_data = cache.character_data[now_id]
                 cache.npc_id_got.add(now_id)
+                if len(cache.npc_id_got) > 0:
+                    info_draw_text += _("共有{0}名陷落干员继承到下一周目\n").format(len(cache.npc_id_got))
+                else:
+                    info_draw_text += _("没有陷落干员\n")
 
                 # 干员好感与信任
                 now_inherit_data_cid = game_config.config_new_round_inherit_type_data[4][self.chara_fon_and_trust_count]
@@ -725,6 +761,10 @@ class New_Round_Handle:
                 now_rate = now_inherit_data.inherit_rate
                 new_npc_data.trust = int(old_npc_data[now_id].trust * now_rate / 100)
                 new_npc_data.favorability[0] = int(old_npc_data[now_id].favorability[0] * now_rate / 100)
+                if now_rate > 0:
+                    info_draw_text += _("干员好感与信任继承完毕，共继承了{rate}%的好感与信任\n").format(rate=now_rate)
+                else:
+                    info_draw_text += _("干员好感与信任未继承\n")
 
                 # 干员能力与经验
                 now_inherit_data_cid = game_config.config_new_round_inherit_type_data[5][self.chara_abi_and_exp_count]
@@ -734,8 +774,21 @@ class New_Round_Handle:
                     new_npc_data.ability[i] = int(old_npc_data[now_id].ability[i] * now_rate / 100)
                 for i in old_npc_data[now_id].experience:
                     new_npc_data.experience[i] = int(old_npc_data[now_id].experience[i] * now_rate / 100)
-        info_draw_text += _("干员好感与信任继承完毕\n")
-        info_draw_text += _("干员能力与经验继承完毕\n")
+                if now_rate > 0:
+                    info_draw_text += _("干员能力与经验继承完毕，共继承了{rate}%的能力与经验\n").format(rate=now_rate)
+                else:
+                    info_draw_text += _("干员能力与经验未继承\n")
+
+                # 干员催眠进度
+                now_inherit_data_cid = game_config.config_new_round_inherit_type_data[6][self.chara_hypnosis_count]
+                now_inherit_data = game_config.config_new_round_inherit[now_inherit_data_cid]
+                now_rate = now_inherit_data.inherit_rate
+                new_npc_data.hypnosis.hypnosis_degree = int(old_npc_data[now_id].hypnosis.hypnosis_degree * now_rate / 100)
+                if now_rate > 0:
+                    info_draw_text += _("干员催眠进度继承完毕，共继承了{rate}%的催眠进度\n").format(rate=now_rate)
+                else:
+                    info_draw_text += _("干员催眠进度未继承\n")
+
         info_draw.text = info_draw_text
         info_draw.draw()
 
