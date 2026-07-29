@@ -72,6 +72,13 @@ int,str,str,str,str,int,bool,bool,bool,str,str
 66,orange,#ffa500,,,,,,,,橙色
 67,persian_pink,#f77fbe,,,,,,,,波斯粉，快感
 68,lavender_pink,#fbaed2,,,,,,,,淡紫粉
+69,twilight_blue,#a9c2d7,,,,,,,,浅蓝灰，半梦半醒
+70,dusk_blue,#6b8db5,,,,,,,,中蓝色，浅睡
+71,night_blue,#3a5a80,,,,,,,,深蓝，熟睡
+72,midnight_blue,#1c314f,,,,,,,,暗蓝黑，完全深眠
 74,sanity,#7070C0,,,,,,,,理智的颜色
 75,hp_point,#e15a5a,,,,,,,,体力的颜色
 76,mp_point,#70C070,,,,,,,,气力的颜色
+81,amber_glow,#F0C27A,,,,,,,,琥珀微光，微醺
+82,tipsy_ember,#D96C4A,,,,,,,,醉意余烬，醉酒
+83,blackout_rouge,#7B2040,,,,,,,,断片深红，烂醉

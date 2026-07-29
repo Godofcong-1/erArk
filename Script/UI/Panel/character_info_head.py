@@ -102,16 +102,28 @@ def get_character_status_list(character_id: int) -> Tuple[List[draw.LeftDraw], L
     # 非0疲劳时输出当前疲劳状态
     sleep_draw = draw.LeftDraw()
     sleep_draw.style = "little_dark_slate_blue"
-    sleep_lv = attr_calculation.get_tired_level(character_data.tired_point)
-    sleep_text = " <" + constant.tired_text_list[sleep_lv] + ">"
+    tired_lv = attr_calculation.get_tired_level(character_data.tired_point)
+    sleep_text = " <" + constant.tired_text_list[tired_lv] + ">"
     # 0疲劳的清醒则不输出
     if sleep_text == _(" <清醒>"):
         sleep_text = ""
     if character_id > 0:
         # 睡眠中则输出睡眠程度
         if handle_premise.handle_action_sleep(character_id) or handle_premise.handle_unconscious_flag_1(character_id):
-            tem, sleep_name = attr_calculation.get_sleep_level(character_data.sleep_point)
+            sleep_lv, sleep_name = attr_calculation.get_sleep_level(character_data.sleep_point)
             sleep_text = f" <{sleep_name}>"
+            sleep_draw.tooltip = game_config.config_sleep_level[sleep_lv].introduction
+            sleep_draw.style = game_config.config_sleep_level[sleep_lv].color
+            # 疲劳已完全恢复，且是白天，且没有服用安眠药，且非醉酒，则提示即将醒来
+            if (
+                handle_premise.handle_tired_le_0(character_id) and
+                handle_premise.handle_time_day(character_id) and
+                handle_premise.handle_self_not_sleep_pills(character_id) and
+                handle_premise.handle_drunk_level_0(character_id)
+            ):
+                sleep_text += _("(将醒)")
+                sleep_draw.tooltip = _("已经睡饱了，会很快醒来，如果不想被发现最好快点结束")
+                sleep_draw.style = "warning"
         # 如果在装睡则输出装睡
         if handle_premise.handle_self_sleep_h_awake_but_pretend_sleep(character_id):
             sleep_text = _(" <装睡>")
@@ -120,19 +132,14 @@ def get_character_status_list(character_id: int) -> Tuple[List[draw.LeftDraw], L
     status_list.append(sleep_draw)
     status_text_list.append(sleep_text)
 
-    # 醉酒状态，三种醉的等级分别有对应颜色
+    # 醉酒状态，三种醉的等级分别有对应说明和字体颜色
     drunk_draw = draw.LeftDraw()
     drunk_text = ""
     drunk_level, drunk_name = drunk_sex_common.get_drunk_level(character_id)
     if drunk_level > 0:
         drunk_text = " " + drunk_name
         drunk_draw.tooltip = game_config.config_drunk_level[drunk_level].info
-        if drunk_level == 1:
-            drunk_draw.style = "pink"
-        elif drunk_level == 2:
-            drunk_draw.style = "hot_pink"
-        elif drunk_level == 3:
-            drunk_draw.style = "deep_pink"
+        drunk_draw.style = game_config.config_drunk_level[drunk_level].color
     drunk_draw.text = drunk_text
     status_list.append(drunk_draw)
     status_text_list.append(drunk_text)

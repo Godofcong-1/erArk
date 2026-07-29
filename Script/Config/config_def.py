@@ -539,6 +539,8 @@ class Drunk_Level:
     """ 等级名 """
     drunk_point: int
     """ 当前等级醉酒值上限 """
+    color: str
+    """ 字体颜色 """
     info: str
     """ 说明 """
 
@@ -1484,6 +1486,10 @@ class Sleep_Level:
     """ 等级名 """
     sleep_point: int
     """ 当前等级熟睡值上限 """
+    color: str
+    """ 字体颜色 """
+    introduction: str
+    """ 介绍 """
 
 
 class SolarPeriod:
@@ -1750,6 +1756,7 @@ class Cook_Question:
     """ 错误答案3 """
 
 
+
 class Talk:
     """ 口上配置数据 """
 
@@ -1777,6 +1784,7 @@ class Talk_Common:
     """ 前提id """
     context: str
     """ 组件内容 """
+
 
 
 class TargetEffect:

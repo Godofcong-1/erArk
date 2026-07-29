@@ -366,16 +366,28 @@ def settle_sleep(character_id: int, true_add_time: int) -> None:
     """
     from Script.System.Dormitory_System import dormitory_manager_system
     now_char = cache.character_data[character_id]
+    # 疲劳值越高，熟睡值增加越快，最高为疲劳值满时的2倍
+    tired_adjust = 1 + now_char.tired_point / 160
     # 减少疲劳
     tired_change = int(true_add_time / 6) * 2
     now_char.tired_point = max(now_char.tired_point - tired_change, 0)
     # 增加熟睡值
     level, _ = attr_calculation.get_sleep_level(now_char.sleep_point)
     if level <= 1:
-        add_sleep = int(true_add_time * 1.5)
+        add_sleep = int(true_add_time * tired_adjust * 1.5)
     else:
-        add_sleep = random.randint(int(true_add_time * -0.3), int(true_add_time * 0.6))
-    now_char.sleep_point = min(now_char.sleep_point + add_sleep, 100)
+        add_sleep = random.randint(int(true_add_time * tired_adjust * -0.3), int(true_add_time * tired_adjust * 0.6))
+    # 疲劳已完全恢复，且是白天，且没有服用安眠药，且非醉酒，则熟睡值减少
+    if (
+        handle_premise.handle_tired_le_0(character_id) and
+        handle_premise.handle_time_day(character_id) and
+        handle_premise.handle_self_not_sleep_pills(character_id) and
+        handle_premise.handle_drunk_level_0(character_id)
+    ):
+        now_char.sleep_point = max(now_char.sleep_point - add_sleep, 0)
+    # 其他情况下正常增加熟睡值
+    else:
+        now_char.sleep_point = min(now_char.sleep_point + add_sleep, 100)
     handle_premise.settle_chara_unnormal_flag(character_id, 5)
     handle_premise.settle_chara_unnormal_flag(character_id, 6)
     # 回复体力和气力
