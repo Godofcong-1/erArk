@@ -62,13 +62,13 @@ def get_food_drunk_value(food: game_type.Food) -> int:
         return 0
     return game_config.config_alcohol_level[alcohol_level].drunk_change
 
-
-def add_drunk_point(character_id: int, food: game_type.Food):
+def add_drunk_point(character_id: int, food: game_type.Food, taste_wine_flag: bool = False):
     """
     根据食用的食物增加角色的醉酒值\n
     Keyword arguments:\n
     character_id -- 角色id\n
     food -- 食物对象\n
+    taste_wine_flag -- 是否为品酒指令结算的醉酒值增加，默认为False\n
     Return arguments:\n
     None
     """
@@ -77,6 +77,9 @@ def add_drunk_point(character_id: int, food: game_type.Food):
     add_value = get_food_drunk_value(food)
     if add_value <= 0:
         return
+    # 如果是品酒指令结算的醉酒值增加，则醉酒值只增加30%
+    if taste_wine_flag:
+        add_value = round(add_value * 0.3)
     # 增加角色的醉酒值，并确保不超过100
     character_data.drunk_point = min(100, character_data.drunk_point + add_value)
     handle_premise.settle_chara_unnormal_flag(character_id, 5)
@@ -161,3 +164,53 @@ def judge_accept_alcohol_food(character_id: int, food: game_type.Food) -> bool:
     # 计算实行值判定结果，成功则通过判定
     judge_result = instuct_judege.calculation_instuct_judege(0, character_id, instruct_name, not_draw_flag=True)
     return judge_result[0] == 1
+
+def taste_wine(character_id: int):
+    """
+    角色品酒，角色随机选一个酒，根据角色的酒量和当前醉酒值选择，酒量越好、醉酒程度越高越可能选择度数更高的酒，并结算部分饮用效果\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    Return arguments:\n
+    None
+    """
+    import random
+    from Script.System.Cooking_System import cooking
+    character_data = cache.character_data[character_id]
+    # 获取角色当前醉酒值和醉酒等级
+    drunk_value = character_data.drunk_point
+    drunk_cid, drunk_name = get_drunk_level(character_id)
+    # 角色的酒量基础为3，从一杯就倒到千杯不醉，分别对应为1到5
+    alcohol_tolerance = 3
+    if handle_premise.handle_self_have_easily_drunk(character_id):
+        alcohol_tolerance = 1
+    elif handle_premise.handle_self_have_bad_alcohol_tolerance(character_id):
+        alcohol_tolerance = 2
+    elif handle_premise.handle_self_have_good_alcohol_tolerance(character_id):
+        alcohol_tolerance = 4
+    elif handle_premise.handle_self_have_never_drunk(character_id):
+        alcohol_tolerance = 5
+    # 根据醉酒值和酒量计算一个权重值，用于选择酒的度数，醉酒值越高、酒量越好，权重值越高
+    weight = drunk_value * 0.5 + alcohol_tolerance * 10
+    # 该值随机上下浮动，增加随机性
+    weight *= random.uniform(0.5, 1.5)
+    # 根据权重值选择酒的度数，权重值越高，选择度数越高的酒的概率越大
+    if weight < 20:
+        alcohol_level = 1
+    elif weight < 40:
+        alcohol_level = 2
+    elif weight < 60:
+        alcohol_level = 3
+    elif weight < 80:
+        alcohol_level = 4
+    else:
+        alcohol_level = 5
+    # 选择该酒精等级的随机一个酒
+    target_wines = [wine for wine in game_config.config_recipes.values() if wine.alcohol == alcohol_level]
+    if not target_wines:
+        return
+    selected_wine_recips = random.choice(target_wines)
+    # 创建该酒的食物对象
+    new_wine_food = cooking.create_food("", int(selected_wine_recips.cid), 1, "")
+    # 将行动的食物对象设置为该酒
+    character_data.behavior.target_food = new_wine_food
+    add_drunk_point(character_id, new_wine_food, taste_wine_flag=True)

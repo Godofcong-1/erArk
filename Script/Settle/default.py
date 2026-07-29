@@ -6025,6 +6025,33 @@ def handle_make_food_add_adjust(
         change_data = change_data,
     )
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TASTE_WINE_ADD_ADJUST)
+def handle_taste_wine_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （品酒用）根据酒量随机选一个酒，并结算部分饮用效果
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    from Script.System.Sex_System.drunk_sex_common import taste_wine
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    # 根据酒量随机选一个酒，并结算部分饮用效果
+    taste_wine(character_id)
+    # 删除该食物
+    handle_delete_food(character_id, add_time=add_time, change_data=change_data, now_time=now_time)
+    # 增加饮酒经验
+    base_chara_experience_common_settle(character_id, 94, change_data=change_data)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.OFFICIAL_WORK_ADD_ADJUST)
 def handle_official_work_add_adjust(
