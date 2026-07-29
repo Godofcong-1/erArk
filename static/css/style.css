@@ -2098,6 +2098,28 @@ body {
     border-radius: 8px;
 }
 
+/* 无立绘时的占位框
+   需要有确定的尺寸与竖长比例，作为身体部位按钮层的坐标参考，
+   使角色缺少立绘资源时仍然可以点击部位发起交互 */
+.character-container > .character-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+    /* 竖长比例，接近立绘的画幅 */
+    aspect-ratio: 1 / 2;
+    /* JS会按可用高度动态覆盖，这里提供一个兜底高度 */
+    height: 60vh;
+    max-width: 100%;
+    border: 1px dashed rgba(136, 136, 170, 0.4);
+}
+
+/* 默认部位布局（角色缺少关键点数据时的估算位置）使用更淡的提示样式 */
+.body-parts-layer.is-default-layout .body-part-button {
+    opacity: 0.75;
+}
+
 /* 身体部位交互层 */
 .body-parts-layer {
     position: absolute;

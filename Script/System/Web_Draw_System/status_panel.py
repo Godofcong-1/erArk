@@ -107,12 +107,20 @@ class StatusPanel:
         
         # 获取是否开启全部位显示
         show_all_body_parts = cache.all_system_setting.draw_setting.get(18, 0) if hasattr(cache, 'all_system_setting') else False
-        
-        # 获取可选部位列表（仅在开启全部位显示时）
+
+        # 获取角色的立绘与部位数据（只解析一次，供下面两处使用）
+        image_data = self._get_character_image_data(character_id)
+
+        # 判断是否需要强制显示可选部位列表
+        # 当角色没有立绘时，立绘上不会有部位按钮，此时必须显示文字版的可选部位列表，
+        # 否则玩家将无法对该角色执行任何带部位的指令
+        force_show_body_parts = not (image_data.get("full_body_image") or image_data.get("half_body_image"))
+
+        # 获取可选部位列表（开启全部位显示、或角色没有立绘时才需要）
         available_body_parts = []
-        if show_all_body_parts:
-            available_body_parts = self._get_available_body_parts_for_display(character_id)
-        
+        if show_all_body_parts or force_show_body_parts:
+            available_body_parts = self._get_available_body_parts_for_display(character_id, image_data)
+
         return {
             "id": character_id,
             "name": char_data.name,
@@ -127,8 +135,24 @@ class StatusPanel:
             "other_states": self._get_other_states(character_id),
             "value_changes": self._get_value_changes(character_id),
             "show_all_body_parts": show_all_body_parts,
-            "available_body_parts": available_body_parts
+            "available_body_parts": available_body_parts,
+            "force_show_body_parts": force_show_body_parts
         }
+
+    def _get_character_image_data(self, character_id: int) -> dict:
+        """
+        获取角色的立绘与部位数据
+
+        Keyword arguments:
+        character_id -- 角色ID
+
+        Returns:
+        dict -- 角色图像数据，获取失败时返回空字典
+        """
+        from Script.System.Web_Draw_System.character_renderer import CharacterRenderer
+
+        renderer = CharacterRenderer()
+        return renderer.get_character_image_data(character_id) or {}
 
     def _get_empty_target_info(self) -> dict:
         """获取空的交互对象信息结构"""
@@ -146,37 +170,38 @@ class StatusPanel:
             "other_states": [],
             "value_changes": [],
             "show_all_body_parts": False,
-            "available_body_parts": []
+            "available_body_parts": [],
+            "force_show_body_parts": False
         }
 
-    def _get_available_body_parts_for_display(self, character_id: int) -> List[dict]:
+    def _get_available_body_parts_for_display(self, character_id: int, image_data: Optional[dict] = None) -> List[dict]:
         """
         获取用于显示的可选部位列表
-        
+
         根据当前交互状态返回可选部位：
         - 未选择交互小类时：返回角色身上的所有可交互部位
         - 选择了交互小类后：返回角色立绘中存在的部位与该小类对应部位的交集
-        
+
         Keyword arguments:
         character_id -- 角色ID
-        
+        image_data -- 已获取的角色图像数据，为None时内部重新获取
+
         Returns:
         List[dict] -- 可选部位列表，每个元素包含 id（英文名）和 name（中文名）
         """
         from Script.Design import web_interaction_manager
         from Script.System.Web_Draw_System.interaction_handler import InteractionHandler
         from Script.System.Instruct_System.instruct_category import (
-            BODY_PART_NAMES, HEAD_SUB_PARTS, HIP_SUB_PARTS, BodyPart
+            BODY_PART_NAMES, HEAD_SUB_PARTS, HIP_SUB_PARTS, BodyPart, CLICKABLE_BODY_PARTS
         )
-        
+
         # 首先获取角色立绘中实际存在的部位
         char_data: game_type.Character = cache.character_data.get(character_id)
         portrait_parts = {}  # {中文显示名: {id, name, base_part}}
-        
+
         if char_data:
-            from Script.System.Web_Draw_System.character_renderer import CharacterRenderer
-            renderer = CharacterRenderer()
-            image_data = renderer.get_character_image_data(character_id)
+            if image_data is None:
+                image_data = self._get_character_image_data(character_id)
             if image_data and 'body_parts' in image_data:
                 body_parts = image_data['body_parts']
                 if isinstance(body_parts, dict) and 'body_parts' in body_parts:
@@ -189,7 +214,22 @@ class StatusPanel:
                         "name": part_key,
                         "base_part": base_part
                     }
-        
+
+        # 立绘中没有任何部位数据时，退化为全部可点击部位
+        # 避免角色缺少立绘或关键点数据时，可选部位列表为空导致无法互动
+        if not portrait_parts:
+            # 兽耳需要角色有兽耳特征才显示
+            has_beast_ears = char_data.talent.get(111, 0) == 1 if (char_data and hasattr(char_data, 'talent')) else False
+            for part_id in CLICKABLE_BODY_PARTS:
+                if part_id == BodyPart.BEAST_EARS and not has_beast_ears:
+                    continue
+                display_name = BODY_PART_NAMES.get(part_id, part_id)
+                portrait_parts[display_name] = {
+                    "id": part_id,
+                    "name": display_name,
+                    "base_part": part_id
+                }
+
         # 获取当前交互小类
         current_minor_type = web_interaction_manager.get_current_minor_type()
         

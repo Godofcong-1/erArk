@@ -734,9 +734,16 @@ def serve_avatar_image(character_name):
     from Script.System.Web_Draw_System import character_renderer
     import io
     
+    # 通过角色名反查角色ID，使差分立绘与路人、女儿等目录下的角色也能正确取到头像
+    character_id = -1
+    for now_id, now_character_data in cache.character_data.items():
+        if getattr(now_character_data, "name", "") == character_name:
+            character_id = now_id
+            break
+
     # 获取角色头像信息
     renderer = character_renderer.CharacterRenderer()
-    avatar_info = renderer.get_avatar_info(character_name)
+    avatar_info = renderer.get_avatar_info(character_name, character_id)
     
     # 如果有现成的头像文件，直接返回
     if avatar_info.get("has_avatar_file"):

@@ -2419,12 +2419,15 @@ function clickPanelTab(tabId) {
     }
 }
 
+// 图片未找到时使用的1x1透明占位图（内联data URI，避免请求不存在的文件产生报错）
+const NOT_FOUND_IMAGE_DATA_URL = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
 /**
  * 获取图片路径
  * 根据图片名称查找对应的完整路径
- * 
+ *
  * @param {string} imageName - 图片名称（不含扩展名）
- * @return {string} 图片的完整路径，若未找到则返回默认路径
+ * @return {string} 图片的完整路径，若未找到则返回透明占位图
  */
 function getImagePath(imageName) {
     // 检查字典中是否存在该图片
@@ -2432,10 +2435,11 @@ function getImagePath(imageName) {
         // 直接使用字典中存储的路径
         return imagePathDict[imageName];
     }
-    
-    // 若未找到，返回默认路径并输出警告
+
+    // 若未找到，返回透明占位图并输出警告
+    // 原实现返回 /image/not_found.png，但该文件并不存在，反而会产生额外的加载失败
     console.warn(`未找到图片: ${imageName}`);
-    return `/image/not_found.png`; // 默认的"图片未找到"图片
+    return NOT_FOUND_IMAGE_DATA_URL;
 }
 
 /**

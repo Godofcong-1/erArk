@@ -6,31 +6,34 @@
 function createCharacterDisplay(targetInfo, showAllBodyParts = false) {
     const display = document.createElement('div');
     display.className = 'new-ui-character-display';
-    
+
     // 获取立绘图片路径（优先使用全身图，否则使用半身图）
     const imageData = targetInfo.image_data;
     const imagePath = imageData ? (imageData.full_body_image || imageData.half_body_image) : null;
-    
+
     if (imagePath) {
         // 创建角色立绘容器
         const characterContainer = document.createElement('div');
         characterContainer.className = 'character-container';
-        
+
         // 创建立绘图片
         const img = document.createElement('img');
         img.alt = targetInfo.name || 'Character';
         img.className = 'character-image';
-        
+
         // 构建裁切图片API路径
         const normalizedPath = imagePath.replace(/^\/?(image\/)?/, '');
         const croppedImageUrl = `/api/cropped_image/${normalizedPath}`;
-        
+
         // 添加加载错误处理
+        // 只替换图片本身，保留容器与身体部位按钮层，否则会连部位按钮一起删掉导致无法互动
         img.onerror = function() {
             console.error('加载角色立绘失败:', imagePath);
-            display.innerHTML = `<div class="character-placeholder">[${targetInfo.name || '无交互对象'}]</div>`;
+            if (img.parentNode) {
+                img.parentNode.replaceChild(createCharacterPlaceholder(targetInfo.name), img);
+            }
         };
-        
+
         // 检查前端缓存，避免重复请求
         const cachedData = croppedImageCache.get(croppedImageUrl);
         if (cachedData) {
@@ -110,19 +113,50 @@ function createCharacterDisplay(targetInfo, showAllBodyParts = false) {
         }
         
         characterContainer.appendChild(img);
-        
+
         // 添加身体部位按钮层
         if (imageData.body_parts && imageData.body_parts.body_parts) {
             const bodyPartsLayer = createBodyPartsLayer(imageData.body_parts, targetInfo.name, showAllBodyParts);
             characterContainer.appendChild(bodyPartsLayer);
         }
-        
+
         display.appendChild(characterContainer);
     } else {
-        display.innerHTML = `<div class="character-placeholder">[${targetInfo.name || '无交互对象'}]</div>`;
+        // 没有立绘时，同样创建角色容器并挂载身体部位按钮层
+        // 这样即使角色缺少立绘资源，玩家仍然可以点击部位来发起交互
+        const characterContainer = document.createElement('div');
+        characterContainer.className = 'character-container';
+
+        const placeholder = createCharacterPlaceholder(targetInfo.name);
+        characterContainer.appendChild(placeholder);
+
+        if (imageData && imageData.body_parts && imageData.body_parts.body_parts) {
+            const bodyPartsLayer = createBodyPartsLayer(imageData.body_parts, targetInfo.name, showAllBodyParts);
+            characterContainer.appendChild(bodyPartsLayer);
+        }
+
+        display.appendChild(characterContainer);
+
+        // 延迟一帧，等元素插入DOM后再按可用高度调整占位框大小（与立绘图片的处理保持一致）
+        requestAnimationFrame(() => applyCharacterImageHeight(display, placeholder));
     }
-    
+
     return display;
+}
+
+/**
+ * 创建角色立绘占位元素
+ * 用于角色没有立绘资源、或立绘加载失败时的替代显示
+ * 占位元素同时充当身体部位按钮层的坐标参考，因此需要有确定的尺寸
+ *
+ * @param {string} characterName - 角色名称
+ * @returns {HTMLElement} 占位元素
+ */
+function createCharacterPlaceholder(characterName) {
+    const placeholder = document.createElement('div');
+    placeholder.className = 'character-placeholder character-image';
+    placeholder.textContent = `[${characterName || '无交互对象'}]`;
+    return placeholder;
 }
 
 /**
@@ -288,8 +322,10 @@ function applyCharacterImageHeight(display, img) {
 function updateCharacterImageHeightOnResize() {
     const display = document.querySelector('.new-ui-character-display');
     const img = display ? display.querySelector('.character-image') : null;
-    
-    if (display && img && img.complete && img.naturalHeight > 0) {
+    // 占位框没有 naturalHeight，这里单独放行，保证无立绘时窗口缩放也能重新计算尺寸
+    const isPlaceholder = img ? img.classList.contains('character-placeholder') : false;
+
+    if (display && img && (isPlaceholder || (img.complete && img.naturalHeight > 0))) {
         applyCharacterImageHeight(display, img);
         
         // 重新调整身体部位按钮层
@@ -334,7 +370,11 @@ function debounce(func, wait) {
 function createBodyPartsLayer(bodyPartsData, characterName, showAllBodyParts = false) {
     const layer = document.createElement('div');
     layer.className = 'body-parts-layer';
-    
+    // 默认部位布局（角色缺少关键点数据时的估算位置）添加标记，供样式区分
+    if (bodyPartsData.is_default) {
+        layer.classList.add('is-default-layout');
+    }
+
     const parts = bodyPartsData.body_parts || {};
     const imageSize = bodyPartsData.image_size || { width: 1024, height: 1024 };
     
@@ -817,8 +857,8 @@ function createTargetInfoPanel(targetInfo) {
     }
     
     // ========== 可选部位打印区 ==========
-    // 仅在开启全部位显示且有可选部位时显示
-    if (targetInfo.show_all_body_parts && targetInfo.available_body_parts && targetInfo.available_body_parts.length > 0) {
+    // 开启全部位显示时显示；角色没有立绘时也强制显示，作为无法点击立绘部位时的交互入口
+    if ((targetInfo.show_all_body_parts || targetInfo.force_show_body_parts) && targetInfo.available_body_parts && targetInfo.available_body_parts.length > 0) {
         const bodyPartsSection = document.createElement('div');
         bodyPartsSection.className = 'target-body-parts-section';
         
