@@ -117,12 +117,17 @@ class FoodBagPanel:
             if cache.now_panel_id != constant.Panel.FOOD_BAG:
                 break
 
+            # 在酒吧的话，则将食物限定为酒类食物
+            if handle_premise.handle_in_bar(0):
+                food_type_list = [_("酒类")]
+
             # 读取背包食物，按(recipe, special_seasoning)分组
             group_normal: dict = {}
             group_special: dict = {}
             del_food_flag = False
             for i in character_data.food_bag.copy():
                 food_data: game_type.Food = cache.character_data[0].food_bag[i]
+                recipe_data = game_config.config_recipes.get(food_data.recipe)
                 # 版本更新用修正
                 # 如果food_data没有milk_ml属性，则删除该食物
                 if not hasattr(food_data, "milk_ml"):
@@ -134,7 +139,11 @@ class FoodBagPanel:
                     del cache.character_data[0].food_bag[i]
                     del_food_flag = True
                     continue
+                # 如果被限定为酒类食物，则跳过非酒类食物
+                if food_type_list == [_("酒类")] and recipe_data is not None and recipe_data.type != 3:
+                    continue
                 group_key = (food_data.recipe, food_data.special_seasoning)
+                # 如果是正常调味食物，则加入group_normal，否则加入group_special
                 if food_data.special_seasoning == 0:
                     group_normal.setdefault(group_key, [])
                     group_normal[group_key].append(i)

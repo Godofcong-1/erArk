@@ -1749,8 +1749,7 @@ def handle_swimming():
 @add_instruct(constant.Instruct.TASTE_WINE)
 def handle_taste_wine():
     """处理品酒指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.TASTE_WINE)
-
+    cache.now_panel_id = constant.Panel.FOOD_BAG
 
 @add_instruct(constant.Instruct.TASTE_TEA)
 def handle_taste_tea():

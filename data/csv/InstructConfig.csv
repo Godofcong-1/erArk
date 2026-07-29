@@ -30,7 +30,7 @@ int,str,str,str,str,int,int,str,str,int,str,str,str,str
 1007,make_coffee,泡咖啡,DAILY,0,1,1,HAVE_TARGET|PLACE_FURNITURE_GE_2|TARGET_URINATE_LE_49|T_NORMAL_24567,MAKE_COFFEE,1,,hand,hand_daily,
 1008,ask_make_coffee,让对方泡咖啡,DAILY,0,1,1,HAVE_TARGET|PLACE_FURNITURE_GE_2|URINATE_LE_49|NO_TARGET_OR_TARGET_CAN_COOPERATE,ASK_MAKE_COFFEE,1,,mouth,mouth_talk,
 1009,make_food,做饭,DAILY,0,1,2,IN_KITCHEN_OR_IN_DR_ROOM_AND_DR_ROOM_LEVEL_GE_2,,2,MAKE_FOOD,hand,hand_daily,hand
-1010,eat,进食,DAILY,0,1,1,HAVE_FOOD,,2,FOOD_BAG,hand,hand_daily,mouth
+1010,eat,进食,DAILY,0,1,1,HAVE_FOOD|NOT_IN_BAR,,2,FOOD_BAG,hand,hand_daily,mouth
 1011,put_selfmade_food_in,放入正常食物,DAILY,0,1,2,HAVE_FOOD|IN_TAKE_FOOD,,1,,hand,hand_scene,
 1012,rest,休息,DAILY,0,1,1,NO_TARGET_OR_TARGET_CAN_COOPERATE_OR_IMPRISONMENT_1,REST,1,,hand,hand_daily,
 1013,diray,日记,DAILY,0,1,1,IN_DORMITORY_OR_HOTEL|NOT_H,,2,DIRAY,hand,hand_daily,hand
