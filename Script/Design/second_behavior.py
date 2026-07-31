@@ -11,6 +11,23 @@ width = normal_config.config_normal.text_width
 _: FunctionType = get_text._
 """ 翻译api """
 
+_orgasm_settle = None
+""" orgasm_settle 模块的延迟导入缓存（规避与Script.Settle包的循环导入，同时消除热路径重复导入开销） """
+
+
+def _get_orgasm_settle():
+    """
+    获取 orgasm_settle 模块（延迟导入并缓存）
+    参数：无
+    返回值类型：module
+    功能描述：首次调用时导入 Script.Settle.orgasm_settle 并缓存，后续直接返回缓存引用
+    """
+    global _orgasm_settle
+    if _orgasm_settle is None:
+        from Script.Settle import orgasm_settle as _orgasm_settle_module
+        _orgasm_settle = _orgasm_settle_module
+    return _orgasm_settle
+
 def character_get_second_behavior(character_id: int, second_behavior_id: str, reset: bool = False):
     """
     角色获得二段行为
@@ -54,18 +71,22 @@ def check_second_effect(
     pl_to_npc -- 玩家对NPC的行为结算
     """
     # 延迟导入，避免与Script.Settle包的循环导入
-    from Script.Settle import orgasm_settle
+    orgasm_settle = _get_orgasm_settle()
 
     # print("进入第二结算")
     orgasm_list = []
     mark_list = []
     item_list = []
     character_data: game_type.Character = cache.character_data[character_id]
-    for second_behavior_id in character_data.second_behavior:
-        if "orgasm" in second_behavior_id:
-            orgasm_list.append(second_behavior_id)
-        if "mark" in second_behavior_id:
-            mark_list.append(second_behavior_id)
+    # 仅在存在激活的二段行为时才构建分类列表：
+    # 无激活行为时，下游 second_behavior_effect 会因"无任何二段行为"直接返回，
+    # 列表内容不会被使用，跳过每次约两百次的子串扫描
+    if any(character_data.second_behavior.values()):
+        for second_behavior_id in character_data.second_behavior:
+            if "orgasm" in second_behavior_id:
+                orgasm_list.append(second_behavior_id)
+            if "mark" in second_behavior_id:
+                mark_list.append(second_behavior_id)
     # for cid in game_config.config_body_item:
     #     body_item_data = game_config.config_body_item[cid]
     #     item_list.append(body_item_data.behavior_id)
@@ -122,7 +143,7 @@ def second_behavior_effect(
     orgasm_settle_flag -- 是否为高潮结算调用，为True时按部位统计部位绝顶行为，每个部位仅程度最高的触发口上，其余仅结算效果，默认为False
     """
     # 延迟导入，避免与Script.Settle包的循环导入
-    from Script.Settle import orgasm_settle
+    orgasm_settle = _get_orgasm_settle()
 
     character_data: game_type.Character = cache.character_data[character_id]
 

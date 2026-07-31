@@ -34,6 +34,9 @@ line_feed = draw.NormalDraw()
 line_feed.text = "\n"
 line_feed.width = 1
 
+_handle_npc_ai_in_h = None
+""" handle_npc_ai_in_h 模块的延迟导入缓存（规避循环导入，同时消除每角色每轮重复导入的开销） """
+
 
 def judge_character_tired_sleep(character_id : int):
     """
@@ -41,8 +44,6 @@ def judge_character_tired_sleep(character_id : int):
     Keyword arguments:
     character_id -- 角色id
     """
-    from Script.System.Instruct_System import handle_instruct
-
     character_data: game_type.Character = cache.character_data[character_id]
     character_sp_flag = character_data.sp_flag
     # 交互对象结算
@@ -81,7 +82,8 @@ def judge_character_tired_sleep(character_id : int):
                     character_data.sp_flag.is_h = False
                     pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
                     pl_character_data.state = constant.CharacterStatus.STATUS_T_H_HP_0
-                    # 调用结束H的指令
+                    # 调用结束H的指令（导入放在罕见分支内，避免热路径重复导入开销）
+                    from Script.System.Instruct_System import handle_instruct
                     handle_instruct.handle_h_end()
 
     # 玩家计算
@@ -102,13 +104,15 @@ def judge_character_tired_sleep(character_id : int):
             if handle_premise.handle_group_sex_mode_on(character_id):
                 character_data.behavior.behavior_id = constant.Behavior.GROUP_SEX_PL_HP_0_END
                 character_data.state = constant.CharacterStatus.STATUS_GROUP_SEX_PL_HP_0_END
-                # 调用结束H的指令
+                # 调用结束H的指令（导入放在罕见分支内，避免热路径重复导入开销）
+                from Script.System.Instruct_System import handle_instruct
                 handle_instruct.handle_group_sex_end()
             # 普通H时
             elif target_data.sp_flag.is_h:
                 character_data.behavior.behavior_id = constant.Behavior.H_HP_0
                 character_data.state = constant.CharacterStatus.STATUS_H_HP_0
-                # 调用结束H的指令
+                # 调用结束H的指令（导入放在罕见分支内，避免热路径重复导入开销）
+                from Script.System.Instruct_System import handle_instruct
                 handle_instruct.handle_h_end()
 
 
@@ -121,7 +125,12 @@ def run_npc_pre_behavior_checks(character_id: int, pl_start_time: datetime.datet
     character_id -- 角色id\n
     pl_start_time -- 玩家行动开始时间\n
     """
-    from Script.Design import handle_npc_ai_in_h
+    # 延迟导入并缓存，避免循环导入且不在热路径反复执行导入机制
+    global _handle_npc_ai_in_h
+    if _handle_npc_ai_in_h is None:
+        from Script.Design import handle_npc_ai_in_h as _in_h_module
+        _handle_npc_ai_in_h = _in_h_module
+    handle_npc_ai_in_h = _handle_npc_ai_in_h
 
     # 判断疲劳和睡眠；群交力竭退出时返回退出行为id，交由本序列提交转换
     if judge_character_tired_sleep(character_id) == constant.Behavior.GROUP_SEX_NPC_HP_0_END:

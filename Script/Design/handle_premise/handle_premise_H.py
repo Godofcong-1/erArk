@@ -19,12 +19,10 @@ def add_premise(premise: str) -> FunctionType:
     """
 
     def decoraror(func):
-        @wraps(func)
-        def return_wrapper(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        constant.handle_premise_data[premise] = return_wrapper
-        return return_wrapper
+        # 直接注册原函数：原先的 return_wrapper 只做纯转发，
+        # 每次前提判定都要白付一层函数调用（热路径每百tick百万次级），故移除
+        constant.handle_premise_data[premise] = func
+        return func
 
     return decoraror
 

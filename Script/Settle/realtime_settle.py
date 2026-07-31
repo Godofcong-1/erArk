@@ -31,6 +31,29 @@ line_feed = draw.NormalDraw()
 line_feed.text = "\n"
 line_feed.width = 1
 
+_drunk_sex_common = None
+""" drunk_sex_common 模块的延迟导入缓存（规避循环导入，同时消除每角色每轮重复导入的开销） """
+_common_default = None
+""" common_default 模块的延迟导入缓存（同上） """
+_map_handle = None
+""" map_handle 模块的延迟导入缓存（同上） """
+
+
+def _rand_range_int(low: int, high: int) -> int:
+    """
+    快速获取 [low, high] 区间内的均匀随机整数
+    参数:
+        low (int) -- 下界（含）
+        high (int) -- 上界（含）
+    返回值类型：int
+    功能描述：random.randint 的轻量替代（省去其参数校验与多层调用开销），
+              用于每角色每分钟都会执行的高频数值结算
+    """
+    if high <= low:
+        return low
+    return low + int(random.random() * (high - low + 1))
+
+
 def judge_pl_real_time_data():
     """
     玩家实时数据结算\n
@@ -63,7 +86,12 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     character_id -- 角色id
     now_time -- 指定时间
     """
-    from Script.System.Sex_System import drunk_sex_common
+    # 延迟导入并缓存，避免循环导入且不在热路径反复执行导入机制
+    global _drunk_sex_common
+    if _drunk_sex_common is None:
+        from Script.System.Sex_System import drunk_sex_common as _drunk_module
+        _drunk_sex_common = _drunk_module
+    drunk_sex_common = _drunk_sex_common
     now_character_data: game_type.Character = cache.character_data[character_id]
     now_behavior_id = now_character_data.behavior.behavior_id
     if now_character_data.target_character_id not in cache.character_data:
@@ -87,7 +115,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     if character_id == 0 and not cache.all_system_setting.difficulty_setting[12]:
         pass
     else:
-        add_urinate = random.randint(int(true_add_time * 0.8), int(true_add_time * 1.2))
+        add_urinate = _rand_range_int(int(true_add_time * 0.8), int(true_add_time * 1.2))
         add_urinate *= cache.all_system_setting.difficulty_setting[11] / 2
         new_urinate = min(now_character_data.urinate_point + int(add_urinate), 300)
         now_character_data.urinate_point = new_urinate
@@ -99,7 +127,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     mana_adjust_coefficient = 2 - mana_point_ratio
 
     # 结算饥饿值
-    add_hunger = random.randint(int(true_add_time * 0.8), int(true_add_time * 1.2))
+    add_hunger = _rand_range_int(int(true_add_time * 0.8), int(true_add_time * 1.2))
     add_hunger = int(add_hunger * hit_adjust_coefficient * mana_adjust_coefficient)
     new_hunger = min(now_character_data.hunger_point + add_hunger, 240)
     now_character_data.hunger_point = new_hunger
@@ -145,7 +173,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         # 结算乳汁量，仅结算有泌乳素质的
         if now_character_data.talent[27]:
             milk_change = int(true_add_time * 2 / 3)
-            add_milk = random.randint(int(milk_change * 0.8), int(milk_change * 1.2))
+            add_milk = _rand_range_int(int(milk_change * 0.8), int(milk_change * 1.2))
             new_milk = min(now_character_data.pregnancy.milk + add_milk, now_character_data.pregnancy.milk_max)
             now_character_data.pregnancy.milk = new_milk
 
@@ -496,16 +524,25 @@ def settle_conscious_continuous(character_id: int, true_add_time: int) -> None:
     返回:
         None
     """
-    from Script.Settle.common_default import base_chara_state_common_settle
-    from Script.Design import map_handle
+    # 延迟导入并缓存，避免循环导入且不在热路径反复执行导入机制
+    global _common_default, _map_handle
+    if _common_default is None:
+        from Script.Settle import common_default as _common_default_module
+        from Script.Design import map_handle as _map_handle_module
+        _common_default = _common_default_module
+        _map_handle = _map_handle_module
+    base_chara_state_common_settle = _common_default.base_chara_state_common_settle
+    map_handle = _map_handle
     now_char = cache.character_data[character_id]
     now_char_ability = now_char.ability
+    # 场景内的角色总数（只计算一次，后续判定复用）
+    scene_chara_count = len(map_handle.get_chara_now_scene_all_chara_id_list(character_id))
     # 场景内减去自己和玩家之外的角色数量
-    others_count = len(map_handle.get_chara_now_scene_all_chara_id_list(character_id)) - 2
+    others_count = scene_chara_count - 2
     # 限制最大加成
     other_chara_count_adjust = min(others_count * 0.1, 2)
-    # 和周围其他人相关的结算
-    if handle_premise.handle_scene_over_two(character_id):
+    # 和周围其他人相关的结算（场景角色数>2，等价于 handle_scene_over_two，复用已计算的人数）
+    if scene_chara_count > 2:
         # 群交中增加羞耻和心理快感
         if handle_premise.handle_group_sex_mode_on(character_id) and handle_premise.handle_self_is_h(character_id):
             base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char_ability[34], extra_adjust=other_chara_count_adjust, tenths_add=False)

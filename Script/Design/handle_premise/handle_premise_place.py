@@ -9,6 +9,9 @@ cache: game_type.Cache = cache_control.cache
 _: FunctionType = get_text._
 """ 翻译api """
 
+_handle_hidden_sex_mode_0 = None
+""" handle_hidden_sex_mode_0 前提函数的延迟导入缓存（规避包内循环导入，同时消除高频前提每次调用的导入开销） """
+
 
 def add_premise(premise: str) -> FunctionType:
     """
@@ -20,12 +23,10 @@ def add_premise(premise: str) -> FunctionType:
     """
 
     def decoraror(func):
-        @wraps(func)
-        def return_wrapper(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        constant.handle_premise_data[premise] = return_wrapper
-        return return_wrapper
+        # 直接注册原函数：原先的 return_wrapper 只做纯转发，
+        # 每次前提判定都要白付一层函数调用（热路径每百tick百万次级），故移除
+        constant.handle_premise_data[premise] = func
+        return func
 
     return decoraror
 
@@ -328,19 +329,24 @@ def handle_scene_someone_h_but_not_hidden_sex(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    from Script.Design.handle_premise import handle_hidden_sex_mode_0
+    # 延迟导入并缓存，避免包内循环导入且不在高频前提中反复执行导入机制
+    global _handle_hidden_sex_mode_0
+    if _handle_hidden_sex_mode_0 is None:
+        from Script.Design.handle_premise import handle_hidden_sex_mode_0 as _hidden_mode_0_func
+        _handle_hidden_sex_mode_0 = _hidden_mode_0_func
     character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于2时进行检测，不再排除自己的跟随和H状态
     # if len(scene_data.character_list) > 2 and not (character_data.sp_flag.is_follow or character_data.sp_flag.is_h):
     if len(character_list) <= 2:
         return 0
+    character_data_all = cache.character_data
     # 遍历当前角色列表
     for chara_id in character_list:
         # 遍历非自己且非玩家的角色
         if chara_id != character_id and chara_id != 0:
-            other_character_data: game_type.Character = cache.character_data[chara_id]
+            other_character_data: game_type.Character = character_data_all[chara_id]
             # 检测是否在非隐奸H
-            if other_character_data.sp_flag.is_h and handle_hidden_sex_mode_0(chara_id):
+            if other_character_data.sp_flag.is_h and _handle_hidden_sex_mode_0(chara_id):
                 return 999
     return 0
 

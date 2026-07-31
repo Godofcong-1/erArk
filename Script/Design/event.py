@@ -6,6 +6,50 @@ from Script.Config import game_config
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 
+_handle_premise = None
+""" handle_premise 模块的延迟导入缓存（规避循环导入，同时消除每次事件判定重复导入的开销） """
+_event_index = {}
+""" 事件预索引缓存：behavior_id -> 按角色专属性分桶的事件id列表（配置在游戏运行期不变，惰性构建一次） """
+
+
+def _get_event_index(behavior_id: str) -> dict:
+    """
+    获取指定行为的事件预索引（惰性构建并缓存）
+    参数:
+        behavior_id (str) -- 行为id
+    返回值类型：dict -- {"universal": [事件id], "sys0": {adv: [事件id]}, "sys1": {adv: [事件id]},
+                        "both": {adv: [事件id]}, "any": {adv: [事件id]}}
+    功能描述：约九成事件是角色专属事件（adv_id 非空），原实现每次事件判定都要遍历该行为的
+              全部事件逐个做 adv 过滤。此处按 adv 过滤规则一次性分桶：
+              universal -- 非角色专属，任何角色都是候选
+              sys0 -- 前提含 sys_0（玩家触发）：仅当交互对象 adv 匹配时是候选
+              sys1 -- 前提含 sys_1（NPC触发）：仅当自己 adv 匹配时是候选
+              both -- 前提同时含 sys_0 与 sys_1：仅当自己与交互对象 adv 都匹配时是候选（沿用原过滤链语义）
+              any -- 前提不含 sys_0/sys_1：自己或交互对象 adv 匹配时是候选
+    """
+    index = _event_index.get(behavior_id)
+    if index is None:
+        index = {"universal": [], "sys0": {}, "sys1": {}, "both": {}, "any": {}}
+        for event_id in game_config.config_event_status_data.get(behavior_id, ()):
+            event_config = game_config.config_event[event_id]
+            if event_config.adv_id in {"", "0", 0}:
+                index["universal"].append(event_id)
+                continue
+            event_adv_id = int(event_config.adv_id)
+            has_sys0 = "sys_0" in event_config.premise
+            has_sys1 = "sys_1" in event_config.premise
+            if has_sys0 and has_sys1:
+                bucket = "both"
+            elif has_sys0:
+                bucket = "sys0"
+            elif has_sys1:
+                bucket = "sys1"
+            else:
+                bucket = "any"
+            index[bucket].setdefault(event_adv_id, []).append(event_id)
+        _event_index[behavior_id] = index
+    return index
+
 
 def handle_event(character_id: int, event_before_instrust_flag = False) -> (draw_event_text_panel.DrawEventTextPanel, str):
     """
@@ -17,7 +61,12 @@ def handle_event(character_id: int, event_before_instrust_flag = False) -> (draw
     draw.LineFeedWaitDraw -- 事件绘制文本
     str -- 事件id
     """
-    from Script.Design import handle_premise
+    # 延迟导入并缓存，避免循环导入且不在热路径反复执行导入机制
+    global _handle_premise
+    if _handle_premise is None:
+        from Script.Design import handle_premise as _handle_premise_module
+        _handle_premise = _handle_premise_module
+    handle_premise = _handle_premise
     character_data: game_type.Character = cache.character_data[character_id]
     target_character_id = character_data.target_character_id
     target_character_data = cache.character_data[target_character_id]
@@ -29,23 +78,23 @@ def handle_event(character_id: int, event_before_instrust_flag = False) -> (draw
     if (
         behavior_id in game_config.config_event_status_data
     ):
-        for event_id in game_config.config_event_status_data[behavior_id]:
+        # 从预索引中直接取出本角色/交互对象相关的候选事件，
+        # 替代原先"遍历该行为全部事件后逐个做 adv 过滤"（约九成事件是其他角色的专属事件）
+        event_index = _get_event_index(behavior_id)
+        self_adv = character_data.adv
+        target_adv = target_character_data.adv
+        candidate_event_ids = list(event_index["universal"])
+        candidate_event_ids += event_index["sys0"].get(target_adv, ())
+        candidate_event_ids += event_index["sys1"].get(self_adv, ())
+        candidate_event_ids += event_index["any"].get(self_adv, ())
+        if target_adv != self_adv:
+            candidate_event_ids += event_index["any"].get(target_adv, ())
+        # both桶要求自己与交互对象的adv同时匹配（沿用原过滤链对 sys_0+sys_1 并存事件的语义）
+        if self_adv == target_adv:
+            candidate_event_ids += event_index["both"].get(self_adv, ())
+        for event_id in candidate_event_ids:
             now_weight = 1
             event_config = game_config.config_event[event_id]
-            # 如果是角色专有事件，则判断角色id是否符合
-            if event_config.adv_id not in {"","0",0}:
-                event_adv_id = int(event_config.adv_id)
-                # print(f"debug event_config.adv_id:{event_config.adv_id}")
-                # 事件由玩家触发，但交互对象不是该id，则跳过
-                if "sys_0" in event_config.premise and event_adv_id != target_character_data.adv:
-                    continue
-                # 事件由NPC触发，但自己不是该id，则跳过
-                elif "sys_1" in event_config.premise and event_adv_id != character_data.adv:
-                    continue
-                # 既不是自己id也不是交互对象id，则跳过
-                else:
-                    if event_adv_id != character_data.adv and event_adv_id != target_character_data.adv:
-                        continue
             # 如果是事件在前，指令在后，判断是否需要跳过
             if event_before_instrust_flag:
                 if event_config.type == 1:

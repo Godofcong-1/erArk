@@ -31,6 +31,9 @@ line_feed = draw.NormalDraw()
 line_feed.text = "\n"
 line_feed.width = 1
 
+_settle_default = None
+""" Script.Settle.default 模块的延迟导入缓存（规避循环导入，同时消除每角色每轮重复导入的开销） """
+
 def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: datetime.datetime) -> int:
     """
     判断H状态、猥亵与无意识\n
@@ -40,7 +43,12 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
     Return arguments:
     bool -- 本次update时间切片内活动是否已完成
     """
-    from Script.Settle import default
+    # 延迟导入并缓存，避免循环导入且不在热路径反复执行导入机制
+    global _settle_default
+    if _settle_default is None:
+        from Script.Settle import default as _settle_default_module
+        _settle_default = _settle_default_module
+    default = _settle_default
     character_data: game_type.Character = cache.character_data[character_id]
     pl_character_data: game_type.Character = cache.character_data[0]
 
@@ -92,6 +100,8 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
 
     # 如果不在同一位置
     if handle_premise.handle_not_in_player_scene(character_id):
+        # 本分支内是否发生了实际的状态重置（未重置时无需刷新异常位掩码）
+        state_reset_flag = False
         # 结束H状态
         if handle_premise.handle_self_is_h(character_id):
             character_data.sp_flag.is_h = False
@@ -101,20 +111,28 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
             character_data.behavior.start_time = pl_start_time
             character_data.behavior.duration = 1
             character_data.target_character_id = character_id
+            state_reset_flag = True
         # 结束睡眠猥亵状态
         if handle_premise.handle_unconscious_flag_1(character_id):
             character_data.sp_flag.unconscious_h = 0
+            state_reset_flag = True
         # 结束空气催眠
         if handle_premise.handle_unconscious_flag_5(character_id) and character_data.position != pl_character_data.pl_ability.air_hypnosis_position:
             character_data.sp_flag.unconscious_h = 0
+            state_reset_flag = True
         # 结束隐奸状态
         if handle_premise.handle_hidden_sex_mode_ge_1(character_id):
             character_data.sp_flag.hidden_sex_mode = 0
+            state_reset_flag = True
         # 结束露出状态
         if handle_premise.handle_exhibitionism_sex_mode_ge_1(character_id):
             character_data.sp_flag.exhibitionism_sex_mode = 0
-        handle_premise.settle_chara_unnormal_flag(character_id, 5)
-        handle_premise.settle_chara_unnormal_flag(character_id, 6)
+            state_reset_flag = True
+        # 仅在本分支实际重置过状态时刷新异常位掩码（5/6位的重算链较昂贵，
+        # 未发生变化时刷新结果不变，其他修改点各自负责调用刷新）
+        if state_reset_flag:
+            handle_premise.settle_chara_unnormal_flag(character_id, 5)
+            handle_premise.settle_chara_unnormal_flag(character_id, 6)
 
     # H状态或木头人时，行动锁死为等待不动
     if character_data.sp_flag.is_h or character_data.hypnosis.blockhead:

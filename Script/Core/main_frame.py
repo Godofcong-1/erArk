@@ -553,8 +553,12 @@ def _read_queue_drain():
             if c["type"] == "image_cmd":
                 io_print_image_cmd(c["text"], c["num"], c.get("tooltip", ""))
             if "\n" in c["text"]:
-                if textbox.get("1.0", END).count("\n") > normal_config.config_normal.text_hight * 10:
+                # 用 end-1c 的行号索引取当前总行数（Tk 内部 O(1)），
+                # 避免旧实现把整个缓冲区拷贝成字符串再数换行（O(缓冲区长度)，且随历史增长变慢）
+                if int(textbox.index("end-1c").split(".")[0]) > normal_config.config_normal.text_hight * 10:
                     textbox.delete("1.0", str(normal_config.config_normal.text_hight * 5) + ".0")
+                    # 裁剪后顺带回收已无文本范围的 tooltip tag，防止 tag 表随会话无限增长
+                    _cleanup_tooltip_tags()
 
 
 def run():
@@ -678,12 +682,31 @@ def print_cmd(string, style=("standard",)):
     see_end()
 
 
+def _cleanup_tooltip_tags():
+    """
+    回收已无文本范围的 tooltip tag
+
+    参数：无
+
+    返回值类型：无
+    功能描述：now_print 为带悬浮提示的文本创建的 text_tooltip_* tag 在文本被
+              清屏/裁剪删除后仍留在 Text 控件的 tag 表中（含事件绑定闭包），
+              导致 tag 表随会话时长线性增长、拖慢后续所有插入与排版操作。
+              此函数删除所有已经没有对应文本范围的 tooltip tag，
+              在清屏与行数裁剪后调用。
+    """
+    for tag_name in textbox.tag_names():
+        if tag_name.startswith("text_tooltip_") and not textbox.tag_ranges(tag_name):
+            textbox.tag_delete(tag_name)
+
+
 def clear_screen():
     """
     清屏
     """
     io_clear_cmd()
     textbox.delete("1.0", END)
+    _cleanup_tooltip_tags()
 
 
 def frame_style_def(
