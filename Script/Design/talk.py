@@ -116,7 +116,7 @@ def handle_talk_sub(character_id: int, behavior_id: str, calculated_premise_dict
             tem_talk_list += game_config.config_talk_data_by_chara_adv[behavior_id][0][1]
         # 获取触发者的口上版本
         character_version = 0
-        if character_data.adv != 0:
+        if character_data.adv != 0 and character_data.adv in cache.all_system_setting.character_text_version:
             character_version = cache.all_system_setting.character_text_version[character_data.adv]
         # 获取触发者id的口上，需要自己adv不为0，有自己adv的口上，自己口上版本不是无
         if (
@@ -128,7 +128,7 @@ def handle_talk_sub(character_id: int, behavior_id: str, calculated_premise_dict
             tem_talk_list += game_config.config_talk_data_by_chara_adv[behavior_id][character_data.adv][character_version]
         # 获取交互目标的口上版本
         target_version = 0
-        if target_data.adv != 0:
+        if target_data.adv != 0 and target_data.adv in cache.all_system_setting.character_text_version:
             target_version = cache.all_system_setting.character_text_version[target_data.adv]
         # 获取交互目标的口上
         if (
