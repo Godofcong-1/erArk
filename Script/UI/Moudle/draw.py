@@ -247,9 +247,9 @@ class BarDraw:
                 self.draw_list.append(now_draw)
 
     def draw(self):
-        """绘制比例条"""
-        for bar in self.draw_list:
-            bar.draw()
+        """绘制比例条（整条合并为一条批量图片消息，避免逐格一条消息的队列放大）"""
+        if self.draw_list:
+            io_init.image_list_print([bar.image_name for bar in self.draw_list])
 
     def __len__(self) -> int:
         """

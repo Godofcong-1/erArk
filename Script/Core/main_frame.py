@@ -535,6 +535,11 @@ def _read_queue_drain():
             )
         if "image" in json_data:
             textbox.image_create("end",image=era_image.image_data[json_data["image"]["image_name"]])
+        if "image_list" in json_data:
+            # 批量图片消息（如整条比例条），一条消息内逐格嵌入
+            image_data_dict = era_image.image_data
+            for image_name in json_data["image_list"]:
+                textbox.image_create("end", image=image_data_dict[image_name])
 
         for c in json_data["content"]:
             if c["type"] == "text":

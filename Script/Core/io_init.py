@@ -404,12 +404,39 @@ def image_print(image_name: str):
         put_queue(json.dumps(json_str, ensure_ascii=False))
 
 
+def image_list_print(image_name_list: list):
+    """
+    批量图片输出命令
+
+    参数:
+    image_name_list (list) -- 图片名称列表
+
+    返回值类型：无
+    功能描述：把一组图片合并为一条消息输出到界面。
+              比例条等逐格图片若逐张调用 image_print，每格都是一条独立队列消息
+              （json序列化/反序列化/队列操作各一次），主界面单屏可达数百条；
+              合并后一条比例条只占一条消息。
+    """
+    if not image_name_list:
+        return
+    # 检查是否在Web模式下（Tk模式的比例条绘制已被Web适配器整体替换，此处仅为兜底）
+    if _is_web_mode():
+        if hasattr(web_io, 'image_print'):
+            for image_name in image_name_list:
+                web_io.image_print(image_name)
+        return
+    # 原始逻辑：单条消息携带整组图片名
+    json_str = new_json()
+    json_str["image_list"] = list(image_name_list)
+    put_queue(json.dumps(json_str, ensure_ascii=False))
+
+
 def clear_screen():
     """
     清屏
-    
+
     参数：无
-    
+
     返回值类型：无
     功能描述：清空显示界面
     """
