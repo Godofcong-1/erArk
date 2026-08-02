@@ -44,11 +44,6 @@ def calculate_food_effects(
     # 品质最小为1
     food_quality = max(food_quality, 1)
     quality_adjust = (food_quality / 2) ** 2
-    # 高品质食物额外加系数
-    if food_quality == 8:
-        quality_adjust *= 2
-    elif food_quality >= 7:
-        quality_adjust += 1
     # 获取食物菜谱难度等级
     cook_difficulty = 1
     if now_food is not None and now_food.recipe in game_config.config_recipes:
@@ -60,7 +55,7 @@ def calculate_food_effects(
     if now_food is not None:
         # 手动制作的食物则额外加成
         if len(now_food.maker):
-            quality_adjust *= 2
+            quality_adjust *= 1.5
         # 获取食谱id
         food_recipe_id = now_food.recipe
         # 获取食谱数据
@@ -73,6 +68,8 @@ def calculate_food_effects(
                 food_recipe_time = 15
             # 根据该时间与60分钟的比例来计算加成时间
             add_time_adjust = food_recipe_time / 60
+            # 封顶1.5倍加成
+            add_time_adjust = min(add_time_adjust, 1.5)
 
     # 状态值变更
     state_add = int(add_time * quality_adjust * cook_difficulty * add_time_adjust * random.uniform(0.8, 1.2))
