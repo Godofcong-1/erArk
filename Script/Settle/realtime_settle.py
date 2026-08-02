@@ -332,11 +332,20 @@ def settle_tired(character_id: int, true_add_time: int) -> None:
     返回:
         None
     """
+    global _drunk_sex_common
+    if _drunk_sex_common is None:
+        from Script.System.Sex_System import drunk_sex_common as _drunk_module
+        _drunk_sex_common = _drunk_module
+    drunk_sex_common = _drunk_sex_common
     now_character_data: game_type.Character = cache.character_data[character_id]
     tired_change = int(true_add_time / 6)
-    # 当前在香薰疗愈-疲劳状态下，疲劳值增加减半
+    # 当前在香薰疗愈-疲劳状态下，疲劳值增加减少
     if handle_premise.handle_aromatherapy_flag_8(character_id):
         tired_change = int(tired_change * 0.8)
+    # 在喝醉的情况下，根据醉酒等级来提升疲劳值增加速度
+    drunk_level, drunk_name = drunk_sex_common.get_drunk_level(character_id)
+    if drunk_level > 0:
+        tired_change = int(tired_change * (1 + drunk_level * 0.1))
     # 大于5分钟的疲劳值增加至少为1
     if true_add_time >= 5:
         tired_change = max(tired_change, 1)
