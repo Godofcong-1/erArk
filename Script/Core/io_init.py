@@ -440,44 +440,78 @@ def warm_up_text_metrics():
     返回值类型：无
     功能描述：Tk Text 控件对新字形/新内容的行度量是异步惰性完成的，欠账会在
               进入游戏后的前几屏由 see(END) 一次性同步补算，造成 0.3~1 秒的偶发卡顿
-              （地图制表符等特殊字形尤其明显）。本函数在启动加载末尾绘制一屏
-              典型内容（真实地图绘制文本 + 常用字符样本 + 字体变体 + 状态条图片），
-              推送 metrics_sync 标记让 GUI 线程强制完成全部行度量，随后立即清屏——
-              三步在同一渲染批内处理，玩家不可见，度量成本被移入加载期。仅 Tk 模式生效。
+              （地图制表符等特殊字形尤其明显）。本函数在启动加载末尾绘制若干屏
+              典型内容：①主场景互动面板（in_scene_panel）及其状态栏/服装栏/身体栏/
+              图片栏/污浊栏/指令面板所用文本的去重字形集；②data/map 各级目录 Map
+              原文件的地图绘制文本（cache.map_data 即其加载结果）。随后推送
+              metrics_sync 标记让 GUI 线程强制完成全部行度量，并立即清屏——
+              全程在同一渲染批内处理，玩家不可见，度量成本被移入加载期。仅 Tk 模式生效。
     """
     if _is_web_mode():
         return
-    # 1. 采样真实地图绘制文本（含制表符等特殊字形，是地图界面度量成本的大头）
+    # 1. 地图面板内容：cache.map_data 即 data/map 各级目录下 Map 原文件的加载结果。
+    #    抽取部分真实行保留行结构（制表符对齐是地图界面度量成本的大头），
+    #    其余行的字形并入去重字形集，保证全部地图的字形都被覆盖
     sample_lines = []
+    glyph_set = set()
     try:
+        raw_line_quota = 40
         for map_data in cache.map_data.values():
             map_draw = getattr(map_data, "map_draw", None)
             if map_draw is None:
                 continue
             for draw_line in map_draw.draw_text:
                 line_text = "".join(getattr(now_draw, "text", "") for now_draw in draw_line.draw_list)
-                if line_text.strip():
+                if not line_text.strip():
+                    continue
+                glyph_set.update(line_text)
+                if raw_line_quota > 0:
                     sample_lines.append(line_text)
-                if len(sample_lines) >= 40:
-                    break
-            if len(sample_lines) >= 40:
-                break
+                    raw_line_quota -= 1
     except Exception:
         # 地图数据不可用时仅用字符样本预热
         pass
-    # 2. 常用字符样本（数字、ASCII、全角标点、特殊符号）。
-    #    注：曾试验过收集全部角色名/状态名/素质名的大字形集预热，实测把加载期同步成本
-    #    推高到3.5秒且首屏残留未消除（残留为字形首次上屏的光栅化成本，隐藏预热覆盖不到），
-    #    而主界面本身无冷启动尖峰，故收缩为仅覆盖有实测冷尖峰的地图字形与轻量样本。
-    sample_lines.append("预热样本：体力气力理智熟练欲望快感绝顶0123456789ABCabc[]（），。！？：→○◆·—/%+-")
+    # 2. 主场景互动面板典型文本字形：面板固定标签 + 常用字符样本
+    glyph_set.update("场景当前位置的角色一览:收起展开状态栏服装身体图片详细污浊(锁)预热样本：体力气力理智熟练欲望快感绝顶0123456789ABCabc[]（），。！？→○◆·—/%+-|")
+    try:
+        from Script.Core import get_text, constant
+
+        translate = get_text._
+        # 主界面各子面板所用配置表的名字字段：
+        # 状态栏（状态名）、服装栏（部位名）、身体栏与污浊栏（器官名/部位名）、指令面板（分类名）。
+        name_sources = (
+            game_config.config_character_state.values(),
+            game_config.config_clothing_type.values(),
+            game_config.config_organ.values(),
+            game_config.config_body_part.values(),
+            game_config.config_instruct_type.values(),
+            game_config.config_instruct_sex_type.values(),
+        )
+        for source in name_sources:
+            for config_data in source:
+                name_text = getattr(config_data, "name", "")
+                if name_text:
+                    glyph_set.update(translate(name_text))
+        # 指令面板：全部指令名
+        for instruct_name in constant.handle_instruct_name_data.values():
+            glyph_set.update(translate(instruct_name))
+    except Exception:
+        # 配置表不可用时仅用地图行与固定样本预热
+        pass
+    # 3. 去重字形按行拼接（去重后仅数十行即可覆盖主界面与全部地图的常见字形）
+    glyph_set.difference_update("\n\r\t\x00 ")
+    glyph_list = sorted(glyph_set)
+    chunk_size = 60
+    for i in range(0, len(glyph_list), chunk_size):
+        sample_lines.append("".join(glyph_list[i : i + chunk_size]))
     # 逐行入队绘制（与下方的度量同步、清屏在同一渲染批内完成，不会被玩家看到）
     for line_text in sample_lines:
         era_print(line_text + "\n")
-    # 3. 字体变体预热：粗体/下划线/斜体是独立的字体实例，字形度量单独缓存
+    # 4. 字体变体预热：粗体/下划线/斜体是独立的字体实例，字形度量单独缓存
     variant_sample = "预热字体变体样本0123456789体力气力理智"
     for style_name in ("bold", "underline", "italic", "standard_bold"):
         era_print(variant_sample + "\n", style=style_name)
-    # 4. 状态条图片预热：首次使用时的 PhotoImage 惰性转换与图片行度量
+    # 5. 状态条图片预热：首次使用时的 PhotoImage 惰性转换与图片行度量
     try:
         bar_image_names = set()
         for bar_config in game_config.config_bar.values():
