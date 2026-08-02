@@ -799,6 +799,9 @@ def get_chara_entertainment(character_id: int):
                         if cache.rhodes_island.facility_open[facility_open_cid] == 0:
                             entertainment_list.remove(choice_entertainment_id)
                             continue
+                    # 品酒只能在晚上进行
+                    if choice_entertainment_id == 62 and i != 2:
+                        continue
                     # 检查该娱乐活动是否需要特定的条件
                     if entertainment_data.need == "无":
                         break
