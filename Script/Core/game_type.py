@@ -220,6 +220,8 @@ class NormalConfig:
     """ 输入框字体大小 """
     tk_dpi: int
     """ Tkinter DPI缩放值，默认100为100%缩放，125为125%缩放，150为150%缩放，0为自动 """
+    perf_monitor: int
+    """ 是否开启性能监控（0关闭，1开启后每屏渲染耗时落盘到 profiling_output/） """
 
 
 # class Clothing:

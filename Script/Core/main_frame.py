@@ -41,6 +41,7 @@ from Script.Core import (
     text_handle,
     game_type,
     cache_control,
+    perf_hook,
 )
 from Script.Config import normal_config, game_config
 
@@ -452,10 +453,29 @@ def _do_arm():
     返回值类型：无
     功能描述：由 read_queue 处理上膛标记时经 root.after_idle 挂起，在 Tk 事件队列
               无待派发事件（滞留点击均已被派发并丢弃）后才运行；幂等且异常安全。
+              性能监控开启时，此处是"一屏"的边界：计算端到端渲染延迟并落盘本屏报告。
     """
     global input_armed, _arm_after_id
     _arm_after_id = None
     input_armed = True
+    if perf_hook.enabled:
+        # 端到端延迟配对：flow 侧入队完成 / 本屏首条消息入队 -> GUI 侧界面可交互
+        t_now = time.perf_counter()
+        extra = {}
+        t_enqueue = perf_hook.get_mark("flow.enqueue_done")
+        if t_enqueue:
+            extra["enqueue_to_interactive_ms"] = round((t_now - t_enqueue) * 1000, 3)
+        t_screen = perf_hook.get_mark("flow.screen_first_msg")
+        if t_screen:
+            extra["screen_total_ms"] = round((t_now - t_screen) * 1000, 3)
+        # 采样 Text 控件当前 tag 总数（观测 tooltip tag 是否泄漏增长）
+        try:
+            perf_hook.hook_value("gui.textbox_tag_count", len(textbox.tag_names()))
+        except Exception:
+            pass
+        perf_hook.flush_screen_report(extra)
+        # 复位"本屏首条消息"标记，下一屏第一条入队消息会重新打标
+        perf_hook.clear_mark("flow.screen_first_msg")
 
 
 def read_queue():
@@ -485,11 +505,21 @@ def _read_queue_drain():
     """
     排空输出队列并逐条渲染的内部实现，无输入参数，无返回值。
     独立成函数，供 read_queue 用 try/finally 包裹以实现批末合并滚动逻辑。
+    性能监控开启时按消息类别分类计时（json 反序列化/文本插入/按钮渲染/图片嵌入/行数裁剪）。
     """
     global input_armed, _arm_after_id
+    _perf = perf_hook.enabled
+    if _perf:
+        _batch_start = time.perf_counter()
+        _batch_msg_count = 0
     while not main_queue.empty():
         quene_str = main_queue.get()
+        if _perf:
+            _t0 = time.perf_counter()
         json_data = json.loads(quene_str)
+        if _perf:
+            perf_hook.hook_time("gui.json_loads", time.perf_counter() - _t0)
+            _batch_msg_count += 1
 
         # 渲染期输入门禁：逐条按批内顺序判定。上膛标记恒在一屏内容之后入队，
         # 逐条处理时"内容先撤膛、末尾标记再上膛"天然正确，无需批末统一置位。
@@ -512,8 +542,11 @@ def _read_queue_drain():
             except Exception:
                 # 旧版 Tk 无 sync 子命令时静默跳过（预热退化为仅字形绘制）
                 pass
+            _sync_duration = time.perf_counter() - _sync_start
             # 向终端输出预热完成信息（该耗时即启动加载期为消除进入游戏后首屏卡顿付出的延迟）
-            print(f"地图预热完毕，耗时 {time.perf_counter() - _sync_start:.2f} 秒")
+            print(f"常用字符预热完毕，耗时 {_sync_duration:.2f} 秒")
+            if _perf:
+                perf_hook.hook_time("gui.metrics_sync", _sync_duration)
             continue
         # 任何其它内容消息（文本/按钮/图片/清屏等）都意味着新一屏正在渲染 → 撤膛，
         # 并取消挂起未执行的上膛回调，防止"标记批之后又来内容批"时旧回调迟到误开门。
@@ -547,20 +580,34 @@ def _read_queue_drain():
                 temp["italic"],
             )
         if "image" in json_data:
+            if _perf:
+                _t0 = time.perf_counter()
             textbox.image_create("end",image=era_image.image_data[json_data["image"]["image_name"]])
+            if _perf:
+                perf_hook.hook_time("gui.image_create", time.perf_counter() - _t0)
         if "image_list" in json_data:
             # 批量图片消息（如整条比例条），一条消息内逐格嵌入
+            if _perf:
+                _t0 = time.perf_counter()
             image_data_dict = era_image.image_data
             for image_name in json_data["image_list"]:
                 textbox.image_create("end", image=image_data_dict[image_name])
+            if _perf:
+                perf_hook.hook_time("gui.image_create", time.perf_counter() - _t0)
 
         for c in json_data["content"]:
             if c["type"] == "text":
                 c["style"][0] = c["style"][0].replace(" ","")
+                if _perf:
+                    _t0 = time.perf_counter()
                 now_print(c["text"], style=tuple(c["style"]), tooltip=c.get("tooltip", ""))
+                if _perf:
+                    perf_hook.hook_time("gui.now_print", time.perf_counter() - _t0)
             if c["type"] == "cmd":
                 c["normal_style"][0] = c["normal_style"][0].replace(" ", "")
                 c["on_style"][0] = c["on_style"][0].replace(" ", "")
+                if _perf:
+                    _t0 = time.perf_counter()
                 io_print_cmd(
                     c["text"],
                     c["num"],
@@ -568,15 +615,30 @@ def _read_queue_drain():
                     c["on_style"],
                     c.get("tooltip", ""),
                 )
+                if _perf:
+                    perf_hook.hook_time("gui.cmd_render", time.perf_counter() - _t0)
             if c["type"] == "image_cmd":
+                if _perf:
+                    _t0 = time.perf_counter()
                 io_print_image_cmd(c["text"], c["num"], c.get("tooltip", ""))
+                if _perf:
+                    perf_hook.hook_time("gui.image_cmd_render", time.perf_counter() - _t0)
             if "\n" in c["text"]:
+                if _perf:
+                    _t0 = time.perf_counter()
                 # 用 end-1c 的行号索引取当前总行数（Tk 内部 O(1)），
                 # 避免旧实现把整个缓冲区拷贝成字符串再数换行（O(缓冲区长度)，且随历史增长变慢）
                 if int(textbox.index("end-1c").split(".")[0]) > normal_config.config_normal.text_hight * 10:
+                    if _perf:
+                        perf_hook.hook_count("gui.line_trim_delete")
                     textbox.delete("1.0", str(normal_config.config_normal.text_hight * 5) + ".0")
                     # 裁剪后顺带回收已无文本范围的 tooltip tag，防止 tag 表随会话无限增长
                     _cleanup_tooltip_tags()
+                if _perf:
+                    perf_hook.hook_time("gui.line_trim_scan", time.perf_counter() - _t0)
+    if _perf and _batch_msg_count:
+        perf_hook.hook_time("gui.drain_batch", time.perf_counter() - _batch_start)
+        perf_hook.hook_count("gui.msg_total", _batch_msg_count)
 
 
 def run():
@@ -597,6 +659,11 @@ def see_end():
     if _defer_see_end:
         # 处于一批输出中，推迟到批末再滚动
         _see_end_pending = True
+        return
+    if perf_hook.enabled:
+        _t0 = time.perf_counter()
+        textbox.see(END)
+        perf_hook.hook_time("gui.see_end", time.perf_counter() - _t0)
         return
     textbox.see(END)
 
@@ -654,12 +721,18 @@ def now_print(string, style=("standard",), tooltip: str = ""):
     style -- 样式序列
     tooltip -- 悬浮提示文本，用于在 Tk 端展示说明
     """
+    _perf = perf_hook.enabled
     tooltip_text = tooltip or ""
     start_index = None
     if tooltip_text and string:
         # 记录插入前的位置，便于为新增文本打标签
         start_index = textbox.index("end-1c")
+    if _perf:
+        _t0 = time.perf_counter()
     textbox.insert("end", string, style)
+    if _perf:
+        perf_hook.hook_time("gui.text_insert", time.perf_counter() - _t0)
+        _t0 = time.perf_counter()
     if tooltip_text and string and start_index is not None:
         end_index = textbox.index("end-1c")
         if textbox.compare(start_index, "<", end_index):
@@ -683,6 +756,10 @@ def now_print(string, style=("standard",), tooltip: str = ""):
             textbox.tag_bind(tag_name, "<Enter>", enter_func)
             textbox.tag_bind(tag_name, "<Leave>", leave_func)
             textbox.tag_bind(tag_name, "<Motion>", motion_func)
+        if _perf:
+            # 单独统计 tooltip tag 的创建耗时与数量（观测 tag 泄漏的来源）
+            perf_hook.hook_time("gui.tooltip_tag", time.perf_counter() - _t0)
+            perf_hook.hook_count("gui.tooltip_tag_created")
     if not string and tooltip_text:
         # 空字符串不创建标签，直接取消已安排的提示
         _hide_tooltip()
@@ -723,6 +800,12 @@ def clear_screen():
     清屏
     """
     io_clear_cmd()
+    if perf_hook.enabled:
+        _t0 = time.perf_counter()
+        textbox.delete("1.0", END)
+        _cleanup_tooltip_tags()
+        perf_hook.hook_time("gui.clear_screen_delete", time.perf_counter() - _t0)
+        return
     textbox.delete("1.0", END)
     _cleanup_tooltip_tags()
 
@@ -1042,6 +1125,10 @@ def io_clear_cmd(*cmd_numbers: list):
     cmd_number -- 命令数字，不输入则清楚当前已有的全部命令
     """
     global cmd_tag_map
+    _perf = perf_hook.enabled
+    if _perf:
+        _t0 = time.perf_counter()
+        _clear_count = len(cmd_numbers) if cmd_numbers else len(cmd_tag_map)
     if cmd_numbers:
         for num in cmd_numbers:
             if num in cmd_tag_map:
@@ -1065,3 +1152,6 @@ def io_clear_cmd(*cmd_numbers: list):
                 textbox.tag_add("standard", index_first, index_lskip_one_waitast)
             textbox.tag_delete(cmd_tag_map[num])
         cmd_tag_map.clear()
+    if _perf:
+        perf_hook.hook_time("gui.clear_cmd", time.perf_counter() - _t0)
+        perf_hook.hook_count("gui.clear_cmd_tags", _clear_count)

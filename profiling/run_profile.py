@@ -62,6 +62,8 @@ def parse_args():
     ap.add_argument("--with-premise-profiler", action="store_true", help="尝试加载前提统计补丁（需已放置 premise_profiler_patch）")
     ap.add_argument("--premise-stats-json", type=str, default="profiling_output/premise_stats.json", help="前提统计输出路径")
     ap.add_argument("--skip-premise-export", action="store_true", help="跳过前提统计导出")
+    ap.add_argument("--loop-stats", action="store_true", help="启用主循环/NPC AI 结构统计（重扫轮数、target 检索规模、每 tick 耗时分布）")
+    ap.add_argument("--loop-stats-json", type=str, default="", help="结构统计输出路径（默认 profiling_output/<name>_loop_stats.json）")
     return ap.parse_args()
 
 
@@ -91,6 +93,27 @@ def patch_for_benchmark(no_patch_io=False):
             draw.WaitDraw.draw = fast_wait
     except Exception as e:
         log(f"补丁 WaitDraw.draw 失败: {e}")
+
+    # 补丁 askfor_all：无人值守时随机的带选项事件（event_option_panel）会调用
+    # askfor_all 阻塞等待玩家输入，导致基准永久挂起。此处模拟"自动玩家"：
+    # 始终选择第一个可用选项并照常分发其回调（_cmd_deal），保持面板退出语义。
+    try:
+        from Script.Core import flow_handle
+
+        def benchmark_askfor_all(input_list, print_order=False):
+            if not input_list:
+                return ""
+            order = str(input_list[0])
+            try:
+                if flow_handle._cmd_valid(order):
+                    flow_handle._cmd_deal(order)
+            except Exception:
+                pass
+            return order
+
+        flow_handle.askfor_all = benchmark_askfor_all
+    except Exception as e:
+        log(f"补丁 askfor_all 失败: {e}")
 
     # 你可根据需要继续补丁其它 UI / 输入函数
     log("IO 补丁完成.")
@@ -440,6 +463,17 @@ def main():
     premise_mod = init_game_environment(args)
     patch_for_benchmark(no_patch_io=args.no_patch_io)
 
+    # 可选：主循环/NPC AI 结构统计补丁（需在 profile 运行前应用）
+    loop_stats_mod = None
+    if args.loop_stats:
+        try:
+            from profiling import loop_stats_patch as loop_stats_mod
+            loop_stats_mod.apply_loop_stats_patch()
+            log("主循环结构统计补丁已应用。")
+        except Exception as e:
+            loop_stats_mod = None
+            log(f"加载主循环结构统计补丁失败: {e}")
+
     profile_run(
         ticks=args.ticks,
         minutes_per_tick=args.minutes_per_tick,
@@ -451,10 +485,20 @@ def main():
     if premise_mod and not args.skip_premise_export:
         export_premise_stats(premise_mod, args.premise_stats_json)
 
+    # 导出主循环结构统计
+    if loop_stats_mod is not None:
+        loop_stats_path = args.loop_stats_json or os.path.join(PROFILE_DIR, f"{args.profile_name}_loop_stats.json")
+        try:
+            loop_stats_mod.export_loop_stats(loop_stats_path)
+            log(f"主循环结构统计已导出 -> {loop_stats_path}")
+        except Exception as e:
+            log(f"导出主循环结构统计失败: {e}")
+
     log("全部完成。可使用 snakeviz / py-spy / scalene 进行进一步分析。")
 
-    # 退出
-    sys.exit(0)
+    # 退出：用 os._exit 强制结束，避免图片管理器等非守护线程阻塞进程退出
+    sys.stdout.flush()
+    os._exit(0)
 
 
 if __name__ == "__main__":

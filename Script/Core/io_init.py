@@ -2,8 +2,9 @@
 import threading
 import queue
 import json
+import time
 from Script.Config import game_config, normal_config
-from Script.Core import cache_control
+from Script.Core import cache_control, perf_hook
 
 # 获取全局缓存
 cache = cache_control.cache
@@ -204,6 +205,12 @@ def put_queue(message: str):
     """
     # Web模式下不使用队列
     if not _is_web_mode():
+        if perf_hook.enabled:
+            # 记录本屏首条消息入队时刻（供 GUI 侧计算整屏耗时），并累计消息数/字节数
+            if not perf_hook.get_mark("flow.screen_first_msg"):
+                perf_hook.mark("flow.screen_first_msg")
+            perf_hook.hook_count("flow.msg_total")
+            perf_hook.hook_count("flow.msg_bytes", len(message))
         _send_queue.put_nowait(message)
 
 
@@ -221,6 +228,8 @@ def arm_input():
     # 隐性前提：绘制队列为单生产者（flow 线程），标记 push 后 flow 即阻塞等待输入，
     # 故标记恒为该屏消息的批尾；若未来出现后台绘制生产者需重新评估此假设。
     if not _is_web_mode():
+        # 性能监控：flow 侧入队完成时刻，与 GUI 侧 _do_arm 配对得出真实渲染延迟
+        perf_hook.mark("flow.enqueue_done")
         _send_queue.put_nowait(json.dumps({"input_arm": True}))
 
 
@@ -377,6 +386,15 @@ def era_print(string: str, style="standard", tooltip: str = ""):
         web_io.era_print(string, style, tooltip=tooltip)
     else:
         # 原始逻辑
+        if perf_hook.enabled:
+            _t0 = time.perf_counter()
+            json_str = new_json()
+            json_str["content"].append(text_json(string, style, tooltip))
+            message = json.dumps(json_str, ensure_ascii=False)
+            perf_hook.hook_time("flow.json_dumps", time.perf_counter() - _t0)
+            perf_hook.hook_count("flow.msg_text")
+            put_queue(message)
+            return
         json_str = new_json()
         json_str["content"].append(text_json(string, style, tooltip))
         put_queue(json.dumps(json_str, ensure_ascii=False))
@@ -398,6 +416,9 @@ def image_print(image_name: str):
         web_io.image_print(image_name)
     else:
         # 原始逻辑
+        if perf_hook.enabled:
+            # 图片消息计数（比例条每格一条消息，是消息量放大器的直接指标）
+            perf_hook.hook_count("flow.msg_image")
         json_str = new_json()
         image_json = {"image_name": image_name}
         json_str["image"] = image_json
@@ -426,6 +447,10 @@ def image_list_print(image_name_list: list):
                 web_io.image_print(image_name)
         return
     # 原始逻辑：单条消息携带整组图片名
+    if perf_hook.enabled:
+        # 图片格数计数与逐格模式保持同口径，另计批数
+        perf_hook.hook_count("flow.msg_image", len(image_name_list))
+        perf_hook.hook_count("flow.msg_image_batch")
     json_str = new_json()
     json_str["image_list"] = list(image_name_list)
     put_queue(json.dumps(json_str, ensure_ascii=False))
@@ -507,11 +532,11 @@ def warm_up_text_metrics():
     # 逐行入队绘制（与下方的度量同步、清屏在同一渲染批内完成，不会被玩家看到）
     for line_text in sample_lines:
         era_print(line_text + "\n")
-    # 4. 字体变体预热：粗体/下划线/斜体是独立的字体实例，字形度量单独缓存
+    # 3. 字体变体预热：粗体/下划线/斜体是独立的字体实例，字形度量单独缓存
     variant_sample = "预热字体变体样本0123456789体力气力理智"
     for style_name in ("bold", "underline", "italic", "standard_bold"):
         era_print(variant_sample + "\n", style=style_name)
-    # 5. 状态条图片预热：首次使用时的 PhotoImage 惰性转换与图片行度量
+    # 4. 状态条图片预热：首次使用时的 PhotoImage 惰性转换与图片行度量
     try:
         bar_image_names = set()
         for bar_config in game_config.config_bar.values():
@@ -675,6 +700,9 @@ def io_print_cmd(
         web_io.io_print_cmd(cmd_str, cmd_number, normal_style, on_style, tooltip)
     else:
         # 原始逻辑
+        if perf_hook.enabled:
+            # 按钮消息计数
+            perf_hook.hook_count("flow.msg_cmd")
         json_str = new_json()
         json_str["content"].append(
             cmd_json(cmd_str, cmd_number, normal_style, on_style, tooltip)

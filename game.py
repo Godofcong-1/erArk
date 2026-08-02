@@ -61,6 +61,17 @@ if __name__ == "__main__":
 
     # 初始化游戏时间
     game_time.init_time()
+
+    # 性能监控开关：config.ini 中 perf_monitor = 1 时启用 TK 渲染性能埋点与排版补丁
+    if not now_web_mode and getattr(normal_config.config_normal, "perf_monitor", 0):
+        from Script.Core import perf_hook
+        perf_hook.enabled = True
+        try:
+            from profiling import ui_perf_patch
+            ui_perf_patch.apply_flow_draw_patches()
+        except Exception as e:
+            print(f"警告：性能监控排版补丁加载失败: {e}")
+        print(f"性能监控已开启，每屏渲染耗时将写入 {perf_hook.get_output_path()}")
     
 
     # 判定是否需要使用Web模式
