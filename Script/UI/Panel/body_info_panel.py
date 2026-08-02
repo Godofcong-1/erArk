@@ -313,7 +313,7 @@ class CharacterBodyText:
             # 其他信息
             now_text = _("\n 【其他】\n")
             # 母亲情况
-            if character_data.relationship.mother_id != 0:
+            if character_data.relationship.mother_id != -1:
                 mother_data: game_type.Character = cache.character_data[character_data.relationship.mother_id]
                 child_id_list = mother_data.relationship.child_id_list
                 if character_id in child_id_list:
