@@ -38,6 +38,10 @@ def init(main_flow: object):
     io_init.set_background(normal_config.config_normal.background)
     # 初始化字体
     io_init.init_style()
+    # Tk模式下预热文本度量：绘制一屏典型内容并强制完成行度量后清屏（同批处理玩家不可见），
+    # 把进入游戏后前几屏的 Tk 字形/行度量尖峰（0.3~1秒的偶发卡顿）移到加载期
+    if not normal_config.config_normal.web_draw:
+        io_init.warm_up_text_metrics()
     # 初始化地图数据
     global _main_flow
     _main_flow = main_flow

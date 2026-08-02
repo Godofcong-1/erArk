@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 import os
 import json
+import time
 import uuid
 import psutil
 import signal
@@ -501,6 +502,18 @@ def _read_queue_drain():
             if _arm_after_id is not None:
                 root.after_cancel(_arm_after_id)
             _arm_after_id = root.after_idle(_do_arm)
+            continue
+        # 度量同步标记：强制完成当前全部内容的行度量（Tk 8.6+ 的 sync 子命令），
+        # 供启动期预热把字形/行度量欠账一次性还清在加载期，消除进入游戏后的首屏度量尖峰
+        if json_data.get("metrics_sync"):
+            _sync_start = time.perf_counter()
+            try:
+                textbox.tk.call(textbox._w, "sync")
+            except Exception:
+                # 旧版 Tk 无 sync 子命令时静默跳过（预热退化为仅字形绘制）
+                pass
+            # 向终端输出预热完成信息（该耗时即启动加载期为消除进入游戏后首屏卡顿付出的延迟）
+            print(f"地图预热完毕，耗时 {time.perf_counter() - _sync_start:.2f} 秒")
             continue
         # 任何其它内容消息（文本/按钮/图片/清屏等）都意味着新一屏正在渲染 → 撤膛，
         # 并取消挂起未执行的上膛回调，防止"标记批之后又来内容批"时旧回调迟到误开门。

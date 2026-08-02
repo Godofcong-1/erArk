@@ -431,6 +431,68 @@ def image_list_print(image_name_list: list):
     put_queue(json.dumps(json_str, ensure_ascii=False))
 
 
+def warm_up_text_metrics():
+    """
+    预热 Tk 文本行度量
+
+    参数：无
+
+    返回值类型：无
+    功能描述：Tk Text 控件对新字形/新内容的行度量是异步惰性完成的，欠账会在
+              进入游戏后的前几屏由 see(END) 一次性同步补算，造成 0.3~1 秒的偶发卡顿
+              （地图制表符等特殊字形尤其明显）。本函数在启动加载末尾绘制一屏
+              典型内容（真实地图绘制文本 + 常用字符样本 + 字体变体 + 状态条图片），
+              推送 metrics_sync 标记让 GUI 线程强制完成全部行度量，随后立即清屏——
+              三步在同一渲染批内处理，玩家不可见，度量成本被移入加载期。仅 Tk 模式生效。
+    """
+    if _is_web_mode():
+        return
+    # 1. 采样真实地图绘制文本（含制表符等特殊字形，是地图界面度量成本的大头）
+    sample_lines = []
+    try:
+        for map_data in cache.map_data.values():
+            map_draw = getattr(map_data, "map_draw", None)
+            if map_draw is None:
+                continue
+            for draw_line in map_draw.draw_text:
+                line_text = "".join(getattr(now_draw, "text", "") for now_draw in draw_line.draw_list)
+                if line_text.strip():
+                    sample_lines.append(line_text)
+                if len(sample_lines) >= 40:
+                    break
+            if len(sample_lines) >= 40:
+                break
+    except Exception:
+        # 地图数据不可用时仅用字符样本预热
+        pass
+    # 2. 常用字符样本（数字、ASCII、全角标点、特殊符号）。
+    #    注：曾试验过收集全部角色名/状态名/素质名的大字形集预热，实测把加载期同步成本
+    #    推高到3.5秒且首屏残留未消除（残留为字形首次上屏的光栅化成本，隐藏预热覆盖不到），
+    #    而主界面本身无冷启动尖峰，故收缩为仅覆盖有实测冷尖峰的地图字形与轻量样本。
+    sample_lines.append("预热样本：体力气力理智熟练欲望快感绝顶0123456789ABCabc[]（），。！？：→○◆·—/%+-")
+    # 逐行入队绘制（与下方的度量同步、清屏在同一渲染批内完成，不会被玩家看到）
+    for line_text in sample_lines:
+        era_print(line_text + "\n")
+    # 3. 字体变体预热：粗体/下划线/斜体是独立的字体实例，字形度量单独缓存
+    variant_sample = "预热字体变体样本0123456789体力气力理智"
+    for style_name in ("bold", "underline", "italic", "standard_bold"):
+        era_print(variant_sample + "\n", style=style_name)
+    # 4. 状态条图片预热：首次使用时的 PhotoImage 惰性转换与图片行度量
+    try:
+        bar_image_names = set()
+        for bar_config in game_config.config_bar.values():
+            bar_image_names.add(bar_config.ture_bar)
+            bar_image_names.add(bar_config.null_bar)
+        image_list_print(sorted(bar_image_names))
+        era_print("\n")
+    except Exception:
+        pass
+    # 请求 GUI 线程同步完成全部行度量
+    put_queue(json.dumps({"metrics_sync": True}))
+    # 立即清屏
+    clear_screen()
+
+
 def clear_screen():
     """
     清屏
