@@ -37,6 +37,8 @@ _common_default = None
 """ common_default 模块的延迟导入缓存（同上） """
 _map_handle = None
 """ map_handle 模块的延迟导入缓存（同上） """
+_character_behavior = None
+""" character_behavior 模块的延迟导入缓存（同上） """
 
 
 def _rand_range_int(low: int, high: int) -> int:
@@ -400,7 +402,7 @@ def settle_sleep(character_id: int, true_add_time: int) -> None:
     tired_change = int(true_add_time / 6) * 2
     now_char.tired_point = max(now_char.tired_point - tired_change, 0)
     # 增加熟睡值
-    level, _ = attr_calculation.get_sleep_level(now_char.sleep_point)
+    level, tem = attr_calculation.get_sleep_level(now_char.sleep_point)
     if level <= 1:
         add_sleep = int(true_add_time * tired_adjust * 1.5)
     else:
@@ -413,6 +415,27 @@ def settle_sleep(character_id: int, true_add_time: int) -> None:
         handle_premise.handle_drunk_level_0(character_id)
     ):
         now_char.sleep_point = max(now_char.sleep_point - add_sleep, 0)
+        # 熟睡值已减少到0时NPC直接醒来
+        if now_char.sleep_point <= 0 and character_id:
+            pl_character_data: game_type.Character = cache.character_data[0]
+            # 玩家与该角色在同一地点，且玩家正在对该角色睡奸中，则结算从无意识H中恢复意识
+            if (
+                pl_character_data.position == now_char.position and
+                pl_character_data.target_character_id == character_id and
+                now_char.sp_flag.unconscious_h == 1
+            ):
+                info_text = _("\n{0}已经睡饱了，从睡梦中自然苏醒过来\n").format(now_char.name)
+                handle_npc_ai_in_h.recover_from_unconscious_h(0, info_text)
+            # 否则直接结束睡眠行为，转为空闲状态交由AI选择新行动
+            else:
+                # 延迟导入并缓存，避免循环导入（导入放在罕见分支内，不增加热路径开销）
+                global _character_behavior
+                if _character_behavior is None:
+                    from Script.Design import character_behavior as _character_behavior_module
+                    _character_behavior = _character_behavior_module
+                _character_behavior.judge_character_status_time_over(character_id, cache.game_time, end_now=2)
+            # 已醒来（行为终止时会刷新异常位掩码5/6），跳过后续的睡眠回复结算
+            return
     # 其他情况下正常增加熟睡值
     else:
         now_char.sleep_point = min(now_char.sleep_point + add_sleep, 100)

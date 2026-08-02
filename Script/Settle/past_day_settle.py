@@ -59,6 +59,8 @@ def update_new_day():
         # 清零香薰疗愈的flag
         character_data.sp_flag.aromatherapy = 0
         if character_id:
+            # 全量重算异常位掩码，兜底修复各状态修改点漏刷新导致的过期缓存位（每日一次，开销可忽略）
+            handle_premise.refresh_unnormal_flag(character_id)
             # 刷新娱乐活动
             handle_npc_ai.get_chara_entertainment(character_id)
             # 刷新生理周期

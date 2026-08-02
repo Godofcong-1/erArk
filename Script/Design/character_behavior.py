@@ -339,6 +339,11 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
         character_data.state = constant.CharacterStatus.STATUS_ARDER
         character_data.event.event_id = ""
         character_data.event.son_event_id = ""
+        # 睡醒时刷新异常位掩码5/6：睡眠中位6被结算为异常，若醒来后不经过起床状态机
+        # （仅宿舍内可触发），无其他修改点负责刷新，会导致角色因过期异常位卡死在原地
+        if character_data.last_behavior_id_list[-1] == constant.Behavior.SLEEP:
+            handle_premise.settle_chara_unnormal_flag(character_id, 5)
+            handle_premise.settle_chara_unnormal_flag(character_id, 6)
         # 当前时间大于行动结束时间
         if time_judge == 1:
             character_data.behavior.start_time = end_time
