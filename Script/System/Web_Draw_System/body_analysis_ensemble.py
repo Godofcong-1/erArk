@@ -447,6 +447,7 @@ def main():
     base_dirs = [
         os.path.join(workspace_root, 'image', '立绘', '干员'),
         os.path.join(workspace_root, 'image', '立绘', '特殊NPC'),
+        os.path.join(workspace_root, 'image', '立绘', '终末地干员'),
     ]
 
     # 初始化模型

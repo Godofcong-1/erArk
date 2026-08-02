@@ -19,6 +19,7 @@ import os
 import sys
 import json
 import copy
+import threading
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 from PIL import Image, ImageTk
@@ -136,7 +137,16 @@ class BodyPartEditor:
         self.zoom_level = 1.0  # 缩放级别（0.25 - 4.0）
         self.min_zoom = 0.25
         self.max_zoom = 4.0
-        
+
+        # 性能优化相关缓存
+        self._image_cache = {}  # {png_path: 解码后的PIL图片}
+        self._image_cache_lock = threading.Lock()  # 图片缓存锁（后台预取线程会访问）
+        self._photo_cache = {}  # {(png_path, w, h): ImageTk.PhotoImage} - 缩放结果缓存
+        self._current_png_path = None  # 当前显示的图片路径（缓存key用）
+        self._last_canvas_size = (0, 0)  # 上次画布尺寸（过滤无效Configure事件）
+        self._resize_after_id = None  # 窗口变化防抖定时器
+        self._hq_redraw_after_id = None  # 高质量重绘防抖定时器
+
         # 创建界面
         self._create_menu()
         self._create_main_ui()
@@ -149,10 +159,7 @@ class BodyPartEditor:
         self.root.bind('<Right>', self._next_file)
         self.root.bind('<Control-Left>', self._prev_file)
         self.root.bind('<Control-Right>', self._next_file)
-        
-        # 绑定窗口大小变化
-        self.root.bind('<Configure>', self._on_resize)
-        
+
     def _create_menu(self):
         """
         创建菜单栏
@@ -303,7 +310,10 @@ class BodyPartEditor:
         
         # 绑定Ctrl+滚轮缩放
         self.canvas.bind('<Control-MouseWheel>', self._on_mouse_wheel)
-        
+
+        # 只在画布自身尺寸变化时才触发重绘（绑定在root上会收到所有子控件的Configure事件，导致拖动时反复无谓重绘）
+        self.canvas.bind('<Configure>', self._on_resize)
+
         # 底部状态栏
         self.status_frame = ttk.Frame(main_frame)
         self.status_frame.pack(fill=tk.X, pady=(10, 0))
@@ -447,82 +457,179 @@ class BodyPartEditor:
         self.index_label.config(text=f"{self.current_index + 1} / {len(self.files)}")
         self.status_label.config(text=f"文件: {os.path.basename(json_path)}")
         
-        # 加载图片
+        # 加载图片（带解码缓存，切回已看过的文件时无需重新解码）
         try:
-            self.current_image = Image.open(png_path)
+            self.current_image = self._get_image(png_path)
+            self._current_png_path = png_path
             self.image_width = self.current_image.width
             self.image_height = self.current_image.height
         except Exception as e:
             messagebox.showerror("错误", f"无法加载图片: {e}")
             return
-            
+
         # 获取landmarks（只保留COCO 17个关键点，id 0-16）
         all_landmarks = data.get('landmarks', [])
         self.landmarks = [lm for lm in all_landmarks if lm.get('id', 999) < 17]
-        
-        # 重新绘制
-        self._redraw()
-        
-    def _redraw(self):
+
+        # 重新绘制（首帧用快速缩放保证切换流畅，随后自动补高质量重绘）
+        self._redraw(fast=True)
+
+        # 后台预取相邻文件的图片，加速左右切换
+        self._prefetch_neighbors()
+
+    def _get_image(self, png_path):
         """
-        重新绘制画布内容
-        
+        获取解码后的PIL图片（带缓存）
+
+        输入：png_path: str - 图片路径
+        输出：Image.Image - 解码完成的图片对象
+        功能：命中缓存直接返回；否则立即解码并放入缓存（后台预取线程也会调用本函数）
+        """
+        with self._image_cache_lock:
+            image = self._image_cache.get(png_path)
+        if image is not None:
+            return image
+        image = Image.open(png_path)
+        image.load()  # 立即解码，避免首次缩放时才触发耗时解码
+        with self._image_cache_lock:
+            self._image_cache[png_path] = image
+            # 限制缓存数量，先进先出淘汰（避免大图占用过多内存）
+            while len(self._image_cache) > 8:
+                oldest = next(iter(self._image_cache))
+                if oldest == png_path:
+                    break
+                self._image_cache.pop(oldest)
+        return image
+
+    def _prefetch_neighbors(self):
+        """
+        后台预取相邻文件的图片
+
         输入：无
         输出：无
-        功能：清空画布并重新绘制图片、骨架和关键点
+        功能：在后台线程解码上一张/下一张图片，使左右键切换文件时几乎无延迟
+        """
+        paths = []
+        for offset in (1, -1):
+            idx = self.current_index + offset
+            if 0 <= idx < len(self.files):
+                paths.append(self.files[idx][1])
+        if not paths:
+            return
+
+        def work():
+            for path in paths:
+                try:
+                    self._get_image(path)
+                except Exception:
+                    pass
+
+        threading.Thread(target=work, daemon=True).start()
+
+    def _redraw(self, fast=False):
+        """
+        重新绘制画布内容
+
+        输入：fast: bool - 是否使用快速缩放（低质量插值，空闲后自动补一次高质量重绘）
+        输出：无
+        功能：清空画布并重新绘制图片、骨架和关键点；缩放结果带缓存，避免重复的高开销缩放
         """
         if not self.current_image:
             return
-            
-        # 清空画布
-        self.canvas.delete('all')
-        self.point_items = {}
-        self.line_items = {}
-        
+
         # 获取画布尺寸
         canvas_width = self.canvas.winfo_width()
         canvas_height = self.canvas.winfo_height()
-        
+
         if canvas_width < 10 or canvas_height < 10:
             # 画布还没准备好
             self.root.after(100, self._redraw)
             return
-        
+
         # 计算缩放比例（保持纵横比）
         scale_x = (canvas_width - 40) / self.image_width
         scale_y = (canvas_height - 40) / self.image_height
         base_scale = min(scale_x, scale_y, 1.0)  # 基础缩放（不放大，只缩小）
-        
+
         # 应用用户缩放级别
         self.scale_factor = base_scale * self.zoom_level
-        
+
         # 计算缩放后的尺寸
-        scaled_width = int(self.image_width * self.scale_factor)
-        scaled_height = int(self.image_height * self.scale_factor)
-        
+        scaled_width = max(1, int(self.image_width * self.scale_factor))
+        scaled_height = max(1, int(self.image_height * self.scale_factor))
+
         # 计算居中偏移
         self.offset_x = (canvas_width - scaled_width) // 2
         self.offset_y = (canvas_height - scaled_height) // 2
-        
-        # 缩放图片
-        scaled_image = self.current_image.resize((scaled_width, scaled_height), Image.Resampling.LANCZOS)
-        self.photo_image = ImageTk.PhotoImage(scaled_image)
-        
-        # 绘制图片
+
+        # 优先命中缩放结果缓存，避免每次重绘都做高开销的图片缩放
+        cache_key = (self._current_png_path, scaled_width, scaled_height)
+        photo = self._photo_cache.get(cache_key)
+        if photo is None:
+            # 快速模式用BILINEAR保证交互流畅，稍后再补一次高质量重绘；reducing_gap可显著加速大图缩小
+            resample = Image.Resampling.BILINEAR if fast else Image.Resampling.LANCZOS
+            scaled_image = self.current_image.resize((scaled_width, scaled_height), resample, reducing_gap=2.0)
+            photo = ImageTk.PhotoImage(scaled_image)
+            if fast:
+                self._schedule_hq_redraw()
+            else:
+                self._photo_cache[cache_key] = photo
+                # 限制缓存数量，先进先出淘汰
+                while len(self._photo_cache) > 12:
+                    self._photo_cache.pop(next(iter(self._photo_cache)))
+        self.photo_image = photo
+
+        # 清空画布并绘制图片
+        self.canvas.delete('all')
         self.canvas.create_image(
             self.offset_x, self.offset_y,
             anchor=tk.NW,
             image=self.photo_image
         )
-        
+
+        # 绘制骨架线和关键点覆盖层
+        self._redraw_overlay(clear=False)
+
+    def _redraw_overlay(self, clear=True):
+        """
+        重新绘制关键点与骨架覆盖层（不重绘底图）
+
+        输入：clear: bool - 是否先清除已有覆盖层元素
+        输出：无
+        功能：只删除并重建点/线/文字元素，跳过图片缩放，用于切换显示、撤销、左右互换等操作
+        """
+        if clear:
+            self.canvas.delete('overlay')
+        self.point_items = {}
+        self.line_items = {}
+
         # 根据可视化模式决定是否绘制骨架线和关键点
         if self.show_landmarks:
-            # 绘制骨架线
             self._draw_skeleton()
-            
-            # 绘制关键点
             self._draw_keypoints()
-        
+
+    def _schedule_hq_redraw(self):
+        """
+        延迟调度一次高质量重绘（防抖）
+
+        输入：无
+        输出：无
+        功能：连续缩放等快速交互结束约200ms后，用LANCZOS补绘一次清晰的底图
+        """
+        if self._hq_redraw_after_id is not None:
+            self.root.after_cancel(self._hq_redraw_after_id)
+        self._hq_redraw_after_id = self.root.after(200, self._do_hq_redraw)
+
+    def _do_hq_redraw(self):
+        """
+        执行高质量重绘
+
+        输入：无
+        输出：无
+        """
+        self._hq_redraw_after_id = None
+        self._redraw(fast=False)
+
     def _draw_skeleton(self):
         """
         绘制骨架连线
@@ -552,7 +659,7 @@ class BodyPartEditor:
                     x1, y1, x2, y2,
                     fill=color,
                     width=3,
-                    tags=f'skeleton_{start_id}_{end_id}'
+                    tags=('overlay', f'skeleton_{start_id}_{end_id}')
                 )
                 self.line_items[(start_id, end_id)] = line_id
                 
@@ -586,7 +693,7 @@ class BodyPartEditor:
                 fill=color,
                 outline='white',
                 width=2,
-                tags=f'point_{lm_id}'
+                tags=('overlay', f'point_{lm_id}')
             )
             
             # 绘制标签
@@ -606,7 +713,7 @@ class BodyPartEditor:
                 fill='white',
                 font=('微软雅黑', 11),
                 anchor=anchor,
-                tags=f'label_{lm_id}'
+                tags=('overlay', f'label_{lm_id}')
             )
             
             # 添加来源模型标记
@@ -616,7 +723,7 @@ class BodyPartEditor:
                 text=f'[{source}]',
                 fill='#888888',
                 font=('Consolas', 10),
-                tags=f'source_{lm_id}'
+                tags=('overlay', f'source_{lm_id}')
             )
             
             self.point_items[lm_id] = (oval_id, text_id, source_id)
@@ -789,17 +896,31 @@ class BodyPartEditor:
         
     def _on_resize(self, event):
         """
-        窗口大小变化事件
-        
+        画布大小变化事件
+
         输入：event: tk.Event - 大小变化事件
         输出：无
-        功能：重新绘制以适应新尺寸
+        功能：画布尺寸真正变化时才延迟重绘，避免其他Configure事件引发无谓的全量重绘
         """
-        if hasattr(self, 'canvas') and self.current_image:
-            # 使用after避免频繁重绘
-            if hasattr(self, '_resize_after_id'):
+        new_size = (event.width, event.height)
+        if new_size == self._last_canvas_size:
+            return
+        self._last_canvas_size = new_size
+        if self.current_image:
+            # 使用after防抖，避免拖动窗口边框时频繁重绘
+            if self._resize_after_id is not None:
                 self.root.after_cancel(self._resize_after_id)
-            self._resize_after_id = self.root.after(100, self._redraw)
+            self._resize_after_id = self.root.after(100, self._do_resize_redraw)
+
+    def _do_resize_redraw(self):
+        """
+        执行窗口大小变化后的重绘
+
+        输入：无
+        输出：无
+        """
+        self._resize_after_id = None
+        self._redraw()
     
     def _undo(self, event):
         """
@@ -816,25 +937,23 @@ class BodyPartEditor:
         history = self.undo_history.pop()
         file_index = history['file_index']
         old_landmarks = history['landmarks']
-        
+
+        # 恢复数据（同时更新files列表中的data，保持内存数据一致）
+        data = self.files[file_index][2]
+        all_landmarks = data.get('landmarks', [])
+        # 替换COCO 17点，保留其他点（如果有）
+        other_landmarks = [lm for lm in all_landmarks if lm.get('id', 999) >= 17]
+        restored = copy.deepcopy(old_landmarks)
+        data['landmarks'] = restored + other_landmarks
+
         # 如果是当前文件的历史记录
         if file_index == self.current_index:
-            # 直接恢复 landmarks 并重绘
-            self.landmarks = copy.deepcopy(old_landmarks)
-            self._redraw()
+            # 直接恢复 landmarks，只重绘覆盖层（底图不变）
+            self.landmarks = restored
+            self._redraw_overlay()
         else:
             # 是其他文件的历史记录，切换到该文件并恢复
             self.current_index = file_index
-            json_path, png_path, data, modified = self.files[file_index]
-            
-            # 更新内存中的数据
-            # 需要同时更新files列表中的数据（以保持一致性）
-            all_landmarks = data.get('landmarks', [])
-            # 替换COCO 17点，保留其他点（如果有）
-            other_landmarks = [lm for lm in all_landmarks if lm.get('id', 999) >= 17]
-            data['landmarks'] = old_landmarks + other_landmarks
-            
-            self.landmarks = copy.deepcopy(old_landmarks)
             self._display_current()
         
         # 检查是否还有未保存的修改
@@ -856,9 +975,12 @@ class BodyPartEditor:
             self.visibility_btn.config(text="👁 隐藏标记")
         else:
             self.visibility_btn.config(text="👁 显示标记")
-        
-        # 重绘
-        self._redraw()
+
+        # 只重绘覆盖层，底图无需重新缩放
+        if self.photo_image:
+            self._redraw_overlay()
+        else:
+            self._redraw()
     
     def _swap_left_right(self):
         """
@@ -911,9 +1033,9 @@ class BodyPartEditor:
         # 标记为已修改
         self.files[self.current_index][3] = True
         self.modified_label.config(text="[已修改，未保存]")
-        
-        # 重绘
-        self._redraw()
+
+        # 只重绘覆盖层，底图无需重新缩放
+        self._redraw_overlay()
     
     def _zoom_in(self):
         """
@@ -925,8 +1047,9 @@ class BodyPartEditor:
         if self.zoom_level < self.max_zoom:
             self.zoom_level = min(self.zoom_level * 1.25, self.max_zoom)
             self._update_zoom_label()
-            self._redraw()
-    
+            # 快速模式：连续缩放时保持流畅，停止后自动补高质量重绘
+            self._redraw(fast=True)
+
     def _zoom_out(self):
         """
         缩小
@@ -937,7 +1060,8 @@ class BodyPartEditor:
         if self.zoom_level > self.min_zoom:
             self.zoom_level = max(self.zoom_level / 1.25, self.min_zoom)
             self._update_zoom_label()
-            self._redraw()
+            # 快速模式：连续缩放时保持流畅，停止后自动补高质量重绘
+            self._redraw(fast=True)
     
     def _zoom_reset(self):
         """
@@ -1019,44 +1143,59 @@ class BodyPartEditor:
                         landmark['source_model'] = 'Z'  # 标记为手动修改
                     break
                     
-        # 更新数据
-        data['landmarks'] = self.landmarks
-        
+        # 更新数据（保留id>=17的其他点）
+        other_landmarks = [lm for lm in data.get('landmarks', []) if lm.get('id', 999) >= 17]
+        data['landmarks'] = self.landmarks + other_landmarks
+
         # 写入文件
+        if self._write_file(self.current_index):
+            self.modified_label.config(text="[已保存]")
+            # 2秒后清除保存提示
+            self.root.after(2000, lambda: self.modified_label.config(text="") if not self.files[self.current_index][3] else None)
+
+    def _write_file(self, index):
+        """
+        将指定文件的数据写入磁盘
+
+        输入：index: int - 文件索引
+        输出：bool - 是否写入成功
+        功能：只做JSON写入与状态更新，不触发图片加载和重绘
+        """
+        entry = self.files[index]
+        json_path = entry[0]
+        data = entry[2]
         try:
             with open(json_path, 'w', encoding='utf-8') as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
-                
-            # 更新状态
-            self.files[self.current_index][2] = data
-            self.files[self.current_index][3] = False
-            self.modified_label.config(text="[已保存]")
-            
-            # 2秒后清除保存提示
-            self.root.after(2000, lambda: self.modified_label.config(text="") if not self.files[self.current_index][3] else None)
-            
+            entry[3] = False
+            return True
         except Exception as e:
-            messagebox.showerror("保存失败", f"无法保存文件: {e}")
-            
+            messagebox.showerror("保存失败", f"无法保存文件 {os.path.basename(json_path)}: {e}")
+            return False
+
     def _save_all(self):
         """
         保存所有已修改的文件
-        
+
         输入：无
         输出：无
+        功能：直接写入所有已修改文件，不逐个切换显示（避免每个文件都触发图片解码和重绘）
         """
+        # 当前文件的编辑数据先同步回data
+        if self.files and self.landmarks:
+            data = self.files[self.current_index][2]
+            other_landmarks = [lm for lm in data.get('landmarks', []) if lm.get('id', 999) >= 17]
+            data['landmarks'] = self.landmarks + other_landmarks
+
         saved_count = 0
-        for i, (json_path, png_path, data, modified) in enumerate(self.files):
-            if modified:
-                # 临时切换到该文件进行保存
-                old_index = self.current_index
-                self.current_index = i
-                self._display_current()
-                self._save_current(None)
-                saved_count += 1
-                self.current_index = old_index
-                
-        self._display_current()
+        for i in range(len(self.files)):
+            if self.files[i][3]:
+                if self._write_file(i):
+                    saved_count += 1
+
+        # 刷新当前文件的修改状态显示
+        if self.files and not self.files[self.current_index][3]:
+            self.modified_label.config(text="")
         messagebox.showinfo("保存完成", f"已保存 {saved_count} 个文件")
         
     def _show_help(self):
