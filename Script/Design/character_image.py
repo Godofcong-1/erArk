@@ -29,11 +29,11 @@ def find_character_image_name(character_id: int) -> str:
         # 母亲的名字的萝莉图片
         mother_data: game_type.Character = cache.character_data[character_data.relationship.mother_id]
         mather_image_name = mother_data.name + "_小"
-        # 优先选择自己的同名图片
-        if character_data.name in era_image.image_data:
+        # 优先选择自己的同名图片（兼容扁平命名与半身图层命名）
+        if character_data.name in era_image.image_data or f"{character_data.name}_半身" in era_image.image_data:
             character_image_name = _(character_data.name, revert_translation=True)
-        # 其次选择母亲的名字的萝莉图片
-        elif mather_image_name in era_image.image_data:
+        # 其次选择母亲的名字的萝莉图片（兼容扁平命名与半身图层命名）
+        elif mather_image_name in era_image.image_data or f"{mather_image_name}_半身" in era_image.image_data:
             character_image_name = _(mather_image_name, revert_translation=True)
     # 非女儿的正常干员角色
     else:
@@ -67,11 +67,14 @@ def find_character_image_name(character_id: int) -> str:
 
         # 按顺序在候选列表中选择存在的第一个
         for candidate in candidates:
-            # 检查候选图片是否存在
+            # 检查候选图片是否存在（扁平命名）
             if candidate in era_image.image_data:
                 return candidate
+            # 检查半身图层命名（如 薇薇安娜_小_半身），兼容半身/全身双图层结构
+            if f"{candidate}_半身" in era_image.image_data:
+                return f"{candidate}_半身"
             # 如果候选图片不匹配且裸体差分不为空，则尝试互换全裸与半裸
-            elif naked_diff != "" and naked_diff in candidate:
+            if naked_diff != "" and naked_diff in candidate:
                 # 判断裸体差分类型并替换为另一种
                 if naked_diff == "_全裸":
                     candidate_alt = candidate.replace("_全裸", "_半裸")  # 替换为半裸
@@ -80,6 +83,9 @@ def find_character_image_name(character_id: int) -> str:
                 # 检查替换后的候选图片是否存在
                 if candidate_alt in era_image.image_data:
                     return candidate_alt
+                # 同样检查替换后候选的半身图层命名
+                if f"{candidate_alt}_半身" in era_image.image_data:
+                    return f"{candidate_alt}_半身"
 
     # 若无匹配则使用原始立绘名，但需要检查半身图格式兼容
     # 这是为了兼容新的文件名格式：{角色名}_半身.png

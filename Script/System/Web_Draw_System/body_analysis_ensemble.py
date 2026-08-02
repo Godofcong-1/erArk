@@ -16,11 +16,19 @@ G. Custom最大精度      = YOLOX-x + RTMW-dw-x-l@384x288 (最强检测器+最�
 
 输入：image/立绘/干员/ 和 image/立绘/特殊NPC/ 下的角色全身图片
 输出：每个角色文件夹中的 {角色名}_body.json（v2.0格式，model="ensemble"）
+
+用法：
+    python body_analysis_ensemble.py
+        默认模式：批量处理 干员/特殊NPC/终末地干员 目录下的所有角色子文件夹
+    python body_analysis_ensemble.py <目录路径>
+        目录模式：处理指定目录下所有尚未生成对应JSON的图片文件（不递归子目录）
+        例：python body_analysis_ensemble.py "image/立绘/特殊NPC/小干员"
 """
 
 import os
 import sys
 import json
+import argparse
 import cv2
 import numpy as np
 import time
@@ -326,6 +334,9 @@ def process_character(char_name, full_body_path, json_path, models, needs_sigmoi
         res = run_model_inference(models[key], key, image)
         results[key] = res
 
+    # 源图片文件名以实际路径为准（目录模式下不一定是 {角色名}_全身.png）
+    source_image_name = os.path.basename(full_body_path)
+
     # 检查是否至少有一个模型成功
     valid_results = {k: v for k, v in results.items() if v is not None}
     if not valid_results:
@@ -334,7 +345,7 @@ def process_character(char_name, full_body_path, json_path, models, needs_sigmoi
             "version": "2.0",
             "model": "ensemble",
             "character": char_name,
-            "source_image": f"{char_name}_全身.png",
+            "source_image": source_image_name,
             "image_width": w,
             "image_height": h,
             "landmarks": [],
@@ -382,7 +393,7 @@ def process_character(char_name, full_body_path, json_path, models, needs_sigmoi
         "model": "ensemble",
         "ensemble_models": list(sorted(models.keys())),
         "character": char_name,
-        "source_image": f"{char_name}_全身.png",
+        "source_image": source_image_name,
         "image_width": w,
         "image_height": h,
         "ensemble_avg_score": ensemble['avg'],
@@ -429,16 +440,73 @@ def collect_characters(base_dirs, skip_existing=True):
     return characters
 
 
+# 目录模式下识别的图片扩展名
+IMAGE_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.webp', '.bmp'}
+
+
+def collect_images_from_dir(target_dir, skip_existing=True):
+    """
+    目录模式：收集指定目录下所有待处理的图片
+
+    输入：
+        target_dir: str - 目标目录路径
+        skip_existing: bool - 是否跳过已生成对应JSON的图片（默认True）
+    输出：list[tuple(str, str, str)] - [(角色名, 图片路径, JSON输出路径), ...]
+    功能：遍历目录下的图片文件（不递归子目录），去掉扩展名及末尾的"_全身"后缀作为角色名，
+          JSON输出为同目录下的 {角色名}_body.json，已存在对应JSON的图片会被跳过
+    """
+    characters = []
+    skipped_count = 0
+    for filename in sorted(os.listdir(target_dir)):
+        file_path = os.path.join(target_dir, filename)
+        if not os.path.isfile(file_path):
+            continue
+        stem, ext = os.path.splitext(filename)
+        if ext.lower() not in IMAGE_EXTENSIONS:
+            continue
+        # 去掉"_全身"后缀，与角色子文件夹模式的命名规则保持一致
+        char_name = stem[:-len('_全身')] if stem.endswith('_全身') else stem
+        json_path = os.path.join(target_dir, f"{char_name}_body.json")
+        # 跳过已生成JSON的图片（同时兼容按完整文件名命名的JSON）
+        stem_json_path = os.path.join(target_dir, f"{stem}_body.json")
+        if skip_existing and (os.path.exists(json_path) or os.path.exists(stem_json_path)):
+            skipped_count += 1
+            continue
+        characters.append((char_name, file_path, json_path))
+    if skipped_count > 0:
+        print(f"跳过已识别图片: {skipped_count}个")
+    return characters
+
+
 def main():
     """
     主函数：使用集成方案批量处理所有角色
 
     执行流程：
-    1. 初始化7个模型
-    2. 收集干员和特殊NPC目录下所有角色
-    3. 对每个角色运行集成方案并保存JSON
-    4. 输出统计信息
+    1. 解析命令行参数（可选指定目录）
+    2. 初始化7个模型
+    3. 默认模式收集干员/特殊NPC目录下所有角色子文件夹；目录模式收集指定目录下所有未处理图片
+    4. 对每个角色运行集成方案并保存JSON
+    5. 输出统计信息
     """
+    # 解析命令行参数
+    parser = argparse.ArgumentParser(description="集成方案批量身体部位识别工具")
+    parser.add_argument(
+        'target_dir', nargs='?', default=None,
+        help="可选：指定目录，处理该目录下所有尚未生成对应JSON的图片（不递归子目录）；不指定则批量处理默认角色目录"
+    )
+    parser.add_argument(
+        '--force', action='store_true',
+        help="不跳过已生成JSON的图片，全部重新处理"
+    )
+    args = parser.parse_args()
+
+    if args.target_dir is not None:
+        target_dir = os.path.abspath(args.target_dir)
+        if not os.path.isdir(target_dir):
+            print(f"错误：目录不存在: {target_dir}")
+            return
+
     start_time = time.time()
 
     # 构建路径 - 从 Script/System/Web_Draw_System 往上走3级到项目根目录
@@ -450,8 +518,25 @@ def main():
         os.path.join(workspace_root, 'image', '立绘', '终末地干员'),
     ]
 
+    # 收集所有角色（目录模式收集指定目录下的图片，默认模式收集角色子文件夹）
+    if args.target_dir is not None:
+        print(f"目录模式: {target_dir}")
+        characters = collect_images_from_dir(target_dir, skip_existing=not args.force)
+        print(f"共找到 {len(characters)} 张图片待处理")
+    else:
+        characters = collect_characters(base_dirs, skip_existing=not args.force)
+        print(f"共找到 {len(characters)} 个角色待处理")
+        for bd in base_dirs:
+            dir_name = os.path.basename(bd)
+            count = sum(1 for c in characters if bd in c[1])
+            print(f"  {dir_name}: {count}个")
+
+    if len(characters) == 0:
+        print("没有需要处理的图片，退出")
+        return
+
     # 初始化模型
-    print("=" * 70)
+    print(f"\n{'=' * 70}")
     print("集成方案批量处理 - 初始化模型")
     print("=" * 70)
     models, needs_sigmoid_keys = init_models()
@@ -463,16 +548,7 @@ def main():
         print("错误：没有成功加载任何模型")
         return
 
-    # 自动检测A模型是否真的需要sigmoid（用第一张图测试）
-    # 在首次推理时检测，见下方
-
-    # 收集所有角色
-    characters = collect_characters(base_dirs)
-    print(f"\n共找到 {len(characters)} 个角色待处理")
-    for bd in base_dirs:
-        dir_name = os.path.basename(bd)
-        count = sum(1 for c in characters if bd in c[1])
-        print(f"  {dir_name}: {count}个")
+    # 自动检测A模型是否真的需要sigmoid（用第一张图测试，在首次推理时检测，见下方）
 
     # 处理所有角色
     print(f"\n{'=' * 70}")

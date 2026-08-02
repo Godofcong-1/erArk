@@ -400,9 +400,15 @@ class CharacterRenderer:
         # 优先在立绘所在目录下查找（可覆盖差分立绘、路人、女儿等各种目录结构）
         if portrait_path:
             portrait_dir = os.path.dirname(portrait_path)
-            # 去掉图层/差分后缀，得到基名，例如 阿米娅_半裸 -> 阿米娅
             file_base = os.path.splitext(os.path.basename(portrait_path))[0]
-            base_names = [file_base, file_base.split("_")[0], character_name]
+            # 仅剥掉图层后缀得到差分基名，保留 _小 等差分，例如 薇薇安娜_小_全身 -> 薇薇安娜_小
+            layer_base = file_base
+            for suffix in ("_全身", "_半身", "_头部"):
+                if layer_base.endswith(suffix):
+                    layer_base = layer_base[: -len(suffix)]
+                    break
+            # 依次回退：完整文件名 -> 剥图层后的差分基名 -> 角色基名（如 阿米娅_半裸 -> 阿米娅）-> 角色名
+            base_names = [file_base, layer_base, file_base.split("_")[0], character_name]
             for base_name in base_names:
                 if not base_name:
                     continue
