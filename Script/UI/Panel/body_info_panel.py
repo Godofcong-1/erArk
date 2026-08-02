@@ -312,8 +312,16 @@ class CharacterBodyText:
             body_text_list.append(now_text)
             # 其他信息
             now_text = _("\n 【其他】\n")
-            if character_data.dirty.absorbed_total_semen > 0:
-                now_text += _("  肠胃一共吸收了{0}ml精液\n").format(character_data.dirty.absorbed_total_semen)
+            # 母亲情况
+            if character_data.relationship.mother_id != 0:
+                mother_data: game_type.Character = cache.character_data[character_data.relationship.mother_id]
+                child_id_list = mother_data.relationship.child_id_list
+                if character_id in child_id_list:
+                    child_index = child_id_list.index(character_id)
+                    if child_index != -1:
+                        now_text += _("  母亲为：{0}，是母亲的第{1}个孩子\n").format(mother_data.name, child_index + 1)
+                else:
+                    now_text += _("  母亲为：{0}\n").format(mother_data.name)
             # 喜欢的姿势
             favorite_position_id = handle_talent.settle_favorite_sex_position(character_id)
             if favorite_position_id != -1:
@@ -323,6 +331,9 @@ class CharacterBodyText:
                 experience_id = 140 + favorite_position_id
                 experience_count = character_data.experience[experience_id]
                 now_text += _("该姿势的性交经验为：{0} 次\n").format(experience_count)
+            # 肠胃吸收的精液量
+            if character_data.dirty.absorbed_total_semen > 0:
+                now_text += _("  肠胃一共吸收了{0}ml精液\n").format(character_data.dirty.absorbed_total_semen)
             now_text += "\n"
             body_text_list.append(now_text)
         if self.center_status:
