@@ -147,8 +147,8 @@ cid,effect_name,effect_type,effect
 311,EAT_FOOD_FLAG_TO_0,特殊flag_基础,自身清零吃饭状态
 312,EAT_FOOD_FLAG_TO_1,特殊flag_基础,自身变成要取餐状态
 313,EAT_FOOD_FLAG_TO_2,特殊flag_基础,自身变成要进食状态
-314,HELP_BUY_FOOD_FLAG_TO_0,特殊flag_基础,自身清零要帮忙买午饭状态
-315,HELP_MAKE_FOOD_FLAG_TO_0,特殊flag_基础,自身清零做午饭状态
+314,HELP_BUY_FOOD_FLAG_TO_0,特殊flag_基础,自身清零要帮忙买饭及买饭后送饭状态
+315,HELP_MAKE_FOOD_FLAG_TO_0,特殊flag_基础,自身清零做饭及做饭后送饭状态
 321,SLEEP_FLAG_TO_0,特殊flag_基础,自身清零要睡眠状态
 322,SLEEP_FLAG_TO_1,特殊flag_基础,自身变成要睡眠状态
 325,REST_FLAG_TO_0,特殊flag_基础,自身清零要休息状态

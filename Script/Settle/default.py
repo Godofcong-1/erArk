@@ -7638,6 +7638,8 @@ def handle_eat_add_just(
     food_quality = now_food.quality if now_food is not None else 1
     food_maker = now_food.maker if now_food is not None else ""
     recipe_id = now_food.recipe if now_food is not None else 0
+    if recipe_id not in game_config.config_recipes:
+        return
     recipe_data = game_config.config_recipes[recipe_id]
     # 判断是谁要吃食物
     eat_food_chara_id_list = []

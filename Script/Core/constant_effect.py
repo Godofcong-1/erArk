@@ -285,9 +285,9 @@ class BehaviorEffect:
     EAT_FOOD_FLAG_TO_2 = 313
     """ 特殊flag_基础 自身变成要进食状态 """
     HELP_BUY_FOOD_FLAG_TO_0 = 314
-    """ 特殊flag_基础 自身清零要帮忙买午饭状态 """
+    """ 特殊flag_基础 自身清零要帮忙买饭及买饭后送饭状态 """
     HELP_MAKE_FOOD_FLAG_TO_0 = 315
-    """ 特殊flag_基础 自身清零做午饭状态 """
+    """ 特殊flag_基础 自身清零做饭及做饭后送饭状态 """
     SLEEP_FLAG_TO_0 = 321
     """ 特殊flag_基础 自身清零要睡眠状态 """
     SLEEP_FLAG_TO_1 = 322
