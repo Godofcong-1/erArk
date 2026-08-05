@@ -550,3 +550,8 @@ def askfor_wait():
         re = askfor_str(donot_return_null_str=False)
         if re == "":
             break
+    # 等待结束后必须把标志位恢复为1
+    # 否则用回车结束等待时 w_frame_up 会遗留为0并跨界面残留（置1的唯一入口在鼠标路径上）
+    # 之后一次点在空白处的左键会被 mouse_left_check 的 w==0 分支误判为"推进等待"：
+    # 消耗掉一次性的输入许可却不产生任何指令，askfor_all 从此永远收不到输入，游戏静默卡死
+    cache.wframe_mouse.w_frame_up = 1
