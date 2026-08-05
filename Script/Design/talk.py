@@ -242,7 +242,7 @@ def choice_talk_from_talk_data(now_talk_data: dict, behavior_id = "share_blankly
         now_talk_id = random.choice(list(now_talk_data[talk_weight]))
         talk_text = game_config.config_talk[now_talk_id].context
         unusual_talk_flag = game_config.config_talk[now_talk_id].adv_id
-        # 如果不是特殊口上或是权重低于100的特殊口上，且行为id在通用口上列表中，则按照设置的几率使用纸娃娃地文
+        # 如果是非特殊口上且是权重低于100的地文，且行为id在通用口上列表中，则按照设置的几率使用纸娃娃地文
         if (
             (not unusual_talk_flag or talk_weight < 100) and
             behavior_id in game_config.config_talk_common_cid_list_by_type and
