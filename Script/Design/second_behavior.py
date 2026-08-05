@@ -341,7 +341,7 @@ def get_now_state_all_value_and_text_from_mark_up_data(mark_up_id: int, characte
     mark_up_data_text = ""
     for need_state in mark_up_data_need_state_list:
         # 跳过空值
-        if need_state == '0':
+        if need_state == ['0'] or need_state == [0]:
             continue
         # 如果长度为2，说明有权重调整
         if len(need_state) == 2:
