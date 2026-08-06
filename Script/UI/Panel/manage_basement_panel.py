@@ -42,7 +42,44 @@ class Manage_Basement_Panel:
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
         self.show_resource_type_dict: Dict = {_("货币"): True,_("材料"): False, _("药剂"): False, _("乳制品"): False, _("香水"): False}
+        
+        # --- 用于全干员一览的分页与分类变量 ---
+        self.chara_list_page = 0
+        self.info_category_list = [
+            "【体力气力】", "【好感信赖】", "【感度类】", "【扩张类】", "【刻印类】", 
+            "【基础属性】", "【工作技能】", "【性技能】"
+        ]
+        self.current_category_index = 0
 
+        # --- 新增：用于全干员一览的筛选与排序变量 ---
+        self.filter_work = 0        # 0:无筛选, 1:有工作, 2:无工作
+        self.filter_fall = 0        # 0:无筛选, 1:无陷落, 2:有(任一陷落), 3:爱情, 4:隶属
+        self.filter_daughter = 0    # 0:无筛选, 1:是
+        self.filter_collection = 0  # 0:无筛选, 1:是, 2:否
+
+        self.sort_main = "默认ID"
+        self.sort_sub = "无"
+        self.sort_reverse = False
+        self.sort_collection_first = True
+
+        self.choosing_sort_mode = 0 # 0:无, 1:主排序, 2:副排序
+    
+    def change_chara_page(self, amount: int):
+        """
+        翻页干员列表
+        Keyword arguments:
+        amount -- 翻页数量（1为下一页，-1为上一页）
+        """
+        self.chara_list_page += amount
+
+    def change_info_category(self, target_index: int):
+        """
+        切换信息分类页
+        Keyword arguments:
+        target_index -- 要切换到的分类页索引
+        """
+        self.current_category_index = target_index
+    
     def draw(self):
         """绘制对象"""
 
@@ -247,22 +284,472 @@ class Manage_Basement_Panel:
 
             # 全干员一览
             elif self.now_panel == _("全干员一览"):
-                chara_count = 0
-                for character_id in cache.npc_id_got:
-                    character_data = cache.character_data[character_id]
-                    name = character_data.name
-                    id = str(character_data.adv).rjust(4,'0')
-                    draw_width = int(self.width / 6)
-                    # 输出干员名字
-                    now_draw_text = f"[{id}]{name}"
-                    name_draw = draw.LeftButton(
-                        now_draw_text, name, draw_width, cmd_func=self.see_attr, args=(character_id,)
-                    )
-                    name_draw.draw()
-                    return_list.append(name_draw.return_text)
-                    chara_count += 1
-                    if chara_count % 6 == 0:
+                
+                # 局部导入状态标识获取函数
+                from Script.UI.Panel.character_info_head import get_character_status_list
+
+                def pass_func(): pass
+
+                # 安全初始化新增的变量 (避免 __init__ 没更新到导致报错)
+                if not hasattr(self, 'filter_visitor'):
+                    self.filter_work = getattr(self, 'filter_work', 0)
+                    self.filter_fall = getattr(self, 'filter_fall', 0)
+                    self.filter_daughter = getattr(self, 'filter_daughter', 0)
+                    self.filter_collection = getattr(self, 'filter_collection', 0)
+                    self.filter_visitor = 0
+                    self.choosing_sort_mode = getattr(self, 'choosing_sort_mode', 0)
+                
+                # --- 辅助函数：计算字母Rank ---
+                def get_rank_letter(value: int) -> str:
+                    if value >= 6: return "EX"
+                    if value == 5: return "S "
+                    if value == 4: return "A "
+                    if value == 3: return "B "
+                    if value == 2: return "C "
+                    if value == 1: return "D "
+                    return "E "
+
+                # --- 辅助函数：获取Rank对应的颜色样式 (套用系统内建颜色) ---
+                def get_rank_color(value: int) -> str:
+                    if value >= 6: return "levelex"      # 紫色/彩色
+                    if value == 5: return "gold_enrod"   # 金色
+                    if value == 4: return "spring_green" # 绿色
+                    if value == 3: return "light_sky_blue" # 蓝色
+                    if value == 2: return "standard"     # 白色
+                    if value == 1: return "deep_gray"    # 灰色
+                    return "deep_gray"                   # E也是深灰
+
+                # --- 辅助函数：计算中英文混合字符串的显示宽度 ---
+                def get_display_width(text: str) -> int:
+                    return sum(2 if ord(c) > 127 else 1 for c in text)
+
+                # --- 辅助函数：格式化表头 ---
+                def format_col_header(name: str) -> str:
+                    return f"{name}|"
+
+                current_category = self.info_category_list[self.current_category_index]
+
+                # 字典定义各分类的具体列 (名称, 对应编号id)
+                cat_columns = {
+                    "【感度类】": [("皮肤", 0), ("胸部", 1), ("阴蒂", 2), ("阴茎", 3), ("阴道", 4), ("肛肠", 5), ("尿道", 6), ("子宫", 7), ("口喉", 100), ("兽部", 101), ("心理", 102)],
+                    "【扩张类】": [("V扩张", 9), ("A扩张", 10), ("U扩张", 11), ("W扩张", 12)],
+                    "【刻印类】": [("快乐", 13), ("屈服", 14), ("苦痛", 15), ("恐怖", 17), ("反发", 18), ("无觉", 19)],
+                    "【基础属性】": [("技巧", 30), ("顺从", 31), ("亲密", 32), ("欲望", 33), ("露出", 34), ("施虐", 35), ("受虐", 36)],
+                    "【工作技能】": [("话术", 40), ("指挥", 41), ("战斗", 42), ("料理", 43), ("音乐", 44), ("学识", 45), ("医术", 46), ("农业", 47), ("制造", 48), ("绘画", 49)],
+                    "【性技能】": [("指技", 70), ("舌技", 71), ("足技", 72), ("胸技", 73), ("膣技", 74), ("肛技", 75), ("腰技", 76), ("榨精", 77), ("隐蔽", 90)]
+                }
+
+                # ================= 1. 绘制顶部：分类切换页 =================
+                cat_line_list = []
+                for i, cat_name in enumerate(self.info_category_list):
+                    if i == self.current_category_index:
+                        # 当前分类：高亮、不可点击
+                        btn = draw.NormalDraw()
+                        btn.text = f" {cat_name} "
+                        btn.style = "gold_enrod"
+                        cat_line_list.append(btn)
+                    else:
+                        # 其他分类：可点击按钮
+                        btn = draw.LeftButton(f" {cat_name} ", str(i + 1000), len(cat_name)*2 + 2, cmd_func=self.change_info_category, args=(i,))
+                        cat_line_list.append(btn)
+                        return_list.append(btn.return_text)
+                
+                for b in cat_line_list:
+                    b.draw()
+                line_feed.draw()
+                line = draw.LineDraw("-", self.width)
+                line.draw()
+
+                # ================= 1.5. 绘制筛选与排序面板 =================
+                work_filter_names = ["不筛选", "有", "无"] 
+                fall_filter_names = ["不筛选", "无", "有", "爱情", "隶属"]
+                bool_filter_names = ["不筛选", "是", "否"]
+                
+                filter_draw_1 = draw.NormalDraw()
+                filter_draw_1.text = " 筛选: "
+                filter_draw_1.draw()
+                
+                # 統一寬度為 18，確保對齊
+                btn_width = 18
+
+                btn_work = draw.LeftButton(f"[工作:{work_filter_names[self.filter_work]}]", "toggle_filter_work", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if self.filter_work else "standard")
+                btn_work.draw()
+                return_list.append(btn_work.return_text)
+                
+                btn_fall = draw.LeftButton(f"[陷落:{fall_filter_names[self.filter_fall]}]", "toggle_filter_fall", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if self.filter_fall else "standard")
+                btn_fall.draw()
+                return_list.append(btn_fall.return_text)
+                
+                btn_daughter = draw.LeftButton(f"[女儿:{bool_filter_names[self.filter_daughter]}]", "toggle_filter_daughter", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if self.filter_daughter else "standard")
+                btn_daughter.draw()
+                return_list.append(btn_daughter.return_text)
+                
+                btn_visitor = draw.LeftButton(f"[访客:{bool_filter_names[self.filter_visitor]}]", "toggle_filter_visitor", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if self.filter_visitor else "standard")
+                btn_visitor.draw()
+                return_list.append(btn_visitor.return_text)
+                
+                btn_collection = draw.LeftButton(f"[收藏:{bool_filter_names[self.filter_collection]}]", "toggle_filter_collection", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if self.filter_collection else "standard")
+                btn_collection.draw()
+                return_list.append(btn_collection.return_text)
+                
+                line_feed.draw()
+                
+                sort_draw = draw.NormalDraw()
+                sort_draw.text = " 排序: "
+                sort_draw.draw()
+                
+                sort_main_text = draw.NormalDraw()
+                sort_main_text.text = f"主排序:{self.sort_main} "
+                sort_main_text.draw()
+                
+                btn_sort_main_mod = draw.LeftButton("[修改]", "modify_sort_main", 8, cmd_func=pass_func)
+                btn_sort_main_mod.draw()
+                return_list.append(btn_sort_main_mod.return_text)
+                
+                btn_sort_main_reset = draw.LeftButton("[重置默认]", "reset_sort_main", 12, cmd_func=pass_func)
+                btn_sort_main_reset.draw()
+                return_list.append(btn_sort_main_reset.return_text)
+                
+                sort_sub_text = draw.NormalDraw()
+                sort_sub_text.text = f" 副排序:{self.sort_sub} "
+                sort_sub_text.draw()
+                
+                btn_sort_sub_mod = draw.LeftButton("[修改]", "modify_sort_sub", 8, cmd_func=pass_func)
+                btn_sort_sub_mod.draw()
+                return_list.append(btn_sort_sub_mod.return_text)
+                
+                btn_sort_sub_reset = draw.LeftButton("[重置默认]", "reset_sort_sub", 12, cmd_func=pass_func)
+                btn_sort_sub_reset.draw()
+                return_list.append(btn_sort_sub_reset.return_text)
+                
+                line_feed.draw()
+                
+                # --- 將升序和收藏優先換到下一行 ---
+                space_draw_sort = draw.NormalDraw()
+                space_draw_sort.text = "       "
+                space_draw_sort.draw()
+
+                sort_order_str = "[升序]" if not self.sort_reverse else "[倒序]"
+                btn_sort_order = draw.LeftButton(sort_order_str, "toggle_sort_reverse", 8, cmd_func=pass_func)
+                btn_sort_order.draw()
+                return_list.append(btn_sort_order.return_text)
+                
+                sort_col_str = "[收藏优先]"
+                btn_sort_col = draw.LeftButton(sort_col_str, "toggle_sort_collection_first", 12, cmd_func=pass_func, normal_style="gold_enrod" if self.sort_collection_first else "standard")
+                btn_sort_col.draw()
+                return_list.append(btn_sort_col.return_text)
+                
+                line_feed.draw()
+                line_feed.draw()
+
+                if self.choosing_sort_mode != 0:
+                    # ================= 正在修改排序 =================
+                    opt_title = draw.NormalDraw()
+                    opt_title.text = f"正在修改 {'主排序' if self.choosing_sort_mode == 1 else '副排序'}，请选择:\n"
+                    opt_title.draw()
+                    
+                    # 第一行
+                    for opt in ["无", "默认ID", "好感", "信赖"]:
+                        btn = draw.LeftButton(f"[{opt}]", f"select_sort_{opt}", len(opt)*2 + 4, cmd_func=pass_func)
+                        btn.draw()
+                        return_list.append(btn.return_text)
+                    line_feed.draw()
+                    
+                    # 第二行
+                    for opt in ["体力", "最大体力", "气力", "最大气力", "催眠深度", "工作", "装备"]:
+                        btn = draw.LeftButton(f"[{opt}]", f"select_sort_{opt}", len(opt)*2 + 4, cmd_func=pass_func)
+                        btn.draw()
+                        return_list.append(btn.return_text)
+                    line_feed.draw()
+                    
+                    # 第三行及之后 (按分类分行)
+                    for cat_name, cols in cat_columns.items():
+                        for col_name, col_id in cols:
+                            btn = draw.LeftButton(f"[{col_name}]", f"select_sort_{col_name}", len(col_name)*2 + 4, cmd_func=pass_func)
+                            btn.draw()
+                            return_list.append(btn.return_text)
                         line_feed.draw()
+
+                else:
+                    # ================= 2. 绘制表头 =================
+                    name_btn_width = 24 
+                    if current_category in cat_columns:
+                        header_draw = draw.NormalDraw()
+                        header_text = " " * name_btn_width
+                        cols = cat_columns[current_category]
+                        for col_name, col_id in cols:
+                            header_text += format_col_header(col_name)
+                        if current_category == "【工作技能】":
+                            header_text += "装备 |工作"
+                        header_draw.text = header_text
+                        header_draw.draw()
+                        line_feed.draw()
+                    else:
+                        line_feed.draw() 
+
+                    # ================= 3. 数据过滤与排序 =================
+                    all_charas = []
+                    
+                    for npc_id in cache.npc_id_got:
+                        if npc_id == 0: continue
+                        chara = cache.character_data[npc_id]
+                        
+                        # 筛选工作 (0:不筛选, 1:有工作, 2:无工作)
+                        has_work = chara.work.work_type != 0
+                        if self.filter_work == 1 and not has_work: continue
+                        if self.filter_work == 2 and has_work: continue
+                        
+                        # 筛选陷落 (0:不筛选, 1:无, 2:有, 3:爱情, 4:隶属)
+                        is_love = any(chara.talent.get(i) for i in [201, 202, 203, 204])
+                        is_obey = any(chara.talent.get(i) for i in [211, 212, 213, 214])
+                        has_fall = is_love or is_obey
+                        if self.filter_fall == 1 and has_fall: continue
+                        if self.filter_fall == 2 and not has_fall: continue
+                        if self.filter_fall == 3 and not is_love: continue
+                        if self.filter_fall == 4 and not is_obey: continue
+                        
+                        # 筛选女儿 (0:不筛选, 1:是, 2:否)
+                        is_daughter = chara.talent.get(311) or chara.talent.get(312) or (hasattr(chara, 'relationship') and chara.relationship.father_id == 0)
+                        if self.filter_daughter == 1 and not is_daughter: continue
+                        if self.filter_daughter == 2 and is_daughter: continue
+                        
+                        # 筛选访客 (0:不筛选, 1:是, 2:否)
+                        is_visitor = npc_id in cache.rhodes_island.visitor_info
+                        if self.filter_visitor == 1 and not is_visitor: continue
+                        if self.filter_visitor == 2 and is_visitor: continue
+
+                        # 筛选收藏 (0:不筛选, 1:是, 2:否) (值为1即代表收藏)
+                        is_collected = chara.chara_setting.get(2, 0) == 1
+                        if self.filter_collection == 1 and not is_collected: continue
+                        if self.filter_collection == 2 and is_collected: continue
+                        
+                        all_charas.append(npc_id)
+                        
+                    def get_sort_val(nid, key):
+                        if key == "无": return 0
+                        c = cache.character_data[nid]
+                        if key == "默认ID": return nid
+                        if key == "好感": return c.favorability.get(0, 0)
+                        if key == "信赖": return c.trust
+                        if key == "体力": return c.hit_point
+                        if key == "最大体力": return c.hit_point_max
+                        if key == "气力": return c.mana_point
+                        if key == "最大气力": return c.mana_point_max
+                        if key == "催眠深度": return c.hypnosis.hypnosis_degree
+                        if key == "工作": return c.work.work_type
+                        if key == "装备":
+                            if handle_premise.handle_self_equipment_maintenance_ge_2(nid): return 2
+                            if handle_premise.handle_self_equipment_damaged_ge_2(nid): return -1
+                            return 0
+                        
+                        for _cname, _cols in cat_columns.items():
+                            for _col_name, _col_id in _cols:
+                                if _col_name == key:
+                                    if _cname == "【刻印类】":
+                                        return c.talent.get(_col_id, 0)
+                                    else:
+                                        return c.ability.get(_col_id, 0)
+                        return 0
+                        
+                    all_charas.sort(
+                        key=lambda x: (
+                            0 if (self.sort_collection_first and cache.character_data[x].chara_setting.get(2, 0) == 1) else 1,
+                            get_sort_val(x, self.sort_main),
+                            get_sort_val(x, self.sort_sub),
+                            x
+                        ), 
+                        reverse=self.sort_reverse
+                    )
+
+                    # ================= 4. 分页逻辑 =================
+                    chara_per_page = 20
+                    total_pages = max(1, (len(all_charas) + chara_per_page - 1) // chara_per_page)
+                    
+                    if self.chara_list_page >= total_pages: self.chara_list_page = total_pages - 1
+                    elif self.chara_list_page < 0: self.chara_list_page = 0
+
+                    start_idx = self.chara_list_page * chara_per_page
+                    end_idx = min(start_idx + chara_per_page, len(all_charas))
+                    current_page_charas = all_charas[start_idx:end_idx]
+
+                    # ================= 5. 遍历渲染当前页干员 =================
+                    for character_id in current_page_charas:
+                        character_data = cache.character_data[character_id]
+                        name = character_data.name
+                        id_str = str(character_data.adv).rjust(4, '0')
+                        
+                        # 收藏判定与对齐：使用全形空格（字元數=1，顯示寬度=2），確保與"★"的底層計算一致
+                        is_collected = character_data.chara_setting.get(2, 0) == 1
+                        star_str = "⭐" if is_collected else "  "
+                        
+                        # 绘制干员名字按钮
+                        name_str = f"[{id_str}]{star_str}{name}"
+                        display_name_len = get_display_width(name_str)
+                        name_pad = " " * max(0, name_btn_width - display_name_len)
+                        
+                        name_draw = draw.LeftButton(
+                            name_str + name_pad, str(character_id), name_btn_width, cmd_func=self.see_attr, args=(character_id,)
+                        )
+                        name_draw.draw()
+                        return_list.append(name_draw.return_text)
+                        
+                        # 绘制后面对应的数值数据
+                        abl = character_data.ability
+                        tlt = character_data.talent
+                        
+                        if current_category == "【体力气力】":
+                            # HP 条绘制
+                            hp_draw = draw.InfoBarDraw()
+                            hp_draw.width = int(self.width / 5)
+                            hp_draw.scale = 0.8
+                            hp_draw.set("HitPointbar", int(character_data.hit_point_max), int(character_data.hit_point), "体力")
+                            hp_draw.draw()
+                            
+                            hp_str_len = len(f"({int(character_data.hit_point)}/{int(character_data.hit_point_max)})")
+                            pad_len = max(0, 12 - hp_str_len)
+                            
+                            space_draw = draw.NormalDraw()
+                            space_draw.text = (" " * pad_len) + "   "
+                            space_draw.draw()
+                            
+                            # MP 条绘制
+                            mp_draw = draw.InfoBarDraw()
+                            mp_draw.width = int(self.width / 5)
+                            mp_draw.scale = 0.8
+                            mp_draw.set("ManaPointbar", int(character_data.mana_point_max), int(character_data.mana_point), "气力")
+                            mp_draw.draw()
+                            
+                            mp_str_len = len(f"({int(character_data.mana_point)}/{int(character_data.mana_point_max)})")
+                            mp_pad_len = max(0, 12 - mp_str_len)
+                            
+                            space_draw2 = draw.NormalDraw()
+                            space_draw2.text = (" " * mp_pad_len) + "   "
+                            space_draw2.draw()
+                            
+                            status_list, _temp_text = get_character_status_list(character_id)
+                            for status_draw in status_list:
+                                status_draw.draw()
+                            
+                        elif current_category == "【好感信赖】":
+                            favor = character_data.favorability.get(0, 0)
+                            trust = character_data.trust
+                            hypnosis_val = character_data.hypnosis.hypnosis_degree
+                            
+                            # 判定现在位置
+                            from Script.Design import map_handle
+                            now_position = map_handle.get_map_system_path_str_for_list(character_data.position)
+                            
+                            # 判断陷落状态与文字颜色
+                            fall_name = "无"
+                            fall_color = "standard"
+                            if tlt.get(204):   fall_name, fall_color = "爱侣", "hot_pink"
+                            elif tlt.get(203): fall_name, fall_color = "恋人", "hot_pink"
+                            elif tlt.get(202): fall_name, fall_color = "恋慕", "deep_pink"
+                            elif tlt.get(201): fall_name, fall_color = "思慕", "light_pink"
+                            elif tlt.get(214): fall_name, fall_color = "奴隶", "levelex"
+                            elif tlt.get(213): fall_name, fall_color = "宠物", "red"
+                            elif tlt.get(212): fall_name, fall_color = "驯服", "crimson"
+                            elif tlt.get(211): fall_name, fall_color = "屈从", "coral"
+
+                            # 統一陷落文字的寬度，精確計算需要補的空格數量
+                            display_fall = get_display_width(fall_name)
+                            fall_pad = " " * max(0, 4 - display_fall)
+
+                            info_draw = draw.NormalDraw()
+                            info_text = f" 好感度: {str(favor).ljust(5)} | 信赖度: {str(round(trust, 1)).ljust(6)}% | 催眠深度: {str(round(hypnosis_val, 1)).ljust(5)}% | 陷落: "
+                            info_draw.text = info_text
+                            info_draw.draw()
+                            
+                            fall_draw = draw.NormalDraw()
+                            fall_draw.text = f"[{fall_name}]{fall_pad}"
+                            fall_draw.style = fall_color
+                            fall_draw.draw()
+
+                            loc_draw = draw.NormalDraw()
+                            loc_draw.text = f" | 现在位置: {now_position}"
+                            loc_draw.draw()
+                            
+                        else:
+                            # 绘制对齐的表格数据
+                            cols = cat_columns.get(current_category, [])
+                            for col_name, col_id in cols:
+                                val = tlt.get(col_id, 0) if current_category == "【刻印类】" else abl.get(col_id, 0)
+                                rank = get_rank_letter(val)
+                                rank_color = get_rank_color(val)
+                                
+                                rank_draw = draw.NormalDraw()
+                                rank_draw.text = rank
+                                rank_draw.style = rank_color
+                                rank_draw.draw()
+                                
+                                val_draw = draw.NormalDraw()
+                                display_width = get_display_width(col_name)
+                                val_str = f"{val}".rjust(2, " ")
+                                content_len = 4 # rank占2位, val_str占2位
+                                padding = " " * max(0, display_width - content_len)
+                                val_draw.text = f"{val_str}{padding}|"
+                                val_draw.draw()
+                            
+                            if current_category == "【工作技能】":
+                                # 渲染装备状态
+                                equip_text = "正常"
+                                equip_color = "standard"
+                                if handle_premise.handle_self_equipment_damaged_ge_2(character_id):
+                                    equip_text = "损坏"
+                                    equip_color = "red"
+                                elif handle_premise.handle_self_equipment_maintenance_ge_2(character_id):
+                                    equip_text = "完美"
+                                    equip_color = "spring_green"
+                                
+                                equip_draw = draw.NormalDraw()
+                                equip_draw.text = f"{equip_text}"
+                                equip_draw.style = equip_color
+                                equip_draw.draw()
+                                
+                                # 將 | 符號拆開渲染，避免顏色污染
+                                bar_draw = draw.NormalDraw()
+                                bar_draw.text = "|"
+                                bar_draw.draw()
+                                
+                                # 渲染当前工作
+                                work_type_id = character_data.work.work_type
+                                work_name = game_config.config_work_type[work_type_id].name
+                                work_draw = draw.NormalDraw()
+                                work_draw.text = f"{work_name}"
+                                work_draw.draw()
+                            
+                        line_feed.draw()
+
+                    # ================= 6. 绘制底部：翻页操作区 =================
+                    line_feed.draw()
+                    line = draw.LineDraw("-", self.width)
+                    line.draw()
+                    
+                    if self.chara_list_page > 0:
+                        prev_page_btn = draw.LeftButton("[888]上一页", "888", 12, cmd_func=self.change_chara_page, args=(-1,))
+                        prev_page_btn.draw()
+                        return_list.append(prev_page_btn.return_text)
+                    else:
+                        prev_page_btn = draw.NormalDraw()
+                        prev_page_btn.text = "[888]上一页"
+                        prev_page_btn.style = "deep_gray"
+                        prev_page_btn.width = 12
+                        prev_page_btn.draw()
+                    
+                    page_info = draw.NormalDraw()
+                    page_info.text = f"  [{self.chara_list_page + 1}/{total_pages}页]  "
+                    page_info.draw()
+                    
+                    if self.chara_list_page < total_pages - 1:
+                        next_page_btn = draw.LeftButton("[222]下一页", "222", 12, cmd_func=self.change_chara_page, args=(1,))
+                        next_page_btn.draw()
+                        return_list.append(next_page_btn.return_text)
+                    else:
+                        next_page_btn = draw.NormalDraw()
+                        next_page_btn.text = "[222]下一页"
+                        next_page_btn.style = "deep_gray"
+                        next_page_btn.width = 12
+                        next_page_btn.draw()
 
             line_feed.draw()
             line_feed.draw()
@@ -270,9 +757,283 @@ class Manage_Basement_Panel:
             back_draw.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
+            
+            # --- 处理UI筛选与排序面板的按键交互 ---
             if yrn == back_draw.return_text:
-                cache.now_panel_id = constant.Panel.IN_SCENE
+                if getattr(self, 'choosing_sort_mode', 0) != 0:
+                    self.choosing_sort_mode = 0  # 若在修改排序模式，按下返回僅關閉修改排序視窗
+                else:
+                    cache.now_panel_id = constant.Panel.IN_SCENE
+                    break
+            elif yrn == "toggle_filter_work":
+                self.filter_work = (self.filter_work + 1) % 3
+                self.chara_list_page = 0
+            elif yrn == "toggle_filter_fall":
+                self.filter_fall = (self.filter_fall + 1) % 5
+                self.chara_list_page = 0
+            elif yrn == "toggle_filter_daughter":
+                self.filter_daughter = (self.filter_daughter + 1) % 3
+                self.chara_list_page = 0
+            elif yrn == "toggle_filter_visitor":
+                self.filter_visitor = (self.filter_visitor + 1) % 3
+                self.chara_list_page = 0
+            elif yrn == "toggle_filter_collection":
+                self.filter_collection = (self.filter_collection + 1) % 3
+                self.chara_list_page = 0
+            elif yrn == "modify_sort_main":
+                self.choosing_sort_mode = 1
+            elif yrn == "modify_sort_sub":
+                self.choosing_sort_mode = 2
+            elif yrn == "reset_sort_main":
+                self.sort_main = "默认ID"
+                self.chara_list_page = 0
+            elif yrn == "reset_sort_sub":
+                self.sort_sub = "无"
+                self.chara_list_page = 0
+            elif yrn == "toggle_sort_reverse":
+                self.sort_reverse = not self.sort_reverse
+                self.chara_list_page = 0
+            elif yrn == "toggle_sort_collection_first":
+                self.sort_collection_first = not self.sort_collection_first
+                self.chara_list_page = 0
+            elif type(yrn) == str and yrn.startswith("select_sort_"):
+                sort_key = yrn.replace("select_sort_", "")
+                if self.choosing_sort_mode == 1:
+                    self.sort_main = sort_key
+                elif self.choosing_sort_mode == 2:
+                    self.sort_sub = sort_key
+                self.choosing_sort_mode = 0
+                self.chara_list_page = 0
+
+    def change_panel(self, now_panel: str):
+        """
+        切换当前面板显示
+        Keyword arguments:
+        panel -- 要切换的面板类型
+        """
+
+        self.now_panel = now_panel
+
+    def jump_to_son_panel(self, son_panel: str):
+        """
+        跳转子面板
+        Keyword arguments:
+        panel -- 要切换的面板类型
+        """
+
+        from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, nation_diplomacy_panel, invite_visitor_panel, agriculture_production_panel, confinement_and_training, manage_power_system_panel, equipmen_panel, manage_vehicle_panel
+        from Script.System.Medical_System import medical_department_panel
+        from Script.System.Field_Commission_System import field_commission_panel
+        from Script.System.Dormitory_System import manage_dormitory_panel
+        from Script.System.Cooking_System import make_food_panel
+
+        if _("基建系统") in son_panel:
+            now_panel = building_panel.Building_Panel(self.width)
+        if _("能源系统") in son_panel:
+            now_panel = manage_power_system_panel.Manage_Power_System_Panel(self.width)
+        elif _("装备维护系统") in son_panel:
+            # 如果铁匠铺还没有开放，则不显示装备维护系统
+            if not handle_premise.handle_blacksmith_shop_open(0):
+                info_draw = draw.WaitDraw()
+                info_draw.text = _("\n○铁匠铺未开放，无法进入装备维护系统\n")
+                info_draw.style = "gold_enrod"
+                info_draw.width = self.width
+                info_draw.draw()
+                return
+            else:
+                now_panel = equipmen_panel.Equipment_Maintain_Panel(self.width)
+        elif _("生产系统") in son_panel:
+            now_panel = manage_assembly_line_panel.Manage_Assembly_Line_Panel(self.width)
+        elif _("图书馆管理系统") in son_panel:
+            now_panel = manage_library.Manage_Library_Panel(self.width)
+        elif _("资源交易系统") in son_panel:
+            now_panel = resource_exchange_panel.Resource_Exchange_Line_Panel(self.width)
+        elif _("招募系统") in son_panel:
+                now_panel =recruit_panel.Recruit_Panel(self.width)
+        elif _("势力外交系统") in son_panel:
+            now_panel = nation_diplomacy_panel.Nation_Diplomacy_Panel(self.width)
+        elif _("邀请访客系统") in son_panel:
+            now_panel = invite_visitor_panel.Invite_Visitor_Panel(self.width)
+        elif _("外勤委托系统") in son_panel:
+            now_panel = field_commission_panel.Field_Commission_Panel(self.width)
+        elif _("载具管理系统") in son_panel:
+            now_panel = manage_vehicle_panel.Manage_Vehicle_Panel(self.width)
+        elif _("农业系统") in son_panel:
+            now_panel = agriculture_production_panel.Agriculture_Production_Panel(self.width)
+        elif _("宿舍管理系统") in son_panel:
+            now_panel = manage_dormitory_panel.Manage_Dormitory_Panel(self.width)
+        elif _("烹饪系统") in son_panel:
+            # 输出提示
+            info_draw = draw.WaitDraw()
+            info_draw.text = _("\n○需要在生活娱乐区-厨房中进行烹饪\n")
+            info_draw.style = "gold_enrod"
+            info_draw.width = self.width
+            info_draw.draw()
+            return
+        elif _("监禁调教系统") in son_panel:
+            # 如果没有监狱长，则不显示监禁调教系统
+            if not handle_premise.handle_have_warden(0):
+                info_draw = draw.WaitDraw()
+                info_draw.text = _("\n○未任命监狱长，无法进入监禁调教系统\n")
+                info_draw.style = "gold_enrod"
+                info_draw.width = self.width
+                info_draw.draw()
+                return
+            else:
+                now_panel = confinement_and_training.Confinement_And_Training_Manage_Panel(self.width)
+        elif _("医疗经营系统") in son_panel:
+            now_panel = medical_department_panel.Medical_Department_Panel(self.width)
+        elif _("诊疗病人系统") in son_panel:
+            # 输出提示
+            info_draw = draw.WaitDraw()
+            info_draw.text = _("\n○需要在医疗部-急诊室/门诊室中诊疗病人，无法在管理台直接诊疗病人\n")
+            info_draw.style = "gold_enrod"
+            info_draw.width = self.width
+            info_draw.draw()
+            return
+        now_panel.draw()
+
+    def show_department(self, department: str):
+        """
+        显示部门情况
+        Keyword arguments:
+        department -- 要显示的部门
+        """
+        from Script.System.Dormitory_System import common
+
+        while 1:
+            title_draw = draw.TitleLineDraw(department, self.width)
+            title_draw.draw()
+            return_list = []
+            now_draw = draw.NormalDraw()
+
+            now_text = _("\n当前{0}部门情况：").format(department)
+            for all_cid in game_config.config_work_type:
+                work_data = game_config.config_work_type[all_cid]
+                if work_data.department == department:
+                    now_text+= _("\n  当前正在工作的{0}：").format(work_data.name)
+                    if len(cache.rhodes_island.all_work_npc_set[all_cid]):
+                        for npc_id in cache.rhodes_island.all_work_npc_set[all_cid]:
+                            npc_name = cache.character_data[npc_id].name
+                            now_text += f" {npc_name}"
+                    else:
+                        now_text += _(" 暂无")
+
+            if department == _("工程部"):
+                # 故障地点与设施损坏数
+                now_text += _("\n  当前故障地点与设施损坏数：")
+                facility_damage_text = ""
+                now_count = 0
+                for scene_path_str in cache.rhodes_island.facility_damage_data:
+                    # 每行显示3个
+                    if now_count % 3 == 0:
+                        facility_damage_text += "\n"
+                    facility_damage_text += f"    {scene_path_str}-{cache.rhodes_island.facility_damage_data[scene_path_str]}"
+                    now_count += 1
+                if facility_damage_text == "":
+                    facility_damage_text = _("\n    无")
+                now_text += facility_damage_text
+                # 检修人员与其负责地点
+                now_text += _("\n  当前检修人员与其负责地点：")
+                npc_and_place_text = ""
+                now_count = 0
+                for chara_id in cache.rhodes_island.maintenance_place:
+                    if len(cache.rhodes_island.maintenance_place[chara_id]):
+                        if now_count % 3 == 0:
+                            npc_and_place_text += "\n"
+                        chara_name = cache.character_data[chara_id].name
+                        npc_and_place_text += f"    {chara_name}-{cache.rhodes_island.maintenance_place[chara_id]}"
+                        now_count += 1
+                if npc_and_place_text == "":
+                    npc_and_place_text = _("\n    无")
+                now_text += npc_and_place_text
+
+            elif department == _("医疗部"):
+                # TODO 调用医疗部管理系统里的今日日志在这里显示
+                pass
+
+            elif department == _("文职部"):
+                if len(cache.rhodes_island.recruited_id):
+                    now_text += _("\n  当前已招募未确认干员人数为：{0}人，请前往博士办公室确认").format(len(cache.rhodes_island.recruited_id))
+                else:
+                    now_text += _("\n  当前没有已招募干员，请等待招募完成")
+                for i in {0,1,2,3}:
+                    if i in cache.rhodes_island.recruit_line:
+                        now_text += _("\n  {0}号招募位进度：{1}%/100%").format(i+1, round(cache.rhodes_island.recruit_line[i][0],1))
+
+            elif department == _("图书馆"):
+                reader_count = cache.rhodes_island.reader_now
+                now_text += _("\n  当前读者人数：{0} 人").format(reader_count)
+
+            elif department == _("宿舍区"):
+                npc_count = str(len(cache.npc_id_got))
+                now_text += _("\n  干员总数/宿舍容量：{0}/{1}").format(npc_count, cache.rhodes_island.people_max)
+                now_text += common.get_dormitory_occupants_text()
+                now_text += "\n"
+
+            elif department == _("机库"):
+                now_text += _("\n  当前外勤委托情况：")
+                # 输出委托信息
+                for commision_id in cache.rhodes_island.ongoing_field_commissions:
+                    commision_data = game_config.config_commission[commision_id]
+                    commision_name = commision_data.name
+                    # 参与干员名字
+                    commision_chara_id_list = cache.rhodes_island.ongoing_field_commissions[commision_id][0]
+                    commision_chara_name_list = [cache.character_data[chara_id].name for chara_id in commision_chara_id_list]
+                    commision_chara_name_str = "、".join(commision_chara_name_list)
+                    # 剩余返回天数
+                    return_time = cache.rhodes_island.ongoing_field_commissions[commision_id][1]
+                    last_days = game_time.count_day_for_datetime(cache.game_time, return_time)
+                    if last_days <= 0:
+                        last_days = _("不足一天")
+                    else:
+                        last_days = _("{0}天").format(last_days)
+                    now_text += _("\n  [{0}]：{1}，剩余{2}").format(commision_name, commision_chara_name_str, last_days)
+                if not len(cache.rhodes_island.ongoing_field_commissions):
+                    now_text += _("\n  无")
+                now_text += _("\n  当前载具情况：")
+                # 输出载具信息
+                for vehicle_id in cache.rhodes_island.vehicles:
+                    # 如果未持有，则跳过
+                    if cache.rhodes_island.vehicles[vehicle_id][0] == 0 and cache.rhodes_island.vehicles[vehicle_id][1] == 0:
+                        continue
+                    vehicle_data = game_config.config_vehicle[vehicle_id]
+                    vehicle_name = vehicle_data.name
+                    # 载具数量
+                    now_vehicle_count = cache.rhodes_island.vehicles[vehicle_id][0]
+                    out_vehicle_count = cache.rhodes_island.vehicles[vehicle_id][1]
+                    now_text += _("\n  [{0}]：可用{1}辆，出动中{2}辆").format(vehicle_name, now_vehicle_count, out_vehicle_count)
+
+            now_draw.text = now_text
+            now_draw.width = self.width
+            now_draw.draw()
+            line_feed.draw()
+
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
                 break
+
+    def settle_show_resource_type(self, resouce_type):
+        """设置显示的资源类型"""
+        self.show_resource_type_dict[resouce_type] = not self.show_resource_type_dict[resouce_type]
+
+    def see_attr(self, character_id: int):
+        # 获取所有npc的列表，用于上一页下一页功能
+        npc_list = list(cache.npc_id_got)
+        if 0 in npc_list:
+            npc_list.remove(0)  # 移除玩家
+        # 使用 SeeCharacterInfoHandleInScene 而不是 SeeCharacterInfoInScenePanel
+        # 因为后者会基于当前场景限制角色列表
+        now_draw = see_character_info_panel.SeeCharacterInfoHandleInScene(
+            character_id, self.width, npc_list
+        )
+        now_draw.draw()
+        # 设置返回后的面板id
+        cache.now_panel_id = constant.Panel.IN_SCENE
 
     def change_panel(self, now_panel: str):
         """
