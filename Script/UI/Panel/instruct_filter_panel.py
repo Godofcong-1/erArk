@@ -31,7 +31,7 @@ class Instruct_filter_Panel:
         """绘制对象"""
         title_draw = draw.TitleLineDraw(_("指令过滤"), self.width)
 
-        self.handle_panel = panel.PageHandlePanel([], HandleFilterButtonList, 999, 8, self.width, True, True, 0)
+        self.handle_panel = panel.PageHandlePanel([], HandleFilterButtonList, 999, 6, self.width, True, True, 0)
 
         instruct_index_list = []
         
@@ -95,7 +95,13 @@ class HandleFilterButtonList:
         name_draw = draw.NormalDraw()
 
         instruct_name = constant.handle_instruct_name_data[self.index]
-        button_text = f"[{self.index}]{instruct_name}"
+        # 显示的指令名如果超过了四个字符，则只显示前四个字符，第五个字符显示为省略号
+        if len(self.index) > 4:
+            show_index = self.index[:4] + ".."
+        # 如果没超过，则用空格补全到6个字符
+        else:
+            show_index = self.index.ljust(6, " ")
+        button_text = f"[{show_index}]{instruct_name}"
 
         if self.index not in cache.instruct_index_filter:
             cache.instruct_index_filter[self.index] = True
