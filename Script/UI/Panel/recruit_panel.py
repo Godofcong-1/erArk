@@ -266,22 +266,26 @@ def calculate_recruit_line_efficiency(line_id: int) -> Tuple[str, float]:
             sub_bonus += base_effect / 5
     # 如果文本为空，说明没有主招聘专员
     if hr_parts_str == "[":
-        hr_parts_str += _("主:空缺")
+        hr_parts_str += _("主:空缺(基础1.0%)")
         total_bonus = 1.0
     # 副专员
     total_bonus += sub_bonus
     hr_parts_str += _("，副:{0}%]").format(round(sub_bonus,1))
+    
     # 除以策略难度调整
     total_bonus /= recruitment_strategy_data.adjust
-    strategy_str = _(" * 策略调整系数{0}%").format(int(recruitment_strategy_data.adjust * 100))
+    # 【修復】這裡將顯示的 "*" 改為 "/" 以符合實際除法運算
+    strategy_str = _(" / 策略调整系数{0}%").format(int(recruitment_strategy_data.adjust * 100))
+    
     # 乘以设施效率
     total_bonus *= facility_effect
     facility_effect_str = _("* 设施效率调整{0}%").format(round(facility_effect * 100,1))
+    
     # 停止招募则为0
     if recruitment_strategy_id == 11:
         total_bonus = 0.0
         hr_parts_str += _("，已停止招募")
-    # 修复了原本占位符 {2} 拼错的问题，改为 {3}
+        
     detail_str = _("当前效率加成：{0} {1} {2} = {3}%").format(hr_parts_str, strategy_str, facility_effect_str, round(total_bonus, 1))
     return detail_str, total_bonus
 
@@ -526,7 +530,7 @@ class Recruit_Panel:
             info_text = ""
             info_text += _(" {0}号招募当前的策略为：{1}").format(recruit_line_id+1, recruitment_strategy_data.name)
 
-            info_text += _("\n\n 当前可以选择的策略有（系数越高越简单）：\n")
+            info_text += _("\n\n 当前可以选择的策略有（系数越低越简单，系数越高招募越慢）：\n")
             info_draw.text = info_text
             info_draw.draw()
             line_feed.draw()
