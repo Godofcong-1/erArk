@@ -484,6 +484,19 @@ class Recruit_Panel:
                 int(self.width / 3),
                 cmd_func=self.select_npc_position,
                 )
+            
+            # 检查是否有任何一条招募线的主招聘专员空缺
+            has_vacant_main = False
+            for recruit_line_id in cache.rhodes_island.recruit_line:
+                main_id = cache.rhodes_island.recruit_line[recruit_line_id][2]
+                if not isinstance(main_id, int) or main_id == 0:
+                    has_vacant_main = True
+                    break
+            
+            # 如果有空缺，将按钮的正常颜色改为 gold_enrod
+            if has_vacant_main:
+                button_draw.normal_style = "gold_enrod"
+
             return_list.append(button_draw.return_text)
             button_draw.draw()
 
@@ -593,6 +606,46 @@ class Recruit_Panel:
         """招聘专员管理(任命各线主招聘专员)"""
         ri = cache.rhodes_island
         from Script.UI.Panel import manage_basement_panel
+        from Script.Design import handle_ability, handle_talent
+        
+        page = 0
+        items_per_page = 10
+        
+        # 輔助：固定寬度對齊
+        def fmt(text, width):
+            return attr_calculation.pad_display_width(str(text), width)
+            
+        # 輔助：模擬話術等級字母 (依照常見的S-A-B-C-D-E-F-G排版，大於等於8視為EX)
+        def get_grade(lv):
+            mapping = {0:"G", 1:"F", 2:"E", 3:"D", 4:"C", 5:"B", 6:"A", 7:"S"}
+            if lv >= 8: return "EX"
+            return mapping.get(lv, "G")
+            
+        # 輔助：建立每一行的文字
+        def build_row_text(role, chara_id, is_main):
+            if chara_id == 0:
+                return "  " + fmt(role, 15) + " | " + fmt(_("空缺"), 12) + " | " + fmt("-", 8) + " | " + fmt("-", 6) + " | " + fmt("-", 10) + " | " + fmt("-", 10) + " | " + fmt("-", 8) + " | " + fmt("-", 8) + " | " + fmt("-", 6) + " | " + fmt("-", 6) + " | " + fmt("-", 6)
+                
+            chara = cache.character_data[chara_id]
+            base_effect = 2 * handle_ability.get_ability_adjust(chara.ability.get(40,0))
+            bonus = base_effect if is_main else base_effect / 5
+            bonus_text = f"{round(bonus,1)}%"
+            abi_lv = chara.ability.get(40,0)
+            abi_str = f"{get_grade(abi_lv)} {abi_lv}"
+            
+            def safe_get(cfg, key):
+                return cfg[key].name if key in cfg else "-"
+            
+            nation = safe_get(game_config.config_nation, chara.relationship.nation)
+            birth = safe_get(game_config.config_birthplace, chara.relationship.birthplace)
+            prof = safe_get(game_config.config_profession, chara.profession)
+            race = safe_get(game_config.config_race, chara.race)
+            age = safe_get(game_config.config_talent, handle_talent.have_age_talent(chara_id))
+            chest = safe_get(game_config.config_talent, handle_talent.have_chest_talent(chara_id))
+            hip = safe_get(game_config.config_talent, handle_talent.have_hip_talent(chara_id))
+            
+            return "  " + fmt(role, 15) + " | " + fmt(chara.name, 12) + " | " + fmt(bonus_text, 8) + " | " + fmt(abi_str, 6) + " | " + fmt(nation, 10) + " | " + fmt(birth, 10) + " | " + fmt(prof, 8) + " | " + fmt(race, 8) + " | " + fmt(age, 6) + " | " + fmt(chest, 6) + " | " + fmt(hip, 6)
+
         while 1:
             # 刷新一下
             basement.update_work_people()
@@ -601,8 +654,7 @@ class Recruit_Panel:
             return_list = []
 
             info = draw.NormalDraw()
-            info.text = _("当前招聘专员数量：{0}").format(len(ri.hr_operator_ids_list))
-            info.text += "      "
+            info.text = _("  当前招聘专员数量：{0}      \n").format(len(ri.hr_operator_ids_list))
             info.draw()
 
             # 增减按钮
@@ -618,55 +670,96 @@ class Recruit_Panel:
             button_draw.draw()
             line_feed.draw(); line_feed.draw()
 
+            # 表头
+            header_text = "  " + fmt(_("职位"), 15) + " | " + fmt(_("名字"), 12) + " | " + fmt(_("加成"), 8) + " | " + fmt(_("话术"), 6) + " | " + fmt(_("势力"), 10) + " | " + fmt(_("出生地"), 10) + " | " + fmt(_("职业"), 8) + " | " + fmt(_("种族"), 8) + " | " + fmt(_("外表"), 6) + " | " + fmt(_("胸部"), 6) + " | " + fmt(_("臀部"), 6)
+            header_draw = draw.NormalDraw()
+            header_draw.text = header_text + "\n"
+            header_draw.draw()
+            
+            # 分割线
+            div = draw.LineDraw("-", self.width)
+            div.draw()
+
             # 显示各线主招聘专员
             for line_id in ri.recruit_line:
                 main_id = ri.recruit_line[line_id][2]
-                main_chara_data = cache.character_data[main_id]
-                name = main_chara_data.name if main_id != 0 else _("空缺")
-                abi_lv = main_chara_data.ability.get(40,0)
-                abi_lv_text = _("(话术lv{0})").format(abi_lv) if main_id != 0 else ""
-                
-                # 將"空缺"同樣單獨分割並套用 warning 樣式
-                row_text_full = _("{0}号招募线 主招聘专员: {1}{2}").format(line_id+1, name, abi_lv_text)
-                vacant_str = _("空缺")
-                if vacant_str in row_text_full:
-                    parts = row_text_full.split(vacant_str)
-                    for i, p in enumerate(parts):
-                        d = draw.NormalDraw()
-                        d.text = p
-                        d.draw()
-                        if i < len(parts) - 1:
-                            vd = draw.NormalDraw()
-                            vd.text = vacant_str
-                            vd.style = "warning"
-                            vd.draw()
-                else:
-                    row = draw.NormalDraw()
-                    row.text = row_text_full
-                    row.draw()
+                if not isinstance(main_id, int):
+                    main_id = 0
+                    
+                role_str = _("主召聘专员({0}号)").format(line_id+1)
+                row_text = build_row_text(role_str, main_id, True)
 
                 def _make(line_idx):
                     return lambda : self._appoint_main_hr(line_idx)
-                btn = draw.CenterButton(_("[任命]"), _("任命")+str(line_id+1), 12, cmd_func=_make(line_id))
+                
+                # 整排按钮，按下等同原 [任命]
+                btn = draw.LeftButton(row_text, f"任命_{line_id+1}", self.width, cmd_func=_make(line_id))
+                
+                # 如果是空缺狀態，則整行按鈕標成橘色
+                if main_id == 0:
+                    btn.normal_style = "gold_enrod"
+                    
                 btn.draw(); return_list.append(btn.return_text)
                 line_feed.draw()
+                
+            line_feed.draw()
+            # 主副之间的分割线
+            div.draw()
             line_feed.draw()
 
             # 其它副招聘专员
-            main_ids = {ri.recruit_line[i][2] for i in ri.recruit_line}
-            other_ops = [cid for cid in ri.hr_operator_ids_list if cid not in main_ids]
-            other_draw = draw.NormalDraw()
-            if other_ops:
-                other_names = []
-                for c in other_ops:
-                    chara = cache.character_data[c]
-                    abi_lv = chara.ability.get(40, 0)
-                    other_names.append(_("{chara_name}(话术lv{abi_lv})").format(chara_name=chara.name, abi_lv=abi_lv))
-                other_draw.text = _("副招聘专员：") + "、".join(other_names) + "\n"
+            main_ids = {ri.recruit_line[i][2] for i in ri.recruit_line if isinstance(ri.recruit_line[i][2], int)}
+            other_ops = [cid for cid in ri.hr_operator_ids_list if cid not in main_ids and cid != 0]
+            # 依话术等级从高到低排序
+            other_ops.sort(key=lambda x: cache.character_data[x].ability.get(40,0), reverse=True)
+            
+            total_sub = len(other_ops)
+            max_page = max(0, (total_sub - 1) // items_per_page)
+            if page > max_page: page = max_page
+            
+            start_idx = page * items_per_page
+            end_idx = start_idx + items_per_page
+            curr_ops = other_ops[start_idx:end_idx]
+            
+            if not curr_ops:
+                no_sub = draw.NormalDraw()
+                no_sub.text = _("  副招聘专员：暂无\n")
+                no_sub.draw()
             else:
-                other_draw.text = _("副招聘专员：暂无\n")
-            other_draw.draw()
+                for cid in curr_ops:
+                    row_text = build_row_text(_("副招聘专员"), cid, False)
+                    row_draw = draw.NormalDraw()
+                    row_draw.text = row_text + "\n"
+                    row_draw.draw()
+                    
             line_feed.draw(); line_feed.draw()
+
+            # 副招聘专员翻页按钮
+            if max_page > 0:
+                def prev_p(): nonlocal page; page -= 1
+                def next_p(): nonlocal page; page += 1
+                
+                prev_btn = draw.CenterButton(_("[上一页]"), _("上一页"), int(self.width/2), cmd_func=prev_p)
+                next_btn = draw.CenterButton(_("[下一页]"), _("下一页"), int(self.width/2), cmd_func=next_p)
+                
+                if page > 0:
+                    prev_btn.draw()
+                    return_list.append(prev_btn.return_text)
+                else:
+                    null_btn = draw.CenterDraw()
+                    null_btn.text = " "
+                    null_btn.width = int(self.width/2)
+                    null_btn.draw()
+                    
+                if page < max_page:
+                    next_btn.draw()
+                    return_list.append(next_btn.return_text)
+                else:
+                    null_btn = draw.CenterDraw()
+                    null_btn.text = " "
+                    null_btn.width = int(self.width/2)
+                    null_btn.draw()
+                line_feed.draw(); line_feed.draw()
 
             back = draw.CenterButton(_("[返回]"), _("返回"), self.width)
             back.draw(); return_list.append(back.return_text)
