@@ -282,14 +282,19 @@ class Make_food_Panel:
             back_draw.draw()
             line_feed.draw()
             return_list.append(back_draw.return_text)
-            yrn = flow_handle.askfor_all(return_list)
+            
             # 进入本轮输入前重置二级确认结果，避免沿用上一次状态
             SeeFoodListByFoodNameDraw.last_confirm_result = ""
+            
+            yrn = flow_handle.askfor_all(return_list)
+            
+            # 判定结果
             if yrn in self.handle_panel.return_list and SeeFoodListByFoodNameDraw.last_confirm_result == _("取消"):
-                yrn = _("取消")
-            # 按下取消按钮回到选择菜品列表，非取消则跳出
-            if (yrn == back_draw.return_text or 
+                # 按下取消按钮回到选择菜品列表
+                pass
+            elif (yrn == back_draw.return_text or 
             (yrn in self.handle_panel.return_list and SeeFoodListByFoodNameDraw.last_confirm_result == _("确认"))):
+                # 选择返回或者确认制作成功后，退出面板
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
