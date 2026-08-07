@@ -74,11 +74,17 @@ def find_recruitable_npc() -> List[int]:
         # 跳过已有的
         if chara_id in cache.npc_id_got:
             continue
+        # 跳过已在待确认招募列表中的
+        if chara_id in cache.rhodes_island.recruited_id:
+            continue
         # 跳过女儿
         if tem_data.Mother_id != 0 or tem_data.AdvNpc > 9000:
             continue
         # 跳过不存在的
         if chara_id not in cache.character_data:
+            continue
+        # 跳过访客
+        if cache.character_data[chara_id].sp_flag.vistor == 1:
             continue
         # 跳过离线异常
         if not handle_premise.handle_normal_7(chara_id):
@@ -275,7 +281,8 @@ def calculate_recruit_line_efficiency(line_id: int) -> Tuple[str, float]:
     if recruitment_strategy_id == 11:
         total_bonus = 0.0
         hr_parts_str += _("，已停止招募")
-    detail_str = _("当前效率加成：{0} {1} {2} = {2}%").format(hr_parts_str, strategy_str, facility_effect_str, round(total_bonus, 1))
+    # 修复了原本占位符 {2} 拼错的问题，改为 {3}
+    detail_str = _("当前效率加成：{0} {1} {2} = {3}%").format(hr_parts_str, strategy_str, facility_effect_str, round(total_bonus, 1))
     return detail_str, total_bonus
 
 class Recruit_Panel:
@@ -293,6 +300,15 @@ class Recruit_Panel:
         """ 当前绘制的页面 """
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
+        self.show_detail_line: int = -1
+        """ 当前展开详情的招募线编号 """
+
+    def toggle_detail(self, line_id: int):
+        """展开或收起招募详情"""
+        if self.show_detail_line == line_id:
+            self.show_detail_line = -1
+        else:
+            self.show_detail_line = line_id
 
     def draw(self):
         """绘制对象"""
@@ -307,14 +323,6 @@ class Recruit_Panel:
 
         # 开始获得招募npc的id
         recruitable_npc_id_list = find_recruitable_npc()
-        wait_id_list = []
-        for chara_id in recruitable_npc_id_list:
-            character_data = cache.character_data[chara_id]
-            # 筛选出出生地是当前罗德岛所在地的角色
-            if character_data.relationship.birthplace != cache.rhodes_island.current_location[0]:
-                continue
-            else:
-                wait_id_list.append(chara_id)
 
         while 1:
             return_list = []
@@ -322,8 +330,8 @@ class Recruit_Panel:
 
             all_info_draw = draw.NormalDraw()
             now_text = _("  当前设施等级为：{0}，可同时有{1}条招募线\n").format(now_level, line_count)
-            # 输出当前国家剩余可招募干员的数量
-            now_text += _("  当前国家剩余可招募干员数量（不含委托特殊招募）：{0}\n").format(len(wait_id_list))
+            
+            # 取消掉原本的"当前国家可招募干员数量"的文字
             if len(cache.rhodes_island.recruited_id) == 0:
                 now_text += _("  当前没有已招募待确认的干员\n")
             else:
@@ -368,12 +376,103 @@ class Recruit_Panel:
                 button_draw.draw()
                 line_feed.draw()
 
+                # 计算本线当前策略能招募到的干员列表
+                line_wait_id_list = []
+                line_main_chara_id = cache.rhodes_island.recruit_line[recruit_line_id][2]
+                if not isinstance(line_main_chara_id, int):
+                    line_main_chara_id = 0
+                
+                for chara_id in recruitable_npc_id_list:
+                    if recruitment_strategy_id == 11:
+                        break
+                    chara_data = cache.character_data[chara_id]
+                    if recruitment_strategy_id == 0:
+                        if chara_data.relationship.birthplace == cache.rhodes_island.current_location[0]:
+                            line_wait_id_list.append(chara_id)
+                    elif recruitment_strategy_id == 1:
+                        line_wait_id_list.append(chara_id)
+                    elif recruitment_strategy_id == 2:
+                        if line_main_chara_id and chara_data.relationship.nation == cache.character_data[line_main_chara_id].relationship.nation:
+                            line_wait_id_list.append(chara_id)
+                    elif recruitment_strategy_id == 3:
+                        if line_main_chara_id and chara_data.relationship.birthplace == cache.character_data[line_main_chara_id].relationship.birthplace:
+                            line_wait_id_list.append(chara_id)
+                    elif recruitment_strategy_id == 4:
+                        if line_main_chara_id and chara_data.profession == cache.character_data[line_main_chara_id].profession:
+                            line_wait_id_list.append(chara_id)
+                    elif recruitment_strategy_id == 5:
+                        if line_main_chara_id and chara_data.race == cache.character_data[line_main_chara_id].race:
+                            line_wait_id_list.append(chara_id)
+                    elif recruitment_strategy_id == 6:
+                        if line_main_chara_id:
+                            age_talent_id = handle_talent.have_age_talent(line_main_chara_id)
+                            if chara_data.talent.get(age_talent_id) == 1:
+                                line_wait_id_list.append(chara_id)
+                    elif recruitment_strategy_id == 7:
+                        if line_main_chara_id:
+                            chest_talent_id = handle_talent.have_chest_talent(line_main_chara_id)
+                            if chara_data.talent.get(chest_talent_id) == 1:
+                                line_wait_id_list.append(chara_id)
+                    elif recruitment_strategy_id == 8:
+                        if line_main_chara_id:
+                            hip_talent_id = handle_talent.have_hip_talent(line_main_chara_id)
+                            if chara_data.talent.get(hip_talent_id) == 1:
+                                line_wait_id_list.append(chara_id)
+
+                # 绘制当前策略能招到的人数及详情按钮
+                rem_count = len(line_wait_id_list)
+                rem_prefix_draw = draw.NormalDraw()
+                rem_prefix_draw.text = _("    当前策略剩余可招募干员数：")
+                rem_prefix_draw.draw()
+
+                rem_count_draw = draw.NormalDraw()
+                rem_count_draw.text = str(rem_count)
+                if rem_count == 0:
+                    rem_count_draw.style = "red"  # 为0时标红色
+                rem_count_draw.draw()
+
+                if rem_count > 0:
+                    detail_btn_text = _(" [详情] ")
+                    detail_btn = draw.CenterButton(
+                        detail_btn_text,
+                        _("{0}_{1}").format(detail_btn_text, recruit_line_id),
+                        len(detail_btn_text) * 2,
+                        cmd_func=self.toggle_detail,
+                        args=(recruit_line_id,)
+                    )
+                    detail_btn.draw()
+                    return_list.append(detail_btn.return_text)
+                line_feed.draw()
+
+                # 如果点击详情，则展开所有名字
+                if self.show_detail_line == recruit_line_id and rem_count > 0:
+                    detail_names = "      " + "、".join([cache.character_data[cid].name for cid in line_wait_id_list])
+                    detail_draw = draw.NormalDraw()
+                    detail_draw.text = detail_names + "\n"
+                    detail_draw.draw()
+
                 # 计算本线当前效率
                 detail_str, total_bonus = calculate_recruit_line_efficiency(recruit_line_id)
                 if recruitment_strategy_id == 11:
                     cache.rhodes_island.recruit_line[recruit_line_id][0] = 0
-                all_info_draw.text = "    " + detail_str
-                all_info_draw.draw()
+                
+                # 绘制效率加成文本，并将"空缺"标为橘色（warning样式）
+                full_detail = "    " + detail_str
+                vacant_str = _("空缺")
+                if vacant_str in full_detail:
+                    parts = full_detail.split(vacant_str)
+                    for i, part in enumerate(parts):
+                        pd = draw.NormalDraw()
+                        pd.text = part
+                        pd.draw()
+                        if i < len(parts) - 1:
+                            vd = draw.NormalDraw()
+                            vd.text = vacant_str
+                            vd.style = "warning"
+                            vd.draw()
+                else:
+                    all_info_draw.text = full_detail
+                    all_info_draw.draw()
 
                 line_feed.draw()
             line_feed.draw()
@@ -523,12 +622,29 @@ class Recruit_Panel:
             for line_id in ri.recruit_line:
                 main_id = ri.recruit_line[line_id][2]
                 main_chara_data = cache.character_data[main_id]
-                name = main_chara_data.name if main_id != 0 else _("(空缺)")
+                name = main_chara_data.name if main_id != 0 else _("空缺")
                 abi_lv = main_chara_data.ability.get(40,0)
                 abi_lv_text = _("(话术lv{0})").format(abi_lv) if main_id != 0 else ""
-                row = draw.NormalDraw()
-                row.text = _("{0}号招募线 主招聘专员: {1}{2}").format(line_id+1, name, abi_lv_text)
-                row.draw()
+                
+                # 將"空缺"同樣單獨分割並套用 warning 樣式
+                row_text_full = _("{0}号招募线 主招聘专员: {1}{2}").format(line_id+1, name, abi_lv_text)
+                vacant_str = _("空缺")
+                if vacant_str in row_text_full:
+                    parts = row_text_full.split(vacant_str)
+                    for i, p in enumerate(parts):
+                        d = draw.NormalDraw()
+                        d.text = p
+                        d.draw()
+                        if i < len(parts) - 1:
+                            vd = draw.NormalDraw()
+                            vd.text = vacant_str
+                            vd.style = "warning"
+                            vd.draw()
+                else:
+                    row = draw.NormalDraw()
+                    row.text = row_text_full
+                    row.draw()
+
                 def _make(line_idx):
                     return lambda : self._appoint_main_hr(line_idx)
                 btn = draw.CenterButton(_("[任命]"), _("任命")+str(line_id+1), 12, cmd_func=_make(line_id))
