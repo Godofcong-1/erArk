@@ -1,7 +1,7 @@
 from typing import Tuple
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import update
+from Script.Design import update, attr_calculation
 from Script.System.Cooking_System import cooking, cook_question_panel
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
@@ -82,11 +82,10 @@ class Make_food_Panel:
 
             # 筛选和排序按钮
             info_draw = draw.NormalDraw()
-            info_draw.text = _("○筛选和排序：\n")
+            info_draw.text = _("○筛选：\n")
             info_draw.draw()
             filter_text, sort_text = self.get_filter_sort_status_text()
             filter_text = "[{0}]".format(filter_text)
-            sort_text = "[{0}]".format(sort_text)
             empty_draw = draw.NormalDraw()
             empty_draw.text = "  "
             empty_draw.draw()
@@ -99,15 +98,55 @@ class Make_food_Panel:
             filter_button.draw()
             return_list.append(filter_button.return_text)
             line_feed.draw()
+            
+            empty_draw = draw.NormalDraw()
+            empty_draw.text = "  "
             empty_draw.draw()
-            sort_button = draw.LeftButton(
-                sort_text,
-                _("[排序]"),
-                int(self.width),
-                cmd_func=self.open_sort_panel,
+            
+            reset_button = draw.CenterButton(
+                _("[重置]"),
+                _("重置所有"),
+                int(self.width / 16),
+                cmd_func=self.clear_filter_and_sort,
             )
-            sort_button.draw()
-            return_list.append(sort_button.return_text)
+            reset_button.draw()
+            return_list.append(reset_button.return_text)
+            line_feed.draw()
+            
+            # 排序维度 (直接列出两行)
+            sort_title = draw.NormalDraw()
+            sort_title.text = _("○排序维度：")
+            sort_title.draw()
+            sort_type_options = [(0, _("无")), (1, _("难度")), (2, _("时间")), (3, _("类型"))]
+            for sort_id, sort_name in sort_type_options:
+                if sort_id == cache.rhodes_island.makefood_sort_type:
+                    btn_text = f"[●{sort_name}]"
+                else:
+                    btn_text = f"[{sort_name}]"
+                btn = draw.CenterButton(
+                    btn_text, f"sort_type_{sort_id}", int(self.width / 6),
+                    cmd_func=self.set_sort_type, args=(sort_id,)
+                )
+                btn.draw()
+                return_list.append(btn.return_text)
+            line_feed.draw()
+
+            # 排序顺序 (直接列出两行)
+            order_title = draw.NormalDraw()
+            order_title.text = _("○排序顺序：")
+            order_title.draw()
+            sort_order_options = [(0, _("升序")), (1, _("降序"))]
+            for order_id, order_name in sort_order_options:
+                if order_id == cache.rhodes_island.makefood_sort_order:
+                    btn_text = f"[●{order_name}]"
+                else:
+                    btn_text = f"[{order_name}]"
+                btn = draw.CenterButton(
+                    btn_text, f"sort_order_{order_id}", int(self.width / 6),
+                    cmd_func=self.set_sort_order, args=(order_id,)
+                )
+                btn.draw()
+                return_list.append(btn.return_text)
             line_feed.draw()
 
             # 加料说明
@@ -201,6 +240,32 @@ class Make_food_Panel:
             fine_info = draw.NormalDraw()
             fine_info.text = _("：仔细考虑烹饪细节，根据细节的处理方式，食物品质能在料理技能的基础上进一步提升，最高可达到绝珍的级别\n")
             fine_info.draw()
+            
+            # 品质预测绘制
+            q_label = draw.NormalDraw()
+            q_label.text = _("○品质预测：")
+            q_label.draw()
+            
+            base_quality = cooking.get_base_food_quality(0)
+            max_quality = base_quality
+            if self.cook_mode == 1:
+                max_quality = min(base_quality + 4, cooking.get_max_food_quality())
+                
+            def draw_q(val):
+                _level, quality_name = attr_calculation.get_food_quality(val)
+                d = draw.NormalDraw()
+                d.text = f"[{quality_name}+{val}]"
+                if val >= 7:
+                    d.style = "green"
+                d.draw()
+                
+            draw_q(base_quality)
+            if self.cook_mode == 1 and max_quality != base_quality:
+                tilde = draw.NormalDraw()
+                tilde.text = "~"
+                tilde.draw()
+                draw_q(max_quality)
+            
             line_feed.draw()
             line_feed.draw()
 
@@ -209,12 +274,29 @@ class Make_food_Panel:
             now_draw.text = _("○选择要制作的食物：\n")
             # now_draw.width = 1
             now_draw.draw()
+
+            food_line = draw.LineDraw("-", self.width)
+            food_line.draw()
+
             food_name_list = cooking.get_filtered_sorted_cook_data(self.now_panel)
             # 将调味、烹饪模式增加进去
             food_name_list = [(x[0], x[1], self.special_seasoning, self.cook_mode) for x in food_name_list]
+            
+            # 填满行数，保持翻页时高度一致（每页50个物品：10行5列）
+            pad_count = 50 - (len(food_name_list) % 50)
+            # 如果刚好是50的倍数且列表非空，则不需要填充
+            if pad_count == 50 and len(food_name_list) > 0:
+                pad_count = 0
+            if pad_count > 0:
+                # 使用 "-1" 作为 cid 标识空项，让 SeeFoodListByFoodNameDraw 绘制空白
+                food_name_list.extend([("-1", "", self.special_seasoning, self.cook_mode)] * pad_count)
+
             self.handle_panel.text_list = food_name_list
             self.handle_panel.update()
             self.handle_panel.draw()
+            
+            food_line = draw.LineDraw("-", self.width)
+            food_line.draw()
 
             return_list.extend(self.handle_panel.return_list)
             line_feed.draw()
@@ -222,13 +304,19 @@ class Make_food_Panel:
             back_draw.draw()
             line_feed.draw()
             return_list.append(back_draw.return_text)
-            yrn = flow_handle.askfor_all(return_list)
+            
             # 进入本轮输入前重置二级确认结果，避免沿用上一次状态
             SeeFoodListByFoodNameDraw.last_confirm_result = ""
+            
+            yrn = flow_handle.askfor_all(return_list)
+            
+            # 判定结果
             if yrn in self.handle_panel.return_list and SeeFoodListByFoodNameDraw.last_confirm_result == _("取消"):
-                yrn = _("取消")
-            if (yrn == back_draw.return_text or 
-            (yrn in self.handle_panel.return_list and yrn not in {self.handle_panel.old_page_return, self.handle_panel.next_page_return, _("取消"), _("[取消]"), _("返回"), _("[返回]")})):
+                # 按下取消按钮回到选择菜品列表
+                pass
+            elif (yrn == back_draw.return_text or 
+            (yrn in self.handle_panel.return_list and SeeFoodListByFoodNameDraw.last_confirm_result == _("确认"))):
+                # 选择返回或者确认制作成功后，退出面板
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
@@ -243,6 +331,13 @@ class Make_food_Panel:
         food_name_list = cooking.get_filtered_sorted_cook_data(self.now_panel)
         # 将调味、烹饪模式增加进去
         food_name_list = [(x[0], x[1], self.special_seasoning, self.cook_mode) for x in food_name_list]
+
+        # 同样在这里进行行数填充
+        pad_count = 50 - (len(food_name_list) % 50)
+        if pad_count == 50 and len(food_name_list) > 0:
+            pad_count = 0
+        if pad_count > 0:
+            food_name_list.extend([("-1", "", self.special_seasoning, self.cook_mode)] * pad_count)
 
         self.handle_panel = panel.PageHandlePanel(
             food_name_list, SeeFoodListByFoodNameDraw, 50, 5, self.width, True, True, 0
@@ -316,7 +411,6 @@ class Make_food_Panel:
     def open_filter_panel(self):
         """
         打开筛选设置面板
-        设置筛选时会重置排序
         """
         # 类型名称映射
         type_name_map = {
@@ -425,10 +519,6 @@ class Make_food_Panel:
 
     def toggle_filter_type(self, type_id: int):
         """切换类型筛选"""
-        # 设置筛选时重置排序
-        cache.rhodes_island.makefood_sort_type = 0
-        cache.rhodes_island.makefood_sort_order = 0
-        
         if type_id in cache.rhodes_island.makefood_filter_type:
             cache.rhodes_island.makefood_filter_type.remove(type_id)
         else:
@@ -436,18 +526,10 @@ class Make_food_Panel:
 
     def set_filter_difficulty(self, difficulty: int):
         """设置难度筛选"""
-        # 设置筛选时重置排序
-        cache.rhodes_island.makefood_sort_type = 0
-        cache.rhodes_island.makefood_sort_order = 0
-        
         cache.rhodes_island.makefood_filter_difficulty = difficulty
 
     def set_filter_time(self, time_level: int):
         """设置时间筛选"""
-        # 设置筛选时重置排序
-        cache.rhodes_island.makefood_sort_type = 0
-        cache.rhodes_island.makefood_sort_order = 0
-        
         cache.rhodes_island.makefood_filter_time = time_level
 
     def clear_filter(self):
@@ -455,11 +537,16 @@ class Make_food_Panel:
         cache.rhodes_island.makefood_filter_type = []
         cache.rhodes_island.makefood_filter_difficulty = -1
         cache.rhodes_island.makefood_filter_time = -1
+        
+    def clear_filter_and_sort(self):
+        """清除筛选和排序"""
+        self.clear_filter()
+        cache.rhodes_island.makefood_sort_type = 0
+        cache.rhodes_island.makefood_sort_order = 0
 
     def open_sort_panel(self):
         """
         打开排序设置面板
-        设置排序时会重置筛选
         """
         sort_type_options = [
             (0, _("无")), (1, _("按难度")), (2, _("按时间")), (3, _("按类型"))
@@ -533,20 +620,10 @@ class Make_food_Panel:
 
     def set_sort_type(self, sort_type: int):
         """设置排序维度"""
-        # 设置排序时重置筛选
-        cache.rhodes_island.makefood_filter_type = []
-        cache.rhodes_island.makefood_filter_difficulty = -1
-        cache.rhodes_island.makefood_filter_time = -1
-        
         cache.rhodes_island.makefood_sort_type = sort_type
 
     def set_sort_order(self, sort_order: int):
         """设置排序顺序"""
-        # 设置排序时重置筛选
-        cache.rhodes_island.makefood_filter_type = []
-        cache.rhodes_island.makefood_filter_difficulty = -1
-        cache.rhodes_island.makefood_filter_time = -1
-        
         cache.rhodes_island.makefood_sort_order = sort_order
 
 
@@ -591,26 +668,38 @@ class SeeFoodListByFoodNameDraw:
         self.last_confirm_result: str = ""
         """ 记录二级确认面板最后一次操作结果（如：取消） """
 
+        # 如果是用来占位的空白项，绘制一个固定宽度的空白文本
+        if self.cid == "-1":
+            self.draw_text = " "
+            name_draw = draw.CenterDraw()
+            name_draw.text = " "
+            name_draw.width = self.width
+            self.now_draw = name_draw
+            return
+
         # 延迟创建：此处仅根据菜谱id读取菜谱信息，不创建食物对象
         self.food_cid: str = self.cid
         """ 菜谱id字符串 """
         food_recipe = game_config.config_recipes[int(self.food_cid)]
         self.food_name = food_recipe.name
+        food_diffucty = food_recipe.difficulty
         self.make_food_time = food_recipe.time
         if food_recipe.type == 8:
             self.add_coffee = True
 
-        # 按钮绘制
+        diff_text = _("难度{0}").format(food_diffucty)
+
+        # 按钮绘制 (加上难度等级)
         name_draw = draw.NormalDraw()
         if is_button:
             if num_button:
                 index_text = text_handle.id_index(button_id)
-                button_text = f"{index_text}{self.food_name}"
+                button_text = f"{index_text}[{diff_text}] {self.food_name}"
                 name_draw = draw.LeftButton(
                     button_text, self.button_return, self.width, cmd_func=self.make_food_for_sure
                 )
             else:
-                button_text = f"[{self.food_name}]"
+                button_text = f"[[{diff_text}] {self.food_name}]"
                 name_draw = draw.CenterButton(
                     button_text, str(self.text), self.width, cmd_func=self.make_food_for_sure
                 )
@@ -618,7 +707,7 @@ class SeeFoodListByFoodNameDraw:
             self.draw_text = button_text
         else:
             name_draw = draw.CenterDraw()
-            name_draw.text = f"[{self.food_name}]"
+            name_draw.text = f"[[{diff_text}] {self.food_name}]"
             name_draw.width = self.width
             self.draw_text = name_draw.text
         self.now_draw = name_draw
@@ -627,6 +716,7 @@ class SeeFoodListByFoodNameDraw:
     def make_food_for_sure(self):
         """确认是否制作食物，并选择制作数量"""
         from Script.Design import basement
+        from Script.Design import handle_premise
 
         character_data: game_type.Character = cache.character_data[0]
         food_recipe = game_config.config_recipes[int(self.food_cid)]
@@ -634,6 +724,15 @@ class SeeFoodListByFoodNameDraw:
         food_diffucty = food_recipe.difficulty
         seasoning_name = game_config.config_seasoning[self.special_seasoning].name
         facility_adjust = basement.calc_facility_efficiency(5)
+        
+        # 预先计算基础品质与最高品质
+        base_quality = cooking.get_base_food_quality(0)
+        # 如果当前是酒类，且当前地点在酒吧，则品质额外+1
+        if food_recipe.type == 3 and handle_premise.handle_in_bar(0):
+            base_quality += 1
+        max_quality = base_quality
+        if self.cook_mode == 1 and cooking.has_cook_question_library(int(self.food_cid)):
+            max_quality = min(base_quality + 4, cooking.get_max_food_quality())
 
         # 计算最大可制作数量（上限10，药物调味时受药物库存限制）
         max_count = 10
@@ -670,10 +769,35 @@ class SeeFoodListByFoodNameDraw:
             confirm_text += _("制作数量: {0} （最多 {1}）\n").format(make_count, max_count)
             confirm_text += _("预计耗时: {0} 分钟{1}\n").format(make_food_time, facility_adjust_str)
             confirm_text += _("当前调味: {0}\n").format(seasoning_name)
-            confirm_text += _("介绍    : {0}\n").format(food_recipe.introduce)
+            
             info_draw = draw.NormalDraw()
             info_draw.text = confirm_text
             info_draw.draw()
+            
+            # 品质预测绘制
+            q_label = draw.NormalDraw()
+            q_label.text = _("品质预测: ")
+            q_label.draw()
+            
+            def draw_q(val):
+                _level, quality_name = attr_calculation.get_food_quality(val)
+                d = draw.NormalDraw()
+                d.text = f"[{quality_name}+{val}]"
+                if val >= 7:
+                    d.style = "green"
+                d.draw()
+                
+            draw_q(base_quality)
+            if max_quality != base_quality:
+                tilde = draw.NormalDraw()
+                tilde.text = "~"
+                tilde.draw()
+                draw_q(max_quality)
+            
+            intro_draw = draw.NormalDraw()
+            intro_draw.text = _("\n介绍    : {0}\n").format(food_recipe.introduce)
+            intro_draw.draw()
+            
             line_feed.draw()
 
             # 数量调整按钮
@@ -800,4 +924,3 @@ class SeeFoodListByFoodNameDraw:
     def draw(self):
         """绘制对象"""
         self.now_draw.draw()
-
