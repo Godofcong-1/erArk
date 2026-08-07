@@ -92,16 +92,21 @@ class Make_food_Panel:
             filter_button = draw.LeftButton(
                 filter_text,
                 _("[筛选]"),
-                int(self.width / 2),
+                int(self.width),
                 cmd_func=self.open_filter_panel,
             )
             filter_button.draw()
             return_list.append(filter_button.return_text)
+            line_feed.draw()
             
-            reset_button = draw.LeftButton(
+            empty_draw = draw.NormalDraw()
+            empty_draw.text = "  "
+            empty_draw.draw()
+            
+            reset_button = draw.CenterButton(
                 _("[重置]"),
                 _("重置所有"),
-                int(self.width / 2),
+                int(self.width / 16),
                 cmd_func=self.clear_filter_and_sort,
             )
             reset_button.draw()
@@ -269,12 +274,29 @@ class Make_food_Panel:
             now_draw.text = _("○选择要制作的食物：\n")
             # now_draw.width = 1
             now_draw.draw()
+
+            food_line = draw.LineDraw("-", self.width)
+            food_line.draw()
+
             food_name_list = cooking.get_filtered_sorted_cook_data(self.now_panel)
             # 将调味、烹饪模式增加进去
             food_name_list = [(x[0], x[1], self.special_seasoning, self.cook_mode) for x in food_name_list]
+            
+            # 填满行数，保持翻页时高度一致（每页50个物品：10行5列）
+            pad_count = 50 - (len(food_name_list) % 50)
+            # 如果刚好是50的倍数且列表非空，则不需要填充
+            if pad_count == 50 and len(food_name_list) > 0:
+                pad_count = 0
+            if pad_count > 0:
+                # 使用 "-1" 作为 cid 标识空项，让 SeeFoodListByFoodNameDraw 绘制空白
+                food_name_list.extend([("-1", "", self.special_seasoning, self.cook_mode)] * pad_count)
+
             self.handle_panel.text_list = food_name_list
             self.handle_panel.update()
             self.handle_panel.draw()
+            
+            food_line = draw.LineDraw("-", self.width)
+            food_line.draw()
 
             return_list.extend(self.handle_panel.return_list)
             line_feed.draw()
@@ -309,6 +331,13 @@ class Make_food_Panel:
         food_name_list = cooking.get_filtered_sorted_cook_data(self.now_panel)
         # 将调味、烹饪模式增加进去
         food_name_list = [(x[0], x[1], self.special_seasoning, self.cook_mode) for x in food_name_list]
+
+        # 同样在这里进行行数填充
+        pad_count = 50 - (len(food_name_list) % 50)
+        if pad_count == 50 and len(food_name_list) > 0:
+            pad_count = 0
+        if pad_count > 0:
+            food_name_list.extend([("-1", "", self.special_seasoning, self.cook_mode)] * pad_count)
 
         self.handle_panel = panel.PageHandlePanel(
             food_name_list, SeeFoodListByFoodNameDraw, 50, 5, self.width, True, True, 0
@@ -638,6 +667,15 @@ class SeeFoodListByFoodNameDraw:
         """ 是否为加料咖啡 """
         self.last_confirm_result: str = ""
         """ 记录二级确认面板最后一次操作结果（如：取消） """
+
+        # 如果是用来占位的空白项，绘制一个固定宽度的空白文本
+        if self.cid == "-1":
+            self.draw_text = " "
+            name_draw = draw.CenterDraw()
+            name_draw.text = " "
+            name_draw.width = self.width
+            self.now_draw = name_draw
+            return
 
         # 延迟创建：此处仅根据菜谱id读取菜谱信息，不创建食物对象
         self.food_cid: str = self.cid
