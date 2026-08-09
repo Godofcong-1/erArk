@@ -86,12 +86,80 @@ class Check_locker_Panel:
             self.handle_panel.draw()
             return_list.extend(self.handle_panel.return_list)
             line_feed.draw()
+
+            # 检查是否有内衣或袜子可以偷
+            can_steal_pan = False
+            can_steal_socks = False
+            for npc_id in npc_id_list:
+                character_data = cache.character_data[npc_id]
+                if "Locker_Room" in map_data.scene_tag:
+                    now_locker = character_data.cloth.cloth_locker_in_shower
+                else:
+                    now_locker = character_data.cloth.cloth_locker_in_dormitory
+                if len(now_locker[9]):
+                    can_steal_pan = True
+                if len(now_locker[10]):
+                    can_steal_socks = True
+
+            steal_all_pan_draw = None
+            steal_all_socks_draw = None
+            if can_steal_pan:
+                steal_all_pan_draw = draw.CenterButton(_("[一键偷取所有内裤]"), _("一键偷取所有内裤"), window_width)
+                steal_all_pan_draw.draw()
+                line_feed.draw()
+                return_list.append(steal_all_pan_draw.return_text)
+            
+            if can_steal_socks:
+                steal_all_socks_draw = draw.CenterButton(_("[一键偷取所有袜子]"), _("一键偷取所有袜子"), window_width)
+                steal_all_socks_draw.draw()
+                line_feed.draw()
+                return_list.append(steal_all_socks_draw.return_text)
+
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             line_feed.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
+            
+            if steal_all_pan_draw and yrn == steal_all_pan_draw.return_text:
+                count = 0
+                for npc_id in npc_id_list:
+                    character_data = cache.character_data[npc_id]
+                    if "Locker_Room" in map_data.scene_tag:
+                        now_locker = character_data.cloth.cloth_locker_in_shower
+                    else:
+                        now_locker = character_data.cloth.cloth_locker_in_dormitory
+                    
+                    if len(now_locker[9]):
+                        pl_data.pl_collection.npc_panties_tem.setdefault(npc_id, [])
+                        for pan_id in now_locker[9]:
+                            pl_data.pl_collection.npc_panties_tem[npc_id].append(pan_id)
+                            count += 1
+                        now_locker[9] = []
+                now_draw = draw.WaitDraw()
+                now_draw.width = window_width
+                now_draw.text = _("\n已一键偷取所有人衣柜里的内裤（共{0}件），可在藏品馆里纳入收藏\n").format(count)
+                now_draw.draw()
+            elif steal_all_socks_draw and yrn == steal_all_socks_draw.return_text:
+                count = 0
+                for npc_id in npc_id_list:
+                    character_data = cache.character_data[npc_id]
+                    if "Locker_Room" in map_data.scene_tag:
+                        now_locker = character_data.cloth.cloth_locker_in_shower
+                    else:
+                        now_locker = character_data.cloth.cloth_locker_in_dormitory
+                    
+                    if len(now_locker[10]):
+                        pl_data.pl_collection.npc_socks_tem.setdefault(npc_id, [])
+                        for socks_id in now_locker[10]:
+                            pl_data.pl_collection.npc_socks_tem[npc_id].append(socks_id)
+                            count += 1
+                        now_locker[10] = []
+                now_draw = draw.WaitDraw()
+                now_draw.width = window_width
+                now_draw.text = _("\n已一键偷取所有人衣柜里的袜子（共{0}件），可在藏品馆里纳入收藏\n").format(count)
+                now_draw.draw()
+            elif yrn == back_draw.return_text:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 

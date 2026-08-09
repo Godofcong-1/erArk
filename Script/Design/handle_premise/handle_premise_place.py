@@ -4445,3 +4445,48 @@ def handle_move_not_finish(character_id: int) -> int:
     if character_data.behavior.move_final_target != []:
         return 10
     return 0
+
+@add_premise(constant_promise.Premise.SCENE_SOMEONE_WEAR_PAN)
+def handle_scene_someone_wear_pan(character_id: int) -> int:
+    """
+    该地点有角色穿着内裤
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过玩家自己
+        if chara_id == 0 or chara_id == character_id:
+            continue
+        other_character_data: game_type.Character = cache.character_data[chara_id]
+        if len(other_character_data.cloth.cloth_wear[9]):
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SCENE_SOMEONE_WEAR_SOCKS)
+def handle_scene_someone_wear_socks(character_id: int) -> int:
+    """
+    该地点有角色穿着袜子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过玩家自己
+        if chara_id == 0 or chara_id == character_id:
+            continue
+        other_character_data: game_type.Character = cache.character_data[chara_id]
+        if len(other_character_data.cloth.cloth_wear[10]):
+            return 1
+    return 0
