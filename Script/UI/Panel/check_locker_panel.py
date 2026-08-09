@@ -123,6 +123,7 @@ class Check_locker_Panel:
             
             if steal_all_pan_draw and yrn == steal_all_pan_draw.return_text:
                 count = 0
+                show_text = "\n"
                 for npc_id in npc_id_list:
                     character_data = cache.character_data[npc_id]
                     if "Locker_Room" in map_data.scene_tag:
@@ -133,15 +134,22 @@ class Check_locker_Panel:
                     if len(now_locker[9]):
                         pl_data.pl_collection.npc_panties_tem.setdefault(npc_id, [])
                         for pan_id in now_locker[9]:
+                            # 跳过序号不存在的服装
+                            if pan_id not in game_config.config_clothing_tem:
+                                continue
                             pl_data.pl_collection.npc_panties_tem[npc_id].append(pan_id)
+                            pan_name = game_config.config_clothing_tem[pan_id].name
+                            show_text += _("获得了{0}的{1}\n").format(character_data.name, pan_name)
                             count += 1
                         now_locker[9] = []
                 now_draw = draw.WaitDraw()
                 now_draw.width = window_width
-                now_draw.text = _("\n已一键偷取所有人衣柜里的内裤（共{0}件），可在藏品馆里纳入收藏\n").format(count)
+                now_draw.text = show_text + _("\n已一键偷取所有人衣柜里的内裤（共{0}件），可在藏品馆里纳入收藏\n").format(count)
                 now_draw.draw()
+                
             elif steal_all_socks_draw and yrn == steal_all_socks_draw.return_text:
                 count = 0
+                show_text = "\n"
                 for npc_id in npc_id_list:
                     character_data = cache.character_data[npc_id]
                     if "Locker_Room" in map_data.scene_tag:
@@ -152,13 +160,19 @@ class Check_locker_Panel:
                     if len(now_locker[10]):
                         pl_data.pl_collection.npc_socks_tem.setdefault(npc_id, [])
                         for socks_id in now_locker[10]:
+                            # 跳过序号不存在的服装
+                            if socks_id not in game_config.config_clothing_tem:
+                                continue
                             pl_data.pl_collection.npc_socks_tem[npc_id].append(socks_id)
+                            socks_name = game_config.config_clothing_tem[socks_id].name
+                            show_text += _("获得了{0}的{1}\n").format(character_data.name, socks_name)
                             count += 1
                         now_locker[10] = []
                 now_draw = draw.WaitDraw()
                 now_draw.width = window_width
-                now_draw.text = _("\n已一键偷取所有人衣柜里的袜子（共{0}件），可在藏品馆里纳入收藏\n").format(count)
+                now_draw.text = show_text + _("\n已一键偷取所有人衣柜里的袜子（共{0}件），可在藏品馆里纳入收藏\n").format(count)
                 now_draw.draw()
+                
             elif yrn == back_draw.return_text:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
