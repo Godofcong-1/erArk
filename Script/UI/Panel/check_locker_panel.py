@@ -104,13 +104,13 @@ class Check_locker_Panel:
             steal_all_pan_draw = None
             steal_all_socks_draw = None
             if can_steal_pan:
-                steal_all_pan_draw = draw.CenterButton(_("[一键偷取所有内裤]"), _("一键偷取所有内裤"), window_width)
+                steal_all_pan_draw = draw.CenterButton(_("[偷取所有内裤]"), _("偷取所有内裤"), window_width)
                 steal_all_pan_draw.draw()
                 line_feed.draw()
                 return_list.append(steal_all_pan_draw.return_text)
             
             if can_steal_socks:
-                steal_all_socks_draw = draw.CenterButton(_("[一键偷取所有袜子]"), _("一键偷取所有袜子"), window_width)
+                steal_all_socks_draw = draw.CenterButton(_("[偷取所有袜子]"), _("偷取所有袜子"), window_width)
                 steal_all_socks_draw.draw()
                 line_feed.draw()
                 return_list.append(steal_all_socks_draw.return_text)
@@ -144,7 +144,7 @@ class Check_locker_Panel:
                         now_locker[9] = []
                 now_draw = draw.WaitDraw()
                 now_draw.width = window_width
-                now_draw.text = show_text + _("\n已一键偷取所有人衣柜里的内裤（共{0}件），可在藏品馆里纳入收藏\n").format(count)
+                now_draw.text = show_text + _("\n已偷取所有人衣柜里的内裤（共{0}件），可在藏品馆里纳入收藏\n").format(count)
                 now_draw.draw()
                 
             elif steal_all_socks_draw and yrn == steal_all_socks_draw.return_text:
@@ -170,7 +170,7 @@ class Check_locker_Panel:
                         now_locker[10] = []
                 now_draw = draw.WaitDraw()
                 now_draw.width = window_width
-                now_draw.text = show_text + _("\n已一键偷取所有人衣柜里的袜子（共{0}件），可在藏品馆里纳入收藏\n").format(count)
+                now_draw.text = show_text + _("\n已偷取所有人衣柜里的袜子（共{0}件），可在藏品馆里纳入收藏\n").format(count)
                 now_draw.draw()
                 
             elif yrn == back_draw.return_text:
