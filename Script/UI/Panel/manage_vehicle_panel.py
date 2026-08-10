@@ -353,8 +353,10 @@ class Manage_Vehicle_Panel:
 
         while 1:
             return_list = []
-            line = draw.LineDraw("-", self.width)
-            line.draw()
+            
+            title_text = _("载具购买")
+            title_draw = draw.TitleLineDraw(title_text, self.width)
+            title_draw.draw()
 
             # 绘制载具信息
             info_draw = draw.NormalDraw()
@@ -395,6 +397,8 @@ class Manage_Vehicle_Panel:
             
             line_feed.draw()
             line_feed.draw()
+            line = draw.LineDraw("-", self.width)
+            line.draw()
 
             # 定义统一下方按钮的宽度基准
             btn_width = int(self.width / 3)
