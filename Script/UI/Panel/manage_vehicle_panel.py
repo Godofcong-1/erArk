@@ -367,8 +367,11 @@ class Manage_Vehicle_Panel:
             info_draw.text += _("\n 特殊效果：{0}").format(vehicle_special)
             info_draw.text += _("\n 介绍：{0}").format(vehicle_description)
             
+            owned_count = cache.rhodes_island.vehicles[vehicle_id][0]
+            info_draw.text += _("\n\n 该载具当前已拥有数量：{0}").format(owned_count)
+            
             money = str(cache.rhodes_island.materials_resouce[1])
-            info_draw.text += _("\n\n 当前龙门币数量：{0}").format(money)
+            info_draw.text += _("\n 当前龙门币数量：{0}").format(money)
             info_draw.width = self.width
             info_draw.draw()
             
