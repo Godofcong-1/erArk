@@ -396,44 +396,59 @@ class Manage_Vehicle_Panel:
             line_feed.draw()
             line_feed.draw()
 
-            # 设施信息
-            facility_data = game_config.config_facility[14]
-            facility_name = facility_data.name
-            now_level = cache.rhodes_island.facility_level[14]
-            facility_cid = game_config.config_facility_effect_data[facility_name][now_level]
-            vehicle_num_limit = game_config.config_facility_effect[facility_cid].effect
+            # 定义统一下方按钮的宽度基准
+            btn_width = int(self.width / 3)
 
-            # 基础型载具，如果还有载具购买空间，则绘制购买按钮
-            if vehicle_acquiring == _("基础") and self.vehicle_count < int(vehicle_num_limit) and money_left >= 0:
+            # === 判断是否可购买 ===
+            buy_condition = (vehicle_acquiring == _("基础") and self.vehicle_count < int(vehicle_num_limit) and money_left >= 0)
+            if buy_condition:
                 buy_vehicle_draw = draw.CenterButton(
                     _("【购买载具】"),
                     _("\n【购买载具】"),
-                    int(self.width / 3),
+                    btn_width,
                     cmd_func=self.buy_vehicle,
                     args=(vehicle_id,),
                 )
                 buy_vehicle_draw.draw()
                 return_list.append(buy_vehicle_draw.return_text)
+            else:
+                buy_vehicle_draw = draw.CenterDraw()
+                buy_vehicle_draw.text = _("【购买载具】")
+                buy_vehicle_draw.style = "deep_gray"  # 设置为灰色文字
+                buy_vehicle_draw.width = btn_width
+                buy_vehicle_draw.draw()
             
-            # 基础型载具，如果有空闲载具，绘制出售按钮
-            if vehicle_acquiring == _("基础") and cache.rhodes_island.vehicles[vehicle_id][0] - cache.rhodes_island.vehicles[vehicle_id][1] > 0:
+            # === 判断是否可出售 ===
+            sell_condition = (vehicle_acquiring == _("基础") and cache.rhodes_island.vehicles[vehicle_id][0] - cache.rhodes_island.vehicles[vehicle_id][1] > 0)
+            if sell_condition:
                 sell_vehicle_draw = draw.CenterButton(
                     _("【出售载具】"),
                     _("\n【出售载具】"),
-                    int(self.width / 3),
+                    btn_width,
                     cmd_func=self.sell_vehicle,
                     args=(vehicle_id,),
                 )
                 sell_vehicle_draw.draw()
                 return_list.append(sell_vehicle_draw.return_text)
+            else:
+                sell_vehicle_draw = draw.CenterDraw()
+                sell_vehicle_draw.text = _("【出售载具】")
+                sell_vehicle_draw.style = "deep_gray" # 设置为灰色文字
+                sell_vehicle_draw.width = btn_width
+                sell_vehicle_draw.draw()
 
             line_feed.draw()
             line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width / 2))
+            
+            # === 返回按钮的宽度设定为上面两者的宽度之和 ===
+            back_btn_width = btn_width * 2
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), back_btn_width)
             back_draw.draw()
             return_list.append(back_draw.return_text)
+            
             yrn = flow_handle.askfor_all(return_list)
-            if yrn in return_list:
+            # 只有点击返回按钮时才 break 跳出载具信息页面
+            if yrn == back_draw.return_text:
                 break
 
     def buy_vehicle(self, vehicle_id: int):
