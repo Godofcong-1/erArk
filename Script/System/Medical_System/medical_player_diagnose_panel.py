@@ -528,10 +528,19 @@ class MedicalPlayerDiagnosePanel:
             return
 
         toggle_label = _(" [展开检查菜单]") if not self.menu_expanded else _(" [收起检查菜单]")
+        # 判断是否还有未确诊的并发症，若有则将按钮样式改为橘黄色
+        has_undiagnosed = False
+        target_count = self.target_complication_count
+        if target_count <= 0 and getattr(self.patient, "complications", None):
+            target_count = len(self.patient.complications)
+        if target_count > 0 and len(confirmed) < target_count:
+            has_undiagnosed = True
+            
         toggle_button = draw.LeftButton(
             toggle_label,
             _("切换检查菜单"),
             max(len(toggle_label) * 2 + 4, 22),
+            normal_style="gold_enrod" if has_undiagnosed else "standard", # 【修改】套用判断结果的样式
             cmd_func=self._toggle_check_menu,
         )
         toggle_button.draw()
@@ -956,24 +965,18 @@ class MedicalPlayerDiagnosePanel:
                         resource_id = 0
                     formatted_amount = self._format_quantity(display_amount)
                     shortage_amount = self._calculate_shortage(resource_id, display_amount, inventory_snapshot)
-                    if shortage_amount > medical_constant.FLOAT_EPSILON:
-                        shortage_text = self._format_quantity(shortage_amount)
-                        stock_text = self._format_quantity(float(inventory_snapshot.get(resource_id, 0.0) or 0.0))
-                        lines.append(
-                            _("  · {name} × {amount}（缺口 {shortage} 单位，库存 {stock} 单位）").format(
-                                name=item.get("name", "-"),
-                                amount=formatted_amount,
-                                shortage=shortage_text,
-                                stock=stock_text,
-                            )
+                    
+                    # 【修改】取消对缺口是否大于0的 if-else 判断，直接常时显示缺口与库存
+                    shortage_text = self._format_quantity(shortage_amount)
+                    stock_text = self._format_quantity(float(inventory_snapshot.get(resource_id, 0.0) or 0.0))
+                    lines.append(
+                        _("  · {name} × {amount}（缺口 {shortage} 单位，库存 {stock} 单位）").format(
+                            name=item.get("name", "-"),
+                            amount=formatted_amount,
+                            shortage=shortage_text,
+                            stock=stock_text,
                         )
-                    else:
-                        lines.append(
-                            _("  · {name} × {amount}").format(
-                                name=item.get("name", "-"),
-                                amount=formatted_amount,
-                            )
-                        )
+                    )
                 if missing_complications:
                     lines.append(
                         _("  * 未确诊 {count} 项并发症，相关药品需求按 50% 计入。").format(
@@ -1087,7 +1090,7 @@ class MedicalPlayerDiagnosePanel:
         if not self.feedback_text:
             return
         line_feed.draw()
-        feedback_draw = draw.WaitDraw()
+        feedback_draw = draw.NormalDraw()
         feedback_draw.text = self.feedback_text + "\n"
         feedback_draw.style = "gold_enrod"
         feedback_draw.draw()
@@ -1624,14 +1627,22 @@ class MedicalPlayerDiagnosePanel:
         if not trace_list:
             return set(), set(), set()
 
+        # 【新增】获取当前已确诊的并发症，用于在下方过滤高亮
+        confirmed_set: Set[int] = set(self._get_confirmed_complications())
+
         system_targets: Set[int] = set()
         part_targets: Set[Tuple[int, int]] = set()
         complication_by_severity: Dict[int, Set[int]] = {}
 
         for entry in trace_list:
+            comp_id = int(entry.get("cid", entry.get("complication_id", 0)) or 0)
+            
+            # 【修改】如果该并发症已经被确诊，则跳过不记录，从而让母分支不再出现橘黄提示
+            if comp_id and comp_id in confirmed_set:
+                continue
+
             system_id = int(entry.get("system_id", 0) or 0)
             part_id = int(entry.get("part_id", 0) or 0)
-            comp_id = int(entry.get("cid", entry.get("complication_id", 0)) or 0)
             severity = entry.get("severity_level")
             if severity is None and comp_id:
                 comp_config = game_config.config_medical_complication.get(comp_id)
