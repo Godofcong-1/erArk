@@ -70,6 +70,26 @@ class Manage_Vehicle_Panel:
         """ 派遣人员列表 """
         self.vehicle_count = 0
         """ 当前拥有载具数量 """
+        
+        # === 排序与翻页相关变量 ===
+        self.sort_by = _("默认")
+        self.is_ascending = True  # 默认升序
+        self.current_page = 1
+        self.items_per_page = 10  # 设定中间固定行数（每页最大载具数）
+
+    # === 切换排序条件 ===
+    def change_sort_by(self, sort_by_type: str):
+        self.sort_by = sort_by_type
+        self.current_page = 1
+
+    # === 切换升降序 ===
+    def change_sort_order(self):
+        self.is_ascending = not self.is_ascending
+        self.current_page = 1
+
+    # === 切换页数 ===
+    def change_page(self, target_page: int):
+        self.current_page = target_page
 
     def draw(self):
         """绘制对象"""
@@ -122,6 +142,9 @@ class Manage_Vehicle_Panel:
             facility_info_text += _("○载具用于给执行外勤委托的干员提供交通和其他方面的辅助，提高委托效率\n")
             facility_info_text += _("○当前机库等级：{0}，载具数量：{1}/{2}\n").format(now_level, self.vehicle_count, vehicle_num_limit)
 
+            money = str(cache.rhodes_island.materials_resouce[1])
+            facility_info_text += _("○当前龙门币数量：{0}\n").format(money)
+
             facility_info_draw = draw.NormalDraw()
             facility_info_draw.text = facility_info_text
             facility_info_draw.width = self.width
@@ -129,10 +152,44 @@ class Manage_Vehicle_Panel:
             line = draw.LineDraw("+", self.width)
             line.draw()
 
-            # 绘制提示信息
-            info_text_list = [_("载具名称"), _("外勤中数量/总持有量"), _("载具速度"), _("运载量"), _("特殊效果(未实装)")]
+            # === 排序按钮 ===
+            sort_text_list = [_("默认"), _("持有量"), _("价钱"), _("速度"), _("运载量")]
+            for sort_type in sort_text_list:
+                if sort_type == self.sort_by:
+                    now_draw = draw.CenterDraw()
+                    now_draw.text = f"[{sort_type}]"
+                    now_draw.style = "onbutton"
+                    now_draw.width = int(self.width / len(sort_text_list))
+                    now_draw.draw()
+                else:
+                    now_draw = draw.CenterButton(
+                        f"[{sort_type}]",
+                        f"\n{sort_type}",
+                        int(self.width / len(sort_text_list)),
+                        cmd_func=self.change_sort_by,
+                        args=(sort_type,),
+                    )
+                    now_draw.draw()
+                    return_list.append(now_draw.return_text)
+            line_feed.draw()
+            
+            # === 升序降序按钮 ===
+            order_text = _("当前排序：升序") if self.is_ascending else _("当前排序：降序")
+            order_draw = draw.CenterButton(
+                f"[{order_text}]",
+                _("\n点击切换升降序"),
+                self.width,
+                cmd_func=self.change_sort_order,
+            )
+            order_draw.draw()
+            return_list.append(order_draw.return_text)
+            line_feed.draw()
+            line = draw.LineDraw("+", self.width)
+            line.draw()
+
+            info_text_list = [_("载具名称"), _("外勤中数量/总持有量"), _(" 价钱"), _(" 载具速度"), _(" 运载量"), _(" 特殊效果(未实装)")]
             # 修正文本宽度
-            text_width = int((self.width - 1) / (len(info_text_list)))
+            text_width = int((self.width) / (len(info_text_list)))
             for info_text in info_text_list:
                 info_draw = draw.CenterDraw()
                 info_draw.text = info_text
@@ -148,7 +205,7 @@ class Manage_Vehicle_Panel:
                 vehicle_data = game_config.config_vehicle[cid]
                 # 获得方式
                 acquire_way = vehicle_data.acquiring
-                vehicle_count = cache.rhodes_island.vehicles[vehicle_id][0]
+                vehicle_count = cache.rhodes_island.vehicles[cid][0]
                 if self.now_panel == _("常规载具") and acquire_way != _("基础"):
                     continue
                 if self.now_panel == _("特殊载具"):
@@ -159,17 +216,47 @@ class Manage_Vehicle_Panel:
                         continue
                 all_vehicle_list.append(cid)
 
-            # 绘制载具信息
-            for vehicle_id in all_vehicle_list:
+            # === 对列表进行排序逻辑处理 ===
+            def get_sort_key(cid_key):
+                if self.sort_by == _("持有量"):
+                    return cache.rhodes_island.vehicles[cid_key][0]
+                elif self.sort_by == _("价钱"):
+                    return game_config.config_vehicle[cid_key].price
+                elif self.sort_by == _("速度"):
+                    return game_config.config_vehicle[cid_key].speed
+                elif self.sort_by == _("运载量"):
+                    return game_config.config_vehicle[cid_key].capacity
+                else:
+                    return cid_key  # 默认按编号
+
+            all_vehicle_list.sort(key=get_sort_key, reverse=not self.is_ascending)
+
+            # === 分页计算 ===
+            total_items = len(all_vehicle_list)
+            total_pages = max(1, (total_items + self.items_per_page - 1) // self.items_per_page)
+            if self.current_page > total_pages:
+                self.current_page = total_pages
+            
+            start_idx = (self.current_page - 1) * self.items_per_page
+            end_idx = start_idx + self.items_per_page
+            display_list = all_vehicle_list[start_idx:end_idx]
+
+            # 绘制载具信息 (修改：只绘制当前页内容，并在中间加入价钱数据)
+            for vehicle_id in display_list:
                 vehicle_data = game_config.config_vehicle[vehicle_id]
                 vehicle_name = attr_calculation.pad_display_width(vehicle_data.name, text_width, "center")
+                
+                # 新增读取并排版价钱
+                vehicle_price = attr_calculation.pad_display_width(str(vehicle_data.price), text_width, "center")
+                
                 vehicle_speed = attr_calculation.pad_display_width(str(vehicle_data.speed), text_width, "center")
                 vehicle_capacity = attr_calculation.pad_display_width(str(vehicle_data.capacity), text_width, "center")
                 vehicle_special = attr_calculation.pad_display_width(vehicle_data.special, text_width, "center")
-                vehicle_count = cache.rhodes_island.vehicles[vehicle_id][0]
                 vehicle_count_str = str(cache.rhodes_island.vehicles[vehicle_id][1]) + "/" + str(cache.rhodes_island.vehicles[vehicle_id][0])
                 vehicle_count_str = attr_calculation.pad_display_width(vehicle_count_str, text_width, "center")
-                vehicle_text = f"{vehicle_name}{vehicle_count_str}{vehicle_speed}{vehicle_capacity}{vehicle_special}"
+                
+                # 文本中加入 vehicle_price
+                vehicle_text = f"{vehicle_name}{vehicle_count_str}{vehicle_price}{vehicle_speed}{vehicle_capacity}{vehicle_special}"
 
                 # 可以进行的，绘制为按钮
                 vehicle_draw = draw.LeftButton(
@@ -182,6 +269,49 @@ class Manage_Vehicle_Panel:
                 vehicle_draw.draw()
                 return_list.append(vehicle_draw.return_text)
                 line_feed.draw()
+
+            # === 用空行填充剩余的总行数 ===
+            drawn_lines = len(display_list)
+            for i in range(self.items_per_page - drawn_lines):
+                line_feed.draw()
+
+            # === 返回上面加翻页和第几页 ===
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+            
+            if total_pages == 1:
+                # 只有一页时无法点击
+                page_text = _(" 第 {0} / {1} 页 ").format(self.current_page, total_pages)
+                page_draw = draw.CenterDraw()
+                page_draw.text = page_text
+                page_draw.width = self.width
+                page_draw.draw()
+                line_feed.draw()
+            else:
+                # 计算循环翻页的目标页
+                prev_page = self.current_page - 1 if self.current_page > 1 else total_pages
+                next_page = self.current_page + 1 if self.current_page < total_pages else 1
+
+                # 始终绘制上一页按钮
+                prev_draw = draw.CenterButton(_("[上一页]"), _("\n上一页"), int(self.width / 3), cmd_func=self.change_page, args=(prev_page,))
+                prev_draw.draw()
+                return_list.append(prev_draw.return_text)
+                    
+                # 绘制页数
+                page_draw = draw.CenterDraw()
+                page_draw.text = _(" 第 {0} / {1} 页 ").format(self.current_page, total_pages)
+                page_draw.width = int(self.width / 3)
+                page_draw.draw()
+                
+                # 始终绘制下一页按钮
+                next_draw = draw.CenterButton(_("[下一页]"), _("\n下一页"), int(self.width / 3), cmd_func=self.change_page, args=(next_page,))
+                next_draw.draw()
+                return_list.append(next_draw.return_text)
+                
+                line_feed.draw()
+                
+            line = draw.LineDraw("-", self.width)
+            line.draw()
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -228,14 +358,41 @@ class Manage_Vehicle_Panel:
 
             # 绘制载具信息
             info_draw = draw.NormalDraw()
-            info_draw.text = _("\n载具名称：{0}").format(vehicle_name)
-            info_draw.text += _("\n载具速度：{0}").format(vehicle_speed)
-            info_draw.text += _("\n运载量：{0}").format(vehicle_capacity)
-            info_draw.text += _("\n购入价格：{0}（出售价格为购入的0.8倍）").format(vehicle_price)
-            info_draw.text += _("\n特殊效果：{0}").format(vehicle_special)
-            info_draw.text += _("\n介绍：{0}").format(vehicle_description)
+            info_draw.text = _("\n 载具名称：{0}").format(vehicle_name)
+            info_draw.text += _("\n 载具速度：{0}").format(vehicle_speed)
+            info_draw.text += _("\n 运载量：{0}").format(vehicle_capacity)
+            info_draw.text += _("\n 购入价格：{0}（出售价格为购入的0.8倍）").format(vehicle_price)
+            info_draw.text += _("\n 特殊效果：{0}").format(vehicle_special)
+            info_draw.text += _("\n 介绍：{0}").format(vehicle_description)
+            
+            money = str(cache.rhodes_island.materials_resouce[1])
+            info_draw.text += _("\n\n 当前龙门币数量：{0}").format(money)
             info_draw.width = self.width
             info_draw.draw()
+            
+            # 设施信息(提前获取设施上限以便计算空间)
+            facility_data = game_config.config_facility[14]
+            facility_name = facility_data.name
+            now_level = cache.rhodes_island.facility_level[14]
+            facility_cid = game_config.config_facility_effect_data[facility_name][now_level]
+            vehicle_num_limit = game_config.config_facility_effect[facility_cid].effect
+
+            money_left_draw = draw.NormalDraw()
+            money_left = cache.rhodes_island.materials_resouce[1] - vehicle_price
+            money_left_draw.text = _(" 购买后剩余龙门币数量：{0}").format(money_left)
+            if money_left < 0:
+                money_left_draw.style = "warning"
+            money_left_draw.draw()
+            
+            line_feed.draw()
+            
+            space_left_draw = draw.NormalDraw()
+            space_left = int(vehicle_num_limit) - self.vehicle_count
+            space_left_draw.text = _(" 当前剩余载具空间：{0}").format(space_left)
+            if space_left <= 0:
+                space_left_draw.style = "warning"
+            space_left_draw.draw()
+            
             line_feed.draw()
             line_feed.draw()
 
@@ -247,7 +404,7 @@ class Manage_Vehicle_Panel:
             vehicle_num_limit = game_config.config_facility_effect[facility_cid].effect
 
             # 基础型载具，如果还有载具购买空间，则绘制购买按钮
-            if vehicle_acquiring == _("基础") and self.vehicle_count < int(vehicle_num_limit):
+            if vehicle_acquiring == _("基础") and self.vehicle_count < int(vehicle_num_limit) and money_left >= 0:
                 buy_vehicle_draw = draw.CenterButton(
                     _("【购买载具】"),
                     _("\n【购买载具】"),
