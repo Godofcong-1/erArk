@@ -531,7 +531,7 @@ def settle_sleep_h(character_id: int, true_add_time: int) -> None:
         # 如果是等待指令或安眠药中则无事发生
         if (
             now_character_data.behavior.behavior_id == constant.Behavior.WAIT or
-            now_character_data.h_state.body_item[9][1] == 1
+            target_data.h_state.body_item[9][1] == 1
         ):
             # 赋值为2来规避吵醒判定
             sleep_level = 2
