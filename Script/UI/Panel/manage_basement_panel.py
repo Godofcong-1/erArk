@@ -57,8 +57,8 @@ class Manage_Basement_Panel:
         self.filter_daughter = 0    # 0:无筛选, 1:是
         self.filter_collection = 0  # 0:无筛选, 1:是, 2:否
 
-        self.sort_main = "默认ID"
-        self.sort_sub = "无"
+        self.sort_main = _("默认ID")
+        self.sort_sub = _("无")
         self.sort_reverse = False
         self.sort_collection_first = True
 
@@ -798,10 +798,10 @@ class Manage_Basement_Panel:
             elif yrn == "modify_sort_sub":
                 self.choosing_sort_mode = 2
             elif yrn == "reset_sort_main":
-                self.sort_main = "默认ID"
+                self.sort_main = _("默认ID")
                 self.chara_list_page = 0
             elif yrn == "reset_sort_sub":
-                self.sort_sub = "无"
+                self.sort_sub = _("无")
                 self.chara_list_page = 0
             elif yrn == "toggle_sort_reverse":
                 self.sort_reverse = not self.sort_reverse
