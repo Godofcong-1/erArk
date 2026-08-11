@@ -272,7 +272,7 @@ def recover_from_unconscious_h(character_id: int, info_text: str = ""):
     # 时间推进5分钟
     update.game_update_flow(5)
 
-def handle_npc_instruct_condition(character_id: int, continue_h: bool, tem_target_id: int = 0, settle_now: bool = False) -> bool:
+def handle_npc_instruct_condition(character_id: int, continue_h: bool, tem_target_id: int = 0, settle_now: bool = True) -> bool:
     """
     处理NPC是否继续H以及对应行为的函数
 
@@ -280,7 +280,7 @@ def handle_npc_instruct_condition(character_id: int, continue_h: bool, tem_targe
         character_id: int -- 自己角色的ID
         continue_h: bool -- 是否继续H的标志
         tem_target_id: int -- 目标角色的ID，如果为0则使用默认的目标角色
-        settle_now: bool -- 是否现在立刻结算的标志，默认为False
+        settle_now: bool -- 是否现在立刻结算的标志，默认为True
 
     返回:
         bool -- 如果满足条件返回True（继续H），否则返回False
@@ -336,6 +336,9 @@ def handle_npc_instruct_condition(character_id: int, continue_h: bool, tem_targe
     if settle_now and continue_h == False:
         character_data.behavior.duration = 5
         character_data.target_character_id = target_character_id
+        character_behavior.judge_character_status(character_id)
+        character_data.behavior.behavior_id = constant.Behavior.NO_CONSCIOUS_H_END
+        character_data.state = constant.CharacterStatus.STATUS_NO_CONSCIOUS_H_END
         character_behavior.judge_character_status(character_id)
 
     # 返回是否满足继续H的条件
