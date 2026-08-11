@@ -310,16 +310,26 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
         # 角色口上
         final_color = "standard"
         if unusual_talk_flag:
-            # 口上文本的，角色文本颜色
-            target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
-            text_color = character_data.text_color
-            tar_text_color = target_character_data.text_color
-            if text_color:
-                now_draw.style = character_data.name
-                final_color = character_data.name
-            elif tar_text_color:
-                now_draw.style = target_character_data.name
-                final_color = target_character_data.name
+            # 首选当前口上所对应的角色id的文本颜色
+            talk_character_data = cache.character_data[unusual_talk_flag]
+            if talk_character_data.text_color:
+                now_draw.style = talk_character_data.name
+                final_color = talk_character_data.name
+            # 如果没有，则根据当前角色与交互对象来决定文本颜色
+            else:
+                # 口上文本的，角色文本颜色
+                text_color = character_data.text_color
+                # 优先选角色自己
+                if text_color:
+                    now_draw.style = character_data.name
+                    final_color = character_data.name
+                # 如果还没有则选择交互对象
+                else:
+                    target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+                    tar_text_color = target_character_data.text_color
+                    if tar_text_color:
+                        now_draw.style = target_character_data.name
+                        final_color = target_character_data.name
             # 翻译口上
             if normal_config.config_normal.language != "zh_CN" and cache.ai_setting.ai_chat_translator_setting == 2:
                 now_talk_text = handle_chat_ai.judge_use_text_ai(character_id, now_behavior_id, now_talk_text, translator=True)
