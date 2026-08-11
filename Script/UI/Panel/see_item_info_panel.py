@@ -162,8 +162,15 @@ class SeeCharacterItemBagPanel:
         item_list_type = [_("药品"), _("机器"), _("消耗品"), _("H药品"), _("H用机器"), _("SM器具"), _("钥匙")]
         while 1:
             title_draw.draw()
+            
+            # 绘制龙门币
+            money_text = _("当前龙门币数量:{0}").format(str(cache.rhodes_island.materials_resouce[1]))
+            money_draw = draw.NormalDraw()
+            money_draw.text = money_text
+            money_draw.draw()
+            
             # 绘制粉红凭证
-            money_text = _("当前持有粉红凭证：{0}").format(str(cache.rhodes_island.materials_resouce[4]))
+            money_text = _("\n当前持有粉红凭证：{0}").format(str(cache.rhodes_island.materials_resouce[4]))
             now_draw = draw.NormalDraw()
             now_draw.text = money_text
             now_draw.width = self.width
