@@ -4,8 +4,8 @@ AdvNpc,int,4235,0,角色编号
 Name,str,珊比,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,6,0,角色职业为重装
-Race,int,13,0,角色种族为菲林
-Nation,int,0,0,角色势力为罗德岛
+Race,int,17,0,角色种族为卡特斯
+Nation,int,91,0,角色势力为雷姆必拓
 Birthplace,int,9,0,角色出身地为雷姆必拓
 Hp,int,1500,0,角色初始体力
 Mp,int,1000,0,角色初始气力
