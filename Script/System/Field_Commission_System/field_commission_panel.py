@@ -558,11 +558,13 @@ class CommissionDraw:
                     val -= 1
             return val
 
-        # 动态获取需要显示的工作技能字典
+        # 动态获取需要显示的工作技能字典，并过滤掉多余字符
         skill_columns = []
-        for tem_ability_cid, ability_data in game_config.config_ability.items():
-            if ability_data.ability_type == 4:  # 4 代表工作技能，请确保与 csv 设定一致
-                skill_columns.append((ability_data.name, tem_ability_cid))
+        for tem_ability_cid in game_config.config_ability:
+            ability_data = game_config.config_ability[tem_ability_cid]
+            if ability_data.ability_type == 4:  # 4 代表工作技能
+                col_name = ability_data.name.replace(_("技能"), "")
+                skill_columns.append((col_name, tem_ability_cid))
 
         while 1:
             return_list = []

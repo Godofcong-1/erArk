@@ -329,7 +329,7 @@ class Manage_Basement_Panel:
 
                 current_category = self.info_category_list[self.current_category_index]
 
-                # 动态读取能力CSV并根据 ability_type 分类
+                # 动态读取能力CSV并根据类型分类
                 cat_columns = {
                     _("【感度类】"): [],
                     _("【扩张类】"): [],
@@ -352,7 +352,9 @@ class Manage_Basement_Panel:
                     ability_data = game_config.config_ability[tem_ability_cid]
                     cat_name = ability_type_to_cat.get(ability_data.ability_type)
                     if cat_name in cat_columns:
-                        cat_columns[cat_name].append((ability_data.name, tem_ability_cid))
+                        # 统一去除后缀名称维持排版宽度
+                        col_name = ability_data.name.replace(_("技能"), "").replace(_("感度"), "").replace(_("扩张"), "").replace(_("刻印"), "")
+                        cat_columns[cat_name].append((col_name, tem_ability_cid))
 
                 # ================= 1. 绘制顶部：分类切换页 =================
                 cat_line_list = []
@@ -490,7 +492,7 @@ class Manage_Basement_Panel:
                         for col_name, col_id in cols:
                             header_text += format_col_header(col_name)
                         if current_category == "【工作技能】":
-                            header_text += "装备 |工作"
+                            header_text += "装备|工作"
                         header_draw.text = header_text
                         header_draw.draw()
                         line_feed.draw()
@@ -555,10 +557,7 @@ class Manage_Basement_Panel:
                         for _cname, _cols in cat_columns.items():
                             for _col_name, _col_id in _cols:
                                 if _col_name == key:
-                                    if _cname == _("【刻印类】"):
-                                        return c.talent.get(_col_id, 0)
-                                    else:
-                                        return c.ability.get(_col_id, 0)
+                                    return c.ability.get(_col_id, 0)
                         return 0
                         
                     all_charas.sort(
@@ -683,7 +682,7 @@ class Manage_Basement_Panel:
                             # 绘制对齐的表格数据
                             cols = cat_columns.get(current_category, [])
                             for col_name, col_id in cols:
-                                val = tlt.get(col_id, 0) if current_category == "【刻印类】" else abl.get(col_id, 0)
+                                val = abl.get(col_id, 0)
                                 rank = get_rank_letter(val)
                                 rank_color = get_rank_color(val)
                                 
