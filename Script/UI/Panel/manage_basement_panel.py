@@ -728,6 +728,10 @@ class Manage_Basement_Panel:
                                 work_draw.draw()
                             
                         line_feed.draw()
+                    
+                    # 补充空行以固定列表显示高度
+                    for i in range(chara_per_page - len(current_page_charas)):
+                        line_feed.draw()
 
                     # ================= 6. 绘制底部：翻页操作区 =================
                     line_feed.draw()
