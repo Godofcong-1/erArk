@@ -275,10 +275,9 @@ def calculate_recruit_line_efficiency(line_id: int) -> Tuple[str, float]:
     total_bonus += sub_bonus
     hr_parts_str += _("，副:{0}%]").format(round(sub_bonus,1))
     
-    # 除以策略难度调整
-    total_bonus /= recruitment_strategy_data.adjust
-    # 【修復】這裡將顯示的 "*" 改為 "/" 以符合實際除法運算
-    strategy_str = _(" / 策略调整系数{0}%").format(int(recruitment_strategy_data.adjust * 100))
+    # 乘以策略难度调整
+    total_bonus *= recruitment_strategy_data.adjust
+    strategy_str = _(" * 策略调整系数{0}%").format(int(recruitment_strategy_data.adjust * 100))
     
     # 乘以设施效率
     total_bonus *= facility_effect
