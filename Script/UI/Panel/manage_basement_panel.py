@@ -491,8 +491,8 @@ class Manage_Basement_Panel:
                         cols = cat_columns[current_category]
                         for col_name, col_id in cols:
                             header_text += format_col_header(col_name)
-                        if current_category == "【工作技能】":
-                            header_text += "装备|工作"
+                        if current_category == _("【工作技能】"):
+                            header_text += _("装备|工作")
                         header_draw.text = header_text
                         header_draw.draw()
                         line_feed.draw()
@@ -606,7 +606,7 @@ class Manage_Basement_Panel:
                         abl = character_data.ability
                         tlt = character_data.talent
                         
-                        if current_category == "【体力气力】":
+                        if current_category == _("【体力气力】"):
                             # HP 条绘制
                             hp_draw = draw.InfoBarDraw()
                             hp_draw.width = int(self.width / 5)
@@ -639,7 +639,7 @@ class Manage_Basement_Panel:
                             for status_draw in status_list:
                                 status_draw.draw()
                             
-                        elif current_category == "【好感信赖】":
+                        elif current_category == _("【好感信赖】"):
                             favor = character_data.favorability.get(0, 0)
                             trust = character_data.trust
                             hypnosis_val = character_data.hypnosis.hypnosis_degree
@@ -649,33 +649,33 @@ class Manage_Basement_Panel:
                             now_position = map_handle.get_map_system_path_str_for_list(character_data.position)
                             
                             # 判断陷落状态与文字颜色
-                            fall_name = "无"
+                            fall_name = _("无")
                             fall_color = "standard"
-                            if tlt.get(204):   fall_name, fall_color = "爱侣", "hot_pink"
-                            elif tlt.get(203): fall_name, fall_color = "恋人", "hot_pink"
-                            elif tlt.get(202): fall_name, fall_color = "恋慕", "deep_pink"
-                            elif tlt.get(201): fall_name, fall_color = "思慕", "light_pink"
-                            elif tlt.get(214): fall_name, fall_color = "奴隶", "levelex"
-                            elif tlt.get(213): fall_name, fall_color = "宠物", "red"
-                            elif tlt.get(212): fall_name, fall_color = "驯服", "crimson"
-                            elif tlt.get(211): fall_name, fall_color = "屈从", "coral"
+                            if tlt.get(204):   fall_name, fall_color = _("爱侣"), "hot_pink"
+                            elif tlt.get(203): fall_name, fall_color = _("恋人"), "hot_pink"
+                            elif tlt.get(202): fall_name, fall_color = _("恋慕"), "deep_pink"
+                            elif tlt.get(201): fall_name, fall_color = _("思慕"), "light_pink"
+                            elif tlt.get(214): fall_name, fall_color = _("奴隶"), "levelex"
+                            elif tlt.get(213): fall_name, fall_color = _("宠物"), "red"
+                            elif tlt.get(212): fall_name, fall_color = _("驯服"), "crimson"
+                            elif tlt.get(211): fall_name, fall_color = _("屈从"), "coral"
 
                             # 統一陷落文字的寬度，精確計算需要補的空格數量
                             display_fall = get_display_width(fall_name)
                             fall_pad = " " * max(0, 4 - display_fall)
 
                             info_draw = draw.NormalDraw()
-                            info_text = f" 好感度: {str(favor).ljust(5)} | 信赖度: {str(round(trust, 1)).ljust(6)}% | 催眠深度: {str(round(hypnosis_val, 1)).ljust(5)}% | 陷落: "
+                            info_text = _(" 好感度: {0} | 信赖度: {1}% | 催眠深度: {2}% | 陷落: ").format(str(favor).ljust(5), str(round(trust, 1)).ljust(6), str(round(hypnosis_val, 1)).ljust(5))
                             info_draw.text = info_text
                             info_draw.draw()
                             
                             fall_draw = draw.NormalDraw()
-                            fall_draw.text = f"[{fall_name}]{fall_pad}"
+                            fall_draw.text = _("[{0}]{1}").format(fall_name, fall_pad)
                             fall_draw.style = fall_color
                             fall_draw.draw()
 
                             loc_draw = draw.NormalDraw()
-                            loc_draw.text = f" | 现在位置: {now_position}"
+                            loc_draw.text = _(" | 现在位置: {0}").format(now_position)
                             loc_draw.draw()
                             
                         else:
@@ -699,15 +699,15 @@ class Manage_Basement_Panel:
                                 val_draw.text = f"{val_str}{padding}|"
                                 val_draw.draw()
                             
-                            if current_category == "【工作技能】":
+                            if current_category == _("【工作技能】"):
                                 # 渲染装备状态
-                                equip_text = "正常"
+                                equip_text = _("正常")
                                 equip_color = "standard"
                                 if handle_premise.handle_self_equipment_damaged_ge_2(character_id):
-                                    equip_text = "损坏"
+                                    equip_text = _("损坏")
                                     equip_color = "red"
                                 elif handle_premise.handle_self_equipment_maintenance_ge_2(character_id):
-                                    equip_text = "完美"
+                                    equip_text = _("完美")
                                     equip_color = "spring_green"
                                 
                                 equip_draw = draw.NormalDraw()
@@ -739,27 +739,27 @@ class Manage_Basement_Panel:
                     line.draw()
                     
                     if self.chara_list_page > 0:
-                        prev_page_btn = draw.LeftButton("[888]上一页", "888", 12, cmd_func=self.change_chara_page, args=(-1,))
+                        prev_page_btn = draw.LeftButton(_("[888]上一页"), "888", 12, cmd_func=self.change_chara_page, args=(-1,))
                         prev_page_btn.draw()
                         return_list.append(prev_page_btn.return_text)
                     else:
                         prev_page_btn = draw.NormalDraw()
-                        prev_page_btn.text = "[888]上一页"
+                        prev_page_btn.text = _("[888]上一页")
                         prev_page_btn.style = "deep_gray"
                         prev_page_btn.width = 12
                         prev_page_btn.draw()
                     
                     page_info = draw.NormalDraw()
-                    page_info.text = f"  [{self.chara_list_page + 1}/{total_pages}页]  "
+                    page_info.text = _("  [{0}/{1}页]  ").format(self.chara_list_page + 1, total_pages)
                     page_info.draw()
                     
                     if self.chara_list_page < total_pages - 1:
-                        next_page_btn = draw.LeftButton("[222]下一页", "222", 12, cmd_func=self.change_chara_page, args=(1,))
+                        next_page_btn = draw.LeftButton(_("[222]下一页"), "222", 12, cmd_func=self.change_chara_page, args=(1,))
                         next_page_btn.draw()
                         return_list.append(next_page_btn.return_text)
                     else:
                         next_page_btn = draw.NormalDraw()
-                        next_page_btn.text = "[222]下一页"
+                        next_page_btn.text = _("[222]下一页")
                         next_page_btn.style = "deep_gray"
                         next_page_btn.width = 12
                         next_page_btn.draw()

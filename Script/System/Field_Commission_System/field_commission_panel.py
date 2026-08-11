@@ -360,7 +360,7 @@ class CommissionDraw:
             else:
                 calc_day = commision_data.time
                 
-            info_draw_2_text += f"\n  (当前队伍速度: {now_speed} ，预计耗时计算: {calc_day}天)"
+            info_draw_2_text += _("\n  (当前队伍速度: {0} ，预计耗时计算: {1}天)").format(now_speed, calc_day)
             
             info_draw_2_text += _("\n\n需求满足情况：\n")
             info_draw_2 = draw.NormalDraw()
@@ -369,13 +369,13 @@ class CommissionDraw:
             info_draw_2.draw()
 
             # 绘制各项需求的达成度 (带颜色与A/B格式)
-            p_text = f"  人数：{len(self.send_npc_list)} / {commision_data.people}"
+            p_text = _("  人数：{0} / {1}").format(len(self.send_npc_list), commision_data.people)
             p_draw = draw.NormalDraw()
             p_draw.text = p_text.ljust(15)
             p_draw.style = "spring_green" if people_sat else "red"
             p_draw.draw()
 
-            c_text = f"  运量：{now_capacity} / {commision_capacity_int} [{commision_data.time - 1}(天-1) * {commision_data.people}(人)]"
+            c_text = _("  运量：{0} / {1} [{2}(天-1) * {3}(人)]").format(now_capacity, commision_capacity_int, commision_data.time - 1, commision_data.people)
             c_draw = draw.NormalDraw()
             c_draw.text = c_text.ljust(35)
             c_draw.style = "spring_green" if cap_sat else "red"
@@ -391,7 +391,7 @@ class CommissionDraw:
             demand_str = str(commision_data.demand)
             if not demand_str or demand_str == "无" or demand_str == "-1":
                 d = draw.NormalDraw()
-                d.text = "无"
+                d.text = _("无")
                 d.style = "spring_green"
                 d.draw()
             else:
@@ -573,14 +573,14 @@ class CommissionDraw:
 
             # --- 1. 绘制当前进度指示器 ---
             demand_label = draw.NormalDraw()
-            demand_label.text = "\n当前派遣进度： "
+            demand_label.text = _("\n当前派遣进度： ")
             demand_label.draw()
             
             # 人数
             current_people = len(self.send_npc_list)
             people_col = "spring_green" if current_people >= commision_people else "red"
             people_draw = draw.NormalDraw()
-            people_draw.text = f"[人数({current_people}/{commision_people})] "
+            people_draw.text = _("[人数({0}/{1})] ").format(current_people, commision_people)
             people_draw.style = people_col
             people_draw.draw()
             
@@ -712,7 +712,7 @@ class CommissionDraw:
                 bar_draw.draw()
                 
             suffix_draw = draw.NormalDraw()
-            suffix_draw.text = "装备|当前工作"
+            suffix_draw.text = _("装备|当前工作")
             suffix_draw.draw()
             
             line_feed.draw()
@@ -820,13 +820,13 @@ class CommissionDraw:
                     val_draw.draw()
                 
                 # 渲染装备状态
-                equip_text = "正常"
+                equip_text = _("正常")
                 equip_color = "standard"
                 if handle_premise.handle_self_equipment_damaged_ge_2(npc_id):
-                    equip_text = "损坏"
+                    equip_text = _("损坏")
                     equip_color = "red"
                 elif handle_premise.handle_self_equipment_maintenance_ge_2(npc_id):
-                    equip_text = "完美"
+                    equip_text = _("完美")
                     equip_color = "spring_green"
                 
                 equip_draw = draw.NormalDraw()
@@ -857,27 +857,27 @@ class CommissionDraw:
             line.draw()
             
             if chara_list_page > 0:
-                prev_page_btn = draw.LeftButton("[888]上一页", "888", 12, cmd_func=pass_func)
+                prev_page_btn = draw.LeftButton(_("[888]上一页"), "888", 12, cmd_func=pass_func)
                 prev_page_btn.draw()
                 return_list.append(prev_page_btn.return_text)
             else:
                 prev_page_btn = draw.NormalDraw()
-                prev_page_btn.text = "[888]上一页"
+                prev_page_btn.text = _("[888]上一页")
                 prev_page_btn.style = "deep_gray"
                 prev_page_btn.width = 12
                 prev_page_btn.draw()
             
             page_info = draw.NormalDraw()
-            page_info.text = f"  [{chara_list_page + 1}/{total_pages}页]  "
+            page_info.text = _("  [{0}/{1}页]  ").format(chara_list_page + 1, total_pages)
             page_info.draw()
             
             if chara_list_page < total_pages - 1:
-                next_page_btn = draw.LeftButton("[222]下一页", "222", 12, cmd_func=pass_func)
+                next_page_btn = draw.LeftButton(_("[222]下一页"), "222", 12, cmd_func=pass_func)
                 next_page_btn.draw()
                 return_list.append(next_page_btn.return_text)
             else:
                 next_page_btn = draw.NormalDraw()
-                next_page_btn.text = "[222]下一页"
+                next_page_btn.text = _("[222]下一页")
                 next_page_btn.style = "deep_gray"
                 next_page_btn.width = 12
                 next_page_btn.draw()
