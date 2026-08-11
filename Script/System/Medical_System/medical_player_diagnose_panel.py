@@ -540,7 +540,7 @@ class MedicalPlayerDiagnosePanel:
             toggle_label,
             _("切换检查菜单"),
             max(len(toggle_label) * 2 + 4, 22),
-            normal_style="gold_enrod" if has_undiagnosed else "standard", # 【修改】套用判断结果的样式
+            normal_style="gold_enrod" if has_undiagnosed and not self.menu_expanded else "standard",
             cmd_func=self._toggle_check_menu,
         )
         toggle_button.draw()
@@ -966,7 +966,7 @@ class MedicalPlayerDiagnosePanel:
                     formatted_amount = self._format_quantity(display_amount)
                     shortage_amount = self._calculate_shortage(resource_id, display_amount, inventory_snapshot)
                     
-                    # 【修改】取消对缺口是否大于0的 if-else 判断，直接常时显示缺口与库存
+                    # 常时显示缺口与库存
                     shortage_text = self._format_quantity(shortage_amount)
                     stock_text = self._format_quantity(float(inventory_snapshot.get(resource_id, 0.0) or 0.0))
                     lines.append(
@@ -977,21 +977,27 @@ class MedicalPlayerDiagnosePanel:
                             stock=stock_text,
                         )
                     )
-                if missing_complications:
-                    lines.append(
-                        _("  * 未确诊 {count} 项并发症，相关药品需求按 50% 计入。").format(
-                            count=len(missing_complications)
-                        )
-                    )
-            elif missing_complications:
-                lines.append(
-                    _("未确诊 {count} 项并发症，相关药品需求按 50% 计入。").format(
-                        count=len(missing_complications)
-                    )
-                )
 
+        # 先将上面的综合病历与治疗信息绘制出来
         summary_draw.text = "\n".join(lines) + "\n"
         summary_draw.draw()
+
+        # 独立绘制未确诊提示并设置橘黄色 (gold_enrod)
+        if missing_complications:
+            missing_draw = draw.NormalDraw()
+            missing_draw.width = self.width
+            missing_draw.style = "gold_enrod"
+            # 根据是否有药品需求来决定前排是否要加上 "  * "
+            if resources:
+                missing_draw.text = _("  * 未确诊 {count} 项并发症，相关药品需求按 50% 计入。\n").format(
+                    count=len(missing_complications)
+                )
+            else:
+                missing_draw.text = _("未确诊 {count} 项并发症，相关药品需求按 50% 计入。\n").format(
+                    count=len(missing_complications)
+                )
+            missing_draw.draw()
+
         line_feed.draw()
 
     def _build_suspect_suggestions(self) -> List[str]:
