@@ -46,8 +46,8 @@ class Manage_Basement_Panel:
         # --- 用于全干员一览的分页与分类变量 ---
         self.chara_list_page = 0
         self.info_category_list = [
-            "【体力气力】", "【好感信赖】", "【感度类】", "【扩张类】", "【刻印类】", 
-            "【基础属性】", "【工作技能】", "【性技能】"
+            _("【体力气力】"), _("【好感信赖】"), _("【感度类】"), _("【扩张类】"), _("【刻印类】"), 
+            _("【基础属性】"), _("【工作技能】"), _("【性技能】")
         ]
         self.current_category_index = 0
 
@@ -329,15 +329,30 @@ class Manage_Basement_Panel:
 
                 current_category = self.info_category_list[self.current_category_index]
 
-                # 字典定义各分类的具体列 (名称, 对应编号id)
+                # 动态读取能力CSV并根据 ability_type 分类
                 cat_columns = {
-                    "【感度类】": [("皮肤", 0), ("胸部", 1), ("阴蒂", 2), ("阴茎", 3), ("阴道", 4), ("肛肠", 5), ("尿道", 6), ("子宫", 7), ("口喉", 100), ("兽部", 101), ("心理", 102)],
-                    "【扩张类】": [("V扩张", 9), ("A扩张", 10), ("U扩张", 11), ("W扩张", 12)],
-                    "【刻印类】": [("快乐", 13), ("屈服", 14), ("苦痛", 15), ("恐怖", 17), ("反发", 18), ("无觉", 19)],
-                    "【基础属性】": [("技巧", 30), ("顺从", 31), ("亲密", 32), ("欲望", 33), ("露出", 34), ("施虐", 35), ("受虐", 36)],
-                    "【工作技能】": [("话术", 40), ("指挥", 41), ("战斗", 42), ("料理", 43), ("音乐", 44), ("学识", 45), ("医术", 46), ("农业", 47), ("制造", 48), ("绘画", 49)],
-                    "【性技能】": [("指技", 70), ("舌技", 71), ("足技", 72), ("胸技", 73), ("膣技", 74), ("肛技", 75), ("腰技", 76), ("榨精", 77), ("隐蔽", 90)]
+                    _("【感度类】"): [],
+                    _("【扩张类】"): [],
+                    _("【刻印类】"): [],
+                    _("【基础属性】"): [],
+                    _("【工作技能】"): [],
+                    _("【性技能】"): []
                 }
+                
+                ability_type_to_cat = {
+                    0: _("【感度类】"),
+                    1: _("【扩张类】"),
+                    2: _("【刻印类】"),
+                    3: _("【基础属性】"),
+                    4: _("【工作技能】"),
+                    5: _("【性技能】")
+                }
+                
+                for tem_ability_cid in game_config.config_ability:
+                    ability_data = game_config.config_ability[tem_ability_cid]
+                    cat_name = ability_type_to_cat.get(ability_data.ability_type)
+                    if cat_name in cat_columns:
+                        cat_columns[cat_name].append((ability_data.name, tem_ability_cid))
 
                 # ================= 1. 绘制顶部：分类切换页 =================
                 cat_line_list = []
@@ -361,80 +376,78 @@ class Manage_Basement_Panel:
                 line.draw()
 
                 # ================= 1.5. 绘制筛选与排序面板 =================
-                work_filter_names = ["不筛选", "有", "无"] 
-                fall_filter_names = ["不筛选", "无", "有", "爱情", "隶属"]
-                bool_filter_names = ["不筛选", "是", "否"]
+                work_filter_names = [_("不筛选"), _("有"), _("无")] 
+                fall_filter_names = [_("不筛选"), _("无"), _("有"), _("爱情"), _("隶属")]
+                bool_filter_names = [_("不筛选"), _("是"), _("否")]
                 
                 filter_draw_1 = draw.NormalDraw()
-                filter_draw_1.text = " 筛选: "
+                filter_draw_1.text = _(" 筛选: ")
                 filter_draw_1.draw()
                 
-                # 統一寬度為 18，確保對齊
                 btn_width = 18
 
-                btn_work = draw.LeftButton(f"[工作:{work_filter_names[self.filter_work]}]", "toggle_filter_work", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if self.filter_work else "standard")
+                btn_work = draw.LeftButton(_("[工作:{0}]").format(work_filter_names[self.filter_work]), "toggle_filter_work", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if self.filter_work else "standard")
                 btn_work.draw()
                 return_list.append(btn_work.return_text)
                 
-                btn_fall = draw.LeftButton(f"[陷落:{fall_filter_names[self.filter_fall]}]", "toggle_filter_fall", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if self.filter_fall else "standard")
+                btn_fall = draw.LeftButton(_("[陷落:{0}]").format(fall_filter_names[self.filter_fall]), "toggle_filter_fall", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if self.filter_fall else "standard")
                 btn_fall.draw()
                 return_list.append(btn_fall.return_text)
                 
-                btn_daughter = draw.LeftButton(f"[女儿:{bool_filter_names[self.filter_daughter]}]", "toggle_filter_daughter", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if self.filter_daughter else "standard")
+                btn_daughter = draw.LeftButton(_("[女儿:{0}]").format(bool_filter_names[self.filter_daughter]), "toggle_filter_daughter", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if self.filter_daughter else "standard")
                 btn_daughter.draw()
                 return_list.append(btn_daughter.return_text)
                 
-                btn_visitor = draw.LeftButton(f"[访客:{bool_filter_names[self.filter_visitor]}]", "toggle_filter_visitor", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if self.filter_visitor else "standard")
+                btn_visitor = draw.LeftButton(_("[访客:{0}]").format(bool_filter_names[self.filter_visitor]), "toggle_filter_visitor", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if self.filter_visitor else "standard")
                 btn_visitor.draw()
                 return_list.append(btn_visitor.return_text)
                 
-                btn_collection = draw.LeftButton(f"[收藏:{bool_filter_names[self.filter_collection]}]", "toggle_filter_collection", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if self.filter_collection else "standard")
+                btn_collection = draw.LeftButton(_("[收藏:{0}]").format(bool_filter_names[self.filter_collection]), "toggle_filter_collection", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if self.filter_collection else "standard")
                 btn_collection.draw()
                 return_list.append(btn_collection.return_text)
                 
                 line_feed.draw()
                 
                 sort_draw = draw.NormalDraw()
-                sort_draw.text = " 排序: "
+                sort_draw.text = _(" 排序: ")
                 sort_draw.draw()
                 
                 sort_main_text = draw.NormalDraw()
-                sort_main_text.text = f"主排序:{self.sort_main} "
+                sort_main_text.text = _("主排序:{0} ").format(self.sort_main)
                 sort_main_text.draw()
                 
-                btn_sort_main_mod = draw.LeftButton("[修改]", "modify_sort_main", 8, cmd_func=pass_func)
+                btn_sort_main_mod = draw.LeftButton(_("[修改]"), "modify_sort_main", 8, cmd_func=pass_func)
                 btn_sort_main_mod.draw()
                 return_list.append(btn_sort_main_mod.return_text)
                 
-                btn_sort_main_reset = draw.LeftButton("[重置默认]", "reset_sort_main", 12, cmd_func=pass_func)
+                btn_sort_main_reset = draw.LeftButton(_("[重置默认]"), "reset_sort_main", 12, cmd_func=pass_func)
                 btn_sort_main_reset.draw()
                 return_list.append(btn_sort_main_reset.return_text)
                 
                 sort_sub_text = draw.NormalDraw()
-                sort_sub_text.text = f" 副排序:{self.sort_sub} "
+                sort_sub_text.text = _(" 副排序:{0} ").format(self.sort_sub)
                 sort_sub_text.draw()
                 
-                btn_sort_sub_mod = draw.LeftButton("[修改]", "modify_sort_sub", 8, cmd_func=pass_func)
+                btn_sort_sub_mod = draw.LeftButton(_("[修改]"), "modify_sort_sub", 8, cmd_func=pass_func)
                 btn_sort_sub_mod.draw()
                 return_list.append(btn_sort_sub_mod.return_text)
                 
-                btn_sort_sub_reset = draw.LeftButton("[重置默认]", "reset_sort_sub", 12, cmd_func=pass_func)
+                btn_sort_sub_reset = draw.LeftButton(_("[重置默认]"), "reset_sort_sub", 12, cmd_func=pass_func)
                 btn_sort_sub_reset.draw()
                 return_list.append(btn_sort_sub_reset.return_text)
                 
                 line_feed.draw()
                 
-                # --- 將升序和收藏優先換到下一行 ---
                 space_draw_sort = draw.NormalDraw()
                 space_draw_sort.text = "       "
                 space_draw_sort.draw()
 
-                sort_order_str = "[升序]" if not self.sort_reverse else "[倒序]"
+                sort_order_str = _("[升序]") if not self.sort_reverse else _("[倒序]")
                 btn_sort_order = draw.LeftButton(sort_order_str, "toggle_sort_reverse", 8, cmd_func=pass_func)
                 btn_sort_order.draw()
                 return_list.append(btn_sort_order.return_text)
                 
-                sort_col_str = "[收藏优先]"
+                sort_col_str = _("[收藏优先]")
                 btn_sort_col = draw.LeftButton(sort_col_str, "toggle_sort_collection_first", 12, cmd_func=pass_func, normal_style="gold_enrod" if self.sort_collection_first else "standard")
                 btn_sort_col.draw()
                 return_list.append(btn_sort_col.return_text)
@@ -443,26 +456,23 @@ class Manage_Basement_Panel:
                 line_feed.draw()
 
                 if self.choosing_sort_mode != 0:
-                    # ================= 正在修改排序 =================
                     opt_title = draw.NormalDraw()
-                    opt_title.text = f"正在修改 {'主排序' if self.choosing_sort_mode == 1 else '副排序'}，请选择:\n"
+                    sort_target = _("主排序") if self.choosing_sort_mode == 1 else _("副排序")
+                    opt_title.text = _("正在修改 {0}，请选择:\n").format(sort_target)
                     opt_title.draw()
                     
-                    # 第一行
-                    for opt in ["无", "默认ID", "好感", "信赖"]:
+                    for opt in [_("无"), _("默认ID"), _("好感"), _("信赖")]:
                         btn = draw.LeftButton(f"[{opt}]", f"select_sort_{opt}", len(opt)*2 + 4, cmd_func=pass_func)
                         btn.draw()
                         return_list.append(btn.return_text)
                     line_feed.draw()
                     
-                    # 第二行
-                    for opt in ["体力", "最大体力", "气力", "最大气力", "催眠深度", "工作", "装备"]:
+                    for opt in [_("体力"), _("最大体力"), _("气力"), _("最大气力"), _("催眠深度"), _("工作"), _("装备")]:
                         btn = draw.LeftButton(f"[{opt}]", f"select_sort_{opt}", len(opt)*2 + 4, cmd_func=pass_func)
                         btn.draw()
                         return_list.append(btn.return_text)
                     line_feed.draw()
                     
-                    # 第三行及之后 (按分类分行)
                     for cat_name, cols in cat_columns.items():
                         for col_name, col_id in cols:
                             btn = draw.LeftButton(f"[{col_name}]", f"select_sort_{col_name}", len(col_name)*2 + 4, cmd_func=pass_func)
@@ -526,18 +536,18 @@ class Manage_Basement_Panel:
                         all_charas.append(npc_id)
                         
                     def get_sort_val(nid, key):
-                        if key == "无": return 0
+                        if key == _("无"): return 0
                         c = cache.character_data[nid]
-                        if key == "默认ID": return nid
-                        if key == "好感": return c.favorability.get(0, 0)
-                        if key == "信赖": return c.trust
-                        if key == "体力": return c.hit_point
-                        if key == "最大体力": return c.hit_point_max
-                        if key == "气力": return c.mana_point
-                        if key == "最大气力": return c.mana_point_max
-                        if key == "催眠深度": return c.hypnosis.hypnosis_degree
-                        if key == "工作": return c.work.work_type
-                        if key == "装备":
+                        if key == _("默认ID"): return nid
+                        if key == _("好感"): return c.favorability.get(0, 0)
+                        if key == _("信赖"): return c.trust
+                        if key == _("体力"): return c.hit_point
+                        if key == _("最大体力"): return c.hit_point_max
+                        if key == _("气力"): return c.mana_point
+                        if key == _("最大气力"): return c.mana_point_max
+                        if key == _("催眠深度"): return c.hypnosis.hypnosis_degree
+                        if key == _("工作"): return c.work.work_type
+                        if key == _("装备"):
                             if handle_premise.handle_self_equipment_maintenance_ge_2(nid): return 2
                             if handle_premise.handle_self_equipment_damaged_ge_2(nid): return -1
                             return 0
@@ -545,7 +555,7 @@ class Manage_Basement_Panel:
                         for _cname, _cols in cat_columns.items():
                             for _col_name, _col_id in _cols:
                                 if _col_name == key:
-                                    if _cname == "【刻印类】":
+                                    if _cname == _("【刻印类】"):
                                         return c.talent.get(_col_id, 0)
                                     else:
                                         return c.ability.get(_col_id, 0)

@@ -384,7 +384,7 @@ class CommissionDraw:
             line_feed.draw()
 
             demand_label = draw.NormalDraw()
-            demand_label.text = "  其他需求："
+            demand_label.text = _("  其他需求：")
             demand_label.draw()
             
             # 使用底层原生函数动态解析每一个需求（包含金钱、能力、限定角色等所有类型）
@@ -558,11 +558,11 @@ class CommissionDraw:
                     val -= 1
             return val
 
-        # 需要显示的工作技能字典
-        skill_columns = [
-            ("话术", 40), ("指挥", 41), ("战斗", 42), ("料理", 43), ("音乐", 44), 
-            ("学识", 45), ("医术", 46), ("农业", 47), ("制造", 48), ("绘画", 49)
-        ]
+        # 动态获取需要显示的工作技能字典
+        skill_columns = []
+        for tem_ability_cid, ability_data in game_config.config_ability.items():
+            if ability_data.ability_type == 4:  # 4 代表工作技能，请确保与 csv 设定一致
+                skill_columns.append((ability_data.name, tem_ability_cid))
 
         while 1:
             return_list = []
@@ -612,62 +612,63 @@ class CommissionDraw:
             info_draw.draw()
 
             # --- 3. 绘制筛选与排序按钮区 ---
+            # 3. 绘制筛选与排序按钮区
             filter_draw = draw.NormalDraw()
-            filter_draw.text = " 筛选: "
+            filter_draw.text = _(" 筛选: ")
             filter_draw.draw()
             
             btn_width = 18
-            work_filter_names = ["不筛选", "有", "无"]
-            fall_filter_names = ["不筛选", "无", "有", "爱情", "隶属"]
-            bool_filter_names = ["不筛选", "是", "否"]
+            work_filter_names = [_("不筛选"), _("有"), _("无")]
+            fall_filter_names = [_("不筛选"), _("无"), _("有"), _("爱情"), _("隶属")]
+            bool_filter_names = [_("不筛选"), _("是"), _("否")]
 
-            btn_work = draw.LeftButton(f"[工作:{work_filter_names[filter_work]}]", "filter_work", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_work else "standard")
+            btn_work = draw.LeftButton(_("[工作:{0}]").format(work_filter_names[filter_work]), "filter_work", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_work else "standard")
             btn_work.draw()
             return_list.append(btn_work.return_text)
 
-            btn_fall = draw.LeftButton(f"[陷落:{fall_filter_names[filter_fall]}]", "filter_fall", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_fall else "standard")
+            btn_fall = draw.LeftButton(_("[陷落:{0}]").format(fall_filter_names[filter_fall]), "filter_fall", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_fall else "standard")
             btn_fall.draw()
             return_list.append(btn_fall.return_text)
             
-            btn_daughter = draw.LeftButton(f"[女儿:{bool_filter_names[filter_daughter]}]", "filter_daughter", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_daughter else "standard")
+            btn_daughter = draw.LeftButton(_("[女儿:{0}]").format(bool_filter_names[filter_daughter]), "filter_daughter", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_daughter else "standard")
             btn_daughter.draw()
             return_list.append(btn_daughter.return_text)
             
-            btn_collection = draw.LeftButton(f"[收藏:{bool_filter_names[filter_collection]}]", "filter_collection", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_collection else "standard")
+            btn_collection = draw.LeftButton(_("[收藏:{0}]").format(bool_filter_names[filter_collection]), "filter_collection", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_collection else "standard")
             btn_collection.draw()
             return_list.append(btn_collection.return_text)
             
             line_feed.draw()
             
             sort_draw = draw.NormalDraw()
-            sort_draw.text = " 排序: "
+            sort_draw.text = _(" 排序: ")
             sort_draw.draw()
             
-            btn_sort_sel = draw.LeftButton("[已选优先]", "sort_sel", 12, cmd_func=pass_func, normal_style="gold_enrod" if sort_selected_first else "standard")
+            btn_sort_sel = draw.LeftButton(_("[已选优先]"), "sort_sel", 12, cmd_func=pass_func, normal_style="gold_enrod" if sort_selected_first else "standard")
             btn_sort_sel.draw()
             return_list.append(btn_sort_sel.return_text)
             
-            btn_sort_col = draw.LeftButton("[收藏优先]", "sort_col", 12, cmd_func=pass_func, normal_style="gold_enrod" if sort_collection_first else "standard")
+            btn_sort_col = draw.LeftButton(_("[收藏优先]"), "sort_col", 12, cmd_func=pass_func, normal_style="gold_enrod" if sort_collection_first else "standard")
             btn_sort_col.draw()
             return_list.append(btn_sort_col.return_text)
             
-            btn_sort_work = draw.LeftButton("[工作排序]", "sort_work", 12, cmd_func=pass_func, normal_style="gold_enrod" if sort_work_toggle else "standard")
+            btn_sort_work = draw.LeftButton(_("[工作排序]"), "sort_work", 12, cmd_func=pass_func, normal_style="gold_enrod" if sort_work_toggle else "standard")
             btn_sort_work.draw()
             return_list.append(btn_sort_work.return_text)
             
-            btn_equip_toggle = draw.LeftButton(f"[装备加成:{'开' if show_equip_modifier else '关'}] ", "toggle_equip", 18, cmd_func=pass_func, normal_style="gold_enrod" if show_equip_modifier else "standard")
+            equip_toggle_status = _("开") if show_equip_modifier else _("关")
+            btn_equip_toggle = draw.LeftButton(_("[装备加成:{0}] ").format(equip_toggle_status), "toggle_equip", 18, cmd_func=pass_func, normal_style="gold_enrod" if show_equip_modifier else "standard")
             btn_equip_toggle.draw()
             return_list.append(btn_equip_toggle.return_text)
 
             line_feed.draw()
             
             sort_draw2 = draw.NormalDraw()
-            sort_draw2.text = " 技能排序: "
+            sort_draw2.text = _(" 技能排序: ")
             sort_draw2.draw()
             
-            # 默认排序按钮
             btn_default = draw.LeftButton(
-                "[默认ID] ", "sort_0", 10, 
+                _("[默认ID] "), "sort_0", 10, 
                 cmd_func=pass_func, normal_style="gold_enrod" if sort_skill_id == 0 else "standard"
             )
             btn_default.draw()
@@ -1100,14 +1101,14 @@ class CommissionDraw:
                 if vehicle_cid in self.send_vehicle_dict:
                     now_choice_count = self.send_vehicle_dict[vehicle_cid]
 
-                # 排版载具信息，利用 get_display_width 补齐空格
+                # 排版载具信息，利用 get_display_width 补齐空格并遵循多语言格式化规范
                 base_str = f"[{str(vehicle_cid).rjust(2,'0')}]{vehicle_data.name}"
                 pad_1 = " " * max(0, 24 - get_display_width(base_str))
                 
-                stats_str = f"| 速度:{vehicle_speed} | 运载:{vehicle_capacity} | 特效:{vehicle_special}"
+                stats_str = _("| 速度:{0} | 运载:{1} | 特效:{2}").format(vehicle_speed, vehicle_capacity, vehicle_special)
                 pad_2 = " " * max(0, 48 - get_display_width(stats_str))
                 
-                count_str = f"| 选定: {now_choice_count}/{vehicle_count}"
+                count_str = _("| 选定: {0}/{1}").format(now_choice_count, vehicle_count)
                 pad_3 = " " * max(0, 16 - get_display_width(count_str))
                 
                 draw_text = " " + base_str + pad_1 + stats_str + pad_2 + count_str + pad_3
