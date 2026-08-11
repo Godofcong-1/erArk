@@ -101,14 +101,6 @@ class InScenePanel:
             now_position_draw = draw.NormalDraw()
             now_position_draw.text = now_position_text
             now_position_draw.draw()
-            
-            
-            money = str(cache.rhodes_island.materials_resouce[1])
-            money_text = _(" 当前龙门币数量: ") + money
-            money_draw = draw.NormalDraw()
-            money_draw.text = money_text
-            money_draw.draw()
-            
             line_feed.draw()
 
             # 当前位置的角色一览
