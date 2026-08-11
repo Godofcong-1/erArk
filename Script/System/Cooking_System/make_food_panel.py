@@ -18,6 +18,19 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
+def draw_q(val: int):
+    """
+    绘制品质预测文本
+    Keyword arguments:
+    val -- 食物品质值
+    """
+    _level, quality_name = attr_calculation.get_food_quality(val)
+    d = draw.NormalDraw()
+    d.text = f"[{quality_name}+{val}]"
+    if val >= 7:
+        d.style = "green"
+    d.draw()
+
 
 class Make_food_Panel:
     """
@@ -250,14 +263,6 @@ class Make_food_Panel:
             max_quality = base_quality
             if self.cook_mode == 1:
                 max_quality = min(base_quality + 4, cooking.get_max_food_quality())
-                
-            def draw_q(val):
-                _level, quality_name = attr_calculation.get_food_quality(val)
-                d = draw.NormalDraw()
-                d.text = f"[{quality_name}+{val}]"
-                if val >= 7:
-                    d.style = "green"
-                d.draw()
                 
             draw_q(base_quality)
             if self.cook_mode == 1 and max_quality != base_quality:
@@ -778,14 +783,6 @@ class SeeFoodListByFoodNameDraw:
             q_label = draw.NormalDraw()
             q_label.text = _("品质预测: ")
             q_label.draw()
-            
-            def draw_q(val):
-                _level, quality_name = attr_calculation.get_food_quality(val)
-                d = draw.NormalDraw()
-                d.text = f"[{quality_name}+{val}]"
-                if val >= 7:
-                    d.style = "green"
-                d.draw()
                 
             draw_q(base_quality)
             if max_quality != base_quality:
