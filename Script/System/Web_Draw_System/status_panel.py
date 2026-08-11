@@ -114,7 +114,7 @@ class StatusPanel:
         # 判断是否需要强制显示可选部位列表
         # 当角色没有立绘时，立绘上不会有部位按钮，此时必须显示文字版的可选部位列表，
         # 否则玩家将无法对该角色执行任何带部位的指令
-        force_show_body_parts = not (image_data.get("full_body_image") or image_data.get("half_body_image"))
+        force_show_body_parts = not image_data.get("full_body_image")
 
         # 获取可选部位列表（开启全部位显示、或角色没有立绘时才需要）
         available_body_parts = []

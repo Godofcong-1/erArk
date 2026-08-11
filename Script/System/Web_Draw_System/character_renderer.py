@@ -105,9 +105,10 @@ class CharacterRenderer:
         has_beast_ears = character_data.talent.get(111, 0) == 1 if hasattr(character_data, 'talent') else False
         has_horn = character_data.talent.get(112, 0) == 1 if hasattr(character_data, 'talent') else False
         
-        # 查找各图层立绘路径
+        # 查找全身立绘路径（Web模式严格仅使用全身图）
         full_body_image = self._find_full_body_image(character_name, character_id)
-        half_body_image = self._find_half_body_image(character_name, character_id)
+        # 严格全身图模式下，不提供半身图给主立绘渲染链路
+        half_body_image = ""
 
         # 构建图像数据
         image_data = {
@@ -116,7 +117,7 @@ class CharacterRenderer:
             "full_body_image": full_body_image,
             "half_body_image": half_body_image,
             "head_image": self._find_head_image(character_name, character_id),
-            "body_parts": self._load_body_parts_data(character_name, has_beast_ears, full_body_image or half_body_image),
+            "body_parts": self._load_body_parts_data(character_name, has_beast_ears, full_body_image),
             "clothing_layers": [],  # 服装图层（待扩展）
             "effect_layers": [],    # 特效图层（待扩展）
             "has_beast_ears": has_beast_ears,  # 角色是否有兽耳（用于兽耳部位显示）
@@ -260,11 +261,13 @@ class CharacterRenderer:
             # 解析结果本身带图层后缀时，优先换成目标图层
             candidates.append(f"{base_name}_{part}")
         candidates.append(f"{image_name}_{part}")
-        if part != "头部":
-            # 差分图（如 阿米娅_半裸）与扁平结构（如 女儿_1、菲林_龙门）直接使用原名
+        if part == "半身":
+            # 半身图允许兼容旧的无图层后缀命名与全身互换回退
             candidates.append(image_name)
-            other_part = "半身" if part == "全身" else "全身"
-            candidates.append(f"{base_name}_{other_part}")
+            candidates.append(f"{base_name}_全身")
+        elif part != "头部":
+            # 全身图严格模式：不回退到半身或无图层命名
+            pass
 
         for candidate in candidates:
             image_path = self._get_era_image_path(candidate)
@@ -298,8 +301,8 @@ class CharacterRenderer:
             part_path = f"{char_dir}/{character_name}_{part}.png"
             if os.path.exists(part_path):
                 return part_path
-            # 头部图不做进一步回退，避免把全身图当作头像
-            if part == "头部":
+            # 头部与全身图在严格模式下不做进一步回退
+            if part in ("头部", "全身"):
                 continue
             # 文件夹结构下不含下划线的原始图片
             if os.path.isdir(char_dir):
@@ -334,8 +337,8 @@ class CharacterRenderer:
         if image_path:
             return image_path
 
-        # 如果没有全身图，暂时使用半身图作为替代
-        return self._find_half_body_image(character_name, character_id)
+        # 严格全身图模式：没有全身图时直接返回空，交给上层走无图占位逻辑
+        return ""
 
     def _find_half_body_image(self, character_name: str, character_id: int = -1) -> str:
         """

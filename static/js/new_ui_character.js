@@ -7,9 +7,9 @@ function createCharacterDisplay(targetInfo, showAllBodyParts = false) {
     const display = document.createElement('div');
     display.className = 'new-ui-character-display';
 
-    // 获取立绘图片路径（优先使用全身图，否则使用半身图）
+    // 获取立绘图片路径（Web模式严格仅使用全身图）
     const imageData = targetInfo.image_data;
-    const imagePath = imageData ? (imageData.full_body_image || imageData.half_body_image) : null;
+    const imagePath = imageData ? imageData.full_body_image : null;
 
     if (imagePath) {
         // 创建角色立绘容器
