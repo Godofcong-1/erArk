@@ -286,6 +286,10 @@
     """ 地点_角色 该地点有玩家以外的角色，且所有角色都未在H中 """
     SCENE_HAVE_MULTI_MASTUREBATE_TO_PL_CHARA = "scene_have_multi_masturebate_to_pl_chara"
     """ 地点_角色 该地点有多个要逆推玩家来自慰的角色 """
+    SCENE_SOMEONE_WEAR_PAN = "scene_someone_wear_pan"
+    """ 场景_角色 该地点有其他角色穿着内裤 """
+    SCENE_SOMEONE_WEAR_SOCKS = "scene_someone_wear_socks"
+    """ 场景_角色 该地点有其他角色穿着袜子 """
 
     TEACHER_TEACHING_IN_CLASSROOM = "teacher_teaching_in_classroom"
     """ 地点_工作 当前有教师在教室里讲课 """
