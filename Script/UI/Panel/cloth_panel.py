@@ -514,8 +514,11 @@ class SwitchCharacterClothPanel:
             naked_draw.width = self.width
             self.draw_list.append(naked_draw)
         # 脱下的衣服显示
-        off_text = _("  [已脱下]:")
-        count = 0
+        off_title = draw.NormalDraw()
+        off_title.text = _("  [已脱下]:")
+        off_title.width = self.width
+        off_cloth_count = 0
+        off_draw_count = 0
         off_row: List[draw.NormalDraw] = []
         for cloth_type in target_character_data.cloth.cloth_off:
             for cloth_id in target_character_data.cloth.cloth_off[cloth_type]:
@@ -523,20 +526,21 @@ class SwitchCharacterClothPanel:
                 self.button_list.append(btn)
                 off_row.append(btn)
                 self.return_list.append(btn.return_text)  # 加入按钮返回值
-                count += 1
-                if count % 8 == 0:
+                off_cloth_count += 1
+                if off_cloth_count % 8 == 0:
+                    # 第一次的衣服前加入前缀显示文本
+                    if off_draw_count == 0:
+                        self.draw_list.append(off_title)
                     self.draw_list.extend(off_row)
                     self.draw_list.append(line_feed)
                     off_row = []
+                    off_draw_count += 1
         if off_row:
+            # 第一次的衣服前加入前缀显示文本
+            if off_draw_count == 0:
+                self.draw_list.append(off_title)
             self.draw_list.extend(off_row)
             self.draw_list.append(line_feed)
-        # 如果有脱下的衣服，则显示
-        if count != 0:
-            off_title = draw.NormalDraw()
-            off_title.text = off_text
-            off_title.width = self.width
-            self.draw_list.insert(-len(off_row)-1 if off_row else -1, off_title)
 
     def draw(self):
         """
