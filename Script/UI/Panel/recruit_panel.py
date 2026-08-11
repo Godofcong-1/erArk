@@ -131,6 +131,9 @@ def update_recruit():
             line_main_chara_id = cache.rhodes_island.recruit_line[recruit_line_id][2]
             line_main_chara_data = cache.character_data[line_main_chara_id]
             for chara_id in recruitable_npc_id_list:
+                if chara_id == 0 and recruitment_strategy != 0 and recruitment_strategy != 1:
+                    break
+            
                 # 本地招募
                 if recruitment_strategy == 0:
                     character_data = cache.character_data[chara_id]
@@ -619,12 +622,6 @@ class Recruit_Panel:
         def fmt(text, width):
             return attr_calculation.pad_display_width(str(text), width)
             
-        # 輔助：模擬話術等級字母 (依照常見的S-A-B-C-D-E-F-G排版，大於等於8視為EX)
-        def get_grade(lv):
-            mapping = {0:"G", 1:"F", 2:"E", 3:"D", 4:"C", 5:"B", 6:"A", 7:"S"}
-            if lv >= 8: return "EX"
-            return mapping.get(lv, "G")
-            
         # 輔助：建立每一行的文字
         def build_row_text(role, chara_id, is_main):
             if chara_id == 0:
@@ -635,7 +632,7 @@ class Recruit_Panel:
             bonus = base_effect if is_main else base_effect / 5
             bonus_text = f"{round(bonus,1)}%"
             abi_lv = chara.ability.get(40,0)
-            abi_str = f"{get_grade(abi_lv)} {abi_lv}"
+            abi_str = f"{attr_calculation.judge_grade(abi_lv)} {abi_lv}"
             
             def safe_get(cfg, key):
                 return cfg[key].name if key in cfg else "-"
