@@ -5,7 +5,7 @@ from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 from Script.Design import game_time, attr_calculation, talk, handle_premise
 
-from Script.System.Field_Commission_System.field_commission_function import get_commission_demand_and_reward
+from Script.System.Field_Commission_System.field_commission_function import get_commission_demand_and_reward, process_commission_text
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -205,8 +205,14 @@ class CommissionDraw:
         commission_data = game_config.config_commission[self.commission_id]
         # 委托信息
         commission_name = commission_data.name
+        
+        # 未完成的委托前面加星号
+        if self.commission_id not in cache.rhodes_island.finished_field_commissions_set:
+            commission_name = "⭐" + commission_name
+            
         if self.commission_id in cache.rhodes_island.ongoing_field_commissions:
             commission_name += _("（进行中）")
+            
         commission_name = attr_calculation.pad_display_width(commission_name, text_width, "center")
         commission_level = attr_calculation.pad_display_width(str(commission_data.level), text_width, "center")
         commission_type = attr_calculation.pad_display_width(commission_data.type, text_width, "center")
@@ -215,17 +221,18 @@ class CommissionDraw:
         commission_people_and_time = attr_calculation.pad_display_width(f"{commission_people}  {commission_time}", text_width, "center")
         demand_return_list = get_commission_demand_and_reward(self.commission_id, self.send_npc_list)
         reward_return_list = get_commission_demand_and_reward(self.commission_id, self.send_npc_list, True)
+        
         commission_demand = attr_calculation.pad_display_width(demand_return_list[1], text_width, "center")
+        # 列表为了排版对齐，这里奖励仍显示简略版类型(如：材料、金钱)
         commision_reward = attr_calculation.pad_display_width(reward_return_list[1], text_width, "center")
         # 最终文本
         commision_text = f"{commission_level}{commission_type}{commission_name}{commission_people_and_time}{commission_demand}{commision_reward}"
-        # print(f"commision_text: {commision_text}")
 
         # 可以进行的，绘制为按钮
         if self.commission_id not in cache.rhodes_island.ongoing_field_commissions:
             commision_draw = draw.LeftButton(
                 commision_text,
-                "\n" + commission_name,
+                "\n" + commission_data.name,  # 返回时不带星号
                 self.width,
                 cmd_func=self.commision_info,
                 args=(self.commission_id,),
@@ -255,130 +262,208 @@ class CommissionDraw:
         # 委托信息
         commision_data = game_config.config_commission[commision_id]
         commision_name = commision_data.name
+        
+        # 委托介绍的名称加星号
+        if commision_id not in cache.rhodes_island.finished_field_commissions_set:
+            commision_name = "⭐" + commision_name
+            
         commision_level = str(commision_data.level)
         commision_people = str(commision_data.people) + _("人")
         commision_time = str(commision_data.time) + _("天")
         commision_capacity_int = (commision_data.time - 1) * commision_data.people
-        commision_capacity_str = _(" {0}(天数-1) * {1}(人数) = {2}").format(commision_data.time - 1, commision_data.people, commision_capacity_int)
+        
+        # [修改] 改为获取并列出实际报酬的全文
         reward_return_list = get_commission_demand_and_reward(commision_id, self.send_npc_list, True)
-        commision_reward = reward_return_list[1]
+        commision_reward = reward_return_list[2] # 索引2为包含具体数值的full_text
+        
         commision_description = commision_data.description
         # 将\n替换为换行符
         if "\\n" in commision_description:
             commision_description = commision_description.replace("\\n", "\n      ")
+
+        # --- 解析委托的动态需求 (能力与特定干员) ---
+        required_ability = {}
+        required_chars_adv = []
+        try:
+            if commision_data.demand and commision_data.demand != "无" and str(commision_data.demand) != "-1":
+                for d in str(commision_data.demand).split("&"):
+                    parts = d.split("_")
+                    if parts[0] == "a" and len(parts) >= 3:
+                        required_ability[int(parts[1])] = int(parts[2])
+                    elif parts[0] == "c" and len(parts) >= 2:
+                        required_chars_adv.append(int(parts[1]))
+        except Exception:
+            pass # 容错处理
 
         # 派遣人员与载具
         self.send_npc_list = []
         self.send_vehicle_dict = {}
 
         while 1:
-            # 是否满足条件
-            all_satisfy = True
-            # 获取需求
+            # 获取当前干员满足的其他需求情况 (底层自带结算，用于判断逻辑)
             demand_return_list = get_commission_demand_and_reward(commision_id, self.send_npc_list)
-            commision_demand = demand_return_list[2]
             deman_satify = demand_return_list[0]
 
             return_list = []
             line = draw.LineDraw("-", self.width)
             line.draw()
 
-            # 绘制委托信息
+            # 绘制委托基础信息
             info_draw = draw.NormalDraw()
             info_draw.text = _("\n委托名称：{0}").format(commision_name)
             info_draw.text += _("\n委托等级：{0}").format(commision_level)
-            info_draw.text += _("\n派遣人数：{0}").format(commision_people)
             info_draw.text += _("\n耗时天数：{0}").format(commision_time)
-            info_draw.text += _("\n载具运量需求：{0}").format(commision_capacity_str)
-            info_draw.text += _("\n其他需求：{0}").format(commision_demand)
             info_draw.text += _("\n奖励：{0}").format(commision_reward)
             info_draw.text += _("\n介绍：{0}").format(commision_description)
             info_draw.width = self.width
             info_draw.draw()
 
-            # 绘制派遣人员与载具是否满足需求
+            # 计算载具总运载量
+            now_capacity = 0 # 当前运载量
+            for vehicle_id in self.send_vehicle_dict:
+                now_capacity += game_config.config_vehicle[vehicle_id].capacity * self.send_vehicle_dict[vehicle_id]
+
+            # 判定各项是否满足
+            people_sat = len(self.send_npc_list) >= commision_data.people
+            cap_sat = now_capacity >= commision_capacity_int
+            all_satisfy = people_sat and cap_sat and deman_satify
+
+            # 绘制派遣人员与载具列表
             info_draw_2_text = _("\n\n派遣人员：")
+            if not self.send_npc_list:
+                info_draw_2_text += _(" 无")
             for chara_id in self.send_npc_list:
                 chara_data = cache.character_data[chara_id]
                 chara_name = chara_data.name
                 info_draw_2_text += f"  {chara_name}"
+            
             info_draw_2_text += _("\n\n派遣载具：")
-            now_capacity = 0 # 当前运载量
+            if not self.send_vehicle_dict:
+                info_draw_2_text += _(" 无")
             for vehicle_id in self.send_vehicle_dict:
                 vehicle_name = game_config.config_vehicle[vehicle_id].name
                 info_draw_2_text += f"  {vehicle_name} * {self.send_vehicle_dict[vehicle_id]}"
-                now_capacity += game_config.config_vehicle[vehicle_id].capacity * self.send_vehicle_dict[vehicle_id]
-            info_draw_2_text += _("  总运载量：{0}").format(now_capacity)
-            info_draw_2_text += _("\n\n是否满足需求：")
-            # 人数需求
-            info_draw_2_text += _("人数需求：")
-            if len(self.send_npc_list) >= commision_data.people:
-                info_draw_2_text += "√"
+            
+            # [修改] 增加耗时计算展示 (并显示在派遣载具下方)
+            now_speed = 9
+            if not self.send_vehicle_dict:
+                now_speed = 1
             else:
-                all_satisfy = False
-                info_draw_2_text += "X"
-            # 载具需求
-            info_draw_2_text += _("  载具需求：")
-            if now_capacity >= commision_capacity_int:
-                info_draw_2_text += "√"
+                for vehicle_id in self.send_vehicle_dict:
+                    v_speed = game_config.config_vehicle[vehicle_id].speed
+                    now_speed = min(now_speed, v_speed)
+                    
+            if now_speed > 1:
+                c_time_min = commision_data.time * 1440
+                c_time_min = int(c_time_min * (0.9 ** now_speed))
+                calc_day = round(c_time_min / 1440, 1)
             else:
-                all_satisfy = False
-                info_draw_2_text += "X"
-            # 其他需求
-            info_draw_2_text += _("  其他需求：")
-            if deman_satify:
-                info_draw_2_text += "√"
-            else:
-                all_satisfy = False
-                info_draw_2_text += "X"
+                calc_day = commision_data.time
+                
+            info_draw_2_text += _("\n  (当前队伍速度: {0} ，预计耗时计算: {1}天)").format(now_speed, calc_day)
+            
+            info_draw_2_text += _("\n\n需求满足情况：\n")
             info_draw_2 = draw.NormalDraw()
             info_draw_2.text = info_draw_2_text
             info_draw_2.width = self.width
             info_draw_2.draw()
 
-            # 调整派遣人员
+            # 绘制各项需求的达成度 (带颜色与A/B格式)
+            p_text = _("  人数：{0} / {1}").format(len(self.send_npc_list), commision_data.people)
+            p_draw = draw.NormalDraw()
+            p_draw.text = p_text.ljust(15)
+            p_draw.style = "spring_green" if people_sat else "red"
+            p_draw.draw()
+
+            c_text = _("  运量：{0} / {1} [{2}(天-1) * {3}(人)]").format(now_capacity, commision_capacity_int, commision_data.time - 1, commision_data.people)
+            c_draw = draw.NormalDraw()
+            c_draw.text = c_text.ljust(35)
+            c_draw.style = "spring_green" if cap_sat else "red"
+            c_draw.draw()
+            
             line_feed.draw()
+
+            demand_label = draw.NormalDraw()
+            demand_label.text = _("  其他需求：")
+            demand_label.draw()
+            
+            # 使用底层原生函数动态解析每一个需求（包含金钱、能力、限定角色等所有类型）
+            demand_str = str(commision_data.demand)
+            if not demand_str or demand_str == "无" or demand_str == "-1":
+                d = draw.NormalDraw()
+                d.text = _("无")
+                d.style = "spring_green"
+                d.draw()
+            else:
+                for part in demand_str.split("&"):
+                    _temp_type, t_full, t_sat = process_commission_text(part, False, False, self.send_npc_list, "", "", True)
+                    d = draw.NormalDraw()
+                    d.text = f"[{t_full.strip()}] "
+                    d.style = "spring_green" if t_sat else "red"
+                    d.draw()
+
             line_feed.draw()
+
+            # --- 调整派遣人员按钮 (未满足条件变黄) ---
+            line_feed.draw()
+            btn_npc_style = "standard" if (people_sat and deman_satify) else "gold_enrod"
             adjust_NPC_button_draw = draw.CenterButton(
                 _("【调整派遣人员】"),
-                _("\n【调整派遣人员】"),
-                int(self.width / 3),
+                _("调整派遣人员"),
+                int(self.width / 2),
                 cmd_func=self.adjust_send_npc,
                 args=(commision_id,),
+                normal_style=btn_npc_style
             )
             adjust_NPC_button_draw.draw()
             return_list.append(adjust_NPC_button_draw.return_text)
 
-            # 调整使用载具
+            # --- 调整使用载具按钮 (未满足条件变黄) ---
+            btn_veh_style = "standard" if cap_sat else "gold_enrod"
             adjust_vehicle_button_draw = draw.CenterButton(
                 _("【调整使用载具】"),
-                _("\n【调整使用载具】"),
-                int(self.width / 3),
+                _("调整使用载具"),
+                int(self.width / 2),
                 cmd_func=self.adjust_send_vehicle,
                 args=(commision_capacity_int,),
+                normal_style=btn_veh_style
             )
             adjust_vehicle_button_draw.draw()
             return_list.append(adjust_vehicle_button_draw.return_text)
+            
             line_feed.draw()
             line_feed.draw()
+            line.draw()
 
-            line_feed.draw()
-            yes_draw = draw.CenterButton(
-                _("[执行委托]"),
-                ("\n执行委托"),
-                int(self.width / 2),
-                cmd_func=self.send_commision,
-                args=(commision_id,),
-            )
+            # --- 执行委托按钮 (满足变绿且可点，不满足变灰不可点，占满单行) ---
             if all_satisfy:
+                yes_draw = draw.CenterButton(
+                    _("[执行委托]"),
+                    _("执行委托"),
+                    self.width,
+                    cmd_func=self.send_commision,
+                    args=(commision_id,),
+                    normal_style="spring_green"
+                )
                 yes_draw.draw()
                 return_list.append(yes_draw.return_text)
+            else:
+                yes_draw = draw.CenterDraw()
+                yes_draw.text = _("[执行委托]")
+                yes_draw.style = "deep_gray"
+                yes_draw.width = self.width
+                yes_draw.draw()
 
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width / 2))
+            line_feed.draw()
+            
+            # --- 返回按钮 (占满单行) ---
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width)
             back_draw.draw()
             return_list.append(back_draw.return_text)
+            
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == yes_draw.return_text or yrn == back_draw.return_text:
+            
+            if yrn == _("执行委托") or yrn == back_draw.return_text:
                 break
 
     def adjust_send_npc(self, commision_id: int):
@@ -390,63 +475,453 @@ class CommissionDraw:
 
         commision_data = game_config.config_commission[commision_id]
         commision_people = commision_data.people
-        self.lead_chara_id = 0
         self.now_commision_id = commision_id
 
-        from Script.UI.Panel import common_select_NPC
-        now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 50, 5, window_width, True, False, 0)
-        select_state = {}
+        # --- 解析限定干员用于自动勾选 ---
+        required_chars_adv = []
+        try:
+            if commision_data.demand and commision_data.demand != "无" and str(commision_data.demand) != "-1":
+                for d in str(commision_data.demand).split("&"):
+                    parts = d.split("_")
+                    if parts[0] == "c" and len(parts) >= 2:
+                        required_chars_adv.append(int(parts[1]))
+        except Exception:
+            pass # 容错处理
+
+        # --- 自动勾选限定干员 ---
+        for npc_id in cache.npc_id_got:
+            if npc_id == 0: continue
+            if cache.character_data[npc_id].adv in required_chars_adv:
+                if npc_id not in self.send_npc_list:
+                    # 检查是否满足最基本的出勤前提，满足才自动勾选
+                    if (handle_premise.handle_normal_2(npc_id) and 
+                        handle_premise.handle_normal_7(npc_id) and 
+                        not handle_premise.handle_self_equipment_damaged_ge_3(npc_id) and 
+                        not handle_premise.handle_work_is_warden(npc_id) and 
+                        not handle_premise.handle_is_assistant(npc_id) and 
+                        not handle_premise.handle_self_visitor_flag_1(npc_id)):
+                        self.send_npc_list.append(npc_id)
+
+        # --- 修复原版Bug：保留已有队长，或指定第一个选中的人为队长 ---
+        if getattr(self, 'lead_chara_id', 0) == 0 and len(self.send_npc_list) > 0:
+            self.lead_chara_id = self.send_npc_list[0]
+        elif not hasattr(self, 'lead_chara_id'):
+            self.lead_chara_id = 0
+
+        # 分页、筛选与排序的局部状态
+        chara_list_page = 0
+        sort_skill_id = 0
+        filter_work = 0         # 0:不筛选, 1:有工作, 2:无工作
+        filter_fall = 0         # 0:不筛选, 1:无, 2:有, 3:爱情, 4:隶属
+        filter_daughter = 0     # 0:不筛选, 1:是, 2:否
+        filter_collection = 0   # 0:不筛选, 1:是, 2:否
+        
+        sort_selected_first = True   # 已选优先(默认开启)
+        sort_collection_first = False# 收藏优先(默认关闭)
+        sort_work_toggle = False     # 工作排序(默认关闭)
+        
+        show_equip_modifier = True # 是否在面板中计算装备加成
+        
+        def pass_func(): pass
+
+        # 辅助函数：计算字母Rank
+        def get_rank_letter(value: int) -> str:
+            if value >= 6: return "EX"
+            if value == 5: return "S "
+            if value == 4: return "A "
+            if value == 3: return "B "
+            if value == 2: return "C "
+            if value == 1: return "D "
+            return "E "
+
+        # 辅助函数：获取Rank对应的颜色样式
+        def get_rank_color(value: int) -> str:
+            if value >= 6: return "levelex"      # 紫色/彩色
+            if value == 5: return "gold_enrod"   # 金色
+            if value == 4: return "spring_green" # 绿色
+            if value == 3: return "light_sky_blue" # 蓝色
+            if value == 2: return "standard"     # 白色
+            if value == 1: return "deep_gray"    # 灰色
+            return "deep_gray"                   # E也是深灰
+
+        # 辅助函数：计算中英文混合字符串的显示宽度
+        def get_display_width(text: str) -> int:
+            return sum(2 if ord(c) > 127 else 1 for c in text)
+
+        # 辅助函数：根据开关获取最终能力值 (加入装备判定)
+        def get_eff_ability(n_id: int, a_id: int) -> int:
+            val = cache.character_data[n_id].ability.get(a_id, 0)
+            if show_equip_modifier:
+                if handle_premise.handle_self_equipment_maintenance_ge_2(n_id) and val < 8:
+                    val += 1
+                if handle_premise.handle_self_equipment_damaged_ge_2(n_id) and val > 0:
+                    val -= 1
+            return val
+
+        # 动态获取需要显示的工作技能字典，并过滤掉多余字符
+        skill_columns = []
+        for tem_ability_cid in game_config.config_ability:
+            ability_data = game_config.config_ability[tem_ability_cid]
+            if ability_data.ability_type == 4:  # 4 代表工作技能
+                col_name = ability_data.name.replace(_("技能"), "")
+                skill_columns.append((col_name, tem_ability_cid))
 
         while 1:
-            info_text = _("可派遣人员（需要{0}人）：\n").format(commision_people)
-            info_text += _("（无意识状态下，或装备在严重损坏及以上、或助理、监狱长等特殊职位的干员无法出勤）\n")
+            return_list = []
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+
+            # --- 1. 绘制当前进度指示器 ---
+            demand_label = draw.NormalDraw()
+            demand_label.text = _("\n当前派遣进度： ")
+            demand_label.draw()
+            
+            # 人数
+            current_people = len(self.send_npc_list)
+            people_col = "spring_green" if current_people >= commision_people else "red"
+            people_draw = draw.NormalDraw()
+            people_draw.text = _("[人数({0}/{1})] ").format(current_people, commision_people)
+            people_draw.style = people_col
+            people_draw.draw()
+            
+            # 使用原生引擎直接解析并绘制其他所有需求进度（包括龙门币、材料、能力、限定角色等）
+            demand_str = str(commision_data.demand)
+            if demand_str and demand_str != "无" and demand_str != "-1":
+                for part in demand_str.split("&"):
+                    _temp_type, t_full, t_sat = process_commission_text(part, False, False, self.send_npc_list, "", "", True)
+                    d = draw.NormalDraw()
+                    d.text = f"[{t_full.strip()}] "
+                    d.style = "spring_green" if t_sat else "red"
+                    d.draw()
+                
+            line_feed.draw()
+
+            # --- 2. 绘制当前派遣信息 ---
+            info_text = _("（无意识/重伤/特殊职位等无法出勤）\n")
             info_text += _("队长：")
             if self.lead_chara_id != 0:
                 info_text += cache.character_data[self.lead_chara_id].name
             else:
                 info_text += _("无")
             info_text += _("。队员：")
-            # 遍历已选择的角色id列表
             for npc_id in self.send_npc_list:
-                # 跳过队长
-                if npc_id == self.lead_chara_id:
-                    continue
+                if npc_id == self.lead_chara_id: continue
                 info_text += cache.character_data[npc_id].name + " "
-            info_text += _("\n\n")
+            
+            info_draw = draw.NormalDraw()
+            info_draw.text = info_text + "\n\n"
+            info_draw.width = self.width
+            info_draw.draw()
 
-            npc_id_got_list = sorted(cache.npc_id_got)
-            # 已选择的角色id列表
-            final_list = []
-            # 遍历角色id
-            for npc_id in npc_id_got_list:
-                if npc_id == 0:
-                    continue
-                # 跳过访客
-                if handle_premise.handle_self_visitor_flag_1(npc_id):
-                    continue
-                # 跳过助理
-                if handle_premise.handle_is_assistant(npc_id):
-                    continue
-                # 跳过监狱长
-                if handle_premise.handle_work_is_warden(npc_id):
-                    continue
-                # 跳过2、7异常的角色
-                if not handle_premise.handle_normal_2(npc_id) :
-                    continue
-                if not handle_premise.handle_normal_7(npc_id):
-                    continue
-                # 跳过装备严重损坏及以上的角色
-                if handle_premise.handle_self_equipment_damaged_ge_3(npc_id):
-                    continue
-                now_list = [npc_id, self.select_this_npc, self.send_npc_list]
-                final_list.append(now_list)
-            now_draw_panel.text_list = final_list
+            # --- 3. 绘制筛选与排序按钮区 ---
+            # 3. 绘制筛选与排序按钮区
+            filter_draw = draw.NormalDraw()
+            filter_draw.text = _(" 筛选: ")
+            filter_draw.draw()
+            
+            btn_width = 18
+            work_filter_names = [_("不筛选"), _("有"), _("无")]
+            fall_filter_names = [_("不筛选"), _("无"), _("有"), _("爱情"), _("隶属")]
+            bool_filter_names = [_("不筛选"), _("是"), _("否")]
 
-            # 调用通用选择按钮列表函数
-            return_list, other_return_list, select_state = common_select_NPC.common_select_npc_button_list_func(now_draw_panel, _("调整派遣人员"), info_text, select_state)
+            btn_work = draw.LeftButton(_("[工作:{0}]").format(work_filter_names[filter_work]), "filter_work", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_work else "standard")
+            btn_work.draw()
+            return_list.append(btn_work.return_text)
 
+            btn_fall = draw.LeftButton(_("[陷落:{0}]").format(fall_filter_names[filter_fall]), "filter_fall", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_fall else "standard")
+            btn_fall.draw()
+            return_list.append(btn_fall.return_text)
+            
+            btn_daughter = draw.LeftButton(_("[女儿:{0}]").format(bool_filter_names[filter_daughter]), "filter_daughter", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_daughter else "standard")
+            btn_daughter.draw()
+            return_list.append(btn_daughter.return_text)
+            
+            btn_collection = draw.LeftButton(_("[收藏:{0}]").format(bool_filter_names[filter_collection]), "filter_collection", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_collection else "standard")
+            btn_collection.draw()
+            return_list.append(btn_collection.return_text)
+            
+            line_feed.draw()
+            
+            sort_draw = draw.NormalDraw()
+            sort_draw.text = _(" 排序: ")
+            sort_draw.draw()
+            
+            btn_sort_sel = draw.LeftButton(_("[已选优先]"), "sort_sel", 12, cmd_func=pass_func, normal_style="gold_enrod" if sort_selected_first else "standard")
+            btn_sort_sel.draw()
+            return_list.append(btn_sort_sel.return_text)
+            
+            btn_sort_col = draw.LeftButton(_("[收藏优先]"), "sort_col", 12, cmd_func=pass_func, normal_style="gold_enrod" if sort_collection_first else "standard")
+            btn_sort_col.draw()
+            return_list.append(btn_sort_col.return_text)
+            
+            btn_sort_work = draw.LeftButton(_("[工作排序]"), "sort_work", 12, cmd_func=pass_func, normal_style="gold_enrod" if sort_work_toggle else "standard")
+            btn_sort_work.draw()
+            return_list.append(btn_sort_work.return_text)
+            
+            equip_toggle_status = _("开") if show_equip_modifier else _("关")
+            btn_equip_toggle = draw.LeftButton(_("[装备加成:{0}] ").format(equip_toggle_status), "toggle_equip", 18, cmd_func=pass_func, normal_style="gold_enrod" if show_equip_modifier else "standard")
+            btn_equip_toggle.draw()
+            return_list.append(btn_equip_toggle.return_text)
+
+            line_feed.draw()
+            
+            sort_draw2 = draw.NormalDraw()
+            sort_draw2.text = _(" 技能排序: ")
+            sort_draw2.draw()
+            
+            btn_default = draw.LeftButton(
+                _("[默认ID] "), "sort_0", 10, 
+                cmd_func=pass_func, normal_style="gold_enrod" if sort_skill_id == 0 else "standard"
+            )
+            btn_default.draw()
+            return_list.append(btn_default.return_text)
+            
+            # 技能排序按钮
+            for name, sid in skill_columns:
+                btn_text = f"[{name}] "
+                btn_width = get_display_width(btn_text)
+                btn = draw.LeftButton(
+                    btn_text, f"sort_{sid}", btn_width, 
+                    cmd_func=pass_func, normal_style="gold_enrod" if sort_skill_id == sid else "standard"
+                )
+                btn.draw()
+                return_list.append(btn.return_text)
+
+            line_feed.draw()
+            line_feed.draw()
+            line.draw()
+
+            # --- 4. 绘制表头 (包含动态高亮与独立的豎槓) ---
+            name_btn_width = 24 
+            
+            prefix_draw = draw.NormalDraw()
+            prefix_draw.text = " " * name_btn_width
+            prefix_draw.draw()
+            
+            for col_name, _id in skill_columns:
+                col_draw = draw.NormalDraw()
+                col_draw.text = f"{col_name}"
+                if sort_skill_id == _id:
+                    col_draw.style = "gold_enrod"
+                else:
+                    col_draw.style = "standard"
+                col_draw.draw()
+                
+                bar_draw = draw.NormalDraw()
+                bar_draw.text = "|"
+                bar_draw.draw()
+                
+            suffix_draw = draw.NormalDraw()
+            suffix_draw.text = _("装备|当前工作")
+            suffix_draw.draw()
+            
+            line_feed.draw()
+
+            # --- 5. 获取并过滤人员列表 ---
+            valid_npc_list = []
+            for npc_id in cache.npc_id_got:
+                if npc_id == 0: continue
+                if handle_premise.handle_self_visitor_flag_1(npc_id): continue
+                if handle_premise.handle_is_assistant(npc_id): continue
+                if handle_premise.handle_work_is_warden(npc_id): continue
+                if not handle_premise.handle_normal_2(npc_id): continue
+                if not handle_premise.handle_normal_7(npc_id): continue
+                if handle_premise.handle_self_equipment_damaged_ge_3(npc_id): continue
+                
+                char_data = cache.character_data[npc_id]
+                
+                # 筛选工作
+                has_work = char_data.work.work_type != 0
+                if filter_work == 1 and not has_work: continue
+                if filter_work == 2 and has_work: continue
+                
+                # 筛选陷落 (0:不筛选, 1:无, 2:有, 3:爱情, 4:隶属)
+                is_love = any(char_data.talent.get(i) for i in [201, 202, 203, 204])
+                is_obey = any(char_data.talent.get(i) for i in [211, 212, 213, 214])
+                has_fall = is_love or is_obey
+                if filter_fall == 1 and has_fall: continue
+                if filter_fall == 2 and not has_fall: continue
+                if filter_fall == 3 and not is_love: continue
+                if filter_fall == 4 and not is_obey: continue
+
+                # 筛选女儿 (0:不筛选, 1:是, 2:否)
+                is_daughter = char_data.talent.get(311) or char_data.talent.get(312) or (hasattr(char_data, 'relationship') and char_data.relationship.father_id == 0)
+                if filter_daughter == 1 and not is_daughter: continue
+                if filter_daughter == 2 and is_daughter: continue
+
+                # 筛选收藏 (0:不筛选, 1:是, 2:否) (值为1即代表收藏)
+                is_collected = char_data.chara_setting.get(2, 0) == 1
+                if filter_collection == 1 and not is_collected: continue
+                if filter_collection == 2 and is_collected: continue
+
+                valid_npc_list.append(npc_id)
+            
+            # 执行综合排序逻辑
+            valid_npc_list.sort(
+                key=lambda x: (
+                    0 if (sort_selected_first and x in self.send_npc_list) else 1,
+                    0 if (sort_collection_first and cache.character_data[x].chara_setting.get(2, 0) == 1) else 1,
+                    -get_eff_ability(x, sort_skill_id) if sort_skill_id != 0 else 0,
+                    cache.character_data[x].work.work_type if sort_work_toggle else 0,
+                    x
+                )
+            )
+
+            # --- 6. 分页计算 ---
+            chara_per_page = 20
+            total_pages = max(1, (len(valid_npc_list) + chara_per_page - 1) // chara_per_page)
+            if chara_list_page >= total_pages: chara_list_page = total_pages - 1
+            if chara_list_page < 0: chara_list_page = 0
+            
+            start_idx = chara_list_page * chara_per_page
+            end_idx = min(start_idx + chara_per_page, len(valid_npc_list))
+            current_page_charas = valid_npc_list[start_idx:end_idx]
+
+            # --- 7. 遍历渲染当前页干员 ---
+            for npc_id in current_page_charas:
+                character_data = cache.character_data[npc_id]
+                name = character_data.name
+                id_str = str(character_data.adv).rjust(4, '0')
+                
+                # 勾选框、星号与名字
+                check_mark = "√" if npc_id in self.send_npc_list else " "
+                is_collected = character_data.chara_setting.get(2, 0) == 1
+                star_str = "⭐" if is_collected else "  "
+                
+                name_str = f"[{check_mark}][{id_str}]{star_str}{name}"
+                btn_style = "gold_enrod" if npc_id in self.send_npc_list else "standard"
+                display_name_len = get_display_width(name_str)
+                name_pad = " " * max(0, name_btn_width - display_name_len)
+                
+                name_btn = draw.LeftButton(
+                    name_str + name_pad, str(npc_id), name_btn_width, 
+                    normal_style=btn_style,
+                    cmd_func=self.select_this_npc, args=(npc_id,)
+                )
+                name_btn.draw()
+                return_list.append(name_btn.return_text)
+
+                # 渲染工作技能数值数据
+                for col_name, col_id in skill_columns:
+                    val = get_eff_ability(npc_id, col_id)
+                    rank = get_rank_letter(val)
+                    rank_color = get_rank_color(val)
+                    
+                    rank_draw = draw.NormalDraw()
+                    rank_draw.text = rank
+                    rank_draw.style = rank_color
+                    rank_draw.draw()
+                    
+                    val_draw = draw.NormalDraw()
+                    col_width = get_display_width(col_name)
+                    val_str = f"{val}".rjust(2, " ")
+                    padding = " " * max(0, col_width - 4)
+                    val_draw.text = f"{val_str}{padding}|"
+                    val_draw.draw()
+                
+                # 渲染装备状态
+                equip_text = _("正常")
+                equip_color = "standard"
+                if handle_premise.handle_self_equipment_damaged_ge_2(npc_id):
+                    equip_text = _("损坏")
+                    equip_color = "red"
+                elif handle_premise.handle_self_equipment_maintenance_ge_2(npc_id):
+                    equip_text = _("完美")
+                    equip_color = "spring_green"
+                
+                equip_draw = draw.NormalDraw()
+                equip_draw.text = f"{equip_text}"
+                equip_draw.style = equip_color
+                equip_draw.draw()
+
+                # 將裝備與工作間的 | 符號獨立繪製
+                bar_draw = draw.NormalDraw()
+                bar_draw.text = "|"
+                bar_draw.draw()
+
+                # 渲染当前工作
+                work_type_id = character_data.work.work_type
+                work_name = game_config.config_work_type[work_type_id].name
+                work_draw = draw.NormalDraw()
+                work_draw.text = f"{work_name}"
+                work_draw.draw()
+                
+                line_feed.draw()
+            
+            # 补充空行以固定列表显示高度
+            for i in range(chara_per_page - len(current_page_charas)):
+                line_feed.draw()
+
+            # --- 8. 绘制底部：翻页操作区 ---
+            line_feed.draw()
+            line.draw()
+            
+            if chara_list_page > 0:
+                prev_page_btn = draw.LeftButton(_("[888]上一页"), "888", 12, cmd_func=pass_func)
+                prev_page_btn.draw()
+                return_list.append(prev_page_btn.return_text)
+            else:
+                prev_page_btn = draw.NormalDraw()
+                prev_page_btn.text = _("[888]上一页")
+                prev_page_btn.style = "deep_gray"
+                prev_page_btn.width = 12
+                prev_page_btn.draw()
+            
+            page_info = draw.NormalDraw()
+            page_info.text = _("  [{0}/{1}页]  ").format(chara_list_page + 1, total_pages)
+            page_info.draw()
+            
+            if chara_list_page < total_pages - 1:
+                next_page_btn = draw.LeftButton(_("[222]下一页"), "222", 12, cmd_func=pass_func)
+                next_page_btn.draw()
+                return_list.append(next_page_btn.return_text)
+            else:
+                next_page_btn = draw.NormalDraw()
+                next_page_btn.text = _("[222]下一页")
+                next_page_btn.style = "deep_gray"
+                next_page_btn.width = 12
+                next_page_btn.draw()
+
+            line_feed.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[完成 / 返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            
+            # --- 9. 处理界面按键 ---
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == _("返回"):
+            
+            if yrn == "888":
+                chara_list_page -= 1
+            elif yrn == "222":
+                chara_list_page += 1
+            elif yrn == "filter_work":
+                filter_work = (filter_work + 1) % 3
+                chara_list_page = 0
+            elif yrn == "filter_fall":
+                filter_fall = (filter_fall + 1) % 5
+                chara_list_page = 0
+            elif yrn == "filter_daughter":
+                filter_daughter = (filter_daughter + 1) % 3
+                chara_list_page = 0
+            elif yrn == "filter_collection":
+                filter_collection = (filter_collection + 1) % 3
+                chara_list_page = 0
+            elif yrn == "sort_sel":
+                sort_selected_first = not sort_selected_first
+                chara_list_page = 0
+            elif yrn == "sort_col":
+                sort_collection_first = not sort_collection_first
+                chara_list_page = 0
+            elif yrn == "sort_work":
+                sort_work_toggle = not sort_work_toggle
+                chara_list_page = 0
+            elif yrn == "toggle_equip":
+                show_equip_modifier = not show_equip_modifier
+            elif yrn.startswith("sort_"):
+                sort_skill_id = int(yrn.split("_")[1])
+                chara_list_page = 0
+            elif yrn == back_draw.return_text:
                 break
 
     def select_this_npc(self, character_id: int):
@@ -543,11 +1018,17 @@ class CommissionDraw:
             for i in range(self.send_vehicle_dict[vehicle_id]):
                 now_vehicle_list.append(vehicle_id)
         cache.rhodes_island.ongoing_field_commissions[commision_id][2] = now_vehicle_list
+        
         # 结算速度对时间的影响
         min_speed = 9
+        # [修改] 修复没带载具时原版默认算作9速的bug
+        if not now_vehicle_list:
+            min_speed = 1
+            
         for vehicle_id in now_vehicle_list:
             vehicle_speed = game_config.config_vehicle[vehicle_id].speed
             min_speed = min(min_speed, vehicle_speed)
+            
         # 如果有实际速度加成，则减少时间
         if min_speed > 1:
             commision_time_by_min = commision_time * 1440
@@ -595,6 +1076,10 @@ class CommissionDraw:
         Keyword arguments:
         commision_capacity_int -- 需要的载具运量
         """
+        
+        # 辅助函数：计算中英文混合字符串的显示宽度
+        def get_display_width(text: str) -> int:
+            return sum(2 if ord(c) > 127 else 1 for c in text)
 
         while 1:
             return_list = []
@@ -603,7 +1088,7 @@ class CommissionDraw:
 
             # 绘制可派遣载具
             info_draw_2 = draw.NormalDraw()
-            info_draw_2.text = _("\n可派遣载具：\n\n")
+            info_draw_2.text = _("\n 可派遣载具：\n\n")
             info_draw_2.width = self.width
             info_draw_2.draw()
 
@@ -612,41 +1097,60 @@ class CommissionDraw:
                 vehicle_count = cache.rhodes_island.vehicles[vehicle_cid][0] - cache.rhodes_island.vehicles[vehicle_cid][1]
                 if vehicle_count <= 0:
                     continue
+                
                 vehicle_data = game_config.config_vehicle[vehicle_cid]
-                vehicle_speed = str(vehicle_data.speed)
-                vehicle_capacity = str(vehicle_data.capacity)
+                vehicle_speed = str(vehicle_data.speed).rjust(2)
+                vehicle_capacity = str(vehicle_data.capacity).rjust(3)
                 vehicle_special = vehicle_data.special
+                
                 now_choice_count = 0
                 if vehicle_cid in self.send_vehicle_dict:
                     now_choice_count = self.send_vehicle_dict[vehicle_cid]
 
-                draw_text = _("[{0}] {1} 当前选择/可选择：{2}/{3} 速度：{4} 运载量：{5} 特殊效果：{6}\n").format(str(vehicle_cid).rjust(2,'0'), vehicle_data.name, now_choice_count, vehicle_count, vehicle_speed, vehicle_capacity, vehicle_special)
+                # 排版载具信息，利用 get_display_width 补齐空格并遵循多语言格式化规范
+                base_str = f"[{str(vehicle_cid).rjust(2,'0')}]{vehicle_data.name}"
+                pad_1 = " " * max(0, 24 - get_display_width(base_str))
+                
+                stats_str = _("| 速度:{0} | 运载:{1} | 特效:{2}").format(vehicle_speed, vehicle_capacity, vehicle_special)
+                pad_2 = " " * max(0, 48 - get_display_width(stats_str))
+                
+                count_str = _("| 选定: {0}/{1}").format(now_choice_count, vehicle_count)
+                pad_3 = " " * max(0, 16 - get_display_width(count_str))
+                
+                draw_text = " " + base_str + pad_1 + stats_str + pad_2 + count_str + pad_3
+
                 info_draw = draw.NormalDraw()
                 info_draw.text = draw_text
-                info_draw.width = self.width
+                # 有选择的载具标为橘色
+                info_draw.style = "gold_enrod" if now_choice_count > 0 else "standard"
                 info_draw.draw()
 
                 # 增加一辆
-                button_draw = draw.CenterButton(
-                    _("[增加一辆]"),
+                button_draw_add = draw.LeftButton(
+                    _("[+1]"),
                     f"\n{vehicle_cid}+1",
-                    int(self.width / 6),
+                    6,
                     cmd_func=self.add_this_vehicle,
                     args=vehicle_cid,
                 )
-                button_draw.draw()
-                return_list.append(button_draw.return_text)
+                button_draw_add.draw()
+                return_list.append(button_draw_add.return_text)
+                
+                # 加上小空格分隔按钮
+                space_draw = draw.NormalDraw()
+                space_draw.text = " "
+                space_draw.draw()
 
                 # 减少一辆
-                button_draw = draw.CenterButton(
-                    _("[减少一辆]"),
+                button_draw_sub = draw.LeftButton(
+                    _("[-1]"),
                     f"\n{vehicle_cid}-1",
-                    int(self.width / 6),
+                    6,
                     cmd_func=self.reduce_this_vehicle,
                     args=vehicle_cid,
                 )
-                button_draw.draw()
-                return_list.append(button_draw.return_text)
+                button_draw_sub.draw()
+                return_list.append(button_draw_sub.return_text)
 
                 line_feed.draw()
 
@@ -661,6 +1165,8 @@ class CommissionDraw:
                 now_speed = min(now_speed, vehicle_data.speed)
                 if vehicle_data.special != "无" and vehicle_data.special not in now_effect:
                     now_effect.append(vehicle_data.special)
+            
+            # 如果没有选择载具，速度算作1
             if now_speed == 99:
                 now_speed = 1
 
@@ -668,16 +1174,35 @@ class CommissionDraw:
             effect_text = ""
             for effect in now_effect:
                 effect_text += f"{effect} "
+            if not effect_text:
+                effect_text = "无"
+
+            # 结合当前速度与基础时间，计算实际消耗天数
+            commision_data = game_config.config_commission[self.commission_id]
+            if now_speed > 1:
+                c_time_min = commision_data.time * 1440
+                c_time_min = int(c_time_min * (0.9 ** now_speed))
+                calc_day = round(c_time_min / 1440, 1)
+            else:
+                calc_day = commision_data.time
 
             # 绘制当前载具的总信息
-            info_draw = draw.NormalDraw()
-            info_draw_text = _("\n")
-            info_draw_text += _("当前总运载量/需要运载量：{0}/{1}\n").format(now_capacity, commision_capacity_int)
-            info_draw_text += _("当前速度（取决于所有载具中最慢的，能够减少委托时间）：{0}\n").format(now_speed)
-            info_draw_text += _("其他效果（未实装）：{0}\n").format(effect_text)
-            info_draw.text = info_draw_text
-            info_draw.width = self.width
-            info_draw.draw()
+            line_feed.draw()
+            
+            info_draw_1 = draw.NormalDraw()
+            info_draw_1.text = _("\n 当前总运载量 / 需求运载量：")
+            info_draw_1.draw()
+            
+            # 运量不足标红，足够标绿
+            info_draw_cap = draw.NormalDraw()
+            info_draw_cap.text = f"{now_capacity} / {commision_capacity_int}\n"
+            info_draw_cap.style = "spring_green" if now_capacity >= commision_capacity_int else "red"
+            info_draw_cap.draw()
+            
+            info_draw_3 = draw.NormalDraw()
+            info_draw_3.text = _(" 当前队伍速度：{0} (预计耗时计算: {1}天)\n").format(now_speed, calc_day)
+            info_draw_3.text += _(" 附加特殊效果：{0}\n").format(effect_text)
+            info_draw_3.draw()
 
             line_feed.draw()
             line_feed.draw()
