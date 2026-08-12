@@ -206,8 +206,8 @@ class CommissionDraw:
         # 委托信息
         commission_name = commission_data.name
         
-        # [修改] 已经完成的委托前面加星号
-        if self.commission_id in cache.rhodes_island.finished_field_commissions_set:
+        # 未完成的委托前面加星号
+        if self.commission_id not in cache.rhodes_island.finished_field_commissions_set:
             commission_name = "⭐" + commission_name
             
         if self.commission_id in cache.rhodes_island.ongoing_field_commissions:
@@ -263,8 +263,8 @@ class CommissionDraw:
         commision_data = game_config.config_commission[commision_id]
         commision_name = commision_data.name
         
-        # [修改] 委托介绍的名称加星号
-        if commision_id in cache.rhodes_island.finished_field_commissions_set:
+        # 委托介绍的名称加星号
+        if commision_id not in cache.rhodes_island.finished_field_commissions_set:
             commision_name = "⭐" + commision_name
             
         commision_level = str(commision_data.level)
