@@ -532,7 +532,7 @@ class Recruit_Panel:
             info_text = ""
             info_text += _(" {0}号招募当前的策略为：{1}").format(recruit_line_id+1, recruitment_strategy_data.name)
 
-            info_text += _("\n\n 当前可以选择的策略有（系数越低越简单，系数越高招募越慢）：\n")
+            info_text += _("\n\n 当前可以选择的策略有（系数越高越简单、招募越快）：\n")
             info_draw.text = info_text
             info_draw.draw()
             line_feed.draw()
