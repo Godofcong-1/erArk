@@ -283,9 +283,10 @@ class Physical_Check_And_Manage_Panel:
             # 获取医术等级与可用次数，次数为(等级+1)*4-已使用次数
             now_ability_lv = self.pl_character_data.ability[46]
             done_times = len(self.done_check_behavior_id_set)
-            now_ability_times = (now_ability_lv + 1) * 4 - done_times
+            total_ability_times = (now_ability_lv + 1) * 4
+            now_ability_times = total_ability_times - done_times
             # 绘制提示信息
-            info_text = _("\n可以进行的检查项目/已进行的检查项目：{0}/{1}（每级医术技能+4）\n").format(now_ability_times, done_times)
+            info_text = _("\n已进行的/共可进行的检查次数：{0}/{1}（每级医术技能+4）\n").format(done_times, total_ability_times)
             info_text += _("请选择要对{0}进行的身体检查：\n\n").format(target_character_data.name)
             info_draw = draw.NormalDraw()
             info_draw.text = info_text
@@ -340,10 +341,13 @@ class Physical_Check_And_Manage_Panel:
                     status_draw.width = window_width
                     status_draw.draw()
                 else:
+                    # 测试类的需要判断轻度猥亵（初级骚扰），将其按钮标为粉色
+                    btn_style = "pink" if "测试" in behavior_data.tag else "standard"
                     status_draw = draw.LeftButton(
                         _(behavior_text),
                         str(count),
                         window_width,
+                        normal_style=btn_style,
                         cmd_func=self.settle_target_physical_status,
                         args=(behavior_id),
                     )
