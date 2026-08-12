@@ -561,7 +561,26 @@ class MedicalPlayerDiagnosePanel:
             system_expanded = system_id == self.expanded_system_id
             system_prefix = "   [-]" if system_expanded else "   [+]"
             system_label = f"{system_prefix} {system_name}"
-            system_style = "gold_enrod" if system_id in highlight_systems else "standard"
+            
+            # 系统按钮颜色：高亮优先；若已无未确诊高亮，且包含已确诊症状则变灰，否则默认
+            system_style = "standard"
+            if system_id in highlight_systems:
+                system_style = "gold_enrod"
+            else:
+                part_map_check = raw_info.get("parts", {})
+                has_confirmed_sys = False
+                if isinstance(part_map_check, dict):
+                    for part_key, p_info in part_map_check.items():
+                        if isinstance(p_info, dict):
+                            opts = p_info.get("options", [])
+                            if any(isinstance(opt, dict) and int(opt.get("cid", 0) or 0) in confirmed for opt in opts):
+                                has_confirmed_sys = True
+                                break
+                    if has_confirmed_sys:
+                        break
+                if has_confirmed_sys:
+                    system_style = "deep_gray"
+
             # 系统按钮支持展开/折叠，并附带提示高亮颜色
             system_button = draw.LeftButton(
                 system_label,
@@ -594,7 +613,16 @@ class MedicalPlayerDiagnosePanel:
                 part_expanded = system_expanded and part_id == self.expanded_part_id
                 part_prefix = "     [-]" if part_expanded else "     [+]"
                 part_label = f"{part_prefix} {part_name}"
-                part_style = "gold_enrod" if (system_id, part_id) in highlight_parts else "standard"
+                
+                # 部位按钮颜色：高亮优先；若已无未确诊高亮，且包含已确诊症状则变灰，否则默认
+                part_style = "standard"
+                if (system_id, part_id) in highlight_parts:
+                    part_style = "gold_enrod"
+                else:
+                    opts = part_info.get("options", [])
+                    if any(isinstance(opt, dict) and int(opt.get("cid", 0) or 0) in confirmed for opt in opts):
+                        part_style = "deep_gray"
+
                 # 部位按钮与系统用同一机制控制展开状态
                 part_button = draw.LeftButton(
                     part_label,
