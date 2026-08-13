@@ -7641,6 +7641,10 @@ def handle_eat_add_just(
     if recipe_id not in game_config.config_recipes:
         return
     recipe_data = game_config.config_recipes[recipe_id]
+    if recipe_data.type in {0, 1, 5}:
+        eat_flag = True
+    else:
+        eat_flag = False
     # 判断是谁要吃食物
     eat_food_chara_id_list = []
     if food_seasoning == 0:
@@ -7683,10 +7687,17 @@ def handle_eat_add_just(
                 # 增加心理快感
                 base_chara_state_common_settle(chara_id, state_add * 2, 23, 0, change_data_to_target_change = change_data)
 
-        # 加体力气力，清零饥饿值和进食状态
-        handle_add_small_hit_point(chara_id,add_time=hpmp_add,change_data=target_change,now_time=now_time)
+        # 仅食物加体力
+        if eat_flag:
+            handle_add_small_hit_point(chara_id,add_time=hpmp_add,change_data=target_change,now_time=now_time)
+        # 都加气力
         handle_add_small_mana_point(chara_id,add_time=hpmp_add,change_data=target_change,now_time=now_time)
-        handle_hunger_point_zero(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
+        # 食物结算饥饿值，饮品结算尿意值
+        if eat_flag:
+            handle_hunger_point_zero(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
+        else:
+            handle_add_small_urinate_point(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
+        # 清除进食状态
         handle_eat_food_flag_to_0(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
 
         # 酒类食物

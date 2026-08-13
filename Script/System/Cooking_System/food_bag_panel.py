@@ -87,11 +87,11 @@ class FoodBagPanel:
     width -- 绘制宽度
     """
 
-    def __init__(self, width: int):
+    def __init__(self, width: int, food_type: str = ""):
         """初始化绘制对象"""
         self.width: int = width
         """ 绘制的最大宽度 """
-        self.now_panel = _("当前持有食物")
+        self.now_panel = food_type
         """ 当前绘制的食物类型 """
         self.handle_panel_normal: panel.PageHandlePanel
         """ 正常调味食物列表控制面板 """
@@ -101,53 +101,25 @@ class FoodBagPanel:
     def draw(self):
         """绘制对象"""
         title_draw = draw.TitleLineDraw(_("食物背包"), self.width)
-        food_type_list = [_("当前持有食物")]
+        if self.now_panel == "":
+            food_type_list = [_("食用"), _("饮用")]
+            self.now_panel = food_type_list[0]
+        else:
+            food_type_list = [self.now_panel]
         # food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
         self.handle_panel_normal = panel.PageHandlePanel(
-            [], FoodGroupDraw, 10, 1, window_width, True, False, 0
+            [], FoodGroupDraw, 10, 1, self.width, True, False, 0
         )
         self.handle_panel_special = panel.PageHandlePanel(
-            [], FoodGroupDraw, 10, 1, window_width, True, False, 2
+            [], FoodGroupDraw, 10, 1, self.width, True, False, 2
         )
         while 1:
             character_data: game_type.Character = cache.character_data[0]
             if cache.now_panel_id != constant.Panel.FOOD_BAG:
                 break
 
-            # 在酒吧的话，则将食物限定为酒类食物
-            if handle_premise.handle_in_bar(0):
-                food_type_list = [_("酒类")]
-
-            # 读取背包食物，按(recipe, special_seasoning)分组
-            group_normal: dict = {}
-            group_special: dict = {}
-            del_food_flag = False
-            for i in character_data.food_bag.copy():
-                food_data: game_type.Food = cache.character_data[0].food_bag[i]
-                recipe_data = game_config.config_recipes.get(food_data.recipe)
-                # 版本更新用修正
-                # 如果food_data没有milk_ml属性，则删除该食物
-                if not hasattr(food_data, "milk_ml"):
-                    del cache.character_data[0].food_bag[i]
-                    del_food_flag = True
-                    continue
-                # 如果food_data是精液调味(调味类型11和12)没有special_seasoning_amount属性，则删除该食物
-                elif food_data.special_seasoning in [11, 12] and not hasattr(food_data, "special_seasoning_amount"):
-                    del cache.character_data[0].food_bag[i]
-                    del_food_flag = True
-                    continue
-                # 如果被限定为酒类食物，则跳过非酒类食物
-                if food_type_list == [_("酒类")] and recipe_data is not None and recipe_data.type != 3:
-                    continue
-                group_key = (food_data.recipe, food_data.special_seasoning)
-                # 如果是正常调味食物，则加入group_normal，否则加入group_special
-                if food_data.special_seasoning == 0:
-                    group_normal.setdefault(group_key, [])
-                    group_normal[group_key].append(i)
-                else:
-                    group_special.setdefault(group_key, [])
-                    group_special[group_key].append(i)
-
+            # 获取当前面板下的食物分组
+            group_normal, group_special = self.get_food_group()
             id_list_normal = list(group_normal.items())
             id_list_special = list(group_special.items())
 
@@ -156,13 +128,6 @@ class FoodBagPanel:
             self.handle_panel_special.text_list = id_list_special
             self.handle_panel_special.update()
             title_draw.draw()
-
-            # 输出删除食物的提示信息
-            if del_food_flag:
-                del_food_draw = draw.LeftDraw()
-                del_food_draw.text = _("\n检测到因版本变更导致的食物数据异常，已删除部分异常食物，并重置了部分食物的数据，请保存并覆盖原存档。\n")
-                del_food_draw.draw()
-                line_feed.draw()
 
             return_list = []
             for food_type in food_type_list:
@@ -186,7 +151,10 @@ class FoodBagPanel:
             line = draw.LineDraw("+", self.width)
             line.draw()
             now_draw = draw.NormalDraw()
-            now_draw.text = _("◆普通食物在场景无人时为独自食用，有人时则与目标一起分享，特殊调味食物仅可让目标食用。\n")
+            if self.now_panel == _("食用"):
+                now_draw.text = _("◆普通食物在场景无人时为独自食用，有人时则与目标一起分享，特殊调味食物仅可让目标食用。\n")
+            elif self.now_panel in {_("饮用"), _("酒类")}:
+                now_draw.text = _("◆普通饮品在场景无人时为独自饮用，有人时则与目标一起分享，特殊调味饮品仅可让目标饮用。\n")
             now_draw.draw()
             line_feed.draw()
 
@@ -197,13 +165,23 @@ class FoodBagPanel:
             now_draw.text = _("○正常调味食物（共 {0} 种，{1} 个）\n").format(
                 len(id_list_normal), sum(len(v) for v in group_normal.values())
             )
-            if handle_premise.handle_have_no_target(0) and handle_premise.handle_hunger_le_79(0):
-                now_draw.text += _("  {0}现在不饿，无法吃东西。\n\n").format(character_data.name)
-            elif handle_premise.handle_have_target(0):
-                if handle_premise.handle_hunger_le_79(character_data.target_character_id):
-                    now_draw.text += _("  {0}现在不饿，无法吃东西。\n\n").format(target_character_data.name)
-                elif not handle_premise.handle_t_normal_6(0):
-                    now_draw.text += _("  {0}现在意识不清醒，无法吃东西。\n\n").format(target_character_data.name)
+            if self.now_panel == _("食用"):
+                if handle_premise.handle_have_no_target(0) and handle_premise.handle_hunger_le_79(0):
+                    now_draw.text += _("  {0}现在不饿，无法吃东西。\n\n").format(character_data.name)
+                elif handle_premise.handle_have_target(0):
+                    if handle_premise.handle_hunger_le_79(character_data.target_character_id):
+                        now_draw.text += _("  {0}现在不饿，无法吃东西。\n\n").format(target_character_data.name)
+                    elif not handle_premise.handle_t_normal_6(0):
+                        now_draw.text += _("  {0}现在意识不清醒，无法吃东西。\n\n").format(target_character_data.name)
+            elif self.now_panel in {_("饮用"), _("酒类")}:
+                if handle_premise.handle_have_no_target(0) and not handle_premise.handle_urinate_le_49(0):
+                    now_draw.text += _("  {0}现在不渴，无法喝东西。\n\n").format(character_data.name)
+                elif handle_premise.handle_have_target(0):
+                    if not handle_premise.handle_urinate_le_49(character_data.target_character_id):
+                        now_draw.text += _("  {0}现在不渴，无法喝东西。\n\n").format(target_character_data.name)
+                    elif not handle_premise.handle_t_normal_6(0):
+                        now_draw.text += _("  {0}现在意识不清醒，无法喝东西。\n\n").format(target_character_data.name)
+            
             now_draw.draw()
             self.handle_panel_normal.draw()
             line_feed.draw()
@@ -214,8 +192,10 @@ class FoodBagPanel:
             )
             if handle_premise.handle_have_no_target(0):
                 now_draw.text += _("  当前没有目标，无法食用特殊调味食物。\n\n")
-            elif handle_premise.handle_have_target(0) and handle_premise.handle_hunger_le_79(character_data.target_character_id):
+            elif self.now_panel == _("食用") and handle_premise.handle_have_target(0) and handle_premise.handle_hunger_le_79(character_data.target_character_id):
                 now_draw.text += _("  {0}现在不饿，无法吃东西。\n\n").format(target_character_data.name)
+            elif self.now_panel in {_("饮用"), _("酒类")} and handle_premise.handle_have_target(0) and not handle_premise.handle_urinate_le_49(character_data.target_character_id):
+                now_draw.text += _("  {0}现在不渴，无法喝东西。\n\n").format(target_character_data.name)
             now_draw.draw()
             self.handle_panel_special.draw()
 
@@ -230,21 +210,43 @@ class FoodBagPanel:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
-    def change_panel(self, food_type: str):
+    def get_food_group(self):
         """
-        切换当前面板显示的食物类型
-        Keyword arguments:
-        food_type -- 要切换的食物类型
+        获取当前面板下的食物分组，按(recipe, special_seasoning)分组\n
+        Return arguments:
+        group_normal -- 正常调味食物分组
+        group_special -- 特殊调味食物分组
         """
-        self.now_panel = food_type
         character_data: game_type.Character = cache.character_data[0]
-
-        # 按(recipe, special_seasoning)分组
+        # 读取背包食物，按(recipe, special_seasoning)分组
         group_normal: dict = {}
         group_special: dict = {}
-        for i in character_data.food_bag:
+        del_food_flag = False
+        for i in character_data.food_bag.copy():
             food_data: game_type.Food = cache.character_data[0].food_bag[i]
+            recipe_data = game_config.config_recipes.get(food_data.recipe)
+            # 版本更新用修正
+            # 如果food_data没有milk_ml属性，则删除该食物
+            if not hasattr(food_data, "milk_ml"):
+                del cache.character_data[0].food_bag[i]
+                del_food_flag = True
+                continue
+            # 如果food_data是精液调味(调味类型11和12)没有special_seasoning_amount属性，则删除该食物
+            elif food_data.special_seasoning in [11, 12] and not hasattr(food_data, "special_seasoning_amount"):
+                del cache.character_data[0].food_bag[i]
+                del_food_flag = True
+                continue
+            # 如果是食用类型的食物，则跳过饮用类型的食物
+            if self.now_panel == _("食用") and recipe_data is not None and recipe_data.type in {2, 3, 4, 8}:
+                continue
+            # 如果是饮用类型的食物，则跳过食用类型的食物
+            elif self.now_panel == _("饮用") and recipe_data is not None and recipe_data.type in {0, 1, 5}:
+                continue
+            # 如果被限定为酒类食物，则跳过非酒类食物
+            elif self.now_panel == _("酒类") and recipe_data is not None and recipe_data.type != 3:
+                continue
             group_key = (food_data.recipe, food_data.special_seasoning)
+            # 如果是正常调味食物，则加入group_normal，否则加入group_special
             if food_data.special_seasoning == 0:
                 group_normal.setdefault(group_key, [])
                 group_normal[group_key].append(i)
@@ -252,15 +254,22 @@ class FoodBagPanel:
                 group_special.setdefault(group_key, [])
                 group_special[group_key].append(i)
 
-        id_list_normal = list(group_normal.items())
-        id_list_special = list(group_special.items())
+        # 输出删除食物的提示信息
+        if del_food_flag:
+            del_food_draw = draw.LeftDraw()
+            del_food_draw.text = _("\n检测到因版本变更导致的食物数据异常，已删除部分异常食物，并重置了部分食物的数据，请保存并覆盖原存档。\n")
+            del_food_draw.draw()
+            line_feed.draw()
 
-        self.handle_panel_normal = panel.PageHandlePanel(
-            id_list_normal, FoodGroupDraw, 10, 5, window_width, True, False, 0
-        )
-        self.handle_panel_special = panel.PageHandlePanel(
-            id_list_special, FoodGroupDraw, 10, 5, window_width, True, False, 2
-        )
+        return group_normal, group_special
+
+    def change_panel(self, food_type: str):
+        """
+        切换当前面板显示的食物类型
+        Keyword arguments:
+        food_type -- 要切换的食物类型
+        """
+        self.now_panel = food_type
 
 
 class FoodGroupDraw:
@@ -303,6 +312,11 @@ class FoodGroupDraw:
             food_recipe: game_type.Recipes = cache.recipe_data[recipe_id]
             self.food_name = food_recipe.name
             self.food_introduce = food_recipe.introduce
+            if food_recipe.type in {0, 1, 5}:
+                now_panel = _("食用")
+            else:
+                now_panel = _("饮用")
+
 
         # 特殊调味名称
         seasoning_str = ""
@@ -339,18 +353,26 @@ class FoodGroupDraw:
         draw_button_flag = True
         character_data: game_type.Character = cache.character_data[0]
         if special_seasoning == 0:
-            if handle_premise.handle_have_no_target(0) and handle_premise.handle_hunger_le_79(0):
-                draw_button_flag = False
+            if handle_premise.handle_have_no_target(0):
+                if now_panel == _("食用") and handle_premise.handle_hunger_le_79(0):
+                    draw_button_flag = False
+                elif now_panel == _("饮用") and not handle_premise.handle_urinate_le_49(0):
+                    draw_button_flag = False
             elif handle_premise.handle_have_target(0):
-                if handle_premise.handle_hunger_le_79(character_data.target_character_id):
+                if now_panel == _("食用") and handle_premise.handle_hunger_le_79(character_data.target_character_id):
+                    draw_button_flag = False
+                elif now_panel == _("饮用") and not handle_premise.handle_urinate_le_49(character_data.target_character_id):
                     draw_button_flag = False
                 elif not handle_premise.handle_t_normal_6(0):
                     draw_button_flag = False
         else:
             if handle_premise.handle_have_no_target(0):
                 draw_button_flag = False
-            elif handle_premise.handle_have_target(0) and handle_premise.handle_hunger_le_79(character_data.target_character_id):
-                draw_button_flag = False
+            elif handle_premise.handle_have_target(0):
+                if now_panel == _("食用") and handle_premise.handle_hunger_le_79(character_data.target_character_id):
+                    draw_button_flag = False
+                elif now_panel == _("饮用") and not handle_premise.handle_urinate_le_49(character_data.target_character_id):
+                    draw_button_flag = False
 
         if draw_button_flag:
             return_text = f"\ngroup_{self.food_name}_{str(uid_list[0])[:3]}"

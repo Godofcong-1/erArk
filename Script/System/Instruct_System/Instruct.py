@@ -59,7 +59,7 @@ class Instruct:
     MAKE_FOOD = "make_food"
     """ 做饭 """
     EAT = "eat"
-    """ 进食 """
+    """ 食物背包 """
     # GIVE_FOOD = "give_food"
     # """ 让对方食用 """
     PUT_SELFMADE_FOOD_IN = "put_selfmade_food_in"

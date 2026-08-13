@@ -449,7 +449,7 @@ def handle_buy_food():
 
 @add_instruct(constant.Instruct.EAT)
 def handle_eat():
-    """处理进食指令"""
+    """处理食物背包指令"""
     cache.now_panel_id = constant.Panel.FOOD_BAG
 
 
