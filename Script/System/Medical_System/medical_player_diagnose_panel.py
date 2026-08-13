@@ -528,10 +528,19 @@ class MedicalPlayerDiagnosePanel:
             return
 
         toggle_label = _(" [展开检查菜单]") if not self.menu_expanded else _(" [收起检查菜单]")
+        # 判断是否还有未确诊的并发症，若有则将按钮样式改为橘黄色
+        has_undiagnosed = False
+        target_count = self.target_complication_count
+        if target_count <= 0 and getattr(self.patient, "complications", None):
+            target_count = len(self.patient.complications)
+        if target_count > 0 and len(confirmed) < target_count:
+            has_undiagnosed = True
+            
         toggle_button = draw.LeftButton(
             toggle_label,
             _("切换检查菜单"),
             max(len(toggle_label) * 2 + 4, 22),
+            normal_style="gold_enrod" if has_undiagnosed and not self.menu_expanded else "standard",
             cmd_func=self._toggle_check_menu,
         )
         toggle_button.draw()
@@ -552,7 +561,26 @@ class MedicalPlayerDiagnosePanel:
             system_expanded = system_id == self.expanded_system_id
             system_prefix = "   [-]" if system_expanded else "   [+]"
             system_label = f"{system_prefix} {system_name}"
-            system_style = "gold_enrod" if system_id in highlight_systems else "standard"
+            
+            # 系统按钮颜色：高亮优先；若已无未确诊高亮，且包含已确诊症状则变灰，否则默认
+            system_style = "standard"
+            if system_id in highlight_systems:
+                system_style = "gold_enrod"
+            else:
+                part_map_check = raw_info.get("parts", {})
+                has_confirmed_sys = False
+                if isinstance(part_map_check, dict):
+                    for part_key, p_info in part_map_check.items():
+                        if isinstance(p_info, dict):
+                            opts = p_info.get("options", [])
+                            if any(isinstance(opt, dict) and int(opt.get("cid", 0) or 0) in confirmed for opt in opts):
+                                has_confirmed_sys = True
+                                break
+                    if has_confirmed_sys:
+                        break
+                if has_confirmed_sys:
+                    system_style = "deep_gray"
+
             # 系统按钮支持展开/折叠，并附带提示高亮颜色
             system_button = draw.LeftButton(
                 system_label,
@@ -585,7 +613,16 @@ class MedicalPlayerDiagnosePanel:
                 part_expanded = system_expanded and part_id == self.expanded_part_id
                 part_prefix = "     [-]" if part_expanded else "     [+]"
                 part_label = f"{part_prefix} {part_name}"
-                part_style = "gold_enrod" if (system_id, part_id) in highlight_parts else "standard"
+                
+                # 部位按钮颜色：高亮优先；若已无未确诊高亮，且包含已确诊症状则变灰，否则默认
+                part_style = "standard"
+                if (system_id, part_id) in highlight_parts:
+                    part_style = "gold_enrod"
+                else:
+                    opts = part_info.get("options", [])
+                    if any(isinstance(opt, dict) and int(opt.get("cid", 0) or 0) in confirmed for opt in opts):
+                        part_style = "deep_gray"
+
                 # 部位按钮与系统用同一机制控制展开状态
                 part_button = draw.LeftButton(
                     part_label,
@@ -956,39 +993,39 @@ class MedicalPlayerDiagnosePanel:
                         resource_id = 0
                     formatted_amount = self._format_quantity(display_amount)
                     shortage_amount = self._calculate_shortage(resource_id, display_amount, inventory_snapshot)
-                    if shortage_amount > medical_constant.FLOAT_EPSILON:
-                        shortage_text = self._format_quantity(shortage_amount)
-                        stock_text = self._format_quantity(float(inventory_snapshot.get(resource_id, 0.0) or 0.0))
-                        lines.append(
-                            _("  · {name} × {amount}（缺口 {shortage} 单位，库存 {stock} 单位）").format(
-                                name=item.get("name", "-"),
-                                amount=formatted_amount,
-                                shortage=shortage_text,
-                                stock=stock_text,
-                            )
-                        )
-                    else:
-                        lines.append(
-                            _("  · {name} × {amount}").format(
-                                name=item.get("name", "-"),
-                                amount=formatted_amount,
-                            )
-                        )
-                if missing_complications:
+                    
+                    # 常时显示缺口与库存
+                    shortage_text = self._format_quantity(shortage_amount)
+                    stock_text = self._format_quantity(float(inventory_snapshot.get(resource_id, 0.0) or 0.0))
                     lines.append(
-                        _("  * 未确诊 {count} 项并发症，相关药品需求按 50% 计入。").format(
-                            count=len(missing_complications)
+                        _("  · {name} × {amount}（缺口 {shortage} 单位，库存 {stock} 单位）").format(
+                            name=item.get("name", "-"),
+                            amount=formatted_amount,
+                            shortage=shortage_text,
+                            stock=stock_text,
                         )
                     )
-            elif missing_complications:
-                lines.append(
-                    _("未确诊 {count} 项并发症，相关药品需求按 50% 计入。").format(
-                        count=len(missing_complications)
-                    )
-                )
 
+        # 先将上面的综合病历与治疗信息绘制出来
         summary_draw.text = "\n".join(lines) + "\n"
         summary_draw.draw()
+
+        # 独立绘制未确诊提示并设置橘黄色 (gold_enrod)
+        if missing_complications:
+            missing_draw = draw.NormalDraw()
+            missing_draw.width = self.width
+            missing_draw.style = "gold_enrod"
+            # 根据是否有药品需求来决定前排是否要加上 "  * "
+            if resources:
+                missing_draw.text = _("  * 未确诊 {count} 项并发症，相关药品需求按 50% 计入。\n").format(
+                    count=len(missing_complications)
+                )
+            else:
+                missing_draw.text = _("未确诊 {count} 项并发症，相关药品需求按 50% 计入。\n").format(
+                    count=len(missing_complications)
+                )
+            missing_draw.draw()
+
         line_feed.draw()
 
     def _build_suspect_suggestions(self) -> List[str]:
@@ -1087,7 +1124,7 @@ class MedicalPlayerDiagnosePanel:
         if not self.feedback_text:
             return
         line_feed.draw()
-        feedback_draw = draw.WaitDraw()
+        feedback_draw = draw.NormalDraw()
         feedback_draw.text = self.feedback_text + "\n"
         feedback_draw.style = "gold_enrod"
         feedback_draw.draw()
@@ -1624,14 +1661,22 @@ class MedicalPlayerDiagnosePanel:
         if not trace_list:
             return set(), set(), set()
 
+        # 【新增】获取当前已确诊的并发症，用于在下方过滤高亮
+        confirmed_set: Set[int] = set(self._get_confirmed_complications())
+
         system_targets: Set[int] = set()
         part_targets: Set[Tuple[int, int]] = set()
         complication_by_severity: Dict[int, Set[int]] = {}
 
         for entry in trace_list:
+            comp_id = int(entry.get("cid", entry.get("complication_id", 0)) or 0)
+            
+            # 【修改】如果该并发症已经被确诊，则跳过不记录，从而让母分支不再出现橘黄提示
+            if comp_id and comp_id in confirmed_set:
+                continue
+
             system_id = int(entry.get("system_id", 0) or 0)
             part_id = int(entry.get("part_id", 0) or 0)
-            comp_id = int(entry.get("cid", entry.get("complication_id", 0)) or 0)
             severity = entry.get("severity_level")
             if severity is None and comp_id:
                 comp_config = game_config.config_medical_complication.get(comp_id)
