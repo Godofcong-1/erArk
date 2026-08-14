@@ -830,7 +830,7 @@ class Manage_Power_System_Panel:
         ri = cache.rhodes_island
         fac_lv = ri.facility_level.get(1,1)
         # 计算区块等级提供的基础发电设施数量
-        base_power_facility_by_fac_lv = fac_lv * 3 + 3
+        base_power_facility_by_fac_lv = fac_lv * 2 + 3
         while 1:
             return_list = []
             title = draw.TitleLineDraw(_("发电设施管理"), self.width)
@@ -990,7 +990,7 @@ class Manage_Power_System_Panel:
         ri = cache.rhodes_island
         lv = ri.facility_level.get(1, 1)
         # 设施等级提供的基础上限
-        base_power_facility_by_fac_lv = lv * 3 + 3
+        base_power_facility_by_fac_lv = lv * 2 + 3
         # 按类型上限先校验
         new_val = max(0, ri.other_power_facility_list[idx] + delta)
         # 全局三类总量上限：区块等级 + 额外模块总数
@@ -1013,7 +1013,7 @@ class Manage_Power_System_Panel:
         ri = cache.rhodes_island
         fac_lv = ri.facility_level.get(1, 1)
         # 设施等级提供的基础上限
-        base_battery_by_fac_lv = fac_lv * 5 + 10
+        base_battery_by_fac_lv = fac_lv * 2 + 8
         while 1:
             title = draw.TitleLineDraw(_("蓄电池管理"), self.width)
             title.draw()
@@ -1096,8 +1096,8 @@ class Manage_Power_System_Panel:
     def _change_battery(self, level: int, delta: int):
         ri = cache.rhodes_island
         lv = ri.facility_level.get(1, 1)
-        # 设施等级提供的基础上限：区块等级 * 5 + 10
-        base_battery_by_fac_lv = lv * 5 + 10
+        # 设施等级提供的基础上限
+        base_battery_by_fac_lv = lv * 2 + 8
         if delta > 0:
             total_now = sum(ri.battery_list)
             total_limit = base_battery_by_fac_lv + ri.materials_resouce[52]
