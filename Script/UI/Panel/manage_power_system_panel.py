@@ -829,6 +829,8 @@ class Manage_Power_System_Panel:
         """发电设施管理子界面"""
         ri = cache.rhodes_island
         fac_lv = ri.facility_level.get(1,1)
+        # 计算区块等级提供的基础发电设施数量
+        base_power_facility_by_fac_lv = fac_lv * 3 + 3
         while 1:
             return_list = []
             title = draw.TitleLineDraw(_("发电设施管理"), self.width)
@@ -858,10 +860,10 @@ class Manage_Power_System_Panel:
             # 显示文本
             extra_module = draw.NormalDraw()
             extra_module.text = _("  副源石反应炉扩展模块 ：已用 {0} / 总 {1} （含区块等级提供的{2}）\n").format(
-                ri.orundum_reactor_list[1], ri.materials_resouce[51] + fac_lv * 3, fac_lv * 3
+                ri.orundum_reactor_list[1], ri.materials_resouce[51] + base_power_facility_by_fac_lv, base_power_facility_by_fac_lv
             )
             extra_module.text += _("  清洁能源通用扩展模块 ：已用 {0} / 总 {1} （含区块等级提供的{2}）\n").format(
-                sum(ri.other_power_facility_list), ri.materials_resouce[53] + fac_lv, fac_lv
+                sum(ri.other_power_facility_list), ri.materials_resouce[53] + base_power_facility_by_fac_lv, base_power_facility_by_fac_lv
             )
             extra_module.draw()
             line_feed.draw()
@@ -917,7 +919,7 @@ class Manage_Power_System_Panel:
             # 反应炉增减按钮
             else:
                 def add_aux():
-                    ri.orundum_reactor_list[1] = min(ri.orundum_reactor_list[1] + 1, fac_lv * 3 + ri.materials_resouce[51])
+                    ri.orundum_reactor_list[1] = min(ri.orundum_reactor_list[1] + 1, base_power_facility_by_fac_lv + ri.materials_resouce[51])
                 def sub_aux():
                     if ri.orundum_reactor_list[1] > 0: ri.orundum_reactor_list[1] -= 1
                 btn_add = draw.CenterButton(_("[+]"), _("增加副源石反应炉"), 8, cmd_func=add_aux); btn_add.draw(); return_list.append(btn_add.return_text)
@@ -987,12 +989,14 @@ class Manage_Power_System_Panel:
         """增加或减少某类清洁能源设施"""
         ri = cache.rhodes_island
         lv = ri.facility_level.get(1, 1)
+        # 设施等级提供的基础上限
+        base_power_facility_by_fac_lv = lv * 3 + 3
         # 按类型上限先校验
         new_val = max(0, ri.other_power_facility_list[idx] + delta)
         # 全局三类总量上限：区块等级 + 额外模块总数
         total_now = sum(ri.other_power_facility_list)
         if delta > 0:
-            clean_total_limit = lv + ri.materials_resouce[53]
+            clean_total_limit = base_power_facility_by_fac_lv + ri.materials_resouce[53]
             if total_now >= clean_total_limit:
                 self._hint(_("三种清洁能源设施总数已达上限({0})，可通过生产清洁能源模块扩展上限").format(clean_total_limit))
                 return
@@ -1001,13 +1005,15 @@ class Manage_Power_System_Panel:
         else:
             ri.other_power_facility_list[idx] = new_val
         total_after = sum(ri.other_power_facility_list)
-        ri.now_used_extra_clean_energy_module_count = max(0, total_after - lv)
+        ri.now_used_extra_clean_energy_module_count = max(0, total_after - base_power_facility_by_fac_lv)
 
     # ---------- 蓄电池管理 ---------- #
     def _panel_battery(self):
         """蓄电池管理子界面"""
         ri = cache.rhodes_island
         fac_lv = ri.facility_level.get(1, 1)
+        # 设施等级提供的基础上限
+        base_battery_by_fac_lv = fac_lv * 5 + 10
         while 1:
             title = draw.TitleLineDraw(_("蓄电池管理"), self.width)
             title.draw()
@@ -1022,7 +1028,7 @@ class Manage_Power_System_Panel:
             )
             summary.text += _("  当前储能: {0:.1f}/{1:.1f}\n").format(ri.power_storage, ri.power_storage_max)
             summary.text += _("  蓄电池通用扩展模块 ：已用 {0} / 总 {1} （含区块等级提供的{2}）\n").format(
-                total_batt, ri.materials_resouce[52] + fac_lv, fac_lv
+                total_batt, ri.materials_resouce[52] + base_battery_by_fac_lv, base_battery_by_fac_lv
             )
             summary.draw()
             line_feed.draw()
@@ -1090,9 +1096,11 @@ class Manage_Power_System_Panel:
     def _change_battery(self, level: int, delta: int):
         ri = cache.rhodes_island
         lv = ri.facility_level.get(1, 1)
+        # 设施等级提供的基础上限：区块等级 * 5 + 10
+        base_battery_by_fac_lv = lv * 5 + 10
         if delta > 0:
             total_now = sum(ri.battery_list)
-            total_limit = lv + ri.materials_resouce[52]
+            total_limit = base_battery_by_fac_lv + ri.materials_resouce[52]
             if total_now >= total_limit:
                 self._hint(_("蓄电池总数已达上限({0})，可通过生产蓄电池扩展上限").format(total_limit))
                 return
@@ -1103,7 +1111,7 @@ class Manage_Power_System_Panel:
         _recalc_battery_capacity()
         # 更新已使用扩展位
         total_after = sum(ri.battery_list)
-        used_extra_batt = max(0, total_after - lv)
+        used_extra_batt = max(0, total_after - base_battery_by_fac_lv)
         ri.now_used_extra_battery_count = min(used_extra_batt, ri.materials_resouce[52])
 
     # ---------- 小提示 ---------- #
