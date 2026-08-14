@@ -7538,6 +7538,10 @@ def handle_release_from_bag_add_just(
     target_data.sp_flag.be_bagged = False
     handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 7)
     handle_chara_on_line(character_data.target_character_id, add_time, change_data, now_time)
+    # 如果当时是时间停止H中，则刷新时停状态
+    if handle_premise.handle_time_stop_on(character_id):
+        target_data.sp_flag.unconscious_h = 3
+    handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 6)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PUT_INTO_PRISON_ADD_ADJUST)
@@ -7572,6 +7576,10 @@ def handle_put_into_prison_add_just(
     confinement_and_training.chara_become_prisoner(target_id)
     # 角色上线
     handle_chara_on_line(target_id, add_time, change_data, now_time)
+    # 如果当时是时间停止H中，则刷新时停状态
+    if handle_premise.handle_time_stop_on(character_id):
+        target_data.sp_flag.unconscious_h = 3
+    handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 6)
     # 囚犯成就
     achievement_panel.achievement_flow(_("囚犯"))
 

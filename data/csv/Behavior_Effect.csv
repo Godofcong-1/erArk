@@ -144,7 +144,7 @@ int,str,str
 338,steal_scene_all_socks,1513 - 1514 - 624
 
 341,bagging_and_moving,1515 - 1516 - 513 - 952
-342,put_into_prison,1515 - 1516 - 514 - 153
+342,put_into_prison,1515 - 1516 - 153 - 514
 343,set_free,1511 - 1512 - 515
 344,release_from_bag,1515 - 1516 - 540
 
