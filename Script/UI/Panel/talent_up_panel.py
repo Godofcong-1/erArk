@@ -8,7 +8,7 @@ from Script.Core import (
     constant,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import update, handle_talent
+from Script.Design import update, handle_talent, attr_calculation
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -80,17 +80,13 @@ class Character_talent_show_Text:
         desc_draw.text = _("\n 分为爱情系与隶属系两条路线，只能任选其一，选择后另一路线消失，仅在新周目时可以重置\n")
         desc_draw.draw()
 
-        # 检测是哪个路线
-        next_love_id, next_obey_id = 0, 0
-        for talent_id in {201, 202, 203, 204}:
-            if self.character_data.talent[talent_id]:
-                next_love_id = talent_id + 1
-        for talent_id in {211, 212, 213, 214}:
-            if self.character_data.talent[talent_id]:
-                next_obey_id = talent_id + 1
+        # 获取陷落阶段等级 (正数为爱情路线，负数为隶属路线)
+        fall_level = attr_calculation.get_character_fall_level(self.character_id, True)
+        love_level = fall_level if fall_level > 0 else 0
+        obey_level = -fall_level if fall_level < 0 else 0
 
-        # 爱情路线
-        if next_love_id or not next_obey_id:
+        # 爱情路线 (如果还没选路线，或是已经走了爱情路线)
+        if love_level > 0 or obey_level == 0:
             love_judge = 1 if judge == 1 else 0
             line = draw.LineDraw("-", self.width)
             line.draw()
@@ -107,18 +103,17 @@ class Character_talent_show_Text:
             line_feed.draw()
 
             # 输出最高级的提示信息
-            if self.character_data.talent[204]:
+            if love_level == 4:
                 max_level_draw = draw.NormalDraw()
                 max_level_draw.text = _("已达到最高级-爱侣\n")
                 max_level_draw.draw()
+            # 路线选择
             else:
-                if next_love_id == 0:
-                    self.show_gain_need(201, love_judge)
-                else:
-                    self.show_gain_need(next_love_id, love_judge)
+                next_id = 201 if love_level == 0 else 200 + love_level + 1
+                self.show_gain_need(next_id, love_judge)
 
-        # 隶属路线
-        if next_obey_id or not next_love_id:
+        # 隶属路线 (如果还没选路线，或是已经走了隶属路线)
+        if obey_level > 0 or love_level == 0:
             obey_judge = 1 if judge == 1 else 0
             line = draw.LineDraw("-", self.width)
             line.draw()
@@ -135,16 +130,14 @@ class Character_talent_show_Text:
             line_feed.draw()
 
             # 输出最高级的提示信息
-            if self.character_data.talent[214]:
+            if obey_level == 4:
                 max_level_draw = draw.NormalDraw()
                 max_level_draw.text = _("已达到最高级-奴隶\n")
                 max_level_draw.draw()
+            # 路线选择
             else:
-                if next_obey_id == 0:
-                    self.show_gain_need(211, obey_judge)
-                else:
-                    self.show_gain_need(next_obey_id, obey_judge)
-
+                next_id = 211 if obey_level == 0 else 210 + obey_level + 1
+                self.show_gain_need(next_id, obey_judge)
 
     def show_gain_need(self, talent_id, judge):
         """具体显示需要什么"""
@@ -199,7 +192,7 @@ class Character_talent_show_Text:
             if not is_met:
                 judge = 0
             
-            # 使用通用函数绘制变色文本，因原版文字中已自带说明不需要尾部加(√)/(X)，所以设定 show_suffix=False
+            # 使用通用函数绘制变色文本
             self._draw_condition(button_text, is_met, show_suffix=False)
 
         if talent_id in {201, 211}:
@@ -253,4 +246,3 @@ class Character_talent_show_Text:
         character_data.state = constant.CharacterStatus.STATUS_WAIT
         character_data.behavior.duration = 1
         update.game_update_flow(1)
-
