@@ -1119,6 +1119,47 @@ def handle_npc_make_food_to_bag(
     character_data.food_bag[new_food.uid] = new_food
     character_data.behavior.target_food = new_food
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ASSISTANT_MAKE_FOOD_TO_BAG)
+def handle_assistant_make_food_to_bag(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    助理制作两个食物，并补充到自己背包中
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    from Script.System.Cooking_System import cooking
+    if not add_time:
+        return
+    # 获取角色数据
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 随机选择一个食谱，根据食谱难度，高难度的有高出现权重
+    cookable_recipes_list = cooking.get_character_cookable_recipes(character_id, weight_flag=True)
+    # 随机选择一个正餐食谱，根据食谱难度，高难度的有高出现权重
+    main_cookable_recipes_list = cooking.get_character_cookable_recipes(character_id, weight_flag=True, food_type=0)
+    # 从总食谱里减去正餐食谱，得到非正餐食谱
+    non_main_cookable_recipes_list = list(set(cookable_recipes_list) - set(main_cookable_recipes_list))
+    # 从正餐食谱中随机选择一个食谱进行烹饪
+    main_recipes_id = random.choice(main_cookable_recipes_list)
+    food_list = {}
+    new_food = cooking.cook(food_list, main_recipes_id, character_data.ability[43], character_data.name)
+    character_data.food_bag[new_food.uid] = new_food
+    character_data.behavior.target_food = new_food
+    # 如果非正餐食谱不为空，则从中随机选择一个食谱
+    if non_main_cookable_recipes_list:
+        non_main_recipes_id = random.choice(non_main_cookable_recipes_list)
+    # 否则从正餐食谱中随机选择一个食谱
+    else:
+        non_main_recipes_id = random.choice(main_cookable_recipes_list)
+    # 再进行一次烹饪
+    new_food = cooking.cook(food_list, non_main_recipes_id, character_data.ability[43], character_data.name)
+    character_data.food_bag[new_food.uid] = new_food
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DELETE_ALL_FOOD)
 def handle_delete_all_food(

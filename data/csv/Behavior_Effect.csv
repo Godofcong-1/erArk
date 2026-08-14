@@ -103,7 +103,7 @@ int,str,str
 254,night_salutation_1,9999
 255,night_salutation_2,11 - 12 - 21 - 22 - 118 - 71 - CVE_A2_E|0_G_1 - CVE_A2_E|40_G_1 - CVE_A1_E|40_G_1 - CVE_A2_E|153_G_1 - CVE_A1_E|153_G_1
 256,night_salutation_3,11 - 12 - 21 - 22 - 71 - 113 - CVE_A2_E|3_G_1 - CVE_A2_E|21_G_1 - CVE_A1_E|42_G_1 - CVE_A1_E|25_G_1 - CVE_A1_E|153_G_1 - 520
-257,npc_assistant_cook,13 - 14 - 81 - CVE_A1_E|83_G_1 - 995 - 995
+257,npc_assistant_cook,13 - 14 - 81 - CVE_A1_E|83_G_1 - 996
 
 261,hold_child,1513 - 1514 - 21 - 22 - 71 - 53
 262,sing_children_song,1513 - 1514 - 21 - 22 - 71 - 53

@@ -263,12 +263,13 @@ def init_food_shop_data(update_restaurant_id: int = -2, new_day_flag: bool = Fal
             if cook_index >= max_people or cook_index >= 10:
                 break
 
-def get_character_cookable_recipes(character_id: int = 0, weight_flag = False) -> list[int]:
+def get_character_cookable_recipes(character_id: int = 0, weight_flag = False, food_type: int = -1) -> list[int]:
     """
     获取角色可以制作的食物食谱列表
     Keyword arguments:
     character_id -- 角色id，默认为0
     输出权重标记 -- 是否根据食谱难度的权重输出列表，默认为False
+    food_type -- 食物类型，默认为-1表示不限制类型
     Return arguments:
     list -- 食谱id列表
     """
@@ -280,6 +281,9 @@ def get_character_cookable_recipes(character_id: int = 0, weight_flag = False) -
             continue
         # 无法制作的种类的菜谱直接跳过
         if recipe.type in {4,5,9}:
+            continue
+        # 限制食物类型时，非指定类型的菜谱直接跳过
+        if food_type != -1 and recipe.type != food_type:
             continue
         # 非玩家跳过咖啡
         if character_id != 0 and recipe.type in {8}:

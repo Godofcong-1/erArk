@@ -795,6 +795,8 @@ class BehaviorEffect:
     """ 道具_增减 删除背包内所有食物 """
     NPC_MAKE_FOOD_TO_BAG = 995
     """ 道具_增减 NPC随机制作一个食物，并补充到自己背包中 """
+    ASSISTANT_MAKE_FOOD_TO_BAG = 996
+    """ 道具_增减 助理制作两个食物，并补充到自己背包中 """
 
     TARGET_ADD_HUGE_LUBRICATION = 1001
     """ 道具_使用效果 交互对象增加大量润滑（润滑液） """
