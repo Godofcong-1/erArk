@@ -484,10 +484,11 @@ class Manage_Basement_Panel:
                     
                     for npc_id in cache.npc_id_got:
                         if npc_id == 0: continue
-                        chara = cache.character_data[npc_id]
                         
                         # 筛选工作 (0:不筛选, 1:有工作, 2:无工作)
-                        has_work = chara.work.work_type != 0
+                        has_work = False
+                        if handle_premise.handle_have_work(npc_id):
+                            has_work = True
                         if self.filter_work == 1 and not has_work: continue
                         if self.filter_work == 2 and has_work: continue
                         
@@ -505,17 +506,23 @@ class Manage_Basement_Panel:
                         if self.filter_fall == 4 and not is_obey: continue
                         
                         # 筛选女儿 (0:不筛选, 1:是, 2:否)
-                        is_daughter = chara.talent.get(311) or chara.talent.get(312) or (hasattr(chara, 'relationship') and chara.relationship.father_id == 0)
+                        is_daughter = False
+                        if handle_premise.handle_self_is_player_daughter(npc_id):
+                            is_daughter = True
                         if self.filter_daughter == 1 and not is_daughter: continue
                         if self.filter_daughter == 2 and is_daughter: continue
                         
                         # 筛选访客 (0:不筛选, 1:是, 2:否)
-                        is_visitor = npc_id in cache.rhodes_island.visitor_info
+                        is_visitor = False
+                        if handle_premise.handle_self_visitor_flag_1(npc_id):
+                            is_visitor = True
                         if self.filter_visitor == 1 and not is_visitor: continue
                         if self.filter_visitor == 2 and is_visitor: continue
 
                         # 筛选收藏 (0:不筛选, 1:是, 2:否) (值为1即代表收藏)
-                        is_collected = chara.chara_setting.get(2, 0) == 1
+                        is_collected = False
+                        if handle_premise.handle_find_self_is_favorite(npc_id):
+                            is_collected = True
                         if self.filter_collection == 1 and not is_collected: continue
                         if self.filter_collection == 2 and is_collected: continue
                         

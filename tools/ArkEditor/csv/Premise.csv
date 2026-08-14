@@ -141,6 +141,8 @@ place_all_fall_ge_2,SCENE_ALL_FALL_GE_2,地点_角色,该地点有玩家以外�
 place_all_not_tired,SCENE_ALL_NOT_TIRED,地点_角色,该地点有玩家以外的角色，且所有角色都未疲劳
 place_all_not_h,SCENE_ALL_NOT_H,地点_角色,该地点有玩家以外的角色，且所有角色都未在H中
 scene_have_multi_masturebate_to_pl_chara,SCENE_HAVE_MULTI_MASTUREBATE_TO_PL_CHARA,地点_角色,该地点有多个要逆推玩家来自慰的角色
+scene_someone_wear_pan,SCENE_SOMEONE_WEAR_PAN,场景_角色,该地点有其他角色穿着内裤
+scene_someone_wear_socks,SCENE_SOMEONE_WEAR_SOCKS,场景_角色,该地点有其他角色穿着袜子
 
 teacher_teaching_in_classroom,TEACHER_TEACHING_IN_CLASSROOM,地点_工作,当前有教师在教室里讲课
 student_not_study_in_classroom,STUDENT_NOT_STUDY_IN_CLASSROOM,地点_工作,教室里有没在上课的学生
@@ -864,6 +866,8 @@ t_exhibitionism_sex_mode_4,TARGET_EXHIBITIONISM_SEX_MODE_4,特殊flag_露出,交
 
 not_witness_pl_h_with_others,NOT_WITNESS_PL_H_WITH_OTHERS,特殊flag_其他,自己没有目击过本次玩家与他人H
 witness_pl_h_with_others,WITNESS_PL_H_WITH_OTHERS,特殊flag_其他,自己目击过本次玩家与他人H
+self_is_favorite,SELF_IS_FAVORITE,特殊flag_其他,自己被设为了收藏角色
+t_is_favorite,TARGET_IS_FAVORITE,特殊flag_其他,交互对象被设为了收藏角色
 
 good_mood,GOOD_MOOD,属性_心情,自己心情愉快
 normal_mood,NORMAL_MOOD,属性_心情,自己心情普通

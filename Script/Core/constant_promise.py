@@ -1718,6 +1718,10 @@
     """ 特殊flag_其他 自己没有目击过本次玩家与他人H """
     WITNESS_PL_H_WITH_OTHERS = "witness_pl_h_with_others"
     """ 特殊flag_其他 自己目击过本次玩家与他人H """
+    SELF_IS_FAVORITE = "self_is_favorite"
+    """ 特殊flag_其他 自己被设为了收藏角色 """
+    TARGET_IS_FAVORITE = "t_is_favorite"
+    """ 特殊flag_其他 交互对象被设为了收藏角色 """
 
     GOOD_MOOD = "good_mood"
     """ 属性_心情 自己心情愉快 """

@@ -2593,7 +2593,7 @@ def handle_t_exhibitionism_sex_mode_4(character_id: int) -> int:
     return handle_exhibitionism_sex_mode_4(character_data.target_character_id)
 
 @add_premise(constant_promise.Premise.NOT_WITNESS_PL_H_WITH_OTHERS)
-def handlefind_not_witness_pl_h_with_others(character_id: int) -> int:
+def handle_find_not_witness_pl_h_with_others(character_id: int) -> int:
     """
     自己没有目击过本次玩家与他人H
     Keyword arguments:
@@ -2601,10 +2601,10 @@ def handlefind_not_witness_pl_h_with_others(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    return not handlefind_witness_pl_h_with_others(character_id)
+    return not handle_find_witness_pl_h_with_others(character_id)
 
 @add_premise(constant_promise.Premise.WITNESS_PL_H_WITH_OTHERS)
-def handlefind_witness_pl_h_with_others(character_id: int) -> int:
+def handle_find_witness_pl_h_with_others(character_id: int) -> int:
     """
     自己目击过本次玩家与他人H
     Keyword arguments:
@@ -2614,3 +2614,27 @@ def handlefind_witness_pl_h_with_others(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.sp_flag.see_pl_h
+
+@add_premise(constant_promise.Premise.SELF_IS_FAVORITE)
+def handle_find_self_is_favorite(character_id: int) -> int:
+    """
+    自己被设为了收藏角色
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.chara_setting.get(2, 0) == 1
+
+@add_premise(constant_promise.Premise.TARGET_IS_FAVORITE)
+def handle_find_target_is_favorite(character_id: int) -> int:
+    """
+    交互对象被设为了收藏角色
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_find_self_is_favorite(character_data.target_character_id)

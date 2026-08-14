@@ -124,10 +124,10 @@ def common_select_npc_button_list_func(now_draw_panel: panel.PageHandlePanel, ti
             character_data = cache.character_data[npc_id]
             if select_state["type"] > 0:
                 # 收藏筛选
-                if select_state["type"] == 1 and character_data.chara_setting[2] != 1:
+                if select_state["type"] == 1 and not handle_premise.handle_find_self_is_favorite(npc_id):
                     continue
                 # 访客筛选
-                elif select_state["type"] == 2 and npc_id not in cache.rhodes_island.visitor_info:
+                elif select_state["type"] == 2 and not handle_premise.handle_self_visitor_flag_1(npc_id):
                     continue
                 # 未陷落筛选
                 elif select_state["type"] == 3 and handle_premise.handle_self_fall(npc_id):

@@ -708,10 +708,10 @@ class CommissionDraw:
                 if not handle_premise.handle_normal_7(npc_id): continue
                 if handle_premise.handle_self_equipment_damaged_ge_3(npc_id): continue
                 
-                char_data = cache.character_data[npc_id]
-                
                 # 筛选工作
-                has_work = char_data.work.work_type != 0
+                has_work = False
+                if handle_premise.handle_have_work(npc_id):
+                    has_work = True
                 if filter_work == 1 and not has_work: continue
                 if filter_work == 2 and has_work: continue
                 
@@ -729,12 +729,16 @@ class CommissionDraw:
                 if filter_fall == 4 and not is_obey: continue
 
                 # 筛选女儿 (0:不筛选, 1:是, 2:否)
-                is_daughter = char_data.talent.get(311) or char_data.talent.get(312) or (hasattr(char_data, 'relationship') and char_data.relationship.father_id == 0)
+                is_daughter = False
+                if handle_premise.handle_self_is_player_daughter(npc_id):
+                    is_daughter = True
                 if filter_daughter == 1 and not is_daughter: continue
                 if filter_daughter == 2 and is_daughter: continue
 
                 # 筛选收藏 (0:不筛选, 1:是, 2:否) (值为1即代表收藏)
-                is_collected = char_data.chara_setting.get(2, 0) == 1
+                is_collected = False
+                if handle_premise.handle_find_self_is_favorite(npc_id):
+                    is_collected = True
                 if filter_collection == 1 and not is_collected: continue
                 if filter_collection == 2 and is_collected: continue
 
