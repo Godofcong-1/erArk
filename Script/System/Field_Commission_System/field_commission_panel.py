@@ -524,26 +524,6 @@ class CommissionDraw:
         
         def pass_func(): pass
 
-        # 辅助函数：计算字母Rank
-        def get_rank_letter(value: int) -> str:
-            if value >= 6: return "EX"
-            if value == 5: return "S "
-            if value == 4: return "A "
-            if value == 3: return "B "
-            if value == 2: return "C "
-            if value == 1: return "D "
-            return "E "
-
-        # 辅助函数：获取Rank对应的颜色样式
-        def get_rank_color(value: int) -> str:
-            if value >= 6: return "levelex"      # 紫色/彩色
-            if value == 5: return "gold_enrod"   # 金色
-            if value == 4: return "spring_green" # 绿色
-            if value == 3: return "light_sky_blue" # 蓝色
-            if value == 2: return "standard"     # 白色
-            if value == 1: return "deep_gray"    # 灰色
-            return "deep_gray"                   # E也是深灰
-
         # 辅助函数：计算中英文混合字符串的显示宽度
         def get_display_width(text: str) -> int:
             return sum(2 if ord(c) > 127 else 1 for c in text)
@@ -804,8 +784,8 @@ class CommissionDraw:
                 # 渲染工作技能数值数据
                 for col_name, col_id in skill_columns:
                     val = get_eff_ability(npc_id, col_id)
-                    rank = get_rank_letter(val)
-                    rank_color = get_rank_color(val)
+                    rank = attr_calculation.judge_grade(val)
+                    rank_color = f"level{rank.lower()}"
                     
                     rank_draw = draw.NormalDraw()
                     rank_draw.text = rank
