@@ -716,8 +716,12 @@ class CommissionDraw:
                 if filter_work == 2 and has_work: continue
                 
                 # 筛选陷落 (0:不筛选, 1:无, 2:有, 3:爱情, 4:隶属)
-                is_love = any(char_data.talent.get(i) for i in [201, 202, 203, 204])
-                is_obey = any(char_data.talent.get(i) for i in [211, 212, 213, 214])
+                now_level = attr_calculation.get_character_fall_level(npc_id, True)
+                is_love, is_obey = False, False
+                if now_level > 0:
+                    is_love = True
+                elif now_level < 0:
+                    is_obey = True
                 has_fall = is_love or is_obey
                 if filter_fall == 1 and has_fall: continue
                 if filter_fall == 2 and not has_fall: continue
