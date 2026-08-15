@@ -167,6 +167,9 @@ class Characterabi_show_Text:
                     now_exp = 0
                     now_exp = self.character_data.ability[ability_id]
                     button_text = f" {ability_data.name} "
+                    # 為能力、技能、技巧補上缺少的兩個半形空格
+                    if anility_type in (3, 4, 5):
+                        button_text += "  "
                     # 根据不同的类型补不同数量的空格#
                     if anility_type != 2 and anility_type != 4 and anility_type != 6:
                         button_text += "  "
@@ -767,11 +770,13 @@ class Character_abi_up_sub_Handle:
         self.draw_data[self.now_panel].draw()
         self.return_list = []
         self.return_list.extend(self.draw_data[self.now_panel].return_list)
+        
         line_feed.draw()
         line = draw.LineDraw("=", self.width)
         line.draw()
-        self.handle_panel.draw()
-        self.return_list.extend(self.handle_panel.return_list)
+        # 這裡將原本繪製單一頁籤註解掉
+        # self.handle_panel.draw()
+        # self.return_list.extend(self.handle_panel.return_list)
 
 
 class Character_abi_up_main_panel:
