@@ -112,8 +112,10 @@ class Characterabi_show_Text:
                         ):
                         # 如果可以升级，则额外标记
                         can_up, can_down = self.check_ability_change_possible(ability_id)
+                        btn_kwargs = {}
                         if can_up:
                             button_text += "(+)"
+                            btn_kwargs['normal_style'] = "gold_enrod"
                         button_draw = draw.LeftButton(
                             _(button_text),
                             _(game_config.config_ability[ability_id].name),
@@ -121,6 +123,7 @@ class Characterabi_show_Text:
                             cmd_func=self.mark_up_show,
                             args=(ability_id),
                             tooltip=game_config.config_ability[ability_id].info,
+                            **btn_kwargs
                         )
                         self.return_list.append(button_draw.return_text)
                         button_draw.draw()
@@ -131,8 +134,10 @@ class Characterabi_show_Text:
                         ):
                         # 如果可以降级，则额外标记
                         can_up, can_down = self.check_ability_change_possible(ability_id)
+                        btn_kwargs = {}
                         if can_down:
                             button_text += "(-)"
+                            btn_kwargs['normal_style'] = "gold_enrod"
                         button_draw = draw.LeftButton(
                             _(button_text),
                             _(game_config.config_ability[ability_id].name),
@@ -140,6 +145,7 @@ class Characterabi_show_Text:
                             cmd_func=self.mark_down_show,
                             args=(ability_id),
                             tooltip=game_config.config_ability[ability_id].info,
+                            **btn_kwargs
                         )
                         self.return_list.append(button_draw.return_text)
                         button_draw.draw()
@@ -180,8 +186,10 @@ class Characterabi_show_Text:
                     button_text += str(now_exp)
                     # 如果可以升级，则额外标记
                     can_up, can_down = self.check_ability_change_possible(ability_id)
+                    btn_kwargs = {}
                     if can_up:
                         button_text += "(+)"
+                        btn_kwargs['normal_style'] = "gold_enrod"
                     now_abi_up_panel = Characterabi_cmd_Text(self.character_id, self.width, ability_id)
                     button_draw = draw.LeftButton(
                         _(button_text),
@@ -189,6 +197,7 @@ class Characterabi_show_Text:
                         int(self.width / 10),
                         cmd_func=now_abi_up_panel.draw,
                         tooltip=game_config.config_ability[ability_id].info,
+                        **btn_kwargs
                         )
                     self.return_list.append(button_draw.return_text)
                     button_draw.draw()
