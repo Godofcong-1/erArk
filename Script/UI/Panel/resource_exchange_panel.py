@@ -397,9 +397,12 @@ class Resource_Exchange_Line_Panel:
 
             stock_draw = draw.NormalDraw()
             stock_draw.text = _("  库存状态   : 当前 {0} / 上限 {1}\n").format(now_resouce_stock, warehouse_capacity)
+            if now_resouce_stock >= warehouse_capacity:
+                stock_draw.style = "gold_enrod"
             stock_draw.draw()
 
             # 自动交易信息
+            auto_draw = draw.NormalDraw()
             res_type_key = _get_resource_type_key(self.now_select_resouce_id)
             settings = _ensure_trade_setting(self.now_select_resouce_id)
             main_id = cache.rhodes_island.resource_type_main_trader.get(res_type_key, 0)
@@ -416,8 +419,8 @@ class Resource_Exchange_Line_Panel:
                     auto_text += _("未设置自动卖出")
             else:
                 auto_text += _("未任命主交易员无法设置")
+                auto_draw.style = "gold_enrod"
 
-            auto_draw = draw.NormalDraw()
             auto_draw.text = attr_calculation.pad_display_width(auto_text, int(self.width/3))
             auto_draw.draw()
 
@@ -454,21 +457,38 @@ class Resource_Exchange_Line_Panel:
             manage_button.draw()
             line_feed.draw()
             line_feed.draw()
-
-            main_name = cache.character_data[main_id].name if main_id > 0 else _("空缺")
-            trader_info = draw.NormalDraw()
-            trader_info.text = _("  主交易员 : {0} (基础加成: +{1:.1f}%)\n").format(main_name, main_bonus * 100)
             
+            trade_type_draw = draw.NormalDraw()
+            trade_type_draw.text = _("  交易种类 : {0}").format(resouce_data.type)
+            trade_type_draw.draw()
+            line_feed.draw()
+            
+            main_trader_info = draw.NormalDraw()
+            if main_id > 0:
+                main_name = cache.character_data[main_id].name
+            else:
+                main_name = _("空缺")
+                main_trader_info.style = "warning"
+            
+            main_trader_info.text = _("  主交易员 : {0} (基础加成: +{1:.1f}%)\n").format(main_name, main_bonus * 100)
+            main_trader_info.draw()
+            line_feed.draw()
+
             sub_ops = [cid for cid in cache.rhodes_island.trade_operator_ids_list if cid != main_id and cid in cache.character_data]
-            trader_info.text += _("  副交易员 : 共 {0} 人 (基础加成: +{1:.1f}%)\n").format(len(sub_ops), sub_bonus * 100)
+            sub_trader_info = draw.NormalDraw()
+            sub_trader_info.text = _("  副交易员 : 共 {0} 人 (基础加成: +{1:.1f}%)\n").format(len(sub_ops), sub_bonus * 100)
+            
             if sub_ops:
                 sub_names = [cache.character_data[cid].name for cid in sub_ops]
-                trader_info.text += _("    - {0}\n").format(", ".join(sub_names))
+                sub_trader_info.text += _("    - {0}\n").format(", ".join(sub_names))
             else:
-                trader_info.text += _("    - 暂无\n")
-
-            trader_info.text += _("  综合倍率 : 买入 {0:+.1f}% / 卖出 {1:+.1f}%\n").format(buy_percent, sell_percent)
-            trader_info.draw()
+                sub_trader_info.text += _("    - 暂无\n")
+            sub_trader_info.draw()
+            line_feed.draw()
+                
+            trade_info = draw.NormalDraw()
+            trade_info.text += _("  综合倍率 : 买入 {0:+.1f}% / 卖出 {1:+.1f}%\n").format(buy_percent, sell_percent)
+            trade_info.draw()
 
             # ---------------------------------------------------------------------------------------------
             draw.LineDraw("-", window_width).draw()
@@ -479,36 +499,101 @@ class Resource_Exchange_Line_Panel:
             budget_info_Title.draw()
             line_feed.draw()
             line_feed.draw()
-            budget_info = draw.NormalDraw()
+            
             abs_qty = abs(self.quantity_of_resouce)
             action_str = _("买入") if self.quantity_of_resouce > 0 else _("卖出") if self.quantity_of_resouce < 0 else _("无")
-            budget_info.text += _("  当前交易数量 : {0} {1}\n").format(action_str, abs_qty)
             
+            # 1. 当前交易数量
+            qty_label = draw.NormalDraw()
+            qty_label.text = _("  当前交易数量 : ")
+            qty_label.draw()
+
+            qty_value = draw.NormalDraw()
+            qty_value.text = _("{0} {1}\n").format(action_str, abs_qty)
+            qty_value.style = "light_cyan"
+            qty_value.draw()
+            
+            # 2. 预计库存变化
             new_stock = now_resouce_stock + self.quantity_of_resouce
             sign = "+" if self.quantity_of_resouce >= 0 else "-"
-            budget_info.text += _("  预计库存变化 : {0} {1} {2}  =>  {3} / {4}\n\n").format(
+            
+            stock_label = draw.NormalDraw()
+            stock_label.text = _("  预计库存变化 : ")
+            stock_label.draw()
+
+            stock_value = draw.NormalDraw()
+            stock_value.text = _("{0} {1} {2}  =>  {3} / {4}\n\n").format(
                 now_resouce_stock, sign, abs_qty, new_stock, warehouse_capacity
             )
+            stock_value.draw()
             
+            # 3. 买入价与卖出价
             buy_str = f"(+{buy_percent:.1f}%)" if buy_percent > 0 else f"({buy_percent:.1f}%)" if buy_percent < 0 else "(0%)"
             sell_str = f"(+{sell_percent:.1f}%)" if sell_percent > 0 else f"({sell_percent:.1f}%)" if sell_percent < 0 else "(0%)"
 
-            budget_info.text += _("  买入价: {0} 龙门币 {1}  |  卖出价: {2} 龙门币 {3}\n").format(
-                buy_price, buy_str, sell_price, sell_str
-            )
-            
+            price_buy = draw.NormalDraw()
+            price_buy.text = _("  买入价: {0} 龙门币 {1}").format(buy_price, buy_str)
             if self.quantity_of_resouce > 0:
-                budget_info.text += _("  预计买入总价: {0} * {1} = {2} 龙门币 | 交易后剩余 {3} 龙门币").format(
-                    buy_price, abs_qty, buy_price * abs_qty, money - buy_price * abs_qty
+                price_buy.style = "light_cyan"
+            price_buy.draw()
+            
+            price_mid = draw.NormalDraw()
+            price_mid.text = _("  |  ")
+            price_mid.draw()
+
+            price_sell = draw.NormalDraw()
+            price_sell.text = _("卖出价: {0} 龙门币 {1}\n").format(sell_price, sell_str)
+            if self.quantity_of_resouce < 0:
+                price_sell.style = "light_cyan"
+            price_sell.draw()
+            
+            # 4. 预计交易总价
+            total_label = draw.NormalDraw()
+            total_value_count = draw.NormalDraw()
+            total_value = draw.NormalDraw()
+            total_value.style = "light_cyan"
+
+            if self.quantity_of_resouce > 0:
+                total_label.text = _("  预计买入总价: ")
+                total_value_count.text = _("{0} * {1} = ").format(
+                    buy_price, abs_qty, buy_price * abs_qty
+                )
+                total_value.text = _("{2} 龙门币").format(
+                    buy_price, abs_qty, buy_price * abs_qty
                 )
             elif self.quantity_of_resouce < 0:
-                budget_info.text += _("  预计卖出总价: {0} * {1} = {2} 龙门币 | 交易后持有 {3} 龙门币").format(
-                    sell_price, abs_qty, sell_price * abs_qty, money - buy_price * abs_qty
+                total_label.text = _("  预计卖出总价: ")
+                total_value_count.text = _("{0} * {1} = ").format(
+                    sell_price, abs_qty, sell_price * abs_qty
+                )
+                total_value.text = _("{2} 龙门币").format(
+                    sell_price, abs_qty, sell_price * abs_qty
                 )
             else:
-                budget_info.text += _("  预计交易总价: 0 * 0 = 0 龙门币 | 交易后剩余 {0} 龙门币").format(money)
+                total_label.text = _("  预计交易总价: ")
+                total_value_count.text = _("0 * 0 = ").format(money)
+                total_value.text = _("0 龙门币")
             
-            budget_info.draw()
+            total_label.draw()
+            total_value_count.draw()
+            total_value.draw()
+            line_feed.draw()
+            
+            money_left_text = draw.NormalDraw()
+            money_left_text.text = _("  交易后剩余龙门币: ")
+            money_left_text.draw()
+            
+            money_left_value = draw.NormalDraw()
+            if self.quantity_of_resouce > 0:
+                money_left = money - buy_price * abs_qty
+                money_left_value.text = _("{0} - {1} = {2} 龙门币").format(money, buy_price * abs_qty, money_left)
+            elif self.quantity_of_resouce < 0:
+                money_left = money + sell_price * abs_qty
+                money_left_value.text = _("{0} + {1} = {2} 龙门币").format(money, sell_price * abs_qty, money_left)
+            else:
+                money_left = money
+                money_left_value.text = _("{0} - 0 = {1} 龙门币").format(money, money_left)
+            money_left_value.draw()
             line_feed.draw()
             
             budget_warn = draw.NormalDraw()
@@ -602,7 +687,7 @@ class Resource_Exchange_Line_Panel:
             # =============================================================================================
             draw.LineDraw("=", window_width).draw()
             
-            back_draw = draw.CenterButton(_("[返  回]"), _("返回"), self.width)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width)
             back_draw.draw()
             line_feed.draw()
             return_list.append(back_draw.return_text)
