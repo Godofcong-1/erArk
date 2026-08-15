@@ -131,7 +131,7 @@ class Characterabi_show_Text:
                         ):
                         # 如果可以降级，则额外标记
                         can_up, can_down = self.check_ability_change_possible(ability_id)
-                        if can_up:
+                        if can_down:
                             button_text += "(-)"
                         button_draw = draw.LeftButton(
                             _(button_text),
