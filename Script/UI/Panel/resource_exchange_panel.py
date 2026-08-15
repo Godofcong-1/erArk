@@ -470,7 +470,7 @@ class Resource_Exchange_Line_Panel:
                 main_name = _("空缺")
                 main_trader_info.style = "warning"
             
-            main_trader_info.text = _("  主交易员 : {0} (基础加成: +{1:.1f}%)\n").format(main_name, main_bonus * 100)
+            main_trader_info.text = _("  主交易员 : {0} (基础加成: +{1:.1f}%)").format(main_name, main_bonus * 100)
             main_trader_info.draw()
             line_feed.draw()
 
@@ -602,7 +602,6 @@ class Resource_Exchange_Line_Panel:
             # 输出特殊提示
             if self.quantity_of_resouce > 0 and buy_price * abs_qty > money:
                 budget_warn.text += _("  ●龙门币不足，无法以当前数量买入")
-            line_feed.draw()
             # 如果是不可购买的则显示提示
             if cant_buy_flag:
                 budget_warn.text += _("  ●该资源无法购买，只能卖出")
@@ -619,11 +618,11 @@ class Resource_Exchange_Line_Panel:
             adjust_draw.draw()
             line_feed.draw()
             
-            max_sell_btn = draw.CenterButton(_(" [ 最大卖出 ] "), _("最大卖出"), self.width / 2, cmd_func=self.settle_max_sell)
+            max_sell_btn = draw.CenterButton(_("[ -------------------- 最大卖出 ------------------- ] "), _("最大卖出"), self.width / 3 - 3, cmd_func=self.settle_max_sell)
             return_list.append(max_sell_btn.return_text)
             max_sell_btn.draw()
 
-            max_buy_btn = draw.CenterButton(_(" [ 最大买入 ] "), _("最大买入"), self.width / 2, cmd_func=self.settle_max_buy)
+            max_buy_btn = draw.CenterButton(_("  [ ------------------- 最大买入 ------------------- ] "), _("最大买入"), self.width / 3 - 3, cmd_func=self.settle_max_buy)
             return_list.append(max_buy_btn.return_text)
             max_buy_btn.draw()
             
@@ -634,7 +633,7 @@ class Resource_Exchange_Line_Panel:
                 btn = draw.CenterButton(
                     _(btn_text),
                     _("{0}").format(btn_text),
-                    self.width / 8,
+                    self.width / 12,
                     cmd_func=self.settle_quantity,
                     args=(btn_text,)
                 )
@@ -651,7 +650,6 @@ class Resource_Exchange_Line_Panel:
             )
             return_list.append(reset_button.return_text)
             reset_button.draw()
-            line_feed.draw()
             line_feed.draw()
 
             # 以下情况绘制确认买入按钮
