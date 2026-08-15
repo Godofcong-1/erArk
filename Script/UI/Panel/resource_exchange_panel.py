@@ -510,7 +510,7 @@ class Resource_Exchange_Line_Panel:
 
             qty_value = draw.NormalDraw()
             qty_value.text = _("{0} {1}\n").format(action_str, abs_qty)
-            qty_value.style = "light_cyan"
+            qty_value.style = "light_sky_blue"
             qty_value.draw()
             
             # 2. 预计库存变化
@@ -534,7 +534,7 @@ class Resource_Exchange_Line_Panel:
             price_buy = draw.NormalDraw()
             price_buy.text = _("  买入价: {0} 龙门币 {1}").format(buy_price, buy_str)
             if self.quantity_of_resouce > 0:
-                price_buy.style = "light_cyan"
+                price_buy.style = "light_sky_blue"
             price_buy.draw()
             
             price_mid = draw.NormalDraw()
@@ -544,14 +544,14 @@ class Resource_Exchange_Line_Panel:
             price_sell = draw.NormalDraw()
             price_sell.text = _("卖出价: {0} 龙门币 {1}\n").format(sell_price, sell_str)
             if self.quantity_of_resouce < 0:
-                price_sell.style = "light_cyan"
+                price_sell.style = "light_sky_blue"
             price_sell.draw()
             
             # 4. 预计交易总价
             total_label = draw.NormalDraw()
             total_value_count = draw.NormalDraw()
             total_value = draw.NormalDraw()
-            total_value.style = "light_cyan"
+            total_value.style = "light_sky_blue"
 
             if self.quantity_of_resouce > 0:
                 total_label.text = _("  预计买入总价: ")
