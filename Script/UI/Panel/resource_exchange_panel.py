@@ -344,15 +344,16 @@ class Resource_Exchange_Line_Panel:
         self.now_select_resouce_id = 11
         """ 当前选择的资源id，默认为11号资源（普通药材） """
         self.quantity_of_resouce = 0
-        """ 交易数量，默认为0 """
+        """ 交易数量，默认为0。正数代表买入，负数代表卖出 """
 
     def draw(self):
         """绘制对象"""
-
+        
         title_text = _("资源交易")
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
         while 1:
+            line_feed.draw()
             return_list = []
             title_draw.draw()
 
@@ -479,29 +480,50 @@ class Resource_Exchange_Line_Panel:
             line_feed.draw()
             line_feed.draw()
             budget_info = draw.NormalDraw()
-            budget_info.text += _("  当前交易数量 : {0}\n").format(self.quantity_of_resouce)
-            budget_info.text += _("  预计库存变化 : {0} ± {1}  =>  {0} / {2}\n\n").format(
-                now_resouce_stock, self.quantity_of_resouce, warehouse_capacity
+            abs_qty = abs(self.quantity_of_resouce)
+            action_str = _("买入") if self.quantity_of_resouce > 0 else _("卖出") if self.quantity_of_resouce < 0 else _("无")
+            budget_info.text += _("  当前交易数量 : {0} {1}\n").format(action_str, abs_qty)
+            
+            new_stock = now_resouce_stock + self.quantity_of_resouce
+            sign = "+" if self.quantity_of_resouce >= 0 else "-"
+            budget_info.text += _("  预计库存变化 : {0} {1} {2}  =>  {3} / {4}\n\n").format(
+                now_resouce_stock, sign, abs_qty, new_stock, warehouse_capacity
             )
             
             buy_str = f"(+{buy_percent:.1f}%)" if buy_percent > 0 else f"({buy_percent:.1f}%)" if buy_percent < 0 else "(0%)"
             sell_str = f"(+{sell_percent:.1f}%)" if sell_percent > 0 else f"({sell_percent:.1f}%)" if sell_percent < 0 else "(0%)"
 
-            budget_info.text += _("  [ 买入价 ] 单价: {0} 龙门币 {1}  |  预计总价: {0} * {2} = {3} 龙门币\n").format(
-                buy_price, buy_str, self.quantity_of_resouce, buy_price * self.quantity_of_resouce
-            )
-            budget_info.text += _("  [ 卖出价 ] 单价: {0} 龙门币 {1}  |  预计总收入: {0} * {2} = {3} 龙门币\n").format(
-                sell_price, sell_str, self.quantity_of_resouce, sell_price * self.quantity_of_resouce
+            budget_info.text += _("  买入价: {0} 龙门币 {1}  |  卖出价: {2} 龙门币 {3}\n").format(
+                buy_price, buy_str, sell_price, sell_str
             )
             
-            # 输出特殊提示
-            if buy_price * self.quantity_of_resouce > money:
-                budget_info.text += _("\n  ●龙门币不足，无法以当前数量买入\n")
-            # 如果是不可购买的则显示提示
-            if cant_buy_flag:
-                budget_info.text += _("\n  ●该资源无法购买，只能卖出\n")
+            if self.quantity_of_resouce > 0:
+                budget_info.text += _("  预计买入总价: {0} * {1} = {2} 龙门币 | 交易后剩余 {3} 龙门币").format(
+                    buy_price, abs_qty, buy_price * abs_qty, money - buy_price * abs_qty
+                )
+            elif self.quantity_of_resouce < 0:
+                budget_info.text += _("  预计卖出总价: {0} * {1} = {2} 龙门币 | 交易后持有 {3} 龙门币").format(
+                    sell_price, abs_qty, sell_price * abs_qty, money - buy_price * abs_qty
+                )
+            else:
+                budget_info.text += _("  预计交易总价: 0 * 0 = 0 龙门币 | 交易后剩余 {0} 龙门币").format(money)
             
             budget_info.draw()
+            line_feed.draw()
+            
+            budget_warn = draw.NormalDraw()
+            budget_warn.style = "gold_enrod"
+            
+            # 输出特殊提示
+            if self.quantity_of_resouce > 0 and buy_price * abs_qty > money:
+                budget_warn.text += _("  ●龙门币不足，无法以当前数量买入")
+            line_feed.draw()
+            # 如果是不可购买的则显示提示
+            if cant_buy_flag:
+                budget_warn.text += _("  ●该资源无法购买，只能卖出")
+            
+            budget_warn.draw()
+            line_feed.draw()
             
             # =============================================================================================
             draw.LineDraw("=", window_width).draw()
@@ -512,27 +534,22 @@ class Resource_Exchange_Line_Panel:
             adjust_draw.draw()
             line_feed.draw()
             
-            adjust_draw.text = "  "
-            adjust_draw.draw()
+            max_sell_btn = draw.CenterButton(_(" [ 最大卖出 ] "), _("最大卖出"), self.width / 2, cmd_func=self.settle_max_sell)
+            return_list.append(max_sell_btn.return_text)
+            max_sell_btn.draw()
 
-            max_buy_btn = draw.CenterButton(_(" [最大买入] "), _("最大买入"), self.width / 12, cmd_func=self.settle_max_buy)
+            max_buy_btn = draw.CenterButton(_(" [ 最大买入 ] "), _("最大买入"), self.width / 2, cmd_func=self.settle_max_buy)
             return_list.append(max_buy_btn.return_text)
             max_buy_btn.draw()
             
-            max_sell_btn = draw.CenterButton(_(" [最大卖出] "), _("最大卖出"), self.width / 12, cmd_func=self.settle_max_sell)
-            return_list.append(max_sell_btn.return_text)
-            max_sell_btn.draw()
             line_feed.draw()
             
-            adjust_draw.text = "  "
-            adjust_draw.draw()
-            
-            button_text_list = [" [-1000] "," [-100] ", " [-10] ", " [-1] ", " [+1] ", " [+10] ", " [+100] ", " [+1000] "]
+            button_text_list = [" [ -1000 ] "," [ -100 ] ", " [ -10 ] ", " [ -1 ] ", " [ +1 ] ", " [ +10 ] ", " [ +100 ] ", " [ +1000 ] "]
             for btn_text in button_text_list:
                 btn = draw.CenterButton(
                     _(btn_text),
                     _("{0}").format(btn_text),
-                    self.width / 12,
+                    self.width / 8,
                     cmd_func=self.settle_quantity,
                     args=(btn_text,)
                 )
@@ -540,7 +557,7 @@ class Resource_Exchange_Line_Panel:
                 btn.draw()
             line_feed.draw(); line_feed.draw()
             
-            button_text = _(" [重  置] ")
+            button_text = _(" [ 重  置 ] ")
             reset_button = draw.CenterButton(
                 _(button_text),
                 _("{0}").format(button_text),
@@ -549,44 +566,41 @@ class Resource_Exchange_Line_Panel:
             )
             return_list.append(reset_button.return_text)
             reset_button.draw()
-            line_feed.draw(); line_feed.draw()
-            
-            buy_button = draw.CenterButton(
-                _("[买  入]"),
-                _("买入"),
-                self.width / 3,
-                cmd_func=self.execute_trade,
-                args=(True,),
-            )
-            sell_button = draw.CenterButton(
-                _("[卖  出]"),
-                _("卖出"),
-                self.width / 3,
-                cmd_func=self.execute_trade,
-                args=(False,),
-            )
-            
-            # 以下情况绘制买入按钮
-            # 钱足够且该资源可以买入
-            if self.quantity_of_resouce > 0 and money >= buy_price * self.quantity_of_resouce and not cant_buy_flag:
-                buy_button.draw()
-                return_list.append(buy_button.return_text)
-            else:
-                empty_draw = draw.NormalDraw()
-                empty_draw.text = attr_calculation.pad_display_width("", int(self.width / 3))
-                empty_draw.draw()
-
-            # 以下情况绘制卖出按钮
-            # 库存大于等于预定卖出的资源数量，且卖出资源不是特产或不是本地特产
-            if (
-                self.quantity_of_resouce > 0 and
-                (now_resouce_stock >= self.quantity_of_resouce) and
-                (resouce_data.type != _("特产") or resouce_data.specialty == cache.rhodes_island.current_location[0])
-            ):
-                sell_button.draw()
-                return_list.append(sell_button.return_text)
-
             line_feed.draw()
+            line_feed.draw()
+
+            # 以下情况绘制确认买入按钮
+            # 钱足够且该资源可以买入
+            if self.quantity_of_resouce > 0:
+                if money >= buy_price * abs_qty and not cant_buy_flag:
+                    buy_button = draw.CenterButton(
+                        _("[确认买入]"),
+                        _("确认买入"),
+                        self.width,
+                        cmd_func=self.execute_trade,
+                        normal_style="gold_enrod",
+                    )
+                    buy_button.draw()
+                    return_list.append(buy_button.return_text)
+
+            # 以下情况绘制确认卖出按钮
+            # 库存大于等于预定卖出的资源数量，且卖出资源不是特产或不是本地特产
+            elif self.quantity_of_resouce < 0:
+                if (now_resouce_stock >= abs_qty) and (resouce_data.type != _("特产") or resouce_data.specialty == cache.rhodes_island.current_location[0]):
+                    sell_button = draw.CenterButton(
+                        _("[确认卖出]"),
+                        _("确认卖出"),
+                        self.width,
+                        cmd_func=self.execute_trade,
+                        normal_style="gold_enrod",
+                    )
+                    sell_button.draw()
+                    return_list.append(sell_button.return_text)
+            
+            line_feed.draw()
+            
+            # =============================================================================================
+            draw.LineDraw("=", window_width).draw()
             
             back_draw = draw.CenterButton(_("[返  回]"), _("返回"), self.width)
             back_draw.draw()
@@ -598,14 +612,20 @@ class Resource_Exchange_Line_Panel:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
-    def execute_trade(self, buy_or_sell_flag: bool):
+    def execute_trade(self, buy_or_sell_flag: bool = None):
         """
         执行资源交易
         输入: 无
         输出: 无
         功能: 根据当前买入/卖出状态和数量，结算资源与龙门币变动
         """
-        trade_result = perform_trade(self.now_select_resouce_id, self.quantity_of_resouce, buy_or_sell_flag)
+        if self.quantity_of_resouce == 0:
+            return
+            
+        buy_or_sell_flag = self.quantity_of_resouce > 0
+        actual_req_quantity = abs(self.quantity_of_resouce)
+        
+        trade_result = perform_trade(self.now_select_resouce_id, actual_req_quantity, buy_or_sell_flag)
         if not trade_result:
             info_draw = draw.WaitDraw()
             info_draw.text = _("\n交易未能执行，请检查资金、仓库或库存限制。\n")
@@ -628,7 +648,7 @@ class Resource_Exchange_Line_Panel:
             cache.rhodes_island.warehouse_capacity,
             resource_delta,
         )
-        if actual_quantity != self.quantity_of_resouce:
+        if actual_quantity != actual_req_quantity:
             info_draw_text += _("(本次实际成交{0}单位)\n").format(actual_quantity)
         info_draw.text = info_draw_text
         info_draw.draw()
@@ -1096,12 +1116,16 @@ class Resource_Exchange_Line_Panel:
         """结算交易数量变更"""
         add_num = int(button_text[2:-2])
         self.quantity_of_resouce += add_num
-        # 交易数量不能超过可购买数量和可卖出数量中的较大值
-        limit = max(cache.rhodes_island.materials_resouce[self.now_select_resouce_id], cache.rhodes_island.warehouse_capacity - cache.rhodes_island.materials_resouce[self.now_select_resouce_id])
-        self.quantity_of_resouce = min(self.quantity_of_resouce, limit)
-        # 保证不为负数
-        if self.quantity_of_resouce < 0:
-            self.quantity_of_resouce = 0
+        
+        capacity_left = cache.rhodes_island.warehouse_capacity - cache.rhodes_island.materials_resouce[self.now_select_resouce_id]
+        now_stock = cache.rhodes_island.materials_resouce[self.now_select_resouce_id]
+        
+        # 交易数量最大买入上限
+        if self.quantity_of_resouce > capacity_left:
+            self.quantity_of_resouce = capacity_left
+        # 交易数量最大卖出下限 (负数)
+        if self.quantity_of_resouce < -now_stock:
+            self.quantity_of_resouce = -now_stock
             
     def settle_max_buy(self):
         """结算最大买入数量"""
@@ -1124,7 +1148,7 @@ class Resource_Exchange_Line_Panel:
 
     def settle_max_sell(self):
         """结算最大卖出数量"""
-        self.quantity_of_resouce = cache.rhodes_island.materials_resouce[self.now_select_resouce_id]
+        self.quantity_of_resouce = -cache.rhodes_island.materials_resouce[self.now_select_resouce_id]
 
     def reset_quantity(self,):
         """重置资源交易数量"""
