@@ -254,12 +254,16 @@ class Characterabi_show_Text:
             line_feed.draw()
             # 如果当前宝珠足够，绘制升级按钮
             if now_juel >= need_juel:
-                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), int(self.width / 3), cmd_func=self.mark_up, args=(ability_id, need_juel))
+                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), int(self.width), cmd_func=self.mark_up, args=(ability_id, need_juel))
                 yes_draw.draw()
                 return_list.append(yes_draw.return_text)
+            line_feed.draw()
+            line = draw.LineDraw("=", self.width)
+            line.draw()
             # 绘制返回按钮
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width / 3))
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width))
             back_draw.draw()
+            line_feed.draw()
             return_list.append(back_draw.return_text)
             # 等待玩家选择
             yrn = flow_handle.askfor_all(return_list)
@@ -339,15 +343,20 @@ class Characterabi_show_Text:
             info_draw.text = juel_info_text
             info_draw.draw()
             line_feed.draw()
+            
             # 如果当前宝珠足够，绘制降低按钮
-            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), int(self.width / 3), cmd_func=self.mark_down, args=(ability_id))
+            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), int(self.width), cmd_func=self.mark_down, args=(ability_id))
             if mark_down_data_all_value >= need_juel_all_value:
                 yes_draw.draw()
                 return_list.append(yes_draw.return_text)
+            line_feed.draw()
+            line = draw.LineDraw("=", self.width)
+            line.draw()
             # 绘制返回按钮
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width / 3))
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width))
             back_draw.draw()
             return_list.append(back_draw.return_text)
+            line_feed.draw()
             # 等待玩家选择
             yrn = flow_handle.askfor_all(return_list)
             py_cmd.clr_cmd()
@@ -613,27 +622,33 @@ class Characterabi_cmd_Text:
                 now_draw_failed.text = _("不满足条件，无法升级\n")
                 now_draw_failed.draw()
             line_feed.draw()
-            line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _( "返回"), int(self.width / 3))
-            back_draw.draw()
-            self.return_list.append(back_draw.return_text)
+            
             if not len(need_list2):
                 if judge:
                     # 如果满足条件且没有第二个需求列表，则绘制升级按钮
-                    yes_draw = draw.CenterButton(_("[确定]"), _( "确定"), int(self.width / 3), cmd_func=self.level_up, args=jule_dict_1)
+                    yes_draw = draw.CenterButton(_("[确定]"), _( "确定"), int(self.width), cmd_func=self.level_up, args=jule_dict_1)
                     yes_draw.draw()
                     self.return_list.append(yes_draw.return_text)
             else:
                 # 按照主要求进行升级
                 if judge:
-                    yes_1_draw = draw.CenterButton(_("[确定(主需求)]"), _( "确定(主需求)"), int(self.width / 3), cmd_func=self.level_up, args=jule_dict_1)
+                    yes_1_draw = draw.CenterButton(_("[确定(主需求)]"), _( "确定(主需求)"), int(self.width / 2), cmd_func=self.level_up, args=jule_dict_1)
                     yes_1_draw.draw()
                     self.return_list.append(yes_1_draw.return_text)
                 # 按照第二要求进行升级
                 if judge2:
-                    yes_2_draw = draw.CenterButton(_("[确定(次需求)]"), _( "确定(次需求)"), int(self.width / 3), cmd_func=self.level_up, args=jule_dict_2)
+                    yes_2_draw = draw.CenterButton(_("[确定(次需求)]"), _( "确定(次需求)"), int(self.width / 2), cmd_func=self.level_up, args=jule_dict_2)
                     yes_2_draw.draw()
                     self.return_list.append(yes_2_draw.return_text)
+            
+            line_feed.draw()
+            line = draw.LineDraw("=", self.width)
+            line.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _( "返回"), int(self.width))
+            back_draw.draw()
+            self.return_list.append(back_draw.return_text)
+            line_feed.draw()
+            
             yrn = flow_handle.askfor_all(self.return_list)
             py_cmd.clr_cmd()
             line_feed.draw()
@@ -703,7 +718,7 @@ class Character_abi_up_main_Handle:
 
     def draw(self):
         """绘制面板"""
-        back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width / 3))
+        back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width))
         now_panel_id = _("属性升级")
         while 1:
             self.return_list = []
