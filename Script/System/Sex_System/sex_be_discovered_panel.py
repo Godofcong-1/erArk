@@ -51,10 +51,22 @@ class Sex_Be_Discovered_Panel:
         self.discoverer_reaction_settled = False
         """ 发现者反应是否已结算 """
 
+        # 如果当前交互对象没有在H，则选取一个正确的H中的对象
+        if not handle_premise.handle_self_is_h(self.pl_chara_data.target_character_id):
+            from Script.Design import map_handle
+            now_scene_character_list = map_handle.get_chara_now_scene_all_chara_id_list(0, remove_own_character=True)
+            for chara_id in now_scene_character_list:
+                target_character_data: game_type.Character = cache.character_data[chara_id]
+                if handle_premise.handle_self_is_h(chara_id):
+                    self.pl_chara_data.target_character_id = chara_id
+                    self.target_chara_data = target_character_data
+                    break
+
     def draw(self) -> None:
         """绘制面板"""
 
         title_draw = draw.TitleLineDraw(_("H中被发现"), self.width)
+
 
         # 性行为情况名
         sex_type_text = _("你正在和{0}单独H").format(self.target_chara_data.name)
