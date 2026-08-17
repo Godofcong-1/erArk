@@ -225,6 +225,8 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         item_type = _("声望")
         # 声望的显示为实际值的百分之一
         item_num *= 0.01
+        # 声望默认为0
+        now_have_item_num = 0
         # 0为当前国家
         if item_id == 0:
             now_country = cache.rhodes_island.current_location[0]

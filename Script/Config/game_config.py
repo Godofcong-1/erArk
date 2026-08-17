@@ -761,6 +761,8 @@ def load_nation():
                 father_cid = now_cid // 10 * 10 + 1
                 config_nation_data_of_country_subordinate.setdefault(father_cid, [])
                 config_nation_data_of_country_subordinate[father_cid].append(now_cid)
+        elif now_cid > 500:
+            config_nation_data_of_country_subordinate[now_cid] = []
 
 
 def load_diplomatic_policy():
