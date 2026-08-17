@@ -112,8 +112,10 @@ class Characterabi_show_Text:
                         ):
                         # 如果可以升级，则额外标记
                         can_up, can_down = self.check_ability_change_possible(ability_id)
+                        btn_kwargs = {}
                         if can_up:
                             button_text += "(+)"
+                            btn_kwargs['normal_style'] = "gold_enrod"
                         button_draw = draw.LeftButton(
                             _(button_text),
                             _(game_config.config_ability[ability_id].name),
@@ -121,6 +123,7 @@ class Characterabi_show_Text:
                             cmd_func=self.mark_up_show,
                             args=(ability_id),
                             tooltip=game_config.config_ability[ability_id].info,
+                            **btn_kwargs
                         )
                         self.return_list.append(button_draw.return_text)
                         button_draw.draw()
@@ -131,8 +134,10 @@ class Characterabi_show_Text:
                         ):
                         # 如果可以降级，则额外标记
                         can_up, can_down = self.check_ability_change_possible(ability_id)
-                        if can_up:
+                        btn_kwargs = {}
+                        if can_down:
                             button_text += "(-)"
+                            btn_kwargs['normal_style'] = "gold_enrod"
                         button_draw = draw.LeftButton(
                             _(button_text),
                             _(game_config.config_ability[ability_id].name),
@@ -140,6 +145,7 @@ class Characterabi_show_Text:
                             cmd_func=self.mark_down_show,
                             args=(ability_id),
                             tooltip=game_config.config_ability[ability_id].info,
+                            **btn_kwargs
                         )
                         self.return_list.append(button_draw.return_text)
                         button_draw.draw()
@@ -167,6 +173,9 @@ class Characterabi_show_Text:
                     now_exp = 0
                     now_exp = self.character_data.ability[ability_id]
                     button_text = f" {ability_data.name} "
+                    # 為能力、技能、技巧補上缺少的兩個半形空格
+                    if anility_type in (3, 4, 5):
+                        button_text += "  "
                     # 根据不同的类型补不同数量的空格#
                     if anility_type != 2 and anility_type != 4 and anility_type != 6:
                         button_text += "  "
@@ -177,8 +186,10 @@ class Characterabi_show_Text:
                     button_text += str(now_exp)
                     # 如果可以升级，则额外标记
                     can_up, can_down = self.check_ability_change_possible(ability_id)
+                    btn_kwargs = {}
                     if can_up:
                         button_text += "(+)"
+                        btn_kwargs['normal_style'] = "gold_enrod"
                     now_abi_up_panel = Characterabi_cmd_Text(self.character_id, self.width, ability_id)
                     button_draw = draw.LeftButton(
                         _(button_text),
@@ -186,6 +197,7 @@ class Characterabi_show_Text:
                         int(self.width / 10),
                         cmd_func=now_abi_up_panel.draw,
                         tooltip=game_config.config_ability[ability_id].info,
+                        **btn_kwargs
                         )
                     self.return_list.append(button_draw.return_text)
                     button_draw.draw()
@@ -242,12 +254,16 @@ class Characterabi_show_Text:
             line_feed.draw()
             # 如果当前宝珠足够，绘制升级按钮
             if now_juel >= need_juel:
-                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), int(self.width / 3), cmd_func=self.mark_up, args=(ability_id, need_juel))
+                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), int(self.width), cmd_func=self.mark_up, args=(ability_id, need_juel))
                 yes_draw.draw()
                 return_list.append(yes_draw.return_text)
+            line_feed.draw()
+            line = draw.LineDraw("=", self.width)
+            line.draw()
             # 绘制返回按钮
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width / 3))
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width))
             back_draw.draw()
+            line_feed.draw()
             return_list.append(back_draw.return_text)
             # 等待玩家选择
             yrn = flow_handle.askfor_all(return_list)
@@ -327,15 +343,20 @@ class Characterabi_show_Text:
             info_draw.text = juel_info_text
             info_draw.draw()
             line_feed.draw()
+            
             # 如果当前宝珠足够，绘制降低按钮
-            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), int(self.width / 3), cmd_func=self.mark_down, args=(ability_id))
+            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), int(self.width), cmd_func=self.mark_down, args=(ability_id))
             if mark_down_data_all_value >= need_juel_all_value:
                 yes_draw.draw()
                 return_list.append(yes_draw.return_text)
+            line_feed.draw()
+            line = draw.LineDraw("=", self.width)
+            line.draw()
             # 绘制返回按钮
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width / 3))
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width))
             back_draw.draw()
             return_list.append(back_draw.return_text)
+            line_feed.draw()
             # 等待玩家选择
             yrn = flow_handle.askfor_all(return_list)
             py_cmd.clr_cmd()
@@ -601,27 +622,33 @@ class Characterabi_cmd_Text:
                 now_draw_failed.text = _("不满足条件，无法升级\n")
                 now_draw_failed.draw()
             line_feed.draw()
-            line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _( "返回"), int(self.width / 3))
-            back_draw.draw()
-            self.return_list.append(back_draw.return_text)
+            
             if not len(need_list2):
                 if judge:
                     # 如果满足条件且没有第二个需求列表，则绘制升级按钮
-                    yes_draw = draw.CenterButton(_("[确定]"), _( "确定"), int(self.width / 3), cmd_func=self.level_up, args=jule_dict_1)
+                    yes_draw = draw.CenterButton(_("[确定]"), _( "确定"), int(self.width), cmd_func=self.level_up, args=jule_dict_1)
                     yes_draw.draw()
                     self.return_list.append(yes_draw.return_text)
             else:
                 # 按照主要求进行升级
                 if judge:
-                    yes_1_draw = draw.CenterButton(_("[确定(主需求)]"), _( "确定(主需求)"), int(self.width / 3), cmd_func=self.level_up, args=jule_dict_1)
+                    yes_1_draw = draw.CenterButton(_("[确定(主需求)]"), _( "确定(主需求)"), int(self.width / 2), cmd_func=self.level_up, args=jule_dict_1)
                     yes_1_draw.draw()
                     self.return_list.append(yes_1_draw.return_text)
                 # 按照第二要求进行升级
                 if judge2:
-                    yes_2_draw = draw.CenterButton(_("[确定(次需求)]"), _( "确定(次需求)"), int(self.width / 3), cmd_func=self.level_up, args=jule_dict_2)
+                    yes_2_draw = draw.CenterButton(_("[确定(次需求)]"), _( "确定(次需求)"), int(self.width / 2), cmd_func=self.level_up, args=jule_dict_2)
                     yes_2_draw.draw()
                     self.return_list.append(yes_2_draw.return_text)
+            
+            line_feed.draw()
+            line = draw.LineDraw("=", self.width)
+            line.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _( "返回"), int(self.width))
+            back_draw.draw()
+            self.return_list.append(back_draw.return_text)
+            line_feed.draw()
+            
             yrn = flow_handle.askfor_all(self.return_list)
             py_cmd.clr_cmd()
             line_feed.draw()
@@ -691,7 +718,7 @@ class Character_abi_up_main_Handle:
 
     def draw(self):
         """绘制面板"""
-        back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width / 3))
+        back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width))
         now_panel_id = _("属性升级")
         while 1:
             self.return_list = []
@@ -767,11 +794,13 @@ class Character_abi_up_sub_Handle:
         self.draw_data[self.now_panel].draw()
         self.return_list = []
         self.return_list.extend(self.draw_data[self.now_panel].return_list)
+        
         line_feed.draw()
         line = draw.LineDraw("=", self.width)
         line.draw()
-        self.handle_panel.draw()
-        self.return_list.extend(self.handle_panel.return_list)
+        # 這裡將原本繪製單一頁籤註解掉
+        # self.handle_panel.draw()
+        # self.return_list.extend(self.handle_panel.return_list)
 
 
 class Character_abi_up_main_panel:
