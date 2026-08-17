@@ -4087,6 +4087,10 @@ def handle_move_to_pre_scene(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
+    # 如果前一场景的移动数据与当前场景相同，则删除掉前一场景的移动数据
+    while character_data.action_info.past_move_position_list and character_data.action_info.past_move_position_list[-1] == character_data.position:
+        character_data.action_info.past_move_position_list.pop(-1)
+    # 然后再判断是否还有前一场景的移动数据，如果有则移动至前一场景
     if len(character_data.action_info.past_move_position_list):
         character_data.behavior.move_target = character_data.action_info.past_move_position_list[-1]
         # 删除掉前一场景的移动数据

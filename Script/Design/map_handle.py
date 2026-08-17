@@ -115,6 +115,12 @@ def character_move_scene(old_scene_path: list, new_scene_path: list, character_i
     # 刷新移动起止位置
     character_data.behavior.move_src = old_scene_path
     character_data.behavior.move_target = new_scene_path
+    # 记录移动历史
+    if len(character_data.action_info.past_move_position_list) == 0 or (len(character_data.action_info.past_move_position_list) and old_scene_path != character_data.action_info.past_move_position_list[-1]):
+        character_data.action_info.past_move_position_list.append(old_scene_path)
+        # 如果移动历史超过10条，则删除最早的一条
+        if len(character_data.action_info.past_move_position_list) > 10:
+            character_data.action_info.past_move_position_list.pop(0)
     # 清零最终目的地
     if new_scene_path == character_data.behavior.move_final_target:
         character_data.behavior.move_final_target = []
