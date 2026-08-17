@@ -618,17 +618,46 @@ class Resource_Exchange_Line_Panel:
             adjust_draw.draw()
             line_feed.draw()
             
-            max_sell_btn = draw.CenterButton(_("[ -------------------- 最大卖出 ------------------- ] "), _("最大卖出"), self.width / 3 - 3, cmd_func=self.settle_max_sell)
+            max_sell_btn = draw.CenterButton(_("[ ==================== 最大卖出 =================== ] "), _("最大卖出"), self.width / 3 - 3, cmd_func=self.settle_max_sell)
             return_list.append(max_sell_btn.return_text)
             max_sell_btn.draw()
+            
+            qty_value = draw.NormalDraw()
+            qty_value.text = _("    {0} {1}").format(action_str, abs_qty)
+            qty_value.text = attr_calculation.pad_display_width(qty_value.text, int(self.width/12))
+            qty_value.style = "light_sky_blue"
+            qty_value.draw()
 
-            max_buy_btn = draw.CenterButton(_("  [ ------------------- 最大买入 ------------------- ] "), _("最大买入"), self.width / 3 - 3, cmd_func=self.settle_max_buy)
+            max_buy_btn = draw.CenterButton(_("  [ =================== 最大买入 =================== ] "), _("最大买入"), self.width / 3 - 3, cmd_func=self.settle_max_buy)
             return_list.append(max_buy_btn.return_text)
             max_buy_btn.draw()
             
             line_feed.draw()
+            line_feed.draw()
             
-            button_text_list = [" [ -1000 ] "," [ -100 ] ", " [ -10 ] ", " [ -1 ] ", " [ +1 ] ", " [ +10 ] ", " [ +100 ] ", " [ +1000 ] "]
+            button_text_list = [" [ -1000 ] "," [ -100 ] ", " [ -10 ] ", " [ -1 ] "]
+            for btn_text in button_text_list:
+                btn = draw.CenterButton(
+                    _(btn_text),
+                    _("{0}").format(btn_text),
+                    self.width / 12,
+                    cmd_func=self.settle_quantity,
+                    args=(btn_text,)
+                )
+                return_list.append(btn.return_text)
+                btn.draw()
+            
+            button_text = _(" [ 重   置 ] ")
+            reset_button = draw.CenterButton(
+                _(button_text),
+                _("{0}").format(button_text),
+                self.width/12,
+                cmd_func=self.reset_quantity,
+            )
+            return_list.append(reset_button.return_text)
+            reset_button.draw()
+            
+            button_text_list = [" [ +1 ] ", " [ +10 ] ", " [ +100 ] ", " [ +1000 ] "]
             for btn_text in button_text_list:
                 btn = draw.CenterButton(
                     _(btn_text),
@@ -640,17 +669,6 @@ class Resource_Exchange_Line_Panel:
                 return_list.append(btn.return_text)
                 btn.draw()
             line_feed.draw(); line_feed.draw()
-            
-            button_text = _(" [ 重  置 ] ")
-            reset_button = draw.CenterButton(
-                _(button_text),
-                _("{0}").format(button_text),
-                self.width,
-                cmd_func=self.reset_quantity,
-            )
-            return_list.append(reset_button.return_text)
-            reset_button.draw()
-            line_feed.draw()
 
             # 以下情况绘制确认买入按钮
             # 钱足够且该资源可以买入
