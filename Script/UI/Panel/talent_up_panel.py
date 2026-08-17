@@ -8,7 +8,7 @@ from Script.Core import (
     constant,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import update, handle_talent
+from Script.Design import update, handle_talent, attr_calculation
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -38,10 +38,23 @@ class Character_talent_show_Text:
         """ 当前最大可绘制宽度 """
         self.return_list: List[str] = []
         """ 监听的按钮列表 """
-        # self.column = column
-        # """ 每行状态最大个数 """
         self.character_data = cache.character_data[self.character_id]
         """ 角色数据 """
+
+    def _draw_condition(self, text: str, is_met: bool, show_suffix: bool = True) -> bool:
+        """
+        通用判断与绘制函数：自动根据判定结果改色并附加(√)/(X)
+        返回 is_met 以便外层更新 judge 变量
+        """
+        cond_draw = draw.NormalDraw()
+        if is_met:
+            cond_draw.text = f"{text}(√)" if show_suffix else text
+            cond_draw.style = "green"
+        else:
+            cond_draw.text = f"{text}(X)" if show_suffix else text
+            cond_draw.style = "warning"
+        cond_draw.draw()
+        return is_met
 
     def draw(self):
         """绘制对象"""
@@ -51,131 +64,80 @@ class Character_talent_show_Text:
         title_text = "素质"
         type_line = draw.LittleTitleLineDraw(title_text, self.width, ":")
         type_line.draw()
+        
         # 前提说明#
-        text_draw_introduce = draw.NormalDraw()
-        text_draw_introduce_text = _("陷落系素质\n 共通基础前提：")
+        intro_draw = draw.NormalDraw()
+        intro_draw.text = _("陷落系素质\n 共通基础前提：")
+        intro_draw.draw()
 
         # 检测共通基础前提
         judge = 1
-        text_draw_introduce_text += _(" 好感度500以上")
-        if self.character_data.favorability[0] < 500:
-            text_draw_introduce_text += "(X)"
-            judge = 0
-        else:
-            text_draw_introduce_text += "(√)"
-        text_draw_introduce_text += _(" 信任度50%以上")
-        if self.character_data.trust < 50:
-            text_draw_introduce_text += "(X)"
-            judge = 0
-        else:
-            text_draw_introduce_text += "(√)"
-        text_draw_introduce_text += _(" 反发刻印0")
-        if self.character_data.ability[18] != 0:
-            text_draw_introduce_text += "(X)"
-            judge = 0
-        else:
-            text_draw_introduce_text += "(√)"
-        text_draw_introduce_text += "\n"
-        text_draw_introduce_text += _(" 分为爱情系与隶属系两条路线，只能任选其一，选择后另一路线消失，仅在新周目时可以重置\n")
+        if not self._draw_condition(_(" 好感度500以上"), self.character_data.favorability[0] >= 500): judge = 0
+        if not self._draw_condition(_(" 信任度50%以上"), self.character_data.trust >= 50): judge = 0
+        if not self._draw_condition(_(" 反发刻印0"), self.character_data.ability[18] == 0): judge = 0
 
-        text_draw_introduce.text = text_draw_introduce_text
-        text_draw_introduce.draw()
+        desc_draw = draw.NormalDraw()
+        desc_draw.text = _("\n 分为爱情系与隶属系两条路线，只能任选其一，选择后另一路线消失，仅在新周目时可以重置\n")
+        desc_draw.draw()
 
-        # 检测是哪个路线
-        next_love_id,next_obey_id = 0,0
-        for talent_id in {201,202,203,204}:
-            if self.character_data.talent[talent_id]:
-                next_love_id = talent_id + 1
-        for talent_id in {211,212,213,214}:
-            if self.character_data.talent[talent_id]:
-                next_obey_id = talent_id + 1
+        # 获取陷落阶段等级 (正数为爱情路线，负数为隶属路线)
+        fall_level = attr_calculation.get_character_fall_level(self.character_id, True)
+        love_level = fall_level if fall_level > 0 else 0
+        obey_level = -fall_level if fall_level < 0 else 0
 
-        # 爱情路线
-        if next_love_id or not next_obey_id:
+        # 爱情路线 (如果还没选路线，或是已经走了爱情路线)
+        if love_level > 0 or obey_level == 0:
             love_judge = 1 if judge == 1 else 0
             line = draw.LineDraw("-", self.width)
             line.draw()
-            info_draw_love = draw.NormalDraw()
-            text_draw_love_text = _("爱情路线前提：")
+            
+            title_draw_love = draw.NormalDraw()
+            title_draw_love.text = _("爱情路线前提：")
+            title_draw_love.draw()
 
             # 检测爱情路线前提
-            text_draw_love_text += _(" 苦痛刻印0")
-            if self.character_data.ability[15] != 0:
-                text_draw_love_text += "(X)"
-                love_judge = 0
-            else:
-                text_draw_love_text += "(√)"
-            text_draw_love_text += _(" 恐怖刻印0")
-            if self.character_data.ability[17] != 0:
-                text_draw_love_text += "(X)"
-                love_judge = 0
-            else:
-                text_draw_love_text += "(√)"
-            text_draw_love_text += _(" 亲密等级至少为2")
-            if self.character_data.ability[32] < 2:
-                text_draw_love_text += "(X)"
-                love_judge = 0
-            else:
-                text_draw_love_text += "(√)"
-            text_draw_love_text += "\n"
+            if not self._draw_condition(_(" 苦痛刻印0"), self.character_data.ability[15] == 0): love_judge = 0
+            if not self._draw_condition(_(" 恐怖刻印0"), self.character_data.ability[17] == 0): love_judge = 0
+            if not self._draw_condition(_(" 亲密等级至少为2"), self.character_data.ability[32] >= 2): love_judge = 0
+            
+            line_feed.draw()
 
             # 输出最高级的提示信息
-            if self.character_data.talent[204]:
-                text_draw_love_text += _("\n已达到最高级-爱侣\n")
-                info_draw_love.text = text_draw_love_text
-                info_draw_love.draw()
+            if love_level == 4:
+                max_level_draw = draw.NormalDraw()
+                max_level_draw.text = _("已达到最高级-爱侣\n")
+                max_level_draw.draw()
             # 路线选择
             else:
-                info_draw_love.text = text_draw_love_text
-                info_draw_love.draw()
-                if next_love_id == 0:
-                    self.show_gain_need(201, love_judge)
-                else:
-                    self.show_gain_need(next_love_id, love_judge)
+                next_id = 201 if love_level == 0 else 200 + love_level + 1
+                self.show_gain_need(next_id, love_judge)
 
-        # 隶属路线
-        if next_obey_id or not next_love_id:
+        # 隶属路线 (如果还没选路线，或是已经走了隶属路线)
+        if obey_level > 0 or love_level == 0:
             obey_judge = 1 if judge == 1 else 0
             line = draw.LineDraw("-", self.width)
             line.draw()
-            info_draw_obey = draw.NormalDraw()
-            text_draw_obey_text = _("隶属路线前提：")
+            
+            title_draw_obey = draw.NormalDraw()
+            title_draw_obey.text = _("隶属路线前提：")
+            title_draw_obey.draw()
 
             # 检测隶属路线前提
-            text_draw_obey_text += _(" 快乐刻印>=1")
-            if self.character_data.ability[13] == 0:
-                text_draw_obey_text += "(X)"
-                obey_judge = 0
-            else:
-                text_draw_obey_text += "(√)"
-            text_draw_obey_text += _(" 屈服刻印>=1")
-            if self.character_data.ability[14] == 0:
-                text_draw_obey_text += "(X)"
-                obey_judge = 0
-            else:
-                text_draw_obey_text += "(√)"
-            text_draw_obey_text += _(" 顺从等级至少为2")
-            if self.character_data.ability[31] <= 1:
-                text_draw_obey_text += "(X)"
-                obey_judge = 0
-            else:
-                text_draw_obey_text += "(√)"
-            text_draw_obey_text += "\n"
+            if not self._draw_condition(_(" 快乐刻印>=1"), self.character_data.ability[13] >= 1): obey_judge = 0
+            if not self._draw_condition(_(" 屈服刻印>=1"), self.character_data.ability[14] >= 1): obey_judge = 0
+            if not self._draw_condition(_(" 顺从等级至少为2"), self.character_data.ability[31] >= 2): obey_judge = 0
+            
+            line_feed.draw()
 
             # 输出最高级的提示信息
-            if self.character_data.talent[214]:
-                text_draw_obey_text += _("\n已达到最高级-奴隶\n")
-                info_draw_obey.text = text_draw_obey_text
-                info_draw_obey.draw()
+            if obey_level == 4:
+                max_level_draw = draw.NormalDraw()
+                max_level_draw.text = _("已达到最高级-奴隶\n")
+                max_level_draw.draw()
             # 路线选择
             else:
-                info_draw_obey.text = text_draw_obey_text
-                info_draw_obey.draw()
-                if next_obey_id == 0:
-                    self.show_gain_need(211, obey_judge)
-                else:
-                    self.show_gain_need(next_obey_id, obey_judge)
-
+                next_id = 211 if obey_level == 0 else 210 + obey_level + 1
+                self.show_gain_need(next_id, obey_judge)
 
     def show_gain_need(self, talent_id, judge):
         """具体显示需要什么"""
@@ -190,8 +152,7 @@ class Character_talent_show_Text:
 
         # 以&为分割判定是否有多个需求
         if "&" not in need_all.gain_need:
-            need_list = []
-            need_list.append(need_all.gain_need)
+            need_list = [need_all.gain_need]
         else:
             need_list = need_all.gain_need.split('&')
 
@@ -201,41 +162,40 @@ class Character_talent_show_Text:
             if len(need_text.split('|')[0]) >= 2:
                 need_type_id = int(need_text.split('|')[0][1:])
             need_value = int(need_text.split('|')[1])
-            # print(f"debug need_type = {need_type},need_type_id = {need_type_id},need_value = {need_value}")
+            
+            is_met = True
+            button_text = ""
+            
             if need_type == "A":
                 abi_name = game_config.config_ability[need_type_id].name
                 button_text = _("  需要能力[{0}]至少为 {1}\n").format(abi_name, str(need_value))
-                if self.character_data.ability[need_type_id] < need_value:
-                    judge = 0
+                is_met = self.character_data.ability[need_type_id] >= need_value
             elif need_type == "T":
                 tal_name = game_config.config_talent[need_value].name
                 button_text = _("  需要素质[{0}]\n").format(tal_name)
-                if not self.character_data.talent[need_value]:
-                    judge = 0
+                is_met = bool(self.character_data.talent[need_value])
             elif need_type == "J":
                 juel_name = game_config.config_juel[need_type_id].name
                 button_text = _("  需要宝珠[{0}]至少为 {1}\n").format(juel_name, str(need_value))
-                if self.character_data.juel[need_type_id] < need_value:
-                    judge = 0
-                # self.jule_dict[need_type_id] = need_value
+                is_met = self.character_data.juel[need_type_id] >= need_value
             elif need_type == "E":
                 experience_name = game_config.config_experience[need_type_id].name
                 button_text = _("  需要经验[{0}]至少为 {1}\n").format(experience_name, str(need_value))
-                if self.character_data.experience[need_type_id] < need_value:
-                    judge = 0
+                is_met = self.character_data.experience[need_type_id] >= need_value
             elif need_type == "F":
                 button_text = _("  需要好感至少为 {0}\n").format(str(need_value))
-                if self.character_data.favorability[0] < need_value:
-                    judge = 0
+                is_met = self.character_data.favorability[0] >= need_value
             elif need_type == "X":
                 button_text = _("  需要信赖至少为 {0}\n").format(str(need_value))
-                if self.character_data.trust < need_value:
-                    judge = 0
-            now_draw = draw.NormalDraw()
-            now_draw.text = button_text
-            now_draw.draw()
+                is_met = self.character_data.trust >= need_value
 
-        if talent_id in {201,211}:
+            if not is_met:
+                judge = 0
+            
+            # 使用通用函数绘制变色文本
+            self._draw_condition(button_text, is_met, show_suffix=False)
+
+        if talent_id in {201, 211}:
             line_feed.draw()
             if judge:
                 now_draw_succed = draw.NormalDraw()
@@ -286,4 +246,3 @@ class Character_talent_show_Text:
         character_data.state = constant.CharacterStatus.STATUS_WAIT
         character_data.behavior.duration = 1
         update.game_update_flow(1)
-
