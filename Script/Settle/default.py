@@ -1742,10 +1742,10 @@ def handle_target_hypnosis_blockhead_switch_change(
     target_character_data = cache.character_data[character_data.target_character_id]
     if character_data.dead:
         return
-    if target_character_data.hypnosis.blockhead:
-        hypnosis_state.clear_hypnosis_behavior_mode(character_data.target_character_id)
-    else:
-        hypnosis_state.clear_hypnosis_behavior_mode(character_data.target_character_id)
+    # 清理会复位全部行为模式标志，本次操作是开启还是关闭须以清理前的开关状态判断
+    target_in_blockhead = target_character_data.hypnosis.blockhead
+    hypnosis_state.clear_hypnosis_behavior_mode(character_data.target_character_id)
+    if not target_in_blockhead:
         target_character_data.hypnosis.blockhead = True
         target_character_data.sp_flag.unconscious_h = 6
         santi_down = 10
@@ -1801,10 +1801,10 @@ def handle_target_hypnosis_active_h_switch_change(
     target_character_data = cache.character_data[character_data.target_character_id]
     if character_data.dead:
         return
-    if target_character_data.hypnosis.active_h:
-        hypnosis_state.clear_hypnosis_behavior_mode(character_data.target_character_id)
-    else:
-        hypnosis_state.clear_hypnosis_behavior_mode(character_data.target_character_id)
+    # 清理会复位全部行为模式标志，本次操作是开启还是关闭须以清理前的开关状态判断
+    target_in_active_h = target_character_data.hypnosis.active_h
+    hypnosis_state.clear_hypnosis_behavior_mode(character_data.target_character_id)
+    if not target_in_active_h:
         target_character_data.hypnosis.active_h = True
         target_character_data.h_state.npc_active_h = True
         target_character_data.sp_flag.unconscious_h = 6

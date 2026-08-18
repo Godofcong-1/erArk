@@ -374,9 +374,6 @@ int,str,str,str
 921,hypnosis_increase_body_sensitivity,体控-敏感度提升,通过催眠增强目标身体的敏感程度。
 922,hypnosis_force_climax,体控-强制高潮,通过催眠强制目标达到性高潮。
 923,hypnosis_force_ovulation,体控-强制排卵,通过催眠影响目标的生理功能促进排卵。
-924,hypnosis_blockhead,体控-木头人,通过催眠使目标进入被动呆滞状态。
-925,hypnosis_active_h,体控-逆推,通过催眠使目标主动进行亲密行为。
-931,hypnosis_roleplay,心控-角色扮演,通过催眠使目标相信自己是特定角色。
 932,hypnosis_pain_as_pleasure,心控-苦痛快感化,通过催眠改变目标的感知，将痛苦感知为快感。
 941,time_stop_on,时间停止流动,激活特殊能力暂停时间的流动。
 942,time_stop_off,时间重新流动,解除时间停止状态，恢复正常时间流动。
