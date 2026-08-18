@@ -37,6 +37,8 @@ data/talk/ai
 .claude/settings.json
 yolo11x-pose.pt
 .claude/skills
+node_modules/
+package-lock.json
 
 # 地图数据
 data/MapData
