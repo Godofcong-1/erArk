@@ -1,10 +1,17 @@
 # Plan 03：破处记录在中断 H 时回溯到上一个有效 H 指令
 
-- 状态：待实施
+- 状态：已实施；通用回溯函数已按要求放入 `Script/System/Instruct_System/common_behavior_utils.py`
 - 来源：`todo list.txt` → `# 待处理的小问题` → “如果破处的时候记录的指令为中断H指令，则往前回溯一个指令记录”
-- 预计改动量：1 个文件（`Script/Settle/default.py`），约 30~50 行
+- 预计改动量：2 个文件（新增 1 个通用函数文件 + 修改 `Script/Settle/default.py`）
 - 风险等级：低
 - 适用代码快照：`master @ b17d1b1ba`（v0.66）
+
+### 修订记录
+
+| 版本 | 内容 |
+| --- | --- |
+| v1 | 初版：在 `Script/Settle/default.py` 头部新增 helper |
+| v2 | 调整：helper 迁移到 `Script/System/Instruct_System/common_behavior_utils.py`，由 `default.py` 引用 |
 
 ---
 
@@ -74,46 +81,59 @@ special_end_H_list = [
 
 ## 3. 实施方案
 
-### 3.1 新增共享 helper 函数
+### 3.1 新建通用函数文件
 
-放在 `Script/Settle/default.py` 顶部公共区域（例如第一个 `@settle_behavior` 函数之前），函数名为：
+新建文件：
 
-```python
-def get_last_valid_sex_behavior_id() -> str:
-    """
-    获取玩家最近一条非中断H指令的behavior_id。
-
-    输入：无
-    返回：
-        str -- 最近一条非中断H指令的behavior_id；
-               若列表为空，返回 "share_blankly" 作为兜底。
-    功能：
-        从 cache.pl_pre_behavior_instruce 尾部向前遍历，
-        跳过 constant.special_end_H_list 中的中断指令，
-        返回第一条有效指令。
-    """
+```text
+Script/System/Instruct_System/common_behavior_utils.py
 ```
 
-实现伪代码：
+文件内容：
 
 ```python
-def get_last_valid_sex_behavior_id() -> str:
-    from Script.Core import constant
+# -*- coding: UTF-8 -*-
 
+from Script.Core import cache_control, constant
+
+cache = cache_control.cache
+""" 游戏缓存数据 """
+
+
+def get_last_valid_sex_behavior_id() -> str:
+    """
+    获取玩家最近一条非中断H指令的behavior_id
+    输入：
+        无
+    返回：
+        str -- 最近一条非中断H指令的behavior_id；若列表为空则返回基础空闲行为id
+    功能：
+        从cache.pl_pre_behavior_instruce尾部向前遍历，
+        跳过constant.special_end_H_list中的中断指令，
+        返回第一条有效指令，避免破处体位被记录为中断类指令。
+    """
     for behavior_id in reversed(cache.pl_pre_behavior_instruce):
         if behavior_id not in constant.special_end_H_list:
             return behavior_id
-
     return constant.Behavior.SHARE_BLANKLY
 ```
 
 说明：
 
-- `cache` 与 `constant` 在 `default.py` 中已经可用（当前文件已有相关 import），按文件顶部实际 import 情况放置，不要重复 import。
+- 该函数不放在 `Script/Settle/default.py` 头部，而是作为 `Instruct_System` 的通用函数，供需要回溯玩家最近有效 H 指令的模块复用。
+- `default.py` 顶部已有 `from Script.Core import ... constant ...` 与 `cache`，新文件自行 import `cache_control`、`constant`，不形成循环依赖。
 - 兜底 `SHARE_BLANKLY` 只是防止空列表导致 `[-1]` 崩溃；正常破处流程中列表至少有一条插入行为。
 - 保留最近 10 条的限制足够：回溯目标只可能是前 1~2 条中断指令，不会超出窗口。
 
-### 3.2 替换四个取指令位置
+### 3.2 在 default.py 中引用通用函数
+
+`Script/Settle/default.py` 顶部 import 区新增：
+
+```python
+from Script.System.Instruct_System.common_behavior_utils import get_last_valid_sex_behavior_id
+```
+
+### 3.3 替换四个取指令位置
 
 将四个函数中的：
 
@@ -136,7 +156,7 @@ behavior_id = get_last_valid_sex_behavior_id()
 
 其他逻辑（`behavior_data` 查找、`instruct_name` 写入）保持不变。
 
-### 3.3 兼容性说明
+### 3.4 兼容性说明
 
 - `cache.pl_pre_behavior_instruce` 在新代码中保存的是字符串 behavior_id；旧存档读取时已有字符串化兼容逻辑，不会影响本函数。
 - 如果某条记录不是字符串或不在 `config_behavior` 中，本 helper 不会引入新的错误：它只负责跳过 `special_end_H_list`，后续 `game_config.config_behavior[behavior_id]` 的异常表现与现状相同。
@@ -154,6 +174,8 @@ behavior_id = get_last_valid_sex_behavior_id()
 4. 构造 `["normal_sex"]`，应返回 `"normal_sex"`
 5. 构造 `[]`，应返回 `"share_blankly"`
 
+当前实现已通过上述单元级验证。
+
 ### 4.2 游戏内验证
 
 1. 选一名处女干员，进入可插入 H。
@@ -165,16 +187,17 @@ behavior_id = get_last_valid_sex_behavior_id()
 
 ## 5. 风险与回滚
 
-- **风险 1：函数放置位置。** 应放在 `default.py` 模块级函数区，不要在某个注册函数内部定义，否则只对局部可见。
+- **风险 1：函数放置位置。** 已按要求放在 `Script/System/Instruct_System/common_behavior_utils.py` 模块级，不在 `default.py` 或任何注册函数内部，可被其他模块复用。
 - **风险 2：循环变量命名。** 使用 `behavior_id` 会与外部函数中的同名变量无冲突（Python 作用域独立），但保持清晰。
 - **风险 3：空列表。** 已用 `SHARE_BLANKLY` 兜底；若 `config_behavior` 中该 id 不存在会导致后续 KeyError，但该 id 是基础行为，必然存在。
-- **回滚**：恢复 `Script/Settle/default.py` 即可，无数据文件改动。
+- **回滚**：删除新文件中的引用，恢复 `Script/Settle/default.py` 的 4 处取值方式即可，无数据文件改动。
 
 ## 6. 改动文件清单
 
 | 文件 | 类型 | 改动 |
 | --- | --- | --- |
-| `Script/Settle/default.py` | 修改 | 新增 `get_last_valid_sex_behavior_id()`；替换 4 处 `pl_pre_behavior_instruce[-1]` |
+| `Script/System/Instruct_System/common_behavior_utils.py` | 新增 | 通用函数 `get_last_valid_sex_behavior_id()` |
+| `Script/Settle/default.py` | 修改 | 引入通用函数；替换 4 处 `pl_pre_behavior_instruce[-1]` |
 
 ## 7. 不在本 Plan 范围
 

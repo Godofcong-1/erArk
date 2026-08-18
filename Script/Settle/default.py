@@ -22,6 +22,7 @@ from Script.Core import cache_control, constant, constant_effect, game_type, get
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
 from Script.System.Instruct_System import handle_instruct
+from Script.System.Instruct_System.common_behavior_utils import get_last_valid_sex_behavior_id
 from Script.UI.Panel import hypnosis_panel, event_option_panel, ejaculation_panel, achievement_panel
 
 from Script.Settle.common_default import (
@@ -1027,8 +1028,8 @@ def handle_first_sex(
 
     item_flag = False
 
-    # 获取玩家最后一个指令的中文名
-    behavior_id = cache.pl_pre_behavior_instruce[-1]
+    # 获取玩家最近一条非中断H指令的中文名，避免中断指令覆盖真实破处体位
+    behavior_id = get_last_valid_sex_behavior_id()
     behavior_data = game_config.config_behavior[behavior_id]
     instruct_name = behavior_data.name
 
@@ -1116,8 +1117,8 @@ def handle_first_a_sex(
     if cache.input_cache and cache.input_cache[-1] == str(constant.Instruct.VIBRATOR_INSERTION_ANAL):
         item_flag = True
 
-    # 获取玩家最后一个指令的中文名
-    behavior_id = cache.pl_pre_behavior_instruce[-1]
+    # 获取玩家最近一条非中断H指令的中文名，避免中断指令覆盖真实破处体位
+    behavior_id = get_last_valid_sex_behavior_id()
     behavior_data = game_config.config_behavior[behavior_id]
     instruct_name = behavior_data.name
 
@@ -1182,8 +1183,8 @@ def handle_first_u_sex(
     # if cache.input_cache[len(cache.input_cache) - 1] == str(constant.Instruct.URINE_COLLECTOR_ON):
     #     item_flag = True
 
-    # 获取玩家最后一个指令的中文名
-    behavior_id = cache.pl_pre_behavior_instruce[-1]
+    # 获取玩家最近一条非中断H指令的中文名，避免中断指令覆盖真实破处体位
+    behavior_id = get_last_valid_sex_behavior_id()
     behavior_data = game_config.config_behavior[behavior_id]
     instruct_name = behavior_data.name
 
@@ -1224,8 +1225,8 @@ def handle_first_w_sex(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
-    # 获取玩家最后一个指令的中文名
-    behavior_id = cache.pl_pre_behavior_instruce[-1]
+    # 获取玩家最近一条非中断H指令的中文名，避免中断指令覆盖真实破处体位
+    behavior_id = get_last_valid_sex_behavior_id()
     behavior_data = game_config.config_behavior[behavior_id]
     instruct_name = behavior_data.name
 
