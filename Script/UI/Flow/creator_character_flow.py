@@ -410,6 +410,8 @@ class Character_FirstNPC:
         """ 特殊干员列表 """
         self.name_filter_flag = False
         """ 姓名筛选标记 """
+        self.show_chara_attributes_flag = False
+        """ 显示干员属性标记 """
         self.chest_filter_flag, self.chest_filter_id_dict = 0, {}
         """ 胸围筛选标记与ID字典 """
         self.age_filter_flag, self.age_filter_id_dict = 0, {}
@@ -535,6 +537,9 @@ class Character_FirstNPC:
         # 调用过滤准备函数
         self.prepare_filter()
 
+        # 同步查看属性模式标记（防止跨局残留）
+        SelectFirstNPCButton.show_attributes_mode = self.show_chara_attributes_flag
+
         while 1:
             return_list = []
 
@@ -562,6 +567,13 @@ class Character_FirstNPC:
                 button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.select_all)
                 button_draw.draw()
                 return_list.append(button_draw.return_text)
+            button_style = "standard"
+            if self.show_chara_attributes_flag:
+                button_style = "gold_enrod"
+            button_text = _(" [显示角色属性] ")
+            button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, normal_style=button_style, cmd_func=self.change_show_character_attributes_flag)
+            button_draw.draw()
+            return_list.append(button_draw.return_text)
             button_text = _(" [随机选择] ")
             random_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.random_select)
             random_draw.draw()
@@ -747,6 +759,11 @@ class Character_FirstNPC:
         for npc_id in random_npc:
             cache.npc_id_got.add(npc_id)
 
+    def change_show_character_attributes_flag(self):
+        """切换显示干员属性标记"""
+        self.show_chara_attributes_flag = not self.show_chara_attributes_flag
+        SelectFirstNPCButton.show_attributes_mode = self.show_chara_attributes_flag
+
     def talk_filter(self):
         """口上过滤"""
         self.age_filter_flag = 0
@@ -851,6 +868,38 @@ class Character_FirstNPC:
         self.prepare_filter()
 
 
+def draw_first_npc_attributes(npc_id: int):
+    """
+    绘制初期干员的属性查看界面
+    Keyword arguments:
+    npc_id -- 要查看的干员id
+    """
+    from Script.UI.Panel import see_character_info_panel, character_info_head
+
+    back_draw = draw.CenterButton(_("[返回]"), _("返回"), width)
+    while 1:
+        return_list = []
+        head_draw = character_info_head.CharacterInfoHead(npc_id, width)
+        image_draw = see_character_info_panel.CharacterImage(npc_id, width)
+        Talent_draw = see_character_info_panel.CharacterTalentText(npc_id, width, 16, False)
+        abi_draw = see_character_info_panel.CharacterabiText(npc_id, width)
+        experience_draw = see_character_info_panel.CharacterExperienceText(npc_id, width, 8, False)
+        head_draw.draw()
+        image_draw.draw()
+        Talent_draw.draw()
+        abi_draw.draw()
+        experience_draw.draw()
+        now_line = draw.LineDraw("-", width)
+        now_line.draw()
+        back_draw.draw()
+        line_feed_draw.draw()
+        return_list.append(back_draw.return_text)
+        yrn = flow_handle.askfor_all(return_list)
+        py_cmd.clr_cmd()
+        if yrn == back_draw.return_text:
+            break
+
+
 class SelectFirstNPCButton:
     """
     点击后可选择作为初期干员的NPC的按钮对象
@@ -861,6 +910,9 @@ class SelectFirstNPCButton:
     num_button -- 绘制数字按钮
     button_id -- 数字按钮id
     """
+
+    show_attributes_mode: bool = False
+    """ 是否为查看角色属性模式（由干员选择面板同步） """
 
     def __init__(
         self, NPC_id: int, width: int, is_button: bool, num_button: bool, button_id: int
@@ -900,9 +952,13 @@ class SelectFirstNPCButton:
         if self.NPC_id in cache.npc_id_got:
             if target_data.name in constant.first_NPC_name_set:
                 button_text += _("(基础)")
-                name_draw.text = button_text
-                name_draw.width = self.width
-                name_draw.style = now_style
+                # 查看属性模式下基础干员也可点击查看属性
+                if SelectFirstNPCButton.show_attributes_mode:
+                    name_draw = draw.LeftButton(button_text, self.button_return, self.width, normal_style=now_style, cmd_func=self.button_0)
+                else:
+                    name_draw.text = button_text
+                    name_draw.width = self.width
+                    name_draw.style = now_style
             else:
                 button_text += _("(自选)")
                 name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = now_style, cmd_func=self.button_0)
@@ -918,6 +974,10 @@ class SelectFirstNPCButton:
 
     def button_0(self):
         """选项1"""
+        # 查看属性模式下，点击角色名字改为查看该角色的详细属性
+        if SelectFirstNPCButton.show_attributes_mode:
+            draw_first_npc_attributes(self.NPC_id)
+            return
         if self.NPC_id in cache.npc_id_got:
             cache.npc_id_got.remove(self.NPC_id)
         elif cache.debug_mode:
