@@ -165,7 +165,9 @@ class TALK_QUICK_TEST:
 
         title_text = _("快速测试口上")
         title_draw = draw.TitleLineDraw(title_text, self.width)
-        from Script.Design import talk
+
+        # 当前测试模式：False为单条测试，True为批量测试
+        batch_mode = False
 
         while 1:
             return_list = []
@@ -174,7 +176,8 @@ class TALK_QUICK_TEST:
             info_draw.width = self.width
 
             info_text = _("本功能用于快速测试当前数据情况下，指定角色的指定id口上的触发情况，包括触发者与交互对象、是否能够触发、每个前提是否满足、最终输出文本等\n\n")
-            info_text += _("刷新口上文件，用于在不重启游戏的情况，重新刷新并读取发生了变更的口上文件。即可以在编辑器中写完新的条目、保存，然后在游戏中点击该刷新按钮，读取刚写好的条目并进行测试\n\n\n")
+            info_text += _("刷新口上文件，用于在不重启游戏的情况，重新刷新并读取发生了变更的口上文件。即可以在编辑器中写完新的条目、保存，然后在游戏中点击该刷新按钮，读取刚写好的条目并进行测试\n\n")
+            info_text += _("批量测试时，口上id支持逗号分隔（如1,3,5）和区间（如95-98）\n\n\n")
             info_draw.text = info_text
             info_draw.draw()
 
@@ -190,6 +193,12 @@ class TALK_QUICK_TEST:
             return_list.append(button2_draw.return_text)
             line_feed.draw()
 
+            button_text = _("[003]批量测试多条口上")
+            button3_draw = draw.LeftButton(button_text, button_text, len(button_text)*2, cmd_func=self.nothing)
+            button3_draw.draw()
+            return_list.append(button3_draw.return_text)
+            line_feed.draw()
+
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width / 4)
             back_draw.draw()
@@ -200,6 +209,10 @@ class TALK_QUICK_TEST:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 return
             elif yrn == button1_draw.return_text or yrn == button2_draw.return_text:
+                batch_mode = False
+                break
+            elif yrn == button3_draw.return_text:
+                batch_mode = True
                 break
 
         while 1:
@@ -209,7 +222,10 @@ class TALK_QUICK_TEST:
             line.draw()
             info_draw = draw.NormalDraw()
             info_draw.width = self.width
-            info_draw.text = _("\n\n测试开始\n\n")
+            if batch_mode:
+                info_draw.text = _("\n\n批量测试开始\n\n")
+            else:
+                info_draw.text = _("\n\n测试开始\n\n")
             info_draw.draw()
             # 获取角色id
             change_value_panel = panel.AskForOneMessage()
@@ -222,112 +238,82 @@ class TALK_QUICK_TEST:
                 if tem_character_data.adv == chara_adv_id:
                     target_chara_id = tem_chara_id
                     break
-            target_character_data = cache.character_data[target_chara_id]
             line_feed.draw()
             # 获取口上id
             change_value_panel = panel.AskForOneMessage()
-            change_value_panel.set(_("请输入口上id"), 100)
-            talk_id = int(change_value_panel.draw())
-            # 在chara_adv_id在前面补零为4位数
-            full_adv_id = str(chara_adv_id).rjust(4, '0')
-            chara_name = target_character_data.name
-            full_talk_id = f"chara_{full_adv_id}_{chara_name}{talk_id}"
-            # 获取口上数据
-            find_talk_flag = False
-            if full_talk_id in game_config.config_talk:
-                find_talk_flag = True
+            if batch_mode:
+                change_value_panel.set(_("请输入口上id（支持1,3,5或95-98）"), 100)
+            else:
+                change_value_panel.set(_("请输入口上id"), 100)
+            talk_id_text = change_value_panel.draw()
+            line_feed.draw()
 
             # 开始打印测试结果
             line_feed.draw()
             line_draw = draw.LineDraw("-", self.width)
             line_draw.draw()
-            draw_text = "\n"
-            if target_chara_id == 0:
-                draw_text += _("未找到该角色，请确认是否输入正确\n")
-            elif not find_talk_flag:
-                draw_text += _("未找到该口上，请确认是否输入正确\n")
+
+            if batch_mode:
+                # 解析批量口上id列表
+                talk_id_list = self.parse_talk_id_list(talk_id_text)
+                if not talk_id_list:
+                    now_draw = draw.WaitDraw()
+                    now_draw.text = _("\n未输入有效的口上id，请重新进入面板输入\n")
+                    now_draw.draw()
+                elif len(talk_id_list) > 10:
+                    # 数量超过10条时，按每10条一组分批测试和显示
+                    self.run_batch_talk_test_in_groups(target_chara_id, talk_id_list)
+                else:
+                    # 保存博士当前交互对象，避免批量测试污染游戏状态
+                    old_target_character_id = pl_character_data.target_character_id
+                    report_lines = []
+                    pass_count = 0
+                    fail_count = 0
+                    pass_id_list = []
+                    fail_id_list = []
+                    try:
+                        for talk_index, talk_id in enumerate(talk_id_list, 1):
+                            report_text, pass_flag = self.test_single_talk(target_chara_id, talk_id)
+                            # 在每条测试信息前打印编号，方便用户按编号追溯
+                            report_lines.append(_("\n===== 第 {0} 条 / 共 {1} 条（口上id：{2}） =====").format(talk_index, len(talk_id_list), talk_id))
+                            report_lines.append(report_text)
+                            if pass_flag:
+                                pass_count += 1
+                                pass_id_list.append(talk_id)
+                            else:
+                                fail_count += 1
+                                fail_id_list.append(talk_id)
+                    finally:
+                        # 恢复博士的交互对象
+                        pl_character_data.target_character_id = old_target_character_id
+                    # 输出汇总信息
+                    report_lines.append(_("\n汇总：共测试 {0} 条，通过 {1} 条，未通过 {2} 条").format(len(talk_id_list), pass_count, fail_count))
+                    if pass_id_list:
+                        report_lines.append(_("\n通过的口上id：{0}").format("、".join(str(talk_id) for talk_id in pass_id_list)))
+                    else:
+                        report_lines.append(_("\n通过的口上id：无"))
+                    if fail_id_list:
+                        report_lines.append(_("未通过的口上id：{0}\n").format("、".join(str(talk_id) for talk_id in fail_id_list)))
+                    else:
+                        report_lines.append(_("未通过的口上id：无\n"))
+                    now_draw = draw.WaitDraw()
+                    now_draw.text = "\n".join(report_lines)
+                    now_draw.draw()
             else:
-                pass_flag = True
-                # 输出角色信息
-                draw_text += _("测试角色：{0}\n").format(target_character_data.name)
-                # 是否已获得该角色
-                if target_chara_id not in cache.npc_id_got:
-                    draw_text += _("  博士未获得该角色(X)\n")
-                    pass_flag = False
+                # 单条测试模式
+                try:
+                    talk_id = int(talk_id_text)
+                except ValueError:
+                    talk_id = -1
+                if talk_id < 0:
+                    now_draw = draw.WaitDraw()
+                    now_draw.text = _("\n口上id输入错误，请重新进入面板输入\n")
+                    now_draw.draw()
                 else:
-                    draw_text += _("  博士已获得该角色(√)\n")
-                # 当前交互对象是否是该角色
-                if pl_character_data.target_character_id != target_chara_id:
-                    draw_text += _("  博士当前交互对象不是该角色(X)\n")
-                    pass_flag = False
-                else:
-                    draw_text += _("  博士当前交互对象是该角色(√)\n")
-                # 指令状态
-                now_behavior_id = game_config.config_talk[full_talk_id].behavior_id
-                draw_text += _("\n指令状态：{0}\n").format(game_config.config_behavior[now_behavior_id].name)
-                # 判断触发人与交互对象
-                draw_text += _("\n触发人与交互对象：\n")
-                if "sys_0" in game_config.config_talk_premise_data[full_talk_id]:
-                    draw_text += _("  触发人：博士\n")
-                    start_chara_id = 0
-                elif "sys_1" in game_config.config_talk_premise_data[full_talk_id]:
-                    draw_text += _("  触发人：NPC\n")
-                    start_chara_id = target_chara_id
-                else:
-                    if game_config.config_behavior[now_behavior_id].trigger == "npc":
-                        draw_text += _("  触发人：未填写，本测试中默认选择为NPC\n")
-                        start_chara_id = target_chara_id
-                    else:
-                        draw_text += _("  触发人：未填写，本测试中默认选择为博士\n")
-                        start_chara_id = 0
-                if "二段结算" in game_config.config_behavior[now_behavior_id].tag:
-                    draw_text += _("  交互对象：同触发人，二段结算的交互对象只能是触发人自己\n")
-                    end_chara_id = start_chara_id
-                elif "sys_4" in game_config.config_talk_premise_data[full_talk_id]:
-                    draw_text += _("  交互对象：博士\n")
-                    end_chara_id = 0
-                elif "sys_5" in game_config.config_talk_premise_data[full_talk_id]:
-                    draw_text += _("  交互对象：NPC\n")
-                    end_chara_id = target_chara_id
-                else:
-                    if start_chara_id == 0:
-                        draw_text += _("  交互对象：未填写，本测试中默认选择为NPC\n")
-                        end_chara_id = target_chara_id
-                    else:
-                        draw_text += _("  交互对象：未填写，本测试中默认选择为博士\n")
-                        end_chara_id = 0
-                # 设置交互对象
-                cache.character_data[start_chara_id].target_character_id = end_chara_id
-
-                # 输出口上文本
-                talk_context = game_config.config_talk[full_talk_id].context
-                draw_text += _("\n口上原文本：\n  {0}\n").format(talk_context)
-                draw_text += _("口上输出文本：\n  {0}\n").format(talk.code_text_to_draw_text(talk_context, start_chara_id))
-                # 遍历前提条件
-                draw_text += _("\n前提条件：\n")
-                for premise in game_config.config_talk_premise_data[full_talk_id]:
-                    # 综合数值前提判定
-                    if "CVP" in premise:
-                        premise_all_value_list = premise.split("_")[1:]
-                        now_add_weight = handle_premise.handle_comprehensive_value_premise(start_chara_id, premise_all_value_list)
-                    # 其他正常口上判定
-                    else:
-                        now_add_weight = constant.handle_premise_data[premise](start_chara_id)
-                    if now_add_weight:
-                        draw_text += _("  {0}：满足(√)\n").format(premise)
-                    else:
-                        draw_text += _("  {0}：不满足(X)\n").format(premise)
-                        pass_flag = False
-
-                # 输出测试结果
-                if pass_flag:
-                    draw_text += _("\n最终结果：\n  测试通过，该口上可以触发\n")
-                else:
-                    draw_text += _("\n最终结果：\n  测试未通过，该口上无法触发\n")
-            now_draw = draw.WaitDraw()
-            now_draw.text = draw_text
-            now_draw.draw()
-
+                    report_text, pass_flag = self.test_single_talk(target_chara_id, talk_id)
+                    now_draw = draw.WaitDraw()
+                    now_draw.text = report_text
+                    now_draw.draw()
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -338,6 +324,225 @@ class TALK_QUICK_TEST:
             if yrn == back_draw.return_text:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
+
+
+    def test_single_talk(self, target_chara_id: int, talk_id: int):
+        """
+        测试单条角色口上并返回文本化的测试报告
+        Keyword arguments:
+        target_chara_id -- 目标角色的运行时character_id
+        talk_id -- 口上数字id
+        Return arguments:
+        tuple[str, bool] -- 测试报告文本和是否通过
+        """
+        from Script.Design import talk
+
+        pl_character_data = cache.character_data[0]
+        target_character_data = cache.character_data[target_chara_id]
+        # 在chara_adv_id前面补零为4位数
+        full_adv_id = str(target_character_data.adv).rjust(4, "0")
+        chara_name = target_character_data.name
+        full_talk_id = f"chara_{full_adv_id}_{chara_name}{talk_id}"
+        # 获取口上数据
+        find_talk_flag = full_talk_id in game_config.config_talk
+
+        draw_text = "\n"
+        if target_chara_id == 0:
+            draw_text += _("未找到该角色，请确认是否输入正确\n")
+            return draw_text, False
+        if not find_talk_flag:
+            draw_text += _("未找到该口上（id={0}），请确认是否输入正确\n").format(talk_id)
+            return draw_text, False
+
+        pass_flag = True
+        # 输出角色信息
+        draw_text += _("测试角色：{0}\n").format(target_character_data.name)
+        draw_text += _("口上id：{0}\n").format(full_talk_id)
+        # 是否已获得该角色
+        if target_chara_id not in cache.npc_id_got:
+            draw_text += _("  博士未获得该角色(X)\n")
+            pass_flag = False
+        else:
+            draw_text += _("  博士已获得该角色(√)\n")
+        # 当前交互对象是否是该角色
+        if pl_character_data.target_character_id != target_chara_id:
+            draw_text += _("  博士当前交互对象不是该角色(X)\n")
+            pass_flag = False
+        else:
+            draw_text += _("  博士当前交互对象是该角色(√)\n")
+        # 指令状态
+        now_behavior_id = game_config.config_talk[full_talk_id].behavior_id
+        draw_text += _("\n指令状态：{0}\n").format(game_config.config_behavior[now_behavior_id].name)
+        # 判断触发人与交互对象
+        draw_text += _("\n触发人与交互对象：\n")
+        if "sys_0" in game_config.config_talk_premise_data[full_talk_id]:
+            draw_text += _("  触发人：博士\n")
+            start_chara_id = 0
+        elif "sys_1" in game_config.config_talk_premise_data[full_talk_id]:
+            draw_text += _("  触发人：NPC\n")
+            start_chara_id = target_chara_id
+        else:
+            if game_config.config_behavior[now_behavior_id].trigger == "npc":
+                draw_text += _("  触发人：未填写，本测试中默认选择为NPC\n")
+                start_chara_id = target_chara_id
+            else:
+                draw_text += _("  触发人：未填写，本测试中默认选择为博士\n")
+                start_chara_id = 0
+        if "二段结算" in game_config.config_behavior[now_behavior_id].tag:
+            draw_text += _("  交互对象：同触发人，二段结算的交互对象只能是触发人自己\n")
+            end_chara_id = start_chara_id
+        elif "sys_4" in game_config.config_talk_premise_data[full_talk_id]:
+            draw_text += _("  交互对象：博士\n")
+            end_chara_id = 0
+        elif "sys_5" in game_config.config_talk_premise_data[full_talk_id]:
+            draw_text += _("  交互对象：NPC\n")
+            end_chara_id = target_chara_id
+        else:
+            if start_chara_id == 0:
+                draw_text += _("  交互对象：未填写，本测试中默认选择为NPC\n")
+                end_chara_id = target_chara_id
+            else:
+                draw_text += _("  交互对象：未填写，本测试中默认选择为博士\n")
+                end_chara_id = 0
+        # 设置交互对象
+        cache.character_data[start_chara_id].target_character_id = end_chara_id
+
+        # 输出口上文本
+        talk_context = game_config.config_talk[full_talk_id].context
+        draw_text += _("\n口上原文本：\n  {0}\n").format(talk_context)
+        draw_text += _("口上输出文本：\n  {0}\n").format(talk.code_text_to_draw_text(talk_context, start_chara_id))
+        # 遍历前提条件
+        draw_text += _("\n前提条件：\n")
+        for premise in game_config.config_talk_premise_data[full_talk_id]:
+            # 综合数值前提判定
+            if "CVP" in premise:
+                premise_all_value_list = premise.split("_")[1:]
+                now_add_weight = handle_premise.handle_comprehensive_value_premise(start_chara_id, premise_all_value_list)
+            # 其他正常口上判定
+            else:
+                now_add_weight = constant.handle_premise_data[premise](start_chara_id)
+            if now_add_weight:
+                draw_text += _("  {0}：满足(√)\n").format(premise)
+            else:
+                draw_text += _("  {0}：不满足(X)\n").format(premise)
+                pass_flag = False
+
+        # 输出测试结果
+        if pass_flag:
+            draw_text += _("\n最终结果：\n  测试通过，该口上可以触发\n")
+        else:
+            draw_text += _("\n最终结果：\n  测试未通过，该口上无法触发\n")
+
+        return draw_text, pass_flag
+
+
+    def run_batch_talk_test_in_groups(self, target_chara_id: int, talk_id_list: List[int]):
+        """
+        按每10条一组分批测试口上，每组显示后等待用户手动选择是否继续
+        Keyword arguments:
+        target_chara_id -- 目标角色的运行时character_id
+        talk_id_list -- 待测试的口上id列表
+        Return arguments:
+        无
+        """
+        pl_character_data = cache.character_data[0]
+        old_target_character_id = pl_character_data.target_character_id
+        total_count = len(talk_id_list)
+        group_size = 10
+        group_count = (total_count + group_size - 1) // group_size
+        all_pass_id_list = []
+        all_fail_id_list = []
+        test_stopped = False
+        try:
+            for group_index in range(group_count):
+                start_index = group_index * group_size
+                end_index = min(start_index + group_size, total_count)
+                group_talk_id_list = talk_id_list[start_index:end_index]
+                report_lines = []
+                for talk_index, talk_id in enumerate(group_talk_id_list, start_index + 1):
+                    report_text, pass_flag = self.test_single_talk(target_chara_id, talk_id)
+                    # 在每条测试信息前打印全局编号，方便用户按编号追溯
+                    report_lines.append(_("\n===== 第 {0} 条 / 共 {1} 条（口上id：{2}） =====").format(talk_index, total_count, talk_id))
+                    report_lines.append(report_text)
+                    if pass_flag:
+                        all_pass_id_list.append(talk_id)
+                    else:
+                        all_fail_id_list.append(talk_id)
+                # 非最后一组：显示本轮结果后，等待用户手动选择继续下一轮或停止测试
+                if group_index < group_count - 1:
+                    report_lines.append(_("\n本轮已测试第 {0}-{1} 条，请确认后选择是否继续下一轮").format(start_index + 1, end_index))
+                    now_draw = draw.WaitDraw()
+                    now_draw.text = "\n".join(report_lines)
+                    now_draw.draw()
+                    line_feed.draw()
+                    continue_draw = draw.CenterButton(_("[继续下一轮测试]"), _("继续下一轮测试"), window_width / 3)
+                    continue_draw.draw()
+                    stop_draw = draw.CenterButton(_("[停止测试并查看汇总]"), _("停止测试并查看汇总"), window_width / 3)
+                    stop_draw.draw()
+                    line_feed.draw()
+                    yrn = flow_handle.askfor_all([continue_draw.return_text, stop_draw.return_text])
+                    if yrn == stop_draw.return_text:
+                        test_stopped = True
+                        break
+                else:
+                    # 最后一组：显示本轮结果，随后统一显示最终汇总
+                    now_draw = draw.WaitDraw()
+                    now_draw.text = "\n".join(report_lines)
+                    now_draw.draw()
+        finally:
+            # 恢复博士的交互对象
+            pl_character_data.target_character_id = old_target_character_id
+        # 输出最终汇总信息
+        pass_count = len(all_pass_id_list)
+        fail_count = len(all_fail_id_list)
+        summary_lines = []
+        if test_stopped:
+            summary_lines.append(_("\n测试已停止，以下是已测试部分的汇总"))
+        summary_lines.append(_("\n汇总：共测试 {0} 条，通过 {1} 条，未通过 {2} 条").format(pass_count + fail_count, pass_count, fail_count))
+        if all_pass_id_list:
+            summary_lines.append(_("\n通过的口上id：{0}").format("、".join(str(talk_id) for talk_id in all_pass_id_list)))
+        else:
+            summary_lines.append(_("\n通过的口上id：无"))
+        if all_fail_id_list:
+            summary_lines.append(_("未通过的口上id：{0}\n").format("、".join(str(talk_id) for talk_id in all_fail_id_list)))
+        else:
+            summary_lines.append(_("未通过的口上id：无\n"))
+        now_draw = draw.WaitDraw()
+        now_draw.text = "\n".join(summary_lines)
+        now_draw.draw()
+
+
+    def parse_talk_id_list(self, input_text: str) -> List[int]:
+        """
+        将输入解析为口上id列表
+        Keyword arguments:
+        input_text -- 面板输入的字符串
+        Return arguments:
+        List[int] -- 去重后的口上id列表
+        """
+        result = []
+        for part in input_text.replace("，", ",").split(","):
+            part = part.strip()
+            if not part:
+                continue
+            if "-" in part:
+                range_list = part.split("-")
+                if len(range_list) == 2 and range_list[0].strip().isdigit() and range_list[1].strip().isdigit():
+                    start_id = int(range_list[0].strip())
+                    end_id = int(range_list[1].strip())
+                    if start_id > end_id:
+                        start_id, end_id = end_id, start_id
+                    result.extend(range(start_id, end_id + 1))
+            elif part.isdigit():
+                result.append(int(part))
+        # 去重并保持输入顺序
+        seen_id_set = set()
+        output_list = []
+        for talk_id in result:
+            if talk_id not in seen_id_set:
+                seen_id_set.add(talk_id)
+                output_list.append(talk_id)
+        return output_list
 
 
     def refresh_talk_file(self):
