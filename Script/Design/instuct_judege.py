@@ -324,7 +324,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         calculation_text += _("+初吻(-125)")
 
     # 性交的避孕相关修正
-    if instruct_name == _("性交") or _("W性交"):
+    if instruct_name in {_("性交"), _("W性交")}:
         # 妊娠合意、避孕套、避孕中出合意+事前避孕药、性无知，以上可直接通过
         if (
             target_data.talent[14] or
