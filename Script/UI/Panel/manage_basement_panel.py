@@ -1333,6 +1333,8 @@ class Change_Npc_Work_Panel:
             for i in target_data.body_manage:
                 if i in range(30,40) and target_data.body_manage[i]:
                     target_data.body_manage[i] = 0
+        # 赋予新工作
+        target_data.work.work_type = work_id
         # 如果当前工作是监狱长
         if handle_premise.handle_work_is_warden(character_id):
             from Script.Design import map_handle
@@ -1346,8 +1348,6 @@ class Change_Npc_Work_Panel:
             # 更新监狱长的宿舍
             target_data.pre_dormitory = target_data.dormitory
             target_data.dormitory = map_handle.get_map_system_path_str_for_list(["关押", "休息室"])
-        # 赋予新工作
-        target_data.work.work_type = work_id
         # 更新罗德岛的工作人员及状态
         basement.update_work_people()
         basement.update_facility_people()

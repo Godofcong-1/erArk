@@ -525,6 +525,10 @@ def update_work_people():
             if chara_id in cache.rhodes_island.production_worker_ids:
                 cache.rhodes_island.production_worker_ids.remove(chara_id)
 
+        # 如果是监狱长，则更新监狱长id
+        if work_type == 191:
+            cache.rhodes_island.current_warden_id = chara_id
+
     clinic_doctors.sort()
     hospital_doctors.sort()
     medical_service.update_doctor_assignments(
