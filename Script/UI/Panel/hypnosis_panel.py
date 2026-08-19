@@ -2,7 +2,7 @@ from typing import List
 from types import FunctionType
 import random
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import handle_premise, handle_talent, map_handle, handle_ability
+from Script.Design import handle_premise, handle_talent, map_handle, handle_ability, hypnosis_state
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 
@@ -142,6 +142,7 @@ def evaluate_hypnosis_completion(character_id: int):
             # 更新记录当前地点
             pl_character_data.pl_ability.air_hypnosis_position = pl_character_data.position
         if now_hypnosis_type == 1 or now_hypnosis_type == 2:
+            hypnosis_state.clear_hypnosis_behavior_mode(character_id)
             character_data.sp_flag.unconscious_h = now_hypnosis_type + 3
         handle_premise.settle_chara_unnormal_flag(character_id, 5)
         handle_premise.settle_chara_unnormal_flag(character_id, 6)
@@ -286,7 +287,7 @@ class Chose_Hypnosis_Type_Panel:
         if hypnosis_type_cid > 0:
             hypnosis_type_name = game_config.config_hypnosis_type[hypnosis_type_cid].name
             now_draw = draw.WaitDraw()
-            draw_text = _("\n已切换为{0}催眠模式\n\n").format(hypnosis_type_name)
+            draw_text = _("\n已选择{0}催眠类型\n\n").format(hypnosis_type_name)
             now_draw.style = "pink"
             now_draw.text = draw_text
             now_draw.draw()
@@ -821,6 +822,9 @@ class Chose_Roleplay_Type_Panel:
         """
         pl_character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
+        # 提交非空的角色扮演选择时先退出目标当前的催眠行为模式，保证模式互斥
+        if self.selected_roleplay_cache:
+            hypnosis_state.clear_hypnosis_behavior_mode(pl_character_data.target_character_id)
         # 赋值缓存到数据
         target_data.hypnosis.roleplay = self.selected_roleplay_cache[:]
         # 输出提示信息

@@ -726,30 +726,6 @@ def handle_hypnosis_force_ovulation():
     chara_handle_instruct_common_settle(constant.Behavior.HYPNOSIS_FORCE_OVULATION)
 
 
-@add_instruct(constant.Instruct.HYPNOSIS_BLOCKHEAD)
-def handle_hypnosis_blockhead():
-    """处理体控-木头人"""
-    chara_handle_instruct_common_settle(constant.Behavior.HYPNOSIS_BLOCKHEAD)
-
-
-@add_instruct(constant.Instruct.HYPNOSIS_ACTIVE_H)
-def handle_hypnosis_active_h():
-    """处理体控-逆推"""
-    chara_handle_instruct_common_settle(constant.Behavior.HYPNOSIS_ACTIVE_H)
-
-
-@add_instruct(constant.Instruct.HYPNOSIS_ROLEPLAY)
-def handle_hypnosis_roleplay():
-    """处理心控-角色扮演"""
-    from Script.UI.Panel import hypnosis_panel
-    now_draw = hypnosis_panel.Chose_Roleplay_Type_Panel(width)
-    now_draw.draw()
-    character_data: game_type.Character = cache.character_data[0]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.hypnosis.roleplay != []:
-        chara_handle_instruct_common_settle(constant.Behavior.HYPNOSIS_ROLEPLAY)
-
-
 @add_instruct(constant.Instruct.HYPNOSIS_PAIN_AS_PLEASURE)
 def handle_hypnosis_pain_as_pleasure():
     """处理心控-苦痛快感化"""
