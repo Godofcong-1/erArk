@@ -256,6 +256,8 @@
     """ 地点_角色 该地点有HP1或太疲劳的角色 """
     SCENE_SOMEONE_UNCONSCIOUS = "place_someone_unconscious"
     """ 地点_角色 该地点有无意识状态的角色 """
+    SCENE_SOMEONE_SLEEPING = "place_someone_sleeping"
+    """ 地点_角色 该地点有角色正在睡觉 """
     SCENE_SOMEONE_NOT_UNCONSCIOUS = "place_someone_not_unconscious"
     """ 地点_角色 该地点有玩家以外的非无意识状态的角色 """
     SCENE_SOMEONE_NOT_IN_HIDDEN_AND_CONSCIOUS = "place_someone_not_in_hidden_and_conscious"

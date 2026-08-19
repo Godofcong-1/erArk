@@ -344,14 +344,15 @@ def handle_npc_instruct_condition(character_id: int, continue_h: bool, tem_targe
     # 返回是否满足继续H的条件
     return continue_h
 
-def judge_weak_up_in_sleep_h(character_id: int):
+def judge_weak_up_in_sleep_h(character_id: int, target_character_id: int):
     """
-    判断睡奸中是否醒来\n
+    判断睡眠中是否被吵醒\n
     Keyword arguments:\n
-    character_id -- 角色id\n
+    character_id -- 产生动作的角色id\n
+    target_character_id -- 需要判定是否醒来的睡眠角色id\n
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
+    target_data: game_type.Character = cache.character_data[target_character_id]
 
     # 浅睡和半梦半醒时递增苏醒概率
     weak_rate = game_config.config_sleep_level[1].sleep_point - target_data.sleep_point
@@ -362,11 +363,20 @@ def judge_weak_up_in_sleep_h(character_id: int):
         # 清空疲劳和睡眠程度
         target_data.tired_point = 0
         target_data.sleep_point = 0
-        handle_premise.settle_chara_unnormal_flag(now_character_data.target_character_id, 5)
-        # 提示信息
-        info_text = _("\n因为{0}的动作，{1}从梦中惊醒过来\n").format(now_character_data.name, target_data.name)
-        # 结算醒来
-        recover_from_unconscious_h(character_id, info_text)
+        handle_premise.settle_chara_unnormal_flag(target_character_id, 5)
+        handle_premise.settle_chara_unnormal_flag(target_character_id, 6)
+        if target_data.sp_flag.unconscious_h == 1:
+            # 睡奸目标：走现有无意识H恢复流程
+            info_text = _("\n因为{0}的动作，{1}从梦中惊醒过来\n").format(now_character_data.name, target_data.name)
+            recover_from_unconscious_h(character_id, info_text)
+        else:
+            # 普通睡眠角色：直接结束睡眠行为，交由AI重新选择行动
+            info_text = _("\n{0}被{1}的动静吵醒了\n").format(target_data.name, now_character_data.name)
+            now_draw = draw.WaitDraw()
+            now_draw.width = window_width
+            now_draw.text = info_text
+            now_draw.draw()
+            character_behavior.judge_character_status_time_over(target_character_id, cache.game_time, end_now=2)
 
 
 def settle_unconscious_semen_and_cloth(character_id: int) -> None:

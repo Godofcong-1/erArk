@@ -429,6 +429,30 @@ def handle_scene_someone_unconscious(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SCENE_SOMEONE_SLEEPING)
+def handle_scene_someone_sleeping(character_id: int) -> int:
+    """
+    校验角色所在地点是否有人正在睡觉
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.Design.handle_premise import handle_action_sleep
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
+    # 场景角色数大于等于2时进行检测
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过玩家，只判断NPC是否在睡觉
+        if chara_id == 0:
+            continue
+        if handle_action_sleep(chara_id):
+            return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.SCENE_SOMEONE_NOT_UNCONSCIOUS)
 def handle_scene_someone_not_unconscious(character_id: int) -> int:
     """

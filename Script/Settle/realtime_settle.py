@@ -98,7 +98,6 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     now_behavior_id = now_character_data.behavior.behavior_id
     if now_character_data.target_character_id not in cache.character_data:
         now_character_data.target_character_id = character_id
-    target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
     # 获取实际增加时间
     true_add_time = get_true_add_time(character_id, now_time, pl_start_time)
 
@@ -155,9 +154,8 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         # 结算玩家源石技艺的理智值消耗
         settle_player_ability(character_id, true_add_time)
 
-        # 结算对无意识对象的结算
-        if target_data.sp_flag.unconscious_h:
-            # 睡奸判定
+        # 当前地点有人睡觉时，结算玩家动作对所有睡眠NPC的影响
+        if handle_premise.handle_scene_someone_sleeping(character_id):
             settle_sleep_h(character_id, true_add_time)
 
     # 结算干员
@@ -516,35 +514,89 @@ def settle_player_ability(character_id: int, true_add_time: int) -> None:
         if handle_premise.handle_time_stop_on(character_id):
             handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.TIME_STOP_OFF)
 
+def get_sleep_disturbance_value(behavior_id: str, true_add_time: int) -> int:
+    """
+    根据玩家行为类型计算对睡眠角色熟睡程度的减轻量
+    参数:
+        behavior_id (str): 行为id
+        true_add_time (int): 实际行动时间（分钟）
+    返回:
+        int -- 本次行为对熟睡程度的减轻量
+    """
+    behavior_data = game_config.config_behavior.get(behavior_id)
+    tags = getattr(behavior_data, "tag", "") if behavior_data else ""
+
+    # 影响排序：插入 > 道具/侍奉 > 性爱 > 非性爱
+    if "插入" in tags:
+        factor = 3.0
+    elif "道具" in tags or "侍奉" in tags:
+        factor = 2.0
+    elif "性爱" in tags:
+        factor = 1.0
+    else:
+        factor = 0.5
+
+    if true_add_time <= 0:
+        return 0
+    return max(1, int(true_add_time * factor))
+
+
 def settle_sleep_h(character_id: int, true_add_time: int) -> None:
     """
-    结算睡奸
+    结算玩家当前场景内所有睡眠NPC的熟睡程度变化与被吵醒判定
     参数:
         character_id (int): 角色ID
         true_add_time (int): 实际行动时间（分钟）
     返回:
         None
     """
+    # 延迟导入并缓存，避免循环导入且不在热路径反复执行导入机制
+    global _map_handle
+    if _map_handle is None:
+        from Script.Design import map_handle as _map_handle_module
+        _map_handle = _map_handle_module
+    map_handle = _map_handle
+
     now_character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
-    if target_data.behavior.behavior_id == constant.Behavior.SLEEP and target_data.sp_flag.unconscious_h == 1:
-        # 如果是等待指令或安眠药中则无事发生
+    scene_path_str = map_handle.get_map_system_path_str_for_list(now_character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+
+    # 遍历玩家当前场景内所有睡眠中的NPC
+    for sleeper_id in list(scene_data.character_list):
+        # 跳过玩家和非睡眠角色
+        if sleeper_id == 0:
+            continue
+        sleeper_data: game_type.Character = cache.character_data[sleeper_id]
+        if sleeper_data.behavior.behavior_id != constant.Behavior.SLEEP:
+            continue
+        # 等待行为或服用安眠药的目标不受影响
         if (
             now_character_data.behavior.behavior_id == constant.Behavior.WAIT or
-            target_data.h_state.body_item[9][1] == 1
+            sleeper_data.h_state.body_item[9][1] == 1
         ):
-            # 赋值为2来规避吵醒判定
-            sleep_level = 2
-        # 如果是其他行动则判定是否吵醒
-        else:
-            # 双倍扣除原本会增加的熟睡值
-            down_sleep = int(true_add_time * 3)
-            target_data.sleep_point -= down_sleep
-            # 计算当前熟睡等级
-            sleep_level,tem = attr_calculation.get_sleep_level(target_data.sleep_point)
-        # 熟睡等级小于等于1时判定是否吵醒
+            continue
+
+        # 计算本次动作对熟睡程度的影响
+        down_sleep = get_sleep_disturbance_value(now_character_data.behavior.behavior_id, true_add_time)
+
+        # 仅玩家当前睡奸目标使用完整影响，非睡奸目标影响减半
+        is_sleep_h_target = (
+            sleeper_id == now_character_data.target_character_id and
+            sleeper_data.sp_flag.unconscious_h == 1
+        )
+        if not is_sleep_h_target:
+            down_sleep = max(1, down_sleep // 2)
+        if down_sleep <= 0:
+            continue
+
+        # 减少熟睡程度；睡眠等级大于1时也照常结算，只是不会进入醒来判定
+        sleeper_data.sleep_point = max(0, sleeper_data.sleep_point - down_sleep)
+
+        # 重新计算当前熟睡等级
+        sleep_level,tem = attr_calculation.get_sleep_level(sleeper_data.sleep_point)
+        # 只有睡眠等级小于等于1时才判定是否被吵醒
         if sleep_level <= 1:
-            handle_npc_ai_in_h.judge_weak_up_in_sleep_h(character_id)
+            handle_npc_ai_in_h.judge_weak_up_in_sleep_h(character_id, sleeper_id)
 
 
 def settle_conscious_continuous(character_id: int, true_add_time: int) -> None:
