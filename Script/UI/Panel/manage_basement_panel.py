@@ -299,10 +299,6 @@ class Manage_Basement_Panel:
                     self.filter_visitor = 0
                     self.choosing_sort_mode = getattr(self, 'choosing_sort_mode', 0)
 
-                # --- 辅助函数：计算中英文混合字符串的显示宽度 ---
-                def get_display_width(text: str) -> int:
-                    return sum(2 if ord(c) > 127 else 1 for c in text)
-
                 # --- 辅助函数：格式化表头 ---
                 def format_col_header(name: str) -> str:
                     return f"{name}|"
@@ -584,11 +580,9 @@ class Manage_Basement_Panel:
                         
                         # 绘制干员名字按钮
                         name_str = f"[{id_str}]{star_str}{name}"
-                        display_name_len = get_display_width(name_str)
-                        name_pad = " " * max(0, name_btn_width - display_name_len)
-                        
+                        name_str = attr_calculation.pad_display_width(name_str, name_btn_width)
                         name_draw = draw.LeftButton(
-                            name_str + name_pad, str(character_id), name_btn_width, cmd_func=self.see_attr, args=(character_id,)
+                            name_str, str(character_id), name_btn_width, cmd_func=self.see_attr, args=(character_id,)
                         )
                         name_draw.draw()
                         return_list.append(name_draw.return_text)
@@ -651,17 +645,13 @@ class Manage_Basement_Panel:
                             elif tlt.get(212): fall_name, fall_color = _("驯服"), "crimson"
                             elif tlt.get(211): fall_name, fall_color = _("屈从"), "coral"
 
-                            # 統一陷落文字的寬度，精確計算需要補的空格數量
-                            display_fall = get_display_width(fall_name)
-                            fall_pad = " " * max(0, 4 - display_fall)
-
                             info_draw = draw.NormalDraw()
-                            info_text = _(" 好感度: {0} | 信赖度: {1}% | 催眠深度: {2}% | 陷落: ").format(str(favor).ljust(5), str(round(trust, 1)).ljust(6), str(round(hypnosis_val, 1)).ljust(5))
+                            info_text = _(" 好感度: {0} | 信赖度: {1}% | 催眠深度: {2}% | 陷落: ").format(str(favor).ljust(6), str(round(trust, 1)).ljust(6), str(round(hypnosis_val, 1)).ljust(5))
                             info_draw.text = info_text
                             info_draw.draw()
                             
                             fall_draw = draw.NormalDraw()
-                            fall_draw.text = _("[{0}]{1}").format(fall_name, fall_pad)
+                            fall_draw.text = _("[{0}]").format(attr_calculation.pad_display_width(fall_name, 8, "center"))
                             fall_draw.style = fall_color
                             fall_draw.draw()
 
@@ -678,16 +668,12 @@ class Manage_Basement_Panel:
                                 rank_color = f"level{rank.lower()}"
                                 
                                 rank_draw = draw.NormalDraw()
-                                rank_draw.text = rank
+                                rank_draw.text = attr_calculation.pad_display_width(rank, 3)
                                 rank_draw.style = rank_color
                                 rank_draw.draw()
                                 
                                 val_draw = draw.NormalDraw()
-                                display_width = get_display_width(col_name)
-                                val_str = f"{val}".rjust(2, " ")
-                                content_len = 4 # rank占2位, val_str占2位
-                                padding = " " * max(0, display_width - content_len)
-                                val_draw.text = f"{val_str}{padding}|"
+                                val_draw.text = f"{val}|"
                                 val_draw.draw()
                             
                             if current_category == _("【工作技能】"):

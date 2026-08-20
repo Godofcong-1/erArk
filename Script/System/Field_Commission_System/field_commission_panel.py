@@ -524,10 +524,6 @@ class CommissionDraw:
         
         def pass_func(): pass
 
-        # 辅助函数：计算中英文混合字符串的显示宽度
-        def get_display_width(text: str) -> int:
-            return sum(2 if ord(c) > 127 else 1 for c in text)
-
         # 辅助函数：根据开关获取最终能力值 (加入装备判定)
         def get_eff_ability(n_id: int, a_id: int) -> int:
             val = cache.character_data[n_id].ability.get(a_id, 0)
@@ -599,24 +595,24 @@ class CommissionDraw:
             filter_draw.text = _(" 筛选: ")
             filter_draw.draw()
             
-            btn_width = 18
+            btn_width = 19
             work_filter_names = [_("不筛选"), _("有"), _("无")]
             fall_filter_names = [_("不筛选"), _("无"), _("有"), _("爱情"), _("隶属")]
             bool_filter_names = [_("不筛选"), _("是"), _("否")]
 
-            btn_work = draw.LeftButton(_("[工作:{0}]").format(work_filter_names[filter_work]), "filter_work", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_work else "standard")
+            btn_work = draw.CenterButton(_("[工作:{0}]").format(work_filter_names[filter_work]), "filter_work", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_work else "standard")
             btn_work.draw()
             return_list.append(btn_work.return_text)
 
-            btn_fall = draw.LeftButton(_("[陷落:{0}]").format(fall_filter_names[filter_fall]), "filter_fall", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_fall else "standard")
+            btn_fall = draw.CenterButton(_("[陷落:{0}]").format(fall_filter_names[filter_fall]), "filter_fall", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_fall else "standard")
             btn_fall.draw()
             return_list.append(btn_fall.return_text)
             
-            btn_daughter = draw.LeftButton(_("[女儿:{0}]").format(bool_filter_names[filter_daughter]), "filter_daughter", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_daughter else "standard")
+            btn_daughter = draw.CenterButton(_("[女儿:{0}]").format(bool_filter_names[filter_daughter]), "filter_daughter", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_daughter else "standard")
             btn_daughter.draw()
             return_list.append(btn_daughter.return_text)
             
-            btn_collection = draw.LeftButton(_("[收藏:{0}]").format(bool_filter_names[filter_collection]), "filter_collection", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_collection else "standard")
+            btn_collection = draw.CenterButton(_("[收藏:{0}]").format(bool_filter_names[filter_collection]), "filter_collection", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if filter_collection else "standard")
             btn_collection.draw()
             return_list.append(btn_collection.return_text)
             
@@ -626,20 +622,20 @@ class CommissionDraw:
             sort_draw.text = _(" 排序: ")
             sort_draw.draw()
             
-            btn_sort_sel = draw.LeftButton(_("[已选优先]"), "sort_sel", 12, cmd_func=pass_func, normal_style="gold_enrod" if sort_selected_first else "standard")
+            btn_sort_sel = draw.CenterButton(_("[已选优先]"), "sort_sel", 12, cmd_func=pass_func, normal_style="gold_enrod" if sort_selected_first else "standard")
             btn_sort_sel.draw()
             return_list.append(btn_sort_sel.return_text)
             
-            btn_sort_col = draw.LeftButton(_("[收藏优先]"), "sort_col", 12, cmd_func=pass_func, normal_style="gold_enrod" if sort_collection_first else "standard")
+            btn_sort_col = draw.CenterButton(_("[收藏优先]"), "sort_col", 12, cmd_func=pass_func, normal_style="gold_enrod" if sort_collection_first else "standard")
             btn_sort_col.draw()
             return_list.append(btn_sort_col.return_text)
             
-            btn_sort_work = draw.LeftButton(_("[工作排序]"), "sort_work", 12, cmd_func=pass_func, normal_style="gold_enrod" if sort_work_toggle else "standard")
+            btn_sort_work = draw.CenterButton(_("[工作排序]"), "sort_work", 12, cmd_func=pass_func, normal_style="gold_enrod" if sort_work_toggle else "standard")
             btn_sort_work.draw()
             return_list.append(btn_sort_work.return_text)
             
             equip_toggle_status = _("开") if show_equip_modifier else _("关")
-            btn_equip_toggle = draw.LeftButton(_("[装备加成:{0}] ").format(equip_toggle_status), "toggle_equip", 18, cmd_func=pass_func, normal_style="gold_enrod" if show_equip_modifier else "standard")
+            btn_equip_toggle = draw.CenterButton(_("[装备加成:{0}] ").format(equip_toggle_status), "toggle_equip", btn_width, cmd_func=pass_func, normal_style="gold_enrod" if show_equip_modifier else "standard")
             btn_equip_toggle.draw()
             return_list.append(btn_equip_toggle.return_text)
 
@@ -649,7 +645,7 @@ class CommissionDraw:
             sort_draw2.text = _(" 技能排序: ")
             sort_draw2.draw()
             
-            btn_default = draw.LeftButton(
+            btn_default = draw.CenterButton(
                 _("[默认ID] "), "sort_0", 10, 
                 cmd_func=pass_func, normal_style="gold_enrod" if sort_skill_id == 0 else "standard"
             )
@@ -659,9 +655,8 @@ class CommissionDraw:
             # 技能排序按钮
             for name, sid in skill_columns:
                 btn_text = f"[{name}] "
-                btn_width = get_display_width(btn_text)
-                btn = draw.LeftButton(
-                    btn_text, f"sort_{sid}", btn_width, 
+                btn = draw.CenterButton(
+                    btn_text, f"sort_{sid}", len(btn_text) * 2, 
                     cmd_func=pass_func, normal_style="gold_enrod" if sort_skill_id == sid else "standard"
                 )
                 btn.draw()
@@ -777,12 +772,10 @@ class CommissionDraw:
                 star_str = "⭐" if is_collected else "  "
                 
                 name_str = f"[{check_mark}][{id_str}]{star_str}{name}"
+                name_str = attr_calculation.pad_display_width(name_str, name_btn_width)
                 btn_style = "gold_enrod" if npc_id in self.send_npc_list else "standard"
-                display_name_len = get_display_width(name_str)
-                name_pad = " " * max(0, name_btn_width - display_name_len)
-                
                 name_btn = draw.LeftButton(
-                    name_str + name_pad, str(npc_id), name_btn_width, 
+                    name_str, str(npc_id), name_btn_width, 
                     normal_style=btn_style,
                     cmd_func=self.select_this_npc, args=(npc_id,)
                 )
@@ -796,15 +789,12 @@ class CommissionDraw:
                     rank_color = f"level{rank.lower()}"
                     
                     rank_draw = draw.NormalDraw()
-                    rank_draw.text = rank
+                    rank_draw.text = attr_calculation.pad_display_width(rank, 3)
                     rank_draw.style = rank_color
                     rank_draw.draw()
                     
                     val_draw = draw.NormalDraw()
-                    col_width = get_display_width(col_name)
-                    val_str = f"{val}".rjust(2, " ")
-                    padding = " " * max(0, col_width - 4)
-                    val_draw.text = f"{val_str}{padding}|"
+                    val_draw.text = f"{val}|"
                     val_draw.draw()
                 
                 # 渲染装备状态
@@ -1095,17 +1085,23 @@ class CommissionDraw:
                 if vehicle_cid in self.send_vehicle_dict:
                     now_choice_count = self.send_vehicle_dict[vehicle_cid]
 
-                # 排版载具信息，利用 get_display_width 补齐空格并遵循多语言格式化规范
+                # 排版载具信息
                 base_str = f"[{str(vehicle_cid).rjust(2,'0')}]{vehicle_data.name}"
-                pad_1 = " " * max(0, 24 - get_display_width(base_str))
+                base_str = attr_calculation.pad_display_width(base_str, 24, "center")
+
+                speed_str = _("速度:{0}").format(vehicle_speed)
+                speed_str = attr_calculation.pad_display_width(speed_str, 16, "center")
+
+                capacity_str = _("运载:{0}").format(vehicle_capacity)
+                capacity_str = attr_calculation.pad_display_width(capacity_str, 16, "center")
+
+                special_str = _("特效:{0}").format(vehicle_special)
+                special_str = attr_calculation.pad_display_width(special_str, 16, "center")
                 
-                stats_str = _("| 速度:{0} | 运载:{1} | 特效:{2}").format(vehicle_speed, vehicle_capacity, vehicle_special)
-                pad_2 = " " * max(0, 48 - get_display_width(stats_str))
+                count_str = _("选定: {0}/{1}").format(now_choice_count, vehicle_count)
+                count_str = attr_calculation.pad_display_width(count_str, 16, "center")
                 
-                count_str = _("| 选定: {0}/{1}").format(now_choice_count, vehicle_count)
-                pad_3 = " " * max(0, 16 - get_display_width(count_str))
-                
-                draw_text = " " + base_str + pad_1 + stats_str + pad_2 + count_str + pad_3
+                draw_text = f" {base_str} | {speed_str} | {capacity_str} | {special_str} | {count_str}"
 
                 info_draw = draw.NormalDraw()
                 info_draw.text = draw_text
@@ -1114,7 +1110,7 @@ class CommissionDraw:
                 info_draw.draw()
 
                 # 增加一辆
-                button_draw_add = draw.LeftButton(
+                button_draw_add = draw.CenterButton(
                     _("[+1]"),
                     f"\n{vehicle_cid}+1",
                     6,
@@ -1130,7 +1126,7 @@ class CommissionDraw:
                 space_draw.draw()
 
                 # 减少一辆
-                button_draw_sub = draw.LeftButton(
+                button_draw_sub = draw.CenterButton(
                     _("[-1]"),
                     f"\n{vehicle_cid}-1",
                     6,
@@ -1151,7 +1147,7 @@ class CommissionDraw:
                 vehicle_data = game_config.config_vehicle[vehicle_id]
                 now_capacity += vehicle_data.capacity * self.send_vehicle_dict[vehicle_id]
                 now_speed = min(now_speed, vehicle_data.speed)
-                if vehicle_data.special != "无" and vehicle_data.special not in now_effect:
+                if vehicle_data.special != _("无") and vehicle_data.special not in now_effect:
                     now_effect.append(vehicle_data.special)
             
             # 如果没有选择载具，速度算作1
@@ -1163,7 +1159,7 @@ class CommissionDraw:
             for effect in now_effect:
                 effect_text += f"{effect} "
             if not effect_text:
-                effect_text = "无"
+                effect_text = _("无")
 
             # 结合当前速度与基础时间，计算实际消耗天数
             commision_data = game_config.config_commission[self.commission_id]
