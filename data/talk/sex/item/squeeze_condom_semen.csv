@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,squeeze_condom_semen,0,condom_operation_to_body,{Name}捏住避孕套的底部用力一挤，浓稠的精液尽数浇在了{TargetName}的身上，缓缓流淌下来
+1,squeeze_condom_semen,0,condom_operation_to_body,「呀……好烫……」{TargetName}感受着精液从避孕套里倾泻到自己的肌肤上，忍不住轻轻颤抖了一下
+2,squeeze_condom_semen,0,condom_operation_to_body,{TargetName}闭着眼睛一动不动，任凭{Name}将一个个避孕套里的精液挤在自己身上，直到浑身都染上了气味
+3,squeeze_condom_semen,0,condom_operation_to_cloth,{Name}把避孕套倒转过来，让积存的精液滴滴答答地落在{TargetName}的衣物上，晕开一片白浊的痕迹
+4,squeeze_condom_semen,0,condom_operation_to_cloth,{Name}像挤颜料一样把避孕套里的精液尽数抹在{TargetName}的衣物上，她低头看着被染污的衣服，羞得说不出话来

@@ -299,6 +299,10 @@ class DIRTY:
         """ 阴茎的污浊属性 [semen精液, blood处子血] """
         self.absorbed_total_semen: int = 0
         """ 累计吸收的精液总量，int类 """
+        self.condom_decoration: Dict[tuple, List[int]] = {}
+        """ 挂在本角色身上作装饰的用过的避孕套
+        键为(部位类型, 部位cid)元组：部位类型 0=身体（仅头发0可用），1=服装部位
+        值为列表，每个元素为该避孕套内的精液量(ml) """
 
 
 class PREGNANCY:
@@ -741,6 +745,8 @@ class SPECIAL_FLAG:
         """ 在无意识H模式中，int [0否,1睡眠,2醉酒,3时停,4平然,5空气,6体控,7心控] """
         self.hidden_sex_mode: int = 0
         """ 隐奸H模式，int [0否,1双不隐,2女隐,3男隐,4双隐] """
+        self.condom_cloth_flag: int = 0
+        """ 当前避孕套装饰相关行为的目标类型，int [0身体部位（头发）,1服装部位] """
         self.exhibitionism_sex_mode: int = 0
         """ 露出H模式，int [0否,1无人室内露出,2无人室外露出,3人前露出,4无意识人前露出] """
         self.sleep_h_awake: bool = False
@@ -874,6 +880,8 @@ class PLAYER_COLLECTION:
         """ 收集的各角色总乳汁量，单位毫升 """
         self.urine_total: Dict[int, int] = {}
         """ 收集的各角色总圣水量，单位毫升 """
+        self.used_condoms: List[int] = []
+        """ 用过的避孕套存量池，每个元素为该避孕套内的精液量(ml)，下一次H开始时清零 """
 
 
 class ACHIEVEMENT:

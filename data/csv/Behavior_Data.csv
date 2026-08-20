@@ -239,6 +239,10 @@ int,str,str,int,str,str
 
 471,put_condom,戴上避孕套,1,pl,性爱|道具
 472,take_condom_out,摘掉避孕套,1,pl,性爱|道具
+475,hang_condom_decoration,挂上避孕套装饰,1,pl,性爱|道具
+476,take_back_condom_decoration,取回避孕套装饰,1,pl,性爱|道具
+477,drink_condom_semen,饮用避孕套精液,5,pl,性爱|道具
+478,squeeze_condom_semen,挤出避孕套精液,5,pl,性爱|道具
 473,urethral_swab,尿道棉棒,10,both,性爱|U|道具
 474,electric_message_stick,电动按摩棒,10,both,性爱|C|道具
 481,nipples_love_egg,乳头跳蛋,10,both,性爱|B|道具

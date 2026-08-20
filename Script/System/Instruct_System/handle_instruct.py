@@ -2694,6 +2694,79 @@ def handle_take_condom_out():
     chara_handle_instruct_common_settle(constant.Behavior.TAKE_CONDOM_OUT)
 
 
+def handle_condom_instruct_common(mode: str, behavior_id: str):
+    """
+    避孕套指令的公共处理流程
+    先进行严重骚扰级别的实行值判定，判定失败则结算为严重骚扰失败行为且不打开选择面板；
+    判定通过后打开选择面板，面板确认时直接完成数据结算，最后走通用结算推进时间与口上
+    Keyword arguments:
+    mode -- 面板操作类型，hang=挂装饰，take_back=取回装饰，drink=饮用，squeeze=挤出
+    behavior_id -- 判定通过后结算的行为id
+    """
+    from Script.System.Item_System import condom_panel
+    character_data: game_type.Character = cache.character_data[0]
+    # 实行值判定必须在打开面板之前进行：面板确认时会直接结算数据，判定失败不能给出选择机会
+    judge_list = instuct_judege.calculation_instuct_judege(0, character_data.target_character_id, _("严重骚扰"))
+    if judge_list[0] == -1:
+        return
+    if judge_list[0] == 0:
+        # 判定失败，结算为严重骚扰失败行为
+        chara_handle_instruct_common_settle(constant.Behavior.HIGH_OBSCENITY_ANUS)
+        return
+    now_draw = condom_panel.Condom_Select_Panel(width, mode)
+    if now_draw.draw() == -1:
+        return
+    chara_handle_instruct_common_settle(behavior_id)
+
+
+@add_instruct(constant.Instruct.HANG_CONDOM_DECORATION)
+def handle_hang_condom_decoration():
+    """处理挂上避孕套装饰指令，数据结算在选择面板确认时直接完成"""
+    handle_condom_instruct_common("hang", constant.Behavior.HANG_CONDOM_DECORATION)
+
+
+@add_instruct(constant.Instruct.TAKE_BACK_CONDOM_DECORATION)
+def handle_take_back_condom_decoration():
+    """处理取回避孕套装饰指令，数据结算在选择面板确认时直接完成"""
+    handle_condom_instruct_common("take_back", constant.Behavior.TAKE_BACK_CONDOM_DECORATION)
+
+
+@add_instruct(constant.Instruct.DRINK_CONDOM_SEMEN)
+def handle_drink_condom_semen():
+    """处理饮用避孕套精液指令，数据结算在选择面板确认时直接完成"""
+    handle_condom_instruct_common("drink", constant.Behavior.DRINK_CONDOM_SEMEN)
+
+
+@add_instruct(constant.Instruct.SQUEEZE_CONDOM_SEMEN)
+def handle_squeeze_condom_semen():
+    """处理挤出避孕套精液指令，数据结算在选择面板确认时直接完成"""
+    handle_condom_instruct_common("squeeze", constant.Behavior.SQUEEZE_CONDOM_SEMEN)
+
+
+@add_instruct(constant.Instruct.HANG_CONDOM_DECORATION_DAILY)
+def handle_hang_condom_decoration_daily():
+    """处理非H下的挂上避孕套装饰指令，与H版共用行为与面板"""
+    handle_condom_instruct_common("hang", constant.Behavior.HANG_CONDOM_DECORATION)
+
+
+@add_instruct(constant.Instruct.TAKE_BACK_CONDOM_DECORATION_DAILY)
+def handle_take_back_condom_decoration_daily():
+    """处理非H下的取回避孕套装饰指令，与H版共用行为与面板"""
+    handle_condom_instruct_common("take_back", constant.Behavior.TAKE_BACK_CONDOM_DECORATION)
+
+
+@add_instruct(constant.Instruct.DRINK_CONDOM_SEMEN_DAILY)
+def handle_drink_condom_semen_daily():
+    """处理非H下的饮用避孕套精液指令，与H版共用行为与面板"""
+    handle_condom_instruct_common("drink", constant.Behavior.DRINK_CONDOM_SEMEN)
+
+
+@add_instruct(constant.Instruct.SQUEEZE_CONDOM_SEMEN_DAILY)
+def handle_squeeze_condom_semen_daily():
+    """处理非H下的挤出避孕套精液指令，与H版共用行为与面板"""
+    handle_condom_instruct_common("squeeze", constant.Behavior.SQUEEZE_CONDOM_SEMEN)
+
+
 @add_instruct(constant.Instruct.SAFE_CANDLES)
 def handle_safe_candles():
     """处理滴蜡指令"""

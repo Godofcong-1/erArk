@@ -5177,6 +5177,10 @@ def handle_h_flag_to_1(
     # 此时is_h已为真而跳过，避免误删进入H后角色新下达的移动指令
     if not character_data.sp_flag.is_h:
         character_move.cancel_movement_plan(character_id)
+        # 玩家或玩家的交互对象首次进入H时，清空用过的避孕套存量池（挂在角色身上的装饰保留）
+        if character_id == 0 or cache.character_data[0].target_character_id == character_id:
+            from Script.System.Item_System import condom_handle
+            condom_handle.clear_used_condoms()
     character_data.sp_flag.is_h = True
     # 进入H即视为已目击本场H：即使之后合法离场(如力竭)清了is_h，回场也不会被当作新旁观者而重复触发"H中被发现"面板
     character_data.sp_flag.see_pl_h = True

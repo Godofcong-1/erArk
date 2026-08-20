@@ -28,6 +28,9 @@ def get_npc_cloth(character_id: int):
     if character_id:
         character_data = cache.character_data[character_id]
         character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
+        # 换衣时去除服装部位上的避孕套装饰
+        from Script.System.Item_System import condom_handle
+        condom_handle.remove_cloth_decoration(character_id)
         tem_character = cache.npc_tem_data.get(character_id, None)
         if tem_character is None:
             return  # 模板不存在时安全返回
@@ -82,6 +85,9 @@ def get_cloth_from_dormitory_locker(character_id: int):
         # 宿舍衣柜中有衣服的话，穿上衣服
         if wear_locker_flag:
             character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
+            # 换衣时去除服装部位上的避孕套装饰
+            from Script.System.Item_System import condom_handle
+            condom_handle.remove_cloth_decoration(character_id)
             character_data.cloth.cloth_wear = character_data.cloth.cloth_locker_in_dormitory
             character_data.cloth.cloth_locker_in_dormitory = attr_calculation.get_cloth_locker_in_dormitory_zero()
             # 如果在范例里的衣服还有没穿着的，则穿上
@@ -394,6 +400,9 @@ def get_all_cloth_off(character_id: int):
     if character_id:
         character_data = cache.character_data[character_id]
         character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
+        # 脱衣时去除服装部位上的避孕套装饰
+        from Script.System.Item_System import condom_handle
+        condom_handle.remove_cloth_decoration(character_id)
         chara_special_wear_cloth(character_id)
         handle_premise.settle_chara_unnormal_flag(character_id, 4)
 
@@ -571,6 +580,9 @@ def get_cloth_wear_zero_except_need(character_id: int):
             character_data.cloth.cloth_wear[clothing_type] = result
     chara_special_wear_cloth(character_id)
     handle_premise.settle_chara_unnormal_flag(character_id, 4)
+    # 衣物离开身体时去除服装部位上的避孕套装饰
+    from Script.System.Item_System import condom_handle
+    condom_handle.remove_cloth_decoration(character_id)
     # print(f"debug 脱衣服后 = {character_data.cloth.cloth_wear}")
 
 

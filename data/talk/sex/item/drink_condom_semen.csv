@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,drink_condom_semen,0,high_1,{TargetName}接过用过的避孕套，闭上眼睛仰起头，将里面浓稠的精液一滴不剩地倒进了喉咙里
+1,drink_condom_semen,0,high_1,「咕……咕嘟……」{TargetName}捏着避孕套的底端慢慢挤压，喉咙上下滚动着，把精液一口口咽了下去
+2,drink_condom_semen,0,high_1,{TargetName}红着脸把避孕套口含进嘴里，像吸果冻一样把里面的精液吸得干干净净
+3,drink_condom_semen,0,high_1,「唔……好浓……」{TargetName}喝完后伸出舌头舔了舔嘴角残留的白浊，胃里沉甸甸的都是{Name}的味道
+4,drink_condom_semen,0,high_1,{TargetName}把几个避孕套里的精液集中倒进口中，鼓着脸颊含了一会儿才咽下去，随后长长呼出一口气

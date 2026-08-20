@@ -3058,6 +3058,65 @@ def handle_not_use_condom_in_h(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.USED_CONDOM_GE_1)
+def handle_used_condom_ge_1(character_id: int) -> int:
+    """
+    用过的避孕套存量池中数量大于等于1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Item_System import condom_handle
+    if len(condom_handle.get_used_condoms()) >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_CONDOM_DECORATION_GE_1)
+def handle_t_condom_decoration_ge_1(character_id: int) -> int:
+    """
+    交互对象身上挂着的装饰避孕套数量大于等于1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Item_System import condom_handle
+    character_data = cache.character_data[character_id]
+    if condom_handle.get_decoration_total_count(character_data.target_character_id) >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.CONDOM_OPERATION_TO_BODY)
+def handle_condom_operation_to_body(character_id: int) -> int:
+    """
+    当前避孕套装饰相关行为的目标是身体部位（头发）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if getattr(cache.character_data[0].sp_flag, "condom_cloth_flag", 0) == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.CONDOM_OPERATION_TO_CLOTH)
+def handle_condom_operation_to_cloth(character_id: int) -> int:
+    """
+    当前避孕套装饰相关行为的目标是服装部位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if getattr(cache.character_data[0].sp_flag, "condom_cloth_flag", 0) == 1:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.USE_CONDOM_IN_H_GE_1)
 def handle_use_condom_in_h_ge_1(character_id: int) -> int:
     """

@@ -638,7 +638,25 @@ class StatusPanel:
                         else:
                             dirty_text = game_config.ui_text_data.get('dirty', {}).get(dirty_text_cid, "")
                         cloth_item["dirty_text"] = dirty_text
-                    
+
+                    # 该服装部位挂着的避孕套装饰（在该部位最后一件衣服上显示）
+                    if cloth_id == target_data.cloth.cloth_wear[clothing_type][-1]:
+                        from Script.System.Item_System import condom_handle
+                        decoration_count = condom_handle.get_decoration_count(character_id, 1, clothing_type)
+                        if decoration_count:
+                            # 开启详细污浊信息时显示等级描述文本，否则显示个数
+                            if show_detailed:
+                                decoration_level = condom_handle.get_decoration_level(decoration_count)
+                                decoration_text_cid = f"{_(type_name, revert_translation=True)}避孕套装饰{str(decoration_level)}"
+                                decoration_text = game_config.ui_text_data.get('condom_dirty', {}).get(decoration_text_cid, "")
+                            else:
+                                decoration_text = _("挂着{0}个用过的避孕套").format(str(decoration_count))
+                            # 如果该部位已有污浊信息，则先换行再显示，否则直接显示
+                            if cloth_item["dirty_text"]:
+                                cloth_item["dirty_text"] += "\n" + decoration_text
+                            else:
+                                cloth_item["dirty_text"] = decoration_text
+
                     items.append(cloth_item)
             
             # 真空显示
@@ -790,7 +808,22 @@ class StatusPanel:
                     text = game_config.ui_text_data.get('dirty', {}).get(dirty_text_cid, "")
                 if text:
                     part_info["texts"].append({"type": "semen", "text": text})
-            
+
+            # 头发上挂着的避孕套装饰
+            if i == 0:
+                from Script.System.Item_System import condom_handle
+                decoration_count = condom_handle.get_decoration_count(character_id, 0, 0)
+                if decoration_count:
+                    # 开启详细污浊信息时显示等级描述文本，否则显示个数
+                    if show_detailed:
+                        decoration_level = condom_handle.get_decoration_level(decoration_count)
+                        decoration_text_cid = f"{_(part_name, revert_translation=True)}避孕套装饰{str(decoration_level)}"
+                        decoration_text = game_config.ui_text_data.get('condom_dirty', {}).get(decoration_text_cid, "")
+                    else:
+                        decoration_text = _("挂着{0}个用过的避孕套").format(str(decoration_count))
+                    if decoration_text:
+                        part_info["texts"].append({"type": "semen", "text": decoration_text})
+
             if part_info["texts"]:
                 parts.append(part_info)
         

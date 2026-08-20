@@ -450,6 +450,9 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
             # 将射精量转化为避孕套中的精液量
             character_data.h_state.condom_count[0] += 1
             character_data.h_state.condom_count[1] += semen_count
+            # 存入用过的避孕套存量池
+            from Script.System.Item_System import condom_handle
+            condom_handle.add_used_condom(semen_count)
             # 去掉避孕套状态
             character_data.h_state.body_item[13][1] = False
             # 获取射精文本

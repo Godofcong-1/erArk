@@ -300,6 +300,7 @@ The `.github/prompts/数据处理工作流` directory contains 60 detailed docum
 - **[通用结算函数函数](.github/prompts/数据处理工作流/通用结算函数函数.md)** - Universal calculation functions
 - **[多周目结算与继承系统](.github/prompts/数据处理工作流/多周目结算与继承系统.md)** - Multi-playthrough data inheritance
 - **[ArkEditor编辑器系统说明](.github/prompts/数据处理工作流/ArkEditor编辑器系统说明.md)** - Built-in editor system
+- **[新增指令工作流](.github/prompts/数据处理工作流/新增指令工作流.md)** - Complete workflow for adding a new player instruction (config, behavior, premise, settlement, talk)
 - **[剧情总结工作流](.github/prompts/数据处理工作流/剧情总结工作流.md)** - Story summarization workflow
 - **[剧情转外勤委托工作流](.github/prompts/数据处理工作流/剧情转外勤委托工作流.md)** - Story-to-field-commission conversion workflow
 

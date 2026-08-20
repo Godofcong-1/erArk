@@ -1557,6 +1557,7 @@ def handle_take_condom_off(
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.h_state.body_item[13][1] = False
 
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_REMOTE_TOY_OFF)
 def handle_self_remote_toy_off(
     character_id: int,

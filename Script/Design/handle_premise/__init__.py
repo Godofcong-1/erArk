@@ -1474,6 +1474,23 @@ def handle_t_normal_56_or_unconscious_flag(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.T_NORMAL_56_OR_H_OR_UNCONSCIOUS)
+def handle_t_normal_56_or_h_or_unconscious(character_id: int) -> int:
+    """
+    交互对象56正常或H中或无意识
+    \n用于H模式与日常均可用的指令：H中直接放行，日常则要求56正常或无意识
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.sp_flag.is_h:
+        return 1
+    return handle_t_normal_56_or_unconscious_flag(character_id)
+
+
 @add_premise(constant_promise.Premise.T_UNNORMAL_567)
 def handle_t_unnormal_567(character_id: int) -> int:
     """

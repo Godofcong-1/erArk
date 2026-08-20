@@ -409,6 +409,14 @@ class Behavior_Int:
     """ 尿道棉棒 """
     TAKE_CONDOM_OUT = 474
     """ 摘掉避孕套 """
+    HANG_CONDOM_DECORATION = 475
+    """ 挂上避孕套装饰 """
+    TAKE_BACK_CONDOM_DECORATION = 476
+    """ 取回避孕套装饰 """
+    DRINK_CONDOM_SEMEN = 477
+    """ 饮用避孕套精液 """
+    SQUEEZE_CONDOM_SEMEN = 478
+    """ 挤出避孕套精液 """
     NIPPLES_LOVE_EGG = 481
     """ 乳头跳蛋 """
     NIPPLE_CLAMP_ON = 482

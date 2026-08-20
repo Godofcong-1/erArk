@@ -115,6 +115,21 @@ class SeeCharacterClothPanel:
                         else:
                             dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
                         now_text += f"<semen>({dirty_text_context})</semen>"
+                # 该服装部位挂着的避孕套装饰
+                from Script.System.Item_System import condom_handle
+                decoration_count = condom_handle.get_decoration_count(character_data.target_character_id, 1, clothing_type)
+                if decoration_count:
+                    # 开启详细污浊信息时显示等级描述文本，否则显示个数
+                    if cache.all_system_setting.draw_setting[10]:
+                        decoration_level = condom_handle.get_decoration_level(decoration_count)
+                        decoration_text_cid = "{0}避孕套装饰{1}".format(_(type_name, revert_translation = True), str(decoration_level))
+                        decoration_text_context = game_config.ui_text_data['condom_dirty'][decoration_text_cid]
+                    else:
+                        decoration_text_context = _("挂着{0}个用过的避孕套").format(str(decoration_count))
+                    # 如果该部位已有污浊信息，则先换行再显示，否则直接显示
+                    if target_character_data.dirty.cloth_semen[clothing_type][1] != 0 and now_text != "" and now_text[-1] != "\n":
+                        now_text += "\n"
+                    now_text += f"<semen>({decoration_text_context})</semen>"
 
             # 当显示到下衣8，且此时没有衣服的时候，换行
             if clothing_type == 8 and len(target_character_data.cloth.cloth_wear[8]) == 0:

@@ -211,6 +211,24 @@ class SeeCharacterBodyPanel:
                     now_part_text = f" {part_name}{dirty_text_context}"
                 all_part_text_list.append(now_part_text)
 
+            # 头发上挂着的避孕套装饰
+            if i == 0:
+                from Script.System.Item_System import condom_handle
+                decoration_count = condom_handle.get_decoration_count(character_data.target_character_id, 0, 0)
+                if decoration_count:
+                    # 开启详细污浊信息时显示等级描述文本，否则显示个数
+                    if cache.all_system_setting.draw_setting[10]:
+                        decoration_level = condom_handle.get_decoration_level(decoration_count)
+                        decoration_text_cid = f"{_(part_name, revert_translation = True)}避孕套装饰{str(decoration_level)}"
+                        decoration_text_context = game_config.ui_text_data['condom_dirty'][decoration_text_cid]
+                        now_decoration_text = f"  [{part_name}]:<semen>{decoration_text_context}</semen>\n"
+                    else:
+                        now_decoration_text = _(" {0}上挂着{1}个用过的避孕套").format(part_name, str(decoration_count))
+                    # 如果该部位已有污浊信息，则先换行再显示，否则直接显示
+                    if target_character_data.dirty.body_semen[i][2] and len(all_part_text_list) and not all_part_text_list[-1].endswith("\n"):
+                        now_decoration_text = "\n" + now_decoration_text
+                    all_part_text_list.append(now_decoration_text)
+
         # 如果腹部整体有精液，则显示腹部整体精液污浊
         if abdomen_all_semen:
             now_level = attr_calculation.get_semen_now_level(abdomen_all_semen, 20, 0)
@@ -321,12 +339,12 @@ class SeeCharacterBodyPanel:
         if now_text != "":
             all_part_text_list.append(now_text)
 
-        # 避孕套文本
-        if not len(character_data.h_state.condom_count):
-            character_data.h_state.condom_count = [0, 0]
-        if character_data.h_state.condom_count[0]:
-            condom_text = _(" 用掉了{0}个避孕套，总精液量{1}ml").format(str(character_data.h_state.condom_count[0]), str(character_data.h_state.condom_count[1]))
-            all_part_text_list.append(condom_text)
+        # 用过的避孕套存量池文本
+        from Script.System.Item_System import condom_handle, condom_panel
+        used_condoms = condom_handle.get_used_condoms()
+        if len(used_condoms):
+            pool_text = _(" 现留有{0}个用过的避孕套（{1}）").format(str(len(used_condoms)), "、".join(f"{ml}ml" for ml in used_condoms))
+            all_part_text_list.append(pool_text)
 
         # 香薰疗愈文本
         if target_character_data.sp_flag.aromatherapy != 0:

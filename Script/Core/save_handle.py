@@ -182,6 +182,13 @@ def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
             ability_data = getattr(character, "pl_ability", None)
             if ability_data is not None and hasattr(ability_data, "air_hypnosis_position"):
                 ability_data.air_hypnosis_position = _normalize_save_path(ability_data.air_hypnosis_position)
+            # 避孕套系统旧存档兼容：补全玩家收藏品与角色污浊结构体中缺失的字段
+            pl_collection = getattr(character, "pl_collection", None)
+            if pl_collection is not None and not hasattr(pl_collection, "used_condoms"):
+                pl_collection.used_condoms = []
+            dirty_data = getattr(character, "dirty", None)
+            if dirty_data is not None and not hasattr(dirty_data, "condom_decoration"):
+                dirty_data.condom_decoration = {}
 
     rhodes_island = getattr(loaded_cache, "rhodes_island", None)
     if rhodes_island is not None:

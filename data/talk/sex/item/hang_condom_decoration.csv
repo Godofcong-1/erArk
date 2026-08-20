@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,hang_condom_decoration,0,condom_operation_to_body,{Name}把用过的避孕套系在了{TargetName}的发梢上，沉甸甸的套子随着她的动作轻轻摇晃
+1,hang_condom_decoration,0,condom_operation_to_body,{Name}用避孕套代替发绳，把{TargetName}的头发扎了起来，乳白色的重量坠得她不敢快步走路
+2,hang_condom_decoration,0,condom_operation_to_body,「要、要挂在头发上吗……」{TargetName}微微低下头，任由{Name}把装满精液的避孕套编进自己的发间
+3,hang_condom_decoration,0,condom_operation_to_cloth,{TargetName}红着脸站好不动，看着{Name}将装满精液的避孕套一个个挂上自己的衣角
+4,hang_condom_decoration,0,condom_operation_to_cloth,{Name}把用过的避孕套系在{TargetName}的衣物上，退后一步端详着，白色的套子在她身上微微晃动，像是一种无言的标记

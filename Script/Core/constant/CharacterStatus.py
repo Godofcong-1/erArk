@@ -421,6 +421,14 @@ class CharacterStatus:
     """ 尿道棉棒 """
     STATUS_TAKE_CONDOM_OUT = 474
     """ 摘掉避孕套 """
+    STATUS_HANG_CONDOM_DECORATION = 475
+    """ 挂上避孕套装饰 """
+    STATUS_TAKE_BACK_CONDOM_DECORATION = 476
+    """ 取回避孕套装饰 """
+    STATUS_DRINK_CONDOM_SEMEN = 477
+    """ 饮用避孕套精液 """
+    STATUS_SQUEEZE_CONDOM_SEMEN = 478
+    """ 挤出避孕套精液 """
     STATUS_NIPPLES_LOVE_EGG = 481
     """ 乳头跳蛋 """
     STATUS_NIPPLE_CLAMP_ON = 482

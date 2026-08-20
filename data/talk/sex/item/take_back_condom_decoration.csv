@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,take_back_condom_decoration,0,condom_operation_to_body,{Name}解开用避孕套扎起的头发，{TargetName}的长发散落下来，还带着一丝若有若无的气味
+1,take_back_condom_decoration,0,condom_operation_to_body,{Name}小心地把系在{TargetName}发梢上的避孕套解了下来，「终于取下来了吗……」她轻轻舒了一口气，发间残留的重量感却仿佛还未散去
+2,take_back_condom_decoration,0,condom_operation_to_body,{TargetName}安静地低着头，配合{Name}把发间的避孕套一个个取走，只有耳根的红色出卖了她的心情
+3,take_back_condom_decoration,0,condom_operation_to_cloth,{Name}把避孕套从{TargetName}的衣角上摘下，她下意识地摸了摸那处布料，若有所失地看了{Name}一眼
+4,take_back_condom_decoration,0,condom_operation_to_cloth,{Name}将挂在{TargetName}衣物上的避孕套逐个解下收回，她整了整衣摆，轻得几乎听不见地说了句「……结束了吗」
