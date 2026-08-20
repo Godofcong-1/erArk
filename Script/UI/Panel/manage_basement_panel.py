@@ -1333,16 +1333,21 @@ class Change_Npc_Work_Panel:
             for i in target_data.body_manage:
                 if i in range(30,40) and target_data.body_manage[i]:
                     target_data.body_manage[i] = 0
+        # 如果旧的工作是监狱长，则解除监狱长身份，并重置宿舍
+        if handle_premise.handle_work_is_warden(character_id):
+            target_data.work.work_type = 0
+            target_data.dormitory = target_data.pre_dormitory
+            cache.rhodes_island.current_warden_id = 0
         # 赋予新工作
         target_data.work.work_type = work_id
         # 如果当前工作是监狱长
         if handle_premise.handle_work_is_warden(character_id):
             from Script.Design import map_handle
-            # 如果有旧的监狱长，则解除监狱长身份，并重置宿舍
-            if handle_premise.handle_have_warden(0):
-                old_warden = cache.character_data[cache.rhodes_island.current_warden_id]
-                old_warden.work.work_type = 0
-                old_warden.dormitory = old_warden.pre_dormitory
+            # 如果有其他干员是监狱长，则解除其监狱长身份，并重置宿舍
+            if cache.rhodes_island.current_warden_id != 0 and cache.rhodes_island.current_warden_id != character_id:
+                old_warden_data: game_type.Character = cache.character_data[cache.rhodes_island.current_warden_id]
+                old_warden_data.work.work_type = 0
+                old_warden_data.dormitory = old_warden_data.pre_dormitory
             # 更新监狱长id
             cache.rhodes_island.current_warden_id = character_id
             # 更新监狱长的宿舍
