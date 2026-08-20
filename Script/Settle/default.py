@@ -6730,6 +6730,11 @@ def handle_dirty_reset_in_shower(
         body_dirty[2] = new_lv
         keep_data[body_cid] = body_dirty
 
+    # 被要求禁止洗衣服时，先保存衣物污浊，待身体清洗结算后恢复
+    keep_cloth_semen = {}
+    if handle_premise.handle_ask_not_wash_cloth(character_id):
+        keep_cloth_semen = {clothing_type: semen_data.copy() for clothing_type, semen_data in character_data.dirty.cloth_semen.items()}
+
     # 数据归零后再赋值
     # 暂时注释仅身体污浊的清零，使服装污浊也一起清零
     # new_dirty = attr_calculation.get_dirty_reset(character_data.dirty)
@@ -6737,6 +6742,10 @@ def handle_dirty_reset_in_shower(
     character_data.dirty = attr_calculation.get_dirty_reset(character_data.dirty)
     for body_cid in keep_rate_dict:
         character_data.dirty.body_semen[body_cid] = keep_data[body_cid]
+
+    # 恢复被禁止清洗的衣物污浊
+    for clothing_type, semen_data in keep_cloth_semen.items():
+        character_data.dirty.cloth_semen[clothing_type] = semen_data
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ORGASM_EDGE_RELEASE)

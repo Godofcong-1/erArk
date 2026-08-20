@@ -39,14 +39,14 @@ ai的目标,,,,
 46,522,eat_food_flag_2|ai_eat_in_restaurant|not_in_ai_food_shop,12,要进食状态下，要在餐厅吃饭，且不在餐厅里，则去餐厅
 47,77,eat_food_flag_2|ai_eat_in_restaurant|in_ai_food_shop,12,要进食状态下，要在餐厅吃饭，且在餐厅里，则吃饭
 
-51,71,normal_1267|shower_time|shower_flag_0,11,1267正常（可能AI跟随、服装异常或意识模糊），淋浴时间，今天没洗过澡，则进入要脱衣服（洗澡）状态
+51,71,normal_1267|shower_time|shower_flag_0|not_ask_not_take_bath,11,1267正常（可能AI跟随、服装异常或意识模糊），淋浴时间，今天没洗过澡，自己没有被要求禁止一切洗澡，则进入要脱衣服（洗澡）状态
 52,601,shower_flag_1|not_in_bathzone_locker_room,12,要脱衣服（洗澡）状态下，当前不在大浴室的更衣室，则去大浴室的更衣室
 53,72,shower_flag_1|in_bathzone_locker_room,12,要脱衣服（洗澡）状态下，当前在大浴室的更衣室，则脱成全裸
 54,515,shower_flag_2|not_in_bathroom,12,要洗澡状态下，当前不在淋浴间，则去淋浴间
 55,73,shower_flag_2|in_bathroom,12,要洗澡状态下，当前在淋浴间，则开始淋浴
 56,601,shower_flag_3|not_in_bathzone_locker_room,12,要披浴巾状态，当前不在大浴室的更衣室，则去大浴室的更衣室
 57,74,shower_flag_3|in_bathzone_locker_room,12,要披浴巾状态，当前在大浴室的更衣室，则围上浴巾
-58,71,normal_1267|sleep_h_awake_1|shower_flag_0,0,1267正常（可能AI跟随、服装异常或意识模糊），自身睡奸中醒来状态，今天没洗过澡，则进入要脱衣服（洗澡）状态
+58,71,normal_1267|sleep_h_awake_1|shower_flag_0|not_ask_not_take_bath,0,1267正常（可能AI跟随、服装异常或意识模糊），自身睡奸中醒来状态，今天没洗过澡，自己没有被要求禁止一切洗澡，则进入要脱衣服（洗澡）状态
 59,94,sleep_h_awake_1|shower_flag_4,12,自身睡奸中醒来状态，自身已洗澡状态，则清零洗澡状态和睡奸醒来状态并换上标准衣服
 
 61,79,normal_1267|mp_0|not_sleep_time|self_not_tired,11,1267正常（可能AI跟随、服装异常或意识模糊），气力=0，非睡觉时间，自身未疲劳（体力>1），则进入要休息状态
@@ -64,7 +64,7 @@ ai的目标,,,,
 73,44,unnormal_2|self_tired,13,2异常，已疲劳，则睡觉
 74,44,unnormal_2|sleep_time,13,2异常，睡眠时间，则睡觉
 75,50,unnormal_2|urinate_ge_80,13,2异常，尿意值到80%，则解手
-76,70,unnormal_2|shower_time|shower_flag_0,13,2异常，淋浴时间，今天没洗过澡，则开始淋浴
+76,70,unnormal_2|shower_time|shower_flag_0|not_ask_not_take_bath,13,2异常，淋浴时间，今天没洗过澡，自己没有被要求禁止一切洗澡，则开始淋浴
 
 81,89,normal_1267|milk_ge_80,11,1267正常（可能AI跟随、服装异常或意识模糊），乳汁值到80%，则进入要挤奶状态
 82,512,milk_flag_1|not_in_restroom,12,要挤奶状态，且不在休息室，则去休息室
@@ -119,7 +119,7 @@ ai的目标,,,,
 466,612,swim_flag_2|not_all_entertainment_time|not_in_training_locker_room,33,要游泳状态，当前不是娱乐时间，当前不在训练场的更衣室，则去训练场的更衣室
 467,88,swim_flag_2|not_all_entertainment_time|in_training_locker_room,33,要游泳状态，当前不是娱乐时间，当前在训练场的更衣室，则换回衣服并将flag置0
 
-471,85,normal_all|all_entertainment_time|entertainment_is_bathhouse_type|bathhouse_entertainment_flag_0,31,正常状态下，全娱乐时间，娱乐为大浴场类的娱乐，自身没有大浴场娱乐状态，则进入要去大浴场娱乐_要更衣状态
+471,85,normal_all|all_entertainment_time|entertainment_is_bathhouse_type|bathhouse_entertainment_flag_0|not_ask_not_take_bath,31,正常状态下，全娱乐时间，娱乐为大浴场类的娱乐，自身没有大浴场娱乐状态，自己没有被要求禁止一切洗澡，则进入要去大浴场娱乐_要更衣状态
 472,601,normal_all|all_entertainment_time|bathhouse_entertainment_flag_1|not_in_bathzone_locker_room,31,正常状态下，全娱乐时间，要去大浴场娱乐_要更衣状态，当前不在浴场更衣室，则去浴场更衣室
 473,86,normal_all|all_entertainment_time|bathhouse_entertainment_flag_1|in_bathzone_locker_room|entertainment_is_soak_feet,31,正常状态下，全娱乐时间，要去大浴场娱乐_要更衣状态，当前在浴场更衣室，自己的娱乐为泡脚，则袜子和鞋子转移到衣柜里
 474,87,normal_all|all_entertainment_time|bathhouse_entertainment_flag_1|in_bathzone_locker_room|entertainment_is_bathhouse_shower_cloth_type,31,正常状态下，全娱乐时间，要去大浴场娱乐_要更衣状态，当前在浴场更衣室，自己的娱乐为大浴场类_需要换浴衣的娱乐，则当前身上衣服转移到衣柜里，并换上浴帽和浴巾

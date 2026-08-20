@@ -578,6 +578,13 @@ class Physical_Check_And_Manage_Panel:
             require_text += _("被睡姦经验{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
+        elif body_manage_second_behavior_id in ('ask_not_take_bath', 'ask_not_wash_cloth'):
+            # 精液经验
+            now_value_1 = target_character_data.experience[24]
+            require_value_1 = body_manage_data.need_value_1
+            require_text += _("精液经验{0}/{1}").format(now_value_1, require_value_1)
+            if now_value_1 >= require_value_1:
+                judge_result = True
         # 攻略进度
         now_value_2 = attr_calculation.get_character_fall_level(target_character_id)
         require_value_2 = body_manage_data.need_value_2
@@ -616,6 +623,12 @@ class Physical_Check_And_Manage_Panel:
             judge_result = False
         if manage_cid == 23 and handle_premise.handle_ask_not_active_h_for_player(target_character_id):
             require_text += _(" 需要未选择[禁止逆推]")
+            judge_result = False
+        if manage_cid == 26 and handle_premise.handle_ask_not_wash_semen(target_character_id):
+            require_text += _(" 需要未选择[洗澡时不再清洗阴道内的精液]")
+            judge_result = False
+        if manage_cid == 21 and handle_premise.handle_ask_not_take_bath(target_character_id):
+            require_text += _(" 需要未选择[禁止一切洗澡]")
             judge_result = False
         if manage_cid in range(31, 40) and handle_premise.handle_ask_ge_3_exercises(target_character_id):
             require_text += _(" 最多只能选择3项练习项目")

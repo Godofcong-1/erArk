@@ -473,6 +473,10 @@ class SecondBehavior_Int:
     """ 被要求禁止自慰 """
     ASK_NOT_LOCK_DOOR_BEFORE_SLEEPING = 1474
     """ 被要求晚上睡觉不锁门 """
+    ASK_NOT_TAKE_BATH = 1476
+    """ 被要求禁止一切洗澡 """
+    ASK_NOT_WASH_CLOTH = 1477
+    """ 被要求禁止洗衣服 """
     ASK_SUCKING_AND_SWALLOWING_EXERCISES = 1481
     """ 被要求进行吮吸与吞咽力练习 """
     ASK_ARMPIT_CLAMPING_EXERCISES = 1482
