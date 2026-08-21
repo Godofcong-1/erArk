@@ -131,7 +131,7 @@ class SeeCharacterBodyPanel:
                 target_character_data.dirty.body_semen[i] = [part_name,0,0,0]
 
             # 最开始先计算腹部整体的精液量累积
-            if i in [5,7,8,15]:
+            if i in [6,7,8,15]:
                 abdomen_all_semen += target_character_data.dirty.body_semen[i][1]
 
             # 判定部位是否被衣服遮挡，且没有透视中

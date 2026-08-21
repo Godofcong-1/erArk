@@ -231,7 +231,7 @@ def npc_gain_and_lost_cumflation(character_id: int):
 
     # 计算腹部精液总量
     abdomen_all_semen = 0
-    for i in [5,7,8,15]:
+    for i in [6,7,8,15]:
         # 如果没有第[i]个，则补上
         if len(character_data.dirty.body_semen) <= i:
             part_name = game_config.config_body_part[i].name
