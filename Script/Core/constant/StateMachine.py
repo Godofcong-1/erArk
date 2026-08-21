@@ -267,6 +267,8 @@ class StateMachine:
     """ 移动到黄澄澄游戏室 """
     MOVE_TO_DR_OFFICE = 571
     """ 移动至博士办公室 """
+    MOVE_TO_DR_ROOM = 572
+    """ 移动至博士房间 """
     MOVE_TO_RESOURCE_EXCHANGE = 581
     """ 移动至资源交易所 """
     MOVE_TO_AVANT_GARDE_ARCADE = 584

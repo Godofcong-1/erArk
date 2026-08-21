@@ -202,6 +202,19 @@ def character_move_to_dr_office(character_id: int):
     general_movement_module(character_id, to_dr_office)
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DR_ROOM)
+def character_move_to_dr_room(character_id: int):
+    """
+    移动至博士房间
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    to_dr_room = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Dr_room"])
+    )
+    general_movement_module(character_id, to_dr_room)
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_TOILET)
 def character_move_to_toilet(character_id: int):
     """

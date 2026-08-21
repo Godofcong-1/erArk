@@ -446,6 +446,21 @@ def handle_assistant_live_together_off(character_id: int) -> int:
     return not handle_assistant_live_together_on(character_id)
 
 
+@add_premise(constant_promise.Premise.NOT_IS_ASSISTANT_LIVE_TOGETHER)
+def handle_not_is_assistant_live_together(character_id: int) -> int:
+    """
+    不符合自己是当前的助理干员且开启了同居服务的条件
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    # 只有“既是当前助理、又开启了同居”才返回0，避免用assistant_services残留字段误判卸任助理
+    if handle_is_assistant(character_id) and handle_assistant_live_together_on(character_id):
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.TARGET_ASSISTANT_LIVE_TOGETHER_ON)
 def handle_target_assistant_live_together_on(character_id: int) -> int:
     """

@@ -679,6 +679,8 @@ def handle_shower_locker_to_dormitory_locker(
     # 从缓存中获取角色数据
     character_data = cache.character_data[character_id]
 
+    # 同居助理的宿舍地址即博士房间，所以她在博士房间洗澡后，衣服同样转进这份宿舍衣柜，
+    # 次日在博士房间起床时再由效果649穿回，与普通角色完全一致
     character_data.cloth.cloth_locker_in_dormitory = character_data.cloth.cloth_locker_in_shower.copy()
     character_data.cloth.cloth_locker_in_shower = attr_calculation.get_shower_cloth_locker_zero()
 

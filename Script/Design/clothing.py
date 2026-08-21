@@ -6,7 +6,7 @@ from Script.Core import (
     get_text,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import attr_calculation, handle_premise
+from Script.Design import attr_calculation, handle_premise, map_handle
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -49,6 +49,87 @@ def get_npc_cloth(character_id: int):
         handle_premise.settle_chara_unnormal_flag(character_id, 4)
 
 
+CLOTH_LOCKER_TYPE_SHOWER = 2
+""" 衣柜类型_大浴场（更衣室）衣柜 """
+CLOTH_LOCKER_TYPE_DORMITORY = 3
+""" 衣柜类型_宿舍衣柜 """
+
+CLOTH_LOCKER_ATTR_NAME = {
+    CLOTH_LOCKER_TYPE_SHOWER: "cloth_locker_in_shower",
+    CLOTH_LOCKER_TYPE_DORMITORY: "cloth_locker_in_dormitory",
+}
+""" 衣柜类型对应的CLOTH属性名 """
+
+
+def get_cloth_locker_type_by_scene(scene_tag: str) -> int:
+    """
+    根据场景标签判断该场景使用哪个衣柜
+    博士房间没有独立衣柜：同居助理的宿舍地址已被改写为博士房间，
+    因此那里用的就是她的宿舍衣柜
+    Keyword arguments:
+    scene_tag -- 场景标签字符串
+    Return arguments:
+    int -- 衣柜类型（2大浴场更衣室/3宿舍）
+    """
+    if "Locker_Room" in scene_tag:
+        return CLOTH_LOCKER_TYPE_SHOWER
+    return CLOTH_LOCKER_TYPE_DORMITORY
+
+
+def get_now_cloth_locker_type(character_id: int) -> int:
+    """
+    根据角色当前所在场景，判断应该使用哪个衣柜
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 衣柜类型（2大浴场更衣室/3宿舍）
+    """
+    character_data = cache.character_data[character_id]
+    now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    return get_cloth_locker_type_by_scene(now_scene_data.scene_tag)
+
+
+def get_cloth_locker_by_type(character_id: int, locker_type: int) -> dict:
+    """
+    按衣柜类型取出角色对应的衣柜数据
+    Keyword arguments:
+    character_id -- 角色id
+    locker_type -- 衣柜类型（2大浴场更衣室/3宿舍）
+    Return arguments:
+    dict -- 该衣柜的数据 部位:衣服id列表
+    """
+    character_data = cache.character_data[character_id]
+    return getattr(character_data.cloth, CLOTH_LOCKER_ATTR_NAME[locker_type])
+
+
+def set_cloth_locker_by_type(character_id: int, locker_type: int, locker_data: dict):
+    """
+    按衣柜类型写回角色对应的衣柜数据
+    Keyword arguments:
+    character_id -- 角色id
+    locker_type -- 衣柜类型（2大浴场更衣室/3宿舍）
+    locker_data -- 要写入的衣柜数据
+    Return arguments:
+    无
+    """
+    character_data = cache.character_data[character_id]
+    setattr(character_data.cloth, CLOTH_LOCKER_ATTR_NAME[locker_type], locker_data)
+
+
+def get_cloth_locker_zero_by_type(locker_type: int) -> dict:
+    """
+    按衣柜类型获得一个全空的衣柜数据
+    Keyword arguments:
+    locker_type -- 衣柜类型（2大浴场更衣室/3宿舍）
+    Return arguments:
+    dict -- 全空的衣柜数据
+    """
+    if locker_type == CLOTH_LOCKER_TYPE_SHOWER:
+        return attr_calculation.get_shower_cloth_locker_zero()
+    return attr_calculation.get_cloth_locker_in_dormitory_zero()
+
+
 def get_cloth_from_dormitory_locker(character_id: int):
     """
     清空身上的旧衣服，从宿舍的衣柜里穿上衣服、内衣内裤，并转移衣柜中的精液数据到穿着的衣服上\n
@@ -71,15 +152,17 @@ def get_cloth_from_dormitory_locker(character_id: int):
         if tem_character is None:
             return  # 模板不存在时安全返回
         tem_cloth_list = tem_character.Cloth.copy()
+        # 同居助理的宿舍地址即博士房间，因此她在博士房间起床时读到的也是这份宿舍衣柜
+        now_locker = character_data.cloth.cloth_locker_in_dormitory
         # 检查宿舍衣柜中是否有衣服
         wear_locker_flag = False
-        for cloth_type in character_data.cloth.cloth_locker_in_dormitory:
-            if len(character_data.cloth.cloth_locker_in_dormitory[cloth_type]):
+        for cloth_type in now_locker:
+            if len(now_locker[cloth_type]):
                 wear_locker_flag = True
                 # 去掉里面不符合角色csv的衣服
-                for cloth_id in character_data.cloth.cloth_locker_in_dormitory[cloth_type].copy():
+                for cloth_id in now_locker[cloth_type].copy():
                     if cloth_id not in tem_cloth_list:
-                        character_data.cloth.cloth_locker_in_dormitory[cloth_type].remove(cloth_id)
+                        now_locker[cloth_type].remove(cloth_id)
                     else:
                         tem_cloth_list.remove(cloth_id)
         # 宿舍衣柜中有衣服的话，穿上衣服
@@ -88,7 +171,7 @@ def get_cloth_from_dormitory_locker(character_id: int):
             # 换衣时去除服装部位上的避孕套装饰
             from Script.System.Item_System import condom_handle
             condom_handle.remove_cloth_decoration(character_id)
-            character_data.cloth.cloth_wear = character_data.cloth.cloth_locker_in_dormitory
+            character_data.cloth.cloth_wear = now_locker
             character_data.cloth.cloth_locker_in_dormitory = attr_calculation.get_cloth_locker_in_dormitory_zero()
             # 如果在范例里的衣服还有没穿着的，则穿上
             for cloth_id in tem_cloth_list:
