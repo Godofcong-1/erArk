@@ -81,6 +81,7 @@ def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange
         normal_orgasm_dict = {}  # 高潮结算字典
         extra_orgasm_dict = {}  # 额外高潮结算字典
         un_count_orgasm_dict = {}  # 不计数高潮结算字典
+        drink_semen_orgasm_flag = False  # 本次是否触发了饮精绝顶（素质31）
         for state_id in game_config.config_character_state:
             # 跳过非快感属性
             if game_config.config_character_state[state_id].type != 0:
@@ -106,8 +107,9 @@ def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange
             if orgasm == 21 and character_data.talent[31]:
                 if character_data.h_state.shoot_position_body in [2, 15]:
                     un_count_data += 1
-                    # 触发了饮精绝顶后当场重置射精位置，以免重复触发
-                    character_data.h_state.shoot_position_body = -1
+                    # 仅登记标记，射精位置的重置延后到高潮结算之后，
+                    # 以免 orgasm_settle_in_second_behavior 内的饮精绝顶经验(111)判定读不到射精位置
+                    drink_semen_orgasm_flag = True
             un_count_orgasm_dict[orgasm] = un_count_data
             # 如果已经到了10级，则进行额外高潮结算
             if pre_data >= 10:
@@ -129,6 +131,9 @@ def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange
             normal_orgasm_dict[orgasm] = now_data - pre_data
         # 高潮结算函数
         orgasm_settle_in_second_behavior(character_id, change_data, normal_orgasm_dict, extra_orgasm_dict, un_count_orgasm_dict)
+        # 触发了饮精绝顶后重置射精位置，以免重复触发
+        if drink_semen_orgasm_flag:
+            character_data.h_state.shoot_position_body = -1
 
 
 def orgasm_settle_in_second_behavior(

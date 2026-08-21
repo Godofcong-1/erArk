@@ -7746,6 +7746,10 @@ def handle_eat_add_just(
             cache.shoot_position = 2    # 口腔
             ejaculation_panel.update_semen_dirty(chara_id, 2, 0, semen_ml, update_shoot_position_flag=False)
             cache.shoot_position = temp_position
+            # 登记精液进入口腔，使本次进食若因高品质快感而绝顶时，
+            # 由二段绝顶结算联动饮精绝顶（素质31）与饮精绝顶经验（111）
+            if semen_ml > 0:
+                target_data.h_state.shoot_position_body = 2
         # 药物食物则获得对应药物效果
         elif food_seasoning == 102: # 事后避孕药
             handle_target_no_pregnancy_from_last_h(0,add_time=add_time,change_data=change_data,now_time=now_time)
