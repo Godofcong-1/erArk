@@ -403,9 +403,10 @@ cid,effect_name,effect_type,effect
 955,USE_SAFE_CANDLES,道具_增减,使用了一个低温蜡烛
 991,DELETE_FOOD,道具_增减,删除当前行动中的对象食物
 992,MAKE_FOOD,道具_增减,结算因为制作食物而加好感
-993,NPC_MAKE_FOOD_TO_SHOP,道具_增减,NPC随机制作一个食物，并补充到当前所在食物商店中
+993,NPC_MAKE_FOOD_TO_SHOP,道具_增减,NPC随机制作一个非酒精食物，并补充到当前所在食物商店中
 994,DELETE_ALL_FOOD,道具_增减,删除背包内所有食物
 995,NPC_MAKE_FOOD_TO_BAG,道具_增减,NPC随机制作一个食物，并补充到自己背包中
+996,ASSISTANT_MAKE_FOOD_TO_BAG,道具_增减,助理制作两个食物，并补充到自己背包中
 
 1001,TARGET_ADD_HUGE_LUBRICATION,道具_使用效果,交互对象增加大量润滑（润滑液）
 1002,TARGET_ADD_HUGE_DESIRE_AND_SUBMIT,道具_使用效果,交互对象增加大量欲情和屈服和欲望值（媚药）

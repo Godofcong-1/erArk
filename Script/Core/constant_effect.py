@@ -790,7 +790,7 @@ class BehaviorEffect:
     MAKE_FOOD = 992
     """ 道具_增减 结算因为制作食物而加好感 """
     NPC_MAKE_FOOD_TO_SHOP = 993
-    """ 道具_增减 NPC随机制作一个食物，并补充到当前所在食物商店中 """
+    """ 道具_增减 NPC随机制作一个非酒精食物，并补充到当前所在食物商店中 """
     DELETE_ALL_FOOD = 994
     """ 道具_增减 删除背包内所有食物 """
     NPC_MAKE_FOOD_TO_BAG = 995

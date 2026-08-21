@@ -1073,6 +1073,12 @@ def handle_npc_make_food_to_shop(
         return
     # 随机选择一个食谱，根据食谱难度，高难度的有高出现权重
     cookable_recipes_list = cooking.get_character_cookable_recipes(character_id, weight_flag=True)
+    # 获取酒精食谱
+    alcohol_cookable_recipes_list = cooking.get_character_cookable_recipes(character_id, weight_flag=True, food_type=3)
+    # 从总食谱里减去酒精食谱，但保留总食谱中的概率
+    for alcohol_recipe in alcohol_cookable_recipes_list:
+        if alcohol_recipe in cookable_recipes_list:
+            cookable_recipes_list.remove(alcohol_recipe)
     recipes_id = random.choice(cookable_recipes_list)
     # 获取角色数据
     character_data: game_type.Character = cache.character_data[character_id]
