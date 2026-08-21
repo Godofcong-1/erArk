@@ -1437,6 +1437,20 @@ def handle_in_dr_room(character_id: int) -> int:
     return common_place_judge_by_SceneTag(character_id, "Dr_room")
 
 
+@add_premise(constant_promise.Premise.NOT_IN_DR_ROOM)
+def handle_not_in_dr_room(character_id: int) -> int:
+    """
+    校验角色是否不在博士房间中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_in_dr_room(character_id):
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.IN_COMMAND_ROOM)
 def handle_in_command_room(character_id: int) -> int:
     """
@@ -3382,6 +3396,20 @@ def handle_in_locker_room_or_dormitory(character_id: int) -> int:
     if "Locker_Room" in now_scene_data.scene_tag or "Dormitory" in now_scene_data.scene_tag:
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.IN_LOCKER_ROOM_OR_DORMITORY_OR_DR_ROOM)
+def handle_in_locker_room_or_dormitory_or_dr_room(character_id: int) -> int:
+    """
+    校验角色是否在更衣室或宿舍或博士房间
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_in_locker_room_or_dormitory(character_id):
+        return 1
+    return handle_in_dr_room(character_id)
 
 
 @add_premise(constant_promise.Premise.IN_NURSERY)

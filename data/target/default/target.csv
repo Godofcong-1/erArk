@@ -29,7 +29,7 @@ ai的目标,,,,
 29,44,self_sleep_pills|action_not_sleep,0,自己已服用安眠药，且没有在睡觉，则睡觉
 30,95,ask_masturbation_before_sleep|sleep_flag_1|in_dor|masturebate_bofore_sleep_flag_0,12,自己被要求每天晚上睡前都要自慰，要睡觉状态下，且已在宿舍，自身没有要睡前自慰状态，则进入要睡前自慰状态
 31,92,sleep_flag_1|in_dor|masturebate_bofore_sleep_flag_1,12,要睡觉状态下，且已在宿舍，自身要睡前自慰状态，则自慰
-32,44,handle_drunk_level_3,0,醉酒值到烂醉，则当场直接爆睡
+32,44,drunk_level_3,0,醉酒值到烂醉，则当场直接爆睡
 
 41,75,normal_1267|hunger_ge_80|eat_time|assistant_send_food_of_ai_disable|assistant_salutation_of_ai_disable,11,1267正常（可能AI跟随、服装异常或意识模糊），饥饿值到80%，且在饭点，且不满足助理送饭，且不满足助理问候，则进入要取餐状态
 42,522,eat_food_flag_1|not_in_ai_food_shop,12,要取餐状态下，且不在AI要去吃饭的食物商店里，则去食物商店
@@ -39,14 +39,14 @@ ai的目标,,,,
 46,522,eat_food_flag_2|ai_eat_in_restaurant|not_in_ai_food_shop,12,要进食状态下，要在餐厅吃饭，且不在餐厅里，则去餐厅
 47,77,eat_food_flag_2|ai_eat_in_restaurant|in_ai_food_shop,12,要进食状态下，要在餐厅吃饭，且在餐厅里，则吃饭
 
-51,71,normal_1267|shower_time|shower_flag_0|not_ask_not_take_bath,11,1267正常（可能AI跟随、服装异常或意识模糊），淋浴时间，今天没洗过澡，自己没有被要求禁止一切洗澡，则进入要脱衣服（洗澡）状态
-52,601,shower_flag_1|not_in_bathzone_locker_room,12,要脱衣服（洗澡）状态下，当前不在大浴室的更衣室，则去大浴室的更衣室
-53,72,shower_flag_1|in_bathzone_locker_room,12,要脱衣服（洗澡）状态下，当前在大浴室的更衣室，则脱成全裸
-54,515,shower_flag_2|not_in_bathroom,12,要洗澡状态下，当前不在淋浴间，则去淋浴间
-55,73,shower_flag_2|in_bathroom,12,要洗澡状态下，当前在淋浴间，则开始淋浴
-56,601,shower_flag_3|not_in_bathzone_locker_room,12,要披浴巾状态，当前不在大浴室的更衣室，则去大浴室的更衣室
-57,74,shower_flag_3|in_bathzone_locker_room,12,要披浴巾状态，当前在大浴室的更衣室，则围上浴巾
-58,71,normal_1267|sleep_h_awake_1|shower_flag_0|not_ask_not_take_bath,0,1267正常（可能AI跟随、服装异常或意识模糊），自身睡奸中醒来状态，今天没洗过澡，自己没有被要求禁止一切洗澡，则进入要脱衣服（洗澡）状态
+51,71,normal_1267|shower_time|shower_flag_0|not_ask_not_take_bath|not_is_assistant_live_together,11,1267正常（可能AI跟随、服装异常或意识模糊），淋浴时间，今天没洗过澡，自己没有被要求禁止一切洗澡，自己不是同居中的助理，则进入要脱衣服（洗澡）状态
+52,601,shower_flag_1|not_in_bathzone_locker_room|not_is_assistant_live_together,12,要脱衣服（洗澡）状态下，当前不在大浴室的更衣室，自己不是同居中的助理，则去大浴室的更衣室
+53,72,shower_flag_1|in_bathzone_locker_room|not_is_assistant_live_together,12,要脱衣服（洗澡）状态下，当前在大浴室的更衣室，自己不是同居中的助理，则脱成全裸
+54,515,shower_flag_2|not_in_bathroom|not_is_assistant_live_together,12,要洗澡状态下，当前不在淋浴间，自己不是同居中的助理，则去淋浴间
+55,73,shower_flag_2|in_bathroom|not_is_assistant_live_together,12,要洗澡状态下，当前在淋浴间，自己不是同居中的助理，则开始淋浴
+56,601,shower_flag_3|not_in_bathzone_locker_room|not_is_assistant_live_together,12,要披浴巾状态，当前不在大浴室的更衣室，自己不是同居中的助理，则去大浴室的更衣室
+57,74,shower_flag_3|in_bathzone_locker_room|not_is_assistant_live_together,12,要披浴巾状态，当前在大浴室的更衣室，自己不是同居中的助理，则围上浴巾
+58,71,normal_1267|sleep_h_awake_1|shower_flag_0|not_ask_not_take_bath|not_is_assistant_live_together,0,1267正常（可能AI跟随、服装异常或意识模糊），自身睡奸中醒来状态，今天没洗过澡，自己没有被要求禁止一切洗澡，自己不是同居中的助理，则进入要脱衣服（洗澡）状态
 59,94,sleep_h_awake_1|shower_flag_4,12,自身睡奸中醒来状态，自身已洗澡状态，则清零洗澡状态和睡奸醒来状态并换上标准衣服
 
 61,79,normal_1267|mp_0|not_sleep_time|self_not_tired,11,1267正常（可能AI跟随、服装异常或意识模糊），气力=0，非睡觉时间，自身未疲劳（体力>1），则进入要休息状态
@@ -184,3 +184,12 @@ ai的目标,,,,
 804,651,normal_all|work_is_sex_trainee|ask_one_exercises|to_work_time|self_fall_obey|not_in_humiliation_room,21,正常状态下，工作是性爱练习生，自己被要求进行了至少一项练习，在到岗时间，自己有隶属系陷落素质，如果不在调教室，则去调教室
 805,651,normal_all|work_is_sex_trainee|ask_one_exercises|work_time|self_fall_obey|not_in_humiliation_room,21,正常状态下，工作是性爱练习生，自己被要求进行了至少一项练习，在工作时间，自己有隶属系陷落素质，如果不在调教室，则去调教室
 806,317,normal_all_except_special_hypnosis|work_is_sex_trainee|ask_one_exercises|work_time|self_fall_obey|in_humiliation_room,22,正常状态下或被空气或体控催眠中，自己被要求进行了至少一项练习，工作是性爱练习生，在工作时间，自己有隶属系陷落素质，如果在调教室，则开始性爱练习
+
+901,71,normal_1267|shower_time|shower_flag_0|is_assistant|assistant_live_together_on|not_ask_not_take_bath,11,1267正常（可能AI跟随、服装异常或意识模糊），淋浴时间，今天没洗过澡，自己是同居中的助理，没有被要求禁止一切洗澡，则进入要脱衣服（洗澡）状态
+902,572,shower_flag_1|is_assistant|assistant_live_together_on|not_in_dr_room,12,要脱衣服（洗澡）状态下，自己是同居中的助理，当前不在博士房间，则去博士房间
+903,72,shower_flag_1|is_assistant|assistant_live_together_on|in_dr_room,12,要脱衣服（洗澡）状态下，自己是同居中的助理，当前在博士房间，则脱成全裸
+904,572,shower_flag_2|is_assistant|assistant_live_together_on|not_in_dr_room,12,要洗澡状态下，自己是同居中的助理，当前不在博士房间，则回博士房间
+905,73,shower_flag_2|is_assistant|assistant_live_together_on|in_dr_room,12,要洗澡状态下，自己是同居中的助理，当前在博士房间，则开始淋浴
+906,572,shower_flag_3|is_assistant|assistant_live_together_on|not_in_dr_room,12,要披浴巾状态，自己是同居中的助理，当前不在博士房间，则回博士房间
+907,74,shower_flag_3|is_assistant|assistant_live_together_on|in_dr_room,12,要披浴巾状态，自己是同居中的助理，当前在博士房间，则围上浴巾
+908,71,normal_1267|sleep_h_awake_1|shower_flag_0|is_assistant|assistant_live_together_on|not_ask_not_take_bath,0,1267正常（可能AI跟随、服装异常或意识模糊），自身睡奸中醒来状态，今天没洗过澡，自己是同居中的助理，没有被要求禁止一切洗澡，则进入要脱衣服（洗澡）状态

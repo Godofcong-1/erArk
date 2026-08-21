@@ -1,7 +1,7 @@
 from typing import Tuple, Dict, List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle, attr_calculation, update, attr_text, handle_premise
+from Script.Design import map_handle, attr_calculation, update, attr_text, handle_premise, clothing
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import ejaculation_panel
@@ -39,10 +39,9 @@ class Check_locker_Panel:
         show_text = "\n"
         for npc_id in npc_id_list:
             character_data = cache.character_data[npc_id]
-            if "Locker_Room" in map_data.scene_tag:
-                now_locker = character_data.cloth.cloth_locker_in_shower
-            else:
-                now_locker = character_data.cloth.cloth_locker_in_dormitory
+            now_locker = clothing.get_cloth_locker_by_type(
+                npc_id, clothing.get_cloth_locker_type_by_scene(map_data.scene_tag)
+            )
             
             if len(now_locker[9]):
                 pl_data.pl_collection.npc_panties_tem.setdefault(npc_id, [])
@@ -67,10 +66,9 @@ class Check_locker_Panel:
         show_text = "\n"
         for npc_id in npc_id_list:
             character_data = cache.character_data[npc_id]
-            if "Locker_Room" in map_data.scene_tag:
-                now_locker = character_data.cloth.cloth_locker_in_shower
-            else:
-                now_locker = character_data.cloth.cloth_locker_in_dormitory
+            now_locker = clothing.get_cloth_locker_by_type(
+                npc_id, clothing.get_cloth_locker_type_by_scene(map_data.scene_tag)
+            )
             
             if len(now_locker[10]):
                 pl_data.pl_collection.npc_socks_tem.setdefault(npc_id, [])
@@ -105,8 +103,8 @@ class Check_locker_Panel:
             title_draw.draw()
             npc_id_list = []
 
-            # 宿舍的情况
-            if "Dormitory" in map_data.scene_tag:
+            # 宿舍的情况（同居助理的宿舍地址即博士房间，故博士房间也走这一支）
+            if "Dormitory" in map_data.scene_tag or "Dr_room" in map_data.scene_tag:
                 # 读取当前宿舍的npc列表
                 for npc_id in cache.npc_id_got:
                     if npc_id:
@@ -147,11 +145,9 @@ class Check_locker_Panel:
             can_steal_pan = False
             can_steal_socks = False
             for npc_id in npc_id_list:
-                character_data = cache.character_data[npc_id]
-                if "Locker_Room" in map_data.scene_tag:
-                    now_locker = character_data.cloth.cloth_locker_in_shower
-                else:
-                    now_locker = character_data.cloth.cloth_locker_in_dormitory
+                now_locker = clothing.get_cloth_locker_by_type(
+                    npc_id, clothing.get_cloth_locker_type_by_scene(map_data.scene_tag)
+                )
                 if len(now_locker[9]):
                     can_steal_pan = True
                 if len(now_locker[10]):
@@ -227,10 +223,9 @@ class FindDraw:
         map_data = cache.scene_data[map_path_str]
 
         # 获取当前衣柜是哪个衣柜
-        if "Locker_Room" in map_data.scene_tag:
-            self.now_locker = self.character_data.cloth.cloth_locker_in_shower
-        elif "Dormitory" in map_data.scene_tag:
-            self.now_locker = self.character_data.cloth.cloth_locker_in_dormitory
+        self.now_locker = clothing.get_cloth_locker_by_type(
+            self.npc_id, clothing.get_cloth_locker_type_by_scene(map_data.scene_tag)
+        )
 
         name_draw = draw.NormalDraw()
         # print("text :",text)
@@ -472,13 +467,9 @@ class Ejaculation_NameDraw:
         map_path_str = map_handle.get_map_system_path_str_for_list(pl_character_data.position)
         map_data = cache.scene_data[map_path_str]
 
-        # 获取当前衣柜是哪个衣柜
-        if "Locker_Room" in map_data.scene_tag:
-            now_locker = target_data.cloth.cloth_locker_in_shower
-            self.locker_type = 2
-        elif "Dormitory" in map_data.scene_tag:
-            now_locker = target_data.cloth.cloth_locker_in_dormitory
-            self.locker_type = 3
+        # 获取当前衣柜是哪个衣柜（2大浴场更衣室/3宿舍，博士房间按宿舍处理）
+        self.locker_type = clothing.get_cloth_locker_type_by_scene(map_data.scene_tag)
+        now_locker = clothing.get_cloth_locker_by_type(self.npc_id, self.locker_type)
 
         # 获取衣服名字
         now_text = game_config.config_clothing_type[self.index].name
