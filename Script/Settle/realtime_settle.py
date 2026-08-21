@@ -569,9 +569,9 @@ def settle_sleep_h(character_id: int, true_add_time: int) -> None:
         sleeper_data: game_type.Character = cache.character_data[sleeper_id]
         if sleeper_data.behavior.behavior_id != constant.Behavior.SLEEP:
             continue
-        # 等待行为或服用安眠药的目标不受影响
+        # 等待、休息、睡觉行为或服用安眠药的目标不受影响
         if (
-            now_character_data.behavior.behavior_id == constant.Behavior.WAIT or
+            now_character_data.behavior.behavior_id in {constant.Behavior.WAIT, constant.Behavior.REST, constant.Behavior.SLEEP} or
             sleeper_data.h_state.body_item[9][1] == 1
         ):
             continue
