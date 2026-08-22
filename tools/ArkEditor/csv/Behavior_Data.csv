@@ -6,6 +6,7 @@ int,str,str,int,str,str
 
 0,share_blankly,无行动,-1,both,日常
 1,move,移动,1,both,日常
+7,carry_move,携带H中移动,1,pl,日常
 2,wait,等待,-1,both,日常
 3,change_cloth,换衣服,5,npc,日常
 5,chara_diy_instruct,角色特殊指令,10,pl,日常

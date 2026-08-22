@@ -9,7 +9,7 @@ from Script.Design import (
     handle_ability,
 )
 from Script.System.First_Record_System import first_record_handle
-from Script.Core import cache_control, game_type, get_text
+from Script.Core import cache_control, constant, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
 from Script.UI.Panel import ejaculation_panel, system_setting
@@ -75,6 +75,16 @@ def base_chara_hp_mp_common_settle(
         else:
             hp_adjust /= 2
             mp_adjust /= 2
+    # 隐奸携带模式中双方消耗增加
+    if handle_premise.handle_hidden_sex_mode_5(character_id):
+        # 玩家的携带H中移动消耗为10倍
+        if character_id == 0 and character_data.behavior.behavior_id == constant.Behavior.CARRY_MOVE:
+            hp_adjust *= 10
+            mp_adjust *= 10
+        # 其他所有指令双方消耗均为3倍
+        else:
+            hp_adjust *= 3
+            mp_adjust *= 3
     # 气力结算
     if mp_value in [-1, 1]:
         mp_value = int(add_time * mp_adjust * mp_value)

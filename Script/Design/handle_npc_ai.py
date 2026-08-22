@@ -752,8 +752,11 @@ def judge_same_position_npc_follow():
                 character_data.behavior.behavior_id = constant.Behavior.WAIT
                 character_data.behavior.duration = 5
                 character_data.action_info.follow_wait_time += 5
-
             # print(f"debug {character_data.name}跟随玩家，当前位置为{character_data.position}，当前目标位置为{move_path}，最终目标位置为{pl_character_data.behavior.move_final_target}，行动时间为{move_time}分钟, start_time = {character_data.behavior.start_time}")
+        # 隐奸携带模式中被携带的角色，直接同步移动到玩家本段移动的目的地（不使用移动行为，仅搬运位置）
+        elif character_data.sp_flag.hidden_sex_mode == 5:
+            if len(pl_character_data.behavior.move_target) and character_data.position != pl_character_data.behavior.move_target:
+                map_handle.character_move_scene(character_data.position, pl_character_data.behavior.move_target, character_id)
 
 
 def get_chara_entertainment(character_id: int):

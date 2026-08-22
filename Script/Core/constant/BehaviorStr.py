@@ -5,6 +5,8 @@ class BehaviorStr:
     """ 发呆 """
     MOVE = "move"
     """ 移动 """
+    CARRY_MOVE = "carry_move"
+    """ 携带H中移动 """
     WAIT = "wait"
     """ 等待 """
     CHANGE_CLOTH = "change_cloth"

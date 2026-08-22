@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,carry_move,0,high_1,{Name}把藏在衣服下的{TargetName}紧紧搂住，迈开脚步——每走一步，两人紧密相连的部位都随之研磨着。
+1,carry_move,0,high_1,{TargetName}被{Name}抱在怀里，整个人藏在宽大的衣服下，只能随着{Name}的步伐轻轻晃动，拼命忍住呻吟。
+2,carry_move,0,high_1,「唔……博士、走路的时候……不要故意颠……」{TargetName}在{Name}的衣服下小声抗议着，双腿却更用力地环紧了{Name}的腰。
+3,carry_move,0,high_1,{Name}抱着{TargetName}慢慢走着，每一次迈步的震动都通过结合处传递进{TargetName}的身体深处，让她的呼吸越来越乱。
+4,carry_move,0,high_1,{TargetName}把脸埋在{Name}的胸口，感受着一步一步传来的沉重冲击，生怕被路过的人听到自己压抑的喘息声。

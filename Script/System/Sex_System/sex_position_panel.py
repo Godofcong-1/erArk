@@ -100,6 +100,11 @@ class Sex_Position_Panel:
                     sex_position_text += _("(需要博士腰技至少为{0}级)").format(sex_position_skill_req)
                     cant_flag = True
 
+                # 隐奸携带模式中只能使用对面抱位
+                if character_data.sp_flag.hidden_sex_mode == 5 and sex_position_id != 9:
+                    sex_position_text += _("(携带中只能使用对面抱位)")
+                    cant_flag = True
+
                 # 体位说明
                 sex_position_text += sex_position_data.info
 

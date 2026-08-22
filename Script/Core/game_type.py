@@ -763,7 +763,7 @@ class SPECIAL_FLAG:
         self.unconscious_h: int = 0
         """ 在无意识H模式中，int [0否,1睡眠,2醉酒,3时停,4平然,5空气,6体控,7心控] """
         self.hidden_sex_mode: int = 0
-        """ 隐奸H模式，int [0否,1双不隐,2女隐,3男隐,4双隐] """
+        """ 隐奸H模式，int [0否,1双不隐,2女隐,3男隐,4双隐,5携带] """
         self.condom_cloth_flag: int = 0
         """ 当前避孕套装饰相关行为的目标类型，int [0身体部位（头发）,1服装部位] """
         self.exhibitionism_sex_mode: int = 0

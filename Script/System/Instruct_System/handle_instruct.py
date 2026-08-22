@@ -466,6 +466,12 @@ def handle_move():
     cache.now_panel_id = constant.Panel.SEE_MAP
 
 
+@add_instruct(constant.Instruct.CARRY_MOVE)
+def handle_carry_move():
+    """处理携带H中移动指令，与移动指令共用地图面板，实际行为在own_charcter_move中按携带模式区分"""
+    cache.now_panel_id = constant.Panel.SEE_MAP
+
+
 @add_instruct(constant.Instruct.SEE_ATTR)
 def handle_see_attr():
     """查看属性"""

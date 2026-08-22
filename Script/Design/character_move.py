@@ -51,13 +51,18 @@ def own_charcter_move(target_scene: list):
             break_list = ["null","wait_open","door_lock"]
             if move_now in break_list :
                 break
-            character_data.behavior.behavior_id = constant.Behavior.MOVE
+            # 隐奸携带模式中使用携带H中移动行为，消耗大幅增加
+            if character_data.sp_flag.hidden_sex_mode == 5:
+                character_data.behavior.behavior_id = constant.Behavior.CARRY_MOVE
+                character_data.state = constant.CharacterStatus.STATUS_CARRY_MOVE
+            else:
+                character_data.behavior.behavior_id = constant.Behavior.MOVE
+                character_data.state = constant.CharacterStatus.STATUS_MOVE
             character_data.behavior.move_target = now_target_position
             character_data.behavior.move_src = character_data.position
             character_data.behavior.move_final_target = target_scene
             character_data.behavior.duration = now_need_time
             character_data.behavior.start_time = cache.game_time
-            character_data.state = constant.CharacterStatus.STATUS_MOVE
             character_data.action_info.ask_close_door_flag = False
             # print(f"debug pl start_time = {character_data.behavior.start_time}")
             update.game_update_flow(now_need_time)

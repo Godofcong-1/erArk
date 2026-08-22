@@ -99,7 +99,8 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
         character_data.h_state.time_stop_release = False
 
     # 如果不在同一位置
-    if handle_premise.handle_not_in_player_scene(character_id):
+    # 隐奸携带模式中被携带的角色由跟随结算直接搬运位置，与玩家移动结算的先后可能产生短暂的场景分离，不做重置
+    if handle_premise.handle_not_in_player_scene(character_id) and character_data.sp_flag.hidden_sex_mode != 5:
         # 本分支内是否发生了实际的状态重置（未重置时无需刷新异常位掩码）
         state_reset_flag = False
         # 结束H状态

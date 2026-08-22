@@ -36,12 +36,14 @@ class Sex_Be_Discovered_Panel:
     character_id -- 触发事件的角色id
     """
 
-    def __init__(self, width: int, character_id: int = 0):
+    def __init__(self, width: int, character_id: int = 0, from_hidden_sex_flag: bool = False):
         """初始化绘制对象"""
         self.width = width
         """ 绘制宽度 """
         self.character_id = character_id
         """ 发现H的角色id """
+        self.from_hidden_sex_flag = from_hidden_sex_flag
+        """ 本次是否由隐奸被发现触发（隐奸被发现结算会先清零双方隐奸标记，需由此参数传递上下文） """
         self.find_chara_data: game_type.Character = cache.character_data[self.character_id]
         """ 发现H的角色数据 """
         self.pl_chara_data: game_type.Character = cache.character_data[0]
@@ -70,7 +72,7 @@ class Sex_Be_Discovered_Panel:
 
         # 性行为情况名
         sex_type_text = _("你正在和{0}单独H").format(self.target_chara_data.name)
-        if handle_premise.handle_hidden_sex_mode_ge_1(0):
+        if handle_premise.handle_hidden_sex_mode_ge_1(0) or self.from_hidden_sex_flag:
             sex_type_text = _("你和{0}的隐奸").format(self.target_chara_data.name)
         elif handle_premise.handle_exhibitionism_sex_mode_ge_1(0):
             sex_type_text = _("你和{0}的露出").format(self.target_chara_data.name)
@@ -116,8 +118,8 @@ class Sex_Be_Discovered_Panel:
             return_list.append(talk_button.return_text)
             line_feed.draw()
 
-            # 需要非隐奸、非群交
-            if not handle_premise.handle_hidden_sex_mode_ge_1(0) and not handle_premise.handle_group_sex_mode_on(0):
+            # 需要非隐奸、非群交（隐奸被发现结算会先清零双方隐奸标记，所以还需检查传入的隐奸上下文）
+            if not handle_premise.handle_hidden_sex_mode_ge_1(0) and not handle_premise.handle_group_sex_mode_on(0) and not self.from_hidden_sex_flag:
                 hidden_button = draw.LeftButton(
                     _("[2]迅速地隐藏起来，转为隐奸"),
                     "2",

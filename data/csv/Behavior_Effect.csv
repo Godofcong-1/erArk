@@ -9,6 +9,7 @@ int,str,str
 3,change_cloth,9999
 5,chara_diy_instruct,9999
 6,ai_chat_instruct,9999
+7,carry_move,751 - 1511 - 1514
 98,test_instruct,9999
 99,empty_instruct,9999
 101,chat,21 - 12 - CVE_A2_E|80_G_1 - CVE_A1_E|80_G_1 - 53 - 55 - 501

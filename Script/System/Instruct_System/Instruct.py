@@ -4,6 +4,8 @@ class Instruct:
     #系统#
     MOVE = "move"
     """ 移动 """
+    CARRY_MOVE = "carry_move"
+    """ 携带H中移动 """
     SEE_ATTR = "see_attr"
     """ 查看属性 """
     ITEM = "item"

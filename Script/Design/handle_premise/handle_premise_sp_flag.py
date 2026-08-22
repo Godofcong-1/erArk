@@ -2292,6 +2292,44 @@ def handle_t_hidden_sex_mode_4(character_id: int) -> int:
     return handle_hidden_sex_mode_4(character_data.target_character_id)
 
 
+@add_premise(constant_promise.Premise.HIDDEN_SEX_MODE_5)
+def handle_hidden_sex_mode_5(character_id: int) -> int:
+    """
+    判断角色是否处于携带模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于携带模式中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.sp_flag.hidden_sex_mode == 5
+
+
+@add_premise(constant_promise.Premise.NOT_HIDDEN_SEX_MODE_5)
+def handle_not_hidden_sex_mode_5(character_id: int) -> int:
+    """
+    判断角色是否不处于携带模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色不处于携带模式中则返回1，否则返回0
+    """
+    return not handle_hidden_sex_mode_5(character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_5)
+def handle_t_hidden_sex_mode_5(character_id: int) -> int:
+    """
+    交互对象处于携带模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若交互对象处于携带模式中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return handle_hidden_sex_mode_5(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.HIDDEN_SEX_MODE_1_OR_2)
 def handle_hidden_sex_mode_1_or_2(character_id: int) -> int:
     """
@@ -2375,25 +2413,25 @@ def handle_t_hidden_sex_mode_1_or_3(character_id: int) -> int:
 @add_premise(constant_promise.Premise.HIDDEN_SEX_MODE_2_OR_4)
 def handle_hidden_sex_mode_2_or_4(character_id: int) -> int:
     """
-    交互对象处于双隐或女隐模式中
+    自己处于双隐或女隐或携带模式中（即干员处于隐藏状态）
     参数:
         character_id (int): 角色id
     返回:
         int: 权重
     """
-    return handle_hidden_sex_mode_2(character_id) or handle_hidden_sex_mode_4(character_id)
+    return handle_hidden_sex_mode_2(character_id) or handle_hidden_sex_mode_4(character_id) or handle_hidden_sex_mode_5(character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_2_OR_4)
 def handle_t_hidden_sex_mode_2_or_4(character_id: int) -> int:
     """
-    交互对象处于双隐或女隐模式中
+    交互对象处于双隐或女隐或携带模式中（即干员处于隐藏状态）
     参数:
         character_id (int): 角色id
     返回:
         int: 权重
     """
-    return handle_t_hidden_sex_mode_2(character_id) or handle_t_hidden_sex_mode_4(character_id)
+    return handle_t_hidden_sex_mode_2(character_id) or handle_t_hidden_sex_mode_4(character_id) or handle_t_hidden_sex_mode_5(character_id)
 
 
 @add_premise(constant_promise.Premise.SLEEP_H_OR_HIDDEN_SEX)

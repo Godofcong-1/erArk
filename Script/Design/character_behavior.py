@@ -129,9 +129,9 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
             # print(f"debug 玩家空闲")
         # 非空闲活动下结算当前状态#
         else:
-            # 结算玩家在移动时的特殊结算
-            if character_data.behavior.behavior_id == constant.Behavior.MOVE:
-                # 同场景里的NPC的跟随
+            # 结算玩家在移动时的特殊结算（含隐奸携带模式的携带H中移动）
+            if character_data.behavior.behavior_id in {constant.Behavior.MOVE, constant.Behavior.CARRY_MOVE}:
+                # 同场景里的NPC的跟随与被携带角色的同步移动
                 handle_npc_ai.judge_same_position_npc_follow()
                 # 全角色重置目击玩玩家H
                 for npc_id in cache.npc_id_got:

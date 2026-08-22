@@ -156,6 +156,9 @@ def settle_hidden_value_by_action(character_id = 0, add_flag = None, now_duratio
         # 等待状态减少隐蔽值
         if now_behavior_id == constant.Behavior.WAIT:
             add_flag = False
+        # 携带H中移动时行走晃动易被察觉，计入隐蔽值增加
+        if now_behavior_id == constant.Behavior.CARRY_MOVE:
+            add_flag = True
     # 如果没有指定时间，则获取行为持续时间
     if now_duration == 0:
         now_duration = character_data.behavior.duration
@@ -230,25 +233,30 @@ def settle_discovered(character_id: int) -> None:
     """
     # 获取角色数据
     character_data = cache.character_data[character_id]
-    # 退出隐奸模式
-    character_data.sp_flag.hidden_sex_mode = 0
-    # 获取隐奸对象
+    # 记录本次是否由隐奸被发现触发（清零标记前记录，供被发现面板判定选项与描述）
+    from_hidden_sex_flag = character_data.sp_flag.hidden_sex_mode > 0
+    # 获取隐奸对象（需在清零对方标记前获取）
     hidden_sex_target_id_list = get_hidden_sex_targets(character_id)
+    # 寻找是否有会发现的人（需在清零对方标记前统计，避免把隐奸对象计入发现者）
+    interrupt_chara_list = get_nearby_conscious_unfallen_characters(character_id)
+    # 排除本次行动中已经处理过的发现者
+    interrupt_chara_list = [chara_id for chara_id in interrupt_chara_list if not cache.character_data[chara_id].sp_flag.see_pl_h]
+    # 双方退出隐奸模式（对方标记如残留会导致消耗倍率等携带模式效果异常延续）
+    character_data.sp_flag.hidden_sex_mode = 0
+    for hidden_target_id in hidden_sex_target_id_list:
+        cache.character_data[hidden_target_id].sp_flag.hidden_sex_mode = 0
     if len(hidden_sex_target_id_list):
         character_data.target_character_id = hidden_sex_target_id_list[0]
     else:
         print(f"debug : 隐奸被发现时未找到隐奸对象，角色id:{character_id}")
         return
-    # 寻找是否有会发现的人
-    interrupt_chara_list = get_nearby_conscious_unfallen_characters(character_id)
-    # 排除本次行动中已经处理过的发现者
-    interrupt_chara_list = [chara_id for chara_id in interrupt_chara_list if not cache.character_data[chara_id].sp_flag.see_pl_h]
     # 存在则进入被发现面板
     if len(interrupt_chara_list):
         from Script.System.Sex_System import sex_be_discovered_panel
         now_panel = sex_be_discovered_panel.Sex_Be_Discovered_Panel(
             window_width,
             interrupt_chara_list[0],
+            from_hidden_sex_flag=from_hidden_sex_flag,
         )
         now_panel.draw()
 
@@ -292,6 +300,11 @@ class See_Hidden_Sex_InfoPanel:
         # 根据隐蔽程度数值判断状态文本
         hidden_level, hidden_text = get_hidden_level(now_dregree)
         all_text += _(" 隐蔽程度：{0}").format(hidden_text)
+
+        # 携带模式文本
+        if pl_character_data.sp_flag.hidden_sex_mode == 5:
+            carry_target_data = cache.character_data[pl_character_data.target_character_id]
+            all_text += _(" 正把{0}藏在衣服下抱着行动").format(carry_target_data.name)
 
         # 阴茎文本
         insert_chara_id = dirty_panel.get_inserted_character_id()
@@ -367,7 +380,7 @@ class Select_Hidden_Sex_Mode_Panel:
             # 输出提示信息
             info_draw = draw.NormalDraw()
             info_text = _("\n请选择要进行的隐奸：\n")
-            info_text += _("○需要在没有其他人，或者其他人都无意识下才可以选择单方或者双方隐藏\n")
+            info_text += _("○需要在没有其他人，或者其他人都无意识下才可以选择单方或者双方隐藏或携带\n")
             info_text += _("  隐奸被发现的概率取决于隐奸模式、隐蔽技能等级、指令动作、在场人数、地点环境等\n")
             info_text += "\n"
             info_draw.text = info_text
@@ -378,6 +391,7 @@ class Select_Hidden_Sex_Mode_Panel:
             button_text_list.append(_("[2]干员隐藏：博士不隐藏，干员藏起来不让别人看见，隐蔽程度中等"))
             button_text_list.append(_("[3]博士隐藏：干员不隐藏，博士藏起来不让别人看见，隐蔽程度中等"))
             button_text_list.append(_("[4]双方隐藏：博士和干员都藏起来不让别人看见，很难被察觉"))
+            button_text_list.append(_("[5]携带：干员以对面抱位被博士抱起，藏在博士的衣服遮盖下，可以边走边做，但博士的体力气力消耗大幅增加"))
             for i in range(len(button_text_list)):
                 button_text = button_text_list[i]
                 can_use = True
@@ -388,6 +402,9 @@ class Select_Hidden_Sex_Mode_Panel:
                 # debug模式下不限制
                 if cache.debug_mode:
                     can_use = True
+                # 从被发现面板跳转时不可选择携带模式（此时可能已在其他部位插入，无法满足携带的插入要求）
+                if i == 4 and self.sex_be_discovered_flag:
+                    can_use = False
                 if can_use:
                     button_draw = draw.LeftButton(
                         button_text,
@@ -424,6 +441,13 @@ class Select_Hidden_Sex_Mode_Panel:
         target_character_id = character_data.target_character_id
         target_character_data: game_type.Character = cache.character_data[target_character_id]
 
+        # 携带模式需要先选择插入的部位，取消则返回模式选择
+        carry_sex_type = 0
+        if mode_id == 5:
+            carry_sex_type = self.select_carry_insert_part()
+            if carry_sex_type == -1:
+                return
+
         # 判断是否成功邀请隐奸
         if instuct_judege.calculation_instuct_judege(0, target_character_id, _("隐奸"))[0]:
             character_data.sp_flag.hidden_sex_mode = mode_id
@@ -439,12 +463,26 @@ class Select_Hidden_Sex_Mode_Panel:
             # 如果男不隐，则玩家取消H状态
             if mode_id in {1,2}:
                 character_data.sp_flag.is_h = False
+            # 携带模式下玩家全程处于H状态中（携带H中移动即为H状态中的移动），并重置体位，随后的插入结算会将体位设为对面抱位
+            if mode_id == 5:
+                character_data.sp_flag.is_h = True
+                character_data.h_state.current_sex_position = -1
             # 如果是从被发现面板跳转过来
             if self.sex_be_discovered_flag:
                 handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.OTHER_SEX_BE_FOUND_TO_HIDDEN_SEX)
             # 否则正常结算隐奸
             else:
                 handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.ASK_HIDDEN_SEX)
+            # 携带模式下以对面抱位直接插入所选部位（实行值判定已在邀请隐奸时通过，此处不再判定）
+            if mode_id == 5:
+                sex_position_data = game_config.config_sex_position_data[9]
+                if carry_sex_type == 1:
+                    carry_behavior_id = sex_position_data.vaginal_sex_behavior_id
+                elif carry_sex_type == 4:
+                    carry_behavior_id = sex_position_data.anal_sex_behavior_id
+                else:
+                    carry_behavior_id = sex_position_data.urethral_sex_behavior_id
+                handle_instruct.chara_handle_instruct_common_settle(carry_behavior_id, force_taget_wait=True)
         else:
             now_draw = draw.WaitDraw()
             now_draw.text = _("\n邀请隐奸失败\n")
@@ -455,3 +493,76 @@ class Select_Hidden_Sex_Mode_Panel:
             # 否则正常结算隐奸失败
             else:
                 handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.ASK_HIDDEN_SEX_FAIL)
+
+    def select_carry_insert_part(self) -> int:
+        """
+        携带模式下选择插入的部位
+        返回:
+            int: 性交类型，1阴道，4肛门，5尿道，取消返回-1
+        """
+        line_feed.draw()
+        info_draw = draw.NormalDraw()
+        info_text = _("○只能对小体型干员，即【幼女】或【萝莉】干员进行携带隐奸\n")
+        info_text += _("○携带模式需先选择插入部位（V阴道/A后穴/U尿道），全程无法拔出，体位固定为对面抱位\n")
+        info_text += _("○携带模式中双方消耗为3倍，可用专属的携带H中移动指令带着对方移动（消耗为10倍）\n")
+        info_text += _("\n请选择携带时插入的部位：\n")
+        info_draw.text = info_text
+        info_draw.draw()
+        character_data: game_type.Character = cache.character_data[0]
+        # 对面抱位的体位要求判定（与性交体位面板的判定一致）
+        sex_position_data = game_config.config_sex_position_data[9]
+        base_cant_text = ""
+        # 技巧判定
+        if sex_position_data.skill_req > character_data.ability[76]:
+            base_cant_text += _("(需要博士腰技至少为{0}级)").format(sex_position_data.skill_req)
+        # 体型判定
+        if not handle_premise.handle_t_child_or_loli_1(0):
+            base_cant_text += _("(需要对方体型为【幼女】或【萝莉】)")
+        return_list = []
+        # 各部位的文本、性交类型与可选条件（与对应插入指令的前提一致）
+        part_data_list = [
+            (_("[V]阴道"), "V", 1, handle_premise.handle_target_not_vibrator_insertion(0)),
+            (_("[A]后穴"), "A", 4, handle_premise.handle_target_a_empty(0)),
+            (
+                _("[U]尿道"),
+                "U",
+                5,
+                handle_premise.handle_target_not_urine_collector(0)
+                and handle_premise.handle_t_u_dilate_ge_5(0)
+                and handle_premise.handle_waist_technique_ge_5(0),
+            ),
+        ]
+        return_type_data = {}
+        for part_text, part_return, part_sex_type, part_can_use in part_data_list:
+            # 部位前提不满足的说明文本
+            cant_text = "" if part_can_use else _("(不满足条件)")
+            # 基础要求不满足时全部位不可选，并显示原因
+            cant_text += base_cant_text
+            # debug模式下不限制
+            if cache.debug_mode:
+                cant_text = ""
+            if cant_text == "":
+                button_draw = draw.LeftButton(
+                    part_text,
+                    part_return,
+                    self.width,
+                )
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+                return_type_data[button_draw.return_text] = part_sex_type
+            # 不满足条件则为灰色文字，不可选
+            else:
+                now_draw = draw.NormalDraw()
+                now_draw.text = part_text + cant_text
+                now_draw.style = "deep_gray"
+                now_draw.draw()
+            line_feed.draw()
+        line_feed.draw()
+        back_draw = draw.CenterButton(_("[返回]"), _("部位选择返回"), window_width)
+        back_draw.draw()
+        line_feed.draw()
+        return_list.append(back_draw.return_text)
+        yrn = flow_handle.askfor_all(return_list)
+        if yrn in return_type_data:
+            return return_type_data[yrn]
+        return -1
