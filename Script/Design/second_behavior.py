@@ -1,6 +1,7 @@
 from types import FunctionType
 from Script.Core import cache_control, constant, game_type, get_text
 from Script.Design import handle_premise, talk, settle_behavior
+from Script.System.First_Record_System import first_record_handle
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 
@@ -57,6 +58,25 @@ def character_get_second_behavior(character_id: int, second_behavior_id: str, re
         # 如果该二段行为在必须显示列表中，则进行显示
         if second_behavior_id in game_config.config_behavior_must_show_cid_list:
             character_data.must_show_second_behavior_id_list.append(second_behavior_id)
+        # ——履历记录：二段行为类统一分发（一处覆盖全部来源，dict去重使重复置1零成本）——
+        first_record = character_data.first_record
+        # (1) 部位绝顶行为则记录初次强/超强绝顶（超强同时回填空缺的强绝顶记录）
+        orgasm_settle_module = _get_orgasm_settle()
+        part_str, degree = orgasm_settle_module.get_orgasm_part_and_degree(second_behavior_id)
+        if part_str is not None and degree >= 2:
+            state_id = orgasm_settle_module.orgasm_part_to_state_id[part_str]
+            if state_id not in first_record.first_strong_orgasm_dict:
+                first_record.first_strong_orgasm_dict[state_id] = [cache.game_time, list(character_data.position)]
+            if degree == 3 and state_id not in first_record.first_super_orgasm_dict:
+                first_record.first_super_orgasm_dict[state_id] = [cache.game_time, list(character_data.position)]
+        # (2) 刻印升级行为则记录刻印首达等级（id格式{类型}_mark_{等级}，与部位绝顶id格式互斥）
+        elif "_mark_" in second_behavior_id and second_behavior_id not in first_record.first_mark_dict:
+            first_record.first_mark_dict[second_behavior_id] = [cache.game_time, list(character_data.position)]
+        # (3) 固定二段行为id到特殊履历的白名单映射（受精/喷乳绝顶/放尿绝顶）
+        elif second_behavior_id in first_record_handle.SECOND_BEHAVIOR_TO_SPECIAL_CID:
+            special_cid = first_record_handle.SECOND_BEHAVIOR_TO_SPECIAL_CID[second_behavior_id]
+            special_data = first_record_handle.get_special_data_for_second_behavior(character_id, second_behavior_id)
+            first_record_handle.record_first_special_record(character_id, special_cid, special_data)
 
 def check_second_effect(
         character_id: int,

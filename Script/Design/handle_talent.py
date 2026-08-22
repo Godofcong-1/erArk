@@ -1,5 +1,6 @@
 from types import FunctionType
 from Script.Design import attr_calculation, handle_premise
+from Script.System.First_Record_System import first_record_handle
 from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
@@ -16,6 +17,19 @@ line_feed.text = "\n"
 line_feed.width = 1
 window_width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
+
+def record_fall_talent_time(character_id: int, talent_id: int):
+    """
+    记录获得陷落素质的时间与地点\n
+    Keyword arguments:
+    character_id -- 角色id\n
+    talent_id -- 素质id，仅陷落素质(201~204,211~214)会被记录
+    """
+    if talent_id not in {201, 202, 203, 204, 211, 212, 213, 214}:
+        return
+    character_data = cache.character_data[character_id]
+    if talent_id not in character_data.first_record.fall_talent_time_dict:
+        character_data.first_record.fall_talent_time_dict[talent_id] = [cache.game_time, list(character_data.position)]
 
 def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
     """
@@ -55,6 +69,8 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
         # 如果符合获得条件，则获得该素质
         if judge:
             character_data.talent[talent_id] = 1
+            # 记录陷落素质的获得时间与地点
+            record_fall_talent_time(character_id, talent_id)
             gain_talent_flag = True
             talent_name = game_config.config_talent[talent_id].name
 
@@ -242,6 +258,8 @@ def npc_gain_and_lost_cumflation(character_id: int):
     now_draw_text = ""
     if abdomen_all_semen >= 6000 and not character_data.talent[32]:
         character_data.talent[32] = 1
+        # 记录特殊履历：第一次获得精液膨腹素质（附记当时的腹部精液总量，失去再获得由dict去重不重写）
+        first_record_handle.record_first_special_record(character_id, 6, f"{abdomen_all_semen}ml")
         now_draw_text += _("\n○{0}获得了[精液膨腹]\n").format(character_data.name)
     elif abdomen_all_semen < 6000 and character_data.talent[32]:
         character_data.talent[32] = 0
@@ -262,6 +280,8 @@ def npc_gain_semen_drinking_climax_talent(character_id: int):
         return
     if character_data.experience[111] >= 50:
         character_data.talent[31] = 1
+        # 记录特殊履历：获得精爱味觉素质（附记精液来源：H中记当时的H模式，精液食物记食物名称）
+        first_record_handle.record_first_special_record(character_id, 8, first_record_handle.get_semen_source_text(character_id))
         now_draw_text = _("\n{0}因为经常性地在绝顶的同时被口内射精，因此以后尝到精液的味道就会条件反射性地绝顶了\n").format(character_data.name)
         now_draw_text += _("{0}获得了[饮精绝顶]\n").format(character_data.name)
         now_draw_succed = draw.WaitDraw()
@@ -295,6 +315,8 @@ def npc_lost_no_menarche_talent(character_id: int):
         # 需要W相关开发至少为4级
         if character_data.ability[7] + character_data.ability[12] >= 4:
             character_data.talent[6] = 0
+            # 记录特殊履历：初潮
+            first_record_handle.record_first_special_record(character_id, 5, "")
             now_draw_text = _("\n在对子宫的持续开发下，{0}提前迎来了性成熟，可以受精怀孕了\n").format(character_data.name)
             now_draw_text += _("○{0}失去了[未初潮]\n").format(character_data.name)
             now_draw_succed = draw.WaitDraw()

@@ -714,6 +714,17 @@ class Favorability_Level:
     """ 实行值加成 """
 
 
+class FirstRecordSpecial:
+    """ 特殊履历配置表 """
+
+    cid: int
+    """ 配表id """
+    name: str
+    """ 履历名称 """
+    data_info: str
+    """ 记录的特殊数据说明 """
+
+
 class First_Bouns:
     """ 初期奖励 """
 

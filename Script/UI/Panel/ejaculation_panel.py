@@ -251,6 +251,10 @@ def update_semen_dirty(character_id: int, part_cid: int, part_type: int, semen_c
         now_semen_data = character_data.dirty.cloth_locker_semen[part_cid]
 
     # 进行统一结算
+    # 部位历史累计精液量为0且本次有精液进入时，记录该部位的初次被射精（semen_count>0守卫必须保留，精液流动会传负数扣减源部位）
+    if part_type == 0 and semen_count > 0 and now_semen_data[3] == 0 \
+            and part_cid not in character_data.first_record.first_shoot_body_dict:
+        character_data.first_record.first_shoot_body_dict[part_cid] = [cache.game_time, list(character_data.position)]
     # 该部位增加当前精液量
     now_semen_data[1] += semen_count
     now_semen_data[1] = max(now_semen_data[1], 0)

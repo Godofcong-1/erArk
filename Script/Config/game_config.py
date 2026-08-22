@@ -124,6 +124,8 @@ config_resouce: Dict[int, config_def.Resource] = {}
 """ 资源数据 """
 config_resouce_data_of_nation: Dict[int, List] = {}
 """ 势力特产的资源数据 """
+config_first_record_special: Dict[int, config_def.FirstRecordSpecial] = {}
+""" 特殊履历配置数据 """
 config_font: Dict[int, config_def.FontConfig] = {}
 """ 字体配置数据 """
 config_font_data: Dict[str, int] = {}
@@ -1127,6 +1129,16 @@ def load_resouce():
         if now_tem.specialty != 0:
             config_resouce_data_of_nation.setdefault(now_tem.specialty, [])
             config_resouce_data_of_nation[now_tem.specialty].append(now_tem.cid)
+
+
+def load_first_record_special():
+    """载入特殊履历配置数据"""
+    now_data = config_data["FirstRecordSpecial"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.FirstRecordSpecial()
+        now_tem.__dict__ = tem_data
+        config_first_record_special[now_tem.cid] = now_tem
 
 
 def load_font_data():
@@ -2223,6 +2235,7 @@ def init():
     load_experience()
     load_experience_relations()
     load_experience_types()
+    load_first_record_special()
     load_font_data()
     load_instruct_type()
     load_instruct_sex_type()

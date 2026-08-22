@@ -17,6 +17,26 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 
+def _remap_first_record_ids(first_record, id_map: dict) -> None:
+    """
+    重映射FIRST_RECORD实例中的角色ID（平铺字段与first_part_sex_dict）
+    Keyword arguments:
+    first_record -- FIRST_RECORD实例（当前记录或first_record_history中的历史周目快照）
+    id_map -- 旧角色id到新角色id的映射
+    Return arguments:
+    None
+    """
+    # 平铺字段的重映射保留hasattr守卫，服务尚未走存档迁移的更老路径
+    for attr_name in ('first_hand_in_hand', 'first_kiss_id', 'first_sex_id', 'first_a_sex_id', 'first_u_sex_id', 'first_w_sex_id'):
+        if hasattr(first_record, attr_name) and getattr(first_record, attr_name) > 0:
+            old_id = getattr(first_record, attr_name)
+            setattr(first_record, attr_name, id_map.get(old_id, old_id))
+    # 部位交初体验dict中的对象角色ID
+    for part_record in getattr(first_record, 'first_part_sex_dict', {}).values():
+        if isinstance(part_record, dict) and part_record.get("id", -1) > 0:
+            part_record["id"] = id_map.get(part_record["id"], part_record["id"])
+
+
 def normalize_single_character_id(raw_value, default: int = 0) -> int:
     """
     将旧存档中的单角色id字段归一化为int
@@ -279,28 +299,12 @@ def migrate_old_save_data(loaded_dict) -> int:
                 new_id = old_to_new_id.get(old_id, old_id)
                 character.action_info.social_contact_last_cut_down_time[new_id] = value
         
-        # first_record中的角色ID字段
+        # first_record中的角色ID字段（含first_part_sex_dict与历史周目快照）
         if hasattr(character, 'first_record'):
-            fr = character.first_record
-            # first_hand_in_hand
-            if hasattr(fr, 'first_hand_in_hand') and fr.first_hand_in_hand > 0:
-                fr.first_hand_in_hand = old_to_new_id.get(fr.first_hand_in_hand, fr.first_hand_in_hand)
-            # first_kiss_id
-            if hasattr(fr, 'first_kiss_id') and fr.first_kiss_id > 0:
-                fr.first_kiss_id = old_to_new_id.get(fr.first_kiss_id, fr.first_kiss_id)
-            # first_sex_id
-            if hasattr(fr, 'first_sex_id') and fr.first_sex_id > 0:
-                fr.first_sex_id = old_to_new_id.get(fr.first_sex_id, fr.first_sex_id)
-            # first_a_sex_id
-            if hasattr(fr, 'first_a_sex_id') and fr.first_a_sex_id > 0:
-                fr.first_a_sex_id = old_to_new_id.get(fr.first_a_sex_id, fr.first_a_sex_id)
-            # first_u_sex_id
-            if hasattr(fr, 'first_u_sex_id') and fr.first_u_sex_id > 0:
-                fr.first_u_sex_id = old_to_new_id.get(fr.first_u_sex_id, fr.first_u_sex_id)
-            # first_w_sex_id
-            if hasattr(fr, 'first_w_sex_id') and fr.first_w_sex_id > 0:
-                fr.first_w_sex_id = old_to_new_id.get(fr.first_w_sex_id, fr.first_w_sex_id)
-        
+            _remap_first_record_ids(character.first_record, old_to_new_id)
+        for history_record in getattr(character, 'first_record_history', {}).values():
+            _remap_first_record_ids(history_record, old_to_new_id)
+
         # collection_character (Set) - 收藏的角色列表
         if hasattr(character, 'collection_character') and character.collection_character:
             old_collection = character.collection_character.copy()
@@ -752,22 +756,12 @@ def migrate_character_replacement(loaded_dict: dict, old_to_new_id_map: dict) ->
         if hasattr(new_character.relationship, 'firend_id_list') and new_character.relationship.firend_id_list:
             new_character.relationship.firend_id_list = [old_to_new_id_map.get(fid, fid) for fid in new_character.relationship.firend_id_list]
         
-        # first_record中的角色ID转换
+        # first_record中的角色ID转换（含first_part_sex_dict与历史周目快照）
         if hasattr(new_character, 'first_record'):
-            fr = new_character.first_record
-            if hasattr(fr, 'first_hand_in_hand') and fr.first_hand_in_hand > 0:
-                fr.first_hand_in_hand = old_to_new_id_map.get(fr.first_hand_in_hand, fr.first_hand_in_hand)
-            if hasattr(fr, 'first_kiss_id') and fr.first_kiss_id > 0:
-                fr.first_kiss_id = old_to_new_id_map.get(fr.first_kiss_id, fr.first_kiss_id)
-            if hasattr(fr, 'first_sex_id') and fr.first_sex_id > 0:
-                fr.first_sex_id = old_to_new_id_map.get(fr.first_sex_id, fr.first_sex_id)
-            if hasattr(fr, 'first_a_sex_id') and fr.first_a_sex_id > 0:
-                fr.first_a_sex_id = old_to_new_id_map.get(fr.first_a_sex_id, fr.first_a_sex_id)
-            if hasattr(fr, 'first_u_sex_id') and fr.first_u_sex_id > 0:
-                fr.first_u_sex_id = old_to_new_id_map.get(fr.first_u_sex_id, fr.first_u_sex_id)
-            if hasattr(fr, 'first_w_sex_id') and fr.first_w_sex_id > 0:
-                fr.first_w_sex_id = old_to_new_id_map.get(fr.first_w_sex_id, fr.first_w_sex_id)
-        
+            _remap_first_record_ids(new_character.first_record, old_to_new_id_map)
+        for history_record in getattr(new_character, 'first_record_history', {}).values():
+            _remap_first_record_ids(history_record, old_to_new_id_map)
+
         # action_info中的角色ID转换
         if hasattr(new_character, 'action_info'):
             ai = new_character.action_info
@@ -858,22 +852,12 @@ def migrate_character_replacement(loaded_dict: dict, old_to_new_id_map: dict) ->
             for coll_id in old_coll:
                 character.collection_character.add(old_to_new_id_map.get(coll_id, coll_id))
         
-        # first_record中的角色ID
+        # first_record中的角色ID（含first_part_sex_dict与历史周目快照）
         if hasattr(character, 'first_record'):
-            fr = character.first_record
-            if hasattr(fr, 'first_hand_in_hand') and fr.first_hand_in_hand > 0:
-                fr.first_hand_in_hand = old_to_new_id_map.get(fr.first_hand_in_hand, fr.first_hand_in_hand)
-            if hasattr(fr, 'first_kiss_id') and fr.first_kiss_id > 0:
-                fr.first_kiss_id = old_to_new_id_map.get(fr.first_kiss_id, fr.first_kiss_id)
-            if hasattr(fr, 'first_sex_id') and fr.first_sex_id > 0:
-                fr.first_sex_id = old_to_new_id_map.get(fr.first_sex_id, fr.first_sex_id)
-            if hasattr(fr, 'first_a_sex_id') and fr.first_a_sex_id > 0:
-                fr.first_a_sex_id = old_to_new_id_map.get(fr.first_a_sex_id, fr.first_a_sex_id)
-            if hasattr(fr, 'first_u_sex_id') and fr.first_u_sex_id > 0:
-                fr.first_u_sex_id = old_to_new_id_map.get(fr.first_u_sex_id, fr.first_u_sex_id)
-            if hasattr(fr, 'first_w_sex_id') and fr.first_w_sex_id > 0:
-                fr.first_w_sex_id = old_to_new_id_map.get(fr.first_w_sex_id, fr.first_w_sex_id)
-        
+            _remap_first_record_ids(character.first_record, old_to_new_id_map)
+        for history_record in getattr(character, 'first_record_history', {}).values():
+            _remap_first_record_ids(history_record, old_to_new_id_map)
+
         # action_info中的角色ID
         if hasattr(character, 'action_info'):
             ai = character.action_info

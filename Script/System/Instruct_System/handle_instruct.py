@@ -1108,8 +1108,11 @@ def handle_confession():
         character_data.behavior.behavior_id = constant.Behavior.CONFESSION
         character_data.state = constant.CharacterStatus.STATUS_CONFESSION
         # 将对象的恋慕转为恋人，对方获得戒指
+        from Script.Design import handle_talent
         target_data.talent[202] = 0
         target_data.talent[203] = 1
+        # 记录[恋人]陷落素质的获得时间与地点（此处直接赋值绕过了gain_talent，需补记）
+        handle_talent.record_fall_talent_time(character_data.target_character_id, 203)
         target_data.talent[205] = 1
         target_data.talent[411] = 1
         character_data.pl_collection.token_list[character_data.target_character_id] = True
@@ -1140,8 +1143,11 @@ def handle_give_necklace():
         character_data.behavior.behavior_id = constant.Behavior.GIVE_NECKLACE
         character_data.state = constant.CharacterStatus.STATUS_GIVE_NECKLACE
         # 将对象的驯服转为宠物，增加项圈素质
+        from Script.Design import handle_talent
         target_data.talent[212] = 0
         target_data.talent[213] = 1
+        # 记录[宠物]陷落素质的获得时间与地点（此处直接赋值绕过了gain_talent，需补记）
+        handle_talent.record_fall_talent_time(character_data.target_character_id, 213)
         target_data.talent[215] = 1
         target_data.talent[411] = 1
         character_data.pl_collection.token_list[character_data.target_character_id] = True

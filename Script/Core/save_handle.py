@@ -147,6 +147,90 @@ def _normalize_save_path_keys(path_dict):
     return {_normalize_save_path(key): value for key, value in path_dict.items()}
 
 
+def _migrate_first_record_flat_fields(character) -> None:
+    """
+    将旧存档FIRST_RECORD中的平铺处女字段迁移进first_part_sex_dict
+    Keyword arguments:
+    character -- 反序列化得到的角色对象（旧档判据：first_record无first_part_sex_dict属性，二次载入幂等）
+    Return arguments:
+    None
+    """
+    first_record = getattr(character, "first_record", None)
+    if first_record is None or hasattr(first_record, "first_part_sex_dict"):
+        return
+    default_time = datetime.datetime(1, 1, 1)
+    # 先补齐9个新dict默认值
+    first_record.first_part_sex_dict = {}
+    first_record.first_shoot_body_dict = {}
+    first_record.first_strong_orgasm_dict = {}
+    first_record.first_super_orgasm_dict = {}
+    first_record.first_plural_orgasm_dict = {}
+    first_record.fall_talent_time_dict = {}
+    first_record.first_mark_dict = {}
+    first_record.first_h_mode_dict = {}
+    first_record.first_special_record_dict = {}
+    # 仅NPC：V处女平铺字段转入键6，随后重置回默认值（字段保留给玩家童贞用，不delattr）
+    if getattr(character, "cid", 0) != 0 and getattr(first_record, "first_sex_id", -1) != -1:
+        first_record.first_part_sex_dict[6] = {
+            "id": first_record.first_sex_id,
+            "time": first_record.first_sex_time,
+            "place": list(first_record.first_sex_place),
+            "posture": first_record.first_sex_posture,
+            "item": getattr(first_record, "first_sex_item", -1),
+        }
+        first_record.first_sex_id = -1
+        first_record.first_sex_time = default_time
+        first_record.first_sex_place = ["0"]
+        first_record.first_sex_posture = ""
+        first_record.first_sex_item = -1
+    # A处女平铺字段转入键8
+    if getattr(first_record, "first_a_sex_id", -1) != -1:
+        first_record.first_part_sex_dict[8] = {
+            "id": first_record.first_a_sex_id,
+            "time": first_record.first_a_sex_time,
+            "place": list(first_record.first_a_sex_place),
+            "posture": first_record.first_a_sex_posture,
+            "item": getattr(first_record, "first_a_sex_item", -1),
+        }
+    # U处女平铺字段转入键9（旧道具编号1采尿器改记为2）
+    if getattr(first_record, "first_u_sex_id", -1) != -1:
+        old_u_item = getattr(first_record, "first_u_sex_item", -1)
+        first_record.first_part_sex_dict[9] = {
+            "id": first_record.first_u_sex_id,
+            "time": first_record.first_u_sex_time,
+            "place": list(first_record.first_u_sex_place),
+            "posture": first_record.first_u_sex_posture,
+            "item": 2 if old_u_item == 1 else old_u_item,
+        }
+    # W处女平铺字段转入键7
+    if getattr(first_record, "first_w_sex_id", -1) != -1:
+        first_record.first_part_sex_dict[7] = {
+            "id": first_record.first_w_sex_id,
+            "time": first_record.first_w_sex_time,
+            "place": list(first_record.first_w_sex_place),
+            "posture": first_record.first_w_sex_posture,
+            "item": -1,
+        }
+    # M处女时间转入键2（旧档只有时间，无对象/姿势/道具信息）
+    if getattr(first_record, "first_m_sex_time", default_time) != default_time:
+        first_record.first_part_sex_dict[2] = {
+            "id": -1,
+            "time": first_record.first_m_sex_time,
+            "place": ["0"],
+            "posture": "",
+            "item": -1,
+        }
+    # 清理已从类中删除的平铺字段，避免被recursive_update当孤儿属性带进新对象
+    for old_attr in (
+        "first_a_sex_id", "first_a_sex_time", "first_a_sex_place", "first_a_sex_posture", "first_a_sex_item",
+        "first_u_sex_id", "first_u_sex_time", "first_u_sex_place", "first_u_sex_posture", "first_u_sex_item",
+        "first_w_sex_id", "first_w_sex_time", "first_w_sex_place", "first_w_sex_posture",
+        "first_m_sex_time",
+    ):
+        if hasattr(first_record, old_attr):
+            delattr(first_record, old_attr)
+
+
 def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
     """
     归一化反序列化存档中已知的结构性路径字段
@@ -189,6 +273,8 @@ def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
             dirty_data = getattr(character, "dirty", None)
             if dirty_data is not None and not hasattr(dirty_data, "condom_decoration"):
                 dirty_data.condom_decoration = {}
+            # 性行为履历旧存档兼容：平铺处女字段合并进first_part_sex_dict
+            _migrate_first_record_flat_fields(character)
 
     rhodes_island = getattr(loaded_cache, "rhodes_island", None)
     if rhodes_island is not None:

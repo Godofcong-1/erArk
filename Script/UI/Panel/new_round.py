@@ -662,6 +662,11 @@ class New_Round_Handle:
         new_pl_character_data = cache.character_data[0]
         new_pl_character_data.name = old_pl_character_data.name
 
+        # 归档旧周目的性行为履历（old_pl_character_data已deepcopy，快照直接引用即可；此时cache.game_round仍是旧周目数）
+        new_pl_character_data.first_record_history = getattr(old_pl_character_data, "first_record_history", {})
+        if old_pl_character_data.first_record.has_any_record():
+            new_pl_character_data.first_record_history[cache.game_round] = old_pl_character_data.first_record
+
         # 玩家能力与经验
         now_inherit_data_cid = game_config.config_new_round_inherit_type_data[1][self.pl_abi_and_exp_count]
         now_inherit_data = game_config.config_new_round_inherit[now_inherit_data_cid]
@@ -788,6 +793,14 @@ class New_Round_Handle:
                     info_draw_text += _("干员催眠进度继承完毕，共继承了{rate}%的催眠进度\n").format(rate=now_rate)
                 else:
                     info_draw_text += _("干员催眠进度未继承\n")
+
+            # 归档旧周目的性行为履历（陷落与未陷落分支都归档；old_npc_data已整体deepcopy，快照直接引用即可）
+            old_data = old_npc_data.get(now_id)
+            if old_data is not None:
+                new_data = cache.character_data[now_id]
+                new_data.first_record_history = getattr(old_data, "first_record_history", {})
+                if old_data.first_record.has_any_record():
+                    new_data.first_record_history[cache.game_round] = old_data.first_record
 
         info_draw.text = info_draw_text
         info_draw.draw()

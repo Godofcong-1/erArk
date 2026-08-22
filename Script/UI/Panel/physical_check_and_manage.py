@@ -972,36 +972,34 @@ class Physical_Check_And_Manage_Panel:
             now_text += _("献上了初吻")
         report_text += (" {0}{1}\n").format(base_ability_dict[11], now_text)
 
-        # 处女
+        # 处女（NPC的V破处记录在first_part_sex_dict[6]）
         now_text = ""
         if target_character_data.talent[0]:
             now_text += _("保有处女")
-        elif target_character_data.first_record.first_sex_id != -1:
-            sex_id = target_character_data.first_record.first_sex_id
-            sex_time = target_character_data.first_record.first_sex_time
-            sex_posture = target_character_data.first_record.first_sex_posture
-            now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了处女").format(
-                character_name=cache.character_data[sex_id].name,
-                time=game_time.get_date_until_day(sex_time),
-                palce=attr_text.get_scene_path_text(target_character_data.first_record.first_sex_place),
-                posture=sex_posture,
-            )
+        else:
+            record = target_character_data.first_record.first_part_sex_dict.get(6, None)
+            if record is not None and record["id"] != -1:
+                now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了处女").format(
+                    character_name=cache.character_data[record["id"]].name,
+                    time=game_time.get_date_until_day(record["time"])[3:],
+                    palce=attr_text.get_scene_path_text(record["place"]),
+                    posture=record["posture"],
+                )
         report_text += (" {0}{1}\n").format(base_ability_dict[12], now_text)
 
-        # A处女
+        # A处女（NPC的A破处记录在first_part_sex_dict[8]）
         now_text = ""
         if target_character_data.talent[1]:
             now_text += _("保有后庭处女")
-        elif target_character_data.first_record.first_a_sex_id != -1:
-            a_sex_id = target_character_data.first_record.first_a_sex_id
-            a_sex_time = target_character_data.first_record.first_a_sex_time
-            a_sex_posture = target_character_data.first_record.first_a_sex_posture
-            now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了A处女").format(
-                character_name=cache.character_data[a_sex_id].name,
-                time=game_time.get_date_until_day(a_sex_time),
-                palce=attr_text.get_scene_path_text(target_character_data.first_record.first_a_sex_place),
-                posture=a_sex_posture,
-            )
+        else:
+            record = target_character_data.first_record.first_part_sex_dict.get(8, None)
+            if record is not None and record["id"] != -1:
+                now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了A处女").format(
+                    character_name=cache.character_data[record["id"]].name,
+                    time=game_time.get_date_until_day(record["time"])[3:],
+                    palce=attr_text.get_scene_path_text(record["place"]),
+                    posture=record["posture"],
+                )
         report_text += (" {0}{1}\n").format(base_ability_dict[13], now_text)
 
         # 检查人与时间

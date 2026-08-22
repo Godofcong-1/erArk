@@ -6,6 +6,7 @@ from Script.Core import cache_control, constant, game_type, get_text, text_handl
 from Script.Core.web_server import emit_realtime_text
 from Script.Design import attr_text, attr_calculation, handle_premise, talk, game_time, second_behavior
 from Script.Config import game_config, normal_config
+from Script.System.First_Record_System import first_record_handle
 from Script.System.Instruct_System import handle_instruct
 from Script.UI.Panel import hypnosis_panel
 
@@ -32,6 +33,11 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
     change_data = game_type.CharacterStatusChange()
     start_time = now_character_data.behavior.start_time
     add_time = int((now_time - start_time).seconds / 60)
+
+    # ——履历记录：H模式初体验中心判定（自己与交互对象各判一次，行为结算必经处，dict去重使重复判定零成本）——
+    first_record_handle.check_first_h_mode(character_id)
+    if now_character_data.target_character_id != character_id:
+        first_record_handle.check_first_h_mode(now_character_data.target_character_id)
 
     behavior_id = now_character_data.behavior.behavior_id
     if event_flag > 0:

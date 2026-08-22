@@ -13,6 +13,7 @@ from Script.Core import (
 from Script.Config import game_config, normal_config
 from Script.Design import attr_text, map_handle, attr_calculation, game_time, instuct_judege, character_image
 from Script.UI.Panel import body_info_panel, character_info_head
+from Script.System.First_Record_System import first_record_panel
 
 panel_info_data = {}
 
@@ -59,11 +60,14 @@ class SeeCharacterInfoPanel:
                 _("角色设定"): setting_draw,
             }
         else:
+            # 性行为履历分页仅NPC可见（玩家童贞数据保留但不进新面板），位置在肉体情况之后、角色设定之前
+            first_record_draw = first_record_panel.See_Character_First_Record_Panel(character_id, width)
             self.draw_data = {
                 _("基础属性"): base_attributes_draw,
                 _("能力、经验与宝珠"): detailed_attributes_draw,
                 # _("日程与喜好"): see_daily_draw,
                 _("肉体情况"): main_third_draw,
+                _("性行为履历"): first_record_draw,
                 _("角色设定"): setting_draw,
             }
         """ 按钮文本对应属性面板 """
@@ -73,7 +77,7 @@ class SeeCharacterInfoPanel:
             [f"[{text}]" for text in self.draw_data.keys()],
             list(self.draw_data.keys()),
             width,
-            4,
+            5,
             f"[{self.now_panel}]",
             self.change_panel,
         )
@@ -89,7 +93,7 @@ class SeeCharacterInfoPanel:
             [f"[{text}]" for text in self.draw_data.keys()],
             list(self.draw_data.keys()),
             self.width,
-            4,
+            5,
             f"[{self.now_panel}]",
             self.change_panel,
         )
@@ -100,6 +104,9 @@ class SeeCharacterInfoPanel:
             self.now_panel = _("肉体情况")
         elif self.now_panel == _("肉体情况") and _("肉体情况") not in self.draw_data:
             self.now_panel = _("玩家能力")
+        # 从NPC的性行为履历分页切换到查看玩家时，退回基础属性分页
+        elif self.now_panel == _("性行为履历") and _("性行为履历") not in self.draw_data:
+            self.now_panel = _("基础属性")
         self.draw_data[self.now_panel].draw()
         self.return_list = []
         self.return_list.extend(self.draw_data[self.now_panel].return_list)

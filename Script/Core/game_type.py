@@ -521,45 +521,62 @@ class FIRST_RECORD:
         self.first_kiss_place: List[str] = ["0"]
         """ 初吻地点 """
         self.first_sex_id: int = -1
-        """ 处女对象 -1为无 """
+        """ 处女对象 -1为无（玩家童贞专用，NPC的V破处记录在first_part_sex_dict[6]） """
         self.first_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
-        """ 处女时间 """
+        """ 处女时间（玩家童贞专用） """
         self.first_sex_place: List[str] = ["0"]
-        """ 处女地点 """
+        """ 处女地点（玩家童贞专用） """
         self.first_sex_posture: str = ""
-        """ 处女姿势 """
+        """ 处女姿势（玩家童贞专用） """
         self.first_sex_item: int = -1
-        """ 处女道具 -1为无，0为手指，1为振动棒 """
-        self.first_a_sex_id: int = -1
-        """ A处女对象 -1为无 """
-        self.first_a_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
-        """ A处女时间 """
-        self.first_a_sex_place: List[str] = ["0"]
-        """ A处女地点 """
-        self.first_a_sex_posture: str = ""
-        """ A处女姿势 """
-        self.first_a_sex_item: int = -1
-        """ A处女道具 -1为无，0为手指，1为振动棒 """
-        self.first_u_sex_id: int = -1
-        """ U处女对象 -1为无 """
-        self.first_u_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
-        """ U处女时间 """
-        self.first_u_sex_place: List[str] = ["0"]  
-        """ U处女地点 """
-        self.first_u_sex_posture: str = ""
-        """ U处女姿势 """
-        self.first_u_sex_item: int = -1
-        """ U处女道具 -1为无，1为采尿器 """
-        self.first_w_sex_id: int = -1
-        """ W处女对象 -1为无 """
-        self.first_w_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
-        """ W处女时间 """
-        self.first_w_sex_place: List[str] = ["0"]
-        """ W处女地点 """
-        self.first_w_sex_posture: str = ""
-        """ W处女姿势 """
-        self.first_m_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
-        """ M处女时间 """
+        """ 处女道具 -1为无，0为手指，1为振动棒（玩家童贞专用） """
+        self.first_part_sex_dict: dict = {}
+        """ 部位交/破处初体验记录（每周目一份）
+        键int：同 h_state.insert_position 的身体部位编号，0发交/1脸交/2口交/3乳交/4腋交/5手交/6V性交/7子宫性交/8A性交/9U性交/10腿交/11足交/12尾交/13兽角蹭/14兽耳蹭/15深喉
+        值dict：{"id": 对象角色id int(-1无), "time": datetime, "place": List[str], "posture": str(行为中文名,空串无), "item": int(-1无/0手指/1振动棒/2采尿器)} """
+        self.first_shoot_body_dict: dict = {}
+        """ 各身体部位第一次被射精记录 部位id(同BodyPart.csv 0-18):[时间datetime, 地点List[str]] """
+        self.first_strong_orgasm_dict: dict = {}
+        """ 各部位第一次强绝顶记录 快感状态id(0皮1胸2阴蒂3阴茎4V5A6U7W21口喉22兽部23心理):[时间, 地点] """
+        self.first_super_orgasm_dict: dict = {}
+        """ 各部位第一次超强绝顶记录 结构同上 """
+        self.first_plural_orgasm_dict: dict = {}
+        """ 各等级多重绝顶初次达成记录 同时绝顶部位数int(2~11):[时间, 地点, 参与部位id列表List[int](快感状态id)] """
+        self.fall_talent_time_dict: dict = {}
+        """ 各级陷落素质获得记录 素质id(201-204/211-214):[时间, 地点] """
+        self.first_mark_dict: dict = {}
+        """ 各刻印首次达到各等级记录 刻印二段行为id str(如happy_mark_2，见constant/SecondBehavior.py):[时间, 地点] """
+        self.first_h_mode_dict: dict = {}
+        """ 各H模式初体验记录 模式键str:[时间, 地点, 附加数据str]
+        模式键：unconscious_1~unconscious_7(按sp_flag.unconscious_h类型,1睡眠2醉酒3时停4平然5空气6体控7心控)、
+        group_sex(附加数据:当时场景内人数)、exhibitionism(附加数据:露出模式名)、hidden_sex(附加数据:隐奸模式名)、pretend_sleep """
+        self.first_special_record_dict: dict = {}
+        """ 特殊履历记录 配表cid(FirstRecordSpecial.csv):[时间, 地点, 特殊数据str] """
+
+    def has_any_record(self) -> bool:
+        """
+        判断本记录结构体中是否存在任何一条性行为履历\n
+        Return arguments:
+        bool -- 初吻、玩家童贞或9个履历dict任一有内容则为True
+        """
+        if self.first_kiss_id != -1:
+            return True
+        if self.first_sex_id != -1:
+            return True
+        for record_dict in (
+            self.first_part_sex_dict,
+            self.first_shoot_body_dict,
+            self.first_strong_orgasm_dict,
+            self.first_super_orgasm_dict,
+            self.first_plural_orgasm_dict,
+            self.fall_talent_time_dict,
+            self.first_mark_dict,
+            self.first_h_mode_dict,
+            self.first_special_record_dict,
+        ):
+            if len(record_dict):
+                return True
+        return False
 
 
 class ACTION_INFO:
@@ -1623,6 +1640,8 @@ class Character:
         """ 角色的身体管理，见Body_Manage_Requirement.csv """
         self.first_record: FIRST_RECORD = FIRST_RECORD()
         """ 角色初次状态记录 """
+        self.first_record_history: dict = {}
+        """ 之前各周目性行为履历的单独存储 周目数int:该周目结束时的FIRST_RECORD快照 """
         self.dirty: DIRTY = DIRTY()
         """ 角色身上污浊的情况 """
         self.h_state: BODY_H_STATE = BODY_H_STATE()

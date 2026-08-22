@@ -1050,10 +1050,14 @@ def handle_first_sex(
         # now_draw.draw()
     if target_data.talent[0] == 1:
         target_data.talent[0] = 0
-        target_data.first_record.first_sex_id = character_id
-        target_data.first_record.first_sex_time = cache.game_time
-        target_data.first_record.first_sex_place = target_data.position
-        target_data.first_record.first_sex_posture = instruct_name
+        # NPC的V破处记录进部位交初体验dict（破处是权威事件，无条件覆盖通用挂钩先建的简版条目）
+        target_data.first_record.first_part_sex_dict[6] = {
+            "id": character_id,
+            "time": cache.game_time,
+            "place": list(target_data.position),
+            "posture": instruct_name,
+            "item": 1 if item_flag else -1,
+        }
         second_behavior.character_get_second_behavior(target_data.cid, "first_sex")
         # 失去性无知
         if target_data.talent[222] == 1:
@@ -1086,10 +1090,6 @@ def handle_first_sex(
                 character_data.target_character_id] = _("一滴{0}的处子血").format(target_data.name)
             now_draw.draw()
         handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 4)
-
-        # 道具破处
-        if item_flag:
-            target_data.first_record.first_sex_item = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_A_SEX)
@@ -1139,21 +1139,15 @@ def handle_first_a_sex(
         # now_draw.draw()
     if target_data.talent[1] == 1:
         target_data.talent[1] = 0
-        target_data.first_record.first_a_sex_id = character_id
-        target_data.first_record.first_a_sex_time = cache.game_time
-        target_data.first_record.first_a_sex_place = target_data.position
-        target_data.first_record.first_a_sex_posture = instruct_name
-        if item_flag:
-            target_data.first_record.first_a_sex_item = 1
+        # NPC的A破处记录进部位交初体验dict（破处是权威事件，无条件覆盖通用挂钩先建的简版条目）
+        target_data.first_record.first_part_sex_dict[8] = {
+            "id": character_id,
+            "time": cache.game_time,
+            "place": list(target_data.position),
+            "posture": instruct_name,
+            "item": 1 if item_flag else -1,
+        }
         if (not character_id) or (not target_data.cid):
-            # now_draw = draw.NormalDraw()
-            # now_draw.text = _("{character_name}于{a_sex_time}在{a_sex_palce}失去了A处女\n").format(
-            #     character_name=target_data.name,
-            #     a_sex_time = str(target_data.first_record.first_a_sex_time.month) + "月" + str (target_data.first_record.first_a_sex_time.day) + "日",
-            #     a_sex_palce = attr_text.get_scene_path_text(target_data.first_record.first_a_sex_place),
-            # )
-            # now_draw.width = window_width
-            # now_draw.draw()
             # a处女的二段结算
             second_behavior.character_get_second_behavior(target_data.cid, "first_a_sex")
 
@@ -1196,10 +1190,14 @@ def handle_first_u_sex(
         character_data.first_record.first_sex_posture = instruct_name
     if target_data.talent[2] == 1:
         target_data.talent[2] = 0
-        target_data.first_record.first_u_sex_id = character_id
-        target_data.first_record.first_u_sex_time = cache.game_time
-        target_data.first_record.first_u_sex_place = target_data.position
-        target_data.first_record.first_u_sex_posture = instruct_name
+        # NPC的U破处记录进部位交初体验dict（若未来接入采尿器道具破处，item记2）
+        target_data.first_record.first_part_sex_dict[9] = {
+            "id": character_id,
+            "time": cache.game_time,
+            "place": list(target_data.position),
+            "posture": instruct_name,
+            "item": -1,
+        }
         if (not character_id) or (not target_data.cid):
             # 处女的二段结算
             second_behavior.character_get_second_behavior(target_data.cid, "first_u_sex")
@@ -1238,10 +1236,14 @@ def handle_first_w_sex(
         character_data.first_record.first_sex_posture = instruct_name
     if target_data.talent[3] == 1:
         target_data.talent[3] = 0
-        target_data.first_record.first_w_sex_id = character_id
-        target_data.first_record.first_w_sex_time = cache.game_time
-        target_data.first_record.first_w_sex_place = target_data.position
-        target_data.first_record.first_w_sex_posture = instruct_name
+        # NPC的W破处记录进部位交初体验dict（W破处无道具）
+        target_data.first_record.first_part_sex_dict[7] = {
+            "id": character_id,
+            "time": cache.game_time,
+            "place": list(target_data.position),
+            "posture": instruct_name,
+            "item": -1,
+        }
         if (not character_id) or (not target_data.cid):
             # 处女的二段结算
             second_behavior.character_get_second_behavior(target_data.cid, "first_w_sex")
@@ -9754,6 +9756,37 @@ def handle_scene_all_characters_penis_in_reset(
         now_character_data.h_state.insert_position = -1
 
 
+def record_first_part_sex(character_id: int, target_data: game_type.Character, item: int = -1):
+    """
+    部位交初体验记录（键取自insert_position，未记录才写入；破处handler的完整写入会覆盖本条目）\n
+    Keyword arguments:
+    character_id -- 行为发起者id（记为对象）\n
+    target_data -- 被交部位所属角色数据\n
+    item -- 道具编号，-1无/0手指/1振动棒/2采尿器
+    """
+    # 玩家不做部位交记录（部位交的身体部位恒属于NPC）
+    if not target_data.cid:
+        return
+    part_id = target_data.h_state.insert_position
+    # 身体部位以外（未插入或服装部位）不记录
+    if part_id == -1 or part_id >= 20:
+        return
+    if part_id in target_data.first_record.first_part_sex_dict:
+        return
+    # 姿势取行为发起者当前行为的中文名
+    behavior_name = ""
+    behavior_id = cache.character_data[character_id].behavior.behavior_id
+    if behavior_id in game_config.config_behavior:
+        behavior_name = game_config.config_behavior[behavior_id].name
+    target_data.first_record.first_part_sex_dict[part_id] = {
+        "id": character_id,
+        "time": cache.game_time,
+        "place": list(target_data.position),
+        "posture": behavior_name,
+        "item": item,
+    }
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_HAIR)
 def handle_penis_in_t_hair(
         character_id: int,
@@ -9774,6 +9807,7 @@ def handle_penis_in_t_hair(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = 0
+    record_first_part_sex(character_id, target_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_FACE)
@@ -9796,6 +9830,7 @@ def handle_penis_in_t_face(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = 1
+    record_first_part_sex(character_id, target_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_MOUSE)
@@ -9818,6 +9853,7 @@ def handle_penis_in_t_mouse(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = 2
+    record_first_part_sex(character_id, target_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_BREAST)
@@ -9840,6 +9876,7 @@ def handle_penis_in_t_breast(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = 3
+    record_first_part_sex(character_id, target_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_AXILLA)
@@ -9862,6 +9899,7 @@ def handle_penis_in_t_axilla(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = 4
+    record_first_part_sex(character_id, target_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_HAND)
@@ -9884,6 +9922,7 @@ def handle_penis_in_t_hand(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = 5
+    record_first_part_sex(character_id, target_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_VAGINA)
@@ -9906,6 +9945,7 @@ def handle_penis_in_t_vagina(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = 6
+    record_first_part_sex(character_id, target_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_WOMB)
@@ -9928,6 +9968,7 @@ def handle_penis_in_t_womb(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = 7
+    record_first_part_sex(character_id, target_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_ANAL)
@@ -9950,6 +9991,7 @@ def handle_penis_in_t_anal(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = 8
+    record_first_part_sex(character_id, target_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_URETHRAL)
@@ -9972,6 +10014,7 @@ def handle_penis_in_t_urethral(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = 9
+    record_first_part_sex(character_id, target_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_LEG)
@@ -9994,6 +10037,7 @@ def handle_penis_in_t_leg(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = 10
+    record_first_part_sex(character_id, target_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_FOOT)
@@ -10016,6 +10060,7 @@ def handle_penis_in_t_foot(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = 11
+    record_first_part_sex(character_id, target_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_TAIL)
@@ -10038,6 +10083,7 @@ def handle_penis_in_t_tail(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = 12
+    record_first_part_sex(character_id, target_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_HORN)
@@ -10060,6 +10106,7 @@ def handle_penis_in_t_horn(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = 13
+    record_first_part_sex(character_id, target_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_EARS)
@@ -10082,6 +10129,7 @@ def handle_penis_in_t_ears(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = 14
+    record_first_part_sex(character_id, target_data)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_DEEP_THROAT)
 def handle_penis_in_t_deep_throat(
@@ -10103,6 +10151,7 @@ def handle_penis_in_t_deep_throat(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = 15
+    record_first_part_sex(character_id, target_data)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_HAT)
 def handle_penis_in_t_hat(

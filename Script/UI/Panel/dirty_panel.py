@@ -1,8 +1,6 @@
-from turtle import position
 from typing import Tuple, List
 from types import FunctionType
-from uuid import UUID
-from Script.Core import cache_control, game_type, get_text, flow_handle, rich_text
+from Script.Core import cache_control, game_type, get_text, rich_text
 from Script.Design import map_handle, clothing, attr_calculation
 from Script.Design import handle_premise
 from Script.UI.Moudle import draw, panel

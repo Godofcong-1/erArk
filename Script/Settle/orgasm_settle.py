@@ -14,6 +14,8 @@ _: FunctionType = get_text._
 """ 翻译api """
 orgasm_degree_order = {"small": 0, "normal": 1, "strong": 2, "super": 3}
 """ 部位绝顶二段行为的程度排序，键为二段行为id中的程度后缀，值为程度序号，越大程度越高 """
+orgasm_part_to_state_id = {"s": 0, "b": 1, "c": 2, "p": 3, "v": 4, "a": 5, "u": 6, "w": 7, "m": 21, "f": 22, "h": 23}
+""" 部位绝顶二段行为的部位字母到快感状态id的反向映射 """
 
 
 def get_orgasm_part_and_degree(second_behavior_id: str) -> tuple:
@@ -319,6 +321,10 @@ def orgasm_settle_in_second_behavior(
         second_behavior_id = f"plural_orgasm_{part_count}"
         second_behavior.character_get_second_behavior(character_id, second_behavior_id)
         character_data.h_state.plural_orgasm_set = tem_orgasm_set.copy()
+        # 记录该等级多重绝顶的初次达成（时间/地点/参与部位，各等级独立达成、不做高等级回填）
+        if part_count not in character_data.first_record.first_plural_orgasm_dict:
+            character_data.first_record.first_plural_orgasm_dict[part_count] = [
+                cache.game_time, list(character_data.position), sorted(tem_orgasm_set)]
         # 结算成就
         if part_count >= 2:
             achievement_panel.achievement_flow(_("绝顶"), 1221)

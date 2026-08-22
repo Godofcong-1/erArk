@@ -8,6 +8,7 @@ from Script.Design import (
     handle_premise,
     handle_ability,
 )
+from Script.System.First_Record_System import first_record_handle
 from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
@@ -950,6 +951,20 @@ def base_chara_experience_common_settle(
     character_data.experience.setdefault(experience_id, 0)
     character_data.experience[experience_id] += base_value
     character_data.experience[experience_id] = max(0, character_data.experience[experience_id])
+
+    # 口交经验结算时补记口交初体验（覆盖早安咬/晚安咬、测试口腔吮吸、AI文本等不经阴茎位置效果的口交来源）
+    # 判定只用"dict无键2"而不用exp42==0——多周目下经验按比例继承，exp42非0不代表本周目发生过口交
+    if experience_id == 42 and final_character_id != 0 and 2 not in character_data.first_record.first_part_sex_dict:
+        character_data.first_record.first_part_sex_dict[2] = {
+            "id": 0,
+            "time": cache.game_time,
+            "place": list(character_data.position),
+            "posture": "",
+            "item": -1,
+        }
+    # 饮精绝顶经验结算时记录特殊履历：第一次饮精绝顶（附记精液来源：H中记当时的H模式，精液食物记食物名称）
+    elif experience_id == 111 and 7 not in character_data.first_record.first_special_record_dict:
+        first_record_handle.record_first_special_record(final_character_id, 7, first_record_handle.get_semen_source_text(final_character_id))
 
     # 确认结算信息记录对象
     final_change_data = change_data

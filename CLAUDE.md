@@ -47,7 +47,7 @@ The game uses a debug mode (configured in config.ini) for testing. Set `debug = 
   - **`Script/Design/handle_premise/`** - The premise (condition) system is a package, split by topic into ~20 modules (`handle_premise_H.py`, `handle_premise_place.py`, `handle_premise_ability.py`, `handle_premise_talent.py`, ...) with the main entry in `__init__.py`
 - **`Script/Settle`** - Settlement modules: `default.py`, `common_default.py` (universal settlement), `Second_effect.py` (second-stage effects), `default_cloth.py`, `item_effect.py`, `realtime_settle.py`, `past_day_settle.py`, `sleep_settle.py`
 - **`Script/StateMachine`** - Atomic NPC behavior modules (`default.py`, e.g. movement), executed via `Script/Design/handle_state_machine.py`
-- **`Script/System`** - Self-contained subsystems, each directory carrying its own design docs (`.md`): `Cooking_System`, `Dormitory_System`, `Field_Commission_System`, `Instruct_System` (instruction panel & categories), `Medical_System`, `Sex_System`, `Web_Draw_System` (web rendering)
+- **`Script/System`** - Self-contained subsystems, each directory carrying its own design docs (`.md`): `Cooking_System`, `Dormitory_System`, `Field_Commission_System`, `First_Record_System` (sexual first-experience record system & panel), `Instruct_System` (instruction panel & categories), `Item_System`, `Medical_System`, `Sex_System`, `Web_Draw_System` (web rendering)
 - **`Script/UI`** - `Flow` (title/creator/normal flows), `Moudle` (draw/panel primitives), `Panel` (60+ feature panels)
 
 ### Key Systems
@@ -286,7 +286,7 @@ When `web_draw = 1`, the game runs as a Flask-SocketIO web server (port 5000):
 
 ## Data Processing Workflow Documentation
 
-The `.github/prompts/数据处理工作流` directory contains 60 detailed documentation files (59 system/workflow docs plus a README). These documents explain the relationships between different systems and code components. When working on related features, refer to these documents for understanding system interconnections, dependencies, and data flow. Additionally, each `Script/System/*` subsystem directory carries its own design docs.
+The `.github/prompts/数据处理工作流` directory contains 62 detailed documentation files (61 system/workflow docs plus a README). These documents explain the relationships between different systems and code components. When working on related features, refer to these documents for understanding system interconnections, dependencies, and data flow. Additionally, each `Script/System/*` subsystem directory carries its own design docs.
 
 ### 🏗️ Core System Architecture Documents
 - **[角色行为系统](.github/prompts/数据处理工作流/角色行为系统.md)** - Core behavior loop, time management, status changes
@@ -333,6 +333,7 @@ The `.github/prompts/数据处理工作流` directory contains 60 detailed docum
 
 ### 👨‍⚕️ Body Status Systems
 - **[身体信息面板系统](.github/prompts/数据处理工作流/身体信息面板系统.md)** - Body information display
+- **[性行为履历系统](.github/prompts/数据处理工作流/性行为履历系统.md)** - Sexual first-experience records, multi-playthrough archive and record panel
 - **[射精面板系统](.github/prompts/数据处理工作流/射精面板系统.md)** - Ejaculation status panels
 - **[妊娠系统](.github/prompts/数据处理工作流/妊娠系统.md)** - Pregnancy state management
 

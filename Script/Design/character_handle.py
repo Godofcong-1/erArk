@@ -191,6 +191,9 @@ def born_new_character(mother_id, child_name) -> int:
     # 给父母加上该孩子的社会关系
     cache.character_data[0].relationship.child_id_list.append(now_id)
     mom_character_data.relationship.child_id_list.append(now_id)
+    # 记录特殊履历：第一次分娩（附记孩子的名字，地点即母亲分娩时所在位置）
+    from Script.System.First_Record_System import first_record_handle
+    first_record_handle.record_first_special_record(mother_id, 2, child_name)
     # cache.npc_id_got.add(now_id)
     init_character(now_id, cache.npc_tem_data[now_id])
     # 婴儿的特殊状态flag结算
