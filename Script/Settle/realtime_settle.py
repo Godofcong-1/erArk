@@ -551,11 +551,15 @@ def settle_sleep_h(character_id: int, true_add_time: int) -> None:
         None
     """
     # 延迟导入并缓存，避免循环导入且不在热路径反复执行导入机制
-    global _map_handle
+    global _map_handle, _drunk_sex_common
     if _map_handle is None:
         from Script.Design import map_handle as _map_handle_module
         _map_handle = _map_handle_module
     map_handle = _map_handle
+    if _drunk_sex_common is None:
+        from Script.System.Sex_System import drunk_sex_common as _drunk_module
+        _drunk_sex_common = _drunk_module
+    drunk_sex_common = _drunk_sex_common
 
     now_character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(now_character_data.position)
@@ -569,10 +573,12 @@ def settle_sleep_h(character_id: int, true_add_time: int) -> None:
         sleeper_data: game_type.Character = cache.character_data[sleeper_id]
         if sleeper_data.behavior.behavior_id != constant.Behavior.SLEEP:
             continue
-        # 等待、休息、睡觉行为或服用安眠药的目标不受影响
+        # 等待、休息、睡觉行为，或目标服用安眠药、烂醉爆睡时不受影响
+        # 烂醉豁免与安眠药同级：深度昏睡状态不会被动静吵醒，否则会反复吵醒后又立刻重新爆睡
         if (
             now_character_data.behavior.behavior_id in {constant.Behavior.WAIT, constant.Behavior.REST, constant.Behavior.SLEEP} or
-            sleeper_data.h_state.body_item[9][1] == 1
+            sleeper_data.h_state.body_item[9][1] == 1 or
+            drunk_sex_common.get_drunk_level(sleeper_id)[0] >= 3
         ):
             continue
 

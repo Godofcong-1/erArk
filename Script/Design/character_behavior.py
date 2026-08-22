@@ -299,8 +299,8 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
     add_time = (end_time.timestamp() - start_time.timestamp()) / 60
     # if character_data.name == "阿米娅":
     #     print(f"debug {character_data.name}的time_judge = {time_judge}，add_time = {add_time}")
-    # 如果本次行动的持续时间为0
-    if not add_time:
+    # 如果本次行动的持续时间为0或负数（负数见于状态机算出的异常时长，需在此拦截以保证时间前进）
+    if add_time <= 0:
         # 如果是H状态，则直接可以跳出
         if handle_premise.handle_self_is_h(character_id):
             character_data.behavior.start_time = now_time

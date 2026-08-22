@@ -467,6 +467,10 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
         #     character_data.sp_flag.wait_flag = 1
             # print(f"debug 前一个状态机id = ",state_machine_id,",flag变为1,character_name =",character_data.name)
         constant.handle_state_machine_data[state_machine_id](character_id)
+        # 保证AI选出的行动至少消耗1分钟：时长为0或负数的行动会在时间结算中被直接抹除且效果全部跳过，
+        # 若前提未变化则AI下一轮会重复选择同一行动，导致NPC行为循环永不收敛（死循环）
+        if character_data.behavior.duration <= 0:
+            character_data.behavior.duration = 1
         # if character_data.name == "阿米娅":
         #     print(f"debug 中：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
     else:
@@ -656,6 +660,11 @@ def judge_interrupt_character_behavior(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
 
+    # 本轮内刚赋予的行为（开始时间不早于当前游戏时间）不做打断判定，
+    # 否则"打断→AI重选同一行为→再打断"会使NPC行为循环永不收敛
+    if game_time.judge_date_big_or_small(cache.game_time, character_data.behavior.start_time) != 1:
+        return 0
+
     # 休息中的相关判断
     if handle_premise.handle_action_rest(character_id):
         # 疲劳归零，且HP、MP满值时，则立刻结束休息
@@ -691,12 +700,14 @@ def judge_interrupt_character_behavior(character_id: int) -> int:
                 # print(f"debug {character_data.name}早安问候服务开启中，今日未问候，将行动结束时间设为问候时间，玩家醒来时间={pl_character_data.action_info.wake_time}，角色行动结束时间={end_time},原行动时间={character_data.behavior.duration}分钟，新行动时间={new_duration}分钟")
                 character_data.behavior.duration = new_duration
 
-        # ②睡觉中，疲劳归零，且HP、MP满值时，当前非睡觉时间，角色行动结束时间晚于游戏时间，则立刻结束睡觉
+        # ②睡觉中，疲劳归零，且HP、MP满值时，当前非睡觉时间，未醉酒，角色行动结束时间晚于游戏时间，则立刻结束睡觉
+        # 醉酒豁免与settle_sleep自然醒的豁免保持一致，否则烂醉爆睡的角色会被立刻叫醒后又立刻重新爆睡，形成死循环
         if (
             handle_premise.handle_tired_le_0(character_id) and
             handle_premise.handle_hp_max(character_id) and
             handle_premise.handle_mp_max(character_id) and
             not handle_premise.handle_game_time_is_sleep_time(character_id) and
+            handle_premise.handle_drunk_level_0(character_id) and
             handle_premise.handle_chara_behavior_end_time_lateer_than_game_time(character_id)
         ):
             character_behavior.judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
