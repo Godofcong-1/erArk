@@ -3,6 +3,7 @@ from types import FunctionType
 
 from Script.Core import cache_control, game_type, get_text, flow_handle
 from Script.Config import game_config, normal_config
+from Script.Design import handle_premise
 from Script.UI.Moudle import draw
 from Script.System.Item_System import condom_handle
 
@@ -197,11 +198,11 @@ class Condom_Select_Panel:
                 for part_cid in game_config.config_body_part:
                     if part_cid in {2, 7, 15}:
                         continue
-                    if part_cid == 12 and not target_data.talent[110]:
+                    if part_cid == 12 and handle_premise.handle_target_have_no_tail(0):
                         continue
-                    if part_cid == 13 and not target_data.talent[112]:
+                    if part_cid == 13 and handle_premise.handle_target_have_no_horn(0):
                         continue
-                    if part_cid == 14 and not target_data.talent[111]:
+                    if part_cid == 14 and handle_premise.handle_target_have_no_eras(0):
                         continue
                     part_list.append((0, part_cid))
             # 已穿着的服装部位
@@ -209,15 +210,18 @@ class Condom_Select_Panel:
                 if len(target_data.cloth.cloth_wear[clothing_type]):
                     part_list.append((1, clothing_type))
 
+            # 每行绘制5个居中按钮，每个按钮宽度为行宽的五分之一
             for part_index in range(len(part_list)):
                 part_type, part_cid = part_list[part_index]
                 part_name = get_location_name(part_type, part_cid)
                 return_text = f"part_{part_index}"
-                now_button = draw.Button(f"[{part_name}]", return_text)
-                now_button.width = self.width
+                now_button = draw.CenterButton(f"[{part_name}]", return_text, self.width // 5)
                 now_button.draw()
-                line_feed.draw()
                 return_list.append(return_text)
+                if part_index % 5 == 4:
+                    line_feed.draw()
+            if len(part_list) % 5:
+                line_feed.draw()
 
             yrn = self.draw_confirm_and_cancel(return_list, confirm_flag=False)
             if yrn == "cancel":
