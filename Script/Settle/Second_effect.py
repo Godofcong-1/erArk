@@ -1559,13 +1559,14 @@ def handle_add_b_feel_remote_toy(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
+    duration = character_data.behavior.duration
 
     # 补正根据档位变化
     toy_adjust = character_data.sp_flag.sex_toy_level * 0.5
     # 如果补正为0，则直接返回
     if toy_adjust <= 0:
         return
-    base_chara_state_common_settle(character_id, 0, 1, 20, ability_level = character_data.ability[1], extra_adjust = toy_adjust, tenths_add = False, change_data = change_data)
+    base_chara_state_common_settle(character_id, duration, 1, 20, ability_level = character_data.ability[1], extra_adjust = toy_adjust, tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_C_FEEL_REMOTE_TOY)
 def handle_add_c_feel_remote_toy(
@@ -1579,10 +1580,11 @@ def handle_add_c_feel_remote_toy(
     change_data -- 状态变更信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    duration = character_data.behavior.duration
     toy_adjust = character_data.sp_flag.sex_toy_level * 0.5
     if toy_adjust <= 0:
         return
-    base_chara_state_common_settle(character_id, 0, 2, 20, ability_level = character_data.ability[2], extra_adjust = toy_adjust, tenths_add = False, change_data = change_data)
+    base_chara_state_common_settle(character_id, duration, 2, 20, ability_level = character_data.ability[2], extra_adjust = toy_adjust, tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_V_FEEL_REMOTE_TOY)
 def handle_add_v_feel_remote_toy(
@@ -1596,10 +1598,11 @@ def handle_add_v_feel_remote_toy(
     change_data -- 状态变更信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    duration = character_data.behavior.duration
     toy_adjust = character_data.sp_flag.sex_toy_level * 0.5
     if toy_adjust <= 0:
         return
-    base_chara_state_common_settle(character_id, 0, 4, 20, ability_level = character_data.ability[4], extra_adjust = toy_adjust, tenths_add = False, change_data = change_data)
+    base_chara_state_common_settle(character_id, duration, 4, 20, ability_level = character_data.ability[4], extra_adjust = toy_adjust, tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_A_FEEL_REMOTE_TOY)
 def handle_add_a_feel_remote_toy(
@@ -1613,10 +1616,11 @@ def handle_add_a_feel_remote_toy(
     change_data -- 状态变更信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    duration = character_data.behavior.duration
     toy_adjust = character_data.sp_flag.sex_toy_level * 0.5
     if toy_adjust <= 0:
         return
-    base_chara_state_common_settle(character_id, 0, 5, 20, ability_level = character_data.ability[5], extra_adjust = toy_adjust, tenths_add = False, change_data = change_data)
+    base_chara_state_common_settle(character_id, duration, 5, 20, ability_level = character_data.ability[5], extra_adjust = toy_adjust, tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_U_FEEL_REMOTE_TOY)
 def handle_add_u_feel_remote_toy(
@@ -1630,10 +1634,11 @@ def handle_add_u_feel_remote_toy(
     change_data -- 状态变更信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    duration = character_data.behavior.duration
     toy_adjust = character_data.sp_flag.sex_toy_level * 0.5
     if toy_adjust <= 0:
         return
-    base_chara_state_common_settle(character_id, 0, 6, 20, ability_level = character_data.ability[6], extra_adjust = toy_adjust, tenths_add = False, change_data = change_data)
+    base_chara_state_common_settle(character_id, duration, 6, 20, ability_level = character_data.ability[6], extra_adjust = toy_adjust, tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_LUBRICATION_PLUS)
 def handle_add_large_lubrication_plus(
