@@ -168,6 +168,8 @@ class Panel:
     """ 宿舍管理面板 """
     MIXOLOGY = 66
     """ 调酒面板 """
+    PREGNANCY_OVERVIEW = 67
+    """ 怀孕总览面板 """
 
 
 class InstructType:

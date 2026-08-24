@@ -362,6 +362,12 @@ class SecondBehavior_Int:
     """ 结算幼女长成萝莉 """
     LOLI_TO_GIRL = 1321
     """ 结算萝莉长成少女 """
+    LAY_EGG = 1322
+    """ 结算排出卵 """
+    EGG_FERTILIZED = 1323
+    """ 结算鉴定出受精卵 """
+    EGG_BORN = 1324
+    """ 破壳前的对话 """
 
     FIRST_MEET = 1331
     """ 初次见面 """

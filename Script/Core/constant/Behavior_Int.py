@@ -196,6 +196,12 @@ class Behavior_Int:
     """ 晚安问候：晚安咬 """
     NPC_ASSISTANT_COOK = 261
     """ 干员助理做饭 """
+    IDENTIFY_EGGS = 267
+    """ 鉴定卵 """
+    HATCH_EGGS = 268
+    """ 孵化卵 """
+    IDENTIFY_HELD_EGGS = 269
+    """ 鉴定持有的卵 """
 
     TOUCH_HEAD = 301
     """ 摸头 """
@@ -257,6 +263,8 @@ class Behavior_Int:
     """ 投入监牢 """
     SET_FREE = 353
     """ 解除囚禁 """
+    TAKE_CHARA_EGGS = 354
+    """ 拿走产下的卵 """
     H = 361
     """ 进入H状态 """
     END_H = 362

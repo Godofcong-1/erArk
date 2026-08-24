@@ -316,6 +316,8 @@ class PREGNANCY:
         """ 受精概率 """
         self.reproduction_period: int = 0
         """ 生殖周期的第几天(0安全1普通2危险3排卵，0011232) """
+        self.ovulation_flag: bool = False
+        """ 本周期排卵日事件待处理标记（周期推进到排卵日时置位；胎生由受精判定消费，卵生由排卵结算消费；0点结算兜底保证玩家不睡觉也不会错过） """
         self.fertilization_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色开始受精的时间 """
         self.born_time: datetime.datetime = datetime.datetime(1, 1, 1)
@@ -328,6 +330,17 @@ class PREGNANCY:
         """ 无意识妊娠flag，如果进行过有意识下的H就会被置为False """
         self.lactation_flag: bool = False
         """ 涨奶标记 """
+        self.eggs: Dict[int, Dict] = {}
+        """ 带壳卵生角色排出的卵，键为卵编号（自增，取next_egg_id），值为卵数据字典：
+            lay_time: datetime.datetime 排出时间（排卵日当天）
+            identified: bool 是否已鉴定（未鉴定不可进入孵化）
+            fertilized: bool 是否受精（排出时即确定，鉴定只是揭示；未受精卵鉴定后即删除本条）
+            identify_time: datetime.datetime 鉴定时间（受精卵进入孵化流程的起点记录）
+            father_id: int 父亲id（恒为0，预留）
+            hatch_stage: int 孵化阶段展示值（按自然天数换算，面板显示用）
+            held_by_player: bool 该卵是否已被玩家拿走（拿走后本人的照料卵/NPC鉴定不再计入该卵） """
+        self.next_egg_id: int = 0
+        """ 卵编号自增计数器 """
 
 
 class RELATIONSHIP:
@@ -901,6 +914,12 @@ class PLAYER_COLLECTION:
         """ 收集的各角色总圣水量，单位毫升 """
         self.used_condoms: List[int] = []
         """ 用过的避孕套存量池，每个元素为该避孕套内的精液量(ml)，下一次H开始时清零 """
+        self.held_eggs: Dict[int, tuple] = {}
+        """ 玩家临时持有的卵（从被监禁角色处拿走的未鉴定卵），仅为索引数据：
+            键为持有编号（自增，取next_held_egg_id），值为(角色id, 卵编号)元组，
+            指向该角色pregnancy.eggs中的详细数据；鉴定后索引即消耗删除 """
+        self.next_held_egg_id: int = 0
+        """ 持有编号自增计数器 """
 
 
 class ACHIEVEMENT:
@@ -1850,6 +1869,10 @@ class Cache:
         """ 所有npc位置面板筛选类型 """
         self.all_npc_position_panel_move_type: int = 0
         """ 所有npc位置面板移动类型 """
+        self.pregnancy_panel_sort_type: int = 0
+        """ 怀孕总览面板排序类型（0按阶段降序，1按阶段升序） """
+        self.pregnancy_panel_filter_type: int = 0
+        """ 怀孕总览面板筛选类型（0全部，其余为阶段枚举值） """
         self.rhodes_island: Rhodes_Island = Rhodes_Island()
         """ 罗德岛相关属性 """
         self.first_bonus: Dict[int, int] = {}

@@ -469,6 +469,19 @@ def character_move_to_golden_game_room(character_id: int):
     general_movement_module(character_id, to_target)
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_NURSERY)
+def character_move_to_nursery(character_id: int):
+    """
+    移动至育儿室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    to_target = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Nursery"])
+    )
+    general_movement_module(character_id, to_target)
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_CLASSIC_MUSIC_ROOM)
 def character_move_to_classic_music_room(character_id: int):
     """
@@ -1640,6 +1653,98 @@ def character_play_house(character_id: int):
     character_data.behavior.duration = 60
     character_data.behavior.behavior_id = constant.Behavior.PLAY_HOUSE
     character_data.state = constant.CharacterStatus.STATUS_PLAY_HOUSE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_TEND_EGGS)
+def character_tend_eggs(character_id: int):
+    """
+    娱乐：照料卵（有可鉴定卵时：自己是保育员或无在班保育员在场则自己鉴定，有在班保育员在场则等待其鉴定；否则进行孵化）
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    from Script.System.Pregnancy_System import egg_handle
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    # 鉴定优先级高于孵化，鉴定完成后同一时段的后续行动自然落入孵化行为
+    if len(egg_handle.get_identifiable_eggs(character_id)):
+        # 自己就是保育员时直接自己鉴定
+        if character_data.work.work_type == egg_handle.NURSERY_WORKER_WORK_ID:
+            character_data.behavior.duration = 30
+            character_data.behavior.behavior_id = constant.Behavior.IDENTIFY_EGGS
+            character_data.state = constant.CharacterStatus.STATUS_IDENTIFY_EGGS
+            egg_handle.npc_identify_eggs_settle(character_id)
+        # 有处于工作时间内的保育员在场时，等待保育员前来鉴定（保育员的工作状态机会以最高优先级鉴定在场角色的卵）
+        elif egg_handle.nursery_worker_on_duty_in_scene(character_id):
+            character_data.behavior.duration = 10
+            character_data.behavior.behavior_id = constant.Behavior.WAIT
+            character_data.state = constant.CharacterStatus.STATUS_WAIT
+        # 兜底：无在职保育员或保育员不在场时自己鉴定，保证卵不会永久滞留
+        else:
+            character_data.behavior.duration = 30
+            character_data.behavior.behavior_id = constant.Behavior.IDENTIFY_EGGS
+            character_data.state = constant.CharacterStatus.STATUS_IDENTIFY_EGGS
+            egg_handle.npc_identify_eggs_settle(character_id)
+    else:
+        character_data.behavior.duration = 60
+        character_data.behavior.behavior_id = constant.Behavior.HATCH_EGGS
+        character_data.state = constant.CharacterStatus.STATUS_HATCH_EGGS
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_NURSERY_CARE)
+def character_work_nursery_care(character_id: int):
+    """
+    工作：保育员照料育儿室——优先为在场角色（含自己）鉴定卵；无卵可鉴定时等权重照料孵化中的卵/照料婴儿
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    from Script.System.Pregnancy_System import egg_handle
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 优先级1：为在场角色（含自己）鉴定卵
+    owner_id = egg_handle.find_identifiable_egg_owner_in_scene(character_id)
+    if owner_id != -1:
+        character_data.target_character_id = owner_id
+        character_data.behavior.duration = 30
+        character_data.behavior.behavior_id = constant.Behavior.IDENTIFY_EGGS
+        character_data.state = constant.CharacterStatus.STATUS_IDENTIFY_EGGS
+        # 鉴定的数据结算当场完成（未受精卵静默删除，受精卵进入孵化并通知玩家）
+        egg_handle.npc_identify_eggs_settle(owner_id, identifier_id=character_id)
+        return
+    # 等权重行为池：照料孵化中的卵 / 照料婴儿
+    action_list = []
+    if egg_handle.any_hatching_eggs_exist():
+        action_list.append("hatch")
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data = cache.scene_data[scene_path_str]
+    baby_id_list = [i for i in scene_data.character_list if i and cache.character_data[i].talent[101]]
+    if len(baby_id_list):
+        action_list.append("baby")
+    if len(action_list):
+        now_action = random.choice(action_list)
+        if now_action == "hatch":
+            character_data.target_character_id = character_id
+            character_data.behavior.duration = 60
+            character_data.behavior.behavior_id = constant.Behavior.HATCH_EGGS
+            character_data.state = constant.CharacterStatus.STATUS_HATCH_EGGS
+        else:
+            baby_care_list = [
+                (constant.Behavior.HOLD_CHILD, constant.CharacterStatus.STATUS_HOLD_CHILD),
+                (constant.Behavior.SING_CHILDREN_SONG, constant.CharacterStatus.STATUS_SING_CHILDREN_SONG),
+                (constant.Behavior.NUIRSE_CHILD, constant.CharacterStatus.STATUS_NUIRSE_CHILD),
+                (constant.Behavior.CHANGE_DIAPERS, constant.CharacterStatus.STATUS_CHANGE_DIAPERS),
+                (constant.Behavior.TEACH_TALK, constant.CharacterStatus.STATUS_TEACH_TALK),
+                (constant.Behavior.GIVE_TOY, constant.CharacterStatus.STATUS_GIVE_TOY),
+            ]
+            now_behavior_id, now_state_id = random.choice(baby_care_list)
+            character_data.target_character_id = random.choice(baby_id_list)
+            character_data.behavior.duration = 30
+            character_data.behavior.behavior_id = now_behavior_id
+            character_data.state = now_state_id
+        return
+    # 兜底：无事可做时短暂等待（前提门控下一般不会走到）
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 1
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_STYLE_HAIR)

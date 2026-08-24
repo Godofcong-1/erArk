@@ -9,10 +9,10 @@ from Script.Core import (
 from Script.Design import (
     handle_premise,
     attr_calculation,
-    pregnancy,
     handle_talent,
     handle_ability,
 )
+from Script.System.Pregnancy_System import pregnancy_handle
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import achievement_panel
@@ -85,7 +85,7 @@ def update_sleep():
             # 新：改为洗澡时清零（清零污浊状态）
             # character_data.dirty = attr_calculation.get_dirty_zero()
             # 检查并处理受精怀孕部分
-            pregnancy.check_all_pregnancy(character_id)
+            pregnancy_handle.check_all_pregnancy(character_id)
             # 检查是否有可以获得的素质
             handle_talent.gain_talent(character_id,now_gain_type = 3)
             # 检查是否有可以升级的能力

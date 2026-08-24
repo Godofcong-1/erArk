@@ -112,6 +112,9 @@ int,str,str
 264,change_diapers,1513 - 1514 - 21 - 22 - 71 - 53
 265,teach_talk,1513 - 1514 - 21 - 22 - 71 - 53
 266,give_toy,1513 - 1514 - 21 - 22 - 71 - 53
+267,identify_eggs,9999
+268,hatch_eggs,9999
+269,identify_held_eggs,547
 
 301,hand_in_hand,21 - 11 - 12 - 22 - 52 - 55 - 62
 302,embrace,21 - 11 - 12 - 22 - 53 - 55 - 58 - 62
@@ -148,6 +151,7 @@ int,str,str
 342,put_into_prison,1515 - 1516 - 153 - 514
 343,set_free,1511 - 1512 - 515
 344,release_from_bag,1515 - 1516 - 540
+345,take_chara_eggs,546
 
 351,confession,11 - 12 - 53 - 54 - 55 - 950
 352,confession_failed,11 - 12 - 62
@@ -678,6 +682,9 @@ int,str,str
 1319,rearing_complete,998
 1320,child_to_loli,998
 1321,loli_to_girl,998
+1322,lay_egg,997
+1323,egg_fertilized,998
+1324,egg_born,998
 
 1331,first_meet,999
 1332,day_hello,999

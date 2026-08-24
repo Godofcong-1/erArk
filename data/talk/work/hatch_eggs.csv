@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1,hatch_eggs,0,sys_1,{Name}把受精卵小心地拢进怀里，用自己的体温温暖着卵中正在成长的小生命。
+2,hatch_eggs,0,sys_1,{Name}守在育儿室的恒温巢座旁，时不时伸手翻动一下卵的朝向，让它均匀地受热。
+3,hatch_eggs,0,sys_1,{Name}轻轻擦拭着卵壳上的浮尘，对着卵中的孩子低声说着悄悄话。
+4,hatch_eggs,0,sys_1,{Name}检查了恒温巢座的温度与湿度，又给卵翻了个身，才安心地在一旁坐下守候。
+5,hatch_eggs,0,sys_1,{Name}把脸颊贴在温热的卵壳上，静静感受着其中传来的微弱脉动，眼神无比温柔。

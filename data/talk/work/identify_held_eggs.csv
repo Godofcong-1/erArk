@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1,identify_held_eggs,0,sys_0,{Name}将带来的卵在育儿室的恒温灯下一字排开，逐枚检查起卵壳深处的动静。
+2,identify_held_eggs,0,sys_0,{Name}参照医疗部整理的鉴定手册，仔细辨认着手中每一枚卵的受精迹象。
+3,identify_held_eggs,0,sys_0,{Name}把卵举到灯前透光观察，认真判断着其中是否孕育着新的生命。
+4,identify_held_eggs,0,sys_0,{Name}在育儿室里摆开了随身携带的卵，动作生疏却格外小心地完成了鉴定。
+5,identify_held_eggs,0,sys_0,{Name}逐一检查完了手头的卵，将其中孕育着生命的那几枚安置进了恒温巢座。

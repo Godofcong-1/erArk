@@ -103,6 +103,14 @@ def find_call():
     now_panel.draw()
 
 
+@handle_panel.add_panel(constant.Panel.PREGNANCY_OVERVIEW)
+def pregnancy_overview_flow():
+    """怀孕总览面板"""
+    from Script.System.Pregnancy_System import pregnancy_panel
+    now_panel = pregnancy_panel.Pregnancy_Overview_Panel(width)
+    now_panel.draw()
+
+
 @handle_panel.add_panel(constant.Panel.FOOD_BAG)
 def food_bag_flow():
     """食物背包面板"""

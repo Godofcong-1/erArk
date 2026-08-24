@@ -433,8 +433,8 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
                 if part_type in [0, 1]:
                     calculate_semen_flow(target_character_id, part_cid, part_type, semen_count)
                 # 更新怀孕概率
-                from Script.Design import pregnancy
-                pregnancy.get_fertilization_rate(target_character_id)
+                from Script.System.Pregnancy_System import pregnancy_handle
+                pregnancy_handle.get_fertilization_rate(target_character_id)
                 # 只有在交互对象正确的时候才会显示对方的名字和部位
                 if part_type == 0:
                     part_name = game_config.config_body_part[part_cid].name

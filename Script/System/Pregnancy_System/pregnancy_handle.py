@@ -16,7 +16,8 @@ from Script.Design import (
     second_behavior,
 )
 from Script.UI.Moudle import draw
-from Script.UI.Panel import achievement_panel, sp_event_panel
+from Script.UI.Panel import achievement_panel
+from Script.System.Pregnancy_System import born_event_panel
 from Script.Config import game_config, normal_config
 
 game_path = game_path_config.game_path
@@ -92,12 +93,16 @@ def check_fertilization(character_id: int):
     """
     根据受精概率并判断是否受精
     """
+    from Script.System.Pregnancy_System import egg_handle
     character_data: game_type.Character = cache.character_data[character_id]
     draw_text = ""
 
-    # 仅在排卵日进行判定
-    if character_data.pregnancy.reproduction_period != 5:
+    # 仅在本周期排卵日事件待处理时进行判定（标记于周期推进到排卵日时置位，0点结算有兜底，玩家不睡觉也不会错过）
+    if not character_data.pregnancy.ovulation_flag:
         return 0
+    # 胎生的受精判定即本周期排卵日事件的一次性消费；卵生的标记留给排卵结算消费
+    if egg_handle.get_birth_type(character_id) != 11:
+        character_data.pregnancy.ovulation_flag = False
 
     # 清空小穴和子宫的当前精液量
     for body_cid in [6, 7]:
@@ -255,7 +260,7 @@ def check_born(character_id: int):
         now_rate = past_day * 20
         # print(f"debug {character_data.name}进入生产检测，当前生产几率为{now_rate}%")
         if random.randint(1,100) <= now_rate:
-            draw_panel = sp_event_panel.Born_Panel(character_id)
+            draw_panel = born_event_panel.Born_Panel(character_id)
             draw_panel.draw()
 
 
@@ -402,14 +407,21 @@ def check_all_pregnancy(character_id: int):
     """
     进行受精怀孕的全流程检查
     \n\n包括刷新受精概率、是否受精、是否由受精变为怀孕、是否结束怀孕
+    \n\n带壳卵生角色在受精判定后分流为排卵结算与破壳判定，不走胎生的妊娠/临盆/生产/产后链
     """
+    from Script.System.Pregnancy_System import egg_handle
 
     get_fertilization_rate(character_id)
     check_fertilization(character_id)
-    check_pregnancy(character_id)
-    check_near_born(character_id)
-    check_born(character_id)
-    check_rearing(character_id)
+    # 带壳卵生走排卵与破壳链，胎生走妊娠链
+    if egg_handle.get_birth_type(character_id) == 11:
+        egg_handle.check_ovulation(character_id)
+        egg_handle.check_egg_born(character_id)
+    else:
+        check_pregnancy(character_id)
+        check_near_born(character_id)
+        check_born(character_id)
+        check_rearing(character_id)
     check_rearing_complete(character_id)
     check_grow_to_loli(character_id)
     check_grow_to_girl(character_id)
@@ -417,7 +429,7 @@ def check_all_pregnancy(character_id: int):
 
 def update_reproduction_period(character_id: int):
     """
-    刷新生理周期
+    刷新生理周期（每日0点逐角色调用），推进到排卵日时挂起本周期的排卵日事件待办标记
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
@@ -426,6 +438,9 @@ def update_reproduction_period(character_id: int):
         character_data.pregnancy.reproduction_period = 0
     else:
         character_data.pregnancy.reproduction_period += 1
+    # 该角色自己的排卵日开始时置位待办标记（胎生由受精判定消费，卵生由排卵结算消费）
+    if character_data.pregnancy.reproduction_period == 5:
+        character_data.pregnancy.ovulation_flag = True
 
 
 def chest_grow(character_id: int,print_flag = False):

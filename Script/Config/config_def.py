@@ -1304,6 +1304,8 @@ class Race:
     """ 种族id """
     name: str
     """ 种族名 """
+    birth_type: int
+    """ 生育方式(1单胎胎生,11带壳卵生,12无壳卵生) """
 
 
 class Recipes:
@@ -1733,6 +1735,8 @@ class WorkType:
     """ 自动ai工作数据 """
     describe: str
     """ 描述 """
+    cant_reason: str
+    """ 不可任职原因 """
 
 
 class World_Setting:

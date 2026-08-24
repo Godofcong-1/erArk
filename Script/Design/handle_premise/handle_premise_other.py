@@ -1137,6 +1137,106 @@ def handle_target_not_player_daughter(character_id: int) -> int:
     return not handle_self_is_player_daughter(character_data.target_character_id)
 
 
+@add_premise(constant_promise.Premise.SELF_BIRTH_TYPE_EGG)
+def handle_self_birth_type_egg(character_id: int) -> int:
+    """
+    校验自己是带壳卵生种族
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Pregnancy_System import egg_handle
+    return egg_handle.get_birth_type(character_id) == 11
+
+
+@add_premise(constant_promise.Premise.T_BIRTH_TYPE_EGG)
+def handle_t_birth_type_egg(character_id: int) -> int:
+    """
+    校验交互对象是带壳卵生种族
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Pregnancy_System import egg_handle
+    character_data = cache.character_data[character_id]
+    return egg_handle.get_birth_type(character_data.target_character_id) == 11
+
+
+@add_premise(constant_promise.Premise.HAVE_UNIDENTIFIED_EGGS)
+def handle_have_unidentified_eggs(character_id: int) -> int:
+    """
+    校验自己持有可鉴定的未鉴定卵（排出日早于今天且未被玩家拿走）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Pregnancy_System import egg_handle
+    return len(egg_handle.get_identifiable_eggs(character_id)) > 0
+
+
+@add_premise(constant_promise.Premise.HAVE_HATCHING_EGGS)
+def handle_have_hatching_eggs(character_id: int) -> int:
+    """
+    校验自己持有孵化中的卵
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Pregnancy_System import egg_handle
+    return len(egg_handle.get_hatching_eggs(character_id)) > 0
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_TEND_EGGS)
+def handle_entertainment_is_tend_eggs(character_id: int) -> int:
+    """
+    校验自己当前时段的娱乐活动是照料卵
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.Design import game_time
+    from Script.System.Pregnancy_System import egg_handle
+    character_data = cache.character_data[character_id]
+    now_time_slot = game_time.judge_entertainment_time(character_id)
+    if now_time_slot == 0:
+        return 0
+    return character_data.entertainment.entertainment_type[now_time_slot - 1] == egg_handle.TEND_EGGS_ENTERTAINMENT_ID
+
+
+@add_premise(constant_promise.Premise.T_HAVE_TAKEABLE_EGGS)
+def handle_t_have_takeable_eggs(character_id: int) -> int:
+    """
+    校验交互对象持有可拿走的未鉴定卵
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Pregnancy_System import egg_handle
+    character_data = cache.character_data[character_id]
+    if character_data.target_character_id == character_id:
+        return 0
+    return len(egg_handle.get_unidentified_eggs(character_data.target_character_id)) > 0
+
+
+@add_premise(constant_promise.Premise.PLAYER_HELD_EGGS_NOT_EMPTY)
+def handle_player_held_eggs_not_empty(character_id: int) -> int:
+    """
+    校验玩家临时持有的卵非空
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    return len(pl_character_data.pl_collection.held_eggs) > 0
+
+
 # @add_premise(constant_promise.Premise.TARGET_AGE_SIMILAR)
 # def handle_target_age_similar(character_id: int) -> int:
 #     """

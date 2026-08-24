@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1,take_chara_eggs,0,sys_0,{Name}从{TargetName}的身边收走了她产下的卵，{TargetName}欲言又止地望着卵被拿走的方向。
+2,take_chara_eggs,0,sys_0,{Name}小心地将{TargetName}产下的卵逐枚收好，准备带去育儿室代为鉴定。
+3,take_chara_eggs,0,sys_0,{TargetName}沉默地看着{Name}拿走自己产下的卵，最终什么也没有说。
+4,take_chara_eggs,0,sys_0,{Name}把{TargetName}的卵用软布包好带走，留下她独自望着空荡荡的角落出神。
+5,take_chara_eggs,0,sys_0,在{TargetName}复杂的注视下，{Name}将她产下的卵稳妥地收进了随身的容器里。

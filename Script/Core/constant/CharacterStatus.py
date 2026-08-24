@@ -209,6 +209,12 @@ class CharacterStatus:
     """ 晚安问候：晚安咬 """
     STATUS_NPC_ASSISTANT_COOK = 261
     """ 干员助理做饭 """
+    STATUS_IDENTIFY_EGGS = 267
+    """ 鉴定卵 """
+    STATUS_HATCH_EGGS = 268
+    """ 孵化卵 """
+    STATUS_IDENTIFY_HELD_EGGS = 269
+    """ 鉴定持有的卵 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -269,6 +275,8 @@ class CharacterStatus:
     """ 投入监牢 """
     STATUS_SET_FREE = 353
     """ 解除囚禁 """
+    STATUS_TAKE_CHARA_EGGS = 354
+    """ 拿走产下的卵 """
     STATUS_H = 361
     """ 进入H状态 """
     STATUS_END_H = 362

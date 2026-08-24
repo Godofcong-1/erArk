@@ -10840,3 +10840,53 @@ def handle_h_in_love_hotel_to_false(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     character_data.h_state.h_in_love_hotel = False
     target_data.h_state.h_in_love_hotel = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TAKE_CHARA_EGGS_SETTLE)
+def handle_take_chara_eggs_settle(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （拿走产下的卵用）拿走交互对象的全部未鉴定卵，卵数据留原处标记被拿走并写入玩家临时持有索引
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    from Script.System.Pregnancy_System import egg_handle
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_id = character_data.target_character_id
+    # 无有效交互对象时不结算
+    if target_character_id == character_id or target_character_id not in cache.character_data:
+        return
+    egg_handle.take_eggs_from_chara(target_character_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.IDENTIFY_HELD_EGGS_SETTLE)
+def handle_identify_held_eggs_settle(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （鉴定持有的卵用）鉴定玩家临时持有的全部卵并经索引回写原角色卵数据，无精删卵、受精进入孵化
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 玩家临时持有的卵仅由玩家鉴定
+    if character_id != 0:
+        return
+    from Script.System.Pregnancy_System import egg_handle
+    egg_handle.identify_held_eggs_settle()

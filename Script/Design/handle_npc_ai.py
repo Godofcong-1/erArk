@@ -796,6 +796,9 @@ def get_chara_entertainment(character_id: int):
                 return
             entertainment_list = [i for i in game_config.config_entertainment]
             entertainment_list.remove(0)
+            # 照料卵娱乐不进入随机池，仅由每日替换钩子分配给持卵的卵生角色
+            if 175 in entertainment_list:
+                entertainment_list.remove(175)
             # 循环获得上午、下午、晚上的三个娱乐活动
             for i in range(3):
 

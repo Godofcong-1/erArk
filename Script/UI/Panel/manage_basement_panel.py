@@ -94,6 +94,7 @@ class Manage_Basement_Panel:
             _("图书馆"):[_("[图书馆管理系统]")],
             _("贸易区"):[_("[资源交易系统]")],
             _("文职部"):[_("[招募系统]")],
+            _("教育区"):[_("[妊娠总览系统]")],
             _("医疗部"):[_("[医疗经营系统]"), _("[诊疗病人系统]")],
             _("访客区"):[_("[势力外交系统]"), _("[邀请访客系统]")],
             _("机库"):[_("[外勤委托系统]"), _("[载具管理系统]")],
@@ -873,6 +874,9 @@ class Manage_Basement_Panel:
                 now_panel = confinement_and_training.Confinement_And_Training_Manage_Panel(self.width)
         elif _("医疗经营系统") in son_panel:
             now_panel = medical_department_panel.Medical_Department_Panel(self.width)
+        elif _("妊娠总览系统") in son_panel:
+            from Script.System.Pregnancy_System import pregnancy_panel
+            now_panel = pregnancy_panel.Pregnancy_Overview_Panel(self.width)
         elif _("诊疗病人系统") in son_panel:
             # 输出提示
             info_draw = draw.WaitDraw()
@@ -1236,6 +1240,7 @@ class Change_Npc_Work_Panel:
 
                 # 判断是否开放，未开放则跳过
                 flag_open = True
+                reason_text = work_data.cant_reason
                 # 必要条件判断
                 if work_data.need != _("无"):
                     need_data_all = work_data.need
@@ -1247,6 +1252,7 @@ class Change_Npc_Work_Panel:
                     judge, reason = attr_calculation.judge_require(need_data_list, character_id)
                     if not judge:
                         flag_open = False
+                        reason_text += ' ' + reason
                 # 当前工作的地点名字判断
                 # （应该已经被上面的必要条件判断所取代了，姑且还是保留一下）
                 if flag_open:
@@ -1257,6 +1263,7 @@ class Change_Npc_Work_Panel:
                 # 幼女不能进行学生以外的工作
                 if handle_premise.handle_self_is_child(character_id) and work_cid != 152:
                     flag_open = False
+                    reason_text += ' ' + _("幼女无法进行学生以外的工作")
                 # 特殊解锁的工作不直接开放
                 if work_tag == 2:
                     flag_open = False
@@ -1267,19 +1274,21 @@ class Change_Npc_Work_Panel:
                     if work_cid == 193 and handle_premise.handle_ask_one_exercises(character_id):
                         flag_open = True
 
+                # 工作信息
+                work_text = ""
+                # 基础信息
+                work_text_before = f"[{str(work_cid).rjust(3,'0')}]{work_name}({work_place})"
+                work_text += work_text_before.ljust(18,'　')
+                # 在有能力要求的情况下，显示干员的能力
+                if work_ability_id != 0:
+                    ability_text = f"({work_ability_name}:{chara_ability_lv})"
+                    work_text += ability_text.ljust(6,'　')
+                else:
+                    work_text += "　" * 4
+                # 工作描述
+                work_text += f"：{work_describe}"
+
                 if flag_open:
-                    work_text = ""
-                    # 基础信息
-                    work_text_before = f"[{str(work_cid).rjust(3,'0')}]{work_name}({work_place})"
-                    work_text += work_text_before.ljust(18,'　')
-                    # 在有能力要求的情况下，显示干员的能力
-                    if work_ability_id != 0:
-                        ability_text = f"({work_ability_name}:{chara_ability_lv})"
-                        work_text += ability_text.ljust(6,'　')
-                    else:
-                        work_text += "　" * 4
-                    # 工作描述
-                    work_text += f"：{work_describe}"
                     # 正常工作直接显示
                     if work_tag in {0, 2}:
                         button_draw = draw.LeftButton(
@@ -1295,10 +1304,18 @@ class Change_Npc_Work_Panel:
                     # 特殊工作显示为灰色，无法选择
                     elif work_tag == 1:
                         now_draw = draw.LeftDraw()
-                        now_draw.text = work_text
+                        now_draw.text = work_text + _("（未开放：{0}）").format(reason_text)
                         now_draw.style = "deep_gray"
                         now_draw.width = window_width
                         now_draw.draw()
+                    line_feed.draw()
+                else:
+                    # 未开放的工作显示为灰色，无法选择
+                    now_draw = draw.LeftDraw()
+                    now_draw.text = work_text + _("（未开放：{0}）").format(reason_text)
+                    now_draw.style = "deep_gray"
+                    now_draw.width = window_width
+                    now_draw.draw()
                     line_feed.draw()
 
             line_feed.draw()

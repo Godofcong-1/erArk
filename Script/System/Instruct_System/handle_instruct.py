@@ -1074,6 +1074,26 @@ def handle_see_fridge():
     cache.now_panel_id = constant.Panel.FRIDGE
 
 
+@add_instruct(constant.Instruct.PREGNANCY_OVERVIEW)
+def handle_pregnancy_overview():
+    """处理怀孕总览指令"""
+    cache.now_panel_id = constant.Panel.PREGNANCY_OVERVIEW
+
+
+@add_instruct(constant.Instruct.TAKE_CHARA_EGGS)
+def handle_take_chara_eggs():
+    """处理拿走产下的卵指令"""
+    # 数据结算由行为挂接的专用结算（BehaviorEffect.TAKE_CHARA_EGGS_SETTLE=546）在行为结算阶段完成
+    chara_handle_instruct_common_settle(constant.Behavior.TAKE_CHARA_EGGS, duration=5)
+
+
+@add_instruct(constant.Instruct.IDENTIFY_HELD_EGGS)
+def handle_identify_held_eggs():
+    """处理鉴定持有的卵指令"""
+    # 数据结算由行为挂接的专用结算（BehaviorEffect.IDENTIFY_HELD_EGGS_SETTLE=547）在行为结算阶段完成
+    chara_handle_instruct_common_settle(constant.Behavior.IDENTIFY_HELD_EGGS, duration=30)
+
+
 @add_instruct(constant.Instruct.FIELD_COMMISSION)
 def handle_field_commission():
     """处理外勤委托指令"""

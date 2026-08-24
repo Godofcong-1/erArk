@@ -156,6 +156,8 @@ class StateMachine:
     """ 工作：移动至目标宿舍 """
     DORMITORY_ADMIN_HANDLE_PROBLEM = 329
     """ 工作：处理宿舍问题 """
+    WORK_NURSERY_CARE = 330
+    """ 工作：保育员照料育儿室（优先为在场角色鉴定卵，其次等权重照料孵化中的卵/照料婴儿） """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """
@@ -208,6 +210,8 @@ class StateMachine:
     """ 娱乐：水疗护理 """
     ENTERTAIN_ONSEN_BATH = 426
     """ 娱乐：泡温泉 """
+    ENTERTAIN_TEND_EGGS = 427
+    """ 娱乐：照料卵（状态机内部按卵状态分流为鉴定/孵化行为） """
 
     MOVE_TO_RAND_SCENE = 501
     """ 移动至随机场景 """
@@ -265,6 +269,8 @@ class StateMachine:
     """ 移动到教师办公室 """
     MOVE_TO_GOLDEN_GAME_ROOM = 563
     """ 移动到黄澄澄游戏室 """
+    MOVE_TO_NURSERY = 564
+    """ 移动到育儿室 """
     MOVE_TO_DR_OFFICE = 571
     """ 移动至博士办公室 """
     MOVE_TO_DR_ROOM = 572

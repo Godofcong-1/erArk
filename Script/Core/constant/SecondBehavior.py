@@ -361,6 +361,12 @@ class SecondBehavior:
     """ 结算幼女长成萝莉 """
     LOLI_TO_GIRL = "loli_to_girl"
     """ 结算萝莉长成少女 """
+    LAY_EGG = "lay_egg"
+    """ 结算排出卵 """
+    EGG_FERTILIZED = "egg_fertilized"
+    """ 结算鉴定出受精卵 """
+    EGG_BORN = "egg_born"
+    """ 破壳前的对话 """
 
     FIRST_MEET = "first_meet"
     """ 初次见面 """

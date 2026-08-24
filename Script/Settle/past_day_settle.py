@@ -11,7 +11,6 @@ from Script.Design import (
     handle_premise,
     handle_npc_ai,
     attr_calculation,
-    pregnancy,
     basement,
 )
 from Script.UI.Moudle import draw
@@ -39,6 +38,7 @@ def update_new_day():
     """
     from Script.System.Cooking_System import cooking
     from Script.UI.Panel import nation_diplomacy_panel, navigation_panel, assistant_panel
+    from Script.System.Pregnancy_System import pregnancy_handle, egg_handle
 
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
@@ -61,10 +61,17 @@ def update_new_day():
         if character_id:
             # 全量重算异常位掩码，兜底修复各状态修改点漏刷新导致的过期缓存位（每日一次，开销可忽略）
             handle_premise.refresh_unnormal_flag(character_id)
+            # 排卵日结束仍未结算（玩家当天未睡觉）时的兜底：受精判定与排卵结算
+            if character_data.pregnancy.ovulation_flag:
+                pregnancy_handle.get_fertilization_rate(character_id)
+                pregnancy_handle.check_fertilization(character_id)
+                egg_handle.check_ovulation(character_id)
             # 刷新娱乐活动
             handle_npc_ai.get_chara_entertainment(character_id)
+            # 持有需照料的卵的卵生角色，随机一个娱乐时段替换为照料卵
+            egg_handle.replace_entertainment_for_eggs(character_id)
             # 刷新生理周期
-            pregnancy.update_reproduction_period(character_id)
+            pregnancy_handle.update_reproduction_period(character_id)
             # 清零助理服务的flag
             if character_data.sp_flag.morning_salutation == 2 or character_data.assistant_services[5] == 0:
                 character_data.sp_flag.morning_salutation = 0

@@ -180,6 +180,10 @@ class Instruct:
     #工作#
     OFFICIAL_WORK = "official_work"
     """ 处理公务 """
+    PREGNANCY_OVERVIEW = "pregnancy_overview"
+    """ 怀孕总览 """
+    IDENTIFY_HELD_EGGS = "identify_held_eggs"
+    """ 鉴定持有的卵 """
     BATTLE_COMMAND = "battle_command"
     """ 指挥作战 """
     FIELD_COMMISSION = "field_commission"
@@ -290,6 +294,8 @@ class Instruct:
     #猥亵#
     MAKE_COFFEE_ADD = "make_coffee_add"
     """ 泡咖啡（加料） """
+    TAKE_CHARA_EGGS = "take_chara_eggs"
+    """ 拿走产下的卵 """
     TOUCH_HEAD = "touch_head"
     """ 摸头 """
     TOUCH_BREAST = "touch_breast"

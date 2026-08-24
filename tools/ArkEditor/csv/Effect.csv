@@ -258,6 +258,8 @@ cid,effect_name,effect_type,effect
 543,ASK_COPY_KEY,指令_专用结算,（要求复制钥匙用）获取交互对象的所在楼层的钥匙
 544,MAKE_FOOD_ADD_ADJUST,指令_专用结算,（制作食物用）根据当前行为中的菜谱难度等级，动态获得料理经验与习得
 545,TASTE_WINE_ADD_ADJUST,指令_专用结算,（品酒用）根据酒量随机选一个酒，并结算部分饮用效果
+546,TAKE_CHARA_EGGS_SETTLE,指令_专用结算,（拿走产下的卵用）拿走交互对象的全部未鉴定卵，卵数据留原处标记被拿走并写入玩家临时持有索引
+547,IDENTIFY_HELD_EGGS_SETTLE,指令_专用结算,（鉴定持有的卵用）鉴定玩家临时持有的全部卵并经索引回写原角色卵数据，无精删卵、受精进入孵化
 
 601,CHANGE_UNDERWERA,属性_服装,换新的内衣（胸衣+内裤）
 602,BRA_SEE,属性_服装,胸罩可视

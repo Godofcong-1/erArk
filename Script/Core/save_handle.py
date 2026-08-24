@@ -273,6 +273,18 @@ def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
             dirty_data = getattr(character, "dirty", None)
             if dirty_data is not None and not hasattr(dirty_data, "condom_decoration"):
                 dirty_data.condom_decoration = {}
+            # 卵生系统旧存档兼容：补全妊娠结构体的卵字典与玩家收藏品的持有卵索引
+            pregnancy_data = getattr(character, "pregnancy", None)
+            if pregnancy_data is not None and not hasattr(pregnancy_data, "eggs"):
+                pregnancy_data.eggs = {}
+            if pregnancy_data is not None and not hasattr(pregnancy_data, "next_egg_id"):
+                pregnancy_data.next_egg_id = 0
+            if pregnancy_data is not None and not hasattr(pregnancy_data, "ovulation_flag"):
+                pregnancy_data.ovulation_flag = False
+            if pl_collection is not None and not hasattr(pl_collection, "held_eggs"):
+                pl_collection.held_eggs = {}
+            if pl_collection is not None and not hasattr(pl_collection, "next_held_egg_id"):
+                pl_collection.next_held_egg_id = 0
             # 性行为履历旧存档兼容：平铺处女字段合并进first_part_sex_dict
             _migrate_first_record_flat_fields(character)
 

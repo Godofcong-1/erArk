@@ -113,6 +113,9 @@ int,str,str,int,str,str
 264,change_diapers,换尿布,30,both,工作
 265,teach_talk,教说话,30,both,工作
 266,give_toy,给玩具,30,both,工作
+267,identify_eggs,鉴定卵,30,npc,工作
+268,hatch_eggs,孵化卵,60,npc,工作
+269,identify_held_eggs,鉴定持有的卵,30,pl,工作
 
 301,hand_in_hand,牵手,10,both,猥亵
 302,embrace,拥抱,3,both,猥亵
@@ -149,6 +152,7 @@ int,str,str,int,str,str
 342,put_into_prison,投入监牢,10,pl,猥亵
 343,set_free,解除囚禁,10,pl,猥亵
 344,release_from_bag,从袋中放出来,10,pl,猥亵
+345,take_chara_eggs,拿走产下的卵,5,pl,猥亵
 
 351,confession,告白,10,both,猥亵
 352,confession_failed,告白失败,10,pl,猥亵
@@ -681,6 +685,9 @@ int,str,str,int,str,str
 1319,rearing_complete,结算育儿完成,0,npc,二段结算
 1320,child_to_loli,结算幼女长成萝莉,0,npc,二段结算
 1321,loli_to_girl,结算萝莉长成少女,0,npc,二段结算
+1322,lay_egg,结算排出卵,0,npc,二段结算
+1323,egg_fertilized,结算鉴定出受精卵,0,npc,二段结算
+1324,egg_born,破壳前的对话,0,npc,二段结算
 
 1331,first_meet,初次见面,0,npc,二段结算
 1332,day_hello,每日打招呼,0,npc,二段结算

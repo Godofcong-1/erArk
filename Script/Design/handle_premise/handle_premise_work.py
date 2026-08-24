@@ -296,6 +296,59 @@ def handle_t_work_is_student(character_id: int) -> int:
     return handle_work_is_student(character_data.target_character_id)
 
 
+@add_premise(constant_promise.Premise.WORK_IS_NURSERY_WORKER)
+def handle_work_is_nursery_worker(character_id: int) -> int:
+    """
+    自己的工作为保育员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 153
+
+
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_NURSERY_WORKER)
+def handle_t_work_is_nursery_worker(character_id: int) -> int:
+    """
+    交互对象的工作为保育员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_nursery_worker(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.NURSERY_HAVE_WORK_TO_DO)
+def handle_nursery_have_work_to_do(character_id: int) -> int:
+    """
+    育儿室有保育工作可做（所在场景有持可鉴定卵的角色，或存在孵化中的卵，或所在场景有婴儿）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Pregnancy_System import egg_handle
+    from Script.Design import map_handle
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 所在场景有持可鉴定卵的角色（含自己）
+    if egg_handle.find_identifiable_egg_owner_in_scene(character_id) != -1:
+        return 1
+    # 存在孵化中的卵（受精卵均存放于育儿室）
+    if egg_handle.any_hatching_eggs_exist():
+        return 1
+    # 所在场景有婴儿
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data = cache.scene_data[scene_path_str]
+    for chara_id in scene_data.character_list:
+        if chara_id and cache.character_data[chara_id].talent[101]:
+            return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.WORK_IS_COMBAT_TRAINING)
 def handle_work_is_combat_training(character_id: int) -> int:
     """

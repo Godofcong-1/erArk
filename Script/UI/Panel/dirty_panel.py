@@ -338,7 +338,7 @@ class SeeCharacterBodyPanel:
             all_part_text_list.append(now_text)
 
         # 用过的避孕套存量池文本
-        from Script.System.Item_System import condom_handle, condom_panel
+        from Script.System.Item_System import condom_handle
         used_condoms = condom_handle.get_used_condoms()
         if len(used_condoms):
             pool_text = _(" 现留有{0}个用过的避孕套（{1}）").format(str(len(used_condoms)), "、".join(f"{ml}ml" for ml in used_condoms))
