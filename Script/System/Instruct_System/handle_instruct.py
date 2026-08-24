@@ -2134,7 +2134,7 @@ def handle_remote_toy_level_down():
 @add_instruct(constant.Instruct.REMOTE_TOY_ALL_OFF)
 def handle_remote_toy_all_off():
     """处理遥控关闭全员玩具指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.REMOTE_ALL_TURN_OFF_SEX_TOY, judge = _("严重骚扰"))
+    chara_handle_instruct_common_settle(constant.Behavior.REMOTE_ALL_TURN_OFF_SEX_TOY)
 
 @add_instruct(constant.Instruct.REMOTE_ALL_SET_SEX_TOY_WEAK)
 def handle_remote_all_set_sex_toy_weak():
