@@ -154,8 +154,8 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         # 结算玩家源石技艺的理智值消耗
         settle_player_ability(character_id, true_add_time)
 
-        # 当前地点有人睡觉时，结算玩家动作对所有睡眠NPC的影响
-        if handle_premise.handle_scene_someone_sleeping(character_id):
+        # 非时停中，当前地点有人睡觉时，结算玩家动作对所有睡眠NPC的影响
+        if not handle_premise.handle_time_stop_on(character_id) and handle_premise.handle_scene_someone_sleeping(character_id):
             settle_sleep_h(character_id, true_add_time)
 
     # 结算干员
