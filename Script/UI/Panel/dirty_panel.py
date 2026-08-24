@@ -333,7 +333,7 @@ class SeeCharacterBodyPanel:
                 # 如果是猥亵型装备且当前不在H中，则显示档位文本
                 if body_item_data.type == 2:
                     status_text += sex_toy_lv_text
-                now_text += f" <{status_text}>"
+                now_text += f" {status_text}"
         if now_text != "":
             all_part_text_list.append(now_text)
 
