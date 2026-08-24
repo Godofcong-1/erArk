@@ -563,6 +563,8 @@ class BehaviorEffect:
     """ 属性_服装 清理衣柜里的衣服精液 """
     GET_CLOTH_FROM_DORMITORY_LOCKER = 649
     """ 属性_服装 清空身上的旧衣服，从宿舍的衣柜里穿上衣服、内衣内裤，并转移衣柜中的精液数据到穿着的衣服上 """
+    WEAR_TO_DORMITORY_LOCKER = 650
+    """ 属性_服装 身上除必穿项外的所有衣服（含首饰）转移到宿舍衣柜里 """
     UP_AND_BRA_TO_TEM = 651
     """ 属性_服装 自己的上衣和胸罩转移到临时脱下 """
     DOWN_AND_PAN_TO_TEM = 652

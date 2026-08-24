@@ -287,6 +287,7 @@ cid,effect_name,effect_type,effect
 647,SHOWER_LOCKER_TO_DORMITORY_LOCKER,属性_服装,大浴场衣柜里的衣服转移到宿舍衣柜
 648,CLEAN_LOCKER_CLOTH_SEMEN,属性_服装,清理衣柜里的衣服精液
 649,GET_CLOTH_FROM_DORMITORY_LOCKER,属性_服装,清空身上的旧衣服，从宿舍的衣柜里穿上衣服、内衣内裤，并转移衣柜中的精液数据到穿着的衣服上
+650,WEAR_TO_DORMITORY_LOCKER,属性_服装,身上除必穿项外的所有衣服（含首饰）转移到宿舍衣柜里
 651,UP_AND_BRA_TO_TEM,属性_服装,自己的上衣和胸罩转移到临时脱下
 652,DOWN_AND_PAN_TO_TEM,属性_服装,自己的下衣和内裤转移到临时脱下
 653,TARGET_UP_AND_BRA_TO_TEM,属性_服装,交互对象的上衣和胸罩转移到临时脱下

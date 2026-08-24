@@ -685,6 +685,60 @@ def handle_shower_locker_to_dormitory_locker(
     character_data.cloth.cloth_locker_in_shower = attr_calculation.get_shower_cloth_locker_zero()
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.WEAR_TO_DORMITORY_LOCKER)
+def handle_wear_to_dormitory_locker(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    身上除必穿项外的所有衣服（含首饰）转移到宿舍衣柜里
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 玩家没有换睡衣的流程，衣服不进衣柜，与clothing.get_sleep_cloth()的判定保持一致
+    if not character_id:
+        return
+    from Script.Design import handle_premise
+
+    # 囚犯睡觉时不换睡衣，若把囚服转走会变成全裸睡觉，故跳过
+    if handle_premise.handle_imprisonment_1(character_id):
+        return
+
+    character_data = cache.character_data[character_id]
+
+    # 宿舍衣柜里已经有衣服时跳过，避免洗完澡（效果647）存进来的白天衣服被浴帽浴巾污染
+    for clothing_type in game_config.config_clothing_type:
+        if len(character_data.cloth.cloth_locker_in_dormitory[clothing_type]):
+            return
+
+    # 提前取得必穿项列表（该函数会把缺失的必穿项补回身上，只需调用一次）
+    special_cloth_list = clothing.chara_special_wear_cloth(character_id)
+
+    # 遍历所有服装部位，把身上的衣服转移到宿舍衣柜里
+    for clothing_type in game_config.config_clothing_type:
+        if len(character_data.cloth.cloth_wear[clothing_type]):
+            tem_list = character_data.cloth.cloth_wear[clothing_type].copy()
+            for cloth_id in tem_list:
+                # 必穿项（抑制戒指、监测环、镣铐、戒指、项圈）留在身上，全局只保持一份
+                if cloth_id in special_cloth_list:
+                    continue
+                character_data.cloth.cloth_wear[clothing_type].remove(cloth_id)
+                character_data.cloth.cloth_locker_in_dormitory[clothing_type].append(cloth_id)
+
+    # 把身上衣服的精液数据一并交换到衣柜衣服的精液数据上
+    character_data.dirty.cloth_locker_semen, character_data.dirty.cloth_semen = character_data.dirty.cloth_semen, character_data.dirty.cloth_locker_semen
+    # 衣物离开身体时去除服装部位上的避孕套装饰
+    from Script.System.Item_System import condom_handle
+    condom_handle.remove_cloth_decoration(character_id)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CLEAN_LOCKER_CLOTH_SEMEN)
 def handle_clean_locker_cloth_semen(
     character_id: int,
