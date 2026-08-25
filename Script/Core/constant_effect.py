@@ -201,6 +201,8 @@ class BehaviorEffect:
     """ 属性_状态 自己增加少量屈服（屈服刻印补正） """
     ADD_SMALL_SHY = 88
     """ 属性_状态 自己增加少量羞耻（露出补正） """
+    SELF_ADD_MIDDLE_DISGUST = 89
+    """ 属性_状态 自己增加中量反感（反发刻印补正） """
 
     TECH_ADD_S_ADJUST = 110
     """ 属性_状态特殊补正 皮肤_根据发起者的技巧技能和交互对象的感度，对交互对象进行S快、欲情调整 """
@@ -991,6 +993,8 @@ class BehaviorEffect:
     """ 行动 将交互对象设为当前搬运对象 """
     TARGET_NOT_BE_CARRIED = 1724
     """ 行动 清零自己的当前搬运对象 """
+    GET_SLEEP_DISTURBED_STATE = 1726
+    """ 行动 自身获得睡觉中被吵醒状态（一小时内不会产生睡觉需求） """
 
     FACILITY_DAMAGE_CHECK = 1751
     """ 设施 几率判定自己所在地点是否造成损坏 """

@@ -1785,7 +1785,6 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
-
 class Talk_Common:
     """ 组件配置数据 """
 

@@ -693,7 +693,7 @@ def handle_wear_to_dormitory_locker(
     now_time: datetime.datetime,
 ):
     """
-    身上除必穿项外的所有衣服（含首饰）转移到宿舍衣柜里
+    身上除首饰与必穿项外的所有衣服转移到宿舍衣柜里
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -728,6 +728,10 @@ def handle_wear_to_dormitory_locker(
             for cloth_id in tem_list:
                 # 必穿项（抑制戒指、监测环、镣铐、戒指、项圈）留在身上，全局只保持一份
                 if cloth_id in special_cloth_list:
+                    continue
+                # 首饰留在身上，与大浴场衣柜的handle_wear_to_shower_locker()保持一致；
+                # 若把首饰转进宿舍衣柜，起床时会被get_cloth_from_dormitory_locker()的角色模板过滤永久删除
+                if game_config.config_clothing_tem[cloth_id].tag == 6:
                     continue
                 character_data.cloth.cloth_wear[clothing_type].remove(cloth_id)
                 character_data.cloth.cloth_locker_in_dormitory[clothing_type].append(cloth_id)

@@ -1,0 +1,12 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1001,wake_up_by_noise,0,high_1,{Name}猛地睁开了眼睛，看清吵醒自己的是{PlayerName}后，一言不发地把{PlayerName}推出了房间，关上了门。
+1002,wake_up_by_noise,0,high_1,被吵醒的{Name}皱着眉从被子里坐起来，揉了揉眼睛，把还站在床边的{PlayerName}轰了出去，随后关紧了房门。
+1003,wake_up_by_noise,0,high_1,{Name}被动静惊醒，睡意未消地瞪了{PlayerName}一眼，「……出去。」说完便把{PlayerName}推到门外，关上了门。
+1004,wake_up_by_noise,0,high_1,「唔……」{Name}从睡梦中醒来，意识到是{PlayerName}弄出的声响，沉默地起身把{PlayerName}送出房间，「砰」地关上了门。
+1005,wake_up_by_noise,0,high_1,好不容易睡着的{Name}又被吵醒了，她带着明显的不悦把{PlayerName}请出了房间，门在{PlayerName}身后关上。
+1006,wake_up_by_noise,0,sleep_time,深夜里被吵醒的{Name}显得格外烦躁，她一句话都没说，直接把{PlayerName}推出门外，反手关上了房门。
+1007,wake_up_by_noise,0,favorability_ge_3,{Name}睁开眼看到是{PlayerName}，愣了一下，随即无奈地叹了口气，「博士……现在很晚了。」她把{PlayerName}轻轻推出房间，关上了门。

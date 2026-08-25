@@ -614,6 +614,8 @@ class ACTION_INFO:
         """ 指定角色最后与自己社交的时间 """
         self.sleep_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色上次睡觉时间 """
+        self.sleep_disturbed_end_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 角色睡觉中被吵醒状态的结束时间，在此之前角色不会产生睡觉需求 """
         self.plan_to_wake_time: list = [6, 0]
         """ 角色计划起床的时间，[0时,1分] """
         self.plan_to_sleep_time: list = [18, 0]

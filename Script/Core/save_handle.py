@@ -285,6 +285,10 @@ def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
                 pl_collection.held_eggs = {}
             if pl_collection is not None and not hasattr(pl_collection, "next_held_egg_id"):
                 pl_collection.next_held_egg_id = 0
+            # 睡觉中被吵醒旧存档兼容：补全角色行动信息中缺失的被吵醒状态结束时间
+            action_info_data = getattr(character, "action_info", None)
+            if action_info_data is not None and not hasattr(action_info_data, "sleep_disturbed_end_time"):
+                action_info_data.sleep_disturbed_end_time = datetime.datetime(1, 1, 1)
             # 性行为履历旧存档兼容：平铺处女字段合并进first_part_sex_dict
             _migrate_first_record_flat_fields(character)
 

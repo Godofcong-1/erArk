@@ -67,6 +67,8 @@ class Behavior_Int:
     """ 换上浴帽和浴巾 """
     PUT_SLEEP_CLOTH = 143
     """ 换上睡衣和内衣 """
+    WAKE_UP_BY_NOISE = 947
+    """ 睡觉中被吵醒 """
     WEAR_TO_LOCKER = 144
     """ 身上衣服脱到衣柜 """
     LOCKER_TO_WEAR = 145

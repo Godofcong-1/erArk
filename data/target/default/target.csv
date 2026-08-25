@@ -40,8 +40,8 @@ ai的目标,,,,
 
 110100,78,normal_1267|self_tired,11,1267正常（可能AI跟随、服装异常或意识模糊），hp1时，则进入要睡觉状态
 110105,78,normal_1267|tired_ge_85|tired_l_100,11,1267正常（可能AI跟随、服装异常或意识模糊），疲劳值到85%且不到100%时，则进入要睡觉状态
-110110,78,normal_1267|sleep_time|shower_flag_4|assistant_salutation_of_ai_disable,11,1267正常（可能AI跟随、服装异常或意识模糊），就寝时间，今天已经洗过澡，且不满足助理问候，则进入要睡觉状态
-110115,78,normal_1267|sleep_time|not_shower_time|assistant_salutation_of_ai_disable|tired_ge_10,11,1267正常（可能AI跟随、服装异常或意识模糊），就寝时间，不是淋浴时间，自己的助理属性中的问候服务不影响AI行动的情况，疲劳值大于等于10%，则进入要睡觉状态
+110110,78,normal_1267|sleep_time|shower_flag_4|assistant_salutation_of_ai_disable|sleep_disturbed_0,11,1267正常（可能AI跟随、服装异常或意识模糊），就寝时间，今天已经洗过澡，且不满足助理问候，则进入要睡觉状态，自身没有睡觉中被吵醒状态
+110115,78,normal_1267|sleep_time|not_shower_time|assistant_salutation_of_ai_disable|tired_ge_10|sleep_disturbed_0,11,1267正常（可能AI跟随、服装异常或意识模糊），就寝时间，不是淋浴时间，自己的助理属性中的问候服务不影响AI行动的情况，疲劳值大于等于10%，则进入要睡觉状态，自身没有睡觉中被吵醒状态
 110200,75,normal_1267|hunger_ge_80|eat_time|assistant_send_food_of_ai_disable|assistant_salutation_of_ai_disable,11,1267正常（可能AI跟随、服装异常或意识模糊），饥饿值到80%，且在饭点，且不满足助理送饭，且不满足助理问候，则进入要取餐状态
 110300,71,normal_1267|shower_time|shower_flag_0|not_ask_not_take_bath|not_is_assistant_live_together,11,1267正常（可能AI跟随、服装异常或意识模糊），淋浴时间，今天没洗过澡，自己没有被要求禁止一切洗澡，自己不是同居中的助理，则进入要脱衣服（洗澡）状态
 110400,79,normal_1267|mp_0|not_sleep_time|self_not_tired,11,1267正常（可能AI跟随、服装异常或意识模糊），气力=0，非睡觉时间，自身未疲劳（体力>1），则进入要休息状态
@@ -88,7 +88,7 @@ ai的目标,,,,
 
 130100,43,unnormal_2|mp_0,13,2异常，气力0，则休息
 130105,44,unnormal_2|self_tired,13,2异常，已疲劳，则睡觉
-130110,44,unnormal_2|sleep_time,13,2异常，睡眠时间，则睡觉
+130110,44,unnormal_2|sleep_time|sleep_disturbed_0,13,2异常，睡眠时间，则睡觉，自身没有睡觉中被吵醒状态
 130115,50,unnormal_2|urinate_ge_80,13,2异常，尿意值到80%，则解手
 130120,70,unnormal_2|shower_time|shower_flag_0|not_ask_not_take_bath,13,2异常，淋浴时间，今天没洗过澡，自己没有被要求禁止一切洗澡，则开始淋浴
 

@@ -109,7 +109,14 @@ int,str,str,int,str,str
 254,night_salutation_1,晚安问候：催睡觉,5,npc,工作_助理
 255,night_salutation_2,晚安问候：晚安吻,5,npc,工作_助理
 256,night_salutation_3,晚安问候：晚安咬,10,npc,工作_助理
-261,npc_assistant_cook,干员助理做饭,30,npc,工作_助理
+257,npc_assistant_cook,干员助理做饭,30,npc,工作_助理
+
+261,hold_child,抱小孩,30,both,工作
+262,sing_children_song,哼唱儿歌,30,both,工作
+263,nuirse_child,喂奶,30,both,工作
+264,change_diapers,换尿布,30,both,工作
+265,teach_talk,教说话,30,both,工作
+266,give_toy,给玩具,30,both,工作
 267,identify_eggs,鉴定卵,30,npc,工作
 268,hatch_eggs,孵化卵,60,npc,工作
 269,identify_held_eggs,鉴定持有的卵,30,pl,工作
@@ -394,12 +401,16 @@ int,str,str,int,str,str
 
 771,spanking,打屁股,3,both,性爱_SM
 
-801,hold_child,抱小孩,30,both,工作
-802,sing_children_song,哼唱儿歌,30,both,工作
-803,nuirse_child,喂奶,30,both,工作
-804,change_diapers,换尿布,30,both,工作
-805,teach_talk,教说话,30,both,工作
-806,give_toy,给玩具,30,both,工作
+801,cloth_off,脱掉全部衣服,10,npc,日常
+802,put_shower_cloth,换上浴帽和浴巾,10,npc,日常
+803,put_sleep_cloth,换上睡衣和内衣,10,npc,日常
+804,wear_to_locker,身上衣服脱到衣柜,10,npc,日常
+805,locker_to_wear,衣柜衣服穿回身上,10,npc,日常
+806,ready_to_swim,脱掉衣服并换上泳衣,10,npc,日常
+807,foot_cloth_to_locker,脱鞋袜,5,npc,日常
+808,wear_to_locker_and_get_shower_cloth,脱衣换浴帽和浴巾,10,npc,日常
+809,clean_wear_and_locker_to_wear,脱衣并穿回衣柜衣服,10,npc,日常
+810,wake_up_by_noise,睡觉中被吵醒,1,npc,日常
 
 840,remote_turn_off_sex_toy,遥控关闭情趣道具,1,pl,猥亵_玩具
 841,remote_turn_on_sex_toy,遥控开启情趣玩具,1,pl,猥亵_玩具

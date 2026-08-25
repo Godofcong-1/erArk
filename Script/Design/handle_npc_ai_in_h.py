@@ -364,19 +364,40 @@ def judge_weak_up_in_sleep_h(character_id: int, target_character_id: int):
         # 清空疲劳和睡眠程度
         target_data.tired_point = 0
         target_data.sleep_point = 0
-        handle_premise.settle_chara_unnormal_flag(target_character_id, 5)
-        handle_premise.settle_chara_unnormal_flag(target_character_id, 6)
         if target_data.sp_flag.unconscious_h == 1:
             # 睡奸目标：走现有无意识H恢复流程
+            handle_premise.settle_chara_unnormal_flag(target_character_id, 5)
+            handle_premise.settle_chara_unnormal_flag(target_character_id, 6)
             info_text = _("\n因为{0}的动作，{1}从梦中惊醒过来\n").format(now_character_data.name, target_data.name)
             recover_from_unconscious_h(character_id, info_text)
+        elif target_data.sp_flag.unconscious_h == 0:
+            # 普通睡眠角色：先结束睡眠行为，再执行“睡觉中被吵醒”行为
+            # 注意顺序：judge_character_status_time_over()内部会用game_type.Behavior()整体重置行动数据，
+            # 因此必须先结束睡眠、再刷新异常位、最后才赋予新行为，否则新行为会被覆盖，
+            # 且异常位若在behavior_id还是SLEEP时刷新会被判成意识模糊，导致反感结算被静默跳过
+            character_behavior.judge_character_status_time_over(target_character_id, cache.game_time, end_now=2)
+            handle_premise.settle_chara_unnormal_flag(target_character_id, 5)
+            handle_premise.settle_chara_unnormal_flag(target_character_id, 6)
+            # 冗余但便宜的保险：行动起始时间若残留睡眠时的旧值，结算时的add_time会算出天文数字
+            instuct_judege.init_character_behavior_start_time(target_character_id, cache.game_time)
+            target_data.behavior.duration = 1
+            target_data.behavior.behavior_id = constant.Behavior.WAKE_UP_BY_NOISE
+            target_data.state = constant.CharacterStatus.STATUS_WAKE_UP_BY_NOISE
+            # 交互对象设为产生动静的角色（玩家），供效果762把对方推回前一场景使用。
+            # 这里依赖judge_character_status_time_over()中“交互对象不在场景内则把行动立刻结束”的例外分支：
+            # 该分支会跳过sp_flag.bagging_chara_id等于交互对象id的情况，而玩家id与其默认值同为0，
+            # 因此玩家被762推走后本行为不会被判定为已结束。改动bagging_chara_id的默认值时需同步复核此处。
+            target_data.target_character_id = character_id
+            character_behavior.judge_character_status(target_character_id)
         else:
-            # 普通睡眠角色：直接结束睡眠行为，交由AI重新选择行动
+            # 醉酒、时停、平然、空气、体控、心控等其他无意识状态：沿用旧的提示与结束流程
             info_text = _("\n{0}被{1}的动静吵醒了\n").format(target_data.name, now_character_data.name)
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
             now_draw.text = info_text
             now_draw.draw()
+            handle_premise.settle_chara_unnormal_flag(target_character_id, 5)
+            handle_premise.settle_chara_unnormal_flag(target_character_id, 6)
             character_behavior.judge_character_status_time_over(target_character_id, cache.game_time, end_now=2)
 
 

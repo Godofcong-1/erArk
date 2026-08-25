@@ -67,6 +67,8 @@ class BehaviorStr:
     """ 换上浴帽和浴巾 """
     PUT_SLEEP_CLOTH = "put_sleep_cloth"
     """ 换上睡衣和内衣 """
+    WAKE_UP_BY_NOISE = "wake_up_by_noise"
+    """ 睡觉中被吵醒 """
     WEAR_TO_LOCKER = "wear_to_locker"
     """ 身上衣服脱到衣柜 """
     LOCKER_TO_WEAR = "locker_to_wear"

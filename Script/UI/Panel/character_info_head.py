@@ -128,6 +128,13 @@ def get_character_status_list(character_id: int) -> Tuple[List[draw.LeftDraw], L
         if handle_premise.handle_self_sleep_h_awake_but_pretend_sleep(character_id):
             sleep_text = _(" <装睡>")
             sleep_draw.tooltip = _("已经醒来，但决定装睡来默认你的行为")
+        # 如果处于睡觉中被吵醒状态则输出被吵醒，并附上剩余的无法入睡时间
+        elif handle_premise.handle_sleep_disturbed_1(character_id):
+            sleep_text = _(" <被吵醒>")
+            left_minute = int((character_data.action_info.sleep_disturbed_end_time - cache.game_time).total_seconds() // 60)
+            left_minute = max(1, left_minute)
+            sleep_draw.tooltip = _("刚被吵醒，还需{0}分钟才会重新想睡").format(left_minute)
+            sleep_draw.style = "warning"
     sleep_draw.text = sleep_text
     status_list.append(sleep_draw)
     status_text_list.append(sleep_text)

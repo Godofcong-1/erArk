@@ -390,3 +390,4 @@ int,str,str,str
 944,stop_carry_target,停止搬运对方,结束搬运状态，将目标放置在特定位置。
 945,target_free_in_time_stop,在时停中正常行动,使特定目标在时间停止状态下能够活动。
 946,target_stop_in_time_stop,在时停中再次停止,使已获自由的目标重新回到时间停止状态。
+947,wake_up_by_noise,睡觉中被吵醒,睡眠被外界的动静打断，从睡梦中惊醒过来。

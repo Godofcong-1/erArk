@@ -2754,6 +2754,27 @@ def handle_target_not_be_carried(
     character_data.action_info.carry_chara_id = 0
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_SLEEP_DISTURBED_STATE)
+def handle_get_sleep_disturbed_state(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身获得睡觉中被吵醒状态，一小时内不会再产生睡觉需求
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.action_info.sleep_disturbed_end_time = game_time.get_sub_date(minute=60, old_date=cache.game_time)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FACILITY_DAMAGE_CHECK)
 def handle_facility_damage_check(
         character_id: int,
@@ -3976,6 +3997,27 @@ def handle_add_small_shy(
     if character_data.dead:
         return
     base_chara_state_common_settle(character_id, add_time, 16, ability_level = character_data.ability[34], change_data = change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_ADD_MIDDLE_DISGUST)
+def handle_self_add_middle_disgust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己增加中量反感（反发刻印补正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    base_chara_state_common_settle(character_id, add_time, 20, 100, ability_level = character_data.ability[18], change_data = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DIRTY_RESET)

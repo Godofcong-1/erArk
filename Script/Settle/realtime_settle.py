@@ -567,6 +567,9 @@ def settle_sleep_h(character_id: int, true_add_time: int) -> None:
 
     # 遍历玩家当前场景内所有睡眠中的NPC
     for sleeper_id in list(scene_data.character_list):
+        # 上一个被吵醒的角色可能已经把玩家赶出了本场景，此时不再继续结算，避免玩家被连续推开多个场景
+        if map_handle.get_map_system_path_str_for_list(now_character_data.position) != scene_path_str:
+            break
         # 跳过玩家和非睡眠角色
         if sleeper_id == 0:
             continue

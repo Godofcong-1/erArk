@@ -403,6 +403,7 @@ int,str,str,int,str,str
 807,foot_cloth_to_locker,脱鞋袜,5,npc,日常|AI行动
 808,wear_to_locker_and_get_shower_cloth,脱衣换浴帽和浴巾,10,npc,日常|AI行动
 809,clean_wear_and_locker_to_wear,脱衣并穿回衣柜衣服,10,npc,日常|AI行动
+810,wake_up_by_noise,睡觉中被吵醒,1,npc,日常|AI行动
 
 840,remote_turn_off_sex_toy,遥控关闭情趣道具,1,pl,猥亵|玩具
 841,remote_turn_on_sex_toy,遥控开启情趣玩具,1,pl,猥亵|玩具

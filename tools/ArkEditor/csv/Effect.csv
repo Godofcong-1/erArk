@@ -103,6 +103,7 @@ cid,effect_name,effect_type,effect
 86,ADD_SMALL_LEAD,属性_状态,自己增加少量先导（施虐补正）
 87,ADD_SMALL_SUBMIT,属性_状态,自己增加少量屈服（屈服刻印补正）
 88,ADD_SMALL_SHY,属性_状态,自己增加少量羞耻（露出补正）
+89,SELF_ADD_MIDDLE_DISGUST,属性_状态,自己增加中量反感（反发刻印补正）
 
 110,TECH_ADD_S_ADJUST,属性_状态特殊补正,皮肤_根据发起者的技巧技能和交互对象的感度，对交互对象进行S快、欲情调整
 111,TECH_ADD_B_ADJUST,属性_状态特殊补正,胸部_根据发起者的技巧技能和交互对象的感度，对交互对象进行B快、欲情调整
@@ -508,6 +509,7 @@ cid,effect_name,effect_type,effect
 1722,STOP_ENDURANCE_SHOOT,行动,射出忍耐的射精次数
 1723,TARGET_BE_CARRIED,行动,将交互对象设为当前搬运对象
 1724,TARGET_NOT_BE_CARRIED,行动,清零自己的当前搬运对象
+1726,GET_SLEEP_DISTURBED_STATE,行动,自身获得睡觉中被吵醒状态（一小时内不会产生睡觉需求）
 
 1751,FACILITY_DAMAGE_CHECK,设施,几率判定自己所在地点是否造成损坏
 

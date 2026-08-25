@@ -484,6 +484,66 @@ def handle_target_not_have_conscious_or_unconscious_h_today(character_id: int) -
     return not handle_target_have_conscious_or_unconscious_h_today(character_id)
 
 
+@add_premise(constant_promise.Premise.SLEEP_DISTURBED_1)
+def handle_sleep_disturbed_1(character_id: int) -> int:
+    """
+    自身睡觉中被吵醒状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    end_time = getattr(character_data.action_info, "sleep_disturbed_end_time", None)
+    # 旧存档缺字段时视为没有该状态
+    if end_time is None:
+        return 0
+    # 结束时间晚于当前游戏时间才算处于该状态，时间相等即已到期
+    if game_time.judge_date_big_or_small(end_time, cache.game_time) == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SLEEP_DISTURBED_0)
+def handle_sleep_disturbed_0(character_id: int) -> int:
+    """
+    自身没有睡觉中被吵醒状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_sleep_disturbed_1(character_id):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_SLEEP_DISTURBED_1)
+def handle_t_sleep_disturbed_1(character_id: int) -> int:
+    """
+    交互对象睡觉中被吵醒状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_sleep_disturbed_1(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_SLEEP_DISTURBED_0)
+def handle_t_sleep_disturbed_0(character_id: int) -> int:
+    """
+    交互对象没有睡觉中被吵醒状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_sleep_disturbed_0(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.IS_MAN)
 def handle_is_man(character_id: int) -> int:
     """

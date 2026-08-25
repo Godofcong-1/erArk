@@ -516,6 +516,14 @@ def get_sleep_cloth(character_id: int):
     """
     if character_id:
         character_data = cache.character_data[character_id]
+        # 已经穿着睡衣时直接跳过，避免被吵醒后再次入睡（以及爆睡、安眠药、烂醉等所有重睡路径）
+        # 重新随机内裤，把玩家偷走的贴身衣物刷回来；也顺带免掉睡觉时509与634各换一次衣服的浪费
+        if (
+            (552 in character_data.cloth.cloth_wear[5] or 553 in character_data.cloth.cloth_wear[5])
+            and (852 in character_data.cloth.cloth_wear[8] or 853 in character_data.cloth.cloth_wear[8])
+        ):
+            handle_premise.settle_chara_unnormal_flag(character_id, 4)
+            return
         get_cloth_wear_zero_except_need(character_id)
         choic_flag = random.randint(0,1)
         if choic_flag:
