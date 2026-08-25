@@ -17,4 +17,4 @@ H用装备型道具,,,,
 11,事前避孕药,101,0,second_birth_control_pills_before
 12,事后避孕药,102,0,birth_control_pills_after
 13,避孕套,120,0,condom
-14,口球,140,0,gag
+14,口球,140,1,gag

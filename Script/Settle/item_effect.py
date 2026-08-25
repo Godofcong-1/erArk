@@ -532,7 +532,6 @@ def handle_target_gag_on(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.body_item[14][1] = True
 
-
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_GAG_OFF)
 def handle_target_gag_off(
     character_id: int,
@@ -553,8 +552,6 @@ def handle_target_gag_off(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.body_item[14][1] = False
-
-
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADJUST_BODY_MANAGE_DAY_ITEM)
 def handle_adjust_body_manage_day_item(
