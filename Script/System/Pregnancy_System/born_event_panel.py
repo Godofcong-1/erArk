@@ -122,7 +122,7 @@ class Born_Panel:
                     info_draw.text = _("\n 得知了{0}即将生产的消息后，你第一时间来到了待产室，在短暂的陪伴后，目送着她被推入产房\n").format(mom_character_data.name)
                 info_draw.draw()
                 line_feed.draw()
-                button_text = _(" 焦急等待")
+                button_text = _("[焦急等待]")
                 button_draw = draw.LeftButton(_(button_text), _("\n"), self.width)
                 button_draw.draw()
                 return_list.append(button_draw.return_text)
