@@ -608,6 +608,20 @@ class Physical_Check_And_Manage_Panel:
             if target_character_data.talent[1]:
                 judge_result = False
 
+        # 道具持有检查
+        if manage_cid in {11, 15}:
+            require_text += _(" 需要持有乳夹")
+            if not handle_premise.handle_have_nipple_clamp(0):
+                judge_result = False
+        elif manage_cid in {12, 16}:
+            require_text += _(" 需要持有阴蒂夹")
+            if not handle_premise.handle_have_clit_clamp(0):
+                judge_result = False
+        elif manage_cid in {13, 14, 17, 18}:
+            require_text += _(" 需要持有震动棒")
+            if not handle_premise.handle_have_vibrator(0):
+                judge_result = False
+
         # 持有阴茎倒模检查
         if manage_cid in range(31, 40):
             require_text += _(" 需要已送给对方自己的阴茎倒模")
