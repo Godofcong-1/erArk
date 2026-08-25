@@ -6478,6 +6478,18 @@ def handle_invite_visitor_add_adjust(
             now_draw.draw()
         return
 
+    # 如果该角色已经被招募，则直接返回
+    if cache.rhodes_island.invite_visitor[0] in cache.npc_id_got or cache.rhodes_island.invite_visitor[0] in cache.rhodes_island.recruited_id:
+        cache.rhodes_island.invite_visitor[0] = 0
+        cache.rhodes_island.invite_visitor[1] = 0
+        # 玩家使用时显示提示
+        if character_id == 0:
+            now_draw = draw.NormalDraw()
+            now_draw.width = width
+            now_draw.text = _("\n该角色已经被招募，邀请已重置\n")
+            now_draw.draw()
+        return
+
     # 获取调整值#
     adjust = handle_ability.get_ability_adjust(character_data.ability[40])
     # 设施效率

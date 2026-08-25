@@ -201,6 +201,11 @@ def update_recruit():
                 cache.rhodes_island.recruited_id.add(choice_id)
 
                 now_draw.text = _("\n\n   ※ 招募到了新的干员，请前往博士办公室确认 ※\n\n")
+                # 检查该角色是否是正在邀请的访客
+                if choice_id == cache.rhodes_island.invite_visitor[0]:
+                    now_draw.text += _("   ※ 招募到的新干员是正在邀请的访客，已自动停止邀请 ※\n\n")
+                    cache.rhodes_island.invite_visitor[0] = 0
+                    cache.rhodes_island.invite_visitor[1] = 0
                 now_draw.draw()
             else:
                 now_draw.text = _("\n\n   ※ 当前招募策略无可招募npc，招募失败，已自动停止招募，请调整招募策略 ※\n\n")
