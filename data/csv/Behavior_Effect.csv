@@ -112,9 +112,9 @@ int,str,str
 264,change_diapers,1513 - 1514 - 21 - 22 - 71 - 53
 265,teach_talk,1513 - 1514 - 21 - 22 - 71 - 53
 266,give_toy,1513 - 1514 - 21 - 22 - 71 - 53
-267,identify_eggs,9999
-268,hatch_eggs,9999
-269,identify_held_eggs,547
+267,identify_eggs,1511 - 1514 - 72 - CVE_A1_E|88_G_1
+268,hatch_eggs,1511 - 1514 - 72 - CVE_A1_E|88_G_1
+269,identify_held_eggs,1511 - 1514 - 72 - 547 - CVE_A1_E|88_G_1
 
 301,hand_in_hand,21 - 11 - 12 - 22 - 52 - 55 - 62
 302,embrace,21 - 11 - 12 - 22 - 53 - 55 - 58 - 62
