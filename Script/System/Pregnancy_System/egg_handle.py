@@ -66,6 +66,7 @@ def add_egg(character_id: int, fertilized: bool):
         "father_id": 0,
         "hatch_stage": 0,
         "held_by_player": False,
+        "acceleration_days": 0.0,
     }
     character_data.pregnancy.next_egg_id += 1
     return egg_id
@@ -124,13 +125,42 @@ def get_hatching_eggs(character_id: int) -> dict:
 
 def get_hatch_day(egg_data: dict) -> int:
     """
-    计算卵的孵化天数（自排出日起的自然天数）
+    计算卵的有效孵化天数（自排出日起的自然天数+孵化加速药累计的加速天数）
     Keyword arguments:
     egg_data -- 卵数据字典
     Return arguments:
-    int -- 孵化天数
+    int -- 有效孵化天数
     """
-    return (cache.game_time - egg_data["lay_time"]).days
+    # 旧存档的卵可能缺加速键，一律.get兜底
+    return (cache.game_time - egg_data["lay_time"]).days + int(egg_data.get("acceleration_days", 0))
+
+
+def get_egg_acceleration_amount(egg_data: dict) -> float:
+    """
+    计算孵化加速药对该卵单次可入账的加速天数（破壳前一天封顶）
+    Keyword arguments:
+    egg_data -- 卵数据字典
+    Return arguments:
+    float -- 可入账加速天数（<=0时表示已到极限无法使用）
+    """
+    from Script.System.Pregnancy_System import pregnancy_handle
+    now_acc = egg_data.get("acceleration_days", 0)
+    return pregnancy_handle.get_acceleration_amount(now_acc, get_hatch_day(egg_data), HATCH_TOTAL_DAY - 1)
+
+
+def get_accelerable_hatching_eggs(character_id: int) -> dict:
+    """
+    获取角色可被孵化加速药加速的孵化中卵（可入账加速量>0）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    dict -- {卵编号: 卵数据字典}
+    """
+    result = {}
+    for egg_id, egg_data in get_hatching_eggs(character_id).items():
+        if get_egg_acceleration_amount(egg_data) > 0:
+            result[egg_id] = egg_data
+    return result
 
 
 def have_need_tend_eggs(character_id: int) -> bool:

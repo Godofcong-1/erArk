@@ -337,10 +337,15 @@ class PREGNANCY:
             fertilized: bool 是否受精（排出时即确定，鉴定只是揭示；未受精卵鉴定后即删除本条）
             identify_time: datetime.datetime 鉴定时间（受精卵进入孵化流程的起点记录）
             father_id: int 父亲id（恒为0，预留）
-            hatch_stage: int 孵化阶段展示值（按自然天数换算，面板显示用）
-            held_by_player: bool 该卵是否已被玩家拿走（拿走后本人的照料卵/NPC鉴定不再计入该卵） """
+            hatch_stage: int 孵化阶段展示值（按有效天数换算，面板显示用）
+            held_by_player: bool 该卵是否已被玩家拿走（拿走后本人的照料卵/NPC鉴定不再计入该卵）
+            acceleration_days: float 孵化加速药对该卵累计的额外已加速时间（天），旧存档卵缺键时一律.get兜底为0；随卵删除自清；累计上限250 """
         self.next_egg_id: int = 0
         """ 卵编号自增计数器 """
+        self.acceleration_days: float = 0.0
+        """ 妊娠加速药累计的额外已加速时间（天）：float累计、参与天数换算时向下取整；
+            统计怀孕相关事件（受精转妊娠/临盆/生产概率/面板显示）时计入；
+            受精时与生产结算时清零；累计上限250天 """
 
 
 class RELATIONSHIP:
@@ -1056,6 +1061,8 @@ class Behavior:
         """ 前提结算用:桌游AI难度 """
         self.gift_id: int = 0
         """ 前提结算用:礼物id """
+        self.gift_egg_id: int = -1
+        """ 前提结算用:孵化加速药选中的目标卵编号（-1为未选择，结算消费后重置） """
 
 
 class Chara_Event:

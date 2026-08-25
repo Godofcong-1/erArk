@@ -87,18 +87,26 @@ def get_stage_info_text(character_id: int, now_stage: int) -> str:
     character_data: game_type.Character = cache.character_data[character_id]
     if now_stage == STAGE_FERTILIZATION:
         start_time = character_data.pregnancy.fertilization_time
-        return _("受精于{0}，预计{1}妊娠").format(get_date_text(start_time), get_date_text(start_time + datetime.timedelta(days=90)))
+        # 预计日期扣除妊娠加速药的加速天数，已到期则显示为当天
+        acc_day = int(character_data.pregnancy.acceleration_days)
+        predict_time = max(start_time + datetime.timedelta(days=90 - acc_day), cache.game_time)
+        return _("受精于{0}，预计{1}妊娠").format(get_date_text(start_time), get_date_text(predict_time))
     if now_stage == STAGE_EGG_WAIT:
         egg_count = len(egg_handle.get_unidentified_eggs(character_id, exclude_held=False))
         return _("{0}枚卵待鉴定").format(egg_count)
     if now_stage == STAGE_PREGNANCY:
         start_time = character_data.pregnancy.fertilization_time
-        return _("受精于{0}，预计{1}临盆").format(get_date_text(start_time), get_date_text(start_time + datetime.timedelta(days=260)))
+        # 预计日期扣除妊娠加速药的加速天数，已到期则显示为当天
+        acc_day = int(character_data.pregnancy.acceleration_days)
+        predict_time = max(start_time + datetime.timedelta(days=260 - acc_day), cache.game_time)
+        return _("受精于{0}，预计{1}临盆").format(get_date_text(start_time), get_date_text(predict_time))
     if now_stage == STAGE_HATCHING:
         hatching_eggs = egg_handle.get_hatching_eggs(character_id)
         first_egg = list(hatching_eggs.values())[0]
         hatch_day = egg_handle.get_hatch_day(first_egg)
-        born_time = first_egg["lay_time"] + datetime.timedelta(days=egg_handle.HATCH_TOTAL_DAY)
+        # 预计破壳日扣除孵化加速药的加速天数，已到期则显示为当天
+        egg_acc_day = int(first_egg.get("acceleration_days", 0))
+        born_time = max(first_egg["lay_time"] + datetime.timedelta(days=egg_handle.HATCH_TOTAL_DAY - egg_acc_day), cache.game_time)
         return _("孵化第{0}天，预计{1}破壳").format(hatch_day, get_date_text(born_time))
     if now_stage == STAGE_PARTURIENT:
         return _("已在住院区待产，预计近日生产")

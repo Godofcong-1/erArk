@@ -183,6 +183,8 @@ class Born_Panel:
                 draw_text += _("\n{0}从[临盆]转变为[产后]\n").format(mom_character_data.name)
                 mom_character_data.talent[26] = 0
                 draw_text += _("\n{0}失去了[孕肚]\n").format(mom_character_data.name)
+                # 生产完成，重置妊娠加速药的累计加速天数
+                mom_character_data.pregnancy.acceleration_days = 0.0
                 mom_character_data.experience[65] += 10
                 mom_character_data.experience[68] += 10
                 mom_character_data.experience[86] += 1

@@ -1,3 +1,4 @@
+import datetime
 from typing import List
 from types import FunctionType
 from Script.UI.Moudle import draw
@@ -64,7 +65,42 @@ def handle_drug_use_effect(character_id: int, drug_id: int):
     elif drug_id == 34:  # 停乳药
         character_data.talent[27] = 0
         now_draw.text += _("{0}失去了【泌乳】\n").format(character_data.name)
-    
+    elif drug_id == 35:  # 妊娠加速药
+        from Script.System.Pregnancy_System import pregnancy_handle
+        add_day = pregnancy_handle.get_pregnancy_acceleration_amount(character_id)
+        if add_day > 0:
+            character_data.pregnancy.acceleration_days += add_day
+            now_acc = int(character_data.pregnancy.acceleration_days)
+            predict_time = character_data.pregnancy.fertilization_time + datetime.timedelta(days=pregnancy_handle.PARTURIENT_DAY - now_acc)
+            now_draw.text += _("本次加速{0}天，累计加速{1}天，{2}的预计临盆日期提前到了{3}月{4}日\n").format(int(add_day), now_acc, character_data.name, predict_time.month, predict_time.day)
+        else:
+            # 兜底：结算时已到加速极限则不生效（正常已被送出前校验拦截）
+            now_draw.text += _("{0}的孕期已经加速到极限，药物没有产生效果\n").format(character_data.name)
+    elif drug_id == 36:  # 孵化加速药
+        from Script.System.Pregnancy_System import egg_handle
+        pl_character_data: game_type.Character = cache.character_data[0]
+        egg_id = getattr(pl_character_data.behavior, "gift_egg_id", -1)
+        pl_character_data.behavior.gift_egg_id = -1
+        egg_data = character_data.pregnancy.eggs.get(egg_id)
+        # 兜底：选中的卵已不存在或不在孵化中则不生效
+        if egg_data is None or not (egg_data["identified"] and egg_data["fertilized"]):
+            now_draw.text += _("选中的卵已经不存在，药物没有产生效果\n")
+        else:
+            add_day = egg_handle.get_egg_acceleration_amount(egg_data)
+            if add_day > 0:
+                egg_data["acceleration_days"] = egg_data.get("acceleration_days", 0) + add_day
+                now_acc = int(egg_data["acceleration_days"])
+                predict_time = egg_data["lay_time"] + datetime.timedelta(days=egg_handle.HATCH_TOTAL_DAY - now_acc)
+                now_draw.text += _("本次加速{0}天，累计加速{1}天，这枚卵的预计破壳日期提前到了{2}月{3}日\n").format(int(add_day), now_acc, predict_time.month, predict_time.day)
+            else:
+                now_draw.text += _("这枚卵已经加速到极限，药物没有产生效果\n")
+    elif drug_id == 37:  # 假孕药
+        character_data.talent[25] = 1
+        now_draw.text += _("{0}获得了【假孕孕肚】，肚子像真正的孕妇一样隆起来了\n").format(character_data.name)
+    elif drug_id == 38:  # 假孕终止药
+        character_data.talent[25] = 0
+        now_draw.text += _("{0}失去了【假孕孕肚】，隆起的肚子恢复了原状\n").format(character_data.name)
+
     # 绘制结果
     now_draw.style = 'gold_enrod'
     now_draw.draw()
@@ -192,6 +228,11 @@ class Gift_Panel:
         if not self.check_gift_available(gift_id):
             return
 
+        # 孵化加速药需要先选择目标卵（玩家取消则不送出）
+        if gift_id == 36:
+            if not self.select_target_egg():
+                return
+
         # 将礼物id赋予角色行为数据
         character_data.behavior.gift_id = gift_id
         # 药剂礼物需要轻度猥亵条件
@@ -202,6 +243,62 @@ class Gift_Panel:
             handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.GIVE_GIFT, judge = _("严重骚扰"), force_taget_wait=True)
         else:
             handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.GIVE_GIFT, force_taget_wait=True)
+
+    def select_target_egg(self) -> bool:
+        """
+        孵化加速药的选卵交互：绘制交互对象全部可加速的孵化中卵供玩家选择\n
+        仅一枚可加速卵时跳过选择直接选中\n
+        Returns:\n
+        bool -- 是否完成了选择（False为玩家取消或无可选卵）
+        """
+        from Script.System.Pregnancy_System import egg_handle
+        character_data: game_type.Character = cache.character_data[0]
+        target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        accelerable_eggs = egg_handle.get_accelerable_hatching_eggs(target_character_data.cid)
+        if not len(accelerable_eggs):
+            return False
+        # 仅一枚可加速卵时跳过选择直接选中
+        if len(accelerable_eggs) == 1:
+            character_data.behavior.gift_egg_id = list(accelerable_eggs.keys())[0]
+            return True
+        # 多枚卵时绘制选择列表
+        title_draw = draw.TitleLineDraw(_("选择要加速孵化的卵"), self.width)
+        while 1:
+            return_list = []
+            title_draw.draw()
+            for egg_id, egg_data in accelerable_eggs.items():
+                hatch_day = egg_handle.get_hatch_day(egg_data)
+                acc_day = int(egg_data.get("acceleration_days", 0))
+                born_time = egg_data["lay_time"] + datetime.timedelta(days=egg_handle.HATCH_TOTAL_DAY - acc_day)
+                egg_text = _("[{0}号卵] 孵化第{1}天（已加速{2}天，预计{3}月{4}日破壳）").format(egg_id, hatch_day, acc_day, born_time.month, born_time.day)
+                button_draw = draw.LeftButton(
+                    egg_text,
+                    str(egg_id),
+                    self.width,
+                    cmd_func=self.select_egg_id,
+                    args=(egg_id,),
+                )
+                return_list.append(button_draw.return_text)
+                button_draw.draw()
+                line_feed.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回选卵"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                return False
+            return True
+
+    def select_egg_id(self, egg_id: int):
+        """
+        选卵按钮回调：把选中的卵编号写入玩家行为数据\n
+        Keyword arguments:\n
+        egg_id -- 选中的卵编号
+        """
+        character_data: game_type.Character = cache.character_data[0]
+        character_data.behavior.gift_egg_id = egg_id
 
     def check_gift_available(self, gift_id: int) -> bool:
         """
@@ -325,7 +422,45 @@ class Gift_Panel:
             effective_flag = target_character_data.talent[27]
             if not effective_flag:
                 draw_text = _("\n  {0}没有在【泌乳】，无法使用停乳药\n").format(target_character_data.name)
-        
+        # 妊娠加速药：仅对受精或妊娠状态的胎生干员有效，且未达加速上限
+        elif drug_id == 35:
+            from Script.System.Pregnancy_System import pregnancy_handle, egg_handle
+            if not (target_character_data.talent[20] or target_character_data.talent[21]):
+                effective_flag = False
+                draw_text = _("\n  {0}没有处于受精或妊娠状态，无法使用妊娠加速药\n").format(target_character_data.name)
+            elif egg_handle.get_birth_type(target_character_data.cid) != 1:
+                effective_flag = False
+                draw_text = _("\n  {0}的种族不是胎生，无法使用妊娠加速药\n").format(target_character_data.name)
+            elif pregnancy_handle.get_pregnancy_acceleration_amount(target_character_data.cid) <= 0:
+                effective_flag = False
+                draw_text = _("\n  {0}的孕期已经加速到极限了，无法继续使用妊娠加速药\n").format(target_character_data.name)
+        # 孵化加速药：仅对持有可加速的孵化中卵的干员有效
+        elif drug_id == 36:
+            from Script.System.Pregnancy_System import egg_handle
+            if not len(egg_handle.get_hatching_eggs(target_character_data.cid)):
+                effective_flag = False
+                draw_text = _("\n  {0}没有正在孵化中的卵，无法使用孵化加速药\n").format(target_character_data.name)
+            elif not len(egg_handle.get_accelerable_hatching_eggs(target_character_data.cid)):
+                effective_flag = False
+                draw_text = _("\n  {0}的卵都已经加速到极限了，无法继续使用孵化加速药\n").format(target_character_data.name)
+        # 假孕药：仅对不处于任何怀孕相关状态的胎生干员有效
+        elif drug_id == 37:
+            from Script.System.Pregnancy_System import egg_handle
+            if egg_handle.get_birth_type(target_character_data.cid) != 1:
+                effective_flag = False
+                draw_text = _("\n  {0}的种族不是胎生，无法使用假孕药\n").format(target_character_data.name)
+            else:
+                for talent_id in [20, 21, 22, 23, 24, 25, 26]:
+                    if target_character_data.talent[talent_id]:
+                        effective_flag = False
+                        draw_text = _("\n  {0}正处于怀孕相关状态中，无法使用假孕药\n").format(target_character_data.name)
+                        break
+        # 假孕终止药：仅对处于假孕状态的干员有效
+        elif drug_id == 38:
+            effective_flag = target_character_data.talent[25] == 1
+            if not effective_flag:
+                draw_text = _("\n  {0}没有处于假孕状态，不需要使用假孕终止药\n").format(target_character_data.name)
+
         # 如果药物无效，则绘制提示信息
         if not effective_flag:
             now_draw = draw.WaitDraw()

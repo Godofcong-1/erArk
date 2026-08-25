@@ -30,6 +30,53 @@ window_width: int = normal_config.config_normal.text_width
 width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
+PREGNANCY_TOTAL_DAY = 270
+""" 名义孕期总天数（加速药剂量公式的基数） """
+ACCELERATION_MAX_DAY = 250
+""" 加速药额外加速时间的累计上限（天） """
+PARTURIENT_DAY = 260
+""" 妊娠转临盆的天数阈值 """
+
+
+def get_pregnancy_past_day(character_id: int) -> int:
+    """
+    计算角色的有效孕期天数（自受精起的自然天数+妊娠加速药累计的加速天数）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 有效孕期天数
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    natural_day = (cache.game_time - character_data.pregnancy.fertilization_time).days
+    return natural_day + int(character_data.pregnancy.acceleration_days)
+
+
+def get_acceleration_amount(now_acc: float, effective_day: int, day_cap: int) -> float:
+    """
+    计算加速药单次可入账的加速天数（三重夹取：剂量公式/累计上限250/临盆(破壳)前一天）
+    Keyword arguments:
+    now_acc -- 当前已累计的加速天数
+    effective_day -- 当前有效天数（自然天数+已累计加速）
+    day_cap -- 注入后允许的有效天数上限（胎生259=临盆前一天，卵264=破壳前一天）
+    Return arguments:
+    float -- 可入账加速天数（<=0时表示已到极限无法使用）
+    """
+    formula_amount = (PREGNANCY_TOTAL_DAY - now_acc) * 0.3
+    return min(formula_amount, ACCELERATION_MAX_DAY - now_acc, day_cap - effective_day)
+
+
+def get_pregnancy_acceleration_amount(character_id: int) -> float:
+    """
+    计算妊娠加速药对该角色单次可入账的加速天数（临盆前一天封顶）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    float -- 可入账加速天数（<=0时表示已到极限无法使用）
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_acc = character_data.pregnancy.acceleration_days
+    return get_acceleration_amount(now_acc, get_pregnancy_past_day(character_id), PARTURIENT_DAY - 1)
+
 
 def get_fertilization_rate(character_id: int):
     """
@@ -49,6 +96,10 @@ def get_fertilization_rate(character_id: int):
     # 基础概率
     now_rate = math.pow(semen_count / 1000,2) * 100 + semen_level * 5
 
+    # 假孕孕肚修正：假孕状态下无法受精
+    fake_pregnancy_flag = character_data.talent[25] == 1
+    if fake_pregnancy_flag:
+        now_rate = 0
     # 事前避孕药修正
     if character_data.h_state.body_item[11][1]:
         now_rate = 0
@@ -59,8 +110,11 @@ def get_fertilization_rate(character_id: int):
         now_rate = 0
         character_data.h_state.body_item[12][1] = False
     if semen_count > 0:
+        # 如果假孕的话绘制信息
+        if fake_pregnancy_flag:
+            draw_text += _("\n在假孕孕肚的影响下，{0}的身体不会真正受精\n").format(character_data.name)
         # 如果避孕的话绘制信息
-        if now_rate == 0:
+        elif now_rate == 0:
             draw_text += _("\n在避孕药的影响下，{0}的精子无法受精\n").format(pl_character_data.name)
         # 其他修正
         else:
@@ -125,6 +179,11 @@ def check_fertilization(character_id: int):
         if character_data.talent[6] == 1:
             draw_text += _("\n因为{0}还没有迎来初潮，所以精子只能在阴道内徒劳地寻找不存在的卵子，无法完成受精\n").format(character_data.name)
 
+        # 假孕孕肚状态下无法受精（正常经get_fertilization_rate已清零概率，此处为绕过概率计算路径的兜底）
+        elif character_data.talent[25] == 1:
+            character_data.pregnancy.fertilization_rate = 0
+            draw_text += _("\n{0}正处于假孕状态，精子无法使其真正受精\n").format(character_data.name)
+
         # 种族是机械的则需要判断是否有生育模组
         elif character_data.race == 2 and character_data.talent[171] == 0:
             character_data.pregnancy.fertilization_rate = 0
@@ -141,6 +200,8 @@ def check_fertilization(character_id: int):
                 draw_text += "\n※※※※※※※※※\n"
                 character_data.talent[20] = 1
                 character_data.pregnancy.fertilization_time = cache.game_time
+                # 新受精重置妊娠加速药的累计加速天数
+                character_data.pregnancy.acceleration_days = 0.0
                 # 判断是否是无意识妊娠
                 if character_data.pregnancy.unconscious_fertilization:
                     character_data.talent[35] = 1
@@ -183,10 +244,8 @@ def check_pregnancy(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     # 需要已经是受精状态
     if character_data.talent[20]:
-        # 计算经过的天数
-        start_date = cache.game_time
-        end_date = character_data.pregnancy.fertilization_time
-        past_day = (start_date - end_date).days
+        # 计算经过的天数（含妊娠加速药的加速天数）
+        past_day = get_pregnancy_past_day(character_id)
         # 90天在游戏内实际体验是30天
         if past_day >= 90:
             character_data.talent[20] = 0
@@ -220,10 +279,8 @@ def check_near_born(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     # 需要已经是妊娠状态
     if character_data.talent[21]:
-        # 计算经过的天数
-        start_date = cache.game_time
-        end_date = character_data.pregnancy.fertilization_time
-        past_day = (start_date - end_date).days
+        # 计算经过的天数（含妊娠加速药的加速天数）
+        past_day = get_pregnancy_past_day(character_id)
         # 从受精开始算，标准妊娠时间是265天
         if past_day >= 260:
             # 清零污浊结构体
@@ -252,10 +309,8 @@ def check_born(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     # 需要已经是临盆状态
     if character_data.talent[22]:
-        # 计算经过的天数
-        start_date = cache.game_time
-        end_date = character_data.pregnancy.fertilization_time
-        past_day = (start_date - end_date).days - 260
+        # 计算经过的天数（含妊娠加速药的加速天数）
+        past_day = get_pregnancy_past_day(character_id) - 260
         # 每过一天+20%几率判断是否生产
         now_rate = past_day * 20
         # print(f"debug {character_data.name}进入生产检测，当前生产几率为{now_rate}%")

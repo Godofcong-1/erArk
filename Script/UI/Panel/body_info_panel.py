@@ -161,10 +161,9 @@ class CharacterBodyText:
                 # W感觉描述
                 ui_text = get_ability_lv_ui_text(character_id, 7)
             now_text += f"  {ui_text}\n"
-            # 怀孕情况
-            start_date = cache.game_time
-            end_date = character_data.pregnancy.fertilization_time
-            past_day = (start_date - end_date).days
+            # 怀孕情况（有效孕期天数含妊娠加速药的加速天数）
+            from Script.System.Pregnancy_System import pregnancy_handle
+            past_day = pregnancy_handle.get_pregnancy_past_day(character_id)
             if character_data.talent[20]:
                 now_text += _("  已受精{0}天，").format(past_day)
                 now_text += _("但从外表上还看不出来\n")
@@ -183,6 +182,9 @@ class CharacterBodyText:
                 now_text += _("  正在[产后]休息\n")
             elif character_data.talent[24]:
                 now_text += _("  [育儿]中，正在给宝宝喂奶\n")
+            # 假孕状态
+            if character_data.talent[25]:
+                now_text += _("  处于[假孕]状态，肚子隆起如孕妇但并未真正怀孕\n")
             if character_data.experience[86] == 0:
                 now_text += _("  未分娩过\n")
             else:

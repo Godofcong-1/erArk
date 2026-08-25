@@ -2659,14 +2659,14 @@ def handle_t_rearing_1(character_id: int) -> int:
 @add_premise(constant_promise.Premise.INFLATION_0)
 def handle_inflation_0(character_id: int) -> int:
     """
-    校验角色是否孕肚==0
+    校验角色是否无孕肚外观（真孕肚26与假孕孕肚25均为0）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.talent[26] == 0:
+    if character_data.talent[26] == 0 and character_data.talent[25] == 0:
         return 1
     return 0
 
@@ -2674,14 +2674,14 @@ def handle_inflation_0(character_id: int) -> int:
 @add_premise(constant_promise.Premise.INFLATION_1)
 def handle_inflation_1(character_id: int) -> int:
     """
-    校验角色是否孕肚==1
+    校验角色是否有孕肚外观（真孕肚26或假孕孕肚25任一为1）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.talent[26] == 1:
+    if character_data.talent[26] == 1 or character_data.talent[25] == 1:
         return 1
     return 0
 
@@ -2689,7 +2689,7 @@ def handle_inflation_1(character_id: int) -> int:
 @add_premise(constant_promise.Premise.T_INFLATION_0)
 def handle_t_inflation_0(character_id: int) -> int:
     """
-    校验交互对象是否孕肚==0
+    校验交互对象是否无孕肚外观（真孕肚26与假孕孕肚25均为0）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -2697,7 +2697,7 @@ def handle_t_inflation_0(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.talent[26] == 0:
+    if target_data.talent[26] == 0 and target_data.talent[25] == 0:
         return 1
     return 0
 
@@ -2705,7 +2705,7 @@ def handle_t_inflation_0(character_id: int) -> int:
 @add_premise(constant_promise.Premise.T_INFLATION_1)
 def handle_t_inflation_1(character_id: int) -> int:
     """
-    校验交互对象是否孕肚==1
+    校验交互对象是否有孕肚外观（真孕肚26或假孕孕肚25任一为1）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -2713,7 +2713,69 @@ def handle_t_inflation_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.talent[26] == 1:
+    if target_data.talent[26] == 1 or target_data.talent[25] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.FAKE_INFLATION_0)
+def handle_fake_inflation_0(character_id: int) -> int:
+    """
+    校验角色是否假孕孕肚==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[25] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.FAKE_INFLATION_1)
+def handle_fake_inflation_1(character_id: int) -> int:
+    """
+    校验角色是否假孕孕肚==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[25] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_FAKE_INFLATION_0)
+def handle_t_fake_inflation_0(character_id: int) -> int:
+    """
+    校验交互对象是否假孕孕肚==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[25] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_FAKE_INFLATION_1)
+def handle_t_fake_inflation_1(character_id: int) -> int:
+    """
+    校验交互对象是否假孕孕肚==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[25] == 1:
         return 1
     return 0
 
