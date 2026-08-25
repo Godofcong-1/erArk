@@ -279,8 +279,8 @@ def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BOD
         item_id = item_data.item_id
         item_name = game_config.config_item[item_id].name
         h_state_data.body_item[i] = [item_name,False,None]
-        # 保留药物数据
-        if item_data.type == 0 and i in old_h_state_data.body_item:
+        # 保留药物数据和非H下依然可用的装备数据
+        if item_data.type in {0,2} and i in old_h_state_data.body_item:
             h_state_data.body_item[i] = old_h_state_data.body_item[i]
 
     # 部位绝顶
