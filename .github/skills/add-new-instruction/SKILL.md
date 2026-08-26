@@ -1,11 +1,26 @@
 ---
 name: add-new-instruction
-description: 为 erArk 新增一个玩家指令及其行为、前提、结算、口上的完整实施流程。当需要新增游戏指令、行为、或为指令补齐前提/结算/口上时使用。
+description: 为 erArk 新增一个玩家指令及其行为、前提、结算、口上的完整实施流程，含一段行为与二段行为的选型区分。当需要新增游戏指令、行为、二段行为、或为指令补齐前提/结算/口上时使用。
 ---
 
 # Skill Instructions
 
-你是 erArk 的指令系统实施助手。当用户要求新增一个玩家指令（或为既有指令补齐配套）时，按以下步骤依序实施。完整原理说明见 [新增指令工作流](../../prompts/数据处理工作流/新增指令工作流.md)。
+你是 erArk 的指令系统实施助手。当用户要求新增一个玩家指令（或为既有指令补齐配套）时，按以下步骤依序实施。完整原理说明见仓库内文档 `.github/prompts/数据处理工作流/新增指令工作流.md`；二段行为与口上原理另见 `.github/prompts/数据处理工作流/口上系统.md`。
+
+## 行为选型：一段行为与二段行为（动工前必须先定）
+
+**含义区分：**
+- **一段行为**：角色在时间轴上"正在做的事"，由指令触发（`handle_instruct.py` → `chara_handle_instruct_common_settle(constant.Behavior.XXX)`），`Behavior_Data.csv` 中 `duration` 为实际耗时分钟数。
+- **二段行为**：不是行动，是结算阶段挂在角色身上的**反应/衍生结算标记**——`duration=0`、`trigger=npc`、`tag=二段结算`（cid 集中在 1300+ 段）。由任意结算代码调 `second_behavior.character_get_second_behavior(character_id, "en_name")` 置 1，在 `settle_behavior.handle_settle_behavior` 末尾的 `check_second_effect` 中出口上、跑效果、归零。既有例：受精 `fertilization`、刻印升级 `happy_mark_1`、初见 `first_meet`、身体道具持续效果。
+
+**口上区别：**
+- 一段行为口上：`data/talk/` 分类目录，结算时 `talk.handle_talk` **先于**数值/效果结算显示，一次行为一条；同一行为的场景差分靠前提（含参数化 CVP token，零前提代码）。
+- 二段行为口上：`data/talk/system/second_*.csv`，由 `talk.handle_second_talk` 在 `check_second_effect` 中显示——晚于一段口上与主结算，且一次结算可多条并发（每个激活的二段行为各一条）。
+
+**选型准则：**
+- 效果发生在**指令行为本身的瞬间、且只由该指令触发** → 不建二段行为，口上挂一段行为 + 前提差分。礼物/药剂类一律如此：premise 写 `CVP_A1_Gift|<礼物id>_G_0`（读 `behavior.gift_id`），文件放 `data/talk/daily/gift/` 一药一文件。
+- 反应**可由多种指令/多个来源在结算期触发，或触发时机与具体指令解耦**（数值阈值驱动、跨行为共用）→ 新增二段行为（实施要点见文末附录）。
+- ⚠️ 反例警示：plan_14 曾把四种怀孕药物的生效口上误建为 4 个新二段行为，验收后整体返工改挂 `give_gift` 一段行为。
 
 ## 实施步骤
 
@@ -36,20 +51,29 @@ description: 为 erArk 新增一个玩家指令及其行为、前提、结算、
 ### 第五步：结算
 
 二选一：
-- **行为结算器**：`constant_effect.py` 加常量 → `Script/Settle/` 对应文件加 `@settle_behavior.add_settle_behavior_effect` 函数（首行 `if not add_time: return`）→ `Behavior_Effect.csv` 挂接 → 同步 `tools/ArkEditor/csv/Effect.csv`。
+- **行为结算器**：`constant_effect.py` 加常量 → `Script/Settle/` 对应文件加 `@settle_behavior.add_settle_behavior_effect` 函数（首行 `if not add_time: return`）→ `Behavior_Effect.csv` 挂接 → 同步 `tools/ArkEditor/csv/Effect.csv`（四列 `cid,effect_name,effect_type,effect`，`effect_type` 填与常量 docstring 首词一致的分类词）。
 - **面板直接结算**：结算函数写在子系统 handle 模块中（如 `condom_handle.settle_*`），面板确认时直接调用；`Behavior_Effect.csv` 挂 `9999`。副作用：数值变化不进入行动结算展示。
+
+**效果 id 选号与分类**（`BehaviorEffect` 按数字分段，docstring 格式 `""" 分类 说明 """`，新 id 必须插进对应分类段内相邻位置，勿追加到文件末尾）：
+1. 通用数值优先不新增 id：能用既有效果 id、CVE 综合数值结算 token（`Behavior_Effect.csv` 里直接写 `CVE_A1_E|80_G_1` 形式字符串，零代码）或 `common_default.py` 通用函数解决的，不加新常量。
+2. 新指令的专属结算逻辑 → **501~547 指令_专用结算** 段选空闲号，函数写在 `Script/Settle/default.py`。
+3. 其他常用段速查：0~40 与 1501~1531 属性_基础 / 41~89 属性_状态 / 110~146 属性_状态特殊补正 / 301~374 特殊flag_基础 / 451~489 特殊flag_H / 601~654 属性_服装（函数在 `default_cloth.py`）/ 800~868 H_阴茎位置与体位 / 901~1063 道具（函数在 `item_effect.py`）/ 1201~1246 源石技艺 / 1401~1419 属性_H / 1701~1726 行动 / 9999 空结算。
+4. ⚠️ 二段行为效果是 `SecondEffect` 独立编号空间（函数在 `Second_effect.py`，装饰器 `add_settle_second_behavior_effect`），与 `BehaviorEffect` 编号互不相干，勿混用（空结算 999 vs 9999 即一例）。
 
 数值增减优先走 `Script/Settle/common_default.py` 通用函数；精液污浊唯一入口 `ejaculation_panel.update_semen_dirty(..., update_shoot_position_flag=False)`。
 
 ### 第六步：前提
 
-1. `Script/Core/constant_promise.py` 按分类段加枚举（值为小写字符串）。
-2. `Script/Design/handle_premise/` 按主题选文件加 `@add_premise` 函数（返回 1/0）。
-3. 同步 `tools/ArkEditor/csv/Premise.csv`。
+1. **先查重**：优先用现成前提或参数化 CVP token（解析在 `handle_premise/__init__.py`，支持 A能力/T素质/E经验/S状态/F好感/X信赖/G攻略度/Gift礼物id 等；如 `CVP_A2_T|20_E_1` 交互对象素质20==1、`CVP_A1_F_GE_2000` 好感≥2000、`CVP_A1_Gift|35_G_0` 当前礼物id==35），能覆盖就不新增前提。
+2. `Script/Core/constant_promise.py` 加枚举：值为小写字符串 cid，docstring 格式 `""" 分类 说明 """`——首词分类决定归属段（约 70 类，如 系统状态/地点_定位/属性_能力/素质_妊娠/特殊flag_无意识/H_绝顶/初次_素质/道具_使用），新前提插到同分类相邻条目旁，勿追加到文件末尾。
+3. `Script/Design/handle_premise/` 按主题选模块加 `@add_premise` 函数（返回 1/0）：19 个主题文件 `handle_premise_<主题>.py`（H / ability / arts / assistant / base_value / body_manage / cloth / dirty / entertainment / fall / first / food / last_cmd / other / place / sp_flag / talent / time / work），选与分类词对应者。
+4. 同步 `tools/ArkEditor/csv/Premise.csv`（四列 `cid,premise_name,premise_type,premise`，`premise_type` 填与 docstring 相同的分类词）。
 
 ### 第七步：口上
 
-`data/talk/` 按分类目录建 CSV（五列 `cid,behavior_id,adv_id,premise,context`，表头 5 行照抄同目录文件）。`behavior_id` 填行为小写 en_name（共用行为的指令自动共用口上）；`premise` 填前提小写 cid（默认 `high_1`）；文本用 `{Name}`/`{TargetName}` 占位符。需要按场景区分文案时：结算里往 `SPECIAL_FLAG` 写标记 → 为标记做一对前提 → 口上各行分配对应前提。
+**7a 一段行为口上**：`data/talk/` 按分类目录建 CSV（五列 `cid,behavior_id,adv_id,premise,context`，表头 5 行照抄同目录文件）。`behavior_id` 填行为小写 en_name（共用行为的指令自动共用口上）；`premise` 填前提小写 cid（默认 `high_1`）；文本用 `{Name}`/`{TargetName}` 占位符。显示时机：`talk.handle_talk` 在结算数值前触发，一次行为一条。cid 无跨文件冲突问题（buildconfig 自动加文件名前缀），各文件从 1000 起编号即可。需要按场景区分文案时优先用现成参数化 CVP token（如 `CVP_A1_Gift|35_G_0` 礼物id、`CVP_A2_T|20_E_1` 交互对象素质）；无现成 token 再走：结算里往 `SPECIAL_FLAG` 写标记 → 为标记做一对前提 → 口上各行分配对应前提。
+
+**7b 二段行为口上**（仅当选型为二段行为时）：`data/talk/system/second_*.csv` 建条目（同五列格式），`behavior_id` 填二段行为小写 en_name；由 `talk.handle_second_talk` 显示，晚于一段口上与主结算。⚠️ NPC 不与玩家同场景时二段行为默认被丢弃（不显示不结算）；需跨场景生效的，在 `Behavior_Effect.csv` 挂 `998`（必须显示）或 `997`（必须计算但不显示）代替普通空结算 `999`（三者都是 `constant_effect.SecondEffect` 的空白结算，先例：`fertilization` 挂 998、`first_meet` 挂 999）。
 
 ### 第八步：数据结构与存档兼容（如有新数据）
 
@@ -69,6 +93,19 @@ description: 为 erArk 新增一个玩家指令及其行为、前提、结算、
 3. 注册断言：`constant.handle_instruct_data` / `instruct_premise_data` / `handle_premise_data` / `game_config.config_behavior` / `config_behavior_effect_data` 包含新增项。
 4. 游戏内测试可开 debug 模式（config.ini `debug=1`，跳过全部前提）。
 
+## 附录：新增二段行为的实施要点
+
+选型确定为二段行为时，按此清单实施（替代上面第二~七步中的一段行为路线）：
+
+1. `data/csv/Behavior_Data.csv` 加行：cid 在 1300+ 段选空闲号，`duration=0`、`trigger=npc`、`tag=二段结算`。
+2. 常量三处照既有条目位置添加：`Script/Core/constant/SecondBehavior.py`、`SecondBehavior_Int.py`、`Behavior.py`。
+3. 在结算代码的触发点调 `second_behavior.character_get_second_behavior(character_id, "en_name")`（可在 `Script/Settle/`、`second_behavior.py`、各子系统 handle 中，视反应来源而定）。
+4. `data/csv/Behavior_Effect.csv` 必须加行：有数值效果挂对应效果 id（`Script/Settle/Second_effect.py` 中 `@add_settle_second_behavior_effect` 注册）；无数值效果挂空结算 `999`（⚠️ 二段行为的空结算是 999，不是一段行为的 9999）；需跨场景生效改挂 `998`/`997`（见 7b）。
+5. 口上按第七步 7b 建 `data/talk/system/second_*.csv` 条目。
+6. 同步 `tools/ArkEditor/csv/Behavior_Data.csv`。
+7. `python buildconfig.py` 后验证：`game_config.config_behavior` 含新 cid、`config_behavior_effect_data` 含新 en_name、（如挂了 997/998）`config_behavior_must_settle_cid_list`/`config_behavior_must_show_cid_list` 含新 en_name。
+
 ## 完整案例
 
 避孕套道具系统：`plan/wait/plan_06_避孕套道具系统.md`（8 轮执行记录）与 `Script/System/Item_System/道具系统设计文档.md`。
+一段/二段行为选型与礼物药剂口上：`plan/done/plan_14_怀孕系统四种药物.md`（含二段行为方案返工为一段口上方案的完整记录）。
