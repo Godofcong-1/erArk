@@ -679,18 +679,36 @@ def talk_common_judge(now_talk: str, character_id: int) -> str:
                         part_dict = {**part_dict, "A": part_dict["A"].copy()}
                         part_dict["A"] += common_s_A_list
                 # 定义替换函数：每次匹配都随机挑选每个部位一条文本进行拼接
-                def _part_replacer(match, part_dict=part_dict):
+                def _part_replacer(match, part_dict=part_dict, key=key):
                     """
                     部位占位符替换函数，每次匹配都随机挑选每个部位一条文本进行拼接
                     参数:
                         match: 正则匹配对象（未使用）
                         part_dict (dict): 部位字典，以默认参数固化当前循环的取值，避免闭包晚绑定
+                        key (str): 当前占位符的类型名，以默认参数固化当前循环的取值，避免闭包晚绑定
                     返回:
                         str: 替换后的文本
                     """
                     nonlocal calculated_premise_dict  # 声明使用外部变量
                     part_str = ""
-                    for part in part_dict:
+                    # 待拼接的分段列表，部位短词(body_part_*)保持原样全段拼接
+                    draw_part_list = list(part_dict)
+                    # 纸娃娃地文详细程度分档：仅对动作类(action_part_*)生效
+                    if key in game_config.config_talk_common_action_part_type_set:
+                        # 显式指定A→B→C的顺序，不依赖part_dict的插入序
+                        draw_part_list = [part for part in ("A", "B", "C") if part in part_dict]
+                        detail_level = cache.all_system_setting.draw_setting.get(20, 1)
+                        # 低档：A/B/C三段中等概率随机只取一段
+                        if detail_level == 0:
+                            draw_part_list = [random.choice(draw_part_list)] if draw_part_list else []
+                        # 中档：整体动作段A + B/C中等概率随机取一段
+                        elif detail_level == 1:
+                            extra_part_list = [part for part in draw_part_list if part in ("B", "C")]
+                            draw_part_list = [part for part in draw_part_list if part == "A"]
+                            if extra_part_list:
+                                draw_part_list.append(random.choice(extra_part_list))
+                        # 高档：不做裁剪，保持三段全出
+                    for part in draw_part_list:
                         now_talk_data: dict = {}
                         talk_common_cid_list = part_dict[part]
                         for talk_common_cid in talk_common_cid_list:
