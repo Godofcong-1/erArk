@@ -2253,6 +2253,10 @@
     PLAYER_NO_OTHER_PET_EXCEPT_TARGET = "player_no_other_pet_except_target"
     """ 素质_陷落 玩家没有除了玩家交互对象之外的宠物 """
 
+    MENARCHE_0 = "menarche_0"
+    """ 素质_妊娠 自己未初潮==0 """
+    MENARCHE_1 = "menarche_1"
+    """ 素质_妊娠 自己未初潮==1 """
     FERTILIZATION_0 = "fertilization_0"
     """ 素质_妊娠 自己受精==0 """
     FERTILIZATION_1 = "fertilization_1"

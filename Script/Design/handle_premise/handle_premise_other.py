@@ -2318,6 +2318,33 @@ def handle_t_lactation_0(character_id: int) -> int:
         return 1
     return 0
 
+@add_premise(constant_promise.Premise.MENARCHE_0)
+def handle_menarche_0(character_id: int) -> int:
+    """
+    校验角色是否未初潮==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[6] == 0:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.MENARCHE_1)
+def handle_menarche_1(character_id: int) -> int:
+    """
+    校验角色是否已初潮==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[6] == 1:
+        return 1
+    return 0
 
 @add_premise(constant_promise.Premise.FERTILIZATION_0)
 def handle_fertilization_0(character_id: int) -> int:

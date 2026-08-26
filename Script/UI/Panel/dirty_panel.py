@@ -2,7 +2,7 @@ from typing import Tuple, List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, rich_text
 from Script.Design import map_handle, clothing, attr_calculation
-from Script.Design import handle_premise
+from Script.Design import handle_premise, handle_talent
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -201,7 +201,13 @@ class SeeCharacterBodyPanel:
                 dirty_text_cid = f"{_(part_name, revert_translation = True)}精液污浊{str(semen_level)}"
                 # 是否显示完整污浊文本
                 if cache.all_system_setting.draw_setting[10]:
-                    dirty_text_context = game_config.ui_text_data['dirty_full'][dirty_text_cid]
+                    # 检查是否有差分文本
+                    dirty_diff_text_cid = self.get_dirty_diff_text_cid(i, semen_level)
+                    # 如果是胸部、臀部、腿部、后穴、阴道、子宫则优先使用差分文本，如果没有则使用通用文本
+                    if dirty_diff_text_cid != "" and dirty_diff_text_cid in game_config.ui_text_data['dirty_full_diff']:
+                        dirty_text_context = game_config.ui_text_data['dirty_full_diff'][dirty_diff_text_cid]
+                    else:
+                        dirty_text_context = game_config.ui_text_data['dirty_full'][dirty_text_cid]
                     dirty_text_context = f"<semen>{dirty_text_context}</semen>\n"
                     now_part_text = f"  [{part_name}]:{dirty_text_context}"
                 else:
@@ -367,6 +373,56 @@ class SeeCharacterBodyPanel:
         rich_text_draw_list = rich_text.get_rich_text_draw_list(all_part_text)
         # 加入到绘制列表中
         self.draw_list.extend(rich_text_draw_list)
+
+    def get_dirty_diff_text_cid(self, body_part_index: int, semen_level: int) -> str:
+        """
+        获取污浊差分文本cid
+        Keyword arguments:
+        body_part_index -- 部位索引
+        semen_level -- 精液污浊等级
+        Return arguments:
+        str -- 污浊差分文本cid，如果没有则返回空字符串
+        """
+        # 检查部位索引是否在指定范围内
+        if body_part_index not in {3, 6, 7, 8, 10, 11}:
+            return ""
+        part_name = game_config.config_body_part[body_part_index].name
+        # 胸部
+        if body_part_index == 3:
+            talent_id = handle_talent.have_chest_talent(self.character_id)
+            talent_name = game_config.config_talent[talent_id].name
+            dirty_diff_text_cid = f"{_(part_name, revert_translation = True)}{talent_name}精液污浊{str(semen_level)}"
+            return dirty_diff_text_cid
+        # 小穴和子宫
+        elif body_part_index in {6, 7}:
+            if handle_premise.handle_pregnancy_1(self.character_id):
+                dirty_diff_text_cid = f"{_(part_name, revert_translation = True)}妊娠精液污浊{str(semen_level)}"
+            elif handle_premise.handle_fertilization_1(self.character_id):
+                dirty_diff_text_cid = f"{_(part_name, revert_translation = True)}受精精液污浊{str(semen_level)}"
+            elif handle_premise.handle_menarche_1(self.character_id):
+                dirty_diff_text_cid = f"{_(part_name, revert_translation = True)}未初潮精液污浊{str(semen_level)}"
+            else:
+                dirty_diff_text_cid = f"{_(part_name, revert_translation = True)}未孕精液污浊{str(semen_level)}"
+            return dirty_diff_text_cid
+        # 后穴
+        elif body_part_index == 8:
+            talent_id = handle_talent.have_hip_talent(self.character_id)
+            talent_name = game_config.config_talent[talent_id].name
+            dirty_diff_text_cid = f"{_(part_name, revert_translation = True)}{talent_name}精液污浊{str(semen_level)}"
+            return dirty_diff_text_cid
+        # 腿部
+        elif body_part_index == 10:
+            talent_id = handle_talent.have_leg_talent(self.character_id)
+            talent_name = game_config.config_talent[talent_id].name
+            dirty_diff_text_cid = f"{_(part_name, revert_translation = True)}{talent_name}精液污浊{str(semen_level)}"
+            return dirty_diff_text_cid
+        # 脚部
+        elif body_part_index == 11:
+            talent_id = handle_talent.have_foot_talent(self.character_id)
+            talent_name = game_config.config_talent[talent_id].name
+            dirty_diff_text_cid = f"{_(part_name, revert_translation = True)}{talent_name}精液污浊{str(semen_level)}"
+            return dirty_diff_text_cid
+        return ""
 
     def draw(self):
         """绘制面板"""
