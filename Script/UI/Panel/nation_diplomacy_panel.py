@@ -522,8 +522,8 @@ class Nation_Diplomacy_Panel:
             info_draw_2.width = self.width
             info_draw_2.draw()
             npc_draw_count = 0
-            chara_list = cache.npc_id_got
-            # 将当前派遣的外交官加入到角色列表里
+            chara_list = set(cache.npc_id_got)
+            # 将当前派遣的外交官加入到角色列表里（此处为副本，不能影响cache.npc_id_got）
             now_diplomat_chara_id = cache.rhodes_island.diplomat_of_country[country_id][0]
             if now_diplomat_chara_id != 0:
                 chara_list.add(now_diplomat_chara_id)
@@ -588,7 +588,7 @@ class Nation_Diplomacy_Panel:
             # 取消外交官的工作类型和负责区域数据
             old_diplomat_chara_data.work.work_type = 0
             old_diplomat_chara_data.sp_flag.in_diplomatic_visit = 0
-            handle_premise.settle_chara_unnormal_flag(character_id, 7)
+            handle_premise.settle_chara_unnormal_flag(old_diplomat_id, 7)
             cache.rhodes_island.diplomat_of_country[country_id][0] = 0
             # 如果是离线状态，则上线
             if not handle_premise.handle_normal_7(old_diplomat_id):

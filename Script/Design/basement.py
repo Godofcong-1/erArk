@@ -452,9 +452,17 @@ def update_work_people():
             cache.rhodes_island.all_work_npc_set[work_type].add(chara_id)
             cache.rhodes_island.work_people_now += 1
 
-            # 将旧的外交官改为新的邀请专员
+            # 外交官丢失了驻在国信息时的数据修复
             if work_type == 131 and character_data.sp_flag.in_diplomatic_visit == 0:
-                character_data.work.work_type = 132
+                for country_id in cache.rhodes_island.diplomat_of_country:
+                    # 仍在外交官名册上的，补回驻在国信息
+                    if cache.rhodes_island.diplomat_of_country[country_id][0] == chara_id:
+                        character_data.sp_flag.in_diplomatic_visit = country_id
+                        handle_premise.settle_chara_unnormal_flag(chara_id, 7)
+                        break
+                else:
+                    # 名册上没有的，视为旧版本的外交官数据，改为新的邀请专员
+                    character_data.work.work_type = 132
 
             # 维护药材/花草种植员列表
             if work_type == 161:

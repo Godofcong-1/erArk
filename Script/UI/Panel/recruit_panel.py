@@ -66,6 +66,13 @@ def find_recruitable_npc() -> List[int]:
 
     recruitable_npc_id_list = []
 
+    # 收集所有已被任命为各国外交官的干员id
+    # 外派期间的外交官会被移出npc_id_got，无法靠“已在罗德岛”排除，故在此单独收集
+    diplomat_id_set = set()
+    for diplomat_data in cache.rhodes_island.diplomat_of_country.values():
+        if diplomat_data and diplomat_data[0]:
+            diplomat_id_set.add(diplomat_data[0])
+
     for adv_id, tem_data in cache.npc_tem_data.items():
         chara_id = adv_id
         # 跳过玩家
@@ -88,6 +95,9 @@ def find_recruitable_npc() -> List[int]:
             continue
         # 跳过离线异常
         if not handle_premise.handle_normal_7(chara_id):
+            continue
+        # 跳过已被任命为外交官的干员
+        if chara_id in diplomat_id_set:
             continue
         # 跳过特殊NPC
         if cache.character_data[chara_id].name in constant.ban_NPC_name_set:

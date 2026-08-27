@@ -4472,6 +4472,8 @@ def handle_chara_off_line(
     if character_id in cache.scene_data[old_scene_path_str].character_list:
         cache.scene_data[old_scene_path_str].character_list.remove(character_id)
     character_data.position = ["0", "0"]
+    # 重新结算离线异常标记，避免位掩码停留在离线前的旧值
+    handle_premise.settle_chara_unnormal_flag(character_id, 7)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CHARA_ON_LINE)
@@ -4501,12 +4503,16 @@ def handle_chara_on_line(
     character_data.urinate_point = 0
     handle_premise.settle_chara_unnormal_flag(character_id, 5)
     # 清零各特殊状态flag
-    if character_data.sp_flag.imprisonment:
-        character_data.sp_flag = game_type.SPECIAL_FLAG()
+    old_imprisonment = character_data.sp_flag.imprisonment
+    # 外交访问状态需要跨上线保留，否则外交官随罗德岛抵达驻在国回岛后会丢失驻在国信息
+    old_in_diplomatic_visit = character_data.sp_flag.in_diplomatic_visit
+    character_data.sp_flag = game_type.SPECIAL_FLAG()
+    character_data.sp_flag.in_diplomatic_visit = old_in_diplomatic_visit
+    if old_imprisonment:
         character_data.sp_flag.imprisonment = True
         handle_premise.settle_chara_unnormal_flag(character_id, 2)
-    else:
-        character_data.sp_flag = game_type.SPECIAL_FLAG()
+    # 重新结算离线异常标记，避免位掩码停留在上线前的旧值
+    handle_premise.settle_chara_unnormal_flag(character_id, 7)
     # 赋予默认行动数据
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
