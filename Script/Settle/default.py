@@ -10944,3 +10944,26 @@ def handle_identify_held_eggs_settle(
         return
     from Script.System.Pregnancy_System import egg_handle
     egg_handle.identify_held_eggs_settle()
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.EAT_LAST_TWO_FOOD)
+def handle_eat_last_two_food(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    吃掉背包里的最后两个食物，助理送饭时用
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    for i in range(2):
+        handle_set_target_food_from_bag_last(character_id, add_time, change_data, now_time)
+        handle_eat_add_just(character_id, add_time, change_data, now_time)
+        handle_delete_last_food(character_id, add_time, change_data, now_time)

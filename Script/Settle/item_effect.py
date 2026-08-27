@@ -1190,7 +1190,29 @@ def handle_delete_all_food(
         food: game_type.Food = character_data.food_bag[food_id]
         del character_data.food_bag[food.uid]
 
-
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DELETE_LAST_FOOD)
+def handle_delete_last_food(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    删除背包内最后一个食物
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    if character_data.food_bag:
+        last_food_id = list(character_data.food_bag.keys())[-1]
+        del character_data.food_bag[last_food_id]
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_HUGE_LUBRICATION)
 def handle_target_add_huge_lubrication(

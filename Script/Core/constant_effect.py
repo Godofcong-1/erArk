@@ -805,6 +805,8 @@ class BehaviorEffect:
     """ 道具_增减 NPC随机制作一个食物，并补充到自己背包中 """
     ASSISTANT_MAKE_FOOD_TO_BAG = 996
     """ 道具_增减 助理制作两个食物，并补充到自己背包中 """
+    DELETE_LAST_FOOD = 997
+    """ 道具_增减 删除背包内最后一个食物 """
 
     TARGET_ADD_HUGE_LUBRICATION = 1001
     """ 道具_使用效果 交互对象增加大量润滑（润滑液） """
@@ -998,6 +1000,10 @@ class BehaviorEffect:
 
     FACILITY_DAMAGE_CHECK = 1751
     """ 设施 几率判定自己所在地点是否造成损坏 """
+
+    EAT_LAST_TWO_FOOD = 3001
+    """ 复合 吃掉背包里的最后两个食物，助理送饭时用 """
+
 
 class SecondEffect:
     """二段结算效果函数"""
