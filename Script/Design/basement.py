@@ -340,6 +340,8 @@ def update_base_resouce_newday():
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
 
+    # 按当前在编角色重建岗位人员数据，供后续岗位结算使用
+    update_work_people()
     # 结算公务工作
     settle_office_work()
     # 结算精液转化
