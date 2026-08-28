@@ -137,7 +137,7 @@ def get_hatch_day(egg_data: dict) -> int:
 
 def get_egg_acceleration_amount(egg_data: dict) -> float:
     """
-    计算孵化加速药对该卵单次可入账的加速天数（破壳前一天封顶）
+    计算孵化加速药对该卵单次可入账的加速天数（破壳前一天封顶，剂量基数为孵化总天数265）
     Keyword arguments:
     egg_data -- 卵数据字典
     Return arguments:
@@ -145,7 +145,7 @@ def get_egg_acceleration_amount(egg_data: dict) -> float:
     """
     from Script.System.Pregnancy_System import pregnancy_handle
     now_acc = egg_data.get("acceleration_days", 0)
-    return pregnancy_handle.get_acceleration_amount(now_acc, get_hatch_day(egg_data), HATCH_TOTAL_DAY - 1)
+    return pregnancy_handle.get_acceleration_amount(now_acc, get_hatch_day(egg_data), HATCH_TOTAL_DAY - 1, HATCH_TOTAL_DAY)
 
 
 def get_accelerable_hatching_eggs(character_id: int) -> dict:

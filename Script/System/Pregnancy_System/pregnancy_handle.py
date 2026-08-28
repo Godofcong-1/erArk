@@ -31,7 +31,7 @@ width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
 PREGNANCY_TOTAL_DAY = 270
-""" 名义孕期总天数（加速药剂量公式的基数） """
+""" 名义孕期总天数（妊娠加速药剂量公式的基数） """
 ACCELERATION_MAX_DAY = 250
 """ 加速药额外加速时间的累计上限（天） """
 PARTURIENT_DAY = 260
@@ -51,17 +51,19 @@ def get_pregnancy_past_day(character_id: int) -> int:
     return natural_day + int(character_data.pregnancy.acceleration_days)
 
 
-def get_acceleration_amount(now_acc: float, effective_day: int, day_cap: int) -> float:
+def get_acceleration_amount(now_acc: float, effective_day: int, day_cap: int, total_day: int = PREGNANCY_TOTAL_DAY) -> float:
     """
-    计算加速药单次可入账的加速天数（三重夹取：剂量公式/累计上限250/临盆(破壳)前一天）
+    计算加速药单次可入账的加速天数（三重夹取：剩余期30%/累计上限250/临盆(破壳)前一天）
     Keyword arguments:
     now_acc -- 当前已累计的加速天数
     effective_day -- 当前有效天数（自然天数+已累计加速）
     day_cap -- 注入后允许的有效天数上限（胎生259=临盆前一天，卵264=破壳前一天）
+    total_day -- 剂量公式基数（胎生为名义孕期270，卵为孵化总天数265）
     Return arguments:
     float -- 可入账加速天数（<=0时表示已到极限无法使用）
     """
-    formula_amount = (PREGNANCY_TOTAL_DAY - now_acc) * 0.3
+    # 剂量为剩余期（基数-当前有效天数）的30%
+    formula_amount = (total_day - effective_day) * 0.3
     return min(formula_amount, ACCELERATION_MAX_DAY - now_acc, day_cap - effective_day)
 
 
