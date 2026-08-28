@@ -1137,6 +1137,8 @@ player_no_other_pet,PLAYER_NO_OTHER_PET,素质_陷落,玩家没有除了自己�
 player_have_other_pet_except_target,PLAYER_HAVE_OTHER_PET_EXCEPT_TARGET,素质_陷落,玩家有除了玩家交互对象之外的宠物
 player_no_other_pet_except_target,PLAYER_NO_OTHER_PET_EXCEPT_TARGET,素质_陷落,玩家没有除了玩家交互对象之外的宠物
 
+menarche_0,MENARCHE_0,素质_妊娠,自己未初潮==0
+menarche_1,MENARCHE_1,素质_妊娠,自己未初潮==1
 fertilization_0,FERTILIZATION_0,素质_妊娠,自己受精==0
 fertilization_1,FERTILIZATION_1,素质_妊娠,自己受精==1
 t_fertilization_0,T_FERTILIZATION_0,素质_妊娠,交互对象受精==0
@@ -1167,6 +1169,10 @@ fake_inflation_0,FAKE_INFLATION_0,素质_妊娠,自己假孕孕肚==0
 fake_inflation_1,FAKE_INFLATION_1,素质_妊娠,自己假孕孕肚==1
 t_fake_inflation_0,T_FAKE_INFLATION_0,素质_妊娠,交互对象假孕孕肚==0
 t_fake_inflation_1,T_FAKE_INFLATION_1,素质_妊娠,交互对象假孕孕肚==1
+growth_stop_0,GROWTH_STOP_0,素质_妊娠,自己成长停滞==0
+growth_stop_1,GROWTH_STOP_1,素质_妊娠,自己成长停滞==1
+t_growth_stop_0,T_GROWTH_STOP_0,素质_妊娠,交互对象成长停滞==0
+t_growth_stop_1,T_GROWTH_STOP_1,素质_妊娠,交互对象成长停滞==1
 cumflation_0,CUMFLATION_0,素质_妊娠,自己精液膨腹==0
 cumflation_1,CUMFLATION_1,素质_妊娠,自己精液膨腹==1
 t_cumflation_0,T_CUMFLATION_0,素质_妊娠,交互对象精液膨腹==0
@@ -1245,6 +1251,8 @@ t_oestrus_1,T_OESTRUS_1,属性_素质,交互对象发情期==1
 is_medical,IS_MEDICAL,属性_素质,自己的职业为医疗
 t_is_medical,T_IS_MEDICAL,属性_素质,交互对象的职业为医疗
 child_1,SELF_IS_CHILD,属性_素质,自己是幼女
+baby_1,SELF_IS_BABY,属性_素质,自己是婴儿
+loli_1,SELF_IS_LOLI,属性_素质,自己是萝莉
 self_child_or_loli_1,SELF_CHILD_OR_LOLI_1,属性_素质,自己幼女或萝莉==1
 t_child_or_loli_1,T_CHILD_OR_LOLI_1,属性_素质,交互对象幼女或萝莉==1
 self_underage,SELF_UNDERAGE,属性_素质,自己是未成年

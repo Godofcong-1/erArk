@@ -3,7 +3,10 @@ from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant, py_cmd
 from Script.UI.Moudle import draw
 from Script.Config import normal_config
+from Script.Design import game_time
+from Script.Design import handle_premise
 from Script.System.Pregnancy_System import egg_handle, family_tree_draw
+from Script.System.Pregnancy_System import pregnancy_constant
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -16,26 +19,6 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
-STAGE_NONE = 0
-""" 阶段枚举：无 """
-STAGE_FERTILIZATION = 1
-""" 阶段枚举：受精 """
-STAGE_EGG_WAIT = 2
-""" 阶段枚举：持卵待鉴定 """
-STAGE_PREGNANCY = 3
-""" 阶段枚举：妊娠 """
-STAGE_HATCHING = 4
-""" 阶段枚举：孵化中 """
-STAGE_PARTURIENT = 5
-""" 阶段枚举：临盆 """
-STAGE_POSTPARTUM = 6
-""" 阶段枚举：产后 """
-STAGE_REARING = 7
-""" 阶段枚举：育儿 """
-
-STAGE_NAME_LIST = [_("全部"), _("受精"), _("持卵待鉴定"), _("妊娠"), _("孵化中"), _("临盆"), _("产后"), _("育儿")]
-""" 阶段名列表（0位为筛选用的全部） """
-
 
 def get_chara_pregnancy_stage(character_id: int) -> int:
     """
@@ -45,34 +28,33 @@ def get_chara_pregnancy_stage(character_id: int) -> int:
     Return arguments:
     int -- 阶段枚举值（0为不在任何怀孕阶段）
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    now_stage = STAGE_NONE
-    if character_data.talent[20]:
-        now_stage = STAGE_FERTILIZATION
+    now_stage = pregnancy_constant.STAGE_NONE
+    if handle_premise.handle_fertilization_1(character_id):
+        now_stage = pregnancy_constant.STAGE_FERTILIZATION
     if len(egg_handle.get_unidentified_eggs(character_id, exclude_held=False)):
-        now_stage = STAGE_EGG_WAIT
-    if character_data.talent[21]:
-        now_stage = STAGE_PREGNANCY
+        now_stage = pregnancy_constant.STAGE_EGG_WAIT
+    if handle_premise.handle_pregnancy_1(character_id):
+        now_stage = pregnancy_constant.STAGE_PREGNANCY
     if len(egg_handle.get_hatching_eggs(character_id)):
-        now_stage = STAGE_HATCHING
-    if character_data.talent[22]:
-        now_stage = STAGE_PARTURIENT
-    if character_data.talent[23]:
-        now_stage = STAGE_POSTPARTUM
-    if character_data.talent[24]:
-        now_stage = STAGE_REARING
+        now_stage = pregnancy_constant.STAGE_HATCHING
+    if handle_premise.handle_parturient_1(character_id):
+        now_stage = pregnancy_constant.STAGE_PARTURIENT
+    if handle_premise.handle_postpartum_1(character_id):
+        now_stage = pregnancy_constant.STAGE_POSTPARTUM
+    if handle_premise.handle_rearing_1(character_id):
+        now_stage = pregnancy_constant.STAGE_REARING
     return now_stage
 
 
 def get_date_text(now_time: datetime.datetime) -> str:
     """
-    将时间格式化为"X月X日"文本
+    将时间格式化为"X月X日"文本，月份用游戏的春夏秋冬月名（非四季月由 game_time.get_month_text 兜底归并）
     Keyword arguments:
     now_time -- 时间
     Return arguments:
     str -- 格式化文本
     """
-    return _("{0}月{1}日").format(now_time.month, now_time.day)
+    return _("{0}月{1}日").format(game_time.get_month_text(now_time), now_time.day)
 
 
 def get_stage_info_text(character_id: int, now_stage: int) -> str:
@@ -85,40 +67,45 @@ def get_stage_info_text(character_id: int, now_stage: int) -> str:
     str -- 关键时间说明
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if now_stage == STAGE_FERTILIZATION:
+    if now_stage == pregnancy_constant.STAGE_FERTILIZATION:
         start_time = character_data.pregnancy.fertilization_time
         # 预计日期扣除妊娠加速药的加速天数，已到期则显示为当天
         acc_day = int(character_data.pregnancy.acceleration_days)
-        predict_time = max(start_time + datetime.timedelta(days=90 - acc_day), cache.game_time)
+        predict_time = max(game_time.get_sub_date(day=pregnancy_constant.PREGNANCY_DAY - acc_day, old_date=start_time), cache.game_time)
         return _("受精于{0}，预计{1}妊娠").format(get_date_text(start_time), get_date_text(predict_time))
-    if now_stage == STAGE_EGG_WAIT:
+    if now_stage == pregnancy_constant.STAGE_EGG_WAIT:
         egg_count = len(egg_handle.get_unidentified_eggs(character_id, exclude_held=False))
         return _("{0}枚卵待鉴定").format(egg_count)
-    if now_stage == STAGE_PREGNANCY:
+    if now_stage == pregnancy_constant.STAGE_PREGNANCY:
         start_time = character_data.pregnancy.fertilization_time
         # 预计日期扣除妊娠加速药的加速天数，已到期则显示为当天
         acc_day = int(character_data.pregnancy.acceleration_days)
-        predict_time = max(start_time + datetime.timedelta(days=260 - acc_day), cache.game_time)
+        predict_time = max(game_time.get_sub_date(day=pregnancy_constant.PARTURIENT_DAY - acc_day, old_date=start_time), cache.game_time)
         return _("受精于{0}，预计{1}临盆").format(get_date_text(start_time), get_date_text(predict_time))
-    if now_stage == STAGE_HATCHING:
+    if now_stage == pregnancy_constant.STAGE_HATCHING:
         hatching_eggs = egg_handle.get_hatching_eggs(character_id)
         first_egg = list(hatching_eggs.values())[0]
         hatch_day = egg_handle.get_hatch_day(first_egg)
         # 预计破壳日扣除孵化加速药的加速天数，已到期则显示为当天
         egg_acc_day = int(first_egg.get("acceleration_days", 0))
-        born_time = max(first_egg["lay_time"] + datetime.timedelta(days=egg_handle.HATCH_TOTAL_DAY - egg_acc_day), cache.game_time)
+        born_time = max(game_time.get_sub_date(day=pregnancy_constant.HATCH_TOTAL_DAY - egg_acc_day, old_date=first_egg["lay_time"]), cache.game_time)
         return _("孵化第{0}天，预计{1}破壳").format(hatch_day, get_date_text(born_time))
-    if now_stage == STAGE_PARTURIENT:
+    if now_stage == pregnancy_constant.STAGE_PARTURIENT:
         return _("已在住院区待产，预计近日生产")
-    if now_stage == STAGE_POSTPARTUM:
+    if now_stage == pregnancy_constant.STAGE_POSTPARTUM:
         return _("生产完毕，正在住院区休养")
-    if now_stage == STAGE_REARING:
-        if len(character_data.relationship.child_id_list):
-            child_id = character_data.relationship.child_id_list[-1]
-            if child_id in cache.character_data:
-                child_data = cache.character_data[child_id]
-                born_time = child_data.pregnancy.born_time
-                return _("正在育儿室照顾{0}，预计{1}完成育儿").format(child_data.name, get_date_text(born_time + datetime.timedelta(days=90)))
+    if now_stage == pregnancy_constant.STAGE_REARING:
+        # 函数内导入，避免与 pregnancy_handle 形成循环导入
+        from Script.System.Pregnancy_System import pregnancy_handle
+        # 逐个列出名下全部婴儿及各自的预计成长日（扣除成长加速药的加速天数，已到期则显示为当天）
+        baby_text_list = []
+        for child_id in pregnancy_handle.get_baby_id_list(character_id):
+            child_data = cache.character_data[child_id]
+            acc_day = int(getattr(child_data.pregnancy, "growth_acceleration_days", 0))
+            grow_time = max(game_time.get_sub_date(day=pregnancy_constant.REARING_COMPLETE_DAY - acc_day, old_date=child_data.pregnancy.born_time), cache.game_time)
+            baby_text_list.append(_("{0}（预计{1}长大）").format(child_data.name, get_date_text(grow_time)))
+        if len(baby_text_list):
+            return _("正在育儿室照顾{0}").format("、".join(baby_text_list))
         return _("育儿中")
     return ""
 
@@ -156,13 +143,13 @@ class Pregnancy_Overview_Panel:
                     now_draw = draw.CenterDraw()
                     now_draw.text = f"[{page_name_list[page_id]}]"
                     now_draw.style = "onbutton"
-                    now_draw.width = self.width / len(page_name_list)
+                    now_draw.width = int(self.width / len(page_name_list))
                     now_draw.draw()
                 else:
                     now_draw = draw.CenterButton(
                         f"[{page_name_list[page_id]}]",
                         page_name_list[page_id],
-                        self.width / len(page_name_list),
+                        int(self.width / len(page_name_list)),
                         cmd_func=self.change_page,
                         args=(page_id,),
                     )
@@ -210,15 +197,15 @@ class Pregnancy_Overview_Panel:
         info_draw = draw.NormalDraw()
         info_draw.text = _("阶段筛选：")
         info_draw.draw()
-        for stage_id in range(len(STAGE_NAME_LIST)):
+        for stage_id in range(len(pregnancy_constant.STAGE_NAME_LIST)):
             if stage_id == cache.pregnancy_panel_filter_type:
                 now_draw = draw.NormalDraw()
-                now_draw.text = f"▶{STAGE_NAME_LIST[stage_id]}  "
+                now_draw.text = f"▶{pregnancy_constant.STAGE_NAME_LIST[stage_id]}  "
                 now_draw.style = "gold_enrod"
                 now_draw.draw()
             else:
-                draw_text = f"  {STAGE_NAME_LIST[stage_id]}  "
-                now_draw = draw.LeftButton(draw_text, STAGE_NAME_LIST[stage_id], len(draw_text) * 2, cmd_func=self.change_filter_type, args=(stage_id,))
+                draw_text = f"  {pregnancy_constant.STAGE_NAME_LIST[stage_id]}  "
+                now_draw = draw.LeftButton(draw_text, pregnancy_constant.STAGE_NAME_LIST[stage_id], len(draw_text) * 2, cmd_func=self.change_filter_type, args=(stage_id,))
                 now_draw.draw()
                 return_list.append(now_draw.return_text)
         line_feed.draw()
@@ -230,7 +217,7 @@ class Pregnancy_Overview_Panel:
             if character_id == 0:
                 continue
             now_stage = get_chara_pregnancy_stage(character_id)
-            if now_stage == STAGE_NONE:
+            if now_stage == pregnancy_constant.STAGE_NONE:
                 continue
             if cache.pregnancy_panel_filter_type and now_stage != cache.pregnancy_panel_filter_type:
                 continue
@@ -253,7 +240,7 @@ class Pregnancy_Overview_Panel:
             name_draw.draw()
             return_list.append(name_draw.return_text)
             info_draw = draw.NormalDraw()
-            stage_text = STAGE_NAME_LIST[now_stage]
+            stage_text = pregnancy_constant.STAGE_NAME_LIST[now_stage]
             info_draw.text = f"　{stage_text}　　{get_stage_info_text(character_id, now_stage)}"
             info_draw.width = self.width - 20
             info_draw.draw()
@@ -277,7 +264,7 @@ class Pregnancy_Overview_Panel:
         return_list.append(reset_draw.return_text)
         info_draw = draw.NormalDraw()
         info_draw.text = _("　显示上{0}代+下{1}代共4代　夫妇以╤相连并连线到子女　玩家名按父本位置重复显示　超宽时按家族分页　\"…\"表示尚有成员/更深代数未显示　点击图中角色可以其为中心重绘\n").format(
-            family_tree_draw.UP_GEN, family_tree_draw.DOWN_GEN
+            pregnancy_constant.UP_GEN, pregnancy_constant.DOWN_GEN
         )
         info_draw.draw()
         line_feed.draw()

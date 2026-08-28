@@ -978,7 +978,7 @@ class Physical_Check_And_Manage_Panel:
             kiss_time = target_character_data.first_record.first_kiss_time
             now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士").format(
             character_name=cache.character_data[kiss_id].name,
-            kiss_time=str(kiss_time.month) + "月" + str(kiss_time.day) + "日",
+            kiss_time=game_time.get_month_text(kiss_time) + _("月") + str(kiss_time.day) + _("日"),
             kiss_palce=attr_text.get_scene_path_text(target_character_data.first_record.first_kiss_place),
         )
             if target_character_data.first_record.first_kiss_body_part == 1:

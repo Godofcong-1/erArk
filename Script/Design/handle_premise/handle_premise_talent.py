@@ -201,6 +201,36 @@ def handle_self_is_child(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SELF_IS_BABY)
+def handle_self_is_baby(character_id: int) -> int:
+    """
+    校验自己是婴儿
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[101] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SELF_IS_LOLI)
+def handle_self_is_loli(character_id: int) -> int:
+    """
+    校验自己是萝莉
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[103] == 1:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.SELF_CHILD_OR_LOLI_1)
 def handle_self_child_or_loli_1(character_id: int) -> int:
     """

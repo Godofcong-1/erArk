@@ -1663,12 +1663,13 @@ def character_tend_eggs(character_id: int):
     character_id -- 角色id
     """
     from Script.System.Pregnancy_System import egg_handle
+    from Script.System.Pregnancy_System import pregnancy_constant
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
     # 鉴定优先级高于孵化，鉴定完成后同一时段的后续行动自然落入孵化行为
     if len(egg_handle.get_identifiable_eggs(character_id)):
         # 自己就是保育员时直接自己鉴定
-        if character_data.work.work_type == egg_handle.NURSERY_WORKER_WORK_ID:
+        if character_data.work.work_type == pregnancy_constant.NURSERY_WORKER_WORK_ID:
             character_data.behavior.duration = 30
             character_data.behavior.behavior_id = constant.Behavior.IDENTIFY_EGGS
             character_data.state = constant.CharacterStatus.STATUS_IDENTIFY_EGGS

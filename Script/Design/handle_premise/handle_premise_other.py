@@ -1260,12 +1260,12 @@ def handle_entertainment_is_tend_eggs(character_id: int) -> int:
     int -- 权重
     """
     from Script.Design import game_time
-    from Script.System.Pregnancy_System import egg_handle
+    from Script.System.Pregnancy_System import pregnancy_constant
     character_data = cache.character_data[character_id]
     now_time_slot = game_time.judge_entertainment_time(character_id)
     if now_time_slot == 0:
         return 0
-    return character_data.entertainment.entertainment_type[now_time_slot - 1] == egg_handle.TEND_EGGS_ENTERTAINMENT_ID
+    return character_data.entertainment.entertainment_type[now_time_slot - 1] == pregnancy_constant.TEND_EGGS_ENTERTAINMENT_ID
 
 
 @add_premise(constant_promise.Premise.T_HAVE_TAKEABLE_EGGS)
@@ -2803,6 +2803,68 @@ def handle_t_fake_inflation_1(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     if target_data.talent[25] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.GROWTH_STOP_0)
+def handle_growth_stop_0(character_id: int) -> int:
+    """
+    校验角色是否成长停滞==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[28] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.GROWTH_STOP_1)
+def handle_growth_stop_1(character_id: int) -> int:
+    """
+    校验角色是否成长停滞==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[28] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_GROWTH_STOP_0)
+def handle_t_growth_stop_0(character_id: int) -> int:
+    """
+    校验交互对象是否成长停滞==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[28] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_GROWTH_STOP_1)
+def handle_t_growth_stop_1(character_id: int) -> int:
+    """
+    校验交互对象是否成长停滞==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[28] == 1:
         return 1
     return 0
 

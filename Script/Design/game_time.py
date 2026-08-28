@@ -1,3 +1,4 @@
+import calendar
 import datetime
 import time
 import random
@@ -12,7 +13,6 @@ from Script.Core import (
     get_text,
 )
 from Script.Config import normal_config, game_config
-from Script.Design import character
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -39,6 +39,25 @@ def init_time():
     cache.pre_game_time = game_time
 
 
+def get_season_month(month: int) -> int:
+    """
+    将任意月份归并为游戏使用的四季月（3春/6夏/9秋/12冬），规则与 get_sub_date 一致：1,2→3、4,5→6、7,8→9、10,11→12
+    Keyword arguments:
+    month -- 月份（1~12）
+    Return arguments:
+    int -- 归并后的四季月份（3/6/9/12）
+    """
+    if month in {1, 2}:
+        return 3
+    if month in {4, 5}:
+        return 6
+    if month in {7, 8}:
+        return 9
+    if month in {10, 11}:
+        return 12
+    return month
+
+
 def get_date_text(game_time_data: datetime.datetime = None) -> str:
     """
     获取时间信息描述文本
@@ -47,17 +66,9 @@ def get_date_text(game_time_data: datetime.datetime = None) -> str:
     """
     if game_time_data is None:
         game_time_data = cache.game_time
-    if game_time_data.month == 3:
-        month_text = _("春")
-    elif game_time_data.month == 6:
-        month_text = _("夏")
-    elif game_time_data.month == 9:
-        month_text = _("秋")
-    elif game_time_data.month == 12:
-        month_text = _("冬")
     return _("时间:{year}年{month}月{day}日{hour}点{minute}分").format(
         year=game_time_data.year,
-        month=month_text,
+        month=get_month_text(game_time_data),
         day=game_time_data.day,
         hour=game_time_data.hour,
         minute=game_time_data.minute,
@@ -72,17 +83,9 @@ def get_date_until_day(game_time_data: datetime.datetime = None) -> str:
     """
     if game_time_data is None:
         game_time_data = cache.game_time
-    if game_time_data.month == 3:
-        month_text = _("春")
-    elif game_time_data.month == 6:
-        month_text = _("夏")
-    elif game_time_data.month == 9:
-        month_text = _("秋")
-    elif game_time_data.month == 12:
-        month_text = _("冬")
     return _("时间:{year}年{month}月{day}日").format(
         year=game_time_data.year,
-        month=month_text,
+        month=get_month_text(game_time_data),
         day=game_time_data.day,
     )
 
@@ -108,13 +111,15 @@ def get_month_text(game_time_data: datetime.datetime = None) -> str:
     """
     if game_time_data is None:
         game_time_data = cache.game_time
-    if game_time_data.month == 3:
+    # 非四季月（如直接用timedelta相加得到的5月）按归并规则兜底显示为下一个季月
+    season_month = get_season_month(game_time_data.month)
+    if season_month == 3:
         month_text = _("春")
-    elif game_time_data.month == 6:
+    elif season_month == 6:
         month_text = _("夏")
-    elif game_time_data.month == 9:
+    elif season_month == 9:
         month_text = _("秋")
-    elif game_time_data.month == 12:
+    else:
         month_text = _("冬")
     return _("{month}").format(
         month=month_text,
@@ -200,15 +205,12 @@ def get_sub_date(
             days=day, hours=hour, minutes=minute
         )
 
-    # 进行月份调整，保留四个月为春夏秋冬四月，其他月份自动跳转为以上月份
-    if new_date.month in {1,2}:
-        new_date = new_date.replace(month = 3)
-    elif new_date.month in {4,5}:
-        new_date = new_date.replace(month = 6)
-    elif new_date.month in {7,8}:
-        new_date = new_date.replace(month = 9)
-    elif new_date.month in {10,11}:
-        new_date = new_date.replace(month = 12)
+    # 进行月份调整，保留四个月为春夏秋冬四月，其他月份自动跳转为以上月份（规则见 get_season_month）
+    season_month = get_season_month(new_date.month)
+    if season_month != new_date.month:
+        # 目标季月天数可能少于原月份（如5月31日→6月只有30天），日期需夹取到目标月的最后一天，否则 replace 会报错
+        max_day = calendar.monthrange(new_date.year, season_month)[1]
+        new_date = new_date.replace(month=season_month, day=min(new_date.day, max_day))
     return new_date
 
 

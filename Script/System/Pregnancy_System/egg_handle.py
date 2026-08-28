@@ -1,5 +1,6 @@
 import random
 from types import FunctionType
+from typing import Optional
 from Script.Core import (
     cache_control,
     game_type,
@@ -8,9 +9,12 @@ from Script.Core import (
 from Script.Design import (
     talk,
     second_behavior,
+    game_time,
 )
+from Script.Design import handle_premise
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
+from Script.System.Pregnancy_System import pregnancy_constant
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -18,13 +22,6 @@ _: FunctionType = get_text._
 """ 翻译api """
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
-
-HATCH_TOTAL_DAY = 265
-""" 孵化总天数（与胎生受精→标准生产时长一致，基准为卵的排出时间） """
-TEND_EGGS_ENTERTAINMENT_ID = 175
-""" 照料卵娱乐的模板id（Entertainment.csv） """
-NURSERY_WORKER_WORK_ID = 153
-""" 保育员工作的模板id（WorkType.csv） """
 
 
 def get_birth_type(character_id: int) -> int:
@@ -102,7 +99,10 @@ def get_identifiable_eggs(character_id: int) -> dict:
     """
     result = {}
     for egg_id, egg_data in get_unidentified_eggs(character_id).items():
-        if (cache.game_time.date() - egg_data["lay_time"].date()).days >= 1:
+        # 按日历日比较（两端都截到当日0点再算天数）：排出次日起可鉴定
+        lay_day_time = egg_data["lay_time"].replace(hour=0, minute=0, second=0, microsecond=0)
+        now_day_time = cache.game_time.replace(hour=0, minute=0, second=0, microsecond=0)
+        if game_time.count_day_for_datetime(lay_day_time, now_day_time) >= 1:
             result[egg_id] = egg_data
     return result
 
@@ -132,7 +132,7 @@ def get_hatch_day(egg_data: dict) -> int:
     int -- 有效孵化天数
     """
     # 旧存档的卵可能缺加速键，一律.get兜底
-    return (cache.game_time - egg_data["lay_time"]).days + int(egg_data.get("acceleration_days", 0))
+    return game_time.count_day_for_datetime(egg_data["lay_time"], cache.game_time) + int(egg_data.get("acceleration_days", 0))
 
 
 def get_egg_acceleration_amount(egg_data: dict) -> float:
@@ -145,7 +145,7 @@ def get_egg_acceleration_amount(egg_data: dict) -> float:
     """
     from Script.System.Pregnancy_System import pregnancy_handle
     now_acc = egg_data.get("acceleration_days", 0)
-    return pregnancy_handle.get_acceleration_amount(now_acc, get_hatch_day(egg_data), HATCH_TOTAL_DAY - 1, HATCH_TOTAL_DAY)
+    return pregnancy_handle.get_acceleration_amount(now_acc, get_hatch_day(egg_data), pregnancy_constant.HATCH_TOTAL_DAY - 1, pregnancy_constant.HATCH_TOTAL_DAY)
 
 
 def get_accelerable_hatching_eggs(character_id: int) -> dict:
@@ -228,7 +228,7 @@ def nursery_worker_on_duty_in_scene(character_id: int) -> bool:
         if chara_id == 0 or chara_id == character_id:
             continue
         other_character_data: game_type.Character = cache.character_data[chara_id]
-        if other_character_data.work.work_type != NURSERY_WORKER_WORK_ID:
+        if other_character_data.work.work_type != pregnancy_constant.NURSERY_WORKER_WORK_ID:
             continue
         if handle_premise.handle_premise("work_time", chara_id):
             return True
@@ -254,16 +254,16 @@ def check_ovulation(character_id: int):
     # 排卵结算即本周期排卵日事件的消费，以下豁免分支同样视为本周期已处理
     character_data.pregnancy.ovulation_flag = False
     # 未初潮不排卵
-    if character_data.talent[6] == 1:
+    if handle_premise.handle_menarche_1(character_id):
         return
     # 机械体且未安装生育模组不排卵
     if character_data.race == 2 and character_data.talent[171] == 0:
         return
     # 安全兜底：处于胎生妊娠链中的角色（种族被中途修改等）不排卵
-    if character_data.talent[21] or character_data.talent[22]:
+    if handle_premise.handle_pregnancy_1(character_id) or handle_premise.handle_parturient_1(character_id):
         return
     # 受精判定成功则排出受精卵并消费受精素质，否则排出无精卵
-    fertilized = bool(character_data.talent[20])
+    fertilized = bool(handle_premise.handle_fertilization_1(character_id))
     if fertilized:
         character_data.talent[20] = 0
         # 受精素质已被卵消费，无意识妊娠素质一并转移到卵的流程中
@@ -274,7 +274,7 @@ def check_ovulation(character_id: int):
     talk.must_show_talk_check(character_id)
 
 
-def npc_identify_eggs_settle(character_id: int, identifier_id: int = None):
+def npc_identify_eggs_settle(character_id: int, identifier_id: Optional[int] = None):
     """
     鉴定卵结算：一次揭示角色当前全部可鉴定的未鉴定卵
     \n未受精卵静默删除（不通知玩家）；受精卵置已鉴定并通知玩家、进入孵化流程
@@ -322,7 +322,7 @@ def check_egg_born(character_id: int):
     for egg_id, egg_data in get_hatching_eggs(character_id).items():
         # 刷新孵化阶段展示值
         egg_data["hatch_stage"] = get_hatch_day(egg_data)
-        if get_hatch_day(egg_data) >= HATCH_TOTAL_DAY:
+        if get_hatch_day(egg_data) >= pregnancy_constant.HATCH_TOTAL_DAY:
             # 每晚仅处理一枚卵的破壳事件
             from Script.System.Pregnancy_System import born_event_panel
             draw_panel = born_event_panel.Born_Panel(character_id, egg_mode=True, egg_id=egg_id)
@@ -418,10 +418,10 @@ def replace_entertainment_for_eggs(character_id: int):
     if hasattr(cache.rhodes_island, "party_day_of_week") and cache.rhodes_island.party_day_of_week.get(week_day, 0):
         return
     # 幼女不进行照料卵（其娱乐固定为过家家）
-    if character_data.talent[102]:
+    if handle_premise.handle_self_is_child(character_id):
         return
     # 没有需要照料的卵则跳过
     if not have_need_tend_eggs(character_id):
         return
     now_time_slot = random.randint(0, 2)
-    character_data.entertainment.entertainment_type[now_time_slot] = TEND_EGGS_ENTERTAINMENT_ID
+    character_data.entertainment.entertainment_type[now_time_slot] = pregnancy_constant.TEND_EGGS_ENTERTAINMENT_ID

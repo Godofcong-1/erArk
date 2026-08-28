@@ -1,17 +1,11 @@
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, text_handle
+from Script.System.Pregnancy_System import pregnancy_constant
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 _: FunctionType = get_text._
 """ 翻译api """
-
-UP_GEN = 1
-""" 谱系图向上显示的代数（上1代+中心+下2代，共4代） """
-DOWN_GEN = 2
-""" 谱系图向下显示的代数 """
-GAP = 2
-""" 相邻家庭块之间的最小间隔（半角单位），保证排版行的连线段互不粘连 """
 
 
 def get_chara_name(character_id: int) -> str:
@@ -153,7 +147,7 @@ def _build_blood_depth(center_id: int) -> dict:
     """
     depth_data = {center_id: 0}
     now_layer = [center_id]
-    for now_depth in range(1, DOWN_GEN + 1):
+    for now_depth in range(1, pregnancy_constant.DOWN_GEN + 1):
         next_layer = []
         for person_id in now_layer:
             for child_id in get_valid_children(person_id):
@@ -179,7 +173,7 @@ def _expand_person(person_id: int, depth: int, blood_depth: dict, placed_set: se
     dict -- 节点字典 {"chara_id", "more_flag", "boxes": [夫妇框]}
     """
     node = {"chara_id": person_id, "more_flag": False, "boxes": []}
-    if not expand_flag or depth >= DOWN_GEN:
+    if not expand_flag or depth >= pregnancy_constant.DOWN_GEN:
         # 到达显示深度下限：有孩子未显示时标记省略号
         node["more_flag"] = chara_has_children(person_id)
         return node
@@ -216,10 +210,28 @@ def _expand_person(person_id: int, depth: int, blood_depth: dict, placed_set: se
     return node
 
 
+def _choose_couple_order(father_id: int, mother_id: int) -> tuple:
+    """
+    决定夫妇框中左右两侧人物：左侧为向上继续攀升的血亲（有在册父母者优先；均有或均无父母时父在左），右侧为其配偶
+    \n父本恒为玩家且玩家无父母，因此母亲有父母时母亲居左，玩家名落在╤右侧
+    Keyword arguments:
+    father_id -- 父亲id（无效为-1）
+    mother_id -- 母亲id（无效为-1）
+    Return arguments:
+    tuple -- (左侧人物id, 右侧人物id)，右侧无效为-1
+    """
+    if father_id != -1 and mother_id != -1:
+        if not chara_has_parents(father_id) and chara_has_parents(mother_id):
+            return mother_id, father_id
+        return father_id, mother_id
+    return (father_id if father_id != -1 else mother_id), -1
+
+
 def _build_family_blocks(center_id: int) -> list:
     """
     构建顶层家族块列表（分页以家族为单位，家族不可拆散）
-    \n中心有父母时=单一父母树家族；无父母时=中心的每个夫妇框各为一个家族（玩家名按父本位置重复）
+    \n中心有父母时=沿左侧血亲逐代向上攀升至多 UP_GEN 代的祖先树家族（每一代的夫妇框下挂该代的血亲节点与其同辈）；
+    \n无父母时=中心的每个夫妇框各为一个家族（玩家名按父本位置重复）
     Keyword arguments:
     center_id -- 中心角色id
     Return arguments:
@@ -228,27 +240,41 @@ def _build_family_blocks(center_id: int) -> list:
     blood_depth = _build_blood_depth(center_id)
     placed_set = {center_id}
     center_node = _expand_person(center_id, 0, blood_depth, placed_set)
-    father_id = get_valid_parent(center_id, "father")
-    mother_id = get_valid_parent(center_id, "mother")
-    if father_id != -1 or mother_id != -1:
-        # 父母树家族：连线语义要求同辈确实出自该夫妇（仅同父同母或同单亲的兄弟姐妹）
-        left_id = father_id if father_id != -1 else mother_id
-        right_id = mother_id if father_id != -1 else -1
-        children_nodes = [center_node]
+    top_box = None
+    now_node = center_node
+    now_id = center_id
+    for up_depth in range(1, pregnancy_constant.UP_GEN + 1):
+        father_id = get_valid_parent(now_id, "father")
+        mother_id = get_valid_parent(now_id, "mother")
+        if father_id == -1 and mother_id == -1:
+            break
+        left_id, right_id = _choose_couple_order(father_id, mother_id)
+        placed_set.add(left_id)
+        if right_id != -1:
+            placed_set.add(right_id)
+        # 该代夫妇框的子辈：当前血亲节点 + 其同辈（连线语义要求同辈确实出自该夫妇，仅同父同母或同单亲的兄弟姐妹；同辈不向下展开）
+        children_nodes = [now_node]
         for sibling_id in get_valid_children(left_id):
             if sibling_id in placed_set or _get_other_parent(sibling_id, left_id) != right_id:
                 continue
             placed_set.add(sibling_id)
             children_nodes.append(_expand_person(sibling_id, 0, blood_depth, placed_set, expand_flag=False))
-        # 父母行人物有自己的父母（祖辈不在图中）时标记省略号
-        parent_box = {
+        top_box = {
             "left_id": left_id,
-            "left_more": chara_has_parents(left_id),
+            "left_more": False,
             "right_id": right_id,
             "right_more": right_id != -1 and chara_has_parents(right_id),
             "children": children_nodes,
         }
-        return [{"kind": "box", "box": parent_box}]
+        # 已到显示代数上限，或左侧血亲没有在册父母：停止攀升，有祖辈未显示时标记省略号
+        if up_depth >= pregnancy_constant.UP_GEN or not chara_has_parents(left_id):
+            top_box["left_more"] = chara_has_parents(left_id)
+            break
+        # 继续向上：把本代夫妇框包进左侧血亲的人物节点，作为上一代夫妇框的子辈
+        now_node = {"chara_id": left_id, "more_flag": False, "boxes": [top_box]}
+        now_id = left_id
+    if top_box is not None:
+        return [{"kind": "box", "box": top_box}]
     if center_node["boxes"]:
         return [{"kind": "box", "box": now_box} for now_box in center_node["boxes"]]
     return [{"kind": "person", "node": center_node}]
@@ -267,7 +293,7 @@ def _measure_node(node: dict, center_id: int):
         return
     for now_box in node["boxes"]:
         _measure_box(now_box, center_id)
-    node["width"] = sum(now_box["width"] for now_box in node["boxes"]) + GAP * (len(node["boxes"]) - 1)
+    node["width"] = sum(now_box["width"] for now_box in node["boxes"]) + pregnancy_constant.GAP * (len(node["boxes"]) - 1)
 
 
 def _measure_box(box: dict, center_id: int):
@@ -286,7 +312,7 @@ def _measure_box(box: dict, center_id: int):
     box["couple_width"] = sum(_token_width(token) for token in tokens)
     for child_node in box["children"]:
         _measure_node(child_node, center_id)
-    children_width = sum(child_node["width"] for child_node in box["children"]) + GAP * (len(box["children"]) - 1)
+    children_width = sum(child_node["width"] for child_node in box["children"]) + pregnancy_constant.GAP * (len(box["children"]) - 1)
     box["width"] = max(box["couple_width"], children_width)
 
 
@@ -364,7 +390,7 @@ def _place_node(node: dict, start_col: int, gen: int, names_cells: dict, link_ch
         attach_col = _place_box(now_box, cursor_col, gen, names_cells, link_chars)
         if box_index == 0:
             up_attach_col = attach_col
-        cursor_col += now_box["width"] + GAP
+        cursor_col += now_box["width"] + pregnancy_constant.GAP
     return up_attach_col
 
 
@@ -392,12 +418,12 @@ def _place_box(box: dict, start_col: int, gen: int, names_cells: dict, link_char
     else:
         # 无配偶（不在册）时无连接符，仍从人名中点下坠
         drop_col = couple_col + box["couple_width"] // 2
-    children_width = sum(child_node["width"] for child_node in box["children"]) + GAP * (len(box["children"]) - 1)
+    children_width = sum(child_node["width"] for child_node in box["children"]) + pregnancy_constant.GAP * (len(box["children"]) - 1)
     child_col = start_col + max(0, (box["width"] - children_width) // 2)
     child_attach_cols = []
     for child_node in box["children"]:
         child_attach_cols.append(_place_node(child_node, child_col, gen + 1, names_cells, link_chars))
-        child_col += child_node["width"] + GAP
+        child_col += child_node["width"] + pregnancy_constant.GAP
     _add_link_cells(link_chars, gen, drop_col, child_attach_cols)
     return left_center_col
 
@@ -497,7 +523,7 @@ def paginate_family_blocks(blocks: list, max_width: int, center_id: int) -> list
     now_page_width = 0
     for block in blocks:
         block_width = _measure_block(block, center_id)
-        need_width = block_width if not now_page_blocks else GAP + block_width
+        need_width = block_width if not now_page_blocks else pregnancy_constant.GAP + block_width
         if now_page_blocks and now_page_width + need_width > max_width:
             pages.append(now_page_blocks)
             now_page_blocks = [block]
@@ -512,7 +538,7 @@ def paginate_family_blocks(blocks: list, max_width: int, center_id: int) -> list
 
 def build_family_tree_chart(center_id: int, max_width: int, page_index: int = 0) -> dict:
     """
-    以某角色为中心构建带完整连线的传统家谱图（上1代+中心+下2代共4代，代间夹排版行；超宽时按家族分页）
+    以某角色为中心构建带完整连线的传统家谱图（上 UP_GEN 代+中心+下 DOWN_GEN 代，默认上2代+中心+下4代共7代，代间夹排版行；超宽时按家族分页）
     \n列位以 text_handle.get_text_index（wcwidth）为单位制，跨行对齐依赖等距更纱黑体的字符度量
     Keyword arguments:
     center_id -- 中心角色id
@@ -547,11 +573,11 @@ def build_family_tree_chart(center_id: int, max_width: int, page_index: int = 0)
     for block in page_blocks:
         if block["kind"] == "box":
             _place_box(block["box"], cursor_col, 0, names_cells, link_chars)
-            cursor_col += block["box"]["width"] + GAP
+            cursor_col += block["box"]["width"] + pregnancy_constant.GAP
         else:
             _place_node(block["node"], cursor_col, 0, names_cells, link_chars)
-            cursor_col += block["node"]["width"] + GAP
-    chart_width = cursor_col - GAP if page_blocks else 0
+            cursor_col += block["node"]["width"] + pregnancy_constant.GAP
+    chart_width = cursor_col - pregnancy_constant.GAP if page_blocks else 0
 
     # 兜底折叠的隐藏人数以行尾省略号标注在最深名字行末
     if hidden_count:

@@ -346,6 +346,10 @@ class PREGNANCY:
         """ 妊娠加速药累计的额外已加速时间（天）：float累计、参与天数换算时向下取整；
             统计怀孕相关事件（受精转妊娠/临盆/生产概率/面板显示）时计入；
             受精时与生产结算时清零；累计上限250天 """
+        self.growth_acceleration_days: int = 0
+        """ 成长加速药对本角色（作为孩子）累计的额外成长天数：
+            参与婴儿→幼女(90)/幼女→萝莉(270)/萝莉→少女(450)的天数换算与面板预计日期；
+            由 pregnancy_handle.get_child_grow_day 统一读取；出生时为0，不清零（成长为少女后不再消费） """
 
 
 class RELATIONSHIP:
@@ -1063,6 +1067,8 @@ class Behavior:
         """ 前提结算用:礼物id """
         self.gift_egg_id: int = -1
         """ 前提结算用:孵化加速药选中的目标卵编号（-1为未选择，结算消费后重置） """
+        self.gift_child_id: int = -1
+        """ 前提结算用:成长加速药选中的目标婴儿角色id（-1为未选择，结算消费后重置） """
 
 
 class Chara_Event:

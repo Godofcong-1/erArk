@@ -498,3 +498,11 @@ self.gift_egg_id: int = -1
 - 与计划的偏差：①单条文本字数未全部达到 prompt 的 650 字下限（实测 25 条中约半数在 500~649 区间，其余达标），经用户确认"只差一点问题不大"后收尾；②文本由实施方直接撰写，未调用 text-generation 子代理。
 - 回归测试：**62/62 全部通过**（注册与回退断言 30 项、CVP 礼物前提求值 3 项、剂量/计时回归 8 项、假孕回归 3 项、药物效果无二段行为 11 项、条件与选卵抽查 7 项）；`buildconfig.py` 全量重建无报错（口上文件 572→576）。
 - 遗留：§7.2 游戏内整体测试（新增验证点：送四种药时弹出对应送礼口上且先于效果提示；泌乳药等旧药口上不受影响）；buildpo/buildmo 本地化步骤仍待用户环境执行（§12.2-1）。
+
+### 12.5 后续修改（随 plan_17 第 1 次修改，2026-08-29）
+
+本 Plan §3.3 / §5.7 所述的预计日期写法 `fertilization_time + timedelta(days=260 − acc)`、`lay_time + timedelta(days=265 − acc)` 与 `get_pregnancy_past_day` / `get_hatch_day` 的裸 `(now − t).days` 计算，已统一改为复用 `game_time.get_sub_date(day=…, old_date=…)`（自动归并到 3/6/9/12 四季月）与 `game_time.count_day_for_datetime(start, end)`；妊娠加速药/孵化加速药提示、选卵列表与怀孕总览面板的日期显示改用春夏秋冬月名（`pregnancy_panel.get_date_text` → "夏月30日"）。原因、改动明细与回归测试（93/93）见 `plan/done/plan_17_养成系统三种新药物.md` §12.5；本文原文不改写。
+
+随 plan_17 第 2 次修改（同日），本文 §5.4 所述定义在 `pregnancy_handle.py` 顶部的 `PREGNANCY_TOTAL_DAY / ACCELERATION_MAX_DAY / PARTURIENT_DAY` 与 `egg_handle.py` 的 `HATCH_TOTAL_DAY` 已迁移到子系统统一常量文件 `Script/System/Pregnancy_System/pregnancy_constant.py`（另新增 `ACCELERATION_RATE=0.3` 命名原剂量公式中的字面量），所有引用改为 `pregnancy_constant.X`，见 plan_17 §12.6。
+
+随 plan_17 第 4 次修改（同日），**孵化加速药（36）改为只能在育儿室中使用**（与成长加速药一致）：`is_drug_effective` 的 36 分支首条判定改为 `handle_premise.handle_in_nursery(0)`，不满足时提示"只能在育儿室使用孵化加速药"且不消耗道具；Item.csv 与 ArkEditor 副本的道具描述加注"需要在育儿室中使用"。本文 §3.4 使用条件表中 36 号的条件以此为准，见 plan_17 §12.8。

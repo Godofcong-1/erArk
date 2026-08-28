@@ -284,6 +284,9 @@ def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
             # 怀孕药物旧存档兼容：补全妊娠加速药的累计加速天数
             if pregnancy_data is not None and not hasattr(pregnancy_data, "acceleration_days"):
                 pregnancy_data.acceleration_days = 0.0
+            # 养成药物旧存档兼容：补全成长加速药的累计成长天数
+            if pregnancy_data is not None and not hasattr(pregnancy_data, "growth_acceleration_days"):
+                pregnancy_data.growth_acceleration_days = 0
             if pl_collection is not None and not hasattr(pl_collection, "held_eggs"):
                 pl_collection.held_eggs = {}
             if pl_collection is not None and not hasattr(pl_collection, "next_held_egg_id"):

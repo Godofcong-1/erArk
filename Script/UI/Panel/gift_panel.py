@@ -1,4 +1,3 @@
-import datetime
 from typing import List
 from types import FunctionType
 from Script.UI.Moudle import draw
@@ -11,6 +10,7 @@ from Script.Core import (
 )
 from Script.Config import game_config, normal_config
 from Script.Design import game_time, handle_premise
+from Script.System.Pregnancy_System import pregnancy_constant
 
 panel_info_data = {}
 
@@ -66,18 +66,19 @@ def handle_drug_use_effect(character_id: int, drug_id: int):
         character_data.talent[27] = 0
         now_draw.text += _("{0}失去了【泌乳】\n").format(character_data.name)
     elif drug_id == 35:  # 妊娠加速药
-        from Script.System.Pregnancy_System import pregnancy_handle
+        from Script.System.Pregnancy_System import pregnancy_handle, pregnancy_panel
         add_day = pregnancy_handle.get_pregnancy_acceleration_amount(character_id)
         if add_day > 0:
             character_data.pregnancy.acceleration_days += add_day
             now_acc = int(character_data.pregnancy.acceleration_days)
-            predict_time = character_data.pregnancy.fertilization_time + datetime.timedelta(days=pregnancy_handle.PARTURIENT_DAY - now_acc)
-            now_draw.text += _("本次加速{0}天，累计加速{1}天，{2}的预计临盆日期提前到了{3}月{4}日\n").format(int(add_day), now_acc, character_data.name, predict_time.month, predict_time.day)
+            # 预计日期用游戏时间函数计算，自动归并到四季月
+            predict_time = game_time.get_sub_date(day=pregnancy_constant.PARTURIENT_DAY - now_acc, old_date=character_data.pregnancy.fertilization_time)
+            now_draw.text += _("本次加速{0}天，累计加速{1}天，{2}的预计临盆日期提前到了{3}\n").format(int(add_day), now_acc, character_data.name, pregnancy_panel.get_date_text(predict_time))
         else:
             # 兜底：结算时已到加速极限则不生效（正常已被送出前校验拦截）
             now_draw.text += _("{0}的孕期已经加速到极限，药物没有产生效果\n").format(character_data.name)
     elif drug_id == 36:  # 孵化加速药
-        from Script.System.Pregnancy_System import egg_handle
+        from Script.System.Pregnancy_System import egg_handle, pregnancy_panel
         pl_character_data: game_type.Character = cache.character_data[0]
         egg_id = getattr(pl_character_data.behavior, "gift_egg_id", -1)
         pl_character_data.behavior.gift_egg_id = -1
@@ -90,8 +91,8 @@ def handle_drug_use_effect(character_id: int, drug_id: int):
             if add_day > 0:
                 egg_data["acceleration_days"] = egg_data.get("acceleration_days", 0) + add_day
                 now_acc = int(egg_data["acceleration_days"])
-                predict_time = egg_data["lay_time"] + datetime.timedelta(days=egg_handle.HATCH_TOTAL_DAY - now_acc)
-                now_draw.text += _("本次加速{0}天，累计加速{1}天，这枚卵的预计破壳日期提前到了{2}月{3}日\n").format(int(add_day), now_acc, predict_time.month, predict_time.day)
+                predict_time = game_time.get_sub_date(day=pregnancy_constant.HATCH_TOTAL_DAY - now_acc, old_date=egg_data["lay_time"])
+                now_draw.text += _("本次加速{0}天，累计加速{1}天，这枚卵的预计破壳日期提前到了{2}\n").format(int(add_day), now_acc, pregnancy_panel.get_date_text(predict_time))
             else:
                 now_draw.text += _("这枚卵已经加速到极限，药物没有产生效果\n")
     elif drug_id == 37:  # 假孕药
@@ -100,6 +101,30 @@ def handle_drug_use_effect(character_id: int, drug_id: int):
     elif drug_id == 38:  # 假孕终止药
         character_data.talent[25] = 0
         now_draw.text += _("{0}失去了【假孕孕肚】，隆起的肚子恢复了原状\n").format(character_data.name)
+    elif drug_id == 39:  # 成长加速药
+        from Script.System.Pregnancy_System import pregnancy_handle, pregnancy_panel
+        pl_character_data: game_type.Character = cache.character_data[0]
+        child_id = getattr(pl_character_data.behavior, "gift_child_id", -1)
+        pl_character_data.behavior.gift_child_id = -1
+        # 兜底：选中的孩子已不是目标名下的婴儿则不生效
+        if child_id not in pregnancy_handle.get_baby_id_list(character_id):
+            now_draw.text += _("选中的婴儿已经不在婴儿期，药物没有产生效果\n")
+        else:
+            child_character_data: game_type.Character = cache.character_data[child_id]
+            add_day = pregnancy_handle.get_child_growth_acceleration_amount(child_id)
+            if add_day > 0:
+                child_character_data.pregnancy.growth_acceleration_days = getattr(child_character_data.pregnancy, "growth_acceleration_days", 0) + add_day
+                now_acc = int(child_character_data.pregnancy.growth_acceleration_days)
+                predict_time = game_time.get_sub_date(day=pregnancy_constant.REARING_COMPLETE_DAY - now_acc, old_date=child_character_data.pregnancy.born_time)
+                now_draw.text += _("本次加速{0}天，累计加速{1}天，{2}预计将在{3}成长为幼女\n").format(int(add_day), now_acc, child_character_data.name, pregnancy_panel.get_date_text(predict_time))
+            else:
+                now_draw.text += _("{0}已经快要成长为幼女了，药物没有产生效果\n").format(child_character_data.name)
+    elif drug_id == 40:  # 成长停滞药
+        character_data.talent[28] = 1
+        now_draw.text += _("{0}获得了【成长停滞】，在使用成长继续药之前她会一直保持在当前的阶段\n").format(character_data.name)
+    elif drug_id == 41:  # 成长继续药
+        character_data.talent[28] = 0
+        now_draw.text += _("{0}失去了【成长停滞】，她会继续正常成长\n").format(character_data.name)
 
     # 绘制结果
     now_draw.style = 'gold_enrod'
@@ -232,6 +257,10 @@ class Gift_Panel:
         if gift_id == 36:
             if not self.select_target_egg():
                 return
+        # 成长加速药需要先选择目标婴儿（玩家取消则不送出）
+        if gift_id == 39:
+            if not self.select_target_baby():
+                return
 
         # 将礼物id赋予角色行为数据
         character_data.behavior.gift_id = gift_id
@@ -251,7 +280,7 @@ class Gift_Panel:
         Returns:\n
         bool -- 是否完成了选择（False为玩家取消或无可选卵）
         """
-        from Script.System.Pregnancy_System import egg_handle
+        from Script.System.Pregnancy_System import egg_handle, pregnancy_panel
         character_data: game_type.Character = cache.character_data[0]
         target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
         accelerable_eggs = egg_handle.get_accelerable_hatching_eggs(target_character_data.cid)
@@ -269,8 +298,8 @@ class Gift_Panel:
             for egg_id, egg_data in accelerable_eggs.items():
                 hatch_day = egg_handle.get_hatch_day(egg_data)
                 acc_day = int(egg_data.get("acceleration_days", 0))
-                born_time = egg_data["lay_time"] + datetime.timedelta(days=egg_handle.HATCH_TOTAL_DAY - acc_day)
-                egg_text = _("[{0}号卵] 孵化第{1}天（已加速{2}天，预计{3}月{4}日破壳）").format(egg_id, hatch_day, acc_day, born_time.month, born_time.day)
+                born_time = game_time.get_sub_date(day=pregnancy_constant.HATCH_TOTAL_DAY - acc_day, old_date=egg_data["lay_time"])
+                egg_text = _("[{0}号卵] 孵化第{1}天（已加速{2}天，预计{3}破壳）").format(egg_id, hatch_day, acc_day, pregnancy_panel.get_date_text(born_time))
                 button_draw = draw.LeftButton(
                     egg_text,
                     str(egg_id),
@@ -299,6 +328,63 @@ class Gift_Panel:
         """
         character_data: game_type.Character = cache.character_data[0]
         character_data.behavior.gift_egg_id = egg_id
+
+    def select_target_baby(self) -> bool:
+        """
+        成长加速药的选婴儿交互：绘制交互对象名下全部可加速的婴儿供玩家选择\n
+        仅一名可加速婴儿时跳过选择直接选中\n
+        Returns:\n
+        bool -- 是否完成了选择（False为玩家取消或无可选婴儿）
+        """
+        from Script.System.Pregnancy_System import pregnancy_handle, pregnancy_panel
+        character_data: game_type.Character = cache.character_data[0]
+        target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        accelerable_babies = pregnancy_handle.get_accelerable_babies(target_character_data.cid)
+        if not len(accelerable_babies):
+            return False
+        # 仅一名可加速婴儿时跳过选择直接选中
+        if len(accelerable_babies) == 1:
+            character_data.behavior.gift_child_id = accelerable_babies[0]
+            return True
+        # 多名婴儿时绘制选择列表
+        title_draw = draw.TitleLineDraw(_("选择要加速成长的婴儿"), self.width)
+        while 1:
+            return_list = []
+            title_draw.draw()
+            for child_id in accelerable_babies:
+                child_character_data: game_type.Character = cache.character_data[child_id]
+                grow_day = pregnancy_handle.get_child_grow_day(child_id)
+                acc_day = int(getattr(child_character_data.pregnancy, "growth_acceleration_days", 0))
+                grow_time = game_time.get_sub_date(day=pregnancy_constant.REARING_COMPLETE_DAY - acc_day, old_date=child_character_data.pregnancy.born_time)
+                baby_text = _("[{0}] 出生第{1}天（已加速{2}天，预计{3}成长为幼女）").format(child_character_data.name, grow_day, acc_day, pregnancy_panel.get_date_text(grow_time))
+                button_draw = draw.LeftButton(
+                    baby_text,
+                    str(child_id),
+                    self.width,
+                    cmd_func=self.select_child_id,
+                    args=(child_id,),
+                )
+                return_list.append(button_draw.return_text)
+                button_draw.draw()
+                line_feed.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回选婴儿"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                return False
+            return True
+
+    def select_child_id(self, child_id: int):
+        """
+        选婴儿按钮回调：把选中的婴儿角色id写入玩家行为数据\n
+        Keyword arguments:\n
+        child_id -- 选中的婴儿角色id
+        """
+        character_data: game_type.Character = cache.character_data[0]
+        character_data.behavior.gift_child_id = child_id
 
     def check_gift_available(self, gift_id: int) -> bool:
         """
@@ -414,18 +500,18 @@ class Gift_Panel:
                 draw_text = _("\n  {0}已经是最小的【幼女】了，无法使用外表年龄减少药\n").format(target_character_data.name)
         # 泌乳药：如果目标已有泌乳素质则无效
         elif drug_id == 33:
-            effective_flag = not target_character_data.talent[27]
+            effective_flag = not handle_premise.handle_lactation_1(target_character_data.cid)
             if not effective_flag:
                 draw_text = _("\n  {0}已经在【泌乳】了，无法使用泌乳药\n").format(target_character_data.name)
         # 停乳药：如果目标没有泌乳素质则无效
         elif drug_id == 34:
-            effective_flag = target_character_data.talent[27]
+            effective_flag = bool(handle_premise.handle_lactation_1(target_character_data.cid))
             if not effective_flag:
                 draw_text = _("\n  {0}没有在【泌乳】，无法使用停乳药\n").format(target_character_data.name)
         # 妊娠加速药：仅对受精或妊娠状态的胎生干员有效，且未达加速上限
         elif drug_id == 35:
             from Script.System.Pregnancy_System import pregnancy_handle, egg_handle
-            if not (target_character_data.talent[20] or target_character_data.talent[21]):
+            if not (handle_premise.handle_fertilization_1(target_character_data.cid) or handle_premise.handle_pregnancy_1(target_character_data.cid)):
                 effective_flag = False
                 draw_text = _("\n  {0}没有处于受精或妊娠状态，无法使用妊娠加速药\n").format(target_character_data.name)
             elif egg_handle.get_birth_type(target_character_data.cid) != 1:
@@ -434,10 +520,13 @@ class Gift_Panel:
             elif pregnancy_handle.get_pregnancy_acceleration_amount(target_character_data.cid) <= 0:
                 effective_flag = False
                 draw_text = _("\n  {0}的孕期已经加速到极限了，无法继续使用妊娠加速药\n").format(target_character_data.name)
-        # 孵化加速药：仅对持有可加速的孵化中卵的干员有效
+        # 孵化加速药：玩家需在育儿室（受精卵均存放于育儿室孵化），且目标持有可加速的孵化中卵
         elif drug_id == 36:
             from Script.System.Pregnancy_System import egg_handle
-            if not len(egg_handle.get_hatching_eggs(target_character_data.cid)):
+            if not handle_premise.handle_in_nursery(0):
+                effective_flag = False
+                draw_text = _("\n  只能在育儿室使用孵化加速药\n")
+            elif not len(egg_handle.get_hatching_eggs(target_character_data.cid)):
                 effective_flag = False
                 draw_text = _("\n  {0}没有正在孵化中的卵，无法使用孵化加速药\n").format(target_character_data.name)
             elif not len(egg_handle.get_accelerable_hatching_eggs(target_character_data.cid)):
@@ -450,16 +539,60 @@ class Gift_Panel:
                 effective_flag = False
                 draw_text = _("\n  {0}的种族不是胎生，无法使用假孕药\n").format(target_character_data.name)
             else:
-                for talent_id in [20, 21, 22, 23, 24, 25, 26]:
-                    if target_character_data.talent[talent_id]:
+                # 受精/妊娠/临盆/产后/育儿/假孕孕肚/孕肚外观 任一为真即处于怀孕相关状态
+                pregnancy_premise_list = [
+                    handle_premise.handle_fertilization_1,
+                    handle_premise.handle_pregnancy_1,
+                    handle_premise.handle_parturient_1,
+                    handle_premise.handle_postpartum_1,
+                    handle_premise.handle_rearing_1,
+                    handle_premise.handle_fake_inflation_1,
+                    handle_premise.handle_inflation_1,
+                ]
+                for premise_func in pregnancy_premise_list:
+                    if premise_func(target_character_data.cid):
                         effective_flag = False
                         draw_text = _("\n  {0}正处于怀孕相关状态中，无法使用假孕药\n").format(target_character_data.name)
                         break
         # 假孕终止药：仅对处于假孕状态的干员有效
         elif drug_id == 38:
-            effective_flag = target_character_data.talent[25] == 1
+            effective_flag = bool(handle_premise.handle_fake_inflation_1(target_character_data.cid))
             if not effective_flag:
                 draw_text = _("\n  {0}没有处于假孕状态，不需要使用假孕终止药\n").format(target_character_data.name)
+        # 成长加速药：玩家需在育儿室，且目标名下有可加速的婴儿
+        elif drug_id == 39:
+            from Script.System.Pregnancy_System import pregnancy_handle
+            if not handle_premise.handle_in_nursery(0):
+                effective_flag = False
+                draw_text = _("\n  只能在育儿室使用成长加速药\n")
+            elif not len(pregnancy_handle.get_baby_id_list(target_character_data.cid)):
+                effective_flag = False
+                draw_text = _("\n  {0}没有正在婴儿期的孩子，无法使用成长加速药\n").format(target_character_data.name)
+            elif not len(pregnancy_handle.get_accelerable_babies(target_character_data.cid)):
+                effective_flag = False
+                draw_text = _("\n  {0}的孩子都已经快要长成幼女了，无法使用成长加速药\n").format(target_character_data.name)
+        # 成长停滞药：仅对处于幼女或萝莉阶段、且未处于成长停滞的女儿有效
+        elif drug_id == 40:
+            if not handle_premise.handle_self_is_player_daughter(target_character_data.cid):
+                effective_flag = False
+                draw_text = _("\n  {0}不是博士的女儿，无法使用成长停滞药\n").format(target_character_data.name)
+            elif not handle_premise.handle_self_child_or_loli_1(target_character_data.cid):
+                effective_flag = False
+                draw_text = _("\n  {0}不处于幼女或萝莉阶段，无法使用成长停滞药\n").format(target_character_data.name)
+            elif handle_premise.handle_growth_stop_1(target_character_data.cid):
+                effective_flag = False
+                draw_text = _("\n  {0}已经处于【成长停滞】状态了，无法重复使用成长停滞药\n").format(target_character_data.name)
+        # 成长继续药：仅对处于幼女或萝莉阶段、且已处于成长停滞的女儿有效
+        elif drug_id == 41:
+            if not handle_premise.handle_self_is_player_daughter(target_character_data.cid):
+                effective_flag = False
+                draw_text = _("\n  {0}不是博士的女儿，无法使用成长继续药\n").format(target_character_data.name)
+            elif not handle_premise.handle_self_child_or_loli_1(target_character_data.cid):
+                effective_flag = False
+                draw_text = _("\n  {0}不处于幼女或萝莉阶段，无法使用成长继续药\n").format(target_character_data.name)
+            elif not handle_premise.handle_growth_stop_1(target_character_data.cid):
+                effective_flag = False
+                draw_text = _("\n  {0}没有处于【成长停滞】状态，不需要使用成长继续药\n").format(target_character_data.name)
 
         # 如果药物无效，则绘制提示信息
         if not effective_flag:
