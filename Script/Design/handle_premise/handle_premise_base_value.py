@@ -735,6 +735,24 @@ def handle_target_urinate_le_49(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.PL_URINATE_LE_49)
+def handle_pl_urinate_le_49(character_id: int) -> int:
+    """
+    玩家尿意条≤49%，可以继续喝咖啡
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    player_data: game_type.Character = cache.character_data[0]
+
+    value = player_data.urinate_point / 240
+    if value <= 0.49:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.TARGET_URINATE_LE_79)
 def handle_target_urinate_le_79(character_id: int) -> int:
     """
