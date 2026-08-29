@@ -161,6 +161,38 @@ def get_dormitory_resident_id_set() -> Set[int]:
     return resident_id_set
 
 
+def get_open_dormitory_room_occupancy() -> Dict[str, int]:
+    """
+    获取开放普通宿舍的占用表
+    输入类型: 无
+    输出类型: Dict[str, int]
+    功能: 按层号升序、层内房名升序列出全部开放普通宿舍的场景路径，并按宿舍统计角色集合的宿舍归属统计各房当前居住人数，返回保持该顺序的{房间路径: 人数}表
+    """
+    open_rooms_by_layer = get_open_dormitory_rooms_by_layer()
+    room_occupancy: Dict[str, int] = {}
+    for layer in sorted(open_rooms_by_layer):
+        for _room_name, room_path in open_rooms_by_layer[layer]:
+            room_occupancy[room_path] = 0
+    for resident_id in get_dormitory_resident_id_set():
+        resident_dormitory = cache.character_data[resident_id].dormitory
+        if resident_dormitory in room_occupancy:
+            room_occupancy[resident_dormitory] += 1
+    return room_occupancy
+
+
+def pick_dormitory_room(room_occupancy: Dict[str, int]) -> str:
+    """
+    纯函数：按占用表挑选新入住者应分配的宿舍
+    输入类型: room_occupancy(Dict[str, int]) -- 按层序排列的开放普通宿舍占用表，键为房间路径，值为当前人数
+    输出类型: str
+    功能: 宿舍设计容量为2人，返回表中第一间不足2人的房间；全部住满时返回人数最少的一间（并列时取顺序最前者）
+    """
+    for room_path, count in room_occupancy.items():
+        if count < 2:
+            return room_path
+    return min(room_occupancy, key=room_occupancy.get)
+
+
 def get_dormitory_occupants_text() -> str:
     """
     获取当前宿舍区内角色分布文本
@@ -381,18 +413,6 @@ def new_character_get_dormitory(character_id: int):
             character_data.dormitory = final_room_list[0]
             print(f"警告：所有客房都已满，{character_data.name}被分配到{final_room_list[0]}。请检查访客区设施。")
     else:
-        dormitory = {
-            key: constant.place_data[key] for key in constant.place_data if "Dormitory" in key
-        }
-        dormitory = {
-            x: 0 for j in [k[1] for k in sorted(dormitory.items(), key=lambda x: x[0])] for x in j
-        }
-        npc_count = 0
-        for now_character_id in cache.npc_id_got:
-            now_character_data = cache.character_data[now_character_id]
-            # 普通干员每两个人住一个房间
-            if "宿舍" in now_character_data.dormitory:
-                npc_count += 1
-        n = npc_count // 2
-        now_room = list(dormitory.keys())[n]
-        character_data.dormitory = now_room
+        # 按层序查找有空床的开放宿舍分配；全部住满时分入人数最少的开放房
+        room_occupancy = get_open_dormitory_room_occupancy()
+        character_data.dormitory = pick_dormitory_room(room_occupancy)
