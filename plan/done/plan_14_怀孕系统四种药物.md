@@ -506,3 +506,5 @@ self.gift_egg_id: int = -1
 随 plan_17 第 2 次修改（同日），本文 §5.4 所述定义在 `pregnancy_handle.py` 顶部的 `PREGNANCY_TOTAL_DAY / ACCELERATION_MAX_DAY / PARTURIENT_DAY` 与 `egg_handle.py` 的 `HATCH_TOTAL_DAY` 已迁移到子系统统一常量文件 `Script/System/Pregnancy_System/pregnancy_constant.py`（另新增 `ACCELERATION_RATE=0.3` 命名原剂量公式中的字面量），所有引用改为 `pregnancy_constant.X`，见 plan_17 §12.6。
 
 随 plan_17 第 4 次修改（同日），**孵化加速药（36）改为只能在育儿室中使用**（与成长加速药一致）：`is_drug_effective` 的 36 分支首条判定改为 `handle_premise.handle_in_nursery(0)`，不满足时提示"只能在育儿室使用孵化加速药"且不消耗道具；Item.csv 与 ArkEditor 副本的道具描述加注"需要在育儿室中使用"。本文 §3.4 使用条件表中 36 号的条件以此为准，见 plan_17 §12.8。
+
+随 plan_17 第 6 次修改（同日），本文 §3.7 的四个口上文件各补充了**幼女（102）/ 萝莉（103）外表年龄差分**（35 号为受精/妊娠 × 两档共 20 条，36/37/38 号各 10 条，总条数 80/40/40/40），前提写法与既有 104~107 分支同构，见 plan_17 §12.10。
