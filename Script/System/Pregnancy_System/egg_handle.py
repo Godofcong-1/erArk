@@ -30,18 +30,40 @@ def get_birth_type(character_id: int) -> int:
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
-    int -- 生育方式（1单胎胎生，11带壳卵生；12无壳卵生本期未实装，归一化为1）
+    int -- 生育方式（1单胎胎生，2多胎胎生，11带壳卵生；12无壳卵生本期未实装，归一化为1）
     """
     character_data: game_type.Character = cache.character_data[character_id]
     race_config = game_config.config_race.get(character_data.race)
     if race_config is None:
-        return 1
-    # CSV空值字段会被删除，缺列时兜底为1
-    birth_type = getattr(race_config, "birth_type", 1)
+        return pregnancy_constant.BIRTH_TYPE_SINGLE
+    # CSV空值字段会被删除，缺列时兜底为单胎胎生
+    birth_type = getattr(race_config, "birth_type", pregnancy_constant.BIRTH_TYPE_SINGLE)
     # 12无壳卵生本期按胎生处理，胎生链不感知12的存在
-    if birth_type == 12:
-        return 1
+    if birth_type == pregnancy_constant.BIRTH_TYPE_EGG_SOFT:
+        return pregnancy_constant.BIRTH_TYPE_SINGLE
     return birth_type
+
+
+def is_viviparous(character_id: int) -> bool:
+    """
+    判断角色是否为胎生种族（单胎胎生或多胎胎生，供妊娠加速药/假孕药等胎生限定功能使用）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 是否胎生
+    """
+    return get_birth_type(character_id) in (pregnancy_constant.BIRTH_TYPE_SINGLE, pregnancy_constant.BIRTH_TYPE_MULTIPLE)
+
+
+def is_multiple_birth(character_id: int) -> bool:
+    """
+    判断角色是否为多胎胎生种族
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 是否多胎胎生
+    """
+    return get_birth_type(character_id) == pregnancy_constant.BIRTH_TYPE_MULTIPLE
 
 
 def add_egg(character_id: int, fertilized: bool):

@@ -129,11 +129,24 @@ class Born_Panel:
                 yrn = flow_handle.askfor_all(return_list)
                 if yrn in return_list:
                     break
-            # 内循环2：起名字
+            # 本次生产的孩子数：卵生恒为1；胎生取本次胎数（旧存档/单胎为0或1时按1处理），同卵双胞胎换用专属文案
+            born_count = 1
+            identical_twins_flag = False
+            if not self.egg_mode:
+                born_count = max(1, getattr(mom_character_data.pregnancy, "fetus_count", 0))
+                identical_twins_flag = bool(getattr(mom_character_data.pregnancy, "identical_twins", False)) and born_count == 2
+            # 内循环2：起名字（按孩子数逐个取名）
+            child_name_list = []
             while 1:
                 if self.egg_mode:
                     info_draw.text = _(" 在{0}的看护下，蛋壳上的裂纹越来越多，终于随着一声清脆的破裂声，一个小小的身影从蛋壳中探出头来，发出了响亮的啼哭\n").format(doctor_character_data.name)
                     info_draw.text += _(" {0}轻轻抱起了刚刚破壳而出的婴儿，对着你微微一笑，催促你给孩子起名\n").format(mom_character_data.name)
+                elif identical_twins_flag:
+                    info_draw.text = _(" 经过了漫长的等待之后，随着响亮的哭声，{0}推开产房的门，告诉你{1}生了一对同卵双胞胎女儿，母女平安\n").format(doctor_character_data.name, mom_character_data.name)
+                    info_draw.text += _(" {0}躺在床上，怀里抱着两个一模一样的婴儿，对着你微微一笑，催促你分别给她们起名\n").format(mom_character_data.name)
+                elif born_count >= 2:
+                    info_draw.text = _(" 经过了漫长的等待之后，随着此起彼伏的哭声，{0}推开产房的门，告诉你{1}生了{2}个可爱的女儿，母女平安\n").format(doctor_character_data.name, mom_character_data.name, born_count)
+                    info_draw.text += _(" {0}躺在床上，怀里抱着{1}个婴儿，对着你微微一笑，催促你逐个给孩子起名\n").format(mom_character_data.name, born_count)
                 else:
                     info_draw.text = _(" 经过了漫长的等待之后，随着响亮的哭声，{0}推开产房的门，告诉你{1}生了一个可爱的女儿，母女平安\n").format(doctor_character_data.name, mom_character_data.name)
                     info_draw.text += _(" {0}躺在床上，怀里抱着婴儿，对着你微微一笑，催促你给孩子起名\n").format(mom_character_data.name)
@@ -141,16 +154,34 @@ class Born_Panel:
                 line_feed.draw()
 
                 from Script.Design import character
-                new_name = character.input_name_func(_(" 你决定给女儿取名为——"))
+                for born_index in range(born_count):
+                    # 取名询问文案：同卵双胞胎按姐姐/妹妹，多胞胎按序号，单胎沿用原文
+                    if identical_twins_flag:
+                        ask_text = _(" 你决定给双胞胎中的姐姐取名为——") if born_index == 0 else _(" 你决定给双胞胎中的妹妹取名为——")
+                    elif born_count >= 2:
+                        ask_text = _(" 你决定给第{0}个女儿取名为——").format(born_index + 1)
+                    else:
+                        ask_text = _(" 你决定给女儿取名为——")
+                    new_name = character.input_name_func(ask_text)
 
-                # 创建该角色，born_new_character 返回新角色的id
-                new_child_id = character_handle.born_new_character(self.mother_character_id, new_name)
-                child_character_data: game_type.Character = cache.character_data[new_child_id]
-                child_character_data.pregnancy.born_time = cache.game_time
+                    # 创建该角色，born_new_character 返回新角色的id
+                    new_child_id = character_handle.born_new_character(self.mother_character_id, new_name)
+                    child_character_data: game_type.Character = cache.character_data[new_child_id]
+                    child_character_data.pregnancy.born_time = cache.game_time
+                    child_name_list.append(child_character_data.name)
 
-                info_draw.text = _("\n孩子的名字叫做{0}，她是{1}的第{2}个孩子，也是{3}的第{4}个孩子，请慢慢养育她长大成人吧\n").format(child_character_data.name, pl_character_data.name, len(pl_character_data.relationship.child_id_list), mom_character_data.name, len(mom_character_data.relationship.child_id_list))
-                info_draw.draw()
-                line_feed.draw()
+                    info_draw.text = _("\n孩子的名字叫做{0}，她是{1}的第{2}个孩子，也是{3}的第{4}个孩子，请慢慢养育她长大成人吧\n").format(child_character_data.name, pl_character_data.name, len(pl_character_data.relationship.child_id_list), mom_character_data.name, len(mom_character_data.relationship.child_id_list))
+                    info_draw.draw()
+                    line_feed.draw()
+                # 多子总结
+                if identical_twins_flag:
+                    info_draw.text = _("\n{0}生下了一对同卵双胞胎：{1}与{2}\n").format(mom_character_data.name, child_name_list[0], child_name_list[1])
+                    info_draw.draw()
+                    line_feed.draw()
+                elif born_count >= 2:
+                    info_draw.text = _("\n{0}一次生下了{1}个孩子：{2}\n").format(mom_character_data.name, born_count, "、".join(child_name_list))
+                    info_draw.draw()
+                    line_feed.draw()
                 break
 
             if self.egg_mode:
@@ -183,8 +214,10 @@ class Born_Panel:
                 draw_text += _("\n{0}从[临盆]转变为[产后]\n").format(mom_character_data.name)
                 mom_character_data.talent[26] = 0
                 draw_text += _("\n{0}失去了[孕肚]\n").format(mom_character_data.name)
-                # 生产完成，重置妊娠加速药的累计加速天数
+                # 生产完成，重置妊娠加速药的累计加速天数、本次胎数与同卵双胞胎标记
                 mom_character_data.pregnancy.acceleration_days = 0.0
+                mom_character_data.pregnancy.fetus_count = 0
+                mom_character_data.pregnancy.identical_twins = False
                 mom_character_data.experience[65] += 10
                 mom_character_data.experience[68] += 10
                 mom_character_data.experience[86] += 1

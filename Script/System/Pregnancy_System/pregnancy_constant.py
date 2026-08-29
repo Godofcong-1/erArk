@@ -12,6 +12,7 @@
 4. 卵生
 5. 怀孕总览面板阶段枚举
 6. 生育谱系图排版
+7. 生育方式与多胎
 """
 from types import FunctionType
 from Script.Core import get_text
@@ -78,3 +79,17 @@ DOWN_GEN = 4
 """ 谱系图向下显示的代数 """
 GAP = 2
 """ 相邻家庭块之间的最小间隔（半角单位），保证排版行的连线段互不粘连 """
+
+# ==== 7. 生育方式与多胎（Race.csv birth_type / multiple_birth_num 列） ====
+BIRTH_TYPE_SINGLE = 1
+""" 生育方式：单胎胎生（默认） """
+BIRTH_TYPE_MULTIPLE = 2
+""" 生育方式：多胎胎生（受精时按种族产胎数量范围进行多轮判定） """
+BIRTH_TYPE_EGG = 11
+""" 生育方式：带壳卵生 """
+BIRTH_TYPE_EGG_SOFT = 12
+""" 生育方式：无壳卵生（未实装，get_birth_type 归一化为单胎胎生） """
+MULTIPLE_BIRTH_SEMEN_DECAY = 0.3
+""" 多胎受精判定中，每轮判定后临时精液量的衰减比例 """
+IDENTICAL_TWINS_RATE = 1
+""" 单胎胎生种族受精成功后为同卵双胞胎的概率（百分比） """

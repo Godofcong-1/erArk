@@ -179,6 +179,60 @@ def get_accelerable_babies(mother_id: int) -> list:
     return [child_id for child_id in get_baby_id_list(mother_id) if get_child_growth_acceleration_amount(child_id) > 0]
 
 
+def get_fetus_count_draw_text(character_id: int) -> str:
+    """
+    获取妊娠/临盆提示中的胎数说明行：多胞胎为"腹中孕育着N个孩子"，同卵双胞胎为"腹中孕育着一对同卵双胞胎"，单胎返回空串
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    str -- 胎数说明文本（含首尾换行）
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    fetus_count = getattr(character_data.pregnancy, "fetus_count", 0)
+    if fetus_count < 2:
+        return ""
+    if getattr(character_data.pregnancy, "identical_twins", False):
+        return _("\n{0}腹中孕育着一对同卵双胞胎\n").format(character_data.name)
+    return _("\n{0}腹中孕育着{1}个孩子\n").format(character_data.name, fetus_count)
+
+
+def get_base_fertilization_rate(semen_count: float, semen_level: int) -> float:
+    """
+    由子宫精液量与精液等级计算基础受精概率（不含周期/避孕等修正）
+    Keyword arguments:
+    semen_count -- 精液量（毫升）
+    semen_level -- 精液等级
+    Return arguments:
+    float -- 基础受精概率（百分比）
+    """
+    return math.pow(semen_count / 1000, 2) * 100 + semen_level * 5
+
+
+def get_multiple_birth_range(character_id: int) -> tuple:
+    """
+    获取角色种族的多胞胎产胎数量范围（Race.csv multiple_birth_num 列，形如"4~12"）
+    \n非多胎胎生种族恒为(1, 1)；列缺失或格式非法（非整数、最小值<1、最小值>最大值）时回退为(1, 1)
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    tuple -- (最小胎数, 最大胎数)
+    """
+    from Script.System.Pregnancy_System import egg_handle
+    if not egg_handle.is_multiple_birth(character_id):
+        return (1, 1)
+    character_data: game_type.Character = cache.character_data[character_id]
+    race_config = game_config.config_race.get(character_data.race)
+    range_text = str(getattr(race_config, "multiple_birth_num", "1~1"))
+    try:
+        min_text, max_text = range_text.split("~")
+        min_num, max_num = int(min_text), int(max_text)
+    except ValueError:
+        return (1, 1)
+    if min_num < 1 or min_num > max_num:
+        return (1, 1)
+    return (min_num, max_num)
+
+
 def get_fertilization_rate(character_id: int):
     """
     根据当前V精液量计算受精概率
@@ -195,7 +249,7 @@ def get_fertilization_rate(character_id: int):
     semen_level = character_data.dirty.body_semen[7][2]
     now_reproduction = character_data.pregnancy.reproduction_period
     # 基础概率
-    now_rate = math.pow(semen_count / 1000,2) * 100 + semen_level * 5
+    now_rate = get_base_fertilization_rate(semen_count, semen_level)
 
     # 假孕孕肚修正：假孕状态下无法受精
     fake_pregnancy_flag = bool(handle_premise.handle_fake_inflation_1(character_id))
@@ -256,8 +310,13 @@ def check_fertilization(character_id: int):
     if not character_data.pregnancy.ovulation_flag:
         return 0
     # 胎生的受精判定即本周期排卵日事件的一次性消费；卵生的标记留给排卵结算消费
-    if egg_handle.get_birth_type(character_id) != 11:
+    if egg_handle.get_birth_type(character_id) != pregnancy_constant.BIRTH_TYPE_EGG:
         character_data.pregnancy.ovulation_flag = False
+
+    # 多胎判定用的临时精液量：须在清空精液之前读取子宫精液量与等级
+    semen_total = character_data.dirty.body_semen[7][1]
+    semen_level = character_data.dirty.body_semen[7][2]
+    multiple_birth_flag = egg_handle.is_multiple_birth(character_id)
 
     # 清空小穴和子宫的当前精液量
     for body_cid in [6, 7]:
@@ -293,14 +352,43 @@ def check_fertilization(character_id: int):
         # 正常情况下可以受精
         else:
 
-            # 由随机数判断是否受精
-            if random.randint(1,100) <= character_data.pregnancy.fertilization_rate:
+            # 多胎胎生：先从种族的产胎数量范围随机本次排卵数，逐轮判定；单胎胎生恒为1轮，与原单次判定完全等价
+            min_num, max_num = get_multiple_birth_range(character_id)
+            ovum_count = random.randint(min_num, max_num)
+            success_count = 0
+            base_rate = get_base_fertilization_rate(semen_total, semen_level)
+            now_semen = semen_total
+            for _round in range(ovum_count):
+                # 每轮概率：以判定前的受精概率为基准，按临时精液量对应的基础概率比例缩放（首轮比例为1，与原判定一致）
+                if base_rate > 0:
+                    now_rate = character_data.pregnancy.fertilization_rate * get_base_fertilization_rate(now_semen, semen_level) / base_rate
+                else:
+                    now_rate = character_data.pregnancy.fertilization_rate
+                # 由随机数判断本轮是否受精
+                if random.randint(1, 100) <= now_rate:
+                    success_count += 1
+                # 无论成功与否，临时精液量都衰减后进入下一轮
+                now_semen *= 1 - pregnancy_constant.MULTIPLE_BIRTH_SEMEN_DECAY
+
+            if success_count >= 1:
                 draw_text += "\n※※※※※※※※※\n"
                 draw_text += _("\n博士的精子与{0}的卵子结合，成功在子宫里着床了\n").format(character_data.name)
+                # 多胎胎生：说明本次排卵数与受精数
+                if multiple_birth_flag:
+                    if success_count >= 2:
+                        draw_text += _("\n{0}的卵巢一次排出了{1}颗卵子，其中{2}颗成功受精，{0}怀上了{2}胞胎\n").format(character_data.name, ovum_count, success_count)
+                    else:
+                        draw_text += _("\n{0}的卵巢一次排出了{1}颗卵子，其中1颗成功受精\n").format(character_data.name, ovum_count)
+                # 单胎胎生：按概率判定为同卵双胞胎
+                elif random.randint(1, 100) <= pregnancy_constant.IDENTICAL_TWINS_RATE:
+                    success_count = 2
+                    character_data.pregnancy.identical_twins = True
+                    draw_text += _("\n受精卵在着床后分裂成了两个胚胎，{0}怀上了同卵双胞胎\n").format(character_data.name)
                 draw_text += _("\n{0}获得了[受精]\n").format(character_data.name)
                 draw_text += "\n※※※※※※※※※\n"
                 character_data.talent[20] = 1
                 character_data.pregnancy.fertilization_time = cache.game_time
+                character_data.pregnancy.fetus_count = success_count
                 # 新受精重置妊娠加速药的累计加速天数
                 character_data.pregnancy.acceleration_days = 0.0
                 # 判断是否是无意识妊娠
@@ -314,7 +402,10 @@ def check_fertilization(character_id: int):
             else:
                 if character_data.h_state.body_item[11][1] or character_data.h_state.body_item[12][1]:
                     draw_text += _("\n在避孕药的影响下——")
-                draw_text += _("\n精子在{0}的阴道中游荡，但未能成功受精\n").format(character_data.name)
+                if multiple_birth_flag:
+                    draw_text += _("\n{0}的卵巢一次排出了{1}颗卵子，但没有一颗成功受精\n").format(character_data.name, ovum_count)
+                else:
+                    draw_text += _("\n精子在{0}的阴道中游荡，但未能成功受精\n").format(character_data.name)
                 second_behavior.character_get_second_behavior(character_id, "fertilization_failed")
 
         character_data.pregnancy.fertilization_rate = 0
@@ -362,6 +453,7 @@ def check_pregnancy(character_id: int):
             talk.must_show_talk_check(character_id)
             draw_text = "\n※※※※※※※※※\n"
             draw_text += _("\n随着怀孕的进程，{0}挺起了大肚子，隆起的曲线下是正在孕育的新生命\n").format(character_data.name)
+            draw_text += get_fetus_count_draw_text(character_id)
             draw_text += _("\n{0}有孕在身，将会暂停工作和部分娱乐\n").format(character_data.name)
             draw_text += _("\n{0}从[受精]转变为[妊娠]\n").format(character_data.name)
             draw_text += _("\n{0}获得了[孕肚]\n").format(character_data.name)
@@ -394,6 +486,7 @@ def check_near_born(character_id: int):
             talk.must_show_talk_check(character_id)
             draw_text = "\n※※※※※※※※※\n"
             draw_text += _("\n随着怀孕的进程，{0}临近生产，即将诞下爱的结晶\n").format(character_data.name)
+            draw_text += get_fetus_count_draw_text(character_id)
             draw_text += _("\n{0}在临盆期内会一直躺在医疗部住院区的病床上，多去陪陪她，静候生产的来临吧\n").format(character_data.name)
             draw_text += _("\n{0}从[妊娠]转变为[临盆]\n").format(character_data.name)
             draw_text += "\n※※※※※※※※※\n"
@@ -439,7 +532,10 @@ def check_rearing(character_id: int):
             talk.must_show_talk_check(character_id)
             draw_text = "\n※※※※※※※※※\n"
             draw_text += _("\n{0}的产后休息结束了\n").format(character_data.name)
-            draw_text += _("\n{0}接下来的行动重心会以照顾{1}为主\n").format(character_data.name, child_character_data.name)
+            # 列出名下全部婴儿（多胞胎为多个），无婴儿时退回最新的孩子
+            baby_name_list = [cache.character_data[baby_id].name for baby_id in get_baby_id_list(character_id)]
+            baby_name_text = "、".join(baby_name_list) if len(baby_name_list) else child_character_data.name
+            draw_text += _("\n{0}接下来的行动重心会以照顾{1}为主\n").format(character_data.name, baby_name_text)
             draw_text += _("\n{0}从[产后]转变为[育儿]\n").format(character_data.name)
             draw_text += "\n※※※※※※※※※\n"
             now_draw = draw.WaitDraw()
@@ -578,8 +674,8 @@ def check_all_pregnancy(character_id: int):
 
     get_fertilization_rate(character_id)
     check_fertilization(character_id)
-    # 带壳卵生走排卵与破壳链，胎生走妊娠链
-    if egg_handle.get_birth_type(character_id) == 11:
+    # 带壳卵生走排卵与破壳链，胎生（单胎/多胎）走妊娠链
+    if egg_handle.get_birth_type(character_id) == pregnancy_constant.BIRTH_TYPE_EGG:
         egg_handle.check_ovulation(character_id)
         egg_handle.check_egg_born(character_id)
     else:

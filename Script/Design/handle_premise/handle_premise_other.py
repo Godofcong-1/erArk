@@ -1224,6 +1224,87 @@ def handle_t_birth_type_egg(character_id: int) -> int:
     return egg_handle.get_birth_type(character_data.target_character_id) == 11
 
 
+@add_premise(constant_promise.Premise.SELF_BIRTH_TYPE_MULTIPLE)
+def handle_self_birth_type_multiple(character_id: int) -> int:
+    """
+    校验自己是多胎胎生种族
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Pregnancy_System import egg_handle
+    return egg_handle.is_multiple_birth(character_id)
+
+
+@add_premise(constant_promise.Premise.T_BIRTH_TYPE_MULTIPLE)
+def handle_t_birth_type_multiple(character_id: int) -> int:
+    """
+    校验交互对象是多胎胎生种族
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Pregnancy_System import egg_handle
+    character_data = cache.character_data[character_id]
+    return egg_handle.is_multiple_birth(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_MULTIPLE_FETUS)
+def handle_self_multiple_fetus(character_id: int) -> int:
+    """
+    校验自己当前怀着多胞胎（本次胎数>=2，含同卵双胞胎）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return getattr(character_data.pregnancy, "fetus_count", 0) >= 2
+
+
+@add_premise(constant_promise.Premise.T_MULTIPLE_FETUS)
+def handle_t_multiple_fetus(character_id: int) -> int:
+    """
+    校验交互对象当前怀着多胞胎（本次胎数>=2，含同卵双胞胎）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    return getattr(target_data.pregnancy, "fetus_count", 0) >= 2
+
+
+@add_premise(constant_promise.Premise.SELF_IDENTICAL_TWINS)
+def handle_self_identical_twins(character_id: int) -> int:
+    """
+    校验自己当前怀着同卵双胞胎
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return bool(getattr(character_data.pregnancy, "identical_twins", False))
+
+
+@add_premise(constant_promise.Premise.T_IDENTICAL_TWINS)
+def handle_t_identical_twins(character_id: int) -> int:
+    """
+    校验交互对象当前怀着同卵双胞胎
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    return bool(getattr(target_data.pregnancy, "identical_twins", False))
+
+
 @add_premise(constant_promise.Premise.HAVE_UNIDENTIFIED_EGGS)
 def handle_have_unidentified_eggs(character_id: int) -> int:
     """

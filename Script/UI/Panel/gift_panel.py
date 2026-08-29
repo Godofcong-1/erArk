@@ -524,7 +524,7 @@ class Gift_Panel:
             if not (handle_premise.handle_fertilization_1(target_character_data.cid) or handle_premise.handle_pregnancy_1(target_character_data.cid)):
                 effective_flag = False
                 draw_text = _("\n  {0}没有处于受精或妊娠状态，无法使用妊娠加速药\n").format(target_character_data.name)
-            elif egg_handle.get_birth_type(target_character_data.cid) != 1:
+            elif not egg_handle.is_viviparous(target_character_data.cid):
                 effective_flag = False
                 draw_text = _("\n  {0}的种族不是胎生，无法使用妊娠加速药\n").format(target_character_data.name)
             elif pregnancy_handle.get_pregnancy_acceleration_amount(target_character_data.cid) <= 0:
@@ -545,7 +545,7 @@ class Gift_Panel:
         # 假孕药：仅对不处于任何怀孕相关状态的胎生干员有效
         elif drug_id == 37:
             from Script.System.Pregnancy_System import egg_handle
-            if egg_handle.get_birth_type(target_character_data.cid) != 1:
+            if not egg_handle.is_viviparous(target_character_data.cid):
                 effective_flag = False
                 draw_text = _("\n  {0}的种族不是胎生，无法使用假孕药\n").format(target_character_data.name)
             else:

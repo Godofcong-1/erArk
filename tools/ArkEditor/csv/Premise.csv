@@ -1982,6 +1982,12 @@ target_is_player_daughter,TARGET_IS_PLAYER_DAUGHTER,生育,交互对象是玩家
 target_not_player_daughter,TARGET_NOT_PLAYER_DAUGHTER,生育,交互对象不是玩家的女儿
 self_birth_type_egg,SELF_BIRTH_TYPE_EGG,生育,自己是带壳卵生种族
 t_birth_type_egg,T_BIRTH_TYPE_EGG,生育,交互对象是带壳卵生种族
+self_birth_type_multiple,SELF_BIRTH_TYPE_MULTIPLE,生育,自己是多胎胎生种族
+t_birth_type_multiple,T_BIRTH_TYPE_MULTIPLE,生育,交互对象是多胎胎生种族
+self_multiple_fetus,SELF_MULTIPLE_FETUS,生育,自己当前怀着多胞胎（本次胎数>=2，含同卵双胞胎）
+t_multiple_fetus,T_MULTIPLE_FETUS,生育,交互对象当前怀着多胞胎（本次胎数>=2，含同卵双胞胎）
+self_identical_twins,SELF_IDENTICAL_TWINS,生育,自己当前怀着同卵双胞胎
+t_identical_twins,T_IDENTICAL_TWINS,生育,交互对象当前怀着同卵双胞胎
 have_unidentified_eggs,HAVE_UNIDENTIFIED_EGGS,生育,自己持有可鉴定的未鉴定卵（排出日早于今天且未被玩家拿走）
 have_hatching_eggs,HAVE_HATCHING_EGGS,生育,自己持有孵化中的卵
 entertainment_is_tend_eggs,ENTERTAINMENT_IS_TEND_EGGS,生育,当前时段的娱乐活动是照料卵
