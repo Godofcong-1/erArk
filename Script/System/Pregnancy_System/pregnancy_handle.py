@@ -87,15 +87,66 @@ def get_child_grow_day(child_id: int) -> int:
     return natural_day + int(getattr(child_character_data.pregnancy, "growth_acceleration_days", 0))
 
 
-def get_child_growth_acceleration_amount(child_id: int) -> int:
+def get_child_growth_stage_total_day(child_id: int) -> int:
     """
-    计算成长加速药对该婴儿可入账的成长天数（一次到位加速到成为幼女的前一天）
+    获取孩子当前成长阶段进入下一阶段所需的有效成长天数阈值（婴儿→幼女90 / 幼女→萝莉270 / 萝莉→少女450）
     Keyword arguments:
-    child_id -- 婴儿角色id
+    child_id -- 孩子角色id
     Return arguments:
-    int -- 可入账成长天数（<=0时表示已经快要成为幼女，无法使用）
+    int -- 阈值天数；不处于可成长阶段（非婴儿/幼女/萝莉）时返回0
     """
-    return max(0, pregnancy_constant.REARING_COMPLETE_DAY - 1 - get_child_grow_day(child_id))
+    if handle_premise.handle_self_is_baby(child_id):
+        return pregnancy_constant.REARING_COMPLETE_DAY
+    if handle_premise.handle_self_is_child(child_id):
+        return pregnancy_constant.GROW_TO_LOLI_DAY
+    if handle_premise.handle_self_is_loli(child_id):
+        return pregnancy_constant.GROW_TO_GIRL_DAY
+    return 0
+
+
+def get_child_next_stage_name(child_id: int) -> str:
+    """
+    获取孩子当前成长阶段的下一阶段名（用于提示文本）
+    Keyword arguments:
+    child_id -- 孩子角色id
+    Return arguments:
+    str -- 下一阶段名；不处于可成长阶段时返回空串
+    """
+    if handle_premise.handle_self_is_baby(child_id):
+        return _("幼女")
+    if handle_premise.handle_self_is_child(child_id):
+        return _("萝莉")
+    if handle_premise.handle_self_is_loli(child_id):
+        return _("少女")
+    return ""
+
+
+def get_child_growth_acceleration_amount(child_id: int) -> float:
+    """
+    计算成长加速药对该孩子单次可入账的成长天数：当前阶段剩余天数（阈值-有效成长天数）的30%，
+    夹取到进入下一阶段的前一天；不足1天视为已到极限
+    Keyword arguments:
+    child_id -- 孩子角色id（婴儿/幼女/萝莉）
+    Return arguments:
+    float -- 可入账成长天数（0表示不处于可成长阶段或已到极限，无法使用）
+    """
+    total_day = get_child_growth_stage_total_day(child_id)
+    if total_day <= 0:
+        return 0
+    grow_day = get_child_grow_day(child_id)
+    amount = min((total_day - grow_day) * pregnancy_constant.ACCELERATION_RATE, total_day - 1 - grow_day)
+    return amount if amount >= 1 else 0
+
+
+def is_growth_drug_self_target(character_id: int) -> bool:
+    """
+    判断成长加速药是否对该角色本人生效（玩家的女儿且处于幼女或萝莉阶段；婴儿由母亲代收）
+    Keyword arguments:
+    character_id -- 目标角色id
+    Return arguments:
+    bool -- 是否对本人生效
+    """
+    return bool(handle_premise.handle_self_is_player_daughter(character_id) and handle_premise.handle_self_child_or_loli_1(character_id))
 
 
 def get_baby_id_list(mother_id: int) -> list:

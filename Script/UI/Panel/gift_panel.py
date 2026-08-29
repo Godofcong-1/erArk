@@ -104,21 +104,29 @@ def handle_drug_use_effect(character_id: int, drug_id: int):
     elif drug_id == 39:  # 成长加速药
         from Script.System.Pregnancy_System import pregnancy_handle, pregnancy_panel
         pl_character_data: game_type.Character = cache.character_data[0]
-        child_id = getattr(pl_character_data.behavior, "gift_child_id", -1)
-        pl_character_data.behavior.gift_child_id = -1
-        # 兜底：选中的孩子已不是目标名下的婴儿则不生效
-        if child_id not in pregnancy_handle.get_baby_id_list(character_id):
-            now_draw.text += _("选中的婴儿已经不在婴儿期，药物没有产生效果\n")
+        if pregnancy_handle.is_growth_drug_self_target(character_id):
+            # 幼女/萝莉阶段的女儿：对收礼者本人生效
+            child_id = character_id
         else:
+            # 母亲：对送礼前选中的婴儿生效
+            child_id = getattr(pl_character_data.behavior, "gift_child_id", -1)
+            pl_character_data.behavior.gift_child_id = -1
+            # 兜底：选中的孩子已不是目标名下的婴儿则不生效
+            if child_id not in pregnancy_handle.get_baby_id_list(character_id):
+                child_id = -1
+                now_draw.text += _("选中的婴儿已经不在婴儿期，药物没有产生效果\n")
+        if child_id != -1:
             child_character_data: game_type.Character = cache.character_data[child_id]
             add_day = pregnancy_handle.get_child_growth_acceleration_amount(child_id)
+            next_stage_name = pregnancy_handle.get_child_next_stage_name(child_id)
             if add_day > 0:
                 child_character_data.pregnancy.growth_acceleration_days = getattr(child_character_data.pregnancy, "growth_acceleration_days", 0) + add_day
                 now_acc = int(child_character_data.pregnancy.growth_acceleration_days)
-                predict_time = game_time.get_sub_date(day=pregnancy_constant.REARING_COMPLETE_DAY - now_acc, old_date=child_character_data.pregnancy.born_time)
-                now_draw.text += _("本次加速{0}天，累计加速{1}天，{2}预计将在{3}成长为幼女\n").format(int(add_day), now_acc, child_character_data.name, pregnancy_panel.get_date_text(predict_time))
+                total_day = pregnancy_handle.get_child_growth_stage_total_day(child_id)
+                predict_time = game_time.get_sub_date(day=total_day - now_acc, old_date=child_character_data.pregnancy.born_time)
+                now_draw.text += _("本次加速{0}天，累计加速{1}天，{2}预计将在{3}成长为{4}\n").format(int(add_day), now_acc, child_character_data.name, pregnancy_panel.get_date_text(predict_time), next_stage_name)
             else:
-                now_draw.text += _("{0}已经快要成长为幼女了，药物没有产生效果\n").format(child_character_data.name)
+                now_draw.text += _("{0}已经快要成长为{1}了，药物没有产生效果\n").format(child_character_data.name, next_stage_name)
     elif drug_id == 40:  # 成长停滞药
         character_data.talent[28] = 1
         now_draw.text += _("{0}获得了【成长停滞】，在使用成长继续药之前她会一直保持在当前的阶段\n").format(character_data.name)
@@ -257,10 +265,12 @@ class Gift_Panel:
         if gift_id == 36:
             if not self.select_target_egg():
                 return
-        # 成长加速药需要先选择目标婴儿（玩家取消则不送出）
+        # 成长加速药送给母亲时需要先选择目标婴儿（玩家取消则不送出）；送给幼女/萝莉女儿时对本人生效，无需选择
         if gift_id == 39:
-            if not self.select_target_baby():
-                return
+            from Script.System.Pregnancy_System import pregnancy_handle
+            if not pregnancy_handle.is_growth_drug_self_target(character_data.target_character_id):
+                if not self.select_target_baby():
+                    return
 
         # 将礼物id赋予角色行为数据
         character_data.behavior.gift_id = gift_id
@@ -559,12 +569,17 @@ class Gift_Panel:
             effective_flag = bool(handle_premise.handle_fake_inflation_1(target_character_data.cid))
             if not effective_flag:
                 draw_text = _("\n  {0}没有处于假孕状态，不需要使用假孕终止药\n").format(target_character_data.name)
-        # 成长加速药：玩家需在育儿室，且目标名下有可加速的婴儿
+        # 成长加速药：目标为幼女/萝莉阶段的女儿时对本人生效（需未到加速极限）；
+        # 否则目标视为母亲：玩家需在育儿室，且目标名下有可加速的婴儿
         elif drug_id == 39:
             from Script.System.Pregnancy_System import pregnancy_handle
-            if not handle_premise.handle_in_nursery(0):
+            if pregnancy_handle.is_growth_drug_self_target(target_character_data.cid):
+                if pregnancy_handle.get_child_growth_acceleration_amount(target_character_data.cid) <= 0:
+                    effective_flag = False
+                    draw_text = _("\n  {0}已经快要成长到下一阶段了，无法使用成长加速药\n").format(target_character_data.name)
+            elif not handle_premise.handle_in_nursery(0):
                 effective_flag = False
-                draw_text = _("\n  只能在育儿室使用成长加速药\n")
+                draw_text = _("\n  只能在育儿室对母亲使用成长加速药\n")
             elif not len(pregnancy_handle.get_baby_id_list(target_character_data.cid)):
                 effective_flag = False
                 draw_text = _("\n  {0}没有正在婴儿期的孩子，无法使用成长加速药\n").format(target_character_data.name)
