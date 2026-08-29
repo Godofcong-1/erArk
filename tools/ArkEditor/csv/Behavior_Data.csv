@@ -687,6 +687,9 @@ int,str,str,int,str,str
 1322,lay_egg,结算排出卵,0,npc,二段结算_生育
 1323,egg_fertilized,结算鉴定出受精卵,0,npc,二段结算_生育
 1324,egg_born,破壳前的对话,0,npc,二段结算_生育
+1325,lay_soft_egg,结算体外排出无壳卵,0,npc,二段结算_生育
+1326,soft_egg_fertilized,结算体外卵受精,0,npc,二段结算_生育
+1327,soft_egg_born,无壳卵孵化生产前的对话,0,npc,二段结算_生育
 
 1331,first_meet,初次见面,0,npc,二段结算
 1332,day_hello,每日打招呼,0,npc,二段结算

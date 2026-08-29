@@ -275,23 +275,23 @@ def get_fertilization_rate(character_id: int):
         else:
             # 生理周期修正
             now_rate *= game_config.config_reproduction_period[now_reproduction].type
-            # 排卵促进药
+            # 排卵促进药（加成结果须写回now_rate，否则会被函数末尾的赋值覆盖）
             if character_data.h_state.body_item[10][1]:
                 new_rate = min(100, now_rate * 5)
-                draw_text += _("\n在排卵促进药的影响下，怀孕概率由{0}上升到了{1}%\n").format(character_data.pregnancy.fertilization_rate, new_rate)
-                character_data.pregnancy.fertilization_rate = new_rate
+                draw_text += _("\n在排卵促进药的影响下，怀孕概率由{0}上升到了{1}%\n").format(round(now_rate, 2), round(new_rate, 2))
+                now_rate = new_rate
                 character_data.h_state.body_item[10][1] = False
             # 排卵催眠
             if character_data.hypnosis.force_ovulation:
                 new_rate = min(100, now_rate * 5)
-                draw_text += _("\n在催眠-强制排卵的影响下，怀孕概率由{0}上升到了{1}%\n").format(character_data.pregnancy.fertilization_rate, new_rate)
-                character_data.pregnancy.fertilization_rate = new_rate
+                draw_text += _("\n在催眠-强制排卵的影响下，怀孕概率由{0}上升到了{1}%\n").format(round(now_rate, 2), round(new_rate, 2))
+                now_rate = new_rate
                 character_data.hypnosis.force_ovulation = False
             # 浓厚精液
             if pl_character_data.talent[33] == 1:
                 new_rate = min(100, now_rate * 2)
-                draw_text += _("\n在浓厚精液的影响下，怀孕概率由{0}上升到了{1}%\n").format(character_data.pregnancy.fertilization_rate, new_rate)
-                character_data.pregnancy.fertilization_rate = new_rate
+                draw_text += _("\n在浓厚精液的影响下，怀孕概率由{0}上升到了{1}%\n").format(round(now_rate, 2), round(new_rate, 2))
+                now_rate = new_rate
     # 保留两位小数
     now_rate = round(now_rate,2)
     character_data.pregnancy.fertilization_rate = now_rate
@@ -308,6 +308,10 @@ def check_fertilization(character_id: int):
 
     # 仅在本周期排卵日事件待处理时进行判定（标记于周期推进到排卵日时置位，0点结算有兜底，玩家不睡觉也不会错过）
     if not character_data.pregnancy.ovulation_flag:
+        return 0
+    # 无壳卵生没有体内受精判定（排卵在性绝顶时体外发生、受精在体外进行）：只消费标记，体内精液不清零、不判定、不提示
+    if egg_handle.is_egg_soft(character_id):
+        character_data.pregnancy.ovulation_flag = False
         return 0
     # 胎生的受精判定即本周期排卵日事件的一次性消费；卵生的标记留给排卵结算消费
     if egg_handle.get_birth_type(character_id) != pregnancy_constant.BIRTH_TYPE_EGG:
@@ -674,9 +678,11 @@ def check_all_pregnancy(character_id: int):
 
     get_fertilization_rate(character_id)
     check_fertilization(character_id)
-    # 带壳卵生走排卵与破壳链，胎生（单胎/多胎）走妊娠链
+    # 带壳卵生走排卵与破壳链，无壳卵生只走破壳链（排卵在性绝顶时体外发生），胎生（单胎/多胎）走妊娠链
     if egg_handle.get_birth_type(character_id) == pregnancy_constant.BIRTH_TYPE_EGG:
         egg_handle.check_ovulation(character_id)
+        egg_handle.check_egg_born(character_id)
+    elif egg_handle.is_egg_soft(character_id):
         egg_handle.check_egg_born(character_id)
     else:
         check_pregnancy(character_id)
@@ -702,6 +708,14 @@ def update_reproduction_period(character_id: int):
     # 该角色自己的排卵日开始时置位待办标记（胎生由受精判定消费，卵生由排卵结算消费）
     if character_data.pregnancy.reproduction_period == 5:
         character_data.pregnancy.ovulation_flag = True
+        # 无壳卵生：排卵日当天获得一次体外排卵机会
+        character_data.pregnancy.external_ovulation_chance = True
+    else:
+        # 离开排卵日：体外排卵机会过期；无壳卵生的排卵促进药/催眠强制排卵效果只保留到当日机会结束
+        if character_data.pregnancy.external_ovulation_chance:
+            character_data.pregnancy.external_ovulation_chance = False
+            character_data.h_state.body_item[10][1] = False
+            character_data.hypnosis.force_ovulation = False
 
 
 def chest_grow(character_id: int,print_flag = False):

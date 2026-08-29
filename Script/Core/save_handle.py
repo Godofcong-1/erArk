@@ -231,6 +231,33 @@ def _migrate_first_record_flat_fields(character) -> None:
             delattr(first_record, old_attr)
 
 
+def _clear_soft_egg_race_pregnancy(character: game_type.Character) -> None:
+    """
+    清除无壳卵生种族角色正在进行的胎生孕程（旧存档兼容，方案 plan_19 §11-6 确认口径）
+    \n无壳卵生（birth_type=12）实装前被归一化为单胎胎生，旧存档中该种族角色可能持有受精/妊娠/临盆素质；
+    \n读档时一次性清除 20受精/21妊娠/22临盆/26孕肚/35无意识妊娠 及本次胎数/同卵双胞胎/妊娠加速累计，
+    \n23产后/24育儿/27泌乳与已出生的孩子不受影响；非无壳卵生或未在孕程中的角色不做任何改动
+    Keyword arguments:
+    character -- 角色数据
+    Return arguments:
+    无
+    """
+    talent_data = getattr(character, "talent", None)
+    pregnancy_data = getattr(character, "pregnancy", None)
+    if not isinstance(talent_data, dict) or pregnancy_data is None:
+        return
+    race_config = game_config.config_race.get(getattr(character, "race", -1))
+    if race_config is None or getattr(race_config, "birth_type", 1) != 12:
+        return
+    if not any(talent_data.get(talent_id, 0) for talent_id in (20, 21, 22)):
+        return
+    for talent_id in (20, 21, 22, 26, 35):
+        talent_data[talent_id] = 0
+    pregnancy_data.fetus_count = 0
+    pregnancy_data.identical_twins = False
+    pregnancy_data.acceleration_days = 0.0
+
+
 def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
     """
     归一化反序列化存档中已知的结构性路径字段
@@ -292,10 +319,20 @@ def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
                 pregnancy_data.fetus_count = 0
             if pregnancy_data is not None and not hasattr(pregnancy_data, "identical_twins"):
                 pregnancy_data.identical_twins = False
+            # 无壳卵生旧存档兼容：补全体外排卵机会标记
+            if pregnancy_data is not None and not hasattr(pregnancy_data, "external_ovulation_chance"):
+                pregnancy_data.external_ovulation_chance = False
+            # 无壳卵生旧存档兼容：无壳卵生种族此前按单胎胎生运行，读档时一次性清除其正在进行的胎生孕程（受精/妊娠/临盆及伴生状态），产后/育儿/泌乳与已出生的孩子保留
+            _clear_soft_egg_race_pregnancy(character)
             if pl_collection is not None and not hasattr(pl_collection, "held_eggs"):
                 pl_collection.held_eggs = {}
             if pl_collection is not None and not hasattr(pl_collection, "next_held_egg_id"):
                 pl_collection.next_held_egg_id = 0
+            # 无壳卵生旧存档兼容：补全玩家收藏品中的体外无壳卵字典
+            if pl_collection is not None and not hasattr(pl_collection, "soft_eggs"):
+                pl_collection.soft_eggs = {}
+            if pl_collection is not None and not hasattr(pl_collection, "next_soft_egg_id"):
+                pl_collection.next_soft_egg_id = 0
             # 睡觉中被吵醒旧存档兼容：补全角色行动信息中缺失的被吵醒状态结束时间
             action_info_data = getattr(character, "action_info", None)
             if action_info_data is not None and not hasattr(action_info_data, "sleep_disturbed_end_time"):

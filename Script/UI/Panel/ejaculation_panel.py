@@ -382,13 +382,15 @@ def calculate_semen_flow(character_id: int, part_cid: int, part_type: int, semen
         # print(f"debug calculate_semen_flow name = {character_data.name},all_flow_dict = {all_flow_dict}")
 
 
-def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0, draw_flag: bool = True):
+def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0, draw_flag: bool = True, soft_egg_id: int = -1):
     """
     射精流程的总函数
     Keyword arguments:
     part_cid -- 部位cid
     part_type -- 部位类型，0为身体，1为穿着服装，2为浴场衣柜，3为宿舍衣柜
     target_character_id -- 目标角色id
+    draw_flag -- 是否绘制射精文本
+    soft_egg_id -- 射在体外无壳卵上时的卵编号（-1为不射在卵上）；非避孕套时精液全部加到卵上，不更新任何部位污浊/精液流动/受精概率与射精部位记录
     """
     character_data: game_type.Character = cache.character_data[0]
     # 如果没有赋值目标角色id，则默认为当前目标角色
@@ -424,8 +426,13 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
             cache.achievement.sleep_sex_record[2] += 1
         # 正常射精时
         if character_data.h_state.body_item[13][1] == False:
+            # 射在体外无壳卵上
+            if soft_egg_id >= 0:
+                from Script.System.Pregnancy_System import soft_egg_handle
+                soft_egg_handle.add_semen_to_soft_egg(soft_egg_id, semen_count)
+                now_text = _("在{0}上{1}").format(soft_egg_handle.get_soft_egg_name(soft_egg_id), semen_text)
             # 在有目标对象时
-            if target_character_id > 0:
+            elif target_character_id > 0:
                 cache.shoot_position = part_cid
                 # 更新被射精污浊数据
                 update_semen_dirty(target_character_id, part_cid, part_type, semen_count)
@@ -502,13 +509,22 @@ class Ejaculation_Panel:
         """绘制对象"""
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        # 当前地点有体外无壳卵时，无论是否开启自动射精都必须手动选择（可选择射在卵上）
+        from Script.System.Pregnancy_System import soft_egg_handle
+        soft_egg_flag = len(soft_egg_handle.get_soft_eggs_in_scene(character_data.position)) > 0
 
-        # 如果当前交互对象不是NPC的话，则跳过部位选择
+        # 如果当前交互对象不是NPC的话，则跳过部位选择；有体外卵时改为只列卵按钮与照常射出
         if character_data.target_character_id == 0:
-            self.shoot_here(6, 0)
+            if soft_egg_flag:
+                self.draw_choose_part(self_mode=True)
+            else:
+                self.shoot_here(6, 0)
         # 群交模式下手动选择对象与部位
         elif cache.group_sex_mode:
             self.draw_choose_target_chara_in_group_sex()
+            self.draw_choose_part()
+        # 有体外卵时强制手动选择
+        elif soft_egg_flag:
             self.draw_choose_part()
         # 如果没有选择射精部位，则直接在当前阴茎位置射精
         elif not cache.all_system_setting.base_setting[3]:
@@ -589,8 +605,13 @@ class Ejaculation_Panel:
             if yrn in return_list:
                 break
 
-    def draw_choose_part(self):
-        """绘制选择射精部位"""
+    def draw_choose_part(self, self_mode: bool = False):
+        """
+        绘制选择射精部位
+        Keyword arguments:
+        self_mode -- 交互对象为自己（自慰）且当前地点有体外无壳卵：不列身体/服装部位，只列卵按钮与照常射出按钮
+        """
+        from Script.System.Pregnancy_System import soft_egg_handle
 
         title_name = _("选择射精部位")
         title_draw = draw.TitleLineDraw(title_name, self.width)
@@ -602,40 +623,65 @@ class Ejaculation_Panel:
             return_list = []
             title_draw.draw()
 
-            # 绘制身体部位按钮
-            body_count = 0
-            for body_part_cid in game_config.config_body_part:
-                part_name = game_config.config_body_part[body_part_cid].name
-                draw_text = f"[{body_part_cid}]{part_name}"
-                # print("debug draw_text = ",draw_text)
-                body_count += 1
-                show_flag = self.part_can_choose(body_part_cid)
-                if show_flag:
+            if not self_mode:
+                # 绘制身体部位按钮
+                body_count = 0
+                for body_part_cid in game_config.config_body_part:
+                    part_name = game_config.config_body_part[body_part_cid].name
+                    draw_text = f"[{body_part_cid}]{part_name}"
+                    # print("debug draw_text = ",draw_text)
+                    body_count += 1
+                    show_flag = self.part_can_choose(body_part_cid)
+                    if show_flag:
+                        name_draw = draw.CenterButton(
+                            draw_text, '\n' + part_name, (len(draw_text) + 1) * 2, cmd_func=self.shoot_here, args=(body_part_cid, 0)
+                        )
+                        name_draw.draw()
+                        return_list.append(name_draw.return_text)
+                        if body_count > 0 and body_count % 8 == 0:
+                            line_feed.draw()
+
+                line_feed.draw()
+
+                # 绘制服装部位按钮
+                cloth_count = 0
+                for clothing_type in game_config.config_clothing_type:
+                    cloth_name = game_config.config_clothing_type[clothing_type].name
+                    draw_text = f"[{clothing_type}]{cloth_name}"
+                    cloth_count += 1
+                    show_flag = len(target_data.cloth.cloth_wear[clothing_type])
+                    if show_flag:
+                        name_draw = draw.CenterButton(
+                            draw_text, cloth_name, (len(draw_text) + 1) * 2, cmd_func=self.shoot_here, args=(clothing_type, 1)
+                        )
+                        name_draw.draw()
+                        return_list.append(name_draw.return_text)
+                        if cloth_count > 0 and cloth_count % 8 == 0:
+                            line_feed.draw()
+
+            # 绘制当前地点的体外无壳卵按钮（选中即射在该卵上）
+            soft_eggs = soft_egg_handle.get_soft_eggs_in_scene(character_data.position)
+            if len(soft_eggs):
+                line_feed.draw()
+                egg_count = 0
+                for egg_id, egg_data in soft_eggs.items():
+                    egg_name = soft_egg_handle.get_soft_egg_name(egg_id)
+                    draw_text = _("[卵块{0}]{1}（{2}ml）").format(egg_id, egg_name, int(egg_data["semen_count"]))
+                    egg_count += 1
                     name_draw = draw.CenterButton(
-                        draw_text, '\n' + part_name, (len(draw_text) + 1) * 2, cmd_func=self.shoot_here, args=(body_part_cid, 0)
+                        draw_text, draw_text, (len(draw_text) + 1) * 2, cmd_func=self.shoot_soft_egg, args=(egg_id,)
                     )
                     name_draw.draw()
                     return_list.append(name_draw.return_text)
-                    if body_count > 0 and body_count % 8 == 0:
+                    if egg_count > 0 and egg_count % 4 == 0:
                         line_feed.draw()
-
-            line_feed.draw()
-
-            # 绘制服装部位按钮
-            cloth_count = 0
-            for clothing_type in game_config.config_clothing_type:
-                cloth_name = game_config.config_clothing_type[clothing_type].name
-                draw_text = f"[{clothing_type}]{cloth_name}"
-                cloth_count += 1
-                show_flag = len(target_data.cloth.cloth_wear[clothing_type])
-                if show_flag:
-                    name_draw = draw.CenterButton(
-                        draw_text, cloth_name, (len(draw_text) + 1) * 2, cmd_func=self.shoot_here, args=(clothing_type, 1)
-                    )
-                    name_draw.draw()
-                    return_list.append(name_draw.return_text)
-                    if cloth_count > 0 and cloth_count % 8 == 0:
-                        line_feed.draw()
+            # 自慰时保留原来的射精行为作为兜底选项
+            if self_mode:
+                line_feed.draw()
+                normal_text = _("[照常射出]")
+                normal_draw = draw.CenterButton(normal_text, normal_text, (len(normal_text) + 1) * 2, cmd_func=self.shoot_here, args=(6, 0))
+                normal_draw.draw()
+                return_list.append(normal_draw.return_text)
 
             yrn = flow_handle.askfor_all(return_list)
 
@@ -648,6 +694,15 @@ class Ejaculation_Panel:
         """更改射精目标"""
         character_data: game_type.Character = cache.character_data[0]
         character_data.target_character_id = target_character_id
+
+    def shoot_soft_egg(self, egg_id: int):
+        """
+        结算射在体外无壳卵上（不涉及任何身体/服装部位，不更新阴茎插入与射精部位记录）
+        Keyword arguments:
+        egg_id -- 体外无壳卵编号
+        """
+        py_cmd.clr_cmd()
+        ejaculation_flow(-1, 0, soft_egg_id=egg_id)
 
     def shoot_here(self, part_cid: int, part_type: int):
         """结算射精"""

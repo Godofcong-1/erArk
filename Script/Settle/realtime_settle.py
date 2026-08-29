@@ -80,6 +80,10 @@ def judge_pl_real_time_data():
             cache.rhodes_island.love_hotel_room_lv = 0
             pl_character_data.action_info.check_out_time = datetime.datetime(1, 1, 1)
 
+    # 体外无壳卵：排出满1小时的卵进行受精判定
+    from Script.System.Pregnancy_System import soft_egg_handle
+    soft_egg_handle.check_soft_eggs_fertilization()
+
 
 def character_aotu_change_value(character_id: int, now_time: datetime.datetime, pl_start_time: datetime.datetime):
     """

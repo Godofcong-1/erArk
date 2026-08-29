@@ -738,6 +738,18 @@ def get_semen_now_level(value: int, part_cid: int, part_type: int) -> int:
             max_volume = game_config.config_body_part[part_cid].max_volume
     else:
         max_volume = game_config.config_clothing_type[part_cid].max_volume
+    return get_semen_level_by_volume(value, max_volume)
+
+
+def get_semen_level_by_volume(value: float, max_volume: float) -> int:
+    """
+    按精液量与容积基数返回1~10级精液覆盖等级（部位与体外卵共用的阶梯换算）\n
+    Keyword arguments:\n
+    value -- 精液量（须大于0，0及以下由调用方先行处理为0级）\n
+    max_volume -- 容积基数（达到即为10级）\n
+    Return arguments:\n
+    int -- 精液覆盖等级1~10\n
+    """
     # 如果超过最大值，则返回最大等级
     if value >= max_volume:
         now_level = 10
@@ -758,7 +770,6 @@ def get_semen_now_level(value: int, part_cid: int, part_type: int) -> int:
     # 等级上下限1~10级
     now_level = max(now_level, 1)
     now_level = min(now_level, 10)
-    # print(f"debug value = {value},now_level = {now_level}")
     return now_level
 
 

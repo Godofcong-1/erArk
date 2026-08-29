@@ -233,6 +233,25 @@ class SeeCharacterBodyPanel:
                         now_decoration_text = "\n" + now_decoration_text
                     all_part_text_list.append(now_decoration_text)
 
+        # 体外无壳卵：当前地点的每枚卵各一行污浊信息（与交互对象是谁无关）
+        from Script.System.Pregnancy_System import soft_egg_handle
+        for egg_id, egg_data in soft_egg_handle.get_soft_eggs_in_scene(character_data.position).items():
+            egg_name = soft_egg_handle.get_soft_egg_name(egg_id)
+            egg_semen_count = int(egg_data["semen_count"])
+            # 是否显示完整污浊文本
+            if cache.all_system_setting.draw_setting[10]:
+                egg_semen_level = soft_egg_handle.get_soft_egg_semen_level(egg_semen_count)
+                # 增加精液量的文本
+                egg_semen_count_text = _("({egg_semen_count}ml精液)").format(egg_semen_count=egg_semen_count)
+                egg_text_cid = f"体外卵精液污浊{str(egg_semen_level)}"
+                egg_text_context = game_config.ui_text_data['soft_egg_dirty_full'][egg_text_cid]
+                egg_text_context = f"<semen>{egg_name}{egg_semen_count_text}：{egg_text_context}</semen>\n"
+                now_part_text = _("  [卵块]:") + egg_text_context
+            else:
+                egg_text_context = game_config.ui_text_data['dirty']["体外卵精液污浊"].format(egg_semen_count)
+                now_part_text = f" {egg_name}{egg_text_context}"
+            all_part_text_list.append(now_part_text)
+
         # 如果腹部整体有精液，则显示腹部整体精液污浊
         if abdomen_all_semen:
             now_level = attr_calculation.get_semen_now_level(abdomen_all_semen, 20, 0)

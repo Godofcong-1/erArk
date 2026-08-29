@@ -33,6 +33,10 @@ def get_chara_pregnancy_stage(character_id: int) -> int:
         now_stage = pregnancy_constant.STAGE_FERTILIZATION
     if len(egg_handle.get_unidentified_eggs(character_id, exclude_held=False)):
         now_stage = pregnancy_constant.STAGE_EGG_WAIT
+    # 无壳卵生：排出的体外卵尚在玩家收藏品中等待受精判定
+    from Script.System.Pregnancy_System import soft_egg_handle
+    if len(soft_egg_handle.get_mother_soft_eggs(character_id)):
+        now_stage = pregnancy_constant.STAGE_SOFT_EGG_WAIT
     if handle_premise.handle_pregnancy_1(character_id):
         now_stage = pregnancy_constant.STAGE_PREGNANCY
     if len(egg_handle.get_hatching_eggs(character_id)):
@@ -93,6 +97,17 @@ def get_stage_info_text(character_id: int, now_stage: int) -> str:
     if now_stage == pregnancy_constant.STAGE_EGG_WAIT:
         egg_count = len(egg_handle.get_unidentified_eggs(character_id, exclude_held=False))
         return _("{0}枚卵待鉴定").format(egg_count)
+    if now_stage == pregnancy_constant.STAGE_SOFT_EGG_WAIT:
+        from Script.System.Pregnancy_System import soft_egg_handle
+        # 逐枚列出体外卵的地点、精液量与距受精判定的剩余分钟
+        egg_text_list = []
+        for egg_id, egg_data in soft_egg_handle.get_mother_soft_eggs(character_id).items():
+            remain_minute = soft_egg_handle.get_soft_egg_remain_minute(egg_data)
+            if remain_minute > 0:
+                egg_text_list.append(_("{0}的卵块（{1}ml，{2}分钟后判定）").format(soft_egg_handle.get_soft_egg_scene_name(egg_data), int(egg_data["semen_count"]), remain_minute))
+            else:
+                egg_text_list.append(_("{0}的卵块（{1}ml，即将判定）").format(soft_egg_handle.get_soft_egg_scene_name(egg_data), int(egg_data["semen_count"])))
+        return _("待受精卵块：{0}").format("、".join(egg_text_list))
     if now_stage == pregnancy_constant.STAGE_PREGNANCY:
         start_time = character_data.pregnancy.fertilization_time
         # 预计日期扣除妊娠加速药的加速天数，已到期则显示为当天

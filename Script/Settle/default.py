@@ -1695,6 +1695,10 @@ def handle_target_hypnosis_force_ovulation_on(
     santi_down = 10
     target_character_data.hypnosis.force_ovulation = True
     target_character_data.pregnancy.reproduction_period = 5
+    # 无壳卵生：强制进入排卵日的同时给予本日的体外排卵机会（周期直接改写不经过每日推进，需在此补置）
+    from Script.System.Pregnancy_System import egg_handle
+    if egg_handle.is_egg_soft(character_data.target_character_id):
+        target_character_data.pregnancy.external_ovulation_chance = True
     character_data.sanity_point = max(character_data.sanity_point - santi_down, 0)
     change_data.sanity_point -= santi_down
     character_data.pl_ability.today_sanity_point_cost += santi_down

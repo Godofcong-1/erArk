@@ -498,6 +498,22 @@ def handle_down_large_hit_point(
     base_chara_hp_mp_common_settle(character_id, 30, -1, degree=2, change_data=change_data)
 
 
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.LAY_SOFT_EGG)
+def handle_lay_soft_egg(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    无壳卵生体外排卵：生成一枚体外无壳卵（登记到玩家收藏品），把子宫与小穴中八成的精液转移到卵上并提示玩家
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    from Script.System.Pregnancy_System import soft_egg_handle
+
+    soft_egg_handle.lay_soft_egg(character_id)
+
+
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_LARGE_MANA_POINT)
 def handle_down_large_mana_point(
     character_id: int,

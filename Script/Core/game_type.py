@@ -354,6 +354,8 @@ class PREGNANCY:
         """ 本次胎生怀上的胎数：受精成功时写入（单胎种族写1、同卵双胞胎写2、多胎种族写成功受精的轮数），生产结算后清零；卵生不使用 """
         self.identical_twins: bool = False
         """ 本次怀孕是否为单胎胎生种族的同卵双胞胎（受精成功时按概率置位，生产结算后清除；与多胎胎生的一次多卵区分显示） """
+        self.external_ovulation_chance: bool = False
+        """ 无壳卵生：本排卵日的体外排卵机会是否可用（周期推进到排卵日时置True，体外排卵触发或离开排卵日时置False） """
 
 
 class RELATIONSHIP:
@@ -935,6 +937,15 @@ class PLAYER_COLLECTION:
             指向该角色pregnancy.eggs中的详细数据；鉴定后索引即消耗删除 """
         self.next_held_egg_id: int = 0
         """ 持有编号自增计数器 """
+        self.soft_eggs: Dict[int, Dict] = {}
+        """ 当前所有无壳卵生角色排出的体外无壳卵，键为卵编号（自增，取next_soft_egg_id），值为卵数据字典：
+            mother_id: int 排出该卵的角色id
+            lay_time: datetime.datetime 排出时间（自此起满1小时进行受精判定）
+            position: list 排出地点（场景路径列表，玩家在该地点才能对卵射精/看到卵的污浊）
+            semen_count: float 卵上附着的精液量（毫升，排出时转移体内精液，之后由玩家射精累加）
+            受精判定后无论结果都从本字典删除，受精卵转入母亲pregnancy.eggs """
+        self.next_soft_egg_id: int = 0
+        """ 体外无壳卵编号自增计数器 """
 
 
 class ACHIEVEMENT:

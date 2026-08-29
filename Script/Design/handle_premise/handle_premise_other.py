@@ -1305,6 +1305,60 @@ def handle_t_identical_twins(character_id: int) -> int:
     return bool(getattr(target_data.pregnancy, "identical_twins", False))
 
 
+@add_premise(constant_promise.Premise.SELF_BIRTH_TYPE_EGG_SOFT)
+def handle_self_birth_type_egg_soft(character_id: int) -> int:
+    """
+    校验自己是无壳卵生种族
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Pregnancy_System import egg_handle
+    return egg_handle.is_egg_soft(character_id)
+
+
+@add_premise(constant_promise.Premise.T_BIRTH_TYPE_EGG_SOFT)
+def handle_t_birth_type_egg_soft(character_id: int) -> int:
+    """
+    校验交互对象是无壳卵生种族
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Pregnancy_System import egg_handle
+    character_data = cache.character_data[character_id]
+    return egg_handle.is_egg_soft(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_EXTERNAL_OVULATION_CHANCE)
+def handle_self_external_ovulation_chance(character_id: int) -> int:
+    """
+    校验自己今天还有体外排卵机会（无壳卵生、处于排卵日且机会未使用）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Pregnancy_System import soft_egg_handle
+    return soft_egg_handle.have_external_ovulation_chance(character_id)
+
+
+@add_premise(constant_promise.Premise.PLAYER_SOFT_EGGS_IN_SCENE)
+def handle_player_soft_eggs_in_scene(character_id: int) -> int:
+    """
+    校验玩家当前地点有体外无壳卵
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Pregnancy_System import soft_egg_handle
+    pl_character_data = cache.character_data[0]
+    return len(soft_egg_handle.get_soft_eggs_in_scene(pl_character_data.position)) > 0
+
+
 @add_premise(constant_promise.Premise.HAVE_UNIDENTIFIED_EGGS)
 def handle_have_unidentified_eggs(character_id: int) -> int:
     """

@@ -30,18 +30,36 @@ def get_birth_type(character_id: int) -> int:
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
-    int -- 生育方式（1单胎胎生，2多胎胎生，11带壳卵生；12无壳卵生本期未实装，归一化为1）
+    int -- 生育方式（1单胎胎生，2多胎胎生，11带壳卵生，12无壳卵生）
     """
     character_data: game_type.Character = cache.character_data[character_id]
     race_config = game_config.config_race.get(character_data.race)
     if race_config is None:
         return pregnancy_constant.BIRTH_TYPE_SINGLE
     # CSV空值字段会被删除，缺列时兜底为单胎胎生
-    birth_type = getattr(race_config, "birth_type", pregnancy_constant.BIRTH_TYPE_SINGLE)
-    # 12无壳卵生本期按胎生处理，胎生链不感知12的存在
-    if birth_type == pregnancy_constant.BIRTH_TYPE_EGG_SOFT:
-        return pregnancy_constant.BIRTH_TYPE_SINGLE
-    return birth_type
+    return getattr(race_config, "birth_type", pregnancy_constant.BIRTH_TYPE_SINGLE)
+
+
+def is_egg_soft(character_id: int) -> bool:
+    """
+    判断角色是否为无壳卵生种族（体外排卵、体外受精）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 是否无壳卵生
+    """
+    return get_birth_type(character_id) == pregnancy_constant.BIRTH_TYPE_EGG_SOFT
+
+
+def is_egg_layer(character_id: int) -> bool:
+    """
+    判断角色是否为卵生种族（带壳或无壳，卵均在育儿室孵化、走破壳生产事件）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 是否卵生
+    """
+    return get_birth_type(character_id) in (pregnancy_constant.BIRTH_TYPE_EGG, pregnancy_constant.BIRTH_TYPE_EGG_SOFT)
 
 
 def is_viviparous(character_id: int) -> bool:
@@ -66,12 +84,13 @@ def is_multiple_birth(character_id: int) -> bool:
     return get_birth_type(character_id) == pregnancy_constant.BIRTH_TYPE_MULTIPLE
 
 
-def add_egg(character_id: int, fertilized: bool):
+def add_egg(character_id: int, fertilized: bool, soft: bool = False):
     """
     为角色新增一枚卵
     Keyword arguments:
     character_id -- 角色id
     fertilized -- 是否受精（排出时即确定，鉴定只是揭示）
+    soft -- 是否为无壳卵（体外受精后回写的卵，破壳事件按无壳文案与批量模式处理）
     Return arguments:
     int -- 新卵的编号
     """
@@ -86,6 +105,7 @@ def add_egg(character_id: int, fertilized: bool):
         "hatch_stage": 0,
         "held_by_player": False,
         "acceleration_days": 0.0,
+        "soft": soft,
     }
     character_data.pregnancy.next_egg_id += 1
     return egg_id
@@ -341,15 +361,23 @@ def check_egg_born(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
+    from Script.System.Pregnancy_System import born_event_panel
+    soft_flag = is_egg_soft(character_id)
+    due_egg_id_list = []
     for egg_id, egg_data in get_hatching_eggs(character_id).items():
         # 刷新孵化阶段展示值
         egg_data["hatch_stage"] = get_hatch_day(egg_data)
         if get_hatch_day(egg_data) >= pregnancy_constant.HATCH_TOTAL_DAY:
-            # 每晚仅处理一枚卵的破壳事件
-            from Script.System.Pregnancy_System import born_event_panel
-            draw_panel = born_event_panel.Born_Panel(character_id, egg_mode=True, egg_id=egg_id)
-            draw_panel.draw()
-            return
+            if not soft_flag:
+                # 带壳卵生：每晚仅处理一枚卵的破壳事件
+                draw_panel = born_event_panel.Born_Panel(character_id, egg_mode=True, egg_id_list=[egg_id])
+                draw_panel.draw()
+                return
+            due_egg_id_list.append(egg_id)
+    # 无壳卵生：同批受精卵同日到期，一次事件全部孵化并逐个取名
+    if len(due_egg_id_list):
+        draw_panel = born_event_panel.Born_Panel(character_id, egg_mode=True, egg_id_list=due_egg_id_list)
+        draw_panel.draw()
 
 
 def take_eggs_from_chara(target_character_id: int):
@@ -429,7 +457,8 @@ def replace_entertainment_for_eggs(character_id: int):
     """
     if character_id == 0:
         return
-    if get_birth_type(character_id) != 11:
+    # 带壳与无壳卵生都需要照料卵（无壳卵生只有孵化中的卵，没有待鉴定卵）
+    if not is_egg_layer(character_id):
         return
     character_data: game_type.Character = cache.character_data[character_id]
     # 监禁中的角色跳过（其未鉴定卵由玩家指令代办）

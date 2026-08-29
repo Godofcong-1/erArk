@@ -686,6 +686,9 @@ int,str,str
 1322,lay_egg,997
 1323,egg_fertilized,998
 1324,egg_born,998
+1325,lay_soft_egg,235 - 236 - 621 - 998
+1326,soft_egg_fertilized,998
+1327,soft_egg_born,998
 
 1331,first_meet,999
 1332,day_hello,999

@@ -141,6 +141,10 @@ def check_second_effect(
         orgasm_settle.orgasm_judge(character_id, change_data)
         # 单独遍历结算高潮，按部位仅取最高绝顶程度触发口上
         second_behavior_effect(character_id, change_data, orgasm_list, orgasm_settle_flag=True)
+        # 无壳卵生的体外排卵二段行为在高潮结算中才被赋予（不在进入本函数时构建的列表内），此处显式结算使其与本轮绝顶同步生效
+        from Script.System.Pregnancy_System import pregnancy_constant
+        if character_data.second_behavior.get(pregnancy_constant.LAY_SOFT_EGG_SECOND_BEHAVIOR, 0):
+            second_behavior_effect(character_id, change_data, [pregnancy_constant.LAY_SOFT_EGG_SECOND_BEHAVIOR])
 
         # 刻印结算
         mark_effect(character_id, change_data)

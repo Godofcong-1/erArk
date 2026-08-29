@@ -59,17 +59,19 @@ STAGE_FERTILIZATION = 1
 """ 阶段枚举：受精 """
 STAGE_EGG_WAIT = 2
 """ 阶段枚举：持卵待鉴定 """
-STAGE_PREGNANCY = 3
+STAGE_SOFT_EGG_WAIT = 3
+""" 阶段枚举：体外卵待受精（无壳卵生，卵在玩家收藏品的体外卵字典中） """
+STAGE_PREGNANCY = 4
 """ 阶段枚举：妊娠 """
-STAGE_HATCHING = 4
+STAGE_HATCHING = 5
 """ 阶段枚举：孵化中 """
-STAGE_PARTURIENT = 5
+STAGE_PARTURIENT = 6
 """ 阶段枚举：临盆 """
-STAGE_POSTPARTUM = 6
+STAGE_POSTPARTUM = 7
 """ 阶段枚举：产后 """
-STAGE_REARING = 7
+STAGE_REARING = 8
 """ 阶段枚举：育儿 """
-STAGE_NAME_LIST = [_("全部"), _("受精"), _("持卵待鉴定"), _("妊娠"), _("孵化中"), _("临盆"), _("产后"), _("育儿")]
+STAGE_NAME_LIST = [_("全部"), _("受精"), _("持卵待鉴定"), _("卵块待受精"), _("妊娠"), _("孵化中"), _("临盆"), _("产后"), _("育儿")]
 """ 阶段名列表（下标与阶段枚举一致，0位为筛选用的全部） """
 
 # ==== 6. 生育谱系图排版 ====
@@ -93,3 +95,35 @@ MULTIPLE_BIRTH_SEMEN_DECAY = 0.3
 """ 多胎受精判定中，每轮判定后临时精液量的衰减比例 """
 IDENTICAL_TWINS_RATE = 1
 """ 单胎胎生种族受精成功后为同卵双胞胎的概率（百分比） """
+
+# ==== 8. 无壳卵生（体外排卵 → 体外受精） ====
+EXTERNAL_OVULATION_RATE = {1: 5, 2: 10, 3: 15}
+""" 体外排卵基础概率（百分比），键为绝顶程度（1普通、2强、3超强；小绝顶不触发），其他部位的基准值 """
+EXTERNAL_OVULATION_V_MULT = 2
+""" 阴道绝顶的体外排卵概率倍率 """
+EXTERNAL_OVULATION_W_MULT = 4
+""" 子宫绝顶的体外排卵概率倍率（子宫超强绝顶固定100%） """
+EXTERNAL_OVULATION_DRUG_MULT = 2
+""" 排卵促进药 / 催眠强制排卵各自对体外排卵概率的倍率（保留到当日排卵机会结束） """
+SOFT_EGG_SEMEN_TRANSFER_RATE = 0.8
+""" 体外排卵时，子宫与小穴中转移到卵上的精液比例 """
+SOFT_EGG_FERTILIZATION_DELAY_HOUR = 1
+""" 体外卵自排出起到进行受精判定的时间（小时） """
+SOFT_EGG_MIN_SEMEN = 5
+""" 体外受精多轮判定的终止阈值：剩余精液量低于该值（毫升）即停止 """
+SOFT_EGG_RATE_DIVISOR = 1500
+""" 体外受精基础概率公式的精液量除数（部位受精为1000，体外更难） """
+SOFT_EGG_LEVEL_RATE = 3
+""" 体外受精基础概率公式中每级精液污浊等级的加成（部位受精为5） """
+SOFT_EGG_SEMEN_LEVEL_MAX_VOLUME = 5000
+""" 体外卵精液污浊 1~10 级换算的基数（毫升） """
+SOFT_EGG_SEMEN_LEVEL_EXTRA_STEP = 1000
+""" 体外卵精液量超过基数后，每多出该量（毫升）污浊等级+1 """
+SOFT_EGG_SEMEN_LEVEL_MAX = 15
+""" 体外卵精液污浊等级上限 """
+LAY_SOFT_EGG_SECOND_BEHAVIOR = "lay_soft_egg"
+""" 体外排卵的二段行为id """
+SOFT_EGG_FERTILIZED_SECOND_BEHAVIOR = "soft_egg_fertilized"
+""" 体外卵受精的二段行为id """
+SOFT_EGG_BORN_SECOND_BEHAVIOR = "soft_egg_born"
+""" 无壳卵孵化生产的二段行为id """

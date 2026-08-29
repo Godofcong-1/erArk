@@ -59,16 +59,25 @@ class Born_Panel:
     width -- 绘制宽度
     """
 
-    def __init__(self, mother_character_id: int, egg_mode: bool = False, egg_id: int = None):
-        """初始化绘制对象"""
+    def __init__(self, mother_character_id: int, egg_mode: bool = False, egg_id_list: list = None):
+        """
+        初始化绘制对象
+        Keyword arguments:
+        mother_character_id -- 母亲角色id
+        egg_mode -- 是否为卵生破壳模式
+        egg_id_list -- 卵生破壳模式下本次孵化的卵编号列表（带壳卵生每晚一枚；无壳卵生同批受精卵一同孵化、逐个取名）
+        """
         self.width: int = window_width
         """ 绘制的最大宽度 """
         self.mother_character_id: int = mother_character_id
         """ 母亲角色id """
         self.egg_mode: bool = egg_mode
         """ 是否为卵生破壳模式 """
-        self.egg_id: int = egg_id
-        """ 卵生破壳模式下对应的卵编号 """
+        self.egg_id_list: list = list(egg_id_list) if egg_id_list else []
+        """ 卵生破壳模式下本次孵化的卵编号列表 """
+        mom_eggs = cache.character_data[mother_character_id].pregnancy.eggs
+        self.soft_egg_mode: bool = egg_mode and any(mom_eggs.get(egg_id, {}).get("soft", False) for egg_id in self.egg_id_list)
+        """ 是否为无壳卵孵化模式（文案与二段行为与带壳破壳区分） """
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
 
@@ -109,14 +118,21 @@ class Born_Panel:
                 line.draw()
                 return_list = []
 
-                if self.egg_mode:
+                if self.soft_egg_mode:
+                    second_behavior.character_get_second_behavior(self.mother_character_id, "soft_egg_born")
+                elif self.egg_mode:
                     second_behavior.character_get_second_behavior(self.mother_character_id, "egg_born")
                 else:
                     second_behavior.character_get_second_behavior(self.mother_character_id, "born")
                 talk.must_show_talk_check(self.mother_character_id)
                 info_draw = draw.WaitDraw()
                 info_draw.width = self.width
-                if self.egg_mode:
+                if self.soft_egg_mode:
+                    if len(self.egg_id_list) >= 2:
+                        info_draw.text = _("\n 得知了{0}在育儿室悉心孵化的{1}颗受精卵粒即将孵化的消息后，你第一时间赶到了医疗部住院区，看着她小心翼翼地捧着那团凝胶里微微搏动的卵粒，静候新生命的到来\n").format(mom_character_data.name, len(self.egg_id_list))
+                    else:
+                        info_draw.text = _("\n 得知了{0}在育儿室悉心孵化的受精卵粒即将孵化的消息后，你第一时间赶到了医疗部住院区，看着她小心翼翼地捧着那团凝胶里微微搏动的卵粒，静候新生命的到来\n").format(mom_character_data.name)
+                elif self.egg_mode:
                     info_draw.text = _("\n 得知了{0}在育儿室悉心孵化的卵即将破壳的消息后，你第一时间赶到了医疗部住院区，看着她小心翼翼地捧着微微颤动的卵，静候新生命的到来\n").format(mom_character_data.name)
                 else:
                     info_draw.text = _("\n 得知了{0}即将生产的消息后，你第一时间来到了待产室，在短暂的陪伴后，目送着她被推入产房\n").format(mom_character_data.name)
@@ -129,16 +145,25 @@ class Born_Panel:
                 yrn = flow_handle.askfor_all(return_list)
                 if yrn in return_list:
                     break
-            # 本次生产的孩子数：卵生恒为1；胎生取本次胎数（旧存档/单胎为0或1时按1处理），同卵双胞胎换用专属文案
+            # 本次生产的孩子数：带壳卵生恒为1、无壳卵生为同批到期的卵数；胎生取本次胎数（旧存档/单胎为0或1时按1处理），同卵双胞胎换用专属文案
             born_count = 1
             identical_twins_flag = False
-            if not self.egg_mode:
+            if self.egg_mode:
+                born_count = max(1, len(self.egg_id_list))
+            else:
                 born_count = max(1, getattr(mom_character_data.pregnancy, "fetus_count", 0))
                 identical_twins_flag = bool(getattr(mom_character_data.pregnancy, "identical_twins", False)) and born_count == 2
             # 内循环2：起名字（按孩子数逐个取名）
             child_name_list = []
             while 1:
-                if self.egg_mode:
+                if self.soft_egg_mode:
+                    if born_count >= 2:
+                        info_draw.text = _(" 在{0}的看护下，凝胶里的卵粒一颗颗地胀大、变得透亮，包裹着它们的胶质终于相继化开，{1}个小小的身影先后从凝胶中挣脱出来，此起彼伏地发出了响亮的啼哭\n").format(doctor_character_data.name, born_count)
+                        info_draw.text += _(" {0}把刚刚脱出凝胶的{1}个婴儿一一擦拭干净抱在怀里，对着你微微一笑，催促你逐个给孩子起名\n").format(mom_character_data.name, born_count)
+                    else:
+                        info_draw.text = _(" 在{0}的看护下，凝胶里那颗受精的卵粒一点点胀大、变得透亮，包裹着它的胶质终于化开，一个小小的身影从凝胶中挣脱出来，发出了响亮的啼哭\n").format(doctor_character_data.name)
+                        info_draw.text += _(" {0}把刚刚脱出凝胶的婴儿擦拭干净抱在怀里，对着你微微一笑，催促你给孩子起名\n").format(mom_character_data.name)
+                elif self.egg_mode:
                     info_draw.text = _(" 在{0}的看护下，蛋壳上的裂纹越来越多，终于随着一声清脆的破裂声，一个小小的身影从蛋壳中探出头来，发出了响亮的啼哭\n").format(doctor_character_data.name)
                     info_draw.text += _(" {0}轻轻抱起了刚刚破壳而出的婴儿，对着你微微一笑，催促你给孩子起名\n").format(mom_character_data.name)
                 elif identical_twins_flag:
@@ -178,6 +203,10 @@ class Born_Panel:
                     info_draw.text = _("\n{0}生下了一对同卵双胞胎：{1}与{2}\n").format(mom_character_data.name, child_name_list[0], child_name_list[1])
                     info_draw.draw()
                     line_feed.draw()
+                elif self.soft_egg_mode and born_count >= 2:
+                    info_draw.text = _("\n{0}的{1}颗受精卵粒一同孵化了：{2}\n").format(mom_character_data.name, born_count, "、".join(child_name_list))
+                    info_draw.draw()
+                    line_feed.draw()
                 elif born_count >= 2:
                     info_draw.text = _("\n{0}一次生下了{1}个孩子：{2}\n").format(mom_character_data.name, born_count, "、".join(child_name_list))
                     info_draw.draw()
@@ -185,10 +214,11 @@ class Born_Panel:
                 break
 
             if self.egg_mode:
-                # 卵生破壳结算：删卵、直接进入育儿与泌乳，不进入产后
+                # 卵生破壳结算：删除本次孵化的全部卵、直接进入育儿与泌乳，不进入产后
                 draw_text = "\n※※※※※※※※※\n"
-                if self.egg_id in mom_character_data.pregnancy.eggs:
-                    del mom_character_data.pregnancy.eggs[self.egg_id]
+                for egg_id in self.egg_id_list:
+                    if egg_id in mom_character_data.pregnancy.eggs:
+                        del mom_character_data.pregnancy.eggs[egg_id]
                 mom_character_data.talent[24] = 1
                 draw_text += _("\n{0}获得了[育儿]\n").format(mom_character_data.name)
                 mom_character_data.talent[27] = 1
@@ -201,7 +231,7 @@ class Born_Panel:
                 handle_premise.settle_chara_unnormal_flag(self.mother_character_id, 2)
                 mom_character_data.experience[86] += 1
                 draw_text += _("\n{0}的妊娠经验+1\n").format(mom_character_data.name)
-                draw_text += _("\n{0}接下来的行动重心会以照顾{1}为主\n").format(mom_character_data.name, child_character_data.name)
+                draw_text += _("\n{0}接下来的行动重心会以照顾{1}为主\n").format(mom_character_data.name, "、".join(child_name_list) if len(child_name_list) else child_character_data.name)
                 draw_text += "\n※※※※※※※※※\n"
             else:
                 second_behavior.character_get_second_behavior(self.mother_character_id, "postpartum")

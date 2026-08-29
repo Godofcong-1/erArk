@@ -71,6 +71,9 @@ def update_sleep():
                     handle_premise.settle_chara_unnormal_flag(assistant_id, 3)
                 # 助理成就
                 achievement_panel.achievement_flow(_("助理"))
+            # 体外无壳卵：长时间睡眠期间到期的卵进行受精判定（先于各NPC的破壳判定）
+            from Script.System.Pregnancy_System import soft_egg_handle
+            soft_egg_handle.check_soft_eggs_fertilization()
             # 检查是否有可以升级的能力
             if cache.all_system_setting.base_setting[1]:
                 handle_ability.gain_ability(character_id)

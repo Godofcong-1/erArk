@@ -268,6 +268,8 @@ def orgasm_settle_in_second_behavior(
             part_count += 1
             # 加入高潮部位记录
             tem_orgasm_set.add(orgasm)
+            # 本部位本次结算的最高绝顶程度（供无壳卵生的体外排卵判定）
+            max_degree = -1
             # 解放状态（含寸止解放与时停解放）下每部位只结算一次绝顶：累计≥3次由下方超强/强分支结算并跳过掷骰循环，1-2次掷骰一次；其余状态按累计次数逐次掷骰
             release_flag = handle_premise.handle_self_orgasm_edge_relase_or_time_stop_orgasm_relase(character_id)
             roll_count = (0 if climax_count >= 3 else 1) if release_flag else climax_count
@@ -286,6 +288,7 @@ def orgasm_settle_in_second_behavior(
                 # 赋予二次行为
                 second_behavior_id = f"{part_dict[orgasm]}_orgasm_{degree_dict[now_degree]}"
                 second_behavior.character_get_second_behavior(character_id, second_behavior_id)
+                max_degree = max(max_degree, now_degree)
             # 绝顶解放状态下（含寸止解放与时停解放），如果次数大于等于3，则触发超强绝顶
             if release_flag and climax_count >= 3:
                 # 超强绝顶需要该部位敏感度至少为6级，否则变为强绝顶
@@ -298,6 +301,11 @@ def orgasm_settle_in_second_behavior(
                     now_degree = 2
                 second_behavior_id = f"{part_dict[orgasm]}_orgasm_{degree_dict[now_degree]}"
                 second_behavior.character_get_second_behavior(character_id, second_behavior_id)
+                max_degree = max(max_degree, now_degree)
+            # 无壳卵生：排卵日与玩家同处时，普通及以上程度的绝顶有概率伴随体外排卵（每排卵日至多一次，命中即消耗机会）
+            if max_degree >= 1 and handle_premise.handle_self_birth_type_egg_soft(character_id):
+                from Script.System.Pregnancy_System import soft_egg_handle
+                soft_egg_handle.judge_external_ovulation(character_id, orgasm, max_degree)
             # B绝顶喷乳，需要乳汁量到80%
             if orgasm == 1 and handle_premise.handle_milk_ge_80(character_id):
                 # now_draw.text += _("\n触发B绝顶喷乳\n")
