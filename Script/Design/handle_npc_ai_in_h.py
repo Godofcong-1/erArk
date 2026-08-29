@@ -186,9 +186,6 @@ def recover_from_unconscious_h(character_id: int, info_text: str = ""):
     if target_data.sp_flag.unconscious_h == 0:
         return
 
-    # 是否继续H
-    continue_h = False
-
     # 输出提示信息
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
@@ -224,30 +221,30 @@ def recover_from_unconscious_h(character_id: int, info_text: str = ""):
         # 暂存玩家的行为
         tem_behavior_id = character_data.behavior.behavior_id
         tem_state = character_data.state
-        # 结算交互对象以外的其他角色
-        for chara_id in scene_data.character_list:
+        # 结算交互对象以外的其他角色，遍历在角色列表的副本上进行，结算中囚犯干员会被移回监牢而改动该列表
+        for chara_id in scene_data.character_list.copy():
             # 如果是玩家，则跳过
             if chara_id == character_id:
                 continue
             # 如果是交互对象，则跳过
             if chara_id == target_data.cid:
                 continue
-            # 结算其他角色
-            handle_npc_instruct_condition(character_id, False, chara_id, True)
+            # 结算其他角色，这些角色一律不继续H
+            handle_unconscious_h_response(character_id, chara_id, can_continue=False)
         # 恢复玩家的交互对象与行为
         character_data.target_character_id = target_data.cid
         character_data.behavior.behavior_id = tem_behavior_id
         character_data.state = tem_state
 
-    # 结算是否继续H
-    continue_h = handle_npc_instruct_condition(character_id, continue_h)
+    # 结算交互对象的响应
+    response = handle_unconscious_h_response(character_id, character_data.target_character_id)
 
     # 对方的行为改为等待
     target_data.behavior.behavior_id = constant.Behavior.WAIT
     target_data.state = constant.CharacterStatus.STATUS_WAIT
 
     # 如果继续H
-    if continue_h:
+    if response == UnconsciousHResponse.CONTINUE_H:
         default.handle_h_flag_to_1(target_data.cid, 1, game_type.CharacterStatusChange(), cache.game_time)
         character_data.behavior.behavior_id = constant.Behavior.WAIT
         character_data.state = constant.CharacterStatus.STATUS_WAIT
@@ -273,77 +270,106 @@ def recover_from_unconscious_h(character_id: int, info_text: str = ""):
     # 时间推进5分钟
     update.game_update_flow(5)
 
-def handle_npc_instruct_condition(character_id: int, continue_h: bool, tem_target_id: int = 0, settle_now: bool = True) -> bool:
+class UnconsciousHResponse:
+    """无意识H被打断后的裁决结果"""
+
+    CONTINUE_H = 1
+    """ 继续H """
+    LOW_OBSCENITY = 2
+    """ 玩家转为轻度性骚扰 """
+    HIGH_OBSCENITY = 3
+    """ 玩家转为高级性骚扰 """
+    ANGRY = 4
+    """ 目标角色对玩家愤怒 """
+    H_FAIL = 5
+    """ 玩家H失败 """
+
+def handle_unconscious_h_response(character_id: int, target_character_id: int, can_continue: bool = True) -> int:
     """
-    处理NPC是否继续H以及对应行为的函数
+    结算目标角色从无意识H中被打断后的响应
 
     参数:
         character_id: int -- 自己角色的ID
-        continue_h: bool -- 是否继续H的标志
-        tem_target_id: int -- 目标角色的ID，如果为0则使用默认的目标角色
-        settle_now: bool -- 是否现在立刻结算的标志，默认为True
+        target_character_id: int -- 本次结算的目标角色的ID
+        can_continue: bool -- 本次结算是否允许目标角色继续H，默认为True
 
     返回:
-        bool -- 如果满足条件返回True（继续H），否则返回False
+        int -- UnconsciousHResponse中的裁决结果
 
     功能描述:
-        根据交互对象是否处于监禁状态以及目标对象的陷落状态，
-        决定是否允许继续H，并根据陷落状态更新相应的行为和状态。
+        先解除目标角色的无意识H状态，再按目标角色自身的监禁状态与陷落状态得出裁决结果，
+        并按裁决结果改写玩家的行为与状态。
+        裁决为继续H以外的结果时，借玩家的状态机成对结算这场H的收尾；
+        裁决为继续H而can_continue为False时，改为直接对目标角色本人做退出结算。
+        因此返回后，除〈裁决为CONTINUE_H且can_continue为True〉这一种情况外，
+        目标角色的收尾都已经在本函数内完成。
     """
-    # 从缓存中获取自己角色数据
+    from Script.Settle import default, default_cloth
+
+    # 从缓存中获取自己角色数据与目标角色数据
     character_data: game_type.Character = cache.character_data[character_id]
-    # 如果给定了目标角色ID，则使用该ID，否则使用默认的目标角色ID
-    if tem_target_id != 0:
-        target_character_id = tem_target_id
-    else:
-        target_character_id = character_data.target_character_id
     target_data: game_type.Character = cache.character_data[target_character_id]
 
     # 停止对方的无意识状态与H状态
     target_data.sp_flag.unconscious_h = 0
     target_data.sp_flag.is_h = False
-    handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 5)
-    handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 6)
+    handle_premise.settle_chara_unnormal_flag(target_character_id, 5)
+    handle_premise.settle_chara_unnormal_flag(target_character_id, 6)
 
-    # 如果交互对象处于监禁状态，则直接满足条件
-    if handle_premise.handle_t_imprisonment_1(character_id):
-        # 交互对象处于监禁状态，设置继续H标志为True
-        continue_h = True
+    # 如果目标对象处于监禁状态，则直接满足条件
+    if handle_premise.handle_imprisonment_1(target_character_id):
+        # 目标对象处于监禁状态，裁决为继续H
+        response = UnconsciousHResponse.CONTINUE_H
     # 如果满足高级性骚扰的实行值需求，则根据目标对象的陷落状态判断
     elif handle_premise.handle_instruct_judge_high_obscenity(target_character_id):
         # 获取目标对象的陷落状态，minus_flag为True表示计算减值
         character_fall_level = attr_calculation.get_character_fall_level(target_character_id, minus_flag=True)
         # 如果陷落状态等级大于等于3，则允许继续H
         if character_fall_level >= 3:
-            continue_h = True
+            response = UnconsciousHResponse.CONTINUE_H
         # 如果陷落状态大于0，则设置为轻度性骚扰状态
         elif character_fall_level > 0:
+            response = UnconsciousHResponse.LOW_OBSCENITY
             character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
             character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
         # 如果陷落状态小于0，则目标角色愤怒并增加愤怒值
         elif character_fall_level < 0:
+            response = UnconsciousHResponse.ANGRY
             target_data.angry_point += 100
             target_data.sp_flag.angry_with_player = True
         # 如果没有陷落状态，则设置为高级性骚扰状态
         else:
+            response = UnconsciousHResponse.HIGH_OBSCENITY
             character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
             character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
     # 如果上述条件都不满足，则设置为H失败状态
     else:
+        response = UnconsciousHResponse.H_FAIL
         character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
         character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL
 
-    # 当场结算
-    if settle_now and continue_h == False:
+    # 不继续H，当场借玩家的状态机成对结算
+    if response != UnconsciousHResponse.CONTINUE_H:
         character_data.behavior.duration = 5
         character_data.target_character_id = target_character_id
         character_behavior.judge_character_status(character_id)
         character_data.behavior.behavior_id = constant.Behavior.NO_CONSCIOUS_H_END
         character_data.state = constant.CharacterStatus.STATUS_NO_CONSCIOUS_H_END
         character_behavior.judge_character_status(character_id)
+    # 裁决为继续H但本次不允许继续，对目标角色本人做退出奖励、H状态归位与穿回衣物。
+    # 退出奖励会连同角色的交互对象一起结算，而目标角色身上的交互对象可能是没有清理过的旧值，
+    # 因此先把目标指向自己再发奖
+    elif not can_continue:
+        # 先解放目标角色累积的寸止计数；该结算作用于调用者的交互对象、且须在H状态归零前进行，故以自己为调用者、交互对象指向目标角色
+        character_data.target_character_id = target_character_id
+        default.handle_orgasm_edge_release(character_id, 1, game_type.CharacterStatusChange(), cache.game_time)
+        target_data.target_character_id = target_character_id
+        default.handle_end_h_add_hpmp_max(target_character_id, 1, game_type.CharacterStatusChange(), cache.game_time)
+        default.handle_self_h_state_reset(target_character_id, 1, game_type.CharacterStatusChange(), cache.game_time)
+        default_cloth.handle_self_cloth_back(target_character_id, 1, game_type.CharacterStatusChange(), cache.game_time)
 
-    # 返回是否满足继续H的条件
-    return continue_h
+    # 返回裁决结果
+    return response
 
 def judge_weak_up_in_sleep_h(character_id: int, target_character_id: int):
     """

@@ -620,7 +620,7 @@ init_character_behavior()
 
 `Script/Design/handle_npc_ai_in_h.py`：
 - 无意识/睡奸/醉奸/猥亵状态处理
-- `handle_npc_instruct_condition()`：NPC 是否继续 H 的条件
+- `handle_unconscious_h_response()`：无意识H被打断后按目标本人裁决响应并完成对应收尾
 - `npc_active_h()` / `npc_ai_in_group_sex()`：NPC 主动 H 与群交 AI
 - 醒来/恢复意识结算、精液与服装结算、身体部位偏好
 
