@@ -5,6 +5,7 @@ from Script.Design import (
     attr_calculation,
     clothing,
     map_handle,
+    handle_premise,
 )
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
@@ -336,6 +337,8 @@ def handle_self_cloth_back(
             character_data.cloth.cloth_wear[i],character_data.cloth.cloth_off[i] = character_data.cloth.cloth_off[i],[]
             wear_flag = True
     if wear_flag:
+        # 衣物穿戴变化后刷新角色异常状态位缓存
+        handle_premise.settle_chara_unnormal_flag(character_id, 4)
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
         if character_data.sp_flag.unconscious_h:
@@ -580,6 +583,8 @@ def handle_wear_to_shower_locker(
     # 衣物离开身体时去除服装部位上的避孕套装饰
     from Script.System.Item_System import condom_handle
     condom_handle.remove_cloth_decoration(character_id)
+    # 衣物穿戴变化后刷新角色异常状态位缓存
+    handle_premise.settle_chara_unnormal_flag(character_id, 4)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SHOWER_LOCKER_TO_WEAR)
@@ -619,6 +624,8 @@ def handle_shower_locker_to_wear(
     clothing.locker_cloth_semen_to_wear_cloth_semen(character_id)
     # 穿特殊服装
     clothing.chara_special_wear_cloth(character_id)
+    # 衣物穿戴变化后刷新角色异常状态位缓存
+    handle_premise.settle_chara_unnormal_flag(character_id, 4)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FOOT_CLOTH_TO_SHOWER_LOCKER)
