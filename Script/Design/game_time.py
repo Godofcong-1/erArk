@@ -214,6 +214,26 @@ def get_sub_date(
     return new_date
 
 
+def get_predict_date(day: int, old_date: datetime.datetime) -> datetime.datetime:
+    """
+    获取旧日期经过指定天数后、游戏时钟真正会走到的日期，用于各类"预计X日"的展示\n
+    游戏一年只有3/6/9/12四个季月，非季月会被时钟整段跳过（见 sub_time_now 的切月归1处理），
+    因此目标日期落在被跳过的月份时，取其之后第一个季月的1日；
+    直接用 get_sub_date 会保留被跳过月份的"日"再把月份改成季月，得到时钟永远不会显示的日期，
+    并且随天数减少反而可能显示成更晚的日期
+    Keyword arguments:
+    day -- 经过的天数
+    old_date -- 起始日期
+    Return arguments:
+    datetime.datetime -- 预计日期
+    """
+    predict_date = old_date + datetime.timedelta(days=day)
+    season_month = get_season_month(predict_date.month)
+    if season_month == predict_date.month:
+        return predict_date
+    return predict_date.replace(month=season_month, day=1, hour=0, minute=0, second=0, microsecond=0)
+
+
 def get_rand_day_for_year(year: int) -> datetime.datetime:
     """
     随机获取指定年份中一天的日期

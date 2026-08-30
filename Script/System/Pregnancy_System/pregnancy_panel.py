@@ -92,7 +92,7 @@ def get_stage_info_text(character_id: int, now_stage: int) -> str:
         start_time = character_data.pregnancy.fertilization_time
         # 预计日期扣除妊娠加速药的加速天数，已到期则显示为当天
         acc_day = int(character_data.pregnancy.acceleration_days)
-        predict_time = max(game_time.get_sub_date(day=pregnancy_constant.PREGNANCY_DAY - acc_day, old_date=start_time), cache.game_time)
+        predict_time = max(game_time.get_predict_date(pregnancy_constant.PREGNANCY_DAY - acc_day, start_time), cache.game_time)
         return _("受精于{0}，预计{1}妊娠").format(get_date_text(start_time), get_date_text(predict_time)) + get_fetus_count_text(character_id)
     if now_stage == pregnancy_constant.STAGE_EGG_WAIT:
         egg_count = len(egg_handle.get_unidentified_eggs(character_id, exclude_held=False))
@@ -112,7 +112,7 @@ def get_stage_info_text(character_id: int, now_stage: int) -> str:
         start_time = character_data.pregnancy.fertilization_time
         # 预计日期扣除妊娠加速药的加速天数，已到期则显示为当天
         acc_day = int(character_data.pregnancy.acceleration_days)
-        predict_time = max(game_time.get_sub_date(day=pregnancy_constant.PARTURIENT_DAY - acc_day, old_date=start_time), cache.game_time)
+        predict_time = max(game_time.get_predict_date(pregnancy_constant.PARTURIENT_DAY - acc_day, start_time), cache.game_time)
         return _("受精于{0}，预计{1}临盆").format(get_date_text(start_time), get_date_text(predict_time)) + get_fetus_count_text(character_id)
     if now_stage == pregnancy_constant.STAGE_HATCHING:
         hatching_eggs = egg_handle.get_hatching_eggs(character_id)
@@ -120,7 +120,7 @@ def get_stage_info_text(character_id: int, now_stage: int) -> str:
         hatch_day = egg_handle.get_hatch_day(first_egg)
         # 预计破壳日扣除孵化加速药的加速天数，已到期则显示为当天
         egg_acc_day = int(first_egg.get("acceleration_days", 0))
-        born_time = max(game_time.get_sub_date(day=pregnancy_constant.HATCH_TOTAL_DAY - egg_acc_day, old_date=first_egg["lay_time"]), cache.game_time)
+        born_time = max(game_time.get_predict_date(pregnancy_constant.HATCH_TOTAL_DAY - egg_acc_day, first_egg["lay_time"]), cache.game_time)
         return _("孵化第{0}天，预计{1}破壳").format(hatch_day, get_date_text(born_time))
     if now_stage == pregnancy_constant.STAGE_PARTURIENT:
         return _("已在住院区待产，预计近日生产") + get_fetus_count_text(character_id)
@@ -134,7 +134,7 @@ def get_stage_info_text(character_id: int, now_stage: int) -> str:
         for child_id in pregnancy_handle.get_baby_id_list(character_id):
             child_data = cache.character_data[child_id]
             acc_day = int(getattr(child_data.pregnancy, "growth_acceleration_days", 0))
-            grow_time = max(game_time.get_sub_date(day=pregnancy_constant.REARING_COMPLETE_DAY - acc_day, old_date=child_data.pregnancy.born_time), cache.game_time)
+            grow_time = max(game_time.get_predict_date(pregnancy_constant.REARING_COMPLETE_DAY - acc_day, child_data.pregnancy.born_time), cache.game_time)
             baby_text_list.append(_("{0}（预计{1}长大）").format(child_data.name, get_date_text(grow_time)))
         if len(baby_text_list):
             return _("正在育儿室照顾{0}").format("、".join(baby_text_list))
