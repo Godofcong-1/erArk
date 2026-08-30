@@ -653,7 +653,7 @@ def handle_foot_cloth_to_shower_locker(
                     # print(f"debug move_cloth_id = {cloth_id}")
                     character_data.cloth.cloth_wear[clothing_type].remove(cloth_id)
                     character_data.cloth.cloth_locker_in_shower[clothing_type].append(cloth_id)
-        character_data.dirty.cloth_locker_semen[clothing_type] = character_data.dirty.cloth_semen[clothing_type]
+        character_data.dirty.cloth_semen[clothing_type], character_data.dirty.cloth_locker_semen[clothing_type] = character_data.dirty.cloth_locker_semen[clothing_type], character_data.dirty.cloth_semen[clothing_type]
     # 袜子和鞋子离开身体时去除对应部位上的避孕套装饰
     from Script.System.Item_System import condom_handle
     condom_handle.remove_cloth_decoration(character_id, [10, 11])
