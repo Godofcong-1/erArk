@@ -425,7 +425,7 @@ def settle_sleep(character_id: int, true_add_time: int) -> None:
         handle_premise.handle_self_not_sleep_pills(character_id) and
         handle_premise.handle_drunk_level_0(character_id)
     ):
-        now_char.sleep_point = max(now_char.sleep_point - add_sleep, 0)
+        now_char.sleep_point = min(max(now_char.sleep_point - add_sleep, 0), 100)
         # 熟睡值已减少到0时NPC直接醒来
         if now_char.sleep_point <= 0 and character_id:
             pl_character_data: game_type.Character = cache.character_data[0]
@@ -449,7 +449,7 @@ def settle_sleep(character_id: int, true_add_time: int) -> None:
             return
     # 其他情况下正常增加熟睡值
     else:
-        now_char.sleep_point = min(now_char.sleep_point + add_sleep, 100)
+        now_char.sleep_point = min(max(now_char.sleep_point + add_sleep, 0), 100)
     handle_premise.settle_chara_unnormal_flag(character_id, 5)
     handle_premise.settle_chara_unnormal_flag(character_id, 6)
     # 回复体力和气力
