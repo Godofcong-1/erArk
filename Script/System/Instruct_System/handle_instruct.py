@@ -948,7 +948,7 @@ def handle_apologize():
     adjust = handle_ability.get_ability_adjust(character_data.ability[40])
     value = int(10 + adjust * 10)
     # 减愤怒值
-    target_data.angry_point -= value
+    target_data.angry_point = max(target_data.angry_point - value, 0)
     # 判定是否不生气了
     if target_data.angry_point <= 30:
         chara_handle_instruct_common_settle(constant.Behavior.APOLOGIZE, force_taget_wait = True)
@@ -967,7 +967,7 @@ def handle_listen_complaint():
     adjust = handle_ability.get_ability_adjust(character_data.ability[40])
     value = int(10 + adjust * 10)
     # 减愤怒值
-    target_data.angry_point -= value
+    target_data.angry_point = max(target_data.angry_point - value, 0)
     chara_handle_instruct_common_settle(constant.Behavior.LISTEN_COMPLAINT, force_taget_wait = True)
 
 
