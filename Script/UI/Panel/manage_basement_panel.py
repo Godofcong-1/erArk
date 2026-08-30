@@ -1336,10 +1336,11 @@ class Change_Npc_Work_Panel:
             for i in target_data.body_manage:
                 if i in range(30,40) and target_data.body_manage[i]:
                     target_data.body_manage[i] = 0
+        from Script.System.Dormitory_System import common
         # 如果旧的工作是监狱长，则解除监狱长身份，并重置宿舍
         if handle_premise.handle_work_is_warden(character_id):
             target_data.work.work_type = 0
-            target_data.dormitory = target_data.pre_dormitory
+            common.restore_character_dormitory(character_id)
             cache.rhodes_island.current_warden_id = 0
         # 赋予新工作
         target_data.work.work_type = work_id
@@ -1350,11 +1351,11 @@ class Change_Npc_Work_Panel:
             if cache.rhodes_island.current_warden_id != 0 and cache.rhodes_island.current_warden_id != character_id:
                 old_warden_data: game_type.Character = cache.character_data[cache.rhodes_island.current_warden_id]
                 old_warden_data.work.work_type = 0
-                old_warden_data.dormitory = old_warden_data.pre_dormitory
+                common.restore_character_dormitory(cache.rhodes_island.current_warden_id)
             # 更新监狱长id
             cache.rhodes_island.current_warden_id = character_id
             # 更新监狱长的宿舍
-            target_data.pre_dormitory = target_data.dormitory
+            target_data.permanent_dormitory = target_data.dormitory
             target_data.dormitory = map_handle.get_map_system_path_str_for_list(["关押", "休息室"])
         # 更新罗德岛的工作人员及状态
         basement.update_work_people()

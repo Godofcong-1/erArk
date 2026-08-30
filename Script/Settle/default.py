@@ -7691,10 +7691,9 @@ def handle_set_free_add_just(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.sp_flag.imprisonment = False
     handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 2)
+    from Script.System.Dormitory_System import common as dormitory_common
     # 回到旧宿舍
-    if target_data.pre_dormitory != "":
-        target_data.dormitory = target_data.pre_dormitory
-        target_data.pre_dormitory = ""
+    dormitory_common.restore_character_dormitory(character_data.target_character_id)
     # 从囚犯数据中删除
     if character_data.target_character_id in cache.rhodes_island.current_prisoners:
         cache.rhodes_island.current_prisoners.pop(character_data.target_character_id)
