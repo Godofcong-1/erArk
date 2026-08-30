@@ -1355,7 +1355,7 @@ class Change_Npc_Work_Panel:
             # 更新监狱长id
             cache.rhodes_island.current_warden_id = character_id
             # 更新监狱长的宿舍
-            target_data.permanent_dormitory = target_data.dormitory
+            common.register_permanent_dormitory(character_id)
             target_data.dormitory = map_handle.get_map_system_path_str_for_list(["关押", "休息室"])
         # 更新罗德岛的工作人员及状态
         basement.update_work_people()
