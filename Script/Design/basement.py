@@ -340,6 +340,8 @@ def update_base_resouce_newday():
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
 
+    # 按当前在编角色重建岗位人员数据，供后续岗位结算使用
+    update_work_people()
     # 结算公务工作
     settle_office_work()
     # 结算精液转化
@@ -378,6 +380,12 @@ def update_work_people():
     cache.rhodes_island.trade_operator_ids_list = []
     for all_cid in game_config.config_work_type:
         cache.rhodes_island.all_work_npc_set[all_cid] = set()
+    # 重置各岗位当前人员名单，后续按在编角色重建
+    cache.rhodes_island.production_worker_ids = []
+    cache.rhodes_island.herb_garden_operator_ids = []
+    cache.rhodes_island.green_house_operator_ids = []
+    cache.rhodes_island.power_operator_ids_list = []
+    cache.rhodes_island.hr_operator_ids_list = []
 
     clinic_doctors = []
     hospital_doctors = []
