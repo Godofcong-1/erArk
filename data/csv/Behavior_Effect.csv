@@ -173,7 +173,7 @@ int,str,str
 372,ask_group_sex_fail,530
 373,group_sex_pl_hp_0_end,529 - 407 - 636 - 800 - 10011
 374,group_sex_npc_hp_0_end,1503 - 528 - 403 - 635
-375,group_sex_to_h,9999
+375,group_sex_to_h,10011
 376,join_group_sex,CVE_A1_E|56_G_1 - 462 - 602 - 604 - 1408 - 1418 - 10010
 377,refuse_join_group_sex,23 - 24 - 153 - 364 - 1512 - 1524 - 1602 - 1721
 378,other_sex_be_found_to_group_sex,405 - 462 - 464 - 473 - 476 - 603 - 605 - 753 - 1404 - 1409 - 10010
