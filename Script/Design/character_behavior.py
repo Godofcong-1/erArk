@@ -308,9 +308,6 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
         character_data.behavior = game_type.Behavior()
         character_data.behavior.start_time = now_time
         character_data.behavior.duration = 1
-        # 等待状态下则不转为空闲状态，直接跳出
-        if character_data.behavior.behavior_id == constant.Behavior.WAIT:
-            return 1
         character_data.state = constant.CharacterStatus.STATUS_ARDER
         # print(f"debug {character_data.name}的add_time = 0，已重置为当前时间：start_time = {character_data.behavior.start_time}")
         return 0
