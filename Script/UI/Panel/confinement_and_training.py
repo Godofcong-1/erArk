@@ -1,3 +1,4 @@
+import os
 from typing import List, Tuple
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
@@ -500,7 +501,7 @@ class Confinement_And_Training_Manage_Panel:
                 now_text += _("目前的囚犯有：")
                 for chara_id in cache.rhodes_island.current_prisoners:
                     tem_character_data: game_type.Character = cache.character_data[chara_id]
-                    live_room = tem_character_data.dormitory.split("\\")[-1]
+                    live_room = tem_character_data.dormitory.split(os.sep)[-1]
                     now_text += _(" [{0}]{1} - {2}  ").format(str(tem_character_data.adv).rjust(4,'0'), tem_character_data.name, live_room)
                 now_text += f"\n"
 
