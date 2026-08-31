@@ -1,3 +1,4 @@
+import copy
 import random
 from types import FunctionType
 from Script.Core import (
@@ -68,9 +69,9 @@ def init_character(character_id: int, character_tem: game_type.NpcTem, collect_r
     now_character.target_character_id = character_id
     now_character.favorability = {0:0}
     now_character.trust = 0
-    now_character.ability = character_tem.Ability
-    now_character.experience = character_tem.Experience
-    now_character.talent = character_tem.Talent
+    now_character.ability = copy.deepcopy(character_tem.Ability)
+    now_character.experience = copy.deepcopy(character_tem.Experience)
+    now_character.talent = copy.deepcopy(character_tem.Talent)
     now_character.hit_point_max = character_tem.Hp
     now_character.mana_point_max = character_tem.Mp
     now_character.dormitory = character_tem.Dormitory
