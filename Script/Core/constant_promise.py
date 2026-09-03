@@ -1115,6 +1115,8 @@
     """ 属性_基础 尿意条≥150%，需要当场排尿 """
     TARGET_URINATE_LE_49 = "t_urinate_le_49"
     """ 属性_基础 交互对象尿意条≤49%，可以继续喝咖啡 """
+    PL_URINATE_LE_49 = "pl_urinate_le_49"
+    """ 属性_基础 玩家尿意条≤49%，可以继续喝咖啡 """
     TARGET_URINATE_LE_79 = "t_urinate_le_79"
     """ 属性_基础 交互对象尿意条≤79%，不需要排尿 """
     TARGET_URINATE_GE_80 = "t_urinate_ge_80"

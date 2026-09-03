@@ -32,7 +32,7 @@ ai的目标,,,,
 
 30100,100,normal_1267|place_0|player_can_be_interact,3,1267正常（可能AI跟随、服装异常或意识模糊），和玩家在一个房间里，玩家当前可被交互，则有可能随机和玩家聊天
 30105,101,self_fall|normal_1267|place_0|player_can_be_interact,3,自己有陷落素质，1267正常（可能AI跟随、服装异常或意识模糊），和玩家在一个房间里，玩家当前可被交互，则有可能随机和玩家身体接触
-30110,102,self_fall|normal_1267|place_0|player_can_be_interact|place_furniture_ge_2,3,自己有陷落素质，1267正常（可能AI跟随、服装异常或意识模糊），和玩家在一个房间里，玩家当前可被交互，当前地点至少有办公级家具，则有可能随机给玩家泡咖啡
+30110,102,self_fall|normal_1267|place_0|player_can_be_interact|place_furniture_ge_2|pl_urinate_le_49,3,自己有陷落素质，1267正常（可能AI跟随、服装异常或意识模糊），和玩家在一个房间里，玩家当前可被交互，当前地点至少有办公级家具，玩家尿意条≤49%，则有可能随机给玩家泡咖啡
 30200,200,normal_1267|scene_someone_can_be_interact,3,1267正常（可能AI跟随、服装异常或意识模糊），场景内存在可交互对象，则可能随机和房间里的人聊天
 30205,201,normal_1267|scene_someone_can_be_interact,3,1267正常（可能AI跟随、服装异常或意识模糊），场景内存在可交互对象，则可能随机和房间里的人身体接触
 30210,202,normal_1267|in_music_room|scene_someone_can_be_interact,3,1267正常（可能AI跟随、服装异常或意识模糊），在音乐室里，场景内存在可交互对象，则唱歌给房间里随机角色听
