@@ -247,7 +247,7 @@ def get_today_departing_visitors():
     for visitor_id in now_visitor_id_list:
         # 判断时间为明天0点
         judge_time = game_time.get_sub_date(day=1)
-        judge_time.replace(hour=0, minute=0, second=0, microsecond=0)
+        judge_time = judge_time.replace(hour=0, minute=0, second=0, microsecond=0)
         # 判定今天结束后是否要离开
         if game_time.judge_date_big_or_small(judge_time, cache.rhodes_island.visitor_info[visitor_id]):
             # 计算访客留下概率
