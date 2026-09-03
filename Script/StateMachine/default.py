@@ -1,3 +1,4 @@
+import os
 import random
 from types import FunctionType
 from Script.Config import game_config
@@ -252,7 +253,7 @@ def character_move_to_toilet(character_id: int):
         if not find_flag:
             # 遍历所有女厕所，寻找当前大场景内的厕所
             for place in constant.place_data["Toilet_Female"]:
-                if place.split("\\")[0] == now_position:
+                if place.split(os.sep)[0] == now_position:
                     to_toilet = map_handle.get_map_system_path_for_str(place)
                     find_flag = True
                     break
@@ -965,7 +966,7 @@ def character_move_to_rest_room(character_id: int):
     if find_flag == False:
         now_position = character_data.position[0]
         for place in constant.place_data["Rest_Room"]:
-            if place.split("\\")[0] == now_position:
+            if place.split(os.sep)[0] == now_position:
                 if map_handle.judge_scene_accessible(place,character_id) == "open":
                     to_rest_room = map_handle.get_map_system_path_for_str(place)
                     find_flag = True
@@ -992,7 +993,7 @@ def character_move_to_restaurant(character_id: int):
     now_position = character_data.position[0]
     find_flag = False
     for place in constant.place_data["Restaurant"]:
-        if place.split("\\")[0] == now_position:
+        if place.split(os.sep)[0] == now_position:
             to_rest_room = map_handle.get_map_system_path_for_str(place)
             find_flag = True
             break
@@ -1068,7 +1069,7 @@ def character_move_to_bathzone_locker_room(character_id: int):
     to_locker_room = []
     # 直接检索大浴场的更衣室
     for place in constant.place_data["Locker_Room"]:
-        if place.split("\\")[0] == "大浴场":
+        if place.split(os.sep)[0] == "大浴场":
             to_locker_room = map_handle.get_map_system_path_for_str(place)
             break
 
@@ -1088,7 +1089,7 @@ def character_move_to_bathzone_rest_room(character_id: int):
     to_rest_room = []
     # 直接检索大浴场的休息室
     for place in constant.place_data["Rest_Room"]:
-        if place.split("\\")[0] == "大浴场":
+        if place.split(os.sep)[0] == "大浴场":
             to_rest_room = map_handle.get_map_system_path_for_str(place)
             break
 
@@ -1108,7 +1109,7 @@ def character_move_to_training_locker_room(character_id: int):
     to_locker_room = []
     # 直接检索训练场的更衣室
     for place in constant.place_data["Locker_Room"]:
-        if place.split("\\")[0] == "训练":
+        if place.split(os.sep)[0] == "训练":
             to_locker_room = map_handle.get_map_system_path_for_str(place)
             break
 
@@ -1130,7 +1131,7 @@ def character_move_to_bath_room(character_id: int):
     now_position = character_data.position[0]
     find_flag = False
     for place in constant.place_data["Bathroom"]:
-        if place.split("\\")[0] == now_position:
+        if place.split(os.sep)[0] == now_position:
             to_bath_room = map_handle.get_map_system_path_for_str(place)
             find_flag = True
             break

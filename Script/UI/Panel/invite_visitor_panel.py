@@ -1,3 +1,4 @@
+import os
 from typing import List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
@@ -53,7 +54,7 @@ def sort_guest_room_key(room_path):
     return: int -- 提取的客房编号，如果无法解析则返回999
     """
     # 提取客房编号，例如从 "访客\\客房10" 中提取 10
-    room_name = room_path.split("\\")[-1]
+    room_name = room_path.split(os.sep)[-1]
     if "客房" in room_name:
         try:
             room_number = int(room_name.replace("客房", ""))
@@ -290,7 +291,7 @@ class Invite_Visitor_Panel:
                 now_text += _(" 目前的访客有：")
                 for chara_id in cache.rhodes_island.visitor_info:
                     character_data: game_type.Character = cache.character_data[chara_id]
-                    live_room = character_data.dormitory.split("\\")[-1]
+                    live_room = character_data.dormitory.split(os.sep)[-1]
                     leav_time = game_time.get_date_until_day(cache.rhodes_island.visitor_info[chara_id])
                     now_text += _(" [{0}]{1}，居住房间：{2}，离开{3}\n").format(str(character_data.adv).rjust(4,'0'), character_data.name, live_room, leav_time)
                 now_text += f"\n"

@@ -1,3 +1,4 @@
+import os
 import re
 from types import FunctionType
 from typing import Any, Dict, List, Optional, Tuple
@@ -902,5 +903,5 @@ class Manage_Dormitory_Panel:
         if dormitory_path == "":
             return _("暂无")
         if dormitory_path not in cache.scene_data:
-            return dormitory_path.split("\\")[-1]
+            return dormitory_path.split(os.sep)[-1]
         return cache.scene_data[dormitory_path].scene_name

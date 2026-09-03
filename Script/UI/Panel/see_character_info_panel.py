@@ -1,3 +1,4 @@
+import os
 from typing import List
 from types import FunctionType
 from Script.UI.Moudle import draw, panel
@@ -1044,7 +1045,7 @@ class CharacterDailyText:
             text_list += _(" 今日上午：工作    今日下午：工作    今日晚上：{0}").format(entertainment_text_list[2])
         else:
             text_list += _(" 今日上午：{0}    今日下午：{1}    今日晚上：{2}").format(entertainment_text_list[0], entertainment_text_list[1], entertainment_text_list[2])
-        live_room = character_data.dormitory.split("\\")[-1]
+        live_room = character_data.dormitory.split(os.sep)[-1]
         text_list += _("\n居住房间：{0}").format(live_room)
 
         text_draw = draw.LeftDraw()
@@ -1109,7 +1110,7 @@ class CharacterVisitorText:
             stay_text = attitude_data.name
             break
         leav_time = game_time.get_date_until_day(cache.rhodes_island.visitor_info[character_id])
-        live_room = character_data.dormitory.split("\\")[-1]
+        live_room = character_data.dormitory.split(os.sep)[-1]
         text_list += _("留下意愿：{0}     ").format(stay_text)
         text_list += _("离开时间：{0}     ").format(leav_time)
         text_list += _("居住房间：{0}").format(live_room)

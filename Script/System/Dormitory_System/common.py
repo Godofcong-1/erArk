@@ -1,3 +1,4 @@
+import os
 import re
 from types import FunctionType
 from collections import defaultdict
@@ -213,7 +214,7 @@ def get_dormitory_occupants_text() -> str:
     for dormitory_place in Dormitory_all:
         count = 0
         tem_remove_id_set = set() # 用来保存需要删除id的临时set
-        dormitory_name = dormitory_place.split("\\")[-1]
+        dormitory_name = dormitory_place.split(os.sep)[-1]
         dormitory_son_text = f"    [{dormitory_name}]："
         # 遍历角色id
         dormitory_npc_name = ""
@@ -389,7 +390,7 @@ def new_character_get_dormitory(character_id: int):
                 continue
             # 遍历检查是否有同名客房，使用排序后的列表
             for room_full_path in guest_room_sorted:
-                if game_config.config_facility_open[room_id].name == room_full_path.split("\\")[-1]:
+                if game_config.config_facility_open[room_id].name == room_full_path.split(os.sep)[-1]:
                     final_room_list.append(room_full_path)
         
         # 查找第一个空闲的客房
