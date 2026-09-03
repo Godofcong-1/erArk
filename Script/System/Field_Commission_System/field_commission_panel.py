@@ -979,8 +979,6 @@ class CommissionDraw:
         commision_time = int(commision_data.time)
         new_time = game_time.get_sub_date(day=commision_time)
 
-        # 添加到进行中的委托
-        cache.rhodes_island.ongoing_field_commissions[commision_id] = [self.send_npc_list, new_time, []]
         # 消耗资源
         get_commission_demand_and_reward(commision_id, self.send_npc_list, False, True)
         # 遍历派遣人员，设为派遣状态，并离线
@@ -995,7 +993,6 @@ class CommissionDraw:
             cache.rhodes_island.vehicles[vehicle_id][1] += self.send_vehicle_dict[vehicle_id]
             for i in range(self.send_vehicle_dict[vehicle_id]):
                 now_vehicle_list.append(vehicle_id)
-        cache.rhodes_island.ongoing_field_commissions[commision_id][2] = now_vehicle_list
         
         # 结算速度对时间的影响
         min_speed = 9
@@ -1014,12 +1011,13 @@ class CommissionDraw:
             commision_time_by_min = int(commision_time_by_min * (0.9 ** min_speed))
             new_time_by_speed = game_time.get_sub_date(minute=commision_time_by_min)
             new_day = round(commision_time_by_min / 1440, 1)
-            # 重新设置时间
-            cache.rhodes_island.ongoing_field_commissions[commision_id][1] = new_time_by_speed
         # 如果没有实际速度加成，则不减少时间
         else:
             new_time_by_speed = new_time
             new_day = commision_time
+
+        # 添加到进行中的委托
+        cache.rhodes_island.ongoing_field_commissions[commision_id] = [self.send_npc_list, new_time_by_speed, now_vehicle_list]
 
         # 绘制委托信息
         draw_text = ""
