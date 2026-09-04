@@ -203,21 +203,21 @@ def get_residence_type(character_id: int) -> str:
     输出类型: str
     功能: 按访客>监禁>同居>舍管>监狱长的顺序返回角色命中的首个特殊住宿类型（"guest_room"/"prison"/"with_player"/"dormitory_manager"/"prison_manager"）；未处于任何特殊住宿状态时返回"dormitory"（正常住宿）
     """
-    character_data: game_type.Character = cache.character_data[character_id]
+    from Script.Design import handle_premise
     # 访客，住在访客区客房
-    if character_id in cache.rhodes_island.visitor_info:
+    if handle_premise.handle_self_visitor_flag_1(character_id):
         return "guest_room"
     # 被监禁
-    if character_data.sp_flag.imprisonment:
+    if handle_premise.handle_imprisonment_1(character_id):
         return "prison"
     # 开启同居服务的助理，住在博士房间
-    if character_data.assistant_services[7] == 1:
+    if handle_premise.handle_assistant_live_together_on(character_id):
         return "with_player"
     # 宿舍管理员，包住宿岗位
-    if character_data.work.work_type == 31:
+    if handle_premise.handle_work_is_dormitory_manager(character_id):
         return "dormitory_manager"
     # 监狱长，包住宿岗位
-    if character_data.work.work_type == 191:
+    if handle_premise.handle_work_is_warden(character_id):
         return "prison_manager"
     return "dormitory"
 
