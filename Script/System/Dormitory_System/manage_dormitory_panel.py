@@ -432,7 +432,7 @@ class Manage_Dormitory_Panel:
         应用角色宿舍变更
         输入类型: character_id(int), dormitory_path(str)
         输出类型: 无
-        功能: 更新角色 dormitory 字段，不修改 pre_dormitory
+        功能: 更新角色 dormitory 字段，不修改 permanent_dormitory
         """
         character_data = cache.character_data[character_id]
         old_text = self._get_dormitory_name(character_data.dormitory)
@@ -850,8 +850,8 @@ class Manage_Dormitory_Panel:
             return
 
         character_data = cache.character_data[character_id]
-        if not self._is_manager_room_path(character_data.dormitory) and character_data.pre_dormitory == "":
-            character_data.pre_dormitory = character_data.dormitory
+        if not self._is_manager_room_path(character_data.dormitory) and character_data.permanent_dormitory == "":
+            character_data.permanent_dormitory = character_data.dormitory
         character_data.dormitory = manager_room_path
 
         character_position = character_data.position
@@ -864,25 +864,14 @@ class Manage_Dormitory_Panel:
         将被撤销任命的宿舍管理员恢复原宿舍
         输入类型: character_id(int)
         输出类型: 无
-        功能: 若角色当前在舍管房且存在 pre_dormitory，则恢复到原宿舍并清空 pre_dormitory
+        功能: 若角色当前住在舍管房，则按恢复规则重新分配宿舍，并将其移动到落点房间
         """
-        if character_id not in cache.character_data:
-            return
-
         character_data = cache.character_data[character_id]
         if not self._is_manager_room_path(character_data.dormitory):
             return
-        if character_data.pre_dormitory == "":
-            return
-
-        restore_path = character_data.pre_dormitory
-        character_data.dormitory = restore_path
-        character_data.pre_dormitory = ""
-
-        character_position = character_data.position
+        restore_path = common.restore_character_dormitory(character_id)
         target_scene = map_handle.get_map_system_path_for_str(restore_path)
-        if target_scene:
-            map_handle.character_move_scene(character_position, target_scene, character_id)
+        map_handle.character_move_scene(character_data.position, target_scene, character_id)
 
     def _get_dormitory_max_open_layer(self) -> int:
         """

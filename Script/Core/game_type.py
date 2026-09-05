@@ -1631,8 +1631,8 @@ class Character:
         """ 角色所属办公室坐标 """
         self.dormitory: str = ""
         """ 角色宿舍坐标 """
-        self.pre_dormitory: str = ""
-        """ 角色前宿舍坐标 """
+        self.permanent_dormitory: str = ""
+        """ 角色的登记宿舍坐标：临时住进特殊房间期间记录其原普通宿舍；住在普通宿舍时恒为空 """
         self.birthday: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色生日数据 """
         # self.chest_tem: int = 0

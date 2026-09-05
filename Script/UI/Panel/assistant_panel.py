@@ -107,7 +107,8 @@ def assistant_replace(new_assistant_id: int):
         handle_premise.settle_chara_unnormal_flag(character_data.assistant_character_id, 3)
         # 去掉旧助理的同居状态
         if character_data.assistant_character_id != 0 and old_assistant_data.dormitory == map_handle.get_map_system_path_str_for_list(["中枢", "博士房间"]):
-            old_assistant_data.dormitory = old_assistant_data.pre_dormitory
+            from Script.System.Dormitory_System import common as dormitory_common
+            dormitory_common.restore_character_dormitory(character_data.assistant_character_id)
         # 重置旧助理的助理服务数据体
         old_assistant_data.assistant_services = attr_calculation.get_assistant_services_zero()
     # 没有旧助理
@@ -354,10 +355,11 @@ class Assistant_Panel:
             # 此处不可以用翻译地点
             if service_cid == 7:
                 if target_data.assistant_services[service_cid] == 1:
-                    target_data.pre_dormitory = target_data.dormitory
+                    target_data.permanent_dormitory = target_data.dormitory
                     target_data.dormitory = map_handle.get_map_system_path_str_for_list(["中枢", "博士房间"])
                 elif target_data.dormitory == map_handle.get_map_system_path_str_for_list(["中枢", "博士房间"]):
-                    target_data.dormitory = target_data.pre_dormitory
+                    from Script.System.Dormitory_System import common as dormitory_common
+                    dormitory_common.restore_character_dormitory(character_data.assistant_character_id)
                 # print(f"debug target_data.dormitory = {target_data.dormitory}")
 
     def select_morning_salutation_time(self):

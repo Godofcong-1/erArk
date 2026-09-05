@@ -285,7 +285,10 @@ def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
         for character in character_data.values():
             if hasattr(character, "dormitory"):
                 character.dormitory = _normalize_save_path(character.dormitory)
-            if hasattr(character, "pre_dormitory"):
+            # 此处在 old_chara_to_new 迁移之前运行，可能遇到旧存档的 pre_dormitory 或新存档的 permanent_dormitory
+            if hasattr(character, "permanent_dormitory"):
+                character.permanent_dormitory = _normalize_save_path(character.permanent_dormitory)
+            elif hasattr(character, "pre_dormitory"):
                 character.pre_dormitory = _normalize_save_path(character.pre_dormitory)
             work_data = getattr(character, "work", None)
             if work_data is not None and hasattr(work_data, "dormitory_admin_target_room"):

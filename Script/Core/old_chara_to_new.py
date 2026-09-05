@@ -716,7 +716,7 @@ def migrate_character_replacement(loaded_dict: dict, old_to_new_id_map: dict) ->
         # 位置数据
         new_character.position = old_character.position.copy() if old_character.position else ["0", "0"]
         new_character.officeroom = old_character.officeroom.copy() if hasattr(old_character, 'officeroom') and old_character.officeroom else []
-        new_character.pre_dormitory = old_character.pre_dormitory if hasattr(old_character, 'pre_dormitory') else ""
+        new_character.permanent_dormitory = getattr(old_character, "permanent_dormitory", getattr(old_character, "pre_dormitory", ""))
         
         # 时间相关
         new_character.birthday = old_character.birthday
