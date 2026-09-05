@@ -51,8 +51,32 @@ class Make_food_Panel:
         """ 0普通做饭，1泡咖啡，2酒类 """
         self.special_seasoning = 0
         """ 调味类型 """
-        self.cook_mode = 0
-        """ 烹饪模式：0标准模式，1精细模式 """
+        # 烹饪模式与制作数量改为按做饭类型记忆在罗德岛数据里（与做饭面板的筛选/排序一致）
+        # 进入面板时做一次值域校验，防止旧存档或模组写入的非法值导致两个模式按钮都不高亮
+        if not isinstance(cache.rhodes_island.makefood_cook_mode, dict):
+            cache.rhodes_island.makefood_cook_mode = {}
+        if not isinstance(cache.rhodes_island.makefood_make_count, dict):
+            cache.rhodes_island.makefood_make_count = {}
+        if cache.rhodes_island.makefood_cook_mode.get(self.make_food_type, 0) not in {0, 1}:
+            cache.rhodes_island.makefood_cook_mode[self.make_food_type] = 0
+
+    @property
+    def cook_mode(self) -> int:
+        """
+        当前的烹饪模式（读罗德岛缓存，按做饭类型记忆玩家上一次的选择）
+        Return arguments:
+        int -- 烹饪模式：0标准，1精细
+        """
+        return cache.rhodes_island.makefood_cook_mode.get(self.make_food_type, 0)
+
+    @cook_mode.setter
+    def cook_mode(self, cook_mode: int):
+        """
+        设置烹饪模式并写回罗德岛缓存，使下次打开同类型面板时沿用
+        Keyword arguments:
+        cook_mode -- 烹饪模式：0标准，1精细
+        """
+        cache.rhodes_island.makefood_cook_mode[self.make_food_type] = cook_mode
 
     def draw(self):
         """绘制对象"""
@@ -284,8 +308,8 @@ class Make_food_Panel:
             food_line.draw()
 
             food_name_list = cooking.get_filtered_sorted_cook_data(self.now_panel)
-            # 将调味、烹饪模式增加进去
-            food_name_list = [(x[0], x[1], self.special_seasoning, self.cook_mode) for x in food_name_list]
+            # 将调味、烹饪模式、做饭类型增加进去
+            food_name_list = [(x[0], x[1], self.special_seasoning, self.cook_mode, self.make_food_type) for x in food_name_list]
             
             # 填满行数，保持翻页时高度一致（每页50个物品：10行5列）
             pad_count = 50 - (len(food_name_list) % 50)
@@ -294,7 +318,7 @@ class Make_food_Panel:
                 pad_count = 0
             if pad_count > 0:
                 # 使用 "-1" 作为 cid 标识空项，让 SeeFoodListByFoodNameDraw 绘制空白
-                food_name_list.extend([("-1", "", self.special_seasoning, self.cook_mode)] * pad_count)
+                food_name_list.extend([("-1", "", self.special_seasoning, self.cook_mode, self.make_food_type)] * pad_count)
 
             self.handle_panel.text_list = food_name_list
             self.handle_panel.update()
@@ -334,15 +358,15 @@ class Make_food_Panel:
         self.now_panel = food_type
 
         food_name_list = cooking.get_filtered_sorted_cook_data(self.now_panel)
-        # 将调味、烹饪模式增加进去
-        food_name_list = [(x[0], x[1], self.special_seasoning, self.cook_mode) for x in food_name_list]
+        # 将调味、烹饪模式、做饭类型增加进去
+        food_name_list = [(x[0], x[1], self.special_seasoning, self.cook_mode, self.make_food_type) for x in food_name_list]
 
         # 同样在这里进行行数填充
         pad_count = 50 - (len(food_name_list) % 50)
         if pad_count == 50 and len(food_name_list) > 0:
             pad_count = 0
         if pad_count > 0:
-            food_name_list.extend([("-1", "", self.special_seasoning, self.cook_mode)] * pad_count)
+            food_name_list.extend([("-1", "", self.special_seasoning, self.cook_mode, self.make_food_type)] * pad_count)
 
         self.handle_panel = panel.PageHandlePanel(
             food_name_list, SeeFoodListByFoodNameDraw, 50, 5, self.width, True, True, 0
@@ -643,7 +667,7 @@ class SeeFoodListByFoodNameDraw:
     button_id -- 数字按钮id
     """
     def __init__(
-        self, text: Tuple[str, str, int, int], width: int, is_button: bool, num_button: bool, button_id: int,
+        self, text: Tuple[str, str, int, int, int], width: int, is_button: bool, num_button: bool, button_id: int,
     ):
         """初始化绘制对象"""
         self.cid: str = text[0]
@@ -654,6 +678,8 @@ class SeeFoodListByFoodNameDraw:
         """ 调味类型 """
         self.cook_mode = text[3]
         """ 烹饪模式：0标准模式，1精细模式 """
+        self.make_food_type = text[4]
+        """ 做饭类型：0普通做饭，1泡咖啡，2酒类 """
         self.draw_text: str = ""
         """ 食物名字绘制文本 """
         self.width: int = width
@@ -744,7 +770,11 @@ class SeeFoodListByFoodNameDraw:
         if self.special_seasoning > 100:
             max_count = min(max_count, character_data.item[self.special_seasoning])
         max_count = max(1, max_count)
-        make_count = 1
+        # 沿用上次在同类型做饭面板中选择的制作数量，并按本次可制作上限钳制
+        remember_count = cache.rhodes_island.makefood_make_count.get(self.make_food_type, 1)
+        if not isinstance(remember_count, int) or remember_count < 1:
+            remember_count = 1
+        make_count = min(remember_count, max_count)
 
         while 1:
             py_cmd.clr_cmd()
@@ -828,6 +858,8 @@ class SeeFoodListByFoodNameDraw:
             elif yrn == max_draw.return_text:
                 make_count = max_count
             elif yrn == confirm_draw.return_text:
+                # 记忆本次的制作数量，供下次打开同类型做饭面板时沿用
+                cache.rhodes_island.makefood_make_count[self.make_food_type] = make_count
                 self.make_food(make_food_time, make_count)
                 SeeFoodListByFoodNameDraw.last_confirm_result = _("确认")
                 break

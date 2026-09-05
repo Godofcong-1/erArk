@@ -1302,6 +1302,10 @@ class Rhodes_Island:
         """ 做饭排序：排序维度（0无，1难度，2时间，3类型） """
         self.makefood_sort_order: int = 0
         """ 做饭排序：排序顺序（0升序，1降序） """
+        self.makefood_cook_mode: Dict[int, int] = {0: 0, 1: 0, 2: 0}
+        """ 做饭记忆：烹饪模式（0标准模式，1精细模式），键为做饭类型（0普通做饭/1泡咖啡/2调酒） """
+        self.makefood_make_count: Dict[int, int] = {0: 1, 1: 1, 2: 1}
+        """ 做饭记忆：制作数量，键为做饭类型（0普通做饭/1泡咖啡/2调酒） """
 
         # 医疗部
         self.medical_patients_today: Dict[int, Any] = {}
