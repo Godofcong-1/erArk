@@ -832,7 +832,7 @@ SocketIO 事件（后端处理函数）：
   - `scripts[].functions[]`：`type=replace` 函数替换（保留原函数 `call_original`）或 `type=new` 注册新函数
   - `assets.data[]`：CSV 覆盖（`type=csv`）；`assets.image[]`：图片覆盖
 - 脚本环境自动注入：`cache`, `game_config`, `game_type`, `_`, `get_mod_asset`, `call_original`
-- 示例 Mod：`mod/semen_boost/`（替换 `ejaculation_panel.common_ejaculation` + 覆盖 `Semen_Shoot_Amount.csv`）
+- 示例 Mod：`mod/semen_boost/`（替换 `ejaculation_panel.common_ejaculation` 与 `handle_premise.handle_pl_semen_le_2` + 覆盖 `Semen_Shoot_Amount.csv`）
 - 游戏内面板：`UI/Panel/mod_panel.py`
 
 ---

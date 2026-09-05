@@ -1,10 +1,10 @@
 {
     "mod_id": "semen_boost",
     "name": "无限射精",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "匿名",
-    "description": "修改射精相关结算的Mod，作为示范Mod使用。\n\n功能说明：\n1. 移除精液耗尽时的射精限制\n2. 通过修改基础射精量的csv数据文件'Semen_Shoot_Amount.csv'，使射精量数值翻倍\n3. 最终射精量再乘以10倍\n\n总体效果：无视精液量地射精，精液量变为原来的20倍\n\n实现方式：\n- 替换ejaculation_panel模块中的common_ejaculation函数，移除射精限制\n- 通过新的multiply_by_ten函数，将最终射精量乘以10\n- 修改数据文件以提升基础射精量",
-    "game_version": "2025.12.21",
+    "description": "修改射精相关结算的Mod，作为示范Mod使用。\n\n功能说明：\n1. 移除精液耗尽时的射精限制\n2. 通过修改基础射精量的csv数据文件'Semen_Shoot_Amount.csv'，使射精量数值翻倍\n3. 最终射精量再乘以10倍\n4. 绕过绝顶结算中的无精液高潮判定，精液耗尽后也会正常进入射精流程\n\n总体效果：无视精液量地射精，精液量变为原来的20倍\n\n实现方式：\n- 替换ejaculation_panel模块中的common_ejaculation函数，移除射精限制\n- 通过新的multiply_by_ten函数，将最终射精量乘以10\n- 修改数据文件以提升基础射精量\n- 替换handle_premise包中的handle_pl_semen_le_2前提函数，使orgasm_settle的绝顶结算不再走无精液高潮分支",
+    "game_version": "2026.8.31",
     "dependencies": [],
     "incompatible": [],
     "load_priority": 100,
@@ -17,6 +17,12 @@
                     "type": "replace",
                     "target_module": "Script.UI.Panel.ejaculation_panel",
                     "target_function": "common_ejaculation"
+                },
+                {
+                    "name": "modded_handle_pl_semen_le_2",
+                    "type": "replace",
+                    "target_module": "Script.Design.handle_premise",
+                    "target_function": "handle_pl_semen_le_2"
                 },
                 {
                     "name": "multiply_by_ten",

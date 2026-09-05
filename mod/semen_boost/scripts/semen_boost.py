@@ -5,6 +5,7 @@
 1. 移除精液耗尽判断，即使精液耗尽也能射精
 2. 新增乘以十的函数，使射精量变为原来的十倍
 3. 使用mod自带的数据文件替代游戏原数据文件
+4. 替换精液量前提函数，绕过绝顶结算中的无精液高潮分支（2026-07起新增的射精前置判断）
 """
 import os
 import csv
@@ -94,6 +95,33 @@ def multiply_by_ten(value:  int) -> int:
     return value * 10
 
 
+# ===== 替换函数：无精液时也判定为"有精液"，跳过绝顶结算中的无精液高潮分支 =====
+def modded_handle_pl_semen_le_2(character_id: int) -> int:
+    """
+    修改后的"玩家当前精液量小于等于2ml"前提函数，始终返回0（即判定为精液充足）
+
+    参数:
+        character_id: 角色id（前提函数的统一签名，本函数不使用）
+
+    返回:
+        int -- 权重，恒为0
+
+    用途:
+        2026-07起，Script/Settle/orgasm_settle.py 的 orgasm_judge 会在打开射精面板之前
+        先调用 handle_premise.handle_pl_semen_le_2(0)，若为真则登记 p_no_semen_climax
+        （无精液高潮）并直接返回，后面的射精结算（common_ejaculation）根本不会被调用。
+        因此仅替换 common_ejaculation 已不足以实现"无视精液量射精"，还需要把这个前提一并替换掉。
+
+    注意:
+        该替换只影响通过 handle_premise.handle_pl_semen_le_2 这一模块属性进行的调用
+        （orgasm_settle 与 ejaculation_panel 都是这样调用的）。
+        口上/事件系统使用的前提字典 constant.handle_premise_data["pl_semen_le_2"]
+        是在游戏导入时由装饰器登记的原函数引用，不受模块属性替换的影响，
+        所以"精液耗尽"相关的口上前提仍按真实精液量判断。
+    """
+    return 0
+
+
 # ===== 替换函数：修改后的通用射精结算 =====
 def modded_common_ejaculation():
     """
@@ -123,7 +151,9 @@ def modded_common_ejaculation():
     # if handle_premise.handle_pl_semen_le_2(0):
     #     return _("只流出了些许前列腺液，已经射不出精液了"), 0
     # 现在不再进行该判断，直接进入射精计算
-    
+    # 注意：同样的判断在 Script/Settle/orgasm_settle.py 的 orgasm_judge 中还有一处，
+    # 位于本函数被调用之前，由 modded_handle_pl_semen_le_2 负责绕过
+
     # ===== 修改点2：使用mod自带的数据文件 =====
     # 原代码使用 game_config.config_semen_shoot_amount
     # 现在使用 _mod_semen_config（基础值为原版两倍）
