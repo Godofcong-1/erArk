@@ -1493,10 +1493,11 @@ def handle_h_end():
             handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 3)
 
     # 对方原地待机10分钟
-    target_data.behavior.behavior_id = constant.Behavior.WAIT
-    target_data.behavior.duration = 10
-    target_data.behavior.start_time = character_data.behavior.start_time
-    target_data.state = constant.CharacterStatus.STATUS_WAIT
+    if character_data.target_character_id != 0:
+        target_data.behavior.behavior_id = constant.Behavior.WAIT
+        target_data.behavior.duration = 10
+        target_data.behavior.start_time = character_data.behavior.start_time
+        target_data.state = constant.CharacterStatus.STATUS_WAIT
 
     # H结束时的其他处理完毕
     now_draw = draw.WaitDraw()
