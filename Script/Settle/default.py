@@ -4143,10 +4143,9 @@ def handle_move_to_pre_scene(
     # 然后再判断是否还有前一场景的移动数据，如果有则移动至前一场景
     if len(character_data.action_info.past_move_position_list):
         character_data.behavior.move_target = character_data.action_info.past_move_position_list[-1]
+        handle_move_to_target_scene(character_id, add_time, change_data, now_time)
         # 删除掉前一场景的移动数据
         character_data.action_info.past_move_position_list.pop(-1)
-        handle_move_to_target_scene(character_id, add_time, change_data, now_time)
-        character_data.sp_flag.move_stop = True
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_MOVE_TO_PRE_SCENE)
