@@ -579,6 +579,13 @@ def handle_wear_to_shower_locker(
                     # print(f"debug move_cloth_id = {cloth_id}")
                     character_data.cloth.cloth_wear[clothing_type].remove(cloth_id)
                     character_data.cloth.cloth_locker_in_shower[clothing_type].append(cloth_id)
+        # 避免对应type没有数据，所以先补充一个空列表再交换
+        cloth_text = game_config.config_clothing_type[clothing_type].name
+        empty_list = [cloth_text,0,0,0]
+        if clothing_type not in character_data.dirty.cloth_semen:
+            character_data.dirty.cloth_semen[clothing_type] = empty_list
+        if clothing_type not in character_data.dirty.cloth_locker_semen:
+            character_data.dirty.cloth_locker_semen[clothing_type] = empty_list
     character_data.dirty.cloth_locker_semen, character_data.dirty.cloth_semen = character_data.dirty.cloth_semen, character_data.dirty.cloth_locker_semen
     # 衣物离开身体时去除服装部位上的避孕套装饰
     from Script.System.Item_System import condom_handle
@@ -660,6 +667,13 @@ def handle_foot_cloth_to_shower_locker(
                     # print(f"debug move_cloth_id = {cloth_id}")
                     character_data.cloth.cloth_wear[clothing_type].remove(cloth_id)
                     character_data.cloth.cloth_locker_in_shower[clothing_type].append(cloth_id)
+        # 避免对应type没有数据，所以先补充一个空列表再交换
+        cloth_text = game_config.config_clothing_type[clothing_type].name
+        empty_list = [cloth_text,0,0,0]
+        if clothing_type not in character_data.dirty.cloth_semen:
+            character_data.dirty.cloth_semen[clothing_type] = empty_list
+        if clothing_type not in character_data.dirty.cloth_locker_semen:
+            character_data.dirty.cloth_locker_semen[clothing_type] = empty_list
         character_data.dirty.cloth_semen[clothing_type], character_data.dirty.cloth_locker_semen[clothing_type] = character_data.dirty.cloth_locker_semen[clothing_type], character_data.dirty.cloth_semen[clothing_type]
     # 袜子和鞋子离开身体时去除对应部位上的避孕套装饰
     from Script.System.Item_System import condom_handle
@@ -742,6 +756,13 @@ def handle_wear_to_dormitory_locker(
                     continue
                 character_data.cloth.cloth_wear[clothing_type].remove(cloth_id)
                 character_data.cloth.cloth_locker_in_dormitory[clothing_type].append(cloth_id)
+        # 避免对应type没有数据，所以先补充一个空列表再交换
+        cloth_text = game_config.config_clothing_type[clothing_type].name
+        empty_list = [cloth_text,0,0,0]
+        if clothing_type not in character_data.dirty.cloth_semen:
+            character_data.dirty.cloth_semen[clothing_type] = empty_list
+        if clothing_type not in character_data.dirty.cloth_locker_semen:
+            character_data.dirty.cloth_locker_semen[clothing_type] = empty_list
 
     # 把身上衣服的精液数据一并交换到衣柜衣服的精液数据上
     character_data.dirty.cloth_locker_semen, character_data.dirty.cloth_semen = character_data.dirty.cloth_semen, character_data.dirty.cloth_locker_semen
