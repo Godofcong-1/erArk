@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|41_G_0,老师没来，教室里乱哄哄的，谁也不听谁的。\n{Name}看了一会儿，忽然举起手说"我们先安静一下好不好"——没有人理。\n{Name}默默坐了回去，在本子上写了一行："原来指挥不是喊一声就行的。"
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|41_G_0,{Name}把上次画的编队图翻出来，试着自己改一改。\n改着改着{Name}发现自己把两个人排到了同一个位置上，只好整张重画。\n重画的时候{Name}学乖了，先在旁边把人名一个个列出来打勾。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|41_G_0,自习课上，{Name}把上次演练时说的每一句话都回想了一遍，写在纸上。\n写完一数，光是废话就有七句。\n{Name}把那七句一一划掉，剩下的重新排了个顺序，发现整段话短了一半，也清楚了一倍。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|41_G_0,{Name}给自己出了个假想的场面，然后开始在纸上写命令。\n写到"如果这时候有人受伤了"，{Name}停下来想了很久。\n那一页最后没有写完，但{Name}把这个问题记了下来，准备下次上课时问老师。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|41_G_0,教室里没有老师，{Name}索性组织了一次小小的复盘。\n虽然只有三个人愿意参加，但{Name}还是认真地把上次演练里出问题的地方讲了一遍。\n讲完之后有人说"原来是这样"，{Name}比自己弄懂了还高兴。

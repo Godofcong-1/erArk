@@ -1,0 +1,16 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|47_G_0&CVP_A1_CourseType|0_G_0,"你今天做错的事，要等三个月后才知道。"{Name}听完歪了歪头。\n三个月对{Name}来说实在太长了，长得有点想不明白。\n不过{Name}还是把黑板上那条时间轴一笔一笔画进了本子里。
+1001,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|47_G_0&CVP_A1_CourseType|0_G_0,四盆土传下来的时候，{Name}凑得特别近去闻，鼻尖差点碰到土。\n"这个是甜的！"{Name}忽然说，教室里笑成一片。\n老师却认真地问"哪种甜"，{Name}愣了半天，最后指着其中一盆说"这盆和别的不一样"。老师说：对了。
+1002,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|47_G_0&CVP_A1_CourseType|0_G_0,四年的轮作计划表{Name}抄得一丝不苟，连表格线都用尺子比着画。\n"一块地不能年年种同样的东西，人也一样。"{Name}在这句话旁边打了个勾。\n虽然老师说后半句随便听听，{Name}还是记下来了。
+1003,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|47_G_0&CVP_A1_CourseType|0_G_0,讲天灾的那节课，{Name}听得手指发凉。\n"我们种的每一块地，都可能在一夜之间没了。"\n应急收割的三种顺序{Name}记得格外牢，因为那听起来像是真的用得上的东西。
+1004,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|47_G_0&CVP_A1_CourseType|1_G_0,{Name}分到的那盆土比自己的脸还大，抱都抱不动。\n"活不活我不管，但每天要来记一次。"{Name}把这句话记在了盆边贴的纸条上。\n从那天起{Name}每天都要绕路过来看一眼，哪怕什么变化也没有。
+1005,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|47_G_0&CVP_A1_CourseType|1_G_0,移栽的时候{Name}的手一直在抖，生怕把根弄断。\n老师示范时那个慢得像拆东西的动作，{Name}模仿了三遍才勉强像样。\n把苗放进新土里的那一刻，{Name}长长地松了口气。
+1006,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|47_G_0&CVP_A1_CourseType|1_G_0,那盆蔫掉的苗，{Name}第一反应是"水浇少了"。\n老师把盆倒过来，根已经烂了一片——是水太多。\n{Name}把这件事完整地记在了自己那本观察记录里，还画了根的样子。
+1007,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|47_G_0&CVP_A1_CourseType|1_G_0,手直接插进土里的时候，{Name}没有嫌脏，反而觉得那种凉意很舒服。\n"干湿、松紧、温度，手比任何仪器都快。"{Name}换了三个地方分别摸了摸。\n确实是不一样的。{Name}把这个发现写进了记录本。
+1008,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|47_G_0&CVP_A1_CourseType|2_G_0,从种植区一直讲到食堂的餐盘，{Name}第一次知道中间有那么多道工序。\n"下次剩饭之前，想想这条线。"{Name}悄悄把这句话记住了。\n那天晚饭{Name}把盘子吃得干干净净。
+1009,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|47_G_0&CVP_A1_CourseType|2_G_0,不同年份的种子摆在一起，{Name}怎么看也看不出区别。\n"最不起眼也最要紧的部分。"{Name}把这句话记下来。\n散场后{Name}特意去问老师有没有分辨的诀窍，老师说"多看，看上一千次就知道了"。
+1010,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|47_G_0&CVP_A1_CourseType|2_G_0,那片绝收的地，老师只用了两句话就带过去了。\n"因为除了再种一次，也没有别的办法。"{Name}却在这句话上停了很久。\n后面的产量数据{Name}一个也没记住，只记住了这一句。

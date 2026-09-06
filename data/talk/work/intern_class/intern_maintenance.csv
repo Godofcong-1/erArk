@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_maintenance_department,检修部里到处是拆开的东西，{Name}看得手痒，被制止了三次。\n工程师最后给了{Name}一个已经报废的零件，"这个随便你拆"。\n{Name}拆得很起劲，拆完之后发现装不回去了。
+1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_maintenance_department,{Name}的活儿是把工具递过去，工程师说什么就递什么。\n有几件{Name}不认识，只好一件件举起来问。\n问到第五件的时候，工程师说："你把名字记下来，下次就快了。"
+1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_maintenance_department,{Name}第一次看到真正的检修流程，最惊讶的是拆之前要先拍照记录。\n"修东西比造东西难，你得先弄明白别人当初是怎么想的。"\n课上听过的这句话，在这里变成了一沓照片。
+1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_maintenance_department,今天修完之后多出了一个垫片，{Name}第一个发现的。\n工程师二话不说把整个东西又拆开了。\n"它现在能用，但你不知道它什么时候会不能用。"{Name}想起了自己上次也是这么做的。

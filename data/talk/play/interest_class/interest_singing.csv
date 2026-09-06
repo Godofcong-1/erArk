@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,singing,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}站在房间正中，深吸一口气，然后唱破了音。\n"再来一次！"{Name}自己先笑了出来，重新站好。\n第二次好了一点，第三次{Name}索性放开了嗓子，唱得整个房间都是回声。
+1001,singing,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,兴趣课选了唱歌，{Name}却在开口前犹豫了很久。\n直到确认房间里只有自己，{Name}才小声哼了起来。\n哼着哼着声音就大了，最后连门外都听得见。
+1002,singing,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}唱了半首就停下来，皱着眉重新起了个调。\n"刚才那个音太高了，够不着。"{Name}自言自语，然后换了个低一些的调子重来。\n这一遍从头唱到尾都很稳，{Name}唱完自己点了点头。
+1003,singing,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,唱到副歌那句时{Name}特意停了半拍才接上去。\n"音乐课上说的'停'，"{Name}小声解释给自己听，"原来唱歌也一样。"\n加了这半拍之后，整首歌听起来确实不一样了。

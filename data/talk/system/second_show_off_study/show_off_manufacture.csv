@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|48_G_0,{Name}摊开手心，上面整整齐齐排着一列小螺丝。\n"我一颗都没丢！"{Name}宣布，"别人丢了三个，我一个都没丢。"\n说完{Name}小心翼翼地把螺丝收回小袋子里，一颗一颗地数着放。
+1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|48_G_0,{Name}举着一张画着三个方向的图跑过来。\n"这个是从上面看，这个是从前面看，这个是从侧面看，都是同一个东西哦。"\n{Name}讲得头头是道，虽然图上有一条线明显画歪了。
+1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|48_G_0,{Name}把一个小零件放在桌上，然后闭上眼睛用手指摸过去。\n"这里，"{Name}停在某处，"还差一点点。用眼睛是看不出来的。"\n睁开眼之后{Name}有点得意："老师上次也是这样摸出来的。"
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|48_G_0,"我上次装完，多出来一个零件。"{Name}说，"当时它还是能用的。"\n"但是老师说，多出来的零件是最可怕的信号——它能用，但你不知道它什么时候会不能用。"\n{Name}顿了顿："所以我全拆了重装。超时了，但是没剩东西。"

@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,swimming,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|3_G_0&in_swimming_pool,{Name}只敢在浅水那一头待着，两只手死死扒着池边。\n试着松开一只手的时候{Name}整个人晃了一下，赶紧又抓紧了。\n一节课下来{Name}没游出去几步，但至少不哭了。
+1001,swimming,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|3_G_0&in_swimming_pool,今天{Name}练的是憋气，把脸埋进水里数数。\n第一次只数到三就抬起头来，呛得直咳嗽。\n练到最后{Name}能数到十了，抬起头的时候满脸是水，笑得很得意。
+1002,swimming,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|3_G_0&in_swimming_pool,{Name}沿着池边一趟一趟地游，动作还不算标准，但已经很稳。\n游到第四趟时{Name}调整了呼吸的节奏，速度立刻快了一截。\n上岸之后{Name}扶着池边喘了会儿气，然后又跳了下去。
+1003,swimming,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|3_G_0&in_swimming_pool,水里比岸上安静得多，{Name}挺喜欢这一点。\n{Name}把注意力全放在手脚的配合上，一遍遍找那个最省力的节奏。\n找到之后{Name}发现自己能游得比平时远一倍，而且没有那么累。
+1004,swimming,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|3_G_0&in_swimming_pool,{Name}今天没有比速度，而是练了一整节课的漂浮。\n仰面躺在水上，什么也不做，只是让自己浮着。\n起初总是往下沉，后来{Name}学会了放松，居然真的稳稳地浮住了。

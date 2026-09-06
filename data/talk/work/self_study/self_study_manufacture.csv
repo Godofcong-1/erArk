@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|48_G_0,制造课自习不许用工具，{Name}只好把三视图翻出来看。\n看着看着{Name}拿铅笔试着自己画一个，结果三张图对不上。\n{Name}没有气馁，把课本上的例图又描了一遍，边描边数格子。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|48_G_0,{Name}把工具的名字一个个抄下来，还在旁边画了小图。\n画到某一件时{Name}忽然想不起来它是干什么用的了，只好留白。\n下课前{Name}特意跑去实践教室看了一眼那件工具，回来把空补上了。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|48_G_0,{Name}把上次拆过的那个小装置的结构凭记忆画了出来。\n画完对照自己当时排螺丝的照片，发现漏掉了一个垫片。\n"多出来的零件是最可怕的信号"——{Name}想起这句话，把垫片补上去，还标了它的位置。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|48_G_0,自习课上{Name}算了一整节课的公差，把课本上的例题全做了一遍。\n有一题{Name}把误差留反了方向，装出来的东西理论上会卡死。\n{Name}把这道题单独抄在了错题页上，旁边写了"方向"两个字。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|48_G_0,{Name}闭着眼睛摸自己上次磨的那个面，试图找出还差在哪里。\n摸了很久也没摸出来，{Name}只好承认自己的手还没有老师那么准。\n"多摸一千次大概就知道了。"{Name}想起农业课老师说过类似的话，觉得有点好笑。

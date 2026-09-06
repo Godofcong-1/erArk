@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,training,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|3_G_0&in_shoot_room,射击房里的东西对{Name}来说都太重了，端起来手就开始抖。\n{Name}只好用两只手一起端着，姿势相当不标准。\n打完一轮，靶上的痕迹散得到处都是，但{Name}还是很兴奋地跑过去数。
+1001,training,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|3_G_0&in_shoot_room,{Name}发现自己一紧张就会闭眼睛，于是开始练"睁着眼睛"。\n练了很久，{Name}终于能在关键时刻不眨眼了——虽然还是打不中。\n"总得先能看见吧。"{Name}这么安慰自己。
+1002,training,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|3_G_0&in_shoot_room,{Name}今天没有急着打，而是先站定，把呼吸调匀。\n吸气、屏住、再动手——这个顺序{Name}重复了很多次。\n虽然命中率没有明显提高，但散布明显收拢了一些。
+1003,training,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|3_G_0&in_shoot_room,靶上的痕迹全都偏在同一侧，{Name}盯着看了很久。\n"不是我手抖，是我一直往一边偏。"{Name}调整了一下站位，再打一轮。\n这次痕迹果然移到了靶心附近。{Name}把这个发现记在了随身的小本子上。
+1004,training,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|3_G_0&in_shoot_room,射击房很安静，只有{Name}一个人在练。\n练到后来{Name}发现自己开始走神，索性停下来在旁边坐了几分钟。\n重新站起来之后的那一轮，是今天最好的一轮。

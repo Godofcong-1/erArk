@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,recruit,0,have_intern_student,{Name}接待来人时，让跟来的孩子在旁边听着，一句话也不许说。\n谈完之后{Name}问那孩子听懂了多少。\n"大半听不懂，"孩子老实说，"但是你说的每句话都很短。"{Name}笑了。
+1001,recruit,0,have_intern_student,今天这一次谈得不顺，对方最后没有答应。\n{Name}把记录写完就去忙别的了，倒是跟着的孩子一直闷闷的。\n"谈不成是常态。"{Name}顺口说了一句，那孩子抬起了头。
+1002,recruit,0,have_intern_student,{Name}让跟来的孩子把资料按日期排好，一排就是一整节课。\n收工时{Name}随口考了两个名字，那孩子居然都答上来了。\n"抄一遍比背十遍强。"{Name}说。

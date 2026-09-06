@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_inpatient_department,{Name}第一次进住院部，连走路都不自觉地放轻了。\n医生让{Name}跟在后面别出声，{Name}点头点得很用力。\n一圈查下来{Name}一句话也没说，出了门才长长地舒了一口气。
+1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_inpatient_department,{Name}被交待了一件事：记住每张床的名字。\n查到第六张的时候{Name}就有点乱了，只好偷偷去看牌子。\n医生看见了也没说什么，只是回去的路上把顺序又说了一遍。
+1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_inpatient_department,{Name}跟着查房，注意到医生每次都会问病人昨晚睡得怎么样。\n"这跟病没关系吧？"{Name}在回去的路上问。\n"睡不好的人，什么都恢复得慢。"医生说。{Name}把这句写进了本子。
+1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_inpatient_department,有位病人主动招手，问这个最小的实习生要不要来摸摸脉。\n{Name}看了医生一眼，得到点头之后才伸手。\n数完之后{Name}报出的数跟医生的一样，那一整天{Name}的腰板都挺得笔直。

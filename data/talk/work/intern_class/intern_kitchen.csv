@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_kitchen,厨房里又热又吵，{Name}站在角落里，一时不知道该往哪儿站。\n厨师递过来一把小刀和几根菜，"先切这个"，{Name}这才有了事做。\n切得歪七扭八，但{Name}一根也没落下。
+1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_kitchen,{Name}被安排在灶台边看着火，什么也不用做，只要盯着。\n盯了十分钟{Name}就开始不耐烦，脚在地上蹭来蹭去。\n"看火也是活。"厨师头也不回地说。{Name}老实了，重新盯着锅。
+1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_kitchen,{Name}跟着厨师做了一整轮，第一次见到真正的出餐节奏。\n课上学的火候曲线，在这里全被压缩成了"差不多了"三个字。\n"经验就是把那几条线记在手上。"{Name}这么理解了。
+1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_kitchen,今天出的是三百份的量，{Name}跟着做到一半就手酸了。\n"能做三百份还不出错，这就是技巧。"{Name}想起公开课上的这句话。\n做完之后{Name}对着满桌的餐盘发了会儿呆。

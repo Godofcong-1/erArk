@@ -1,0 +1,12 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|45_G_0,讲台空着，教室里没有人管，很快就有人开始说话。\n{Name}把课本立起来挡在面前，试图看进去，可是眼睛总往声音那边飘。\n一节课下来{Name}翻过去了三页，其中两页都不记得写了什么。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|45_G_0,老师没来，{Name}把上次记的笔记翻出来，从头看了一遍。\n看到一处自己都认不出的字，{Name}皱着眉猜了半天，最后猜了个八九不离十。\n"下次要写清楚一点。"{Name}在旁边端端正正地重写了一遍。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|45_G_0,自习课上{Name}的注意力实在集中不起来，索性趴在桌上数窗外的云。\n数到第七朵的时候{Name}忽然良心不安，坐直身体重新翻开了书。\n虽然只多看了半页，但{Name}觉得比一直趴着强。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|45_G_0,没有老师的一节课，{Name}反而把进度往前赶了一截。\n课本上有一处一直没弄懂，{Name}这次没有跳过去，而是一句句读了四五遍。\n读到第五遍时忽然通了。{Name}长长地吐了口气，在旁边画了个勾。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|45_G_0,{Name}把这一章的所有例题重做了一遍，不看解答。\n做到第三题时卡了很久，{Name}没有翻答案，而是回头去看前面的定义。\n定义看了两遍，题就解开了。{Name}在那道题旁边写了三个字："看定义。"
+1005,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|45_G_0,自习的效率其实不如听课，{Name}很清楚这一点。\n所以{Name}索性不学新的，只把已经学过的东西重新整理了一遍，把散在各页的东西归到一处。\n下课时{Name}多了一张干净的提纲，虽然一个新知识点也没学。
+1006,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|45_G_0,教室里有人在小声聊天，{Name}忍了一会儿，最后换到了靠窗的位置。\n新位置有点晒，但确实清静。{Name}把书摊开，一直看到下课。\n收拾东西的时候{Name}发现自己的手臂被晒得有点发红，却没觉得难受。

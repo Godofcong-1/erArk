@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,exercise,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|3_G_0&in_gym_room,健身区的器械对{Name}来说全都太大了，大部分连坐上去都费劲。\n{Name}最后找了块空地，老老实实地做起了跑跳。\n跳到第三十下时{Name}就喘上了，但还是数完了五十下。
+1001,exercise,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|3_G_0&in_gym_room,{Name}在健身区里绕圈跑，跑得不快，但一圈都没有停。\n跑到第五圈时{Name}的脸红扑扑的，头发也黏在了额头上。\n跑完之后{Name}叉着腰站了好一会儿，很有成就感的样子。
+1002,exercise,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|3_G_0&in_gym_room,{Name}给自己排了个顺序，从最轻的开始，一样一样往下做。\n做到中间那项时{Name}明显吃力，但没有跳过去，而是减了次数把它做完了。\n"减次数不算逃。"{Name}这么对自己说。
+1003,exercise,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|3_G_0&in_gym_room,今天{Name}练的是耐力，目标是把上次的时间往后拖一点。\n拖到还差半分钟的时候{Name}真的想停了，最后咬着牙撑了过去。\n结束之后{Name}瘫坐在地上喘了很久，脸上却带着笑。
+1004,exercise,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|3_G_0&in_gym_room,{Name}做完之后没有立刻走，而是照着课上教的做了一遍拉伸。\n"不拉伸第二天会疼。"这是{Name}上次吃过亏之后学会的。\n拉伸做完，{Name}才慢慢收拾东西离开。

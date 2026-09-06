@@ -1,0 +1,16 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|49_G_0&CVP_A1_CourseType|0_G_0,黑板上的立方体被画了两次，{Name}使劲看也没看出区别。\n老师说第二次先定了光从哪儿来，{Name}又看了一遍，忽然"啊"了一声。\n那天回去以后，{Name}对着屋里的每样东西都要先找一遍影子。
+1001,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|49_G_0&CVP_A1_CourseType|0_G_0,"画画是做减法的手艺。"{Name}把这句话记下来，但没太懂。\n{Name}画东西的时候总想把看见的全都画上去，从来没想过还要省掉一些。\n下课后{Name}把自己之前画的翻出来看，好像确实太满了。
+1002,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|49_G_0&CVP_A1_CourseType|0_G_0,两张色卡分开时看着一样，放回一起就完全不同了。\n{Name}跟着"啊"了一声，然后立刻低头在笔记本上写下"颜色是相对的"。\n写完{Name}又把两支不同的笔并排放在一起看了看，果然也变了。
+1003,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|49_G_0&CVP_A1_CourseType|0_G_0,同一个东西挪三个位置就是三种感觉，{Name}看得入了神。\n老师让大家回去看看自己房间的墙，{Name}当晚真的对着墙站了很久。\n第二天{Name}把床头那幅画往左挪了一点，说不上为什么，但确实舒服了。
+1004,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|49_G_0&CVP_A1_CourseType|1_G_0,一个杯子、一块布、一颗果子，要画一整节课。\n{Name}画到第三遍就开始不耐烦，第四遍索性乱画。\n第五遍的时候{Name}忽然发现布的褶皱跟自己前四遍画的完全不一样——原来一直没真的看过。
+1005,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|49_G_0&CVP_A1_CourseType|1_G_0,不许用橡皮，{Name}第一反应是把纸捂住不让人看。\n画到后来纸上全是叠在一起的线，{Name}反倒不在意了。\n"留着错的那条，你才知道自己错在哪。"{Name}回去以后把那张纸贴在了墙上。
+1006,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|49_G_0&CVP_A1_CourseType|1_G_0,三分钟一换姿势，{Name}前几次连轮廓都没画完。\n第五次{Name}放弃了细节，只抓大的走向，居然反而画得像了。\n"三分钟只够你抓住最要紧的东西。"{Name}这才明白老师那句话的意思。
+1007,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|49_G_0&CVP_A1_CourseType|1_G_0,画自己的手，{Name}本以为是全场最简单的题目。\n结果画出来的东西怎么看怎么别扭，手指的长短完全不对。\n"看见和看是两回事。"{Name}把自己的手举起来，认认真真地看了很久，才重新落笔。
+1008,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|49_G_0&CVP_A1_CourseType|2_G_0,同一处景色的两幅画挂在台上，{Name}觉得十年前那幅更好看。\n老师说自己也说不清哪幅更好，{Name}反而松了口气。\n"原来老师也有说不清的事情。"{Name}偷偷在笔记本角落写了这么一句。
+1009,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|49_G_0&CVP_A1_CourseType|2_G_0,"只有画能把一个已经不在的地方，按你记得的样子留下来。"\n{Name}听到这句话时，握笔的手停住了。\n那天的笔记只有这一行，{Name}后来又在下面画了一个很小的、看不出是什么的东西。
+1010,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|49_G_0&CVP_A1_CourseType|2_G_0,老师当场画了第一排的听众，全场都笑了，{Name}笑得最大声。\n"四分钟里我看了他大概三十次。"{Name}忽然不笑了。\n散场之后{Name}试着画了画旁边的人，画到一半就发现自己根本没看够三十次。

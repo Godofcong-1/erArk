@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,organize_dormitory_opinion,0,have_intern_student,{Name}把这一周收上来的意见摊了一桌子，让跟着的孩子先按楼层分堆。\n孩子分到一半抬起头："有三张说的是同一件事。"\n"那就把它们叠在一起。"{Name}说，"重复得越多的，越要先办。"
+1001,organize_dormitory_opinion,0,have_intern_student,意见条上有几张字潦草得认不出，{Name}也没扔，放到了一边。\n跟着的孩子好奇为什么不直接丢掉。\n"写的人是谁我知道，"{Name}说，"回头当面问他一句就行。"
+1002,organize_dormitory_opinion,0,have_intern_student,{Name}整理完之后让跟着的孩子把汇总念一遍。\n孩子念到"洗漱台排队"那条时停了一下，说自己也遇到过。\n{Name}在那一条后面画了个圈："那就多一票。"

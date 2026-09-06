@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,invite_visitor,0,have_intern_student,{Name}写邀请函的时候，跟来的孩子在旁边一封封地看。\n"每一封都不一样。"孩子说。\n"对方是谁，决定了先说结论还是先说理由。"{Name}答。
+1001,invite_visitor,0,have_intern_student,今天来的客人对罗德岛有明显的成见，气氛一度很僵。\n{Name}没有辩解，而是先讲了一件跟正事无关的小事。\n气氛松下来之后，正事才谈了起来。跟来的孩子看得目不转睛。
+1002,invite_visitor,0,have_intern_student,{Name}叮嘱跟来的孩子今天什么都不要说，那孩子真的一个字也没说。\n出门之后{Name}听见身后长长地吐了口气。\n"原来不说话这么难。"{Name}没有回头，但嘴角动了一下。

@@ -1,0 +1,16 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|40_G_0&CVP_A1_CourseType|0_G_0,黑板上并排写着三种说法，{Name}盯着看了半天，也没看出它们有什么不一样。\n"老师，"{Name}小声举手，"这不都是一个意思吗？"\n老师笑了，把其中一句用很凶的语气念了一遍，又用很温柔的语气念了另一句。{Name}的眼睛一下子睁大了。
+1001,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|40_G_0&CVP_A1_CourseType|0_G_0,今天讲怎么拒绝别人，{Name}听得格外认真。\n{Name}想起前几天有人来借东西，自己不想借又说不出口，最后还是借了出去，心里憋闷了好几天。\n"原来可以这样说啊……"{Name}在笔记本上把老师教的那句话抄了三遍。
+1002,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|40_G_0&CVP_A1_CourseType|0_G_0,"对着上级先说结论，对着朋友先说理由。"{Name}把这句话抄下来，笔尖停了一下。\n那么对博士呢？{Name}在旁边画了个小小的问号，想了想又划掉了。\n这一节课{Name}记的笔记比平时多，字迹却越到后面越潦草。
+1003,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|40_G_0&CVP_A1_CourseType|0_G_0,老师说"谈判桌上说得最多的那个人通常是输的那个"，{Name}下意识地抿了抿嘴。\n{Name}是知道自己一紧张就会话多的，之前几次都吃过亏，只是从来没往这上面想过。\n接下来讲"什么时候该停"的那一段，{Name}一个字都没敢漏。
+1004,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|40_G_0&CVP_A1_CourseType|1_G_0,练习是要说服旁边的人把手里的东西交出来，{Name}憋了半天，最后说了句"给我好不好嘛"。\n对方居然真的给了。{Name}正得意，老师在旁边说："他是让着你，不是被你说服了。"\n{Name}的耳朵一下子红了，重新想了个理由，第二次说得像样多了。
+1005,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|40_G_0&CVP_A1_CourseType|1_G_0,复述练习轮到{Name}的时候，{Name}才发现自己刚才根本没听进去几个字。\n磕磕巴巴地复述到一半就卡住了，{Name}的脸涨得通红。\n第二轮{Name}把身体转过去正对着对方，两只手放在膝盖上，这次一句都没漏。
+1006,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|40_G_0&CVP_A1_CourseType|1_G_0,立场冲突的谈判练习进行到一半就僵住了，{Name}是坚持得最久的那个。\n直到时间快到，{Name}才主动退了一步——不是妥协，而是提出了一个所有人都没想到的第三种分法。\n虽然最后还是没谈成，但老师点评的时候特意提了这一段。
+1007,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|40_G_0&CVP_A1_CourseType|1_G_0,今天练的是"把坏消息告诉别人"，{Name}抽到的纸条内容相当棘手。\n{Name}想了很久才开口，先说了三句铺垫，然后才把那件事说了出来。\n扮演听众的人愣了一下，说"你这样讲我反而更难受了"。{Name}低下头，老师却说："难受是对的，至少他没生你的气。"
+1008,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|40_G_0&CVP_A1_CourseType|2_G_0,大礼堂里讲的那个谈判故事，{Name}听得入了神，连笔都忘了拿起来。\n讲到最紧张的那一段，{Name}不自觉地攥紧了裙角。\n散场之后{Name}还在想那个故事，走出礼堂好远才想起自己一个字都没记。
+1009,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|40_G_0&CVP_A1_CourseType|2_G_0,"语言是最便宜的工具，也是最贵的。"{Name}把这句话记在了那一页的最上面。\n整场公开课讲的都是说错话的代价，{Name}越听越安静。\n散场时{Name}回头看了一眼空掉的礼堂，忽然觉得自己以前说过的很多话，好像都该再想一想。
+1010,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|40_G_0&CVP_A1_CourseType|2_G_0,公开课上有干员举手回答了老师的问题，{Name}回头看了一眼那个人。\n那是真的在外勤里遇到过这种场面的人，说出来的东西跟课本上完全不一样。\n{Name}把那段话原原本本地记了下来，比记老师讲的还认真。

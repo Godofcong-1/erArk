@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,maintenance_facilities,0,have_intern_student,{Name}到了报修的地方并不急着动手，先绕着走了一圈。\n跟着的孩子问什么时候开始修。\n"已经开始了。"{Name}说，"先看清楚它是怎么坏的。"
+1001,maintenance_facilities,0,have_intern_student,这处的故障其实只要换个件，{Name}却把旁边两处也一并紧了紧。\n跟着的孩子说那两处又没坏。\n"等它坏了我还得再来一趟。"{Name}边收工具边说。
+1002,maintenance_facilities,0,have_intern_student,收工之前{Name}让跟着的孩子把用过的工具一件件放回原位。\n孩子放完之后{Name}又数了一遍，少了一把。\n"落在设备里的工具比故障更麻烦。"{Name}说完，两个人一起回去找。

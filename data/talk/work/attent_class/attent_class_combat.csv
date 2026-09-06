@@ -1,0 +1,16 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|42_G_0&CVP_A1_CourseType|0_G_0,黑板上画着人形，老师在几个地方点了点，说那些地方最脆。\n{Name}下意识地摸了摸自己的脖子，又赶紧把手放下。\n这节课{Name}听得比平时安静，笔记做得很少，但每个位置都记住了。
+1001,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|42_G_0&CVP_A1_CourseType|0_G_0,老师讲了一整节课的撤退路线，{Name}本来以为战斗课会教怎么打架。\n"打架的目标是赢，战斗的目标是活着回来。"{Name}把这句话抄了下来。\n下课后{Name}还在想，原来"跑"也是要学的。
+1002,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|42_G_0&CVP_A1_CourseType|0_G_0,三种地形的问题抛出来时，{Name}举了手，答对了其中一种。\n老师顺着{Name}的回答往下引，把另外两种也带了出来。\n{Name}坐下时耳根有点发热，笔记本上那一行字写得比平时用力。
+1003,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|42_G_0&CVP_A1_CourseType|0_G_0,老师在黑板上画的那段时间窗只有短短一小截，{Name}盯着它看了很久。\n"早半秒法术打空，晚半秒人已经贴上去了"——{Name}试着在心里数了一下半秒有多长。\n短得几乎没有。{Name}忽然明白了为什么老师说"要把这段线变长"。
+1004,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|42_G_0&CVP_A1_CourseType|1_G_0,护具对{Name}来说太大了，穿上之后袖子长出一截，走路都晃。\n今天学的是怎么挨打，{Name}摔了很多次，护头的姿势倒是越做越熟。\n下课时{Name}浑身是灰，却难得地觉得很痛快。
+1005,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|42_G_0&CVP_A1_CourseType|1_G_0,对练时{Name}用尽了全力，三分钟不到就气喘吁吁。\n老师说"全都太用力了"，{Name}这才发现自己连站都站不稳了。\n第二轮只用五成力，{Name}居然撑到了最后，虽然一下也没打中。
+1006,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|42_G_0&CVP_A1_CourseType|1_G_0,{Name}的动作一直有个毛病：打出去的手收不回来。\n老师陪着走了三遍，第四遍的时候{Name}终于感觉到手是自己回到位的，而不是硬拽回来的。\n"就是这样。"老师说完就走开了，{Name}站在原地又重复了十几次。
+1007,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|42_G_0&CVP_A1_CourseType|1_G_0,灯暗下来之后{Name}几乎什么都看不见，第一下就被撂倒了。\n{Name}没有急着爬起来，趴在地上听了几秒，才辨出对方的脚步在哪个方向。\n这一轮{Name}还是输了，但输得比第一次晚了很多。
+1008,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|42_G_0&CVP_A1_CourseType|2_G_0,"在座有多少人真的动手打过？"{Name}左右看了看，没有举手。\n老师说"那我尽量让你们永远不用举这只手"，{Name}松了口气。\n整场课讲的都是怎么不打架，{Name}听得津津有味。
+1009,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|42_G_0&CVP_A1_CourseType|2_G_0,四段交手记录，每一段结尾都是"这里本来可以不打"。\n{Name}听到第三段的时候，忽然觉得胸口有点闷。\n"让对方觉得不值得跟你打"——{Name}把这句话记下来的时候，笔画得很慢。
+1010,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|42_G_0&CVP_A1_CourseType|2_G_0,有人举手问"打不过怎么办"，{Name}也很想知道答案。\n老师说"跑"，台下笑了，{Name}却认真地把这个字写进了笔记本。\n"能跑掉的人才有下一次。"{Name}在旁边画了一颗小星星。

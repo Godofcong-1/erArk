@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,taste_dessert,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}选兴趣课时毫不犹豫地挑了这个，理由非常坦率。\n点心端上来之后{Name}吃得眼睛都眯了起来。\n"这个真的算上课吗？"{Name}含糊地问，嘴里还塞着东西。
+1001,taste_dessert,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}把点心切成很小的块，一小块一小块地吃，想让它久一点。\n结果吃到一半就忍不住了，剩下的三口解决。\n吃完之后{Name}盯着空盘子看了好一会儿。
+1002,taste_dessert,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}吃得比平时慢，一边吃一边在想这是怎么做出来的。\n"这个层是分开烤的吧……中间那道应该是后放的。"\n吃完之后{Name}把猜想记了下来，准备下次料理课问老师。
+1003,taste_dessert,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,同样一份点心，{Name}分了三口在不同的时间吃。\n刚上桌时最好，凉了之后甜味变得明显了些。\n"温度会改变味道。"{Name}把这句话写在了料理笔记的边上。

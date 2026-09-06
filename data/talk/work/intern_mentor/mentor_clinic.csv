@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,cure_patient,0,have_intern_student,{Name}问诊的时候特意把每一步都说出了声，明知道病人并不需要听这些。\n坐在角落里的那个孩子正飞快地记着。\n"记不完就先记问题，"{Name}在两个病人之间的空隙里说，"答案回去翻书。"
+1001,cure_patient,0,have_intern_student,今天的病人不太配合，{Name}余光瞥见旁边那孩子屏住了呼吸。\n{Name}没有催，也没有让孩子回避，就让他看着全过程。\n等病人走了，{Name}才问："你刚才想说什么？""……等一等。"孩子说。{Name}点了点头。
+1002,cure_patient,0,have_intern_student,{Name}让跟着的孩子递东西，故意报了几个不常用的名字。\n孩子愣了一下，但很快把常用的几样按顺序摆到了手边。\n{Name}什么也没说，只是后面报名字的速度快了一些。

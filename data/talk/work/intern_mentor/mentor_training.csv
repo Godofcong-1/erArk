@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,training,0,have_intern_student&in_training_room,{Name}训练时身边多了个跟着数次数的孩子，数着数着自己也跟着使劲。\n{Name}没有点破，只是在做到一半的时候放慢了节奏。\n"你们上课那个是让你们别受伤，"{Name}说，"我们这个是让敌人受伤。"
+1001,training,0,have_intern_student&in_training_room,今天跟来的孩子想完整做一组，{Name}让他试了。\n做到一半那孩子明显撑不住了，{Name}直接叫了停。\n"知道自己什么时候该停，这也是本事。"
+1002,training,0,have_intern_student&in_training_room,热身的时候{Name}把动作拆得比平时细，一个个说清楚发力在哪儿。\n跟着的孩子学得笨拙，但没有偷懒。\n一轮下来那孩子出了满身汗，{Name}丢过去一条毛巾，没多说什么。

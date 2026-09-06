@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|49_G_0,绘画课自习，{Name}把纸铺开就开始画，画的是窗外那棵树。\n画到一半{Name}发现自己忘了先定光源，影子全画反了。\n{Name}翻过一页重新开始，这次第一笔画的是太阳在哪儿。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|49_G_0,{Name}在纸上画满了小小的杯子，一个接一个，每个都不太一样。\n画到第十几个的时候，{Name}发现自己开始不用看实物也能画出大概了。\n下课时那张纸上密密麻麻全是杯子，{Name}很宝贝地把它夹进了本子。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|49_G_0,自习课上{Name}没有画新的，而是把上次那张静物拿出来重看。\n看了很久，{Name}用铅笔在几处轻轻圈了起来——都是当时偷懒省掉的地方。\n圈完之后{Name}重新画了一张，那几处这次一处没省。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|49_G_0,{Name}练的是三分钟速写，自己掐着时间，画的是教室里其他人的背影。\n前几张还是抓不住，画到第六张时{Name}忽然找到了那种"先抓大走向"的感觉。\n第七张只用了两分钟，反而是最像的一张。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|49_G_0,{Name}又画了一次自己的手，这次画得比上课时久得多。\n画完之后{Name}把手举到纸旁边比了比，还是不太像，但至少手指的长短对了。\n"看见和看是两回事。"{Name}在纸角写下这句话，然后翻页又画了一张。

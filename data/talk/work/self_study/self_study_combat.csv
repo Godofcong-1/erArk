@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|42_G_0,战斗课自习，{Name}不敢乱动，只好照着书上的图比划。\n比划到一半{Name}把胳膊别到了，疼得抽了口气。\n"果然还是得有人在旁边看着。"{Name}老老实实地坐回去看图了。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|42_G_0,{Name}把老师说过的那几个"挨一下就动不了"的位置又背了一遍。\n背着背着{Name}开始担心起来，忍不住摸了摸自己那几个地方。\n下课时{Name}决定回去以后要多穿一件厚点的衣服。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|42_G_0,没有对练的对象，{Name}就对着空气反复练收招。\n打出去，收回来，再打出去，再收回来。练了几十遍之后，{Name}的手臂开始发酸。\n发酸之后动作反而变小了，也变利落了——{Name}觉得这大概就是老师说的"别用那么大力"。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|42_G_0,自习课上{Name}翻的不是招式，而是上次讲的那几条撤退路线。\n{Name}拿铅笔在图上重新标了一遍，标到一半发现有一条路是死路。\n"这条是老师故意留的？"{Name}把这个疑问写在了旁边。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|42_G_0,{Name}闭着眼睛在教室后排站了很久，练的是听声辨位。\n有人经过时{Name}会小声报一个方向，然后睁眼确认。\n十次里错了四次，但比上次课上的时候好多了。

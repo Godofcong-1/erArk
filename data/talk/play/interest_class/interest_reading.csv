@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,read_book,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}在书架间转了很久，最后挑了一本图最多的。\n看图看得很起劲，字基本跳过去了。\n一节课下来{Name}把整本翻完了，说起里面的画来头头是道。
+1001,read_book,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}挑了一本明显超出自己水平的书，抱着回到了座位上。\n看了两页就有一半的字不认识，{Name}却不肯换。\n最后{Name}靠着猜和跳，硬是看完了第一章。
+1002,read_book,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}这次没有挑喜欢的类型，而是特意找了一本自己不太懂的。\n看得很慢，中间停下来查了好几次。\n一节课只看了二十来页，但{Name}觉得比看完一本轻松的划算。
+1003,read_book,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,图书馆里很安静，{Name}看着看着就忘了时间。\n直到有人来提醒，{Name}才发现这一节已经过完了。\n{Name}把书页折了个角，第二天又来了。

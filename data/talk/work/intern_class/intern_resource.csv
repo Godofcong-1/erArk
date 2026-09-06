@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_resource_exchange,交易所里数字跳得飞快，{Name}完全看不懂。\n交易员让{Name}只盯一样东西的价格看，别的都别管。\n盯了半节课之后{Name}真的看出了一点起伏的规律。
+1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_resource_exchange,{Name}的活儿是把成交记录抄进本子，一行都不能错。\n抄错一个数字之后{Name}被要求整页重抄，{Name}没有抱怨。\n第二遍{Name}抄得慢了一倍，但一个错也没有。
+1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_resource_exchange,{Name}看着交易员跟对方来回压价，全程没有提高过嗓门。\n"说得最多的那个通常是输的那个。"{Name}在心里数了数，对方说的话确实多得多。\n最后成交的价格，比一开始报的低了不少。
+1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_resource_exchange,今天{Name}被允许试着报一次价，紧张得声音都在抖。\n报完之后对方沉默了几秒，{Name}差点忍不住往下降。\n交易员在桌下按住了{Name}的手。最后对方接受了原价。

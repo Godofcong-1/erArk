@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|46_G_0,医术课自习，{Name}对着人体图上的血管走向一条条描。\n描到手臂的时候{Name}忍不住看了看自己的手腕，好像真的能看见一点青色。\n{Name}被自己吓了一跳，赶紧把袖子放下来。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|46_G_0,{Name}拿绷带在自己胳膊上练包扎，缠了拆、拆了缠。\n缠到第六遍的时候终于紧了，{Name}举起胳膊左看右看，很是满意。\n然后{Name}发现自己把手指也一起缠进去了，只好又拆开重来。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|46_G_0,{Name}默写那张药物相克表，写到一半就卡住了。\n{Name}没有硬想，而是照老师说的翻开册子查了一遍，然后合上再默一遍。\n第三遍的时候{Name}默出了大半，剩下的几条特意在旁边打了星号。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|46_G_0,自习课上{Name}把"先判断再动手"的顺序重新梳理了一遍，画成了一张流程图。\n画到"如果对方还有意识"这一支时，{Name}发现自己漏了一步。\n补上之后{Name}把整张图重画了一遍，贴在了笔记本的封二。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|46_G_0,{Name}对着镜子练按压的姿势，一遍遍调整手臂的角度。\n公开课上那位干员教的"把体重压上去"，{Name}练了很久才找到感觉。\n找到之后{Name}又练了二十下，累得胳膊发酸，但没有停。

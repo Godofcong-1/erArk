@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|43_G_0,{Name}举着一张画满笑脸和叉的卡片跑过来。\n"这些可以一起吃，这些不行！"{Name}指着卡片，"我全记住了，不信你考我。"\n被考到第三个的时候{Name}卡住了，但很快理直气壮地说："这个还没学到。"
+1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|43_G_0,"我今天做的东西没有糊！"{Name}宣布得像是打了胜仗。\n"前面糊了三次，"{Name}补充，"但是最后一次没有。老师说这样就算会了。"\n说完{Name}眼巴巴地看着博士，显然是在等一句夸奖。
+1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|43_G_0,{Name}端着一小碟东西过来，放下之后退了半步。\n"你尝尝。"{Name}说，"不用勉强，难吃就说难吃。"\n话是这么说，但{Name}的手一直攥着裙角，眼睛一眨不眨地盯着。
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|43_G_0,"老师问我想让吃的人有什么感觉。"{Name}忽然说起了这件事。\n"我当时想了很久，最后说……想让他吃完之后觉得今天没那么难过。"\n{Name}说到这里停住了，没有看博士的脸。

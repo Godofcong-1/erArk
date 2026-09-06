@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|40_G_0,没有老师，话术课的自习就变成了纯粹的聊天课。\n{Name}本来想认真看书，可是旁边的人一句接一句地搭话，{Name}答着答着就忘了手上的书。\n下课时{Name}忽然想起来：刚才那半个小时，其实也算是在练说话吧？
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|40_G_0,{Name}对着课本上的例句一句句小声念，念着念着开始换语气。\n同一句话用生气的、开心的、委屈的语气各念了一遍，{Name}自己被自己逗笑了。\n笑完之后{Name}发现，果然听起来完全不是一回事。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|40_G_0,{Name}把上次课上老师举的那几个反例重新抄了一遍，一条条在旁边写自己会怎么说。\n写到第四条时{Name}发现自己的说法跟反例几乎一样，愣了一下，划掉重写。\n重写的那句{Name}反复念了三遍，才觉得顺了。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|40_G_0,自习课上{Name}给自己出了个题：把同一件事写成三种说法。\n第一种写得很快，第二种想了一会儿，第三种卡了整整十分钟。\n最后那种写出来之后，{Name}觉得反而是最好的一种。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|40_G_0,没有老师带着练，{Name}只好找旁边的人对练。\n对方一开始很敷衍，{Name}换了个说法请求，对方居然认真了起来。\n{Name}在心里默默记下：这一次成功的说法，回头要写进本子里。

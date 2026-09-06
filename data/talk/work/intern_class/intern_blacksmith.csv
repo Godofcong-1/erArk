@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_blacksmith_shop,铁匠铺里又热又响，{Name}进去之后先被声音吓了一跳。\n铁匠让{Name}站远一点看，什么也别碰。\n{Name}看了整整一节课，回去以后耳朵里还嗡嗡的。
+1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_blacksmith_shop,{Name}的活儿是拉风箱，拉了不到十分钟胳膊就酸了。\n{Name}换了个姿势，用整个身子的力气去拉，果然轻松了些。\n"力气是从腰来的。"铁匠头也不抬地说。
+1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_blacksmith_shop,{Name}学着看火色判断温度，铁匠问一次{Name}答一次。\n前几次全错，后来{Name}开始记颜色和时间的对应关系。\n最后一次{Name}答对了，铁匠"嗯"了一声，没有多说。
+1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_blacksmith_shop,今天打出来的那件东西有一处小瑕疵，{Name}以为可以将就。\n铁匠直接把它扔回了炉子里。\n"这里差一点，用起来就断在这里。"{Name}想起了公差那节课。

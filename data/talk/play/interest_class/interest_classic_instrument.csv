@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,play_instrument,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0&in_classic_music_room,传统乐器摆了一屋子，{Name}挨个摸过去，最后挑了一件最小的。\n拨了两下之后{Name}发现声音跟想象中完全不一样，愣了愣，又拨了两下。\n一节课下来{Name}只学会了一个音，但拨得非常起劲。
+1001,play_instrument,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0&in_classic_music_room,{Name}抱着乐器坐在角落里，怎么也调不好音。\n试了很久之后{Name}索性不调了，就着现在的音弹了一小段。\n虽然听着有点怪，但{Name}弹得很认真。
+1002,play_instrument,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0&in_classic_music_room,{Name}先花了一会儿把音调准，然后才开始弹。\n弹的是课上学过的那段调式，弹到第四种时{Name}停了下来。\n还是那个想不起在哪儿听过的调子。{Name}又弹了一遍，还是想不起来。
+1003,play_instrument,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0&in_classic_music_room,传统乐器的指法跟{Name}平时练的完全不同，一开始别扭得很。\n{Name}没有换乐器，而是把最难的那个指法单独拆出来练了几十遍。\n下课前{Name}终于能连贯地弹完一句了，虽然速度还很慢。

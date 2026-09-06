@@ -1,0 +1,16 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|44_G_0&CVP_A1_CourseType|0_G_0,老师敲桌子，大家在纸上记节奏，{Name}记着记着就把点画成了一串小圆圈。\n虽然写法完全不对，但对照的时候{Name}的位置居然一个都没错。\n老师看了一眼那页纸，说"符号回头再学，耳朵你已经有了"。
+1001,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|44_G_0&CVP_A1_CourseType|0_G_0,"为什么有的曲子听着让人想哭？"{Name}本来以为这个问题没有答案。\n结果老师真的讲了一整节课，还写了公式一样的东西在黑板上。\n{Name}一边抄一边觉得有点失落，又有点说不清的兴奋。
+1002,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|44_G_0&CVP_A1_CourseType|0_G_0,六种调式排在黑板上，{Name}一种一种在心里哼过去。\n哼到第四种的时候，{Name}忽然停住了——这个调子好像在哪里听过。\n{Name}想了整整一节课也没想起来是在哪儿，只好在笔记本上打了个问号。
+1003,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|44_G_0&CVP_A1_CourseType|0_G_0,"你什么时候该退到后面去，比你会吹多少调子重要。"{Name}把这句话记了下来。\n下课前放的那段合奏，{Name}听了三遍才听出乐器是怎么轮流让开的。\n"原来不是一起响就好听。"{Name}在旁边补了这么一句。
+1004,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|44_G_0&CVP_A1_CourseType|1_G_0,{Name}挑了一件看起来最小的乐器，结果还是比自己的手大。\n吹了半天只发出些漏气的声音，{Name}的脸憋得通红。\n快下课时终于响了一个完整的音，{Name}举着乐器愣了两秒，然后飞快地又吹了一遍确认不是错觉。
+1005,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|44_G_0&CVP_A1_CourseType|1_G_0,跟着拍子走的时候，{Name}第一遍就乱了，还带偏了旁边的人。\n第二遍{Name}索性不看别人，只盯着老师的手。\n第三遍走完，{Name}发现自己的脚一直在不自觉地打着拍子——原来身体真的会记住。
+1006,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|44_G_0&CVP_A1_CourseType|1_G_0,二重奏怎么也合不上，{Name}越急越乱。\n老师让{Name}先停下来只听，{Name}这才发现对方一直在放慢等自己。\n"你也得等他一次。"再来一遍的时候，{Name}主动慢了半拍，两个人第一次合上了。
+1007,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|44_G_0&CVP_A1_CourseType|1_G_0,窗户全开着，风把谱子吹得哗哗响，{Name}起初根本听不见自己在吹什么。\n后来{Name}干脆闭上眼睛，把注意力全收到手指上。\n再睁开眼的时候，外面的声音还在，但已经不妨碍了。
+1008,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|44_G_0&CVP_A1_CourseType|2_G_0,同一段旋律用三件乐器演了三遍，{Name}听得眼睛一眨不眨。\n第三遍结束时{Name}是第一个鼓掌的，掌声在安静的礼堂里显得特别响。\n{Name}赶紧缩了缩脖子，但旁边很快也响起了掌声。
+1009,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|44_G_0&CVP_A1_CourseType|2_G_0,"它不能让人吃饱，不能治伤，不能挡住子弹。"{Name}听到这里心里咯噔了一下。\n后半句说完之后，{Name}才慢慢松开了攥着的笔。\n那节课{Name}什么也没记，散场时才发现笔记本还是空白的。
+1010,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|44_G_0&CVP_A1_CourseType|2_G_0,只有五个音的旋律反复了很多遍，{Name}听着听着走了神。\n老师说那是自己小时候听过的、不知道名字的调子，然后就换了话题。\n{Name}把那五个音记在了本子最后一页，回去以后哼了很久也没哼腻。

@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|44_G_0,没有老师，教室里的乐器谁也不敢碰，{Name}只好用手指敲桌子。\n敲着敲着{Name}开始跟着自己的节奏小声哼起来。\n哼到一半发现有人在看，{Name}赶紧闭了嘴，脸红到了耳朵根。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|44_G_0,{Name}把上次的听写练习翻出来，自己敲桌子自己记。\n敲的人和记的人是同一个，结果自然全对，{Name}得意了两秒，然后自己也觉得不对劲。\n"这样不算数。"{Name}老实地把纸翻了过去。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|44_G_0,{Name}在纸上默写那六种调式，写到第四种时停住了。\n还是那个熟悉却想不起来的调子。{Name}反复哼了很多遍，仍然没有想起在哪儿听过。\n最后{Name}把它单独抄在了本子的最后一页。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|44_G_0,自习课上{Name}试着自己写一小段旋律，只有八个音。\n写完哼了一遍，觉得别扭，改了第三个音；再哼一遍，还是别扭，又改了第六个。\n改到第五版的时候{Name}忽然满意了，赶紧把它记下来，生怕忘掉。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|44_G_0,{Name}想练合奏里的"让位"，可是一个人没法合奏。\n于是{Name}退而求其次，先练"停"——数着拍子，在该停的地方准确地停住。\n听起来很傻，但{Name}练了整整一节课，最后连停顿的长短都能控制得差不多了。

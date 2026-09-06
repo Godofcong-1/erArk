@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,npc_work_cook,0,have_intern_student,{Name}把手上的活儿放慢了一点，好让旁边那个跟着学的孩子看清楚每一步。\n"这一下别急，"{Name}说，"等它变色再翻。"\n说完{Name}回过头去看了一眼，那孩子正盯着锅，眼睛都不眨。
+1001,npc_work_cook,0,have_intern_student,厨房里多了个够不着灶台的小身影，{Name}默不作声地把矮凳踢了过去。\n孩子站上去之后正好，{Name}这才继续手上的事。\n"切歪了不要紧，"{Name}头也不抬，"切到手才要紧。"
+1002,npc_work_cook,0,have_intern_student,{Name}今天出的量比平时大，跟着的孩子帮不上多少忙，但一直没走。\n收尾的时候{Name}分了一小块出来，推到孩子面前。\n"尝尝。做完了要尝——这是最要紧的一步。"

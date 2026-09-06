@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_nursery,育儿室里有比{Name}还小的孩子，{Name}一下子有了当姐姐的自觉。\n{Name}学着保育员的样子去抱，结果姿势不对，被纠正了三次。\n第四次终于抱稳了，{Name}屏着呼吸一动也不敢动。
+1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_nursery,{Name}的任务是哄一个哭闹的小孩，试了三种办法都不管用。\n最后{Name}索性坐下来陪着哭，那孩子反倒愣住不哭了。\n保育员在旁边笑出了声。
+1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_nursery,{Name}跟着记录每个孩子的作息，一格格填进表里。\n填到一半{Name}发现其中一个孩子的规律跟别人都不一样。\n保育员看了记录之后说："这个我们也刚发现，你记得挺细。"
+1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_nursery,{Name}在育儿室待了一整节课，忽然想起自己也是从这里出去的。\n"我以前也这样吗？"{Name}问。保育员想了想，说"你比他们能闹"。\n{Name}不好意思地笑了，手上哄孩子的动作却轻了些。

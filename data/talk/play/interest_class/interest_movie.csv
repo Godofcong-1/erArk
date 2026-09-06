@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,watch_movie,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}选了兴趣课看电影，坐下之后才发现自己挑的位置太靠前了。\n仰着脖子看了半小时，{Name}的脖子开始酸，只好换到后面去。\n换完位置之后{Name}看得入了神，连自己带的零食都忘了吃。
+1001,watch_movie,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,电影里有一段很吓人，{Name}把脸捂了起来，只从指缝里偷看。\n看完之后{Name}嘴上说"一点都不可怕"，手却还攥着衣角。\n晚上{Name}特意把灯多开了一盏。
+1002,watch_movie,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}看得很专心，中途还掏出本子记了几笔。\n记的不是剧情，而是几处镜头的构图——绘画课上讲过的那些。\n看完之后{Name}发现自己对故事本身反倒印象不深。
+1003,watch_movie,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,片尾字幕滚完之后，{Name}还在座位上坐了一会儿。\n"如果是我，会怎么讲这个故事？"{Name}想着想着，把结局在心里重新编了一遍。\n编完之后{Name}觉得还是原来的好，有点不甘心地承认了。

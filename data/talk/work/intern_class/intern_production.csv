@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_production_workshop,车间里的机器声很大，{Name}说话得靠喊。\n工人把{Name}安排在最末端，负责把成品码整齐。\n码到一半{Name}发现自己码的那一摞歪了，只好整个重来。
+1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_production_workshop,{Name}第一次看到流水线，眼睛跟着传送带来回转。\n"一直看会晕的。"工人提醒。{Name}这才发现自己确实有点头晕。\n后来{Name}学着只盯自己那一段，果然好多了。
+1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_production_workshop,{Name}被要求做同一个动作两百遍，做到一百多遍的时候开始烦躁。\n"能把最简单的一道做成两百次都一样，你才算入门。"{Name}想起料理课上几乎相同的一句话。\n剩下的几十遍{Name}做得比前面更稳。
+1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_production_workshop,今天线上出了一个次品，{Name}是在最后一道才看出来的。\n工人顺着往回查，发现问题出在第二道工序。\n"越早发现越便宜。"{Name}把这句话记在了本子上。

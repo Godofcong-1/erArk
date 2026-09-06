@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,identify_eggs,0,have_intern_student,育儿室里跟来的孩子学着抱，姿势不对，{Name}纠正了三次。\n第四次终于抱稳了，那孩子屏着呼吸一动也不敢动。\n{Name}在旁边守着，也没有催。
+1001,identify_eggs,0,have_intern_student,有个小孩哭闹不止，{Name}让跟来的孩子去试试。\n那孩子试了三种办法都不管用，最后索性坐下来陪着哭——小孩反倒愣住不哭了。\n{Name}没忍住笑出了声。
+1002,identify_eggs,0,have_intern_student,跟来的孩子在记录作息时，发现有一个孩子的规律跟别人都不一样。\n{Name}接过记录看了一遍。\n"这个我们也刚发现，"{Name}说，"你记得挺细。"

@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,training,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|3_G_0&in_fight_room,木桩比{Name}高出一大截，{Name}只能够到最下面那一段。\n打了十几下之后{Name}的手就开始发麻，只好换了个姿势继续。\n下课时{Name}的手心红了一片，却把这当成了值得说给人听的事。
+1001,training,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|3_G_0&in_fight_room,{Name}绕着木桩转了两圈，像是在研究该从哪儿下手。\n最后{Name}选了个自己够得着的高度，一板一眼地打了起来，节奏慢，但一下没落。\n打到一半{Name}忽然发现自己数错了数，只好从头再数。
+1002,training,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|3_G_0&in_fight_room,{Name}没有一上来就用全力，而是先慢慢地找了几遍位置。\n找准之后{Name}才开始加力，每一下都落在同一处。\n木桩上那一块很快被打出了浅浅的痕，{Name}看着那道痕，露出了满意的神色。
+1003,training,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|3_G_0&in_fight_room,课上老师讲过"打出去的手要收得回来"，{Name}今天专门练这个。\n{Name}放慢了速度，每打一下就停一拍，确认手回到了原位再打下一下。\n看起来一点也不利落，但{Name}练了整整一节课都没变过节奏。
+1004,training,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|3_G_0&in_fight_room,练到后半节，{Name}的呼吸乱了，动作也开始散。\n{Name}停下来靠着木桩休息了一会儿，没有硬撑。\n"用五成力。"{Name}想起老师说的话，重新站好之后，果然撑到了下课。

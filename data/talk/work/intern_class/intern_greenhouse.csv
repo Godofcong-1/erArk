@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_greenhouse,温室里又暖又亮，{Name}一进去就眯起了眼睛。\n浇水的活儿看着简单，{Name}却把一盆浇成了积水。\n"少一点，多几次。"种植员示范了一遍，{Name}照着做，果然好多了。
+1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_greenhouse,{Name}被交代了一件很轻松的活——数花苞。\n数到第三排{Name}就数乱了，只好从头再来。\n第二遍{Name}学会了用手指点着数，这次没有乱。
+1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_greenhouse,{Name}发现温室里同一种花，靠窗和靠里的长得完全不一样。\n"光照。"种植员说得很简短。\n{Name}把两边各摘了一片叶子夹进本子，标了位置。
+1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_greenhouse,今天{Name}跟着做移栽，手比上课时稳了很多。\n种植员在旁边看着，一句话也没说，直到{Name}把最后一株放好。\n"你上过课。"这不是问句。{Name}点了点头，有点得意。

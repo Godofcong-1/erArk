@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_library,{Name}的活儿是把还回来的书归位，可是够不着高处的架子。\n搬来凳子之后{Name}终于能放上去了，只是每放一本都要爬上爬下。\n一节课下来{Name}的腿都软了，但书全归好了。
+1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_library,图书馆里太安静，{Name}连翻页都不敢用力。\n管理员说不用这么小心，{Name}还是放轻了动作。\n后来{Name}发现自己走路居然也不自觉地放轻了。
+1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_library,{Name}学的是分类，管理员给了一摞书让{Name}自己判断该放哪儿。\n有三本{Name}拿不准，放在了一边没有硬猜。\n管理员看了之后说："拿不准就问，这是对的。"
+1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_library,有人来问一本书在哪儿，管理员示意{Name}去回答。\n{Name}紧张了一下，但还是把位置说清楚了，还多说了一句相近的架子上也有。\n对方道谢离开之后，{Name}松了口气，脸上却忍不住笑。

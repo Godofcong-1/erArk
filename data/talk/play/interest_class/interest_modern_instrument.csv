@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,play_instrument,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0&in_moden_music_room,现代乐器的声音比{Name}想象的大得多，第一下就把自己吓了一跳。\n吓完之后{Name}反而来劲了，越弹越响。\n直到有人从门口探头进来，{Name}才不好意思地把音量拧小了些。
+1001,play_instrument,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0&in_moden_music_room,{Name}够不着踏板，只好把整个人往前挪，屁股都快离开凳子了。\n这个姿势弹不了多久，{Name}换了几次坐法都不行。\n最后{Name}放弃了踏板，专心练手上的部分。
+1002,play_instrument,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0&in_moden_music_room,{Name}把自己写的那八个音弹了出来，弹完自己听了一遍。\n"果然还是第五版最好。"{Name}又试着往后接了两个音，接了三次都不满意。\n最后{Name}把它维持在八个音，没有再加。
+1003,play_instrument,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0&in_moden_music_room,现代乐器能调出很多种音色，{Name}一个个试了过去。\n同一段旋律换了六种音色，{Name}发现自己最喜欢的不是最好听的那种。\n"换一件乐器，说的就是另一件事了。"{Name}想起了老师这句话。

@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|43_G_0,料理课自习不能开火，{Name}只好翻着图片看。\n看着看着{Name}的肚子叫了起来，赶紧用手按住。\n这一节课{Name}什么也没学会，只知道自己饿了。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|43_G_0,{Name}把相克的食材一对一对抄下来，抄成了一张小卡片。\n卡片上{Name}还画了小小的表情——能一起吃的画笑脸，不能的画叉。\n虽然幼稚，但{Name}后来真的靠这张卡片记住了大半。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|43_G_0,{Name}把火候那几条曲线重新画了一遍，这次是凭记忆画的。\n画完对照课本，有一条的拐点位置差了不少。\n{Name}把画错的那条用另一种颜色重描了一遍，两条并排放着，一眼就能看出差别。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|43_G_0,自习课上{Name}在纸上"做"了一道菜——从备料一直写到装盘，每一步注明用时。\n写到最后{Name}发现总时间超了将近一倍。\n于是{Name}又重排了一遍顺序，把能同时进行的几步并到了一起。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|43_G_0,{Name}翻的是那本种族饮食禁忌的册子，一页页看得很慢。\n看到某一条时{Name}停住了——那正好是自己前几天差点做错的事。\n{Name}在那一页折了个角，然后又觉得不够，干脆抄进了随身的小本子。

@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|44_G_0,{Name}跑过来，什么也没说，先"哔"地吹响了一声。\n只有一个音，但很干净。{Name}举着乐器等了两秒，然后期待地看着博士。\n"我练了一整节课才吹出来的。"
+1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|44_G_0,{Name}用手指在桌面上敲出一小段节奏，敲完抬起头。\n"这个是我记下来的！老师敲一遍我就记住了。"\n{Name}又敲了一遍，这次比上一遍还准。
+1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|44_G_0,{Name}哼了一小段旋律，八个音，然后停下来。\n"这个是我自己写的。"{Name}说，"改了五遍。前面四遍都很别扭。"\n"第五遍的时候突然就对了，我也说不上来为什么。"
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|44_G_0,{Name}这次没有演奏，而是很认真地停顿了几次给博士听。\n"听出来了吗？停多久是不一样的。"{Name}说，"我练了一整节课的'停'。"\n"听起来很傻，但是真的不一样。"

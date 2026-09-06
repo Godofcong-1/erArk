@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_diplomatic_office,外交办公室里连椅子都比别处讲究，{Name}坐得笔直，不太敢乱动。\n专员让{Name}负责端茶，{Name}把这件事做得极其郑重。\n端到第三杯时{Name}才敢小声问："他们在说什么呀？"
+1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_diplomatic_office,{Name}被叮嘱"今天什么都不要说"，于是真的一个字也没说。\n憋了一整节课，{Name}出门之后才长长地吐了口气。\n"原来不说话这么难。"
+1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_diplomatic_office,{Name}发现专员写的邀请函，每一封的措辞都不一样。\n"对方是谁，决定了先说结论还是先说理由。"专员这么解释。\n{Name}把这句话记了下来——话术课上一模一样的话，在这儿有了具体的样子。
+1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_diplomatic_office,今天来的客人对罗德岛有明显的成见，气氛一度很僵。\n专员没有辩解，而是先讲了一件跟正事无关的小事。\n气氛松下来之后，正事才谈了起来。{Name}看得目不转睛。

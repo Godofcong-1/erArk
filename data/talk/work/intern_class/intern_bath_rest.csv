@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_bathzone_rest_room,{Name}的手劲太小，按摩师让{Name}先在垫子上练。\n按了几十下之后{Name}的手指就开始酸了。\n"力气是从肩膀来的，不是手指。"这句提点让{Name}的姿势整个变了。
+1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_bathzone_rest_room,休息室里很安静，{Name}被要求先学会"不说话"。\n{Name}憋了很久，最后还是没忍住小声问了个问题。\n按摩师没有责怪，只是把答案压得更低地说了一遍。
+1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_bathzone_rest_room,{Name}跟着学认穴位，把医术课上背的那些位置对上了实物。\n"课本上的图跟真人还是不一样。"{Name}一边摸一边在心里修正。\n下课时{Name}把几处偏差记在了本子上。
+1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_bathzone_rest_room,今天学的是判断力度，按摩师让{Name}闭着眼睛感受对方的反应。\n"肌肉一紧就是重了。"{Name}试了几次，慢慢摸到了那个界限。\n"跟打磨那个面有点像。"{Name}想起了制造课。

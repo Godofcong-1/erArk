@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,photography,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,相机对{Name}来说有点重，端起来手一直在抖。\n{Name}拍了十几张，回看的时候发现全都是糊的。\n最后{Name}干脆把相机架在桌子上，这才拍出了一张清楚的。
+1001,photography,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}举着相机在摄影室里到处拍，什么都想拍。\n拍到最后{Name}发现自己拍了三十多张地板和天花板。\n"下次要想好了再按。"{Name}认真地记住了这一点。
+1002,photography,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}没有急着按快门，而是先绕着被摄物走了两圈。\n"放在这儿是安稳，放在这儿是不安。"绘画课上的构图，在取景框里同样成立。\n绕完之后{Name}只拍了三张，但三张都留下了。
+1003,photography,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,今天{Name}专门练用光，把灯换了好几个位置。\n侧着打的时候影子最长，{Name}盯着那道影子看了很久。\n"原来照片和画是一回事。"{Name}把这张照片单独存了起来。
