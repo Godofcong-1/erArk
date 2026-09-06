@@ -170,6 +170,8 @@ class Panel:
     """ 调酒面板 """
     PREGNANCY_OVERVIEW = 67
     """ 怀孕总览面板 """
+    EDUCATION_MANAGE = 68
+    """ 教育管理面板 """
 
 
 class InstructType:

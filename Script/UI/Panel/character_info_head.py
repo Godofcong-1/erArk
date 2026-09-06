@@ -24,6 +24,107 @@ line_feed.width = 1
 window_width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
+def get_now_class_tip(character_id: int):
+    """
+    取角色当前的上课信息，供 <课> / <翘> 状态标识使用（Plan 22）
+    ⚠️ 只在角色**此刻正在上课/授课**时返回内容，而不是"本节有排课"——状态标识描述的是此刻的状态，
+       与 <跟> <饿> 的口径一致。孩子因体力不足去休息、或被叫走跟随时不该显示 <课>
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    tuple or None -- 不在上课中则为None，否则为 (是否翘课bool, 悬停提示文本str)
+    """
+    from Script.System.Education_System import schedule_handle
+    from Script.Design import game_time
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    growth_data = character_data.child_growth
+    period = game_time.get_class_period(character_id)
+
+    # 翘课中：本该上课的节次里挂着翘课flag
+    if growth_data is not None and growth_data.skip_class_flag and period != -1:
+        now_course = schedule_handle.get_now_course(character_id)
+        if now_course is not None:
+            return True, _("翘课中：本该上 {0}（第{1}节）").format(
+                get_course_text(now_course), period + 1)
+        return True, _("翘课中（第{0}节）").format(period + 1)
+
+    behavior_id = character_data.behavior.behavior_id
+    # 教师视角：正在授课
+    if behavior_id == constant.Behavior.TEACH:
+        teaching = schedule_handle.get_now_teaching(character_id)
+        if teaching is not None:
+            ability_name = game_config.config_ability[teaching["ability_id"]].name
+            return False, _("授课中：{0}·{1}｜{2}｜第{3}节").format(
+                schedule_handle.COURSE_TYPE_NAME.get(teaching["course_type"], _("课")),
+                ability_name, teaching["classroom"], teaching["period"] + 1)
+        return False, _("授课中")
+
+    # 学生视角：正在听课或自习（自习是本节没有可用教师时的降级，仍然算在上课中）
+    if behavior_id in {constant.Behavior.ATTENT_CLASS, constant.Behavior.SELF_STUDY}:
+        now_course = schedule_handle.get_now_course(character_id)
+        if now_course is None:
+            return False, _("上课中")
+        text = get_course_text(now_course)
+        # ⚠️ 只有班级式的教室课才有"教师缺席降级自习"的说法；
+        #    体育/兴趣/实习课本就没有指派教师（teacher_id 恒为 -1），不能误报成自习
+        if now_course["course_type"] not in schedule_handle.CLASSROOM_COURSE_TYPE_SET:
+            return False, _("{0}｜第{1}节").format(text, period + 1)
+        # 本节没有教师、或人已经在自习了，都按自习显示
+        if now_course["teacher_id"] == -1 or behavior_id == constant.Behavior.SELF_STUDY:
+            return False, _("自习·{0}｜本节无教师，经验减半｜第{1}节").format(text, period + 1)
+        teacher_data: game_type.Character = cache.character_data[now_course["teacher_id"]]
+        return False, _("{0}｜授课：{1}｜第{2}节").format(text, teacher_data.name, period + 1)
+
+    # 个人式课型：人在该课的地点上，就算在上课
+    # ⚠️ 这三种课执行的是既有行为（打木桩、下棋、跟岗），没有专属的"上课"行为可认，
+    #    只能靠"本节排了这门课 + 人确实在那个地点"来判定
+    if period != -1:
+        now_course = schedule_handle.get_now_course(character_id)
+        if now_course is not None and now_course["course_type"] not in schedule_handle.CLASSROOM_COURSE_TYPE_SET:
+            from Script.Design import map_handle
+
+            to_place = schedule_handle.get_course_place(now_course)
+            if to_place and map_handle.get_map_system_path_str_for_list(character_data.position) ==                     map_handle.get_map_system_path_str_for_list(to_place):
+                text = get_course_text(now_course)
+                # 实习课再补一句导师是谁：导师不预先指派，到点看现场谁在岗
+                if now_course["course_type"] == schedule_handle.COURSE_TYPE_INTERN:
+                    mentor_id = schedule_handle.get_intern_mentor(character_id, now_course["target"])
+                    if mentor_id == -1:
+                        return False, _("{0}｜本节无人在岗，降为见习｜第{1}节").format(text, period + 1)
+                    mentor_data: game_type.Character = cache.character_data[mentor_id]
+                    return False, _("{0}｜带教：{1}｜第{2}节").format(text, mentor_data.name, period + 1)
+                return False, _("{0}｜第{1}节").format(text, period + 1)
+
+    return None
+
+
+def get_course_text(now_course: dict) -> str:
+    """
+    把一条课程信息拼成"课型·科目｜地点"的可读文本
+    Keyword arguments:
+    now_course -- schedule_handle.get_now_course() 的返回值
+    Return arguments:
+    str -- 可读文本
+    """
+    from Script.System.Education_System import schedule_handle
+
+    type_name = schedule_handle.COURSE_TYPE_NAME.get(now_course["course_type"], _("课"))
+    # 班级式课：科目与教室都查得到
+    if now_course["course_type"] in schedule_handle.CLASSROOM_COURSE_TYPE_SET:
+        if now_course["ability_id"] > 0:
+            ability_name = game_config.config_ability[now_course["ability_id"]].name
+            return "{0}·{1}｜{2}".format(type_name, ability_name, now_course["classroom"])
+        return "{0}｜{1}".format(type_name, now_course["classroom"])
+    # 个人式课：目标本身就是地点名或配置cid
+    target = now_course["target"]
+    if now_course["course_type"] == schedule_handle.COURSE_TYPE_INTEREST:
+        target = game_config.config_entertainment[target].name
+    elif now_course["course_type"] == schedule_handle.COURSE_TYPE_INTERN:
+        target = game_config.config_work_type[target].name
+    return "{0}·{1}".format(type_name, target)
+
+
 def get_character_status_list(character_id: int) -> Tuple[List[draw.LeftDraw], List[str]]:
     """
     获取角色的所有状态标识
@@ -51,6 +152,24 @@ def get_character_status_list(character_id: int) -> Tuple[List[draw.LeftDraw], L
     follow_draw.text = follow_text
     status_list.append(follow_draw)
     status_text_list.append(follow_text)
+
+    # 上课状态（Plan 22）：一处改动同时覆盖 Tk 与 Web
+    # Web 侧 Web_Draw_System/status_panel.py 的 _get_special_states 复用本函数并原样透传 tooltip
+    class_draw = draw.LeftDraw()
+    class_draw.style = "light_steel_blue"
+    class_text = ""
+    class_tip = get_now_class_tip(character_id)
+    if class_tip:
+        # 翘课时改出红色的 <翘>，这是玩家最该注意到的信号，也是「翘课被抓」事件的前置
+        if class_tip[0]:
+            class_text = _(" <翘>")
+            class_draw.style = "red"
+        else:
+            class_text = _(" <课>")
+        class_draw.tooltip = class_tip[1]
+    class_draw.text = class_text
+    status_list.append(class_draw)
+    status_text_list.append(class_text)
     
     # 非普通时输出当前心情
     angry_draw = draw.LeftDraw()

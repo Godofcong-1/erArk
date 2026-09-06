@@ -434,12 +434,31 @@ def character_move_to_library(character_id: int):
 def character_move_to_class_room(character_id: int):
     """
     移动到教室
+    ⚠️ Plan 22 改造：目标教室改为由课表决定——教师去自己本节要授课的教室，学生去自己本节选的教室；
+       课表查不到（没排课、非师生、旧存档）时回落既有的"在全部理论教室里随机选一间"，不留死分支
     Keyword arguments:
     character_id -- 角色id
     """
-    to_class_room = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["Class_Room"])
-    )
+    from Script.System.Education_System import schedule_handle
+
+    target_room = ""
+    # 教师视角：反查全局课表
+    teaching = schedule_handle.get_now_teaching(character_id)
+    if teaching is not None:
+        target_room = teaching["classroom"]
+    else:
+        # 学生视角：查个人课表，只有班级式课型才在教室里上
+        now_course = schedule_handle.get_now_course(character_id)
+        if now_course is not None and now_course["course_type"] in schedule_handle.CLASSROOM_COURSE_TYPE_SET:
+            target_room = now_course["classroom"]
+    to_class_room = []
+    if target_room:
+        to_class_room = schedule_handle.get_classroom_position(target_room)
+    # 回落：课表没排或教室已不存在时，仍按既有逻辑随机去一间理论教室
+    if not to_class_room:
+        to_class_room = map_handle.get_map_system_path_for_str(
+            random.choice(constant.place_data["Class_Room"])
+        )
 
     general_movement_module(character_id, to_class_room)
 
@@ -2689,6 +2708,108 @@ def character_attend_class(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
     character_data.behavior.duration = 45
     character_data.state = constant.CharacterStatus.STATUS_ATTENT_CLASS
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.EDUCATION_SELF_STUDY)
+def character_education_self_study(character_id: int):
+    """
+    上课：本节无可用教师，降级为自习（Plan 22 §3.5）
+    ⚠️ 与听课的区别只在结算：自习走 548 效果，基础值降档且不吃师生等级差
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.SELF_STUDY
+    character_data.behavior.duration = 45
+    character_data.state = constant.CharacterStatus.STATUS_SELF_STUDY
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.EDUCATION_SKIP_CLASS)
+def character_education_skip_class(character_id: int):
+    """
+    上课：翘课（Plan 22 §3.19）
+    还在教室里就先溜回自己宿舍，人已经不在教室了才开始摸鱼——
+    翘课的可见表现就是"该在教室的人不在教室"，这一步不能省
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    from Script.System.Education_System import schedule_handle
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    now_scene_tag = ""
+    if now_scene_str in cache.scene_data:
+        now_scene_tag = cache.scene_data[now_scene_str].scene_tag
+    # 还在教室（含实践教室与大礼堂）里，先离开
+    if any(tag in now_scene_tag for tag in schedule_handle.CLASSROOM_TAG_BY_COURSE_TYPE.values()):
+        to_dormitory = map_handle.get_map_system_path_for_str(character_data.dormitory)
+        general_movement_module(character_id, to_dormitory)
+        return
+    character_data.behavior.behavior_id = constant.Behavior.SKIP_CLASS
+    character_data.behavior.duration = 45
+    character_data.state = constant.CharacterStatus.STATUS_SKIP_CLASS
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.EDUCATION_MOVE_TO_COURSE_PLACE)
+def character_education_move_to_course_place(character_id: int):
+    """
+    上课：移动到个人式课型（体育/兴趣/实习）的上课地点（Plan 22 §3.21）
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    from Script.System.Education_System import schedule_handle
+
+    now_course = schedule_handle.get_now_course(character_id)
+    if now_course is None:
+        return
+    to_place = schedule_handle.get_course_place(now_course)
+    if not to_place:
+        return
+    general_movement_module(character_id, to_place)
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.EDUCATION_DO_COURSE)
+def character_education_do_course(character_id: int):
+    """
+    上课：在个人式课型的地点执行该课对应的既有行为（Plan 22 §3.21）
+    ⚠️ 体育课与兴趣课执行的是自带效果串的既有行为，学生侧无需另加结算；
+       实习课走新增的 intern_class，它的效果串里带一次学徒侧结算
+    ⚠️ 时长一律截到45分钟（一节课）：战斗训练本是120分钟、锻炼与游泳是60分钟，
+       照原时长会让一节体育课吃掉整个上午。既有结算按 add_time 线性计算，截断天然成立
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    from Script.System.Education_System import schedule_handle
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    now_course = schedule_handle.get_now_course(character_id)
+    if now_course is None:
+        return
+    course_type = now_course["course_type"]
+    behavior_name = ""
+    state_id = 0
+    # 体育课：四处地点各自对应不同的既有行为
+    if course_type == schedule_handle.COURSE_TYPE_PE:
+        place_data = schedule_handle.PE_PLACE_DATA.get(now_course["target"])
+        if place_data is not None:
+            behavior_name, state_id = place_data[1], place_data[2]
+    # 兴趣课：行为直接读 Entertainment.csv 的 behavior_id 列（该列的值即状态cid）
+    elif course_type == schedule_handle.COURSE_TYPE_INTEREST:
+        if now_course["target"] in game_config.config_entertainment:
+            state_id = game_config.config_entertainment[now_course["target"]].behavior_id
+            behavior_name = schedule_handle.get_behavior_name_by_cid(state_id)
+    # 实习课：本计划新增的行为
+    elif course_type == schedule_handle.COURSE_TYPE_INTERN:
+        behavior_name = constant.Behavior.INTERN_CLASS
+        state_id = constant.CharacterStatus.STATUS_INTERN_CLASS
+    if not behavior_name or not state_id:
+        return
+    character_data.behavior.behavior_id = behavior_name
+    character_data.behavior.duration = 45
+    character_data.state = state_id
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_LIBRARY_1)

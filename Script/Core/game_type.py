@@ -358,6 +358,56 @@ class PREGNANCY:
         """ 无壳卵生：本排卵日的体外排卵机会是否可用（周期推进到排卵日时置True，体外排卵触发或离开排卵日时置False） """
 
 
+class CHILD_GROWTH:
+    """生长养成数据结构体（Plan 22）
+
+    主要挂在孩子身上：出生时创建，成年后保留供查阅。
+    ⚠️ 普通干员也可以选课学技能（已确认口径 24），此时同样会被惰性创建出本结构体，
+       但只会用到 selected_course 一个字段，其余养成字段保持初值。
+    创建入口统一为 Script/System/Education_System/growth_handle.get_child_growth()，
+    不要在别处直接 new，以免出现"有的角色有、有的角色没有"的不一致。
+    """
+
+    def __init__(self):
+
+        self.personality_point: dict = {}
+        """ 四对性格倾向的累积值 键int:性格对编号(0勤劳/懒散 1脆弱/坚强 2热情/孤僻 3羞耻/开放)
+            值float:倾向值，正数偏前者、负数偏后者，成年时按符号选边。⚠️ 写入方在三期与四期 """
+        self.prenatal_point: float = 0.0
+        """ 妊娠期胎教累积（出生时由母亲侧转写），参与初始资质计算。⚠️ 写入方在四期 """
+        self.care_point: float = 0.0
+        """ 婴儿期早教与幼女期跟随的照料累积，影响性格倾向与身体发育判定。⚠️ 写入方在二期与四期 """
+        self.selected_course: dict = {}
+        """ 本角色的个人课表 键int:星期(0~6) 值dict:{节次int(0~8): [课型int, 目标]}
+            课型 0理论课 / 1实践课 / 2公开课 → 目标为教室场景名str，实际科目与教师查全局课表
+            课型 3体育课 → 目标为训练场场景名str
+            课型 4兴趣课 → 目标为 Entertainment.csv 的 cid int
+            课型 5实习课 → 目标为 WorkType.csv 的 cid int
+            未填的节次自由行动（幼女期回落为跟随母亲） """
+        self.attend_class_count: int = 0
+        """ 累计听课节数，用于面板显示与养成事件前提 """
+        self.absent_count: int = 0
+        """ 累计缺课节数（体力不足被动缺课），计入学期成绩单 """
+        self.last_absent_period: list = []
+        """ 上一次已计入缺课的 [日期序数int, 节次int]，防止同一节课被反复计数
+            （休息行为只有30分钟，一节课45分钟，不做这层去重会重复累加） """
+        self.event_history: dict = {}
+        """ 已触发的养成事件记录 键str:事件uid 值dict:{"time": datetime, "choice": 玩家选项index int}
+            ⚠️ 写入方在三期 """
+        self.show_off_ability: dict = {}
+        """ 待向玩家炫耀的能力升级 键int:能力id 值int:升级后的等级；触发炫耀后清空 """
+        self.report_card_flag: bool = False
+        """ 学期成绩单是否待查看，学期结算时置True，玩家使用「检查成绩单」后置False """
+        self.skip_class_flag: bool = False
+        """ 今日是否翘课，翘课行为触发时置True，被玩家撞见或次日刷新时置False """
+        self.schedule_template_id: int = 0
+        """ 本孩子套用的日程模板编号，0为未套用。⚠️ 写入方在二期 """
+        self.schedule_override: dict = {}
+        """ 本孩子对日程模板的单项覆盖 键int:时段(0~2) 值int:活动id。⚠️ 写入方在二期 """
+        self.follow_mother_flag: bool = False
+        """ 当前是否正在跟随母亲见学（不复用 sp_flag.is_follow）。⚠️ 写入方在二期 """
+
+
 class RELATIONSHIP:
     """社交关系数据结构体"""
 
@@ -1210,6 +1260,13 @@ class Rhodes_Island:
         """ 今日全部门总收入 """
         self.party_day_of_week: Dict[int, int] = {}
         """ 一周内的派对计划，周一0~周日6:娱乐id """
+        self.class_schedule: Dict[str, Dict[int, Dict[int, list]]] = {}
+        """ 全局课表（Plan 22） 键str:教室场景名(如"理论教室一") 值dict:{星期int(0~6): {节次int(0~8): [科目能力id int, 授课教师id int]}}
+            未排的格子表示该教室该节次空闲；教师id为-1表示排了课但未指派教师（本节降级为自习）
+            ⚠️ 只存班级式的教室课；体育/兴趣/实习课存在各角色的 child_growth.selected_course 里 """
+        self.child_schedule_template: Dict[int, dict] = {}
+        """ 孩子日程模板（Plan 22） 键int:模板编号 值dict:{"name": 模板名str, "slot": {时段int(0~2): 活动id int}}
+            活动id 复用 Entertainment 配置 id。⚠️ 本期只建字段，写入方在二期 """
         self.total_favorability_increased: int = 0
         """ 每日总好感度提升 """
         self.total_semen_count: int = 0
@@ -1715,6 +1772,9 @@ class Character:
         """ 角色的娱乐与兴趣情况 """
         self.pregnancy: PREGNANCY = PREGNANCY()
         """ 角色的怀孕情况 """
+        self.child_growth: Optional[CHILD_GROWTH] = None
+        """ 角色的生长养成数据（Plan 22）。默认None，由 growth_handle.get_child_growth() 惰性创建，
+            只有孩子与选了课的干员才会有，避免给全部干员的存档都塞一份空结构体 """
         self.relationship: RELATIONSHIP = RELATIONSHIP()
         """ 角色的社会关系 """
         self.hypnosis: HYPNOSIS = HYPNOSIS()

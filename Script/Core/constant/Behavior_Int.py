@@ -169,6 +169,14 @@ class Behavior_Int:
     """ 授课 """
     ATTENT_CLASS = 214
     """ 上学 """
+    SELF_STUDY = 211
+    """ 自习 """
+    SKIP_CLASS = 212
+    """ 翘课 """
+    CHECK_REPORT_CARD = 229
+    """ 检查成绩单 """
+    INTERN_CLASS = 230
+    """ 实习 """
     MAINTENANCE_FACILITIES = 215
     """ 维护设施 """
     REPAIR_EQUIPMENT = 216

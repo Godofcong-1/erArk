@@ -5,7 +5,7 @@
 > `plan_22_生长养成系统_总纲.md`（下文简称"总纲"）为准；本文件只写"怎么做、怎么验、怎么回滚"，
 > 实施过程与结果记入 §6。
 
-- 状态：实施中（1a 功能闭环；§2.1 教育区改建已完成，2026-09-06）
+- 状态：**1a 功能闭环已完成**；§2.11 的 1b 口上已完成 **96 个文件 535 条**，17 个实习岗位的师徒两侧全部覆盖；性技 8 门不写（见偏离 22，已定案不再挂起），2026-09-06
 - 适用代码快照：`master @ 6aa5090e3`
 - 实施前提：先通读总纲 §2 与方案全文；实施中发现与方案冲突的事实，**先更新方案再动代码**
 - ⚠️ **建议拆成两个提交推进**（总纲 §3）：
@@ -80,6 +80,8 @@
 | 文件 | 内容 |
 | --- | --- |
 | `growth_handle.py` | 能力成长计算（速度曲线、教育区加成、上限判定） |
+| `class_ai.py` | ⚠️ 实施时新增（§1.6 原表没有）：上课时段的行为决策——体力闸、翘课闸、按课型派状态机 |
+| `auto_schedule.py` / `semester_handle.py` | ⚠️ **本期未建**：自动排课与学期切换属二期范围，一期先把手动排课跑通（见偏离 21） |
 | `schedule_handle.py` | 课表读写、教师/学生视角反查、节次查询、冲突判定 |
 | `auto_schedule.py` | 自动排课三种模式（补弱项 / 均衡 / 主修优先，口径 28） |
 | `semester_handle.py` | 学期切换、成绩单生成（方案 §3.13） |
@@ -297,17 +299,383 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 | `data/csv/WorkType.csv:24~25` | 改 | 教师 / 学生的 `place` 列「教室」→「教育区教室」（纯显示，见偏离 3） |
 | `update.log` | 改 | 登记「新增：（地图）教育区改建…」 |
 
+#### 步骤 §2.2 数据结构与存档（2026-09-06）
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/Core/game_type.py` | 改 | 新增 `CHILD_GROWTH` 类（13 个字段，含二/三/四期只建不写的 6 个）；`Character` 加 `child_growth`（`Optional`，默认 `None`）；`Rhodes_Island` 加 `class_schedule` 与 `child_schedule_template` |
+| `Script/Core/save_handle.py` | 改 | 角色循环里补 `child_growth` 属性位；罗德岛段补两个字典的 `hasattr` 回填 |
+
+#### 步骤 §2.4 节次与学期判定（2026-09-06）
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/Design/game_time.py` | 改 | 新增 `CLASS_PERIOD_START` / `CLASS_PERIOD_MINUTE` 常量与 `get_class_period_by_time()` / `get_class_period()` / `get_now_semester()` 三个函数，接在 `judge_entertainment_time` 之后 |
+
+#### 步骤 §2.5 新子系统骨架（2026-09-06）
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/System/Education_System/__init__.py` | 新增 | 空包标记，照其余子系统的惯例 |
+| `Script/System/Education_System/schedule_handle.py` | 新增 | 课表读写、教师视角反查、教室列表、冲突判定、`get_now_course()` / `get_now_teaching()` 统一入口；六种课型常量 |
+| `Script/System/Education_System/growth_handle.py` | 新增 | `get_child_growth()` 惰性创建、速度曲线、教育区加成、学生/教师侧的一节课结算 |
+
+#### 步骤 §2.6 授课结算改造（2026-09-06）
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/Settle/default.py:7513 handle_teach_add_just` | 改 | 科目从写死的 `ability[45]` 改为教师视角查全局课表；学生侧改调 `growth_handle.settle_student_class_gain`（带师生等级差与教育区加成），教师侧改调 `settle_teacher_class_gain`（加当节所授科目而非固定学识）；查不到课表时回落学识，既有干员学生链不受影响 |
+
+#### 步骤 §2.7 状态机接课表（2026-09-06）
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/StateMachine/default.py:433 character_move_to_class_room` | 改 | 目标教室改为由课表决定（教师查授课表、学生查个人课表），查不到则回落既有的随机选一间理论教室 |
+
+#### 步骤 §2.3 CSV 部分（2026-09-06，行为与常量待做）
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `data/csv/Facility_open.csv` | 改 | 加 7 行教室解锁：理论教室二/三→Lv2(152)、理论教室四+实践教室二→Lv3(153)、理论教室五+实践教室三→Lv4(154)、理论教室六→Lv5(155)。⚠️ 理论教室一 / 实践教室一 / 大礼堂 **不进本表**——不在表里即默认开放，正是 Lv1 就要有的三间 |
+| `data/csv/Entertainment.csv` | 改 | 新增 `class_ok` 列（表头 5 行同步）。16 项配 1，9 项配 0（8 项消费服务类 + 游泳改归体育课）；品酒不需要配，既有 `T7\|0` 前提已挡住未成年 |
+| `data/csv/Facility_effect.csv:97~101` | 改 | 教育区五级的 `info` 文案随改建更新（原 Lv1 写「开放基础设施:【教室】」，那间教室已不存在） |
+
+⚠️ **编号取值说明**：`Facility_open.csv` 的 06x 本是教育区块，但 069/070 已被疗养庭院的房间占用（既有编号不一致），只剩 063~068 六个空号，第七行取同样空闲的 060。cid 只作字典键，无语义约束，但仍记在此处备查。
+
+#### 步骤 §2.3 行为与常量（2026-09-06）
+
+新增 3 个一段行为 + 1 个二段行为。⚠️ 编号均为实施时现查的空号，未预分配：
+
+| cid | en_name | 名称 | 时长 | 触发 | tag | 取号理由 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 211 | `self_study` | 自习 | 45 | npc | 工作 | 紧邻 213 `teach` / 214 `attent_class`，同属教育链 |
+| 212 | `skip_class` | 翘课 | 45 | npc | 工作 | 同上 |
+| 229 | `check_report_card` | 检查成绩单 | 15 | both | 日常 | 工作段末尾之后的空档 |
+| 1328 | `show_off_study` | 向博士炫耀最近学到的东西 | 0 | npc | 二段结算 | 二段行为段 1327 之后的第一个空号 |
+
+新增 4 个效果 id（548~551 为现查空号）：
+
+| id | 常量 | 作用 |
+| --- | --- | --- |
+| 548 | `SELF_STUDY_ADD_ADJUST` | 按自习基础值加习得与所选科目经验，速度系数恒取 1.0 |
+| 549 | `SKIP_CLASS_ADD_ADJUST` | 置翘课 flag、抑郁小幅回落，**不给任何学习收益** |
+| 550 | `CHECK_REPORT_CARD_ADD_ADJUST` | 输出成绩单（各科等级 + 出勤率），按出勤率加好感与心情，清 flag |
+| 551 | `SHOW_OFF_STUDY_ADD_ADJUST` | 二段结算：加好感与亲密，清空待炫耀记录 |
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `data/csv/Behavior_Data.csv` | 改 | 加 4 行 |
+| `data/csv/Behavior_Effect.csv` | 改 | 加 4 行效果串（`self_study` 复用既有 1511/1512 扣体力气力） |
+| `data/csv/Behavior_Introduce.csv` | 改 | 加 3 行介绍文本（二段行为不需要） |
+| `Script/Core/constant/Behavior.py` / `BehaviorStr.py` / `Behavior_Int.py` / `CharacterStatus.py` | 改 | 常量四处同步 |
+| `Script/Core/constant_effect.py` | 改 | 4 个效果 id 常量 |
+| `Script/Settle/default.py` | 改 | 4 个结算函数实现，接在 `handle_teach_add_just` 之后 |
+| `tools/ArkEditor/csv/Behavior_Data.csv` | 改 | 4 行同步 |
+
+#### 步骤 §2.10 `<课>` 状态标识（2026-09-06，面板部分待做）
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/UI/Panel/character_info_head.py` | 改 | 新增 `get_now_class_tip()` 与 `get_course_text()` 两个函数；在 `get_character_status_list()` 的 `<跟>` 之后插入 `<课>` / `<翘>` 一段 |
+
 **与方案的偏离**：
 
+0. ⚠️ **【重大】能力成长机制与方案 §3.1 的原假设不符，已推翻重写。** 方案原文写"上课当场调 `base_chara_experience_common_settle` 给对应能力的经验，等级由既有 `get_experience_level_weight` 自动换算"——实测发现：`Character.ability` 存的是**等级**不是经验，全项目没有能力经验字段；`get_experience_level_weight`（`attr_calculation.py:504`）**全仓库零调用方，是死代码**。真实链条是「习得状态 → 睡眠转珠 → 按 `AbilityUp.csv` 的珠+经验需求升级」。已改为完全复用该链，方案 §3.1 与 §3.9 已按实测重写，总纲 §2.3 补为第 11 条硬约束。
+   - 连带影响一：**升级在当晚睡眠结算兑现，不是当场**，与已确认口径 7 的"当场换算等级"有出入（理由见方案 §3.1）。
+   - 连带影响二：§3.9 的全部算例作废重算。新结论：学识 0→8 需习得珠 49,470 + 学识经验 1,145，约 659 节课，与"上课期约 720 节"的预算刚好吻合。
+   - 意外收获：性技科目的升级需求本就是真实性交经验（膣技要 `E61`），课堂给不了——理论课攒珠、实操课攒经验天然成立，**零特判就落实了已确认口径 5**。
 1. **房间名用汉字数字（理论教室一~六），而非方案原写的阿拉伯数字（理论教室1~6）。** 原因：ASCII 数字属 ASCII 度量族（字号 20 下 14px），与框线族（13px）不通约，每间教室的按钮都会让所在行漂移 1px，6 间累计 6px，`tools/map_aa_check.py` 会判失败。汉字数字恒为 2U，零漂移。方案 §3.10 已同步更新。
 2. **场景数是 18 而非方案预估的 15。** 方案的「9 增至 15」只数了功能房间，实际目录含入口 `0`、走廊与男女洗手间。不影响任何设计。
 3. **`WorkType.csv` 的 `place` 列不是功能性依赖，只是显示文案。** 方案 §7-1 原写「唯一必改」，实测为「唯一需要同步的显示文案」——`handle_npc_ai.py:359` 是 `place`(按场景名) **或** `place_tag`(按标签) 的短路判断，标签命中即成立；移动到工作地点走 `auto_ai_move`(561) → `StateMachine/default.py:441` 的 `place_data["Class_Room"]`，与 `place` 无关。`place` 的实际读取点只有 `debug_panel.py:2089` 与 `manage_basement_panel.py:1230` 两处显示。方案 §7-1 与总纲 §2.4 已同步更新。
 4. **大礼堂的 `Scene_Img` 取「会议室」**：`image/场景/` 下没有礼堂图，会议室是最接近的现成资源。
+5. **`<课>` 的提示文案对个人式课型单独分支**（测试驱动修出来的）：体育 / 兴趣 / 实习课本就没有指派教师（`teacher_id` 恒为 −1），初版代码把它们一律套进"本节无教师，降级自习"的文案，显示成「自习·兴趣课·下棋」。已改为只对班级式教室课判自习。
+6. **`Facility_effect.csv` 的教育区文案顺带修正**：Lv1 原写「开放基础设施:【教室】」，改建后那间教室已不存在；五级文案全部按新的解锁阶梯重写。
+
+8. **`tools/ArkEditor/csv/Behavior_Data.csv` 是落后的旧快照**：它缺主表里的 227 / 228 两行（整理宿舍意见、处理宿舍问题），锚点对不上，本次只好换用 226 作锚。这是既有的同步欠账，不影响本期，但下次谁动 ArkEditor 的 CSV 时要留意两边已经不是一份东西了。
+7. **顺手修好了育儿室的文案与实现不符**（用户拍板）：`Facility_effect.csv:153` 原写教育区 Lv3「开放新设施:【育儿室】」，但 `Facility_open.csv` 里**从来没有育儿室这一行**——即育儿室实际一直是开放的。两条路：给它补一行 Lv3 门禁（会把玩家当前存档里已开放的房间重新上锁），或把文案改成"初期就开放"。按用户决定取后者：Lv1 文案列入【育儿室】，Lv3 文案不再提它。**实现不动，只改文案**，既有存档零影响。
 
 **已知限制**：
 
 - ⚠️ **老存档读出来仍是旧地图**。`save_handle.py:496~516` 只在场景增删或 `scene_tag`/`scene_img`/`room_area` 变化时才刷新存档里的 `map_data`——本次确实是场景增删，理论上会刷新，但**必须用老存档实机验证**（列在 §4.2）。
 - 未解锁教室的门禁（`Facility_open.csv`）尚未配置，属步骤 §2.3，本步未做——当前 10 间教室全部可进入。
+
+#### 步骤 §2.8 缺课与翘课（2026-09-06）
+
+一节课开始时要过两道闸再决定去干什么，顺序不可调换——**体力不足是"去不了"，心情糟糕是"不想去"**，一个孩子累到爬不起来时不该再被算一次叛逆：
+
+| 闸 | 判据 | 不过闸的结果 | 依据 |
+| --- | --- | --- | --- |
+| 体力 | `hit_point / hit_point_max < 0.3` | 走 `REST`(43) 状态机，累加一节缺课，**不置翘课flag** | 阈值取既有前提 `handle_premise_base_value.py:46 handle_hp_low` 的「体力低」口径，不另立一套 |
+| 心情 | 苦痛17+恐怖18+抑郁19+反感20 的**等级**和 | 按阶梯概率走 `EDUCATION_SKIP_CLASS`(714) | 等级和写法照 `Script/Design/instuct_judege.py:103~104`，用 `attr_calculation.py:564 get_status_level` |
+
+过闸后按课型派发（班级式）：不在教室 → `MOVE_TO_CLASS_ROOM`(561)；在教室且教师可用 → `WORK_ATTENT_CLASS`(304)；教师缺席 → `EDUCATION_SELF_STUDY`(713)。
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/System/Education_System/class_ai.py` | 新增 | 两道闸 + 派课的决策总入口 `judge_class_state_machine()`，返回状态机id，0 表示不接管 |
+| `Script/Core/constant/StateMachine.py` | 改 | `EDUCATION_SELF_STUDY = 713` / `EDUCATION_SKIP_CLASS = 714`（现查空号，701~712 已占、751 起是道具开关段） |
+| `Script/StateMachine/default.py` | 改 | 两个状态机实现，接在既有上学状态机之后。⚠️ 翘课是**两步**：人还在教室就先溜回宿舍，离开教室之后才开始摸鱼——"该在教室的人不在教室"正是翘课的可见表现 |
+| `Script/Design/handle_npc_ai.py:351` | 改 | 课表决策接在**工作分支之前**。排在工作前是必须的：孩子的"工作"就是上学，落到工作链只会随机挑一间教室（`StateMachine/default.py:460` 的 `random.choice`），课表就白排了 |
+| `Script/Core/game_type.py` | 改 | `CHILD_GROWTH` 加 `last_absent_period`（方案 §4.1 已同步） |
+| `Script/Settle/past_day_settle.py:62` | 改 | 次日零点无条件清翘课flag，紧邻既有的香薰flag清零 |
+| `Script/Design/handle_ability.py:119` | 改 | 孩子能力升级时记一笔待炫耀——升级发生在玩家睡觉的睡眠结算里，当场没有观众，攒着等下次见面（方案 §3.15） |
+| `Script/Design/second_behavior.py` | 改 | 新增 `judge_child_growth_second_behavior()`，接在 `judge_character_first_meet()` 之后；同场景时触发炫耀或翘课被抓，**翘课被抓优先**（正翘着课的孩子不会先炫耀成绩） |
+| `Script/Settle/Second_effect.py` | 改 | 两个二段结算：`handle_show_off_study`（622）、`handle_caught_skip_class`（623） |
+| `Script/Core/constant_effect.py` | 改 | `SecondEffect` 加 622/623；`BehaviorEffect` **删掉** 551（见偏离 9） |
+| `Script/Core/constant/SecondBehavior.py` / `SecondBehavior_Int.py` | 改 | 两个二段行为常量 |
+| `data/csv/Behavior_Data.csv` / `Behavior_Effect.csv` | 改 | 新增 `1329,caught_skip_class`；`1328` 的效果由 551 改为 622 |
+| `tools/ArkEditor/csv/Behavior_Data.csv` | 改 | 1329 同步 |
+| `Script/UI/Panel/character_info_head.py` | 改 | `<课>` 把 `self_study` 行为一并纳入（此前只认 `teach` / `attent_class`，自习时标识会消失） |
+
+**「翘课被抓」的实际后果**：不只出一段文本——`caught_skip_class` 的结算会**当场清掉 flag**，当日剩余节次得回教室，另加抑郁与恐怖（数值取一节课量级，与翘课本身给的抑郁回落大致相抵）。
+
+#### 实施中发现的偏离（§2.8）
+
+9. **⚠️ 上一步埋的 BUG：`show_off_study` 的结算注册错了命名空间。** 二段行为的效果走 `constant.settle_second_behavior_effect_data`（`settle_behavior.py:504 add_settle_second_behavior_effect`），用的是 `constant_effect.SecondEffect` 这套**独立的编号空间**，函数签名也只有 `(character_id, change_data)` 两个参数。而 §2.3 里我把 `handle_show_off_study_add_just` 写成了一段行为的样子：`add_settle_behavior_effect` + `BehaviorEffect.SHOW_OFF_STUDY_ADD_ADJUST = 551` + 四参数签名，放在 `Script/Settle/default.py` 里。这样注册出来的函数**永远不会被二段结算找到**，运行时会打印"没有找到对应的结算效果"然后跳过。本步已改正：函数移到 `Script/Settle/Second_effect.py`、改用 `add_settle_second_behavior_effect`、编号改为 `SecondEffect.SHOW_OFF_STUDY = 622`（接在既有最大号 621 之后），`Behavior_Effect.csv` 的 1328 行同步改指 622。
+   §2.3 的验证之所以没抓到，是因为当时只断言了"效果串是 `[551]`"，没有断言"551 在哪个注册表里"。本步的测试补上了这一条。
+10. **`CHILD_GROWTH` 加了一个方案里没有的字段 `last_absent_period`。** 起因是缺课计数不幂等：休息行为 30 分钟、一节课 45 分钟，同一节课里 AI 会两次走到缺课分支，`absent_count` 会多加一次，成绩单的出勤率直接失真。用 `[日期序数, 节次]` 做去重标记最省事，也天然可存档（都是 int）。**已先改方案 §4.1 再改代码**，符合本文件开头的实施前提。
+11. **`§2.7-5 个人课型（体育/兴趣/实习）的派发暂未接线**，`class_ai.judge_class_state_machine()` 对这三种课型返回 0 交回既有 AI。原因是它们的落地方式还有一处需要定夺：体育课复用 `training` / `exercise` / `swimming` 三个既有行为、效果照走既有 `Behavior_Effect` 配置（方案 §3.21 的"零新增结算公式"成立）；但**实习课不成立**——导师是"该岗位当时的在岗干员"，他执行的是自己的工作行为，身上没有任何把经验给学徒的效果，学徒侧必须另有一次结算才能拿到方案 §3.21 承诺的"按师徒等级差学该岗位 `ability_id`"。这与"零新增结算"直接冲突，需要单独处理，不适合顺手带过。
+12. **`Script.Settle` 一旦被 import，进程就不会自己退出。** 它会起一个非守护线程 `init_instruct_handle_thread`，无头测试末尾必须用 `os._exit()`（且先 `sys.stdout.flush()`，`os._exit` 不刷缓冲）。这与总纲记过的"配置初始化前 import 会挂住"是同一个线程，但表现不同：配置就绪后 import 不再报错，只是不肯退出。
+
+#### 步骤 §2.7-5 个人式课型（体育 / 兴趣 / 实习）（2026-09-06）
+
+三种课型统一是"人到地点，执行该地点既有的行为"。地点解析收敛到一个入口 `schedule_handle.get_course_place()`，
+六种课型（含班级式）共用它，AI、状态机与 `<课>` 提示三处都不再各自算一遍：
+
+| 课型 | 目标存的是什么 | 地点怎么解析 | 执行什么行为 |
+| --- | --- | --- | --- |
+| 3 体育课 | 训练场的场景名 str | `PE_PLACE_DATA` 固定表（4 处）取标签，再在同标签的房间里**精确匹配场景名** | `training` / `exercise` / `swimming` |
+| 4 兴趣课 | `Entertainment.csv` 的 cid int | 直接读该行的 `place_tag` | 直接读该行的 `behavior_id`（存的是 cid，需反查 en_name） |
+| 5 实习课 | `WorkType.csv` 的 cid int | 直接读该岗位的 `place_tag` | 新增的 `intern_class` |
+
+体育课必须精确匹配场景名，因为木桩房与射击房同挂 `Training_Room`，只按标签取会随机去错地方；
+兴趣课与实习课同标签的房间彼此等价（厨房只有一间），取第一间即可。
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `data/csv/Behavior_Data.csv` | 改 | 新增 `230,intern_class,实习,45,npc,工作`（230 紧接 229，仍在工作段） |
+| `data/csv/Behavior_Effect.csv` | 改 | `230,intern_class,1511 - 1512 - 552`，前两个是与听课同档的体力气力消耗 |
+| `data/csv/Behavior_Introduce.csv` | 改 | 1 行介绍 |
+| `Script/Core/constant/{Behavior,BehaviorStr,Behavior_Int,CharacterStatus}.py` | 改 | `INTERN_CLASS` 四处同步 |
+| `Script/Core/constant_effect.py` | 改 | `INTERN_CLASS_ADD_ADJUST = 552`。⚠️ **551 空着不复用**——它刚随 `show_off_study` 迁到 `SecondEffect` 命名空间，留空以免与历史记录混淆 |
+| `Script/Core/constant/StateMachine.py` | 改 | `EDUCATION_MOVE_TO_COURSE_PLACE = 715` / `EDUCATION_DO_COURSE = 716` |
+| `Script/StateMachine/default.py` | 改 | 两个状态机。⚠️ **时长一律截到 45 分钟**：战斗训练本是 120 分钟、锻炼与游泳 60 分钟，照原时长一节体育课会吃掉整个上午；既有结算按 `add_time` 线性计算，截断天然成立 |
+| `Script/System/Education_System/schedule_handle.py` | 改 | 加 `PE_PLACE_DATA`、`get_course_place()`、`get_intern_mentor()`、`get_behavior_name_by_cid()` |
+| `Script/System/Education_System/growth_handle.py` | 改 | 基础值表加课型 5（习得 40 / 经验 4，介于理论 30 与实践 50 之间）；无教师降级改为**分课型**：教室课掉到自习档，实习课只把本岗位基础值减半 |
+| `Script/System/Education_System/class_ai.py` | 改 | 个人式课型的派发（此前返回 0 的死分支） |
+| `Script/Settle/default.py` | 改 | `handle_intern_class_add_just`（552） |
+| `Script/UI/Panel/character_info_head.py` | 改 | `<课>` 覆盖个人式课型；实习课的提示补一句带教是谁 |
+| `tools/ArkEditor/csv/Behavior_Data.csv` | 改 | 230 同步 |
+
+**为什么 `<课>` 对个人式课型只能靠"地点 + 课表"判定**：这三种课执行的是既有行为（打木桩、下棋、跟岗），
+没有一个专属的"上课中"行为可认。所以判据改成"本节排了这门课 **且** 人确实在那个地点"——
+孩子被叫走跟随、或自己跑去别处玩时，标识会自动消失，与 §3.22 的"描述此刻的状态"口径一致。
+
+#### 实施中发现的偏离（§2.7-5）
+
+13. **方案 §3.21 的"后三种课型零新增行为、零新增结算公式"对实习课不成立，已先改方案再动代码。** 体育课与兴趣课成立——孩子执行的是 `training` / `swimming` / 各娱乐行为，这些行为**自带**效果串，到点就结算，学生侧什么都不用加。实习课不成立：导师是"该岗位当时的在岗干员"，**他执行的是自己的工作行为**，那串效果是给他自己发工作产出的，里面没有任何"把经验分给身边学徒"的部分——对比理论课，教师的 `teach` 行为里有 512 效果专门结算全场学生。学徒站在厨房里什么也不会发生。于是新增 1 个行为 `intern_class` + 1 个结算 552。不复用 `attent_class` 是因为状态栏要显示「实习」而不是「上学」，口上也要按 `behavior_id` 分流。
+14. **虚惊一场：`data/talk/` 的目录名不构成对行为的约束。** §1.8 里列了 `pe_class/` / `interest_class/` / `intern_class/` 三个口上目录，看上去像是要求三个同名行为。实测 `buildconfig.py:509~520` 对 `data/talk/` 是**递归遍历**，每行口上的归属由 CSV 里的 `behavior_id` **列**决定，目录与文件名纯粹是组织手段（`data/talk/work/teach.csv` 里每行也都写着 `behavior_id`）。所以前两个目录装的是 `training` / 各娱乐行为的口上，靠 §3.17 的 `Course` 前提区分"这是在上课"还是"自己在玩"，只有 `intern_class/` 恰好与新行为同名。方案 §3.21 已补记这一条。
+15. **`Entertainment.csv` 的 `behavior_id` 列此前从未被代码读取过。** 全仓库 grep 只有 `.name` / `.place_tag` / `.auto_ai_*` 被用到——娱乐行为一直是靠 `auto_ai_entertainment` 状态机或目标搜索驱动的。本次是第一次读它，读出来是**行为 cid**，而角色身上的 `behavior.behavior_id` 存的是 **en_name 字符串**，两者之间需要一层反查（`config_behavior` 只有 en_name → 数据的正向索引）。加了 `get_behavior_name_by_cid()` 带惰性缓存。
+16. **`growth_handle` 里另写了一份 `CLASSROOM_COURSE_TYPE_SET`。** `schedule_handle` 已经在函数内反向 import 了 `growth_handle`，模块级互相 import 会成环，所以这三个数字在两处各写一份并互相注明。
+
+#### 步骤 §2.9 新前提（2026-09-06）
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/Design/handle_premise/__init__.py` | 改 | CVP token 的值类型加 `C` 开头的分支，覆盖 `Course` 与 `CourseType` 两个 token；另加 `get_now_course_ability()` / `get_now_course_type()` 两个取值函数 |
+| `Script/Core/constant_promise.py` | 改 | `IN_PRACTICE_ROOM` / `NOT_IN_PRACTICE_ROOM` / `IN_AUDITORIUM` / `NOT_IN_AUDITORIUM` |
+| `Script/Design/handle_premise/handle_premise_place.py` | 改 | 上述四条的实现，照同文件 `:3657 handle_in_class_room` 的写法 |
+| `tools/ArkEditor/csv/Premise.csv` | 改 | 4 行同步（`tools/ArkEditor/load_csv.py:5` 读它，不同步则口上作者在编辑器里选不到） |
+
+**两个 token 都不新增字段。** 方案原先设想"把当前科目写进 `behavior` 的某个字段，参照 `behavior.gift_id`"，
+实施时弃选：课表本身就是唯一真相源，现算即可；多存一份反而要在开课、换课、教师缺席、翘课几处同步维护，
+早晚会与课表打架。取值函数读的是 `schedule_handle` 的同一个入口，与 `<课>` 标识、上课结算三处共用。
+
+**两个 token 对教师侧与学生侧通用**：先查 `get_now_teaching()`（教师视角反查全局课表），查不到再查
+`get_now_course()`（学生视角）。同一个人不可能既在授课又在听课，不会歧义——所以
+`data/talk/work/teach/` 与 `attent_class/` 两批口上可以用完全相同的 premise 写法，1b 阶段的生成模板少一套。
+
+#### 实施中发现的偏离（§2.9）
+
+17. **`CourseType` 必须先于 `Course` 判断。** `"CourseType" in premise_all_value_list[1]` 与 `"Course" in ...` 是子串判断，前者的字符串里含有后者——判序写反的话 `CVP_A1_CourseType|5_G_0` 会被 `Course` 分支吃掉，然后拿"当前科目 == 5"去比，永远不成立且不报错。代码里已加注释，测试里也专门留了一项断言钉住这个顺序。
+18. **方案 §3.17 只写了 `Course` 一个 token，实施时加成了两个。** 起因是 §3.21 说体育课与兴趣课的口上"靠 `Course` 前提区分这是在上课还是自己在玩"——但这两种课**没有科目**（学的是该活动自带的东西），`Course|<能力id>` 对它们无从取值。补 `CourseType|<0~5>` 才能表达"这一节是体育课"。方案 §3.17 已同步定稿。
+
+#### 步骤 §2.10 三个面板与入口（2026-09-06）
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/System/Education_System/class_schedule_panel.py` | 新增 | 页签容器 `Education_Manage_Panel` + 全局课表面板；另含两个被另两个面板共用的常量与函数（`WEEK_NAME`、`SUBJECT_ABILITY_LIST`、`get_period_time_text()`） |
+| `Script/System/Education_System/course_select_panel.py` | 新增 | 个人课表面板，含「复制到其他孩子」 |
+| `Script/System/Education_System/growth_panel.py` | 新增 | 养成总览面板 |
+| `Script/Core/constant/__init__.py` | 改 | `Panel.EDUCATION_MANAGE = 68`（67 妊娠总览是当前最大） |
+| `Script/UI/Flow/normal_flow.py` | 改 | 注册面板 68，照 `MANAGE_DORMITORY` 的写法用函数内延迟 import |
+| `Script/System/Instruct_System/Instruct.py` | 改 | `EDUCATION_MANAGE` / `CHECK_REPORT_CARD` 两个指令常量 |
+| `Script/System/Instruct_System/handle_instruct.py` | 改 | 两个指令的处理函数 |
+| `data/csv/InstructConfig.csv` | 改 | `2039,education_manage`（前提 `IN_TEACHER_OFFICE`，开面板 68）、`2040,check_report_card`（前提 `TARGET_IS_PLAYER_DAUGHTER`，走 §2.3 建的行为 229） |
+
+**三个面板都靠"降一个维度"来适配终端宽度**：全局课表是「10 教室 × 7 天 × 9 节」的三维数据，
+一次全画必然溢出，所以**一次只画一间教室的周表**，教室走上方横向页签；个人课表同理，一次一个孩子。
+
+**排课冲突在面板上直接阻止，不留到运行时兜错**（方案 §3.14）：选教师时撞课的干员**不做成按钮**，
+直接灰显并标出"第 N 节已在 X 教室"——玩家看得见原因，比事后弹一句报错好懂。同理，
+个人课表选教室课时只列**该节次已经排了课**的教室，格子上直接把"科目/教师"写出来，看得见再选；
+周日的实习课整列不可选，标明"全岛无人上班，找不到带教干员"。
+
+**入口挂在教师办公室**（`data/map/教/办公室/Scene.json` 的 `SceneTag` 是 `Teacher_Office`，
+既有前提 `IN_TEACHER_OFFICE` 直接可用，无需新增前提）。
+
+#### 实施中发现的偏离（§2.10）
+
+19. **`game_config.config_instruct` 按 **cid** 索引，按 `instruct_id` 字符串查要走 `config_instruct_by_id`。** 与 §2.3 记过的 `config_behavior`（按 en_name 字符串索引）**正好相反**——两张表的索引口径不一致，验证时按错的那个查会拿到 `KeyError`，看上去像配置没生效。
+20. **页签容器放在了 `class_schedule_panel.py` 里，而不是另起一个文件。** §1.6 只规划了三个面板文件，没有容器文件；全局课表是三个页签里的主页面，容器跟它放一起最省一次跳转。三个面板共用的 `WEEK_NAME` / `SUBJECT_ABILITY_LIST` / `get_period_time_text()` 也定义在这里，另两个面板 import 它。
+21. **`auto_schedule.py`（自动排课）与 `semester_handle.py`（学期切换 / 成绩单生成）本期未建。** §1.6 把它们列进了一期的文件清单，但自动排课的三种模式（补弱项 / 均衡 / 主修优先）依赖二期的日程模板，学期切换要接的成绩单也要等口上到位才有内容可出。一期先把**手动排课**跑通即可验收——全局课表能排、个人课表能选、孩子能按表上课，这条链已经闭环。方案 §5.2 的面板草图里画了一个「自动排课」按钮，本轮**没有画上去**——功能不在本期，画个点不动的按钮不如不画。
+
+#### 步骤 §2.11 口上填充：格式定稿与试点（2026-09-06）
+
+先做 2 个试点文件把格式钉死，再按科目铺开：
+
+| 文件 | 条数 | 前提写法 |
+| --- | --- | --- |
+| `data/talk/work/teach/teach_knowledge.csv` | 16 | `CVP_A1_Course\|45_G_0&CVP_A1_CourseType\|<0/1/2>_G_0` |
+| `data/talk/work/attent_class/attent_class_knowledge.csv` | 14 | 上述两条 + `self_is_player_daughter` + `CVP_A1_T\|<102/103>_E_1` |
+
+**定稿的四条格式约定：**
+
+1. **表头 5 行照抄同目录既有文件**，`cid,behavior_id,adv_id,premise,context`，第 4 行的 `0,0,0,0,1`
+   指明只有 `context` 列参与翻译。
+2. **cid 从 1000 起**，构建时会自动加 `<父目录名>_<文件名>` 前缀防跨文件冲突
+   （`buildconfig.py:190`）——实测 `data/talk/work/teach/teach_knowledge.csv` 的 1000 变成了
+   `teach_teach_knowledge1000`。⚠️ 前缀是**父目录+文件名**，所以 §3.18 的命名会出现
+   `teach_teach_` 这样的重复；`data/talk/daily/gift/` 早就是这样了，本期沿用不另立规矩。
+3. **教师侧不带年龄前提**：方案 §3.18 原写"30 条 = 3 课型 × 2 年龄 × 5"，但 `teach` 的
+   `character_id` 是教师，他身上没有学生的年龄可判。改为 3 课型 × N 条，年龄差分只做在
+   学生侧的 `attent_class` 上。
+4. **既有的占位口上保留不删**：`data/talk/work/teach.csv` 与 `attent_class.csv` 各一条
+   `high_1` 的空前提行，正好充当所有具体前提都不成立时的兜底，删掉反而会出现"没有任何口上"的空窗。
+
+#### 步骤 §2.11 第二批：10 门文化课的授课与听课（2026-09-06）
+
+| 目录 | 文件数 | 条数 |
+| --- | --- | --- |
+| `data/talk/work/teach/` | 10 | 115 |
+| `data/talk/work/attent_class/` | 10 | 113 |
+
+10 门文化课：话术 40 / 指挥 41 / 战斗 42 / 料理 43 / 音乐 44 / 学识 45 / 医术 46 / 农业 47 / 制造 48 / 绘画 49。
+每门都按 3 种课型分了差分，学生侧再叠幼女 / 萝莉两档年龄。
+
+**写作口径**（供后续批次照办）：
+
+- **教师侧写课，学生侧写人**。`teach` 的视角是"这堂课是怎么上的"——板书、示范、提问、点评；
+  `attent_class` 的视角是"这孩子在课上经历了什么"——听懂了没有、走神了没有、想起了什么。
+  两边写同一节课，但不重复叙述同一件事。
+- **课型差分要写出物理差别**，不是换个形容词：理论课在讲台与黑板前，实践课围着工作台、会出事故、
+  老师会走下来；公开课在大礼堂，人多、坐得远、听众里混着干员。
+- **年龄差分写能力而不是心智贴标签**：幼女够不着桌子、认不全字、坐不住；萝莉能预习、会复盘、
+  开始意识到自己的局限。避免把幼女写成只会犯傻。
+- **不写具体角色名**，一律用 `{Name}`，老师一侧也只称"老师"——因为教师是课表指派的，谁都可能。
+
+#### 步骤 §2.11 第三批：自习与炫耀（2026-09-06）
+
+| 目录 | 文件数 | 条数 | 行为 |
+| --- | --- | --- | --- |
+| `data/talk/work/self_study/` | 10 | 52 | `self_study` |
+| `data/talk/system/second_show_off_study/` | 10 | 41 | `show_off_study`（二段） |
+
+四个按科目分文件的目录到此齐了：**40 个文件、321 条**。
+
+**为炫耀口上新增了第三个 CVP token `CourseShowOff`**（`Script/Design/handle_premise/__init__.py` 的 `C` 分支，
+6 行代码）：炫耀发生在**见到玩家时**，那时通常不在任何节次内，`Course` 取不到值，
+所以另开一个 token 读 `child_growth.show_off_ability`。方案 §3.17 已同步。
+
+**自习口上不带课型差分**：自习是"本节没有可用教师"的降级，理论课与实践课的自习其实没什么
+体感区别（都是一个人对着书或工具），再分三档只会写出三份雷同的文本。只按科目 × 年龄分。
+
+**炫耀口上的写法**：幼女举着东西冲过来、萝莉装作路过——同一件事的两种表达方式差别很大，
+所以这个目录的年龄差分比别处更值得写。
+
+#### 步骤 §2.11 第四批：体育 / 兴趣 / 实习 / 成绩单 / 翘课（2026-09-06）
+
+| 目录 / 文件 | 文件数 | 条数 | 分文件的依据 |
+| --- | --- | --- | --- |
+| `data/talk/work/pe_class/` | 4 | 20 | 按地点（木桩房 / 射击房 / 健身区 / 游泳池），行为分别是 `training` / `training` / `exercise` / `swimming` |
+| `data/talk/play/interest_class/` | 16 | 64 | 按娱乐行为；演奏传统 / 现代乐器共用 `play_instrument`，靠场景前提分开 |
+| `data/talk/work/intern_class/` | 16 | 64 | 按**岗位所在场景**，全部复用既有的 `in_<场景>` 前提 |
+| `data/talk/daily/check_report_card.csv` | 1 | 6 | 单文件，用 `CVP_A2_T\|<102/103>_E_1` 分年龄 |
+| `data/talk/work/skip_class.csv` | 1 | 5 | 单文件 |
+
+**至此 §2.11 累计 78 个文件、480 条**（7 个目录 + 2 个单文件）。
+
+**实习课按"场景"而不是按"岗位"分文件**：17 个可实习岗位只涉及 7 种能力，按能力分会把
+厨房、图书馆、育儿室这些完全不同的场面糅成一份文本；而按场景分，16 处地点**全部有现成的
+`in_<场景>` 前提**（`in_kitchen` / `in_clinic` / `in_library` / `in_blacksmith_shop` …），
+一个新前提都不用加。坐诊医生与住院医生同在 `Clinic`，合用一份——这两个岗位的实习体验本就一样。
+
+#### 步骤 §2.11 第五批：带教侧（2026-09-06）
+
+带教侧口上此前卡在一个缺口上：干员执行的是**他自己的工作行为**（厨师在 `npc_work_cook`、
+医生在 `cure_patient`），要让这些行为出"身边有实习生"的口上，得先有一条能表达这件事的前提。
+本批把它补上了：
+
+| 文件 | 类型 | 改动 |
+| --- | --- | --- |
+| `Script/Core/constant_promise.py` | 改 | `HAVE_INTERN_STUDENT` / `NOT_HAVE_INTERN_STUDENT` |
+| `Script/Design/handle_premise/handle_premise_work.py` | 改 | 两条实现；⚠️ 它是 `schedule_handle.get_intern_mentor()` 的**反向查询**，两边读同一份判据（同场景 + 对方行为是 `intern_class` + 对方本节的实习目标正好是我的岗位），不会出现"学徒找得到导师、导师却不知道有学徒"的单向成立 |
+| `tools/ArkEditor/csv/Premise.csv` | 改 | 2 行同步 |
+| `data/talk/work/intern_mentor/` | 新增 14 | 42 条，覆盖 12 个能查到工作行为的岗位 |
+
+**只做了 12 个岗位**：`WorkType.csv` 里宿舍管理员、住院医生、图书馆管理员、检修工程师四个岗位的
+`auto_ai_work` 是「无」——他们不走状态机而是走目标搜索，当班时的行为不固定，没有稳定的
+`behavior_id` 可以挂口上。这四个岗位的**学徒侧**口上照常有（`intern_class` 是学徒自己的行为），
+只是带教侧不出文本。
+
+⚠️ 铁匠与检修工程师同用 `repair_equipment` 行为、药材与花草种植员同用 `plant_manage_crop`，
+所以这两对各拆成两个文件，靠场景前提分开——与实习课学徒侧按场景分文件的做法一致。
+
+#### 步骤 §2.11 收尾：补齐第五批遗留的四个实习岗位（2026-09-06）
+
+第五批把宿舍管理员、住院医生、图书馆管理员、检修工程师四个岗位判为"没有稳定的 `behavior_id`
+可挂口上"（当时的偏离 25）。**这个结论是错的**，回头核了一遍才发现：这四个岗位不是没有工作行为，
+只是不走 `WorkType.csv` 的 `auto_ai_work` 字段，而是走 `data/target/default/target.csv` 的目标链
+（220100 / 220105 / 220200 / 220205 / 220305 / 220400 / 220405 七条）。顺着目标链查到状态机，
+再从状态机读出它赋予的行为，四个岗位的行为都是固定的。查证过程中还带出了三个实打实的缺陷：
+
+| 文件 | 类型 | 改动 |
+| --- | --- | --- |
+| `data/csv/WorkType.csv` | 改 2 行 | 031 宿舍管理员 `place_tag` `Dormitory_Manager` → `Dormitory_Manager_Room`；062 住院医生 `place_tag` `Clinic` → `Inpatient_Department` |
+| `Script/System/Education_System/schedule_handle.py` | 改 | `get_course_place()` 的实习课分支：同标签多间房时不再一律取第一间 |
+| `data/talk/work/intern_mentor/mentor_dormitory.csv` | 新增 | 3 条，`organize_dormitory_opinion` |
+| `data/talk/work/intern_mentor/mentor_library.csv` | 新增 | 3 条，`read_book` + `in_library` |
+| `data/talk/work/intern_mentor/mentor_ward.csv` | 新增 | 3 条，`ward_round` |
+| `data/talk/work/intern_mentor/mentor_maintenance.csv` | 改 | 行为由 `repair_equipment` 改为 `maintenance_facilities`，3 条重写 |
+| `data/talk/work/intern_class/intern_ward.csv` | 新增 | 4 条，前提用 `in_inpatient_department` |
+
+**四个岗位的行为落点**（每一条都在测试里用状态机实调钉住，不是照着注释抄的）：
+
+| 岗位 | 目标链 | 状态机 | 行为 | 与学徒同场景？ |
+| --- | --- | --- | --- | --- |
+| 宿舍管理员 031 | 220400 | 327 `dormitory_admin_organize` | `organize_dormitory_opinion` | ✅ 在舍管房 |
+| 图书馆管理员 101 | 220105 | 306 `character_work_library_2` | `read_book` | ✅ 在图书馆 |
+| 住院医生 062 | 220305 | 323 `character_work_ward_round` | `ward_round` | ✅ 在住院部（修正 `place_tag` 之后） |
+| 检修工程师 021 | 220205 | 308 `character_work_maintenance_2` | `maintenance_facilities` | ⚠️ 否，见偏离 29 |
+
+至此 17 个可选实习岗位中，**16 个师徒两侧都有口上**，检修工程师只有学徒侧。
+
+#### 实施中发现的偏离（§2.11）
+
+22. **缺失 8 门性技科目（70~77 指技/舌技/足技/胸技/膣技/肛技/腰技/榨精）的课堂口上（包括上课、自习、教学）。** 这套系统的学生是玩家幼女期与萝莉期的女儿，口上还一律要带 `self_is_player_daughter`。受影响的是 `teach/` `attent_class/` `self_study/` `second_show_off_study/` 四个目录里对应这 8 门科目的 **32 个文件、约 530 条**。10 门文化课（40~49）的 4 个目录共 40 个文件，加上体育 / 兴趣 / 实习 / 带教 / 成绩单 / 翘课，约 1420 条。
+   ⚠️ **机制上不受影响**：性技能力的升级需求本就是真实性交经验（方案 §3.1 的发现），课堂理论只能攒珠不能升级；
+   没有口上时会回落到 `teach.csv` / `attent_class.csv` 里那条 `high_1` 占位地文，功能链不断，
+23. **`chara_4091_U-Official` 已经有 3 条 `attent_class` 的专属口上**，前提是 `CVP_A3|4091_A|45_LE_3` 一类的学识分档。本期新增的通用口上与它并存、互不覆盖——查总条数时要记得这几条也在里面（试点验证时按总数断言就翻了车，改成按 cid 前缀筛才对）。
+24. **实习课的口上按场景分而不是按岗位分**（见上），所以是 16 个文件而不是 §1.8 写的 18 个。
+25. **~~缺的四个岗位没有稳定的 `behavior_id`~~ —— 这个结论是错的，收尾批次已推翻并补齐。** 第五批看到宿舍管理员、住院医生、图书馆管理员、检修工程师的 `auto_ai_work` 是「无」，就断定它们当班行为不固定。实际上 `auto_ai_work` 只是工作 AI 的**其中一条**入口（`handle_npc_ai.py:366`，且要 `auto_ai` 为真才走），这四个岗位走的是另一条：`data/target/default/target.csv` 的目标链 → 状态机 → 固定行为。
+    **教训**：判断"某个岗位当班时干什么"，不能只看 `WorkType.csv` 一张表就下结论——`auto_ai_work` 为「无」恰恰说明它走的是目标链，应当接着去 `target.csv` 里按 `work_is_xxx` 前提搜一遍。当时少搜了这一步，就把"我没找到"写成了"不存在"。
+26. **为带教侧新增了一条前提 `have_intern_student`。** 这是本期第二次为口上加前提（第一次是 §2.9 的三个 `Course*` token）。判据必须与学徒侧的 `get_intern_mentor()` 完全对称，否则会出现"学徒拿到了导师加成、导师却不知道有学徒"这种半边成立的状态——测试里专门用"改换实习岗位"的用例钉住了这一点。
+27. **`WorkType.csv` 里两个岗位的 `place_tag` 是错的，实习课踩到了。** 031 宿舍管理员写的是 `Dormitory_Manager`，而真正的场景标签是 `Dormitory_Manager_Room`（`handle_premise_place.py:1591`）——`constant.place_data` 里根本没有前者这个键，于是 `get_course_place()` 对这个岗位**返回空列表**，学徒压根走不到岗位上去，这门实习课等于是废的。062 住院医生写的是 `Clinic`，但 `Clinic` 标签下是急诊室与门诊室，住院医生实际在住院部（`Inpatient_Department`）查房，学徒被送去了一个没有导师的房间。两条都改了。
+    ⚠️ **改这两个字段是安全的**：`work_type.place_tag` 全仓只有 `handle_npc_ai.py:366` 一处读，且被 `work_type_data.auto_ai and ...` 短路保护，而这两个岗位的 `auto_ai` 都是 0，所以基础游戏的行为一点没动，受影响的只有本期新写的 `get_course_place()`。
+28. **`get_course_place()` 原先"同标签的房间等价，取第一间"的假设不成立。** 实测：`Clinic` 含急诊室与门诊室但坐诊医生只在门诊室；`Dormitory_Manager_Room` 有 9 间、各区管理员只守自己那间；`Training_Room` 含射击房与木桩房；`Production_Workshop` 含生产车间 1~5。取第一间的话，学徒有很大概率站在一间没有导师的房里，然后 `get_intern_mentor()` 返回 -1、降级成见习——而且**不会报任何错**，只会表现为"实习课好像总是没人带"。
+    改成三级取房：①**该标签下哪间房此刻有这个岗位的在岗干员就去哪间**（口径 53：实习就是跟着此刻在做这份工作的人）→ ②取与岗位 `place` 同名的那间（坐诊医生 → 门诊室）→ ③退回第一间。三级都是纯读取，无副作用，导师换房时学徒下一节次自然跟过去。
+29. **检修工程师仍然只有学徒侧口上，但原因换了。** 不是"没有稳定行为"（那是错的），而是**师徒必然不同场景**：目标链 220200 让他在运维部进入"要检修"状态（行为是 `SHARE_BLANKLY`，1 分钟），随即 517 移动到损坏设施处，220205 才在**那里**执行 `maintenance_facilities`；而学徒是待在岗位地点（运维部）不动的。`mentor_maintenance.csv` 已经从错挂的 `repair_equipment`（那是铁匠的行为，害得它一直在铁匠铺里跟 `mentor_blacksmith.csv` 抢词条）改回正确的 `maintenance_facilities`，条文也重写了；在一期"学徒待在岗位地点"的模型下它基本不会触发，等哪一期做了"学徒跟着导师走"再自然生效。
+30. **住院医生的学徒侧要单独一份 `intern_ward.csv`。** `place_tag` 从 `Clinic` 改到 `Inpatient_Department` 之后，这个岗位的学徒不再站在门诊室里，原先靠 `in_clinic` 前提的 `intern_clinic.csv` 就盖不住他了。新写 4 条、前提改用 `in_inpatient_department`，与门诊那份按场景互斥，不会互相串台。
 
 ### 6.2 实施前的假设复核
 
@@ -318,7 +686,9 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 | 1 | `Class_Room` 只有 6 处引用，其中 4 处沿用标签即自动适配 | ✅ 确认。且第 5 处（`WorkType.csv` 的 `place` 列）实测也只是显示文案，见 §6.1 偏离 3 |
 | 2 | `handle_instruct.py:553~573` 与 `StateMachine/default.py:2648` 是平行实现 | ✅ 确认（读码核对，改造待步骤 §2.6/§2.7） |
 | 3 | `StateMachine/default.py:441` 的 `place_data` 会自动收录新教室 | ✅ 确认。重建缓存后 `place_data["Class_Room"]` 含全部 6 间理论教室，`Practice_Room` 3 间、`Auditorium` 1 间 |
-| 4 | `Facility_effect.csv` 的教育区 `effect` 列在代码中从未被读取 | |
+| 4 | `Facility_effect.csv` 的教育区 `effect` 列在代码中从未被读取 | ✅ 确认，本期已接上（`growth_handle.get_education_zone_adjust()`，Lv1~Lv5 实测倍率 1.0/1.05/1.2/1.5/2.0） |
+| 7 | ✗ **方案 §3.1 原假设「等级由 `get_experience_level_weight` 自动换算」** | ✗ **不成立**：该函数零调用方，是死代码；真实链条见总纲 §2.3-11。方案已重写 |
+| 8 | 科目→经验id 可从 `AbilityUp.csv` 解出，无需硬编码 | ✅ 确认（学识→82、战斗→81、话术→80、料理→83、膣技→61） |
 | 5 | `talk.py:185~188` 对女儿有 5 倍加权 | |
 | 6 | `Entertainment.csv:62` 品酒的 `T7|0` 前提能挡住未成年 | |
 
@@ -337,6 +707,263 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 | 场景标签收录 | ✅ `Class_Room` 6 间、`Practice_Room` 3 间、`Auditorium` 1 间 |
 | 教育区内部寻路 | ✅ 走廊 → 全部 17 个节点均可达 |
 | 旧「教室」场景 | ✅ 已从 `scene_data` 中消失（残留的「关押\调教室」是无关场景） |
+
+#### 步骤 §2.4 节次判定（13 项断言全部通过）
+
+09:00→0、09:44→0、09:45→1、11:15→3、11:59→3、12:00→−1、13:59→−1、14:00→4、17:00→8、17:44→8、17:45→−1、19:00→−1、08:59→−1
+
+#### 步骤 §2.5/§2.6 成长与课表（31 项断言全部通过）
+
+| 组 | 断言 | 结果 |
+| --- | --- | --- |
+| 速度系数曲线 | diff = +8/+4/+1/0/−1/−2/−8 → 3.00/2.00/1.25/1.00/0.67/0.50/0.20 | ✅ 7/7 |
+| 科目经验id（从 `AbilityUp.csv` 解出） | 学识45→82、战斗42→81、话术40→80、料理43→83、膣技74→61 | ✅ 5/5 |
+| 教育区效率加成 | Lv1~Lv5 → 1.0/1.05/1.2/1.5/2.0 | ✅ 5/5 |
+| 课表读写与教师反查 | 存取、未排返回None、教师整周反查、撞课判定、清空 | ✅ 8/8 |
+| 可排课教室列表（源自场景标签） | 理论 6 / 实践 3 / 大礼堂 1，按教室反查课型 | ✅ 6/6 |
+
+**关键实测值**：学识 0→8 累计需习得珠 49,470、学识经验 1,145；一节理论课（速度 1.0）习得值 75、经验 3；珠约束 659 节、经验约束 381 节 —— **珠是瓶颈**。
+
+#### 步骤 §2.3/§2.10 配置与状态标识（24 项断言全部通过）
+
+| 组 | 断言 | 结果 |
+| --- | --- | --- |
+| `class_ok` 列进入运行时 | 下棋=1、泡温泉=0、游泳=0、品酒=0，可排兴趣课共 **16 项** | ✅ 5/5 |
+| 教室解锁配置 | 理论教室二→152、理论教室六→155；理论教室一与大礼堂不在解锁表（Lv1 即开） | ✅ 4/4 |
+| `<课>` 提示文案 | 学生听课 / 教师授课 / 无教师自习 / 翘课 / 休息中不显示 / 无课表信息 / 兴趣课 / 实习课 / 体育课 | ✅ 11/11 |
+| 状态列表结构 | draw 对象数与文本数一致；`<课>` 样式为 `light_steel_blue`；带 tooltip | ✅ 4/4 |
+
+#### 步骤 §2.3 行为与效果进入运行时（8 项断言全部通过）
+
+| 断言 | 结果 |
+| --- | --- |
+| `config_behavior` 含 self_study/skip_class/check_report_card/show_off_study，cid 与时长正确 | ✅ 4/4 |
+| `config_behavior_effect_data` 的效果串：`[1511,1512,548]` / `[549]` / `[550]` / `[551]` | ✅ 4/4 |
+
+⚠️ **本表最后一项后来被推翻**：`show_off_study` 的 `[551]` 是错的 —— 551 注册在**一段**结算表里，二段行为永远取不到它。§2.8 已改为 `[622]`（`SecondEffect` 命名空间），详见 §2.8 的偏离 9。这份断言当时只查了效果串的**值**、没查它注册在**哪张表**，所以放过了这个 BUG。
+| 全部改动文件通过 `py_compile` | ✅ |
+| 两套既有测试（31 项 + 24 项）全部回归通过 | ✅ |
+
+⚠️ 排查记录：`game_config.config_behavior` 是**按 `en_name` 字符串索引**的，不是按 cid。首次验证时按 cid 取而报 `KeyError: 211`，虚惊一场。
+
+**实际文案样例**：
+- 学生：`理论课·学识技能｜理论教室一｜授课：凯尔希｜第1节`
+- 教师：`授课中：理论课·学识技能｜理论教室一｜第1节`
+- 无教师：`自习·理论课·学识技能｜理论教室一｜本节无教师，经验减半｜第1节`
+- 翘课：`翘课中：本该上 理论课·学识技能｜理论教室一（第1节）`（红色 `<翘>`）
+- 个人式课：`兴趣课·下棋｜第1节`、`实习课·厨师｜第1节`、`体育课·木桩房｜第1节`
+
+#### 步骤 §2.8 验证（42 项断言全部通过）
+
+| 断言组 | 项数 | 结果 |
+| --- | --- | --- |
+| 四个负面状态的等级和：全0 / 四项各600（各2级）→ 0 / 8 | 2 | ✅ |
+| 翘课概率阶梯：等级和 0/3/4/7/8/11/12/15/16/20 → 0/0/.1/.1/.25/.25/.45/.45/.7/.7 | 10 | ✅ |
+| 体力闸：体力20%时走 `REST`、累加一节缺课、不置翘课flag | 3 | ✅ |
+| 体力闸优先于心情闸：等级和打桩为 32（最坏）时仍走 `REST` | （含上） | ✅ |
+| 缺课去重：同一节课判定三次只记一次；换一节课才再记一次 | 2 | ✅ |
+| 翘课掷骰：等级和32时 400 次里 276 次翘课（期望区间 240~320）；等级和0时 200 次一次不翘 | 2 | ✅ |
+| 翘课不计入 `absent_count`（它只统计被动缺课） | 1 | ✅ |
+| 已置 flag 则当日不再掷骰，直接翘 | 1 | ✅ |
+| 派课：不在教室→561、在教室有老师→304、老师在H中/外勤中/课表没排老师→713 | 5 | ✅ |
+| 不接管：不在节次内返回0；没有个人课表的角色返回0，**且不会被凭空建出养成数据** | 3 | ✅ |
+| 二段行为 1328/1329 的 cid 与效果串 `[622]` / `[623]`，且 622/623 在**二段**注册表里 | 6 | ✅ |
+| 551 已不在一段注册表；548/549/550 仍在 | 4 | ✅ |
+| 状态机 713/714 已注册 | 2 | ✅ |
+| 既有两套测试（31 项 + 24 项）全部回归通过 | —— | ✅ |
+| 全部改动文件 `py_compile`；`buildconfig.py` 退出码 0 | —— | ✅ |
+
+#### 步骤 §2.7-5 个人式课型（45 项断言全部通过）
+
+| 断言组 | 项数 | 结果 |
+| --- | --- | --- |
+| 实习岗位的能力与地点直接读 `WorkType.csv`（厨师 → 能力43料理、地点 `Kitchen`） | 3 | ✅ |
+| `get_course_place()` 六种课型全部解析出地点；体育课精确到木桩房而非同标签的射击房；不存在的地点返回空 | 8 | ✅ |
+| 行为 cid → en_name 反查：161→swimming、205→training、230→intern_class、不存在的返回空串 | 4 | ✅ |
+| AI 派发：不在地点→715、到了→716；体育课执行 `training`、兴趣课执行 `play_chess`、实习课执行 `intern_class` | 8 | ✅ |
+| 时长一律截到 45 分钟（战斗训练原 120 分钟） | 2 | ✅ |
+| 导师到点现找：现场没厨师→-1，有厨师→他就是导师 | 2 | ✅ |
+| 见习降级：有导师习得 191、无导师 65，且 65 仍高于自习档的 45+15 —— 是减半而不是掉档 | 5 | ✅ |
+| `<课>` 覆盖个人式课型：实习中带导师名、无人在岗显示"降为见习"、体育课显示"体育课"、人不在地点则不显示 | 5 | ✅ |
+| 新行为 230 的 cid / 时长 / 效果串 `[1511,1512,552]`；效果 552 与状态机 715/716 已注册 | 8 | ✅ |
+| 既有三套测试（31 + 24 + 42 项）全部回归通过 | —— | ✅ |
+| 全部改动文件 `py_compile`；`buildconfig.py` 退出码 0 | —— | ✅ |
+
+**关键实测值**：厨师岗（能力 43 料理）实习一节 45 分钟，导师 5 级 / 学徒 0 级时习得 191、无导师见习时 65。
+
+#### 步骤 §2.9 新前提（33 项断言全部通过）
+
+| 断言组 | 项数 | 结果 |
+| --- | --- | --- |
+| `Course`：教室课的科目查全局课表；学生与教师同一 token 都成立；无关角色不成立 | 4 | ✅ |
+| `CourseType`：理论 0 / 实践 1 / 体育 3 / 兴趣 4 / 实习 5 各自成立且互不串台 | 8 | ✅ |
+| 实习课的科目取岗位 `ability_id`（厨师 → 料理 43） | 1 | ✅ |
+| 体育课没有科目，`Course` 恒不成立 | 1 | ✅ |
+| 判序：`CourseType\|5` 不会被 `Course` 分支吃掉，且 `Course\|5` 本身不成立 | 2 | ✅ |
+| 不在节次内 / 清掉个人课表后一律不成立 | 3 | ✅ |
+| 既有 CVP 类型（`A` 能力、`T` 素质）未被新分支影响 | 2 | ✅ |
+| 场景前提：实践教室与大礼堂各自成立、互不成立；理论教室的 `in_class_room` 仍成立 | 7 | ✅ |
+| ArkEditor 的 `Premise.csv` 已同步 4 行 | 4 | ✅ |
+| 既有四套测试（31 + 24 + 42 + 45 项）全部回归通过 | —— | ✅ |
+| 全部改动文件 `py_compile`；`buildconfig.py` 退出码 0 | —— | ✅ |
+
+#### 步骤 §2.10 三个面板（30 项断言全部通过）
+
+| 断言组 | 项数 | 结果 |
+| --- | --- | --- |
+| 入口三处齐全：面板id 68、flow 已注册、两条指令进配置且各有处理函数 | 8 | ✅ |
+| `education_manage` 的前提是 `IN_TEACHER_OFFICE` 且绑定面板 68 | （含上） | ✅ |
+| 节次时间文本：第1/4/5/9节 → 09:00~09:45 / 11:15~12:00 / 14:00~14:45 / 17:00~17:45 | 4 | ✅ |
+| 18 门科目表齐全且全在能力表里 | 2 | ✅ |
+| 可排课学生列表：孩子在前；选了课的成年干员也进；没选课的教师不进 | 3 | ✅ |
+| 个人课表格子文本：教室课/体育/兴趣（显示娱乐名）/实习（显示岗位名）/未排课 | 5 | ✅ |
+| 复制到其他孩子后格子与源一致；清空后全为 `--` | 2 | ✅ |
+| 实习可选岗位 17 个，教师/学生/监狱长均被排除 | 4 | ✅ |
+| 养成总览的阶段素质集合与 `growth_handle.CHILD_TALENT_SET` 一致；四对性格倾向 | 3 | ✅ |
+| 既有五套测试（31 + 24 + 42 + 45 + 33 项）全部回归通过 | —— | ✅ |
+| 全部改动文件 `py_compile`；`buildconfig.py` 退出码 0 | —— | ✅ |
+
+⚠️ 排查记录：`game_config.config_instruct` 按 **cid** 索引，按 `instruct_id` 字符串查要走
+`config_instruct_by_id`；这与 `config_behavior`（按 en_name 字符串索引）**正好相反**。
+两张表的索引口径不一致，查错会拿到 `KeyError`，看上去像配置没生效。
+
+⚠️ 面板的**绘制循环**（`flow_handle.askfor_all` 要等玩家输入）无法在无头环境里跑，
+上述断言覆盖的是**数据层与注册层**：候选表、格子文本、复制与清空、入口挂载。
+按钮的实际点击流程留给 §6.4 的游戏内清单。
+
+#### 构建链：PO / MO 两步在本机跑不了（环境缺件，非代码问题）
+
+`§3 构建与缓存` 要求 CSV / 常量改动后跑四条链，本轮的实际结果：
+
+| 命令 | 结果 |
+| --- | --- |
+| `buildconfig.py` | ✅ 退出码 0，CSV 与 `config_def.py` 已重建 |
+| `init_data.py`（地图缓存） | ✅ 在 §2.1 已跑过 |
+| `tools/map_aa_check.py` | ✅ 「教」0px |
+| `buildpo.py` | ❌ 本机没有 GNU gettext 的 `xgettext`，脚本在 `:29` 因找不到 `erArk.pot` 中止 |
+| `buildmo.py` | ❌ 本机 conda 环境没装 `polib` |
+
+⚠️ **`buildpo.py` 在没有 `xgettext` 的机器上会删掉文件**：它 `:10~11` 一进门就无条件
+`os.remove(data/po/zh_CN/LC_MESSAGES/erArk_py.po)`，再靠 `xgettext` 重建（`:24`）。
+`xgettext` 不存在时重建那步静默失败，脚本在 `:29` 复制 `erArk.pot` 时才报 `FileNotFoundError` 中止——
+此时 `erArk_py.po` 已经没了。本轮就踩了这一下，已 `git checkout` 恢复。
+**这是仓库既有的隐患，不是本计划引入的**：任何没装 GNU gettext 的人照 CLAUDE.md 的构建说明跑一次
+`buildpo.py` 都会丢这个文件。建议把 `:10~11` 的删除挪到 `xgettext` 成功之后，或先判断
+`shutil.which("xgettext")` 再动手。（本计划范围外，只记录不改。）
+
+⚠️ 影响面：`buildconfig.py` 已经把**CSV 来源**的文本刷进了 `data/po/`（git 里那几个 po 的改动就是它生成的），
+缺的只是从 `.py` 源码里抽 `_()` 字符串这一步——也就是本期三个面板与状态标识里新写的界面文案。
+游戏默认语言是 zh_CN 而这些原文本身就是中文，**不影响显示**，只影响将来做其他语种翻译时的词条完整性。
+需要在装有 `xgettext` 与 `polib` 的环境上补跑这两步。
+
+#### 步骤 §2.11 口上试点（13 项断言全部通过）
+
+| 断言组 | 项数 | 结果 |
+| --- | --- | --- |
+| 两个新文件进运行时配置：teach 16 条、attent_class 14 条，cid 已带前缀 | 3 | ✅ |
+| 教师与学生身上「科目+课型」同一串前提都成立（两侧通用，口上模板可共用） | 2 | ✅ |
+| 换成实践课型则不成立（课型差分真的生效） | 1 | ✅ |
+| 学生侧四段串：萝莉女儿全成立；改成幼女后萝莉那条落空、幼女那条成立 | 3 | ✅ |
+| 非女儿的成年学生拿不到孩子版口上，但仍拿得到「科目+课型」那两条 | 2 | ✅ |
+| `buildconfig.py` 退出码 0，两文件被递归遍历收进 `config_talk` | 2 | ✅ |
+
+#### 步骤 §2.11 第二批（8 项断言全部通过，覆盖 90 次前提判定）
+
+| 断言组 | 结果 |
+| --- | --- |
+| 20 个文件全部进运行时：teach 115 条、attent_class 113 条带课程前提 | ✅ |
+| 30 个「科目 × 课型」组合两侧都有口上，无遗漏 | ✅ |
+| 在真实课表下逐组判前提：教师侧 / 学生侧 / 萝莉女儿侧共 **90 次全部成立** | ✅ |
+| 串台检查：排学识课时，其余 9 门科目的口上**全部落空** | ✅ |
+| 文本卫生：228 条全部含 `{Name}` 且为多行 | ✅ |
+| 八套测试（31 + 24 + 42 + 45 + 33 + 30 + 13 + 8）全部回归通过 | ✅ |
+| `buildconfig.py` 退出码 0 | ✅ |
+
+⚠️ 两个验证脚本自身的坑，记下来免得后面重踩：
+
+1. **`self_is_player_daughter` 判的是 `relationship.father_id == 0`**（`handle_premise_other.py:1159`），
+   **不是**素质 101~104。`RELATIONSHIP.father_id` 的默认值是 **-1**，fixture 里不显式置 0，
+   所有孩子版口上都会静默落空。
+2. **口上里的换行是字面的两个字符「反斜杠 + n」**，不是真换行符。用 `"
+" in text` 去查会
+   因为转义层数不同而查错，稳妥写法是 `chr(92) + "n"`。
+
+#### 步骤 §2.11 第三批（10 项断言，覆盖 100 次交叉判定）
+
+| 断言组 | 结果 |
+| --- | --- |
+| `CourseShowOff`：无养成数据 / 有数据但表空 / 进表 / 未进表 / 同时两门 / 清空后，六种情形全对 | ✅ |
+| 三个 `Course*` token 互不抢食：上着学识课且待炫耀是战斗时，五条判定各归各位 | ✅ |
+| 四个目录各 10 个文件，合计 321 条 | ✅ |
+| 40 个「目录 × 科目」组合全部有口上，无遗漏 | ✅ |
+| 10 门科目的自习前提在真实课表下全部成立 | ✅ |
+| 炫耀交叉判定 **10 × 10 = 100 次**：表里有哪门就只有哪门成立 | ✅ |
+| 文本卫生：321 条全部含 `{Name}`、多行；三个孩子版目录全部带 `self_is_player_daughter` | ✅ |
+| 十套测试全部回归通过 | ✅ |
+
+⚠️ 又一次被自己的旧断言绊到：`test_showoff.py` 里写死了"self_study 7 条 / show_off 5 条"，
+那是只有 1 个试点文件时的数字，目录铺开后必然失败。**同一个数字不要在两个脚本里各断言一次**——
+总数交给覆盖面最广的那个脚本（`test_talk40.py`），其余只断言非空。
+
+#### 步骤 §2.11 第四批与总校验（10 项断言全部通过）
+
+| 断言组 | 结果 |
+| --- | --- |
+| 7 个目录 + 2 个单文件，合计 **78 个文件 480 条** | ✅ |
+| 480 条的 `behavior_id` 全部存在于 `config_behavior` | ✅ |
+| 480 条用到的普通前提名全部存在于 `constant_promise` | ✅ |
+| 480 条全部含 `{Name}` 或 `{TargetName}`，且全部是多行 | ✅ |
+| 十一套测试全部回归通过 | ✅ |
+| `buildconfig.py` 退出码 0 | ✅ |
+
+⚠️ 校验脚本自己踩的两个坑：
+
+1. **扫描范围写成了 `os.path.dirname(单文件)`**，结果把整个 `data/talk/work/` 与 `daily/`
+   的既有口上全扫了进来，报出一堆"不合规"——那些是别人的文件，格式本来就不同。
+   校验新增内容时，扫描范围必须**显式列出自己的文件**。
+2. **提取前提名的正则写成了 `[a-z0-9_]+`**，把 `in_café` 判成了未定义前提。
+   仓库里确实存在带非 ASCII 字符的前提名（`constant_promise.py:622 IN_CAFÉ`），正则不能只认 ASCII。
+
+#### 步骤 §2.11 第五批：带教侧（17 项断言全部通过）
+
+| 断言组 | 结果 |
+| --- | --- |
+| `have_intern_student`：学徒未开始 / 在实习 / 不在场 / 回来 / 午休不在节次内，五种情形全对 | ✅ |
+| 同场景的**别的岗位**干员不成立；反向前提 `not_have_intern_student` 对称 | ✅ |
+| 与 `get_intern_mentor()` 互为反向：改换实习岗位后，两侧同时切换，无单向成立 | ✅ |
+| 带教口上 14 文件 42 条（收尾批次后为 17 文件 51 条），行为id全部有效且全部带 `have_intern_student` | ✅ |
+| ArkEditor 的 `Premise.csv` 已同步 2 行 | ✅ |
+| 口上总校验：**92 个文件 522 条**（收尾批次后为 96 文件 535 条），行为id / 前提名 / 文本卫生全部合规 | ✅ |
+| 十二套测试全部回归通过 | ✅ |
+
+⚠️ 又一次踩到快照过期：总校验脚本用的是导出到文件的前提名清单，新增前提之后忘了重新导出，
+于是把刚加的 `have_intern_student` 判成了未定义。**从外部文件读的校验基准，每次改动源头都要重导。**
+
+#### 步骤 §2.11 收尾：实习课选房与四个补写岗位（20 项断言全部通过）
+
+| 断言组 | 项数 | 结果 |
+| --- | --- | --- |
+| 17 个可选实习岗位**全部**能解析出地点（宿舍管理员原先返回空列表） | 2 | ✅ |
+| 同标签多间房按岗位 `place` 精确取：坐诊医生 → 门诊室（而非 `Clinic` 的第一间急诊室）；住院医生 → 住院部 | 2 | ✅ |
+| 在岗导师优先：3 区管理员在岗 → 解析到 3 区；他一走 → 退回第一间；训练学员在木桩房 → 解析到木桩房 | 4 | ✅ |
+| 无人在岗时不报错、稳定退回第一间 | 1 | ✅ |
+| 体育课仍按场景名精确取、理论课仍走教室名（新分支没有波及其他课型） | 2 | ✅ |
+| **四个补写岗位的口上行为 == 状态机实调后真正赋予的行为**（`dormitory_admin_organize` / `character_work_maintenance_2` / `character_work_ward_round` / `character_work_library_2` 逐个真跑一遍再比对） | 4 | ✅ |
+| 学徒侧 `intern_ward.csv` 4 条，全带 `in_inpatient_department` 与 `self_is_player_daughter`；与门诊那份按场景互斥 | 4 | ✅ |
+| 口上总校验：**96 个文件 535 条**，行为id / 前提名 / 文本卫生全部合规 | 1 | ✅ |
+| 十三套测试全部回归通过（growth / premise / mentor / talk / talk10 / talk40 / showoff / talkall / personal / classmark / classai / panel / place） | —— | ✅ |
+| `buildconfig.py` 退出码 0 | —— | ✅ |
+
+⚠️ 这批里最值钱的一项是**用状态机实调去校验口上的行为id**。第五批把 `mentor_maintenance.csv`
+挂在了 `repair_equipment` 上（那是铁匠的行为），当时的测试只查"这个行为id在 `config_behavior` 里存在"，
+所以一路绿灯——存在不等于**是这个岗位的**。改成"把状态机真跑一遍，看它给角色赋了哪个行为，
+再跟口上文件里写的比"之后，这个错当场就露出来了。
+**校验一个 id 时，要校验的是它指向对不对，而不是它存不存在。**
+
+⚠️ 顺带记一条环境坑：`character_work_ward_round` / `character_work_maintenance_2` 会调
+`basement.calc_facility_efficiency()` 折算时长，无头环境下 `cache.rhodes_island.facility_level` 是空的，
+补零也不行（`config_facility_effect_data[name][0]` 取不到）。本测只关心它赋了哪个行为，
+所以直接把 `calc_facility_efficiency` 钉成 `lambda: 1.0` —— 无头测试里，**与被测目标无关的基建依赖直接钉死比喂 fixture 划算**。
 
 ### 6.4 尚未覆盖的验证
 

@@ -169,6 +169,14 @@ def manage_basement_flow():
     now_panel.draw()
 
 
+@handle_panel.add_panel(constant.Panel.EDUCATION_MANAGE)
+def education_manage_flow():
+    """教育管理面板"""
+    from Script.System.Education_System import class_schedule_panel
+    now_panel = class_schedule_panel.Education_Manage_Panel(width)
+    now_panel.draw()
+
+
 @handle_panel.add_panel(constant.Panel.MANAGE_DORMITORY)
 def manage_dormitory_flow():
     """宿舍管理面板"""

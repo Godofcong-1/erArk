@@ -173,6 +173,14 @@ class CharacterStatus:
     """ 授课 """
     STATUS_ATTENT_CLASS = 214
     """ 上学 """
+    STATUS_SELF_STUDY = 211
+    """ 自习 """
+    STATUS_SKIP_CLASS = 212
+    """ 翘课 """
+    STATUS_CHECK_REPORT_CARD = 229
+    """ 检查成绩单 """
+    STATUS_INTERN_CLASS = 230
+    """ 实习 """
     STATUS_MAINTENANCE_FACILITIES = 215
     """ 维护设施 """
     STATUS_REPAIR_EQUIPMENT = 216

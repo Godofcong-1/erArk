@@ -84,6 +84,10 @@ int,str,str
 210,read_book,12 - 21 - 22 - 71 - 511
 213,teach,1513 - 1514 - 512
 214,attent_class,1511 - 1512
+211,self_study,1511 - 1512 - 548
+212,skip_class,549
+229,check_report_card,550
+230,intern_class,1511 - 1512 - 552
 215,maintenance_facilities,13 - 14 - 21 - 22 - 71 - CVE_A1_E|90_G_1 - 534 - 371
 216,repair_equipment,15 - 16 - 21 - 22 - 71 - 539 - CVE_A1_E|90_G_1 - 1751
 217,npc_work_cook,13 - 14 - 81 - CVE_A1_E|83_G_1 - 993 - 1751
@@ -689,6 +693,8 @@ int,str,str
 1325,lay_soft_egg,235 - 236 - 621 - 998
 1326,soft_egg_fertilized,998
 1327,soft_egg_born,998
+1328,show_off_study,622
+1329,caught_skip_class,623
 
 1331,first_meet,999
 1332,day_hello,999

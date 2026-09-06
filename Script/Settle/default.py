@@ -7518,7 +7518,8 @@ def handle_teach_add_just(
         now_time: datetime.datetime,
 ):
     """
-    （教学用）自己增加习得和学识经验，所有当前场景里状态是上课的角色增加习得和学识经验，如果玩家是老师则再加好感和信赖，最后结束
+    （教学用）按课表所排的科目结算：教师与场景内所有听课角色都获得该科目的习得与经验，如果玩家是老师则再加好感和信赖
+    ⚠️ Plan 22 改造：科目从写死的学识(45)改为查全局课表取当节所授科目；查不到课表时回落学识，保证既有干员学生链不被破坏
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -7527,16 +7528,26 @@ def handle_teach_add_just(
     """
     if not add_time:
         return
+    from Script.System.Education_System import growth_handle, schedule_handle
+
     character_data: game_type.Character = cache.character_data[character_id]
 
-    # 获取调整值#
-    adjust = handle_ability.get_ability_adjust(character_data.ability[45])
-    # 获得加成 #
-    now_add_lust = adjust * add_time * random.uniform(0.5, 1.5)
+    # 取本节所授科目与课型：教师视角反查全局课表
+    ability_id = 45
+    course_type = schedule_handle.COURSE_TYPE_THEORY
+    teaching = schedule_handle.get_now_teaching(character_id)
+    if teaching is not None and teaching["ability_id"] > 0:
+        ability_id = teaching["ability_id"]
+        course_type = teaching["course_type"]
+    else:
+        # 玩家手动发起的授课不在课表上，课型按所在教室的场景标签判定，科目回落学识
+        scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+        now_course_type = schedule_handle.get_course_type_by_classroom(cache.scene_data[scene_path_str].scene_name)
+        if now_course_type != -1:
+            course_type = now_course_type
 
-    # 增加自己的习得和学识经验
-    base_chara_state_common_settle(character_id, add_time, 9, ability_level = character_data.ability[45], change_data = change_data)
-    base_chara_experience_common_settle(character_id, 82)
+    # 教师自身的教学相长：加当节所授科目的习得与经验
+    growth_handle.settle_teacher_class_gain(character_id, ability_id, add_time, change_data=change_data)
 
     # 遍历当前场景的其他角色
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
@@ -7553,9 +7564,15 @@ def handle_teach_add_just(
                 # 如果对方在听课
                 if other_character_data.behavior.behavior_id == constant.Behavior.ATTENT_CLASS:
 
-                    # 增加习得和学识经验
-                    base_chara_state_common_settle(chara_id, add_time, 9, ability_level = character_data.ability[45], change_data_to_target_change = change_data)
-                    base_chara_experience_common_settle(chara_id, 82)
+                    # 按课表科目结算该学生的习得与科目经验，学习速度由师生等级差决定
+                    growth_handle.settle_student_class_gain(
+                        chara_id,
+                        character_id,
+                        ability_id,
+                        course_type,
+                        add_time,
+                        change_data_to_target_change=change_data,
+                    )
 
                     # 如果老师是玩家
                     if character_id == 0:
@@ -7567,6 +7584,157 @@ def handle_teach_add_just(
                     # 手动结算该状态
                     character_behavior.judge_character_status(chara_id)
                     # other_character_data.state = constant.CharacterStatus.STATUS_ARDER
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_STUDY_ADD_ADJUST)
+def handle_self_study_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （自习用）本节无教师时的降级行为，按自习基础值增加习得与所选科目的经验，不受师生等级差影响
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    from Script.System.Education_System import growth_handle, schedule_handle
+
+    now_course = schedule_handle.get_now_course(character_id)
+    # 查不到课表就没有科目可自习，回落为学识
+    ability_id = 45
+    if now_course is not None and now_course["ability_id"] > 0:
+        ability_id = now_course["ability_id"]
+    # 教师id传-1即走自习分支：基础值降档、速度系数恒取1.0
+    growth_handle.settle_student_class_gain(
+        character_id, -1, ability_id, schedule_handle.COURSE_TYPE_THEORY, add_time, change_data=change_data
+    )
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SKIP_CLASS_ADD_ADJUST)
+def handle_skip_class_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （翘课用）置翘课flag，小幅回复心情，本节不获得任何学习收益
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    from Script.System.Education_System import growth_handle
+
+    growth_data = growth_handle.get_child_growth(character_id)
+    growth_data.skip_class_flag = True
+    # 翘课换来的那点轻松：抑郁小幅回落。⚠️ 不给任何学习收益，这是翘课的代价
+    character_data: game_type.Character = cache.character_data[character_id]
+    if 19 in character_data.status_data:
+        character_data.status_data[19] = max(0, character_data.status_data[19] - add_time)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.INTERN_CLASS_ADD_ADJUST)
+def handle_intern_class_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （实习课用）找同场景中该岗位的在岗干员当导师，按师徒等级差学该岗位的能力
+    ⚠️ 实习课是三种个人式课型里唯一需要自己结算的：体育课与兴趣课执行的是自带效果串的既有行为，
+       而实习课的导师执行的是**他自己的工作行为**，那串效果只给他自己发工作产出，
+       里面没有任何把经验分给身边学徒的部分（对比理论课：教师的 teach 行为里有512效果专门结算全场学生）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    from Script.System.Education_System import growth_handle, schedule_handle
+
+    now_course = schedule_handle.get_now_course(character_id)
+    if now_course is None or now_course["course_type"] != schedule_handle.COURSE_TYPE_INTERN:
+        return
+    work_type_id = now_course["target"]
+    if work_type_id not in game_config.config_work_type:
+        return
+    ability_id = game_config.config_work_type[work_type_id].ability_id
+    if not ability_id:
+        return
+    # 导师 = 此刻和自己在同一场景、且正干着这个岗位的干员；找不到就是无人在岗，降级为见习
+    mentor_id = schedule_handle.get_intern_mentor(character_id, work_type_id)
+    growth_handle.settle_student_class_gain(
+        character_id, mentor_id, ability_id, schedule_handle.COURSE_TYPE_INTERN, add_time,
+        change_data=change_data,
+    )
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CHECK_REPORT_CARD_ADD_ADJUST)
+def handle_check_report_card_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （检查成绩单用）输出该女儿本学期的各科成长与出勤，按成绩档位加好感与亲密，并清除成绩单flag
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    from Script.System.Education_System import growth_handle
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_id = character_data.target_character_id
+    if target_id == character_id or target_id not in cache.character_data:
+        return
+    target_data: game_type.Character = cache.character_data[target_id]
+    growth_data = growth_handle.get_child_growth(target_id)
+
+    # 汇总本学期各科等级与出勤
+    ability_text_list = []
+    for ability_id in list(range(40, 50)) + list(range(70, 78)):
+        level = int(target_data.ability.get(ability_id, 0))
+        if level > 0:
+            ability_text_list.append("{0}{1}".format(
+                game_config.config_ability[ability_id].name, attr_calculation.judge_grade(level)))
+    total = growth_data.attend_class_count + growth_data.absent_count
+    rate = growth_data.attend_class_count / total if total else 1.0
+
+    info_text = _("\n※※※※※※※※※\n")
+    info_text += _("\n{0}的成绩单\n").format(target_data.name)
+    info_text += _("\n出勤：{0} 节，缺课：{1} 节（出勤率 {2}%）\n").format(
+        growth_data.attend_class_count, growth_data.absent_count, int(rate * 100))
+    info_text += _("\n各科水平：{0}\n").format("、".join(ability_text_list) if ability_text_list else _("尚无成绩"))
+    info_text += _("\n※※※※※※※※※\n")
+    now_draw = draw.NormalDraw()
+    now_draw.width = normal_config.config_normal.text_width
+    now_draw.text = info_text
+    now_draw.draw()
+
+    # 出勤率越高，检查成绩单时的反馈越正面
+    base_chara_favorability_and_trust_common_settle(
+        character_id, add_time, True, 0, target_data.ability[32], change_data, target_data.cid)
+    if rate >= 0.8:
+        base_chara_state_common_settle(target_id, add_time, 13, change_data_to_target_change=change_data)
+    growth_data.report_card_flag = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BAGGING_AND_MOVING_ADD_ADJUST)

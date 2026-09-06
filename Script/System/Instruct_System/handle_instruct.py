@@ -652,6 +652,18 @@ def handle_manage_basement():
     cache.now_panel_id = constant.Panel.MANAGE_BASEMENT
 
 
+@add_instruct(constant.Instruct.EDUCATION_MANAGE)
+def handle_education_manage():
+    """处理教育管理系统指令"""
+    cache.now_panel_id = constant.Panel.EDUCATION_MANAGE
+
+
+@add_instruct(constant.Instruct.CHECK_REPORT_CARD)
+def handle_check_report_card():
+    """处理检查成绩单指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.CHECK_REPORT_CARD)
+
+
 @add_instruct(constant.Instruct.MANAGE_DORMITORY)
 def handle_manage_dormitory():
     """处理宿舍管理系统指令"""

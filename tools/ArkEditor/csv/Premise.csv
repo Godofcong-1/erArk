@@ -341,6 +341,12 @@ in_garage,IN_GARAGE,地点_定位,在格纳库
 not_in_garage,NOT_IN_GARAGE,地点_定位,不在格纳库
 in_class_room,IN_CLASS_ROOM,地点_定位,在教室
 not_in_class_room,NOT_IN_CLASS_ROOM,地点_定位,不在教室
+in_practice_room,IN_PRACTICE_ROOM,地点_定位,在实践教室
+not_in_practice_room,NOT_IN_PRACTICE_ROOM,地点_定位,不在实践教室
+in_auditorium,IN_AUDITORIUM,地点_定位,在大礼堂
+not_in_auditorium,NOT_IN_AUDITORIUM,地点_定位,不在大礼堂
+have_intern_student,HAVE_INTERN_STUDENT,工作,此刻同场景有人正在自己这个岗位上实习
+not_have_intern_student,NOT_HAVE_INTERN_STUDENT,工作,此刻同场景没有人在自己这个岗位上实习
 in_teacher_office,IN_TEACHER_OFFICE,地点_定位,在教师办公室
 not_in_teacher_office,NOT_IN_TEACHER_OFFICE,地点_定位,不在教师办公室
 in_herb_garden,IN_HERB_GARDEN,地点_定位,在药田

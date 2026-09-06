@@ -508,5 +508,9 @@ class SecondBehavior:
     HAS_BEEN_DEEP_HYPNOSIS = "has_been_deep_hypnosis"
     """ 获得被深层催眠素质 """
     HAS_BEEN_COMPLETE_HYPNOSIS = "has_been_complete_hypnosis"
+    SHOW_OFF_STUDY = "show_off_study"
+    """ 向博士炫耀最近学到的东西 """
+    CAUGHT_SKIP_CLASS = "caught_skip_class"
+    """ 被博士撞见翘课 """
     """ 获得被完全催眠素质 """
 

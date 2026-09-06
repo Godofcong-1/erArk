@@ -369,6 +369,15 @@ class StateMachine:
     NIGHT_SALUTATION_FLAG_2 = 712
     """ 进入已晚安问候状态 """
 
+    EDUCATION_SELF_STUDY = 713
+    """ 上课：本节无可用教师，降级为自习 """
+    EDUCATION_SKIP_CLASS = 714
+    """ 上课：翘课，先离开教室再摸鱼 """
+    EDUCATION_MOVE_TO_COURSE_PLACE = 715
+    """ 上课：移动到个人式课型（体育/兴趣/实习）的上课地点 """
+    EDUCATION_DO_COURSE = 716
+    """ 上课：在个人式课型的地点执行该课对应的既有行为 """
+
     SELF_NIPPLE_CLAMP_SWITCH_CHANEG = 751
     """ 切换自己是否装备道具_乳头夹 """
     SELF_CLIT_CLAMP_SWITCH_CHANEG = 752

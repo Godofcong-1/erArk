@@ -570,6 +570,8 @@ class Entertainment:
     """ 自动ai工作数据 """
     describe: str
     """ 描述 """
+    class_ok: int
+    """ 是否可排为兴趣课(1可0否) """
 
 
 class Equipment_Condition:

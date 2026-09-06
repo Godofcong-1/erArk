@@ -886,3 +886,51 @@ def handle_prisoner_daily_management_set(character_id: int) -> int:
         return 1
     return 0
 
+
+@add_premise(constant_promise.Premise.HAVE_INTERN_STUDENT)
+def handle_have_intern_student(character_id: int) -> int:
+    """
+    校验此刻同场景有人正在自己这个岗位上实习（Plan 22 §3.21 的带教侧）
+    ⚠️ 这是 schedule_handle.get_intern_mentor() 的反向查询：学徒侧靠它找导师，
+       导师侧靠本前提知道自己身边有人在跟岗。两边读的是同一份判据，不会出现单向成立
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.Design import map_handle
+    from Script.System.Education_System import schedule_handle
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    work_type_id = character_data.work.work_type
+    if not work_type_id:
+        return 0
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    if scene_path_str not in cache.scene_data:
+        return 0
+    for other_id in cache.scene_data[scene_path_str].character_list:
+        if other_id == character_id:
+            continue
+        other_data: game_type.Character = cache.character_data[other_id]
+        if other_data.behavior.behavior_id != constant.Behavior.INTERN_CLASS:
+            continue
+        now_course = schedule_handle.get_now_course(other_id)
+        if now_course is None:
+            continue
+        if now_course["course_type"] == schedule_handle.COURSE_TYPE_INTERN and now_course["target"] == work_type_id:
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_HAVE_INTERN_STUDENT)
+def handle_not_have_intern_student(character_id: int) -> int:
+    """
+    校验此刻同场景没有人在自己这个岗位上实习
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_have_intern_student(character_id):
+        return 0
+    return 1

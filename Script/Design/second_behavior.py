@@ -131,6 +131,8 @@ def check_second_effect(
     if character_id != 0:
         # 初见和每日招呼结算
         judge_character_first_meet(character_id)
+        # 孩子见到玩家时的养成二段行为（Plan 22）
+        judge_child_growth_second_behavior(character_id)
         # 阴茎位置结算
         insert_position_effect(character_id, change_data)
         # 道具结算
@@ -298,6 +300,35 @@ def judge_character_first_meet(character_id: int):
                 character_get_second_behavior(character_id, "give_pan_in_day_first_meet")
             if handle_premise.handle_wear_socks(character_id) and handle_premise.handle_ask_give_socks_everyday(character_id):
                 character_get_second_behavior(character_id, "give_socks_in_day_first_meet")
+
+def judge_child_growth_second_behavior(character_id: int):
+    """
+    判断孩子与玩家同场景时的养成二段行为（Plan 22）
+    两件事都是"攒着等见面再兑现"：
+        炫耀     —— 能力升级发生在玩家睡觉时的睡眠结算里，当场没有观众（方案 §3.15）
+        翘课被抓 —— 翘课的孩子撞见了玩家（方案 §3.19）
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    growth_data = character_data.child_growth
+    if growth_data is None:
+        return
+    pl_character_data: game_type.Character = cache.character_data[0]
+    # 需要与玩家同场景，且双方都不在睡觉、玩家不在男隐或双隐的隐奸中，口径与初见判定一致
+    if character_data.position != pl_character_data.position:
+        return
+    if not handle_premise.handle_action_not_sleep(character_id) or not handle_premise.handle_action_not_sleep(0):
+        return
+    if handle_premise.handle_hidden_sex_mode_3_or_4(0):
+        return
+    # 翘课被抓优先于炫耀：正翘着课的孩子不会先炫耀成绩
+    if growth_data.skip_class_flag:
+        character_get_second_behavior(character_id, "caught_skip_class")
+        return
+    if growth_data.show_off_ability:
+        character_get_second_behavior(character_id, "show_off_study")
+
 
 def insert_position_effect(character_id: int, change_data: game_type.CharacterStatusChange):
     """

@@ -58,6 +58,9 @@ def update_new_day():
                 now_draw.draw()
         # 清零香薰疗愈的flag
         character_data.sp_flag.aromatherapy = 0
+        # 清零翘课flag：翘课只翘一天，次日重新按课表走（Plan 22 §3.19）
+        if character_data.child_growth is not None:
+            character_data.child_growth.skip_class_flag = False
         if character_id:
             # 全量重算异常位掩码，兜底修复各状态修改点漏刷新导致的过期缓存位（每日一次，开销可忽略）
             handle_premise.refresh_unnormal_flag(character_id)

@@ -507,5 +507,9 @@ class SecondBehavior_Int:
     HAS_BEEN_DEEP_HYPNOSIS = 1502
     """ 获得被深层催眠素质 """
     HAS_BEEN_COMPLETE_HYPNOSIS = 1503
+    SHOW_OFF_STUDY = 1328
+    """ 向博士炫耀最近学到的东西 """
+    CAUGHT_SKIP_CLASS = 1329
+    """ 被博士撞见翘课 """
     """ 获得被完全催眠素质 """
 

@@ -89,6 +89,8 @@ int,str,str,int,str,str
 208,recruit,招募干员,60,both,工作
 209,invite_visitor,邀请访客,60,both,工作
 210,read_book,读书,30,both,工作
+211,self_study,自习,45,npc,工作
+212,skip_class,翘课,45,npc,工作
 213,teach,授课,45,both,工作
 214,attent_class,上学,45,both,工作
 215,maintenance_facilities,维护设施,60,both,工作
@@ -102,6 +104,8 @@ int,str,str,int,str,str
 224,investigate_resource_market,研判资源市场,60,both,工作
 225,perform_surgery,进行手术治疗,60,both,工作
 226,ward_round,病房查房,45,both,工作
+229,check_report_card,检查成绩单,15,both,日常
+230,intern_class,实习,45,npc,工作
 
 251,morning_salutation_1,早安问候：叫起床,5,npc,工作_助理
 252,morning_salutation_2,早安问候：早安吻,5,npc,工作_助理
@@ -690,6 +694,8 @@ int,str,str,int,str,str
 1325,lay_soft_egg,结算体外排出无壳卵,0,npc,二段结算_生育
 1326,soft_egg_fertilized,结算体外卵受精,0,npc,二段结算_生育
 1327,soft_egg_born,无壳卵孵化生产前的对话,0,npc,二段结算_生育
+1328,show_off_study,向博士炫耀最近学到的东西,0,npc,二段结算
+1329,caught_skip_class,被博士撞见翘课,0,npc,二段结算
 
 1331,first_meet,初次见面,0,npc,二段结算
 1332,day_hello,每日打招呼,0,npc,二段结算

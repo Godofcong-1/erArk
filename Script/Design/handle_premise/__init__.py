@@ -299,6 +299,52 @@ def get_weight_from_premise_dict(talk_premise_dict: set, character_id: int, calc
     return now_weight, now_premise_data
 
 
+def get_now_course_type(character_id: int) -> int:
+    """
+    取角色当前这一节在上（或在教）的课型，供 CourseType 型 CVP token 使用
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 课型编号0~5，不在上课则为-1
+    """
+    from Script.System.Education_System import schedule_handle
+
+    # 教师优先：同一个人不可能既在授课又在听课
+    teaching = schedule_handle.get_now_teaching(character_id)
+    if teaching is not None:
+        return teaching["course_type"]
+    now_course = schedule_handle.get_now_course(character_id)
+    if now_course is not None:
+        return now_course["course_type"]
+    return -1
+
+
+def get_now_course_ability(character_id: int) -> int:
+    """
+    取角色当前这一节课的科目能力id，供 Course 型 CVP token 使用
+    ⚠️ 体育课与兴趣课没有"科目"这个概念（学的是该活动自带的东西），恒返回-1不成立；
+       实习课的科目取该岗位 WorkType.csv 的 ability_id 列
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 科目能力id，取不到则为-1
+    """
+    from Script.System.Education_System import schedule_handle
+
+    teaching = schedule_handle.get_now_teaching(character_id)
+    if teaching is not None:
+        return teaching["ability_id"]
+    now_course = schedule_handle.get_now_course(character_id)
+    if now_course is None:
+        return -1
+    if now_course["course_type"] in schedule_handle.CLASSROOM_COURSE_TYPE_SET:
+        return now_course["ability_id"]
+    if now_course["course_type"] == schedule_handle.COURSE_TYPE_INTERN:
+        if now_course["target"] in game_config.config_work_type:
+            return game_config.config_work_type[now_course["target"]].ability_id
+    return -1
+
+
 def handle_comprehensive_value_premise(character_id: int, premise_all_value_list: list) -> int:
     """
     综合型基础数值前提
@@ -332,7 +378,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
         if final_character_id not in cache.npc_id_got:
             return 0
 
-    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场,Dirty污浊,Bondage绳子捆绑,Roleplay角色扮演,PenisPos阴茎位置,ShootPos射精位置,Relationship身份关系
+    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场,Dirty污浊,Bondage绳子捆绑,Roleplay角色扮演,PenisPos阴茎位置,ShootPos射精位置,Relationship身份关系,Course当前课程科目,CourseType当前课型,CourseShowOff待炫耀的已升级科目
     if (
         len(premise_all_value_list[1]) > 1 and
         "Time" not in premise_all_value_list[1] and
@@ -403,6 +449,24 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
                 final_value = 1
             else:
                 final_value = 0
+    elif premise_all_value_list[1][0] == "C":
+        # 上课前提（Plan 22 §3.17）：一条分支覆盖全部18门科目与6种课型，日后加科目零改动
+        # ⚠️ 不新增字段，当前课程由课表现算——教师侧查全局课表、学生侧查个人课表，
+        #    与 <课> 状态标识、上课结算读的是同一个入口，三处不会各说各话
+        # ⚠️ 三者判序不能改：CourseShowOff 与 CourseType 的字符串里都含有 "Course"，
+        #    长的必须先判，否则会被 Course 分支抢先吃掉（而且不报错，只是永远不成立）
+        if "CourseShowOff" in premise_all_value_list[1]:
+            growth_data = final_character_data.child_growth
+            if growth_data is None:
+                return 0
+            return 1 if type_son_id in growth_data.show_off_ability else 0
+        if "CourseType" in premise_all_value_list[1]:
+            now_type = get_now_course_type(final_character_id)
+            return 1 if now_type == type_son_id else 0
+        if "Course" in premise_all_value_list[1]:
+            now_ability_id = get_now_course_ability(final_character_id)
+            return 1 if now_ability_id == type_son_id else 0
+        return 0
     elif premise_all_value_list[1][0] == "R":
         if "Roleplay" in premise_all_value_list[1]:
             if type_son_id in final_character_data.hypnosis.roleplay:

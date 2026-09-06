@@ -348,6 +348,13 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
             target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
             premise_data = new_premise_data
+    # 然后判断上课，需要本节次在个人课表上排了课（Plan 22 §2.8）
+    # ⚠️ 排在工作之前：孩子的"工作"就是上学，走到下面的工作链只会随机挑一间教室；
+    #    成年干员自选了课时，本节同样以课优先
+    if judge == 0:
+        from Script.System.Education_System import class_ai
+
+        judge = class_ai.judge_class_state_machine(character_id)
     # 然后判断工作，需要有工作，且在工作时间或到岗时间
     if judge == 0 and handle_premise.handle_have_work(character_id) and handle_premise.handle_to_work_time_or_work_time(character_id):
         # 当前工作数据

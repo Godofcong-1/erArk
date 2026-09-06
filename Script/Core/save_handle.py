@@ -340,6 +340,10 @@ def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
             # 无壳卵生旧存档兼容：补全体外排卵机会标记
             if pregnancy_data is not None and not hasattr(pregnancy_data, "external_ovulation_chance"):
                 pregnancy_data.external_ovulation_chance = False
+            # 生长养成系统旧存档兼容：补全养成数据结构体的挂载位（Plan 22）
+            # 默认None，由 growth_handle.get_child_growth() 惰性创建，此处只保证属性存在
+            if not hasattr(character, "child_growth"):
+                character.child_growth = None
             # 无壳卵生旧存档兼容：无壳卵生种族此前按单胎胎生运行，读档时一次性清除其正在进行的胎生孕程（受精/妊娠/临盆及伴生状态），产后/育儿/泌乳与已出生的孩子保留
             _clear_soft_egg_race_pregnancy(character, soft_egg_enabled)
             if pl_collection is not None and not hasattr(pl_collection, "held_eggs"):
@@ -545,6 +549,13 @@ def input_load_save(save_id: str):
         if all_cid not in loaded_dict["rhodes_island"].materials_resouce:
             loaded_dict["rhodes_island"].materials_resouce[all_cid] = 0
             update_count += 1
+    # 生长养成系统旧存档兼容：补全全局课表与孩子日程模板（Plan 22）
+    if not hasattr(loaded_dict["rhodes_island"], "class_schedule"):
+        loaded_dict["rhodes_island"].class_schedule = {}
+        update_count += 1
+    if not hasattr(loaded_dict["rhodes_island"], "child_schedule_template"):
+        loaded_dict["rhodes_island"].child_schedule_template = {}
+        update_count += 1
     # 更新罗德岛的设施等级
     for all_cid in game_config.config_facility:
         # 没有记录的设施改为初始等级0

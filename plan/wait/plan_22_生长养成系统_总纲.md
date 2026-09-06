@@ -176,6 +176,15 @@
 9. **能力等级封顶 8 级**：`attr_calculation.py:559` 起 `value >= 8` 即 EX。`Ability_Lv_Adjust.csv` 虽有 0~10 行，但评级与养成设计一律以 8 为上限。
 10. **时段与节次的关系**：`judge_entertainment_time`（`game_time.py:497`）只分三段（9~12 / 14~18 / 19~22），`handle_work_time`（`handle_premise_time.py:368`）的工作时间只覆盖工作日前两段。按节排课需要在既有时段之上再切一层节次（一期方案 §3.2），**晚上时段不排课**。
 
+11. ⚠️ **能力成长链走「状态→珠→需求表」，不是「经验→阈值」**（2026-09-06 实施中确认，已推翻一期方案 §3.1 的原假设）：
+    - `Character.ability` 存的是**等级**，全项目没有 `ability_exp` 之类的能力经验字段
+    - `attr_calculation.py:504 get_experience_level_weight` 是**死代码**，全仓库零调用方，切勿据此设计
+    - 真实链条：行为 → `base_chara_state_common_settle(状态9 习得)` + `base_chara_experience_common_settle(科目经验)`
+      → 玩家睡觉时 `sleep_settle.py:113 settle_character_juel()` 把习得状态值按 `get_juel` 递减换算为习得珠(juel 9) 并清零
+      → `handle_ability.py:58 gain_ability()` 按 `AbilityUp.csv` 的 `J9|n & E<经验id>|n` 需求升级并扣珠
+    - 推论一：**习得珠通用、科目经验分科**，珠池决定总成长量、经验决定单科高度
+    - 推论二：**性技能力的升级需求是真实性交经验**（膣技 74 要 `E61`），课堂给不了，理论课只能攒珠
+    - 推论三：升级在**当晚睡眠结算**兑现，不是当场
 ### 2.4 引用全量清单
 
 ⚠️ 一期的教育区改建会把教室从 1 间变成 10 间并新增两种场景标签，下表是改建前对 `Class_Room` / 授课链的**全部读写点**（2026-09-06 于 `master @ 6aa5090e3` 穷举，已排除 `__pycache__`、`data/po/`、`data/data.json` 等生成物与 `备份/` 目录）。

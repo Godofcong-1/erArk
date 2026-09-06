@@ -516,6 +516,57 @@ def judge_entertainment_time(character_id: int) -> int:
     return 0
 
 
+CLASS_PERIOD_START = [(9, 0), (9, 45), (10, 30), (11, 15), (14, 0), (14, 45), (15, 30), (16, 15), (17, 0)]
+""" 上课节次的起始时间（Plan 22）：上午4节 + 下午5节，每节45分钟，与既有 teach / attent_class 行为的时长一致。
+    晚上时段（19~22）不排课，留给日程活动 """
+
+CLASS_PERIOD_MINUTE = 45
+""" 每节课的时长（分钟） """
+
+
+def get_class_period_by_time(now_time: datetime.datetime) -> int:
+    """
+    把一个时间点换算为上课节次编号（Plan 22）
+    Keyword arguments:
+    now_time -- 要换算的时间
+    Return arguments:
+    int -- 节次编号0~8，不在任何节次内则为-1
+    """
+    now_minute = now_time.hour * 60 + now_time.minute
+    for period, (hour, minute) in enumerate(CLASS_PERIOD_START):
+        start = hour * 60 + minute
+        if start <= now_minute < start + CLASS_PERIOD_MINUTE:
+            return period
+    return -1
+
+
+def get_class_period(character_id: int) -> int:
+    """
+    校验角色当前处于第几节课（Plan 22）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 节次编号0~8，不在任何节次内则为-1
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time: datetime.datetime = character_data.behavior.start_time
+    if now_time is None:
+        now_time = cache.game_time
+    return get_class_period_by_time(now_time)
+
+
+def get_now_semester() -> tuple:
+    """
+    取当前学期（Plan 22）。游戏一年只有3/6/9/12四个季月，一个季月即一个学期，不另造时间周期
+    Keyword arguments:
+    无
+    Return arguments:
+    tuple -- (年int, 季月int)，季月取值为3/6/9/12
+    """
+    now_time: datetime.datetime = cache.game_time
+    return now_time.year, get_season_month(now_time.month)
+
+
 # def judge_attend_class_today(character_id: int) -> bool:
 #     """
 #     校验角色今日是否需要上课

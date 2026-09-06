@@ -2968,3 +2968,53 @@ def handle_add_1_h_experience(
     """
     base_chara_experience_common_settle(character_id, 155, 1, change_data=change_data)
 
+
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.SHOW_OFF_STUDY)
+def handle_show_off_study(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    （炫耀用）女儿向博士炫耀最近升级的能力，加好感与亲密，并清空待炫耀记录
+    ⚠️ 能力升级发生在玩家睡觉时的睡眠结算里，当场没有观众；本二段行为把这份成就感延后到
+       孩子下次与玩家同场景时兑现（方案 §3.15 的延迟炫耀）
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    from Script.Settle.common_default import base_chara_favorability_and_trust_common_settle
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    growth_data = character_data.child_growth
+    if growth_data is None or not growth_data.show_off_ability:
+        return
+    # 炫耀是亲子互动而非学习行为，所以只加好感与心情，不给习得
+    base_chara_favorability_and_trust_common_settle(
+        0, 30, True, 0, character_data.ability[32], change_data, character_data.cid)
+    base_chara_state_common_settle(character_id, 30, 13, change_data_to_target_change=change_data)
+    growth_data.show_off_ability = {}
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.CAUGHT_SKIP_CLASS)
+def handle_caught_skip_class(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    （翘课被抓用）翘课中的孩子与玩家同场景时被撞见，当场清掉翘课flag（本日剩余节次回去上课），
+    并按被抓的心虚加抑郁与恐怖
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    growth_data = character_data.child_growth
+    if growth_data is None or not growth_data.skip_class_flag:
+        return
+    # 被抓个正着：翘课到此为止，本日剩余节次重新按课表走
+    growth_data.skip_class_flag = False
+    # 心虚与害怕，数值取一节课的量级（45分钟），与翘课本身给的抑郁回落大致相抵
+    base_chara_state_common_settle(character_id, 45, 19, change_data=change_data)
+    base_chara_state_common_settle(character_id, 45, 18, change_data=change_data)

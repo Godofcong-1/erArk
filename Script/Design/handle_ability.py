@@ -116,6 +116,11 @@ def gain_ability(character_id: int):
             now_draw_succed = draw.NormalDraw()
             now_draw_succed.text = _("{0}的{1}提升到{2}级\n").format(character_data.name, ability_name, str(ability_level+1))
             now_draw_succed.draw()
+
+            # 孩子升级时记一笔待炫耀（Plan 22 §3.15 延迟炫耀）
+            # ⚠️ 升级发生在玩家睡觉时的睡眠结算里，当场没有观众，所以攒着等下次见到玩家再说
+            if character_data.child_growth is not None:
+                character_data.child_growth.show_off_ability[ability_cid] = character_data.ability[ability_cid]
     # print(f"debug {character_data.name}的睡觉结算素质结束")
 
 
