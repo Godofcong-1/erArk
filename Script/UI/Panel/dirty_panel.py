@@ -203,7 +203,7 @@ class SeeCharacterBodyPanel:
                 if cache.all_system_setting.draw_setting[10]:
                     # 检查是否有差分文本
                     dirty_diff_text_cid = self.get_dirty_diff_text_cid(i, semen_level)
-                    # 如果是胸部、臀部、腿部、后穴、阴道、子宫则优先使用差分文本，如果没有则使用通用文本
+                    # 如果有差分文本则优先使用差分文本，如果没有则使用通用文本
                     if dirty_diff_text_cid != "" and dirty_diff_text_cid in game_config.ui_text_data['dirty_full_diff']:
                         dirty_text_context = game_config.ui_text_data['dirty_full_diff'][dirty_diff_text_cid]
                     else:
@@ -402,12 +402,15 @@ class SeeCharacterBodyPanel:
         Return arguments:
         str -- 污浊差分文本cid，如果没有则返回空字符串
         """
-        # 检查部位索引是否在指定范围内
-        if body_part_index not in {3, 6, 7, 8, 10, 11}:
-            return ""
         part_name = game_config.config_body_part[body_part_index].name
+        # 脸部、口腔、腋部、手部
+        if body_part_index in {1, 2, 4, 5}:
+            talent_id = handle_talent.have_age_talent(self.character_id)
+            talent_name = game_config.config_talent[talent_id].name
+            dirty_diff_text_cid = f"{_(part_name, revert_translation = True)}{talent_name}精液污浊{str(semen_level)}"
+            return dirty_diff_text_cid
         # 胸部
-        if body_part_index == 3:
+        elif body_part_index == 3:
             talent_id = handle_talent.have_chest_talent(self.character_id)
             talent_name = game_config.config_talent[talent_id].name
             dirty_diff_text_cid = f"{_(part_name, revert_translation = True)}{talent_name}精液污浊{str(semen_level)}"
