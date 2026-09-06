@@ -107,5 +107,5 @@ description: 为 erArk 新增一个玩家指令及其行为、前提、结算、
 
 ## 完整案例
 
-避孕套道具系统：`plan/wait/plan_06_避孕套道具系统.md`（8 轮执行记录）与 `Script/System/Item_System/道具系统设计文档.md`。
+避孕套道具系统：`plan/done/plan_06_避孕套道具系统.md`（8 轮执行记录）与 `Script/System/Item_System/道具系统设计文档.md`。
 一段/二段行为选型与礼物药剂口上：`plan/done/plan_14_怀孕系统四种药物.md`（含二段行为方案返工为一段口上方案的完整记录）。
