@@ -161,6 +161,18 @@ class System_Setting_Panel:
                 now_setting_flag = setting[cid] # 当前设置的值
                 option_len = len(setting_option[cid]) # 选项的长度
 
+                # 如果是基础设置
+                if type_name == _("基础"):
+                    # 第13项生殖方式开关，本身不是可切换的选项，改为跳转到子面板逐个修改三种生殖方式
+                    if cid == 13:
+                        new_button_text = _(" [修改生殖方式开关] ")
+                        new_button_len = max(len(new_button_text) * 2, 30)
+                        new_button_draw = draw.LeftButton(new_button_text, str(cid) + new_button_text, new_button_len, cmd_func=self.birth_type_setting_panel_draw)
+                        new_button_draw.draw()
+                        return_list.append(new_button_draw.return_text)
+                        line_feed.draw()
+                        continue
+
                 # 如果是绘制设置
                 if type_name == _("绘制"):
                     # 第12项，则加一个[修改字体大小]的按钮
@@ -363,6 +375,137 @@ class System_Setting_Panel:
         now_draw.text = info_text
         now_draw.style = 'gold_enrod'
         now_draw.draw()
+
+    def birth_type_setting_panel_draw(self):
+        """绘制生殖方式开关子面板，逐个开关多胎胎生、带壳卵生、无壳卵生三种生殖方式"""
+        while 1:
+            return_list = []
+            title_text = _("生殖方式开关")
+            title_draw = draw.TitleLineDraw(title_text, self.width)
+            title_draw.draw()
+
+            # 输出提示信息
+            info_draw = draw.NormalDraw()
+            info_text = _(" \n ○点击[生殖方式名]显示[详细说明]，点击[当前状态]即可[切换开关]\n")
+            info_text += _(" ○被关闭的生殖方式，其所属种族的干员将全部改为单胎胎生\n")
+            info_text += _(" ○关闭时会立即清除该生殖方式的存量数据，该操作不可撤销\n\n")
+            info_draw.text = info_text
+            info_draw.width = self.width
+            info_draw.draw()
+
+            # 遍历三种可开关的生殖方式
+            setting = cache.all_system_setting.birth_type_setting
+            for birth_type in game_config.config_birth_type_setting:
+                setting_data = game_config.config_birth_type_setting[birth_type]
+                # 生殖方式名，点击显示详细说明
+                button_text = f"  [{setting_data.name}]： "
+                button_len = max(len(button_text) * 2, 40)
+                button_draw = draw.LeftButton(button_text, button_text, button_len, cmd_func=self.birth_type_name_info, args=(birth_type,))
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+                # 如果没有该键，则补为开启
+                if birth_type not in setting:
+                    setting[birth_type] = 1
+                now_setting_flag = setting[birth_type]
+                # 当前状态，点击切换开关；已关闭的显示为灰色
+                option_text = game_config.config_birth_type_setting_option[birth_type][now_setting_flag]
+                state_text = f" [{option_text}] "
+                state_len = max(len(state_text) * 2, 30)
+                draw_style = "standard"
+                if not now_setting_flag:
+                    draw_style = "deep_gray"
+                state_draw = draw.LeftButton(state_text, str(birth_type) + state_text, state_len, normal_style=draw_style, cmd_func=self.change_birth_type_setting, args=(birth_type,))
+                state_draw.draw()
+                return_list.append(state_draw.return_text)
+                line_feed.draw()
+
+            line_feed.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
+    def birth_type_name_info(self, birth_type: int):
+        """
+        绘制某个生殖方式的详细说明
+        Keyword arguments:
+        birth_type -- 生育方式编号
+        """
+        setting_data = game_config.config_birth_type_setting[birth_type]
+        line = draw.LineDraw("-", self.width)
+        line.draw()
+        now_draw = draw.WaitDraw()
+        # 将介绍信息中的换行符替换为实际换行
+        info_text = setting_data.info.replace("\\n", " \n")
+        now_draw.text = f"\n {info_text}\n"
+        now_draw.width = self.width
+        now_draw.draw()
+        line = draw.LineDraw("-", self.width)
+        line.draw()
+
+    def change_birth_type_setting(self, birth_type: int):
+        """
+        切换某个生殖方式的开关，由开启改为关闭时进行二次确认并立即清除该生殖方式的存量数据
+        Keyword arguments:
+        birth_type -- 生育方式编号
+        """
+        from Script.System.Pregnancy_System import egg_handle
+
+        setting = cache.all_system_setting.birth_type_setting
+        setting_data = game_config.config_birth_type_setting[birth_type]
+        # 由关闭改为开启：直接生效，无需确认（重新开启后自下一次判定起恢复该生殖方式）
+        if not setting.get(birth_type, 1):
+            setting[birth_type] = 1
+            return
+        # 由开启改为关闭：先二次确认，再清除存量数据
+        if not self.confirm_close_birth_type(setting_data.name, setting_data.info):
+            return
+        setting[birth_type] = 0
+        clear_text = egg_handle.clear_birth_type_data(birth_type)
+        line_feed.draw()
+        now_draw = draw.WaitDraw()
+        now_draw.text = _("\n 已关闭[{0}]，{1}\n\n").format(setting_data.name, clear_text)
+        now_draw.style = "gold_enrod"
+        now_draw.width = self.width
+        now_draw.draw()
+
+    def confirm_close_birth_type(self, name: str, info: str) -> bool:
+        """
+        关闭生殖方式开关前的二次确认
+        Keyword arguments:
+        name -- 生殖方式名
+        info -- 该生殖方式的详细说明
+        Return arguments:
+        bool -- 是否确认关闭
+        """
+        while 1:
+            line_feed.draw()
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+            now_draw = draw.NormalDraw()
+            info_text = info.replace("\\n", " \n")
+            now_draw.text = _("\n 即将关闭[{0}]\n\n {1}\n\n").format(name, info_text)
+            now_draw.width = self.width
+            now_draw.draw()
+            warning_draw = draw.NormalDraw()
+            warning_draw.text = _(" ※该操作会立即清除对应的存量数据，且无法撤销\n\n")
+            warning_draw.style = "warning"
+            warning_draw.width = self.width
+            warning_draw.draw()
+            yes_draw = draw.CenterButton(_("[确认关闭]"), _("确认关闭"), window_width / 2)
+            yes_draw.draw()
+            no_draw = draw.CenterButton(_("[取消]"), _("取消"), window_width / 2)
+            no_draw.draw()
+            line_feed.draw()
+            yrn = flow_handle.askfor_all([yes_draw.return_text, no_draw.return_text])
+            if yrn == yes_draw.return_text:
+                return True
+            elif yrn == no_draw.return_text:
+                return False
 
     def change_ban_list(self):
         """修改已禁止干员列表"""

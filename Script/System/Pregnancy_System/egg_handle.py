@@ -24,9 +24,10 @@ window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
 
-def get_birth_type(character_id: int) -> int:
+def get_race_birth_type(character_id: int) -> int:
     """
-    获取角色的生育方式
+    获取角色种族配置中的原始生育方式（不受系统设置的生殖方式开关影响）
+    \n仅供存量数据清理与旧存档迁移使用，游戏逻辑一律用开关感知的 get_birth_type
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -38,6 +39,38 @@ def get_birth_type(character_id: int) -> int:
         return pregnancy_constant.BIRTH_TYPE_SINGLE
     # CSV空值字段会被删除，缺列时兜底为单胎胎生
     return getattr(race_config, "birth_type", pregnancy_constant.BIRTH_TYPE_SINGLE)
+
+
+def is_birth_type_enabled(birth_type: int) -> bool:
+    """
+    判断某生育方式在系统设置中是否处于开启状态
+    \n单胎胎生是关闭后的兜底形态，没有开关，恒为开启；设置缺失时一律兜底为开启
+    Keyword arguments:
+    birth_type -- 生育方式编号
+    Return arguments:
+    bool -- 是否开启
+    """
+    if birth_type not in pregnancy_constant.BIRTH_TYPE_SETTING_LIST:
+        return True
+    all_setting = getattr(cache, "all_system_setting", None)
+    birth_setting = getattr(all_setting, "birth_type_setting", None) if all_setting is not None else None
+    if not isinstance(birth_setting, dict):
+        return True
+    return bool(birth_setting.get(birth_type, 1))
+
+
+def get_birth_type(character_id: int) -> int:
+    """
+    获取角色的生育方式（开关感知：该生育方式被系统设置关闭时一律按单胎胎生处理）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 生育方式（1单胎胎生，2多胎胎生，11带壳卵生，12无壳卵生）
+    """
+    now_birth_type = get_race_birth_type(character_id)
+    if not is_birth_type_enabled(now_birth_type):
+        return pregnancy_constant.BIRTH_TYPE_SINGLE
+    return now_birth_type
 
 
 def is_egg_soft(character_id: int) -> bool:
@@ -82,6 +115,94 @@ def is_multiple_birth(character_id: int) -> bool:
     bool -- 是否多胎胎生
     """
     return get_birth_type(character_id) == pregnancy_constant.BIRTH_TYPE_MULTIPLE
+
+
+def clear_birth_type_data(birth_type: int) -> str:
+    """
+    关闭某生育方式的开关时，清除该生育方式的全部存量数据，并返回给玩家的汇报文案
+    \n多胎胎生：原始种族为多胎的角色，本次胎数重置为1（同卵双胞胎是单胎种族的机制，不做改动）
+    \n带壳卵生/无壳卵生：清除该种族角色已产下的全部卵、博士已拿走的卵索引，并重掷当日被替换为照料卵的娱乐时段；
+    \n无壳卵生另清除博士持有的体外卵块与当日的体外排卵机会
+    Keyword arguments:
+    birth_type -- 被关闭的生育方式编号
+    Return arguments:
+    str -- 清除结果的汇报文案
+    """
+    from Script.Design import handle_npc_ai
+
+    pl_character_data: game_type.Character = cache.character_data[0]
+    pl_collection = pl_character_data.pl_collection
+    chara_count = 0
+    egg_count = 0
+    held_egg_count = 0
+    soft_egg_count = 0
+    fetus_chara_count = 0
+    # 遍历全角色（含未招募干员），按种族原始生育方式判定归属，此时开关已关闭不能用 get_birth_type
+    for character_id in cache.character_data:
+        if character_id == 0:
+            continue
+        if get_race_birth_type(character_id) != birth_type:
+            continue
+        character_data: game_type.Character = cache.character_data[character_id]
+        pregnancy_data = character_data.pregnancy
+        # 多胎胎生：把正在进行的多胎孕程重置为单胎
+        if birth_type == pregnancy_constant.BIRTH_TYPE_MULTIPLE:
+            if getattr(pregnancy_data, "fetus_count", 0) > 1:
+                pregnancy_data.fetus_count = 1
+                fetus_chara_count += 1
+            continue
+        # 卵生：清空该角色持有的全部卵
+        now_eggs = getattr(pregnancy_data, "eggs", None)
+        if isinstance(now_eggs, dict) and len(now_eggs):
+            egg_count += len(now_eggs)
+            chara_count += 1
+            pregnancy_data.eggs = {}
+        # 无壳卵生：当日的体外排卵机会一并清除
+        if birth_type == pregnancy_constant.BIRTH_TYPE_EGG_SOFT:
+            pregnancy_data.external_ovulation_chance = False
+        # 重掷当日被替换为照料卵的娱乐时段，避免角色空转执行孵化卵行为
+        if pregnancy_constant.TEND_EGGS_ENTERTAINMENT_ID in character_data.entertainment.entertainment_type:
+            handle_npc_ai.get_chara_entertainment(character_id)
+    # 博士已拿走的卵索引：值为(角色id, 卵编号)，按母亲的原始生育方式过滤
+    held_eggs = getattr(pl_collection, "held_eggs", None)
+    if birth_type != pregnancy_constant.BIRTH_TYPE_MULTIPLE and isinstance(held_eggs, dict):
+        for held_id in list(held_eggs.keys()):
+            mother_id = held_eggs[held_id][0]
+            if mother_id not in cache.character_data:
+                continue
+            if get_race_birth_type(mother_id) != birth_type:
+                continue
+            del held_eggs[held_id]
+            held_egg_count += 1
+    # 博士持有的体外无壳卵块
+    soft_eggs = getattr(pl_collection, "soft_eggs", None)
+    if birth_type == pregnancy_constant.BIRTH_TYPE_EGG_SOFT and isinstance(soft_eggs, dict):
+        for soft_egg_id in list(soft_eggs.keys()):
+            mother_id = soft_eggs[soft_egg_id].get("mother_id", -1)
+            if mother_id in cache.character_data and get_race_birth_type(mother_id) != birth_type:
+                continue
+            del soft_eggs[soft_egg_id]
+            soft_egg_count += 1
+    # 汇报文案
+    if birth_type == pregnancy_constant.BIRTH_TYPE_MULTIPLE:
+        if fetus_chara_count:
+            return _("已将{0}名干员正在进行的多胎孕程重置为单胎").format(fetus_chara_count)
+        return _("没有需要清除的数据")
+    draw_text = ""
+    if egg_count:
+        draw_text += _("已清除{0}名干员持有的{1}枚卵").format(chara_count, egg_count)
+        if held_egg_count:
+            draw_text += _("（其中博士持有{0}枚）").format(held_egg_count)
+    elif held_egg_count:
+        draw_text += _("已清除博士持有的{0}枚卵").format(held_egg_count)
+    if soft_egg_count:
+        if draw_text:
+            draw_text += _("，另清除了博士持有的{0}团体外卵块").format(soft_egg_count)
+        else:
+            draw_text += _("已清除博士持有的{0}团体外卵块").format(soft_egg_count)
+    if not draw_text:
+        draw_text = _("没有需要清除的数据")
+    return draw_text
 
 
 def add_egg(character_id: int, fertilized: bool, soft: bool = False):

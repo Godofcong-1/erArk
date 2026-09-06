@@ -231,17 +231,22 @@ def _migrate_first_record_flat_fields(character) -> None:
             delattr(first_record, old_attr)
 
 
-def _clear_soft_egg_race_pregnancy(character: game_type.Character) -> None:
+def _clear_soft_egg_race_pregnancy(character: game_type.Character, soft_egg_enabled: bool = True) -> None:
     """
     清除无壳卵生种族角色正在进行的胎生孕程（旧存档兼容，方案 plan_19 §11-6 确认口径）
     \n无壳卵生（birth_type=12）实装前被归一化为单胎胎生，旧存档中该种族角色可能持有受精/妊娠/临盆素质；
     \n读档时一次性清除 20受精/21妊娠/22临盆/26孕肚/35无意识妊娠 及本次胎数/同卵双胞胎/妊娠加速累计，
     \n23产后/24育儿/27泌乳与已出生的孩子不受影响；非无壳卵生或未在孕程中的角色不做任何改动
+    \n※本函数每次读档都会执行：无壳卵生开关关闭时该种族按单胎胎生运行，其孕程是正常妊娠，必须整体跳过，
+    \n否则玩家每读一次档就会被清空一次孕程（plan_21）
     Keyword arguments:
     character -- 角色数据
+    soft_egg_enabled -- 无壳卵生开关是否开启（关闭时不做任何处理）
     Return arguments:
     无
     """
+    if not soft_egg_enabled:
+        return
     talent_data = getattr(character, "talent", None)
     pregnancy_data = getattr(character, "pregnancy", None)
     if not isinstance(talent_data, dict) or pregnancy_data is None:
@@ -279,6 +284,16 @@ def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
         for map_data_value in loaded_cache.map_data.values():
             if hasattr(map_data_value, "map_path"):
                 map_data_value.map_path = _normalize_save_path(map_data_value.map_path)
+
+    # 无壳卵生开关：本函数早于 update_settings 执行，且此时全局cache尚未被替换，只能从存档自身的设置对象里读
+    # 旧存档没有该设置项，.get兜底为开启，正是旧存档迁移应有的行为
+    from Script.System.Pregnancy_System import pregnancy_constant
+
+    loaded_setting = getattr(loaded_cache, "all_system_setting", None)
+    loaded_birth_setting = getattr(loaded_setting, "birth_type_setting", None) if loaded_setting is not None else None
+    soft_egg_enabled = True
+    if isinstance(loaded_birth_setting, dict):
+        soft_egg_enabled = bool(loaded_birth_setting.get(pregnancy_constant.BIRTH_TYPE_EGG_SOFT, 1))
 
     character_data = getattr(loaded_cache, "character_data", None)
     if isinstance(character_data, dict):
@@ -326,7 +341,7 @@ def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
             if pregnancy_data is not None and not hasattr(pregnancy_data, "external_ovulation_chance"):
                 pregnancy_data.external_ovulation_chance = False
             # 无壳卵生旧存档兼容：无壳卵生种族此前按单胎胎生运行，读档时一次性清除其正在进行的胎生孕程（受精/妊娠/临盆及伴生状态），产后/育儿/泌乳与已出生的孩子保留
-            _clear_soft_egg_race_pregnancy(character)
+            _clear_soft_egg_race_pregnancy(character, soft_egg_enabled)
             if pl_collection is not None and not hasattr(pl_collection, "held_eggs"):
                 pl_collection.held_eggs = {}
             if pl_collection is not None and not hasattr(pl_collection, "next_held_egg_id"):
@@ -727,6 +742,20 @@ def update_settings(loaded_dict):
         now_difficulty.style = "gold_enrod"
         now_difficulty.text = draw_text
         now_difficulty.draw()
+    # 生殖方式设置（旧存档的设置对象里没有该属性，需先补空字典再逐项补默认值）
+    birth_type_setting = zero_system_setting.birth_type_setting
+    if not hasattr(loaded_dict["all_system_setting"], "birth_type_setting"):
+        loaded_dict["all_system_setting"].birth_type_setting = {}
+    if len(loaded_dict["all_system_setting"].birth_type_setting) != len(birth_type_setting):
+        for key in birth_type_setting:
+            if key not in loaded_dict["all_system_setting"].birth_type_setting:
+                loaded_dict["all_system_setting"].birth_type_setting[key] = birth_type_setting[key]
+                update_count += 1
+        now_birth_type = draw.NormalDraw()
+        draw_text = _("\n生殖方式设置已更新，如有需要请手动修改\n")
+        now_birth_type.style = "gold_enrod"
+        now_birth_type.text = draw_text
+        now_birth_type.draw()
     # 角色口上选择设置
     character_text_version = zero_system_setting.character_text_version
     # 获取玩家的女儿角色列表

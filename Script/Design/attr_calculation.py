@@ -29,6 +29,9 @@ def get_system_setting_zero() -> game_type.System_Setting:
     for system_setting in game_config.config_difficulty_setting:
         difficulty_setting_data = game_config.config_difficulty_setting[system_setting]
         empty_system_setting.difficulty_setting[system_setting] = difficulty_setting_data.default_value
+    for system_setting in game_config.config_birth_type_setting:
+        birth_type_setting_data = game_config.config_birth_type_setting[system_setting]
+        empty_system_setting.birth_type_setting[system_setting] = birth_type_setting_data.default_value
     for adv_id, tem_data in cache.npc_tem_data.items():
         chara_adv_id = tem_data.AdvNpc
         empty_system_setting.character_text_version[chara_adv_id] = 1

@@ -1520,6 +1520,8 @@ class System_Setting:
         """ 绘制设定，即draw类 """
         self.difficulty_setting: Dict[int, int] = {}
         """ 难度设定，即difficulty类 """
+        self.birth_type_setting: Dict[int, int] = {}
+        """ 生殖方式设定，即birth类，键为生育方式编号（2多胎胎生/11带壳卵生/12无壳卵生），值为0关闭/1开启，关闭的生育方式一律按单胎胎生处理 """
         self.line_before_main_update: int = 3
         """ 主界面刷新前的行数 """
         self.value_draw: Dict[str, bool] = {"pl": False, "npc": False}

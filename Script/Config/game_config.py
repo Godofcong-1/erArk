@@ -383,6 +383,10 @@ config_difficulty_setting: Dict[int, config_def.System_Setting] = {}
 """ 难度设置数据 设置id:详细内容 """
 config_difficulty_setting_option: Dict[int, List] = {}
 """ 难度设置数据的选项数据 设置id:选项序号:选项内容 """
+config_birth_type_setting: Dict[int, config_def.System_Setting] = {}
+""" 生殖方式设置数据 生育方式id:详细内容（设置id直接取生育方式编号，2多胎胎生/11带壳卵生/12无壳卵生） """
+config_birth_type_setting_option: Dict[int, List] = {}
+""" 生殖方式设置数据的选项数据 生育方式id:选项序号:选项内容 """
 config_ai_chat_setting: Dict[int, config_def.Ai_Chat_Setting] = {}
 """ 文本生成AI设置数据 设置id:详细内容 """
 config_ai_chat_setting_option: Dict[int, List] = {}
@@ -1875,6 +1879,14 @@ def load_system_setting():
                 config_draw_setting_option[new_cid].append(option_text)
             else:
                 config_draw_setting_option[new_cid] = option_text.split('|')
+        # 生殖方式设置（不在系统设置主列表中显示，由基础设置的生殖方式开关入口跳转到子面板修改，cid直接为生育方式编号）
+        elif option_type == "birth":
+            config_birth_type_setting[now_tem.cid] = now_tem
+            if "|" not in option_text:
+                config_birth_type_setting_option[now_tem.cid] = []
+                config_birth_type_setting_option[now_tem.cid].append(option_text)
+            else:
+                config_birth_type_setting_option[now_tem.cid] = option_text.split('|')
 
 
 def load_ai_chat_setting():
