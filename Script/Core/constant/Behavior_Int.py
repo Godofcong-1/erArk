@@ -177,6 +177,10 @@ class Behavior_Int:
     """ 检查成绩单 """
     INTERN_CLASS = 230
     """ 实习 """
+    FOLLOW_MOTHER = 231
+    """ 跟随母亲见学 """
+    FREE_PLAY = 232
+    """ 自由玩耍（幼女见学回落，或日程模板排的活动） """
     MAINTENANCE_FACILITIES = 215
     """ 维护设施 """
     REPAIR_EQUIPMENT = 216

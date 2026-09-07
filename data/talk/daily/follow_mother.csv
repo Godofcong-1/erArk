@@ -1,0 +1,15 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,follow_mother,0,self_is_player_daughter&have_work,{Name}踮着脚，努力想看清妈妈手上在忙些什么。\n"妈妈，这个是要这样弄的吗？"\n虽然十有八九没看懂，但{Name}的眼睛一直没离开过。
+1001,follow_mother,0,self_is_player_daughter&have_work,妈妈干活的时候，{Name}就安安静静地待在旁边的角落里。\n偶尔被交代一句"别碰那个"，{Name}就赶紧把手缩回来，过一会儿又忍不住伸过去。
+1002,follow_mother,0,self_is_player_daughter&have_work,"妈妈，为什么要先做这一步呀？"\n{Name}问得很认真。妈妈一边手上不停，一边简单地解释了两句。\n{Name}似懂非懂地点着头，把这句话记了下来。
+1003,follow_mother,0,self_is_player_daughter&have_work,{Name}学着妈妈的样子，把小手也摆成同样的姿势。\n动作歪歪扭扭的，但那股一板一眼的认真劲儿，倒是有几分像模像样。
+1004,follow_mother,0,self_is_player_daughter&have_work,忙到一半，妈妈回头看了一眼，发现{Name}还乖乖地跟在后面。\n"累了就去旁边坐着。"\n"不累！"{Name}摇摇头，又往前凑了半步。
+1005,follow_mother,0,self_is_player_daughter&have_work,{Name}看着妈妈把一堆乱糟糟的东西三两下收拾得整整齐齐，忍不住"哇"了一声。\n在{Name}眼里，妈妈干活的样子好像什么都难不倒她。
+1006,follow_mother,0,self_is_player_daughter,今天妈妈没有工作，就带着{Name}到处走了走。\n{Name}一路上问东问西，妈妈都耐心地一一答了。
+1007,follow_mother,0,self_is_player_daughter,{Name}牵着妈妈的手，一小步一小步地跟在旁边。\n没有什么要紧事要做，这样待着也挺好。
+1008,follow_mother,0,self_is_player_daughter,妈妈把{Name}抱到腿上坐着，随口讲起了以前的事情。\n{Name}听得入神，虽然大半都听不太明白。
+1009,follow_mother,0,self_is_player_daughter,{Name}把今天遇到的事情一件件说给妈妈听，说得颠三倒四的。\n妈妈没有打断，只是时不时"嗯"一声。

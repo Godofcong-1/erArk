@@ -68,10 +68,10 @@ class Education_Manage_Panel:
         输出类型: 无
         功能: 绘制页签并分发到对应子页面
         """
-        from Script.System.Education_System import course_select_panel, growth_panel
+        from Script.System.Education_System import course_select_panel, growth_panel, schedule_template_panel
 
         title_draw = draw.TitleLineDraw(_("教育管理系统"), self.width)
-        panel_list = [_("全局课表"), _("个人课表"), _("养成总览")]
+        panel_list = [_("全局课表"), _("个人课表"), _("日程模板"), _("养成总览")]
 
         while 1:
             return_list: List[str] = []
@@ -101,6 +101,8 @@ class Education_Manage_Panel:
                 Class_Schedule_Panel(self.width).draw()
             elif self.now_panel == _("个人课表"):
                 course_select_panel.Course_Select_Panel(self.width).draw()
+            elif self.now_panel == _("日程模板"):
+                schedule_template_panel.Schedule_Template_Panel(self.width).draw()
             else:
                 growth_panel.Growth_Panel(self.width).draw()
 

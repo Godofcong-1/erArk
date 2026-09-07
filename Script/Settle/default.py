@@ -7682,6 +7682,61 @@ def handle_intern_class_add_just(
     )
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FOLLOW_MOTHER_ADD_ADJUST)
+def handle_follow_mother_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （见学用）幼女跟着母亲，按母亲当前工作对应的科目获得习得与经验，并累加照料值与母女好感
+    ⚠️ 母亲没有工作时只加照料值与好感，不加学习收益（方案 §3.24）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    from Script.System.Education_System import growth_handle, class_ai
+
+    # 结算时再判一次母亲是否有效：从决策到结算之间母亲可能已经离场（进H、被调走）
+    mother_id = class_ai.judge_mother_available(character_id)
+    if mother_id == -1:
+        return
+    growth_handle.settle_follow_mother_gain(character_id, mother_id, add_time, change_data=change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FREE_PLAY_ADD_ADJUST)
+def handle_free_play_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （自由玩耍用）在育儿室自己玩，小幅回复心情，不获得任何学习收益
+    ⚠️ 与翘课的区别只在语义：翘课是"该上课却没去"的代价性摸鱼，自由玩耍是日程安排里正当的休息
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    from Script.System.Education_System import growth_handle
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 抑郁(19)与反感(20)小幅回落。数值与翘课同档，但自由玩耍不置任何负面flag
+    for state_id in (19, 20):
+        if state_id in character_data.status_data:
+            character_data.status_data[state_id] = max(0, character_data.status_data[state_id] - add_time)
+    growth_handle.get_child_growth(character_id).follow_mother_flag = False
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CHECK_REPORT_CARD_ADD_ADJUST)
 def handle_check_report_card_add_just(
         character_id: int,

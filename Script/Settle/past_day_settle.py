@@ -39,6 +39,7 @@ def update_new_day():
     from Script.System.Cooking_System import cooking
     from Script.UI.Panel import nation_diplomacy_panel, navigation_panel, assistant_panel
     from Script.System.Pregnancy_System import pregnancy_handle, egg_handle
+    from Script.System.Education_System import schedule_template_handle
 
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
@@ -73,6 +74,9 @@ def update_new_day():
             handle_npc_ai.get_chara_entertainment(character_id)
             # 持有需照料的卵的卵生角色，随机一个娱乐时段替换为照料卵
             egg_handle.replace_entertainment_for_eggs(character_id)
+            # 孩子按日程模板改写今日的三个娱乐时段（Plan 22 二期）
+            # ⚠️ 必须在上面的 get_chara_entertainment 之后：顺序颠倒会被当天的随机值冲掉
+            schedule_template_handle.apply_schedule_for_child(character_id)
             # 刷新生理周期
             pregnancy_handle.update_reproduction_period(character_id)
             # 清零助理服务的flag

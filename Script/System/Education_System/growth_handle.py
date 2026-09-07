@@ -16,12 +16,15 @@
     2. 性技科目（70~77）的升级需求是**真实性交经验**（如膣技要 E61 阴道性交经验），
        所以性技理论课只能攒珠，经验要靠实操课（四期）来补 —— 理论与实操天然两条腿。
 """
+from types import FunctionType
 from typing import Dict, Optional
-from Script.Core import cache_control, game_type
+from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
+_: FunctionType = get_text._
+""" 翻译api """
 
 CHILD_TALENT_SET = {101, 102, 103, 104}
 """ 成长链的四个年龄素质：101婴儿 / 102幼女 / 103萝莉 / 104少女 """
@@ -274,3 +277,205 @@ def settle_teacher_class_gain(
     exp_id = get_subject_exp_id(ability_id)
     if exp_id:
         common_default.base_chara_experience_common_settle(teacher_id, exp_id, change_data=change_data)
+
+
+# ---------------------------------------------------------------------------
+# 幼女跟随母亲见学（Plan 22 二期 §3.24）
+# ---------------------------------------------------------------------------
+
+FOLLOW_MOTHER_LEARN_BASE = 6
+""" 见学的习得基础值。约为理论课(30)的两成——看着母亲干活当然比正经上课慢，
+    但胜在幼女期没课的时段本来就是空的，积少成多 """
+
+FOLLOW_MOTHER_EXP_BASE = 1
+""" 见学的科目经验基础值 """
+
+FOLLOW_MOTHER_CARE_POINT = 0.5
+""" 每次见学累加的照料值。成年时参与身体发育与性格判定（方案 §3.8） """
+
+FOLLOW_MOTHER_FAVORABILITY = 2
+""" 每次见学母女双方各自增加的好感 """
+
+
+def get_mother_work_ability_id(mother_id: int) -> int:
+    """
+    取母亲当前工作对应的科目能力id
+    Keyword arguments:
+    mother_id -- 母亲的角色id
+    Return arguments:
+    int -- 能力id，母亲没有工作（work_type为0）或该岗位不对应能力时为0
+    """
+    if mother_id not in cache.character_data:
+        return 0
+    mother_data: game_type.Character = cache.character_data[mother_id]
+    work_type_id = mother_data.work.work_type
+    if not work_type_id or work_type_id not in game_config.config_work_type:
+        return 0
+    return game_config.config_work_type[work_type_id].ability_id
+
+
+def settle_follow_mother_gain(
+        character_id: int,
+        mother_id: int,
+        add_time: int,
+        change_data=None,
+) -> None:
+    """
+    一次见学的结算：按母亲的工作科目加习得与经验，并累加照料值与母女好感
+
+    ⚠️ 母亲没有工作时**只加照料值与好感，不加任何学习收益**（方案 §3.24 的回落表最后一行）——
+       跟着一个没在工作的母亲，学不到手艺，但相处本身是有意义的。
+    ⚠️ 不计入 attend_class_count：见学不是课，混进出勤率会让成绩单失真。
+    Keyword arguments:
+    character_id -- 幼女的角色id
+    mother_id -- 母亲的角色id
+    add_time -- 结算的分钟数
+    change_data -- 结算信息记录对象
+    Return arguments:
+    无
+    """
+    if not add_time or mother_id not in cache.character_data:
+        return
+    from Script.Settle import common_default
+    from Script.Design import character_handle
+
+    growth_data = get_child_growth(character_id)
+    growth_data.care_point += FOLLOW_MOTHER_CARE_POINT
+
+    # 母女好感：直接走 add_favorability，不套 common_default 的好感链——
+    # 那条链的信物/连续指令/难度修正都是围绕玩家设计的，母女之间套上去只会得到看不懂的数字
+    character_handle.add_favorability(mother_id, character_id, FOLLOW_MOTHER_FAVORABILITY, change_data, None)
+    character_handle.add_favorability(character_id, mother_id, FOLLOW_MOTHER_FAVORABILITY, change_data, None)
+
+    ability_id = get_mother_work_ability_id(mother_id)
+    if not ability_id:
+        return
+
+    # 速度系数走与教室课同一套曲线：母亲该能力等级 vs 自己的等级
+    child_data: game_type.Character = cache.character_data[character_id]
+    mother_data: game_type.Character = cache.character_data[mother_id]
+    adjust = get_learn_speed(
+        int(mother_data.ability.get(ability_id, 0)),
+        int(child_data.ability.get(ability_id, 0)),
+    ) * get_education_zone_adjust()
+
+    common_default.base_chara_state_common_settle(
+        character_id,
+        add_time,
+        LEARN_STATE_ID,
+        base_value=FOLLOW_MOTHER_LEARN_BASE,
+        ability_level=-1,
+        extra_adjust=adjust - 1.0,
+        change_data=change_data,
+    )
+    exp_id = get_subject_exp_id(ability_id)
+    if exp_id:
+        common_default.base_chara_experience_common_settle(
+            character_id, exp_id, base_value=max(1, int(FOLLOW_MOTHER_EXP_BASE * adjust)),
+            change_data=change_data,
+        )
+
+
+# ---------------------------------------------------------------------------
+# 成年结算：性格选边 / 发育加成输入 / 职业倾向提示（Plan 22 二期 §3.8）
+# ---------------------------------------------------------------------------
+
+PERSONALITY_PAIR_TALENT = {
+    0: (271, 272),
+    1: (274, 273),
+    2: (275, 276),
+    3: (278, 277),
+}
+""" 四对性格倾向 → (正数侧素质id, 负数侧素质id)。
+    ⚠️ 正负两侧的顺序以 `growth_panel.PERSONALITY_PAIR_NAME` 为准（勤劳/懒散、坚强/脆弱、
+    热情/孤僻、开放/羞耻），两处的前后必须一致，否则面板显示"偏坚强"、结算却写了脆弱 """
+
+CARE_POINT_CHEST_MAX_BONUS = 20
+""" 照料值对胸部发育概率表的最大偏移（百分点）。
+    偏移的是 `chest_grow` 里"不长"那一档的宽度：照料得越多，落进"不长"的窗口越窄 """
+
+CARE_POINT_PER_CHEST_BONUS = 5.0
+""" 每多少点照料值换 1 个百分点的发育偏移 """
+
+
+def get_care_point_grow_bonus(character_id: int) -> int:
+    """
+    把照料值折算为身体发育判定的概率偏移（方案 §3.8 的第二输入）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 0~CARE_POINT_CHEST_MAX_BONUS 的百分点偏移
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    growth_data = character_data.child_growth
+    if growth_data is None:
+        return 0
+    return int(min(CARE_POINT_CHEST_MAX_BONUS, max(0.0, growth_data.care_point) / CARE_POINT_PER_CHEST_BONUS))
+
+
+def settle_personality_talent(character_id: int) -> str:
+    """
+    成年时按 personality_point 的符号给四对性格素质选边
+
+    ⚠️ 全为 0 时**不随机选边**，输出"性格尚未定型"（方案 §3.8）——
+       玩家全程没参与养成就凭空得到一套性格，会让养成事件显得可有可无。
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    str -- 要输出给玩家的文本
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    growth_data = character_data.child_growth
+    if growth_data is None:
+        return _("\n{0}的性格尚未定型\n").format(character_data.name)
+    got_name_list = []
+    for pair_id, (plus_talent, minus_talent) in PERSONALITY_PAIR_TALENT.items():
+        point = growth_data.personality_point.get(pair_id, 0.0)
+        if point > 0:
+            got_talent = plus_talent
+        elif point < 0:
+            got_talent = minus_talent
+        else:
+            # 这一对没有倾向，两侧都不写
+            continue
+        character_data.talent[got_talent] = 1
+        # 同一对的另一侧要清掉，避免出现"既勤劳又懒散"
+        character_data.talent[plus_talent if got_talent == minus_talent else minus_talent] = 0
+        got_name_list.append(game_config.config_talent[got_talent].name)
+    if not got_name_list:
+        return _("\n{0}的性格尚未定型\n").format(character_data.name)
+    return _("\n{0}的性格定型为了[{1}]\n").format(character_data.name, "]、[".join(got_name_list))
+
+
+def get_career_suggestion_text(character_id: int) -> str:
+    """
+    按当前等级最高的科目反查岗位，给出职业倾向提示
+
+    ⚠️ **只提示、不自动任命**（口径 39）：成年后成为普通干员、可任命到任何岗位，任命权在玩家手里。
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    str -- 提示文本，没有任何科目有等级时为空串
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    best_ability_id = 0
+    best_level = 0
+    # 只看课程科目：基础能力(40~49) 与性技(70~77) 之外的能力不由课堂决定，拿来推岗位没有意义
+    for ability_id in range(40, 50):
+        level = int(character_data.ability.get(ability_id, 0))
+        if level > best_level:
+            best_level = level
+            best_ability_id = ability_id
+    if not best_ability_id:
+        return ""
+    ability_name = game_config.config_ability[best_ability_id].name
+    # 反查以该能力为主的岗位。同一能力可能对应多个岗位，取cid最小的那个作为代表
+    work_name = ""
+    for work_id in sorted(game_config.config_work_type):
+        if work_id and game_config.config_work_type[work_id].ability_id == best_ability_id:
+            work_name = game_config.config_work_type[work_id].name
+            break
+    if not work_name:
+        return _("\n{0}在[{1}]上的天赋最为突出\n").format(character_data.name, ability_name)
+    return _("\n{0}在[{1}]上的天赋最为突出，或许适合去做[{2}]\n").format(
+        character_data.name, ability_name, work_name)

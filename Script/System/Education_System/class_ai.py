@@ -178,3 +178,99 @@ def judge_class_state_machine(character_id: int) -> int:
     if map_handle.get_map_system_path_str_for_list(character_data.position) !=             map_handle.get_map_system_path_str_for_list(to_place):
         return constant.StateMachine.EDUCATION_MOVE_TO_COURSE_PLACE
     return constant.StateMachine.EDUCATION_DO_COURSE
+
+
+# ---------------------------------------------------------------------------
+# 幼女跟随母亲见学（Plan 22 二期 §3.24）
+# ---------------------------------------------------------------------------
+
+FOLLOW_MOTHER_ENTERTAINMENT_ID = 176
+""" 娱乐配置「跟随母亲」的cid。日程模板把某个时段排成它时，该时段也走见学分支 """
+
+
+def judge_mother_available(character_id: int) -> int:
+    """
+    判断幼女此刻能不能去跟着母亲见学，返回有效的母亲id
+
+    ⚠️ 回落链的每一条都必须有出路（方案 §3.24 的表），否则幼女会卡在 SHARE_BLANKLY。
+    其中母亲在 H / 监禁 / 无意识时的排除是**硬要求不是优化**：既有的跟随链完全不判这几个状态，
+    不显式挡住就会出现幼女跟进 H 场景。
+    Keyword arguments:
+    character_id -- 幼女的角色id
+    Return arguments:
+    int -- 有效的母亲角色id，无效则为-1
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    mother_id = character_data.relationship.mother_id
+    # 没有母亲，或母亲已不在角色表里（旧档 / 数据损坏）
+    if mother_id == -1 or mother_id not in cache.character_data:
+        return -1
+    mother_data: game_type.Character = cache.character_data[mother_id]
+    if mother_data.dead:
+        return -1
+    # ⚠️ 绝不能让幼女跟进 H 场景：H中 / 无意识H中 / 被监禁
+    if mother_data.sp_flag.is_h or mother_data.sp_flag.unconscious_h or mother_data.sp_flag.imprisonment:
+        return -1
+    # 母亲人不在罗德岛（外勤 / 外交访问）
+    if mother_data.sp_flag.field_commission or mother_data.sp_flag.in_diplomatic_visit:
+        return -1
+    # 母亲住院中
+    if mother_id in getattr(cache.rhodes_island, "medical_hospitalized", {}):
+        return -1
+    # 母亲所在场景不可达（未解锁 / 已拆除）
+    mother_scene_str = map_handle.get_map_system_path_str_for_list(mother_data.position)
+    if mother_scene_str not in cache.scene_data:
+        return -1
+    return mother_id
+
+
+def judge_should_follow_mother(character_id: int) -> bool:
+    """
+    判断本时刻是否应当走见学分支
+
+    两种入口：
+        1. 幼女期的默认行为 —— 在节次内、且本节没排课（方案 §3.24 的触发条件）
+        2. 日程模板把当前娱乐时段排成了「跟随母亲」—— 晚上或没课的时段也能跟
+    ⚠️ 只对幼女（素质102）成立：萝莉期的自由时段是自由行动（口径 10）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 是否应当见学
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if not character_data.talent.get(102, 0):
+        return False
+    # 入口1：在节次内且本节没课。get_now_course 已经把"不在节次内"和"没排课"都归为None，
+    # 所以这里要自己再判一次是不是真的在节次内
+    if game_time.get_class_period(character_id) != -1:
+        return schedule_handle.get_now_course(character_id) is None
+    # 入口2：当前娱乐时段的日程活动就是「跟随母亲」
+    enter_time = game_time.judge_entertainment_time(character_id)
+    if not enter_time:
+        return False
+    slot = enter_time - 1
+    return character_data.entertainment.entertainment_type[slot] == FOLLOW_MOTHER_ENTERTAINMENT_ID
+
+
+def judge_follow_mother_state_machine(character_id: int) -> int:
+    """
+    见学分支的决策入口，返回本时刻该执行的状态机id
+
+    母亲无效时一律回落到育儿室自由玩耍——这是回落链的唯一出口，
+    不返回0交回既有AI链：交回去等于让幼女在没课的时段随机游荡，方案要的是确定的去处。
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 状态机id，0表示本函数不接管
+    """
+    if not judge_should_follow_mother(character_id):
+        return 0
+    mother_id = judge_mother_available(character_id)
+    if mother_id == -1:
+        return constant.StateMachine.ENTERTAIN_FREE_PLAY
+    character_data: game_type.Character = cache.character_data[character_id]
+    mother_data: game_type.Character = cache.character_data[mother_id]
+    # 还没到母亲身边，先移动过去
+    if character_data.position != mother_data.position:
+        return constant.StateMachine.EDUCATION_MOVE_TO_MOTHER
+    return constant.StateMachine.EDUCATION_FOLLOW_MOTHER

@@ -11,7 +11,7 @@ from typing import Dict, List
 from Script.Core import cache_control, game_type, get_text, flow_handle
 from Script.Config import game_config, normal_config
 from Script.Design import game_time
-from Script.System.Education_System import schedule_handle, growth_handle
+from Script.System.Education_System import schedule_handle, growth_handle, schedule_template_handle
 from Script.System.Education_System.class_schedule_panel import (
     WEEK_NAME, get_period_time_text)
 from Script.UI.Moudle import draw
@@ -104,6 +104,15 @@ class Course_Select_Panel:
             line_feed.draw()
             draw.LineDraw("-", self.width).draw()
 
+            # 日程一行：管的是这个孩子没课的时段干什么（Plan 22 二期 §5.2）
+            schedule_draw = draw.LeftButton(
+                _(" 日程：{0} [改]").format(schedule_template_handle.get_child_schedule_text(now_student)),
+                "EDIT_SCHEDULE", self.width)
+            schedule_draw.draw()
+            return_list.append(schedule_draw.return_text)
+            line_feed.draw()
+            draw.LineDraw("-", self.width).draw()
+
             copy_draw = draw.CenterButton(_("[复制到其他孩子]"), _("复制"), int(self.width / 3))
             copy_draw.draw()
             return_list.append(copy_draw.return_text)
@@ -123,6 +132,9 @@ class Course_Select_Panel:
                 continue
             if yrn == copy_draw.return_text:
                 self._copy_to_others(now_student, student_list)
+                continue
+            if yrn == schedule_draw.return_text:
+                self._edit_schedule(now_student)
                 continue
             if yrn in cell_return:
                 week_day, period = cell_return[yrn]
@@ -197,6 +209,68 @@ class Course_Select_Panel:
         for week_day in range(len(WEEK_NAME)):
             for period in range(len(game_time.CLASS_PERIOD_START)):
                 schedule_handle.clear_selected_course(character_id, week_day, period)
+
+    def _edit_schedule(self, character_id: int):
+        """
+        单孩日程微调：换模板，或对某个时段单独覆盖
+        输入类型: character_id(int)
+        输出类型: 无
+        功能: 覆盖只存在这个孩子身上，不影响模板本体与其他孩子（方案 §5.2）
+        """
+        from Script.System.Education_System import schedule_template_panel
+
+        template_panel = schedule_template_panel.Schedule_Template_Panel(self.width)
+        while 1:
+            return_list: List[str] = []
+            slot_by_return: Dict[str, int] = {}
+            draw.TitleLineDraw(
+                _("{0}的日程").format(cache.character_data[character_id].name), self.width).draw()
+            # 当前套用的模板
+            change_draw = draw.LeftButton(
+                _(" 日程模板：{0} [改]").format(
+                    schedule_template_handle.get_child_schedule_text(character_id)),
+                "CHANGE_TEMPLATE", self.width)
+            change_draw.draw()
+            return_list.append(change_draw.return_text)
+            line_feed.draw()
+            draw.LineDraw("-", self.width).draw()
+            # 三个时段，点进去单独覆盖
+            for slot in range(schedule_template_handle.SLOT_COUNT):
+                entertainment_id = schedule_template_handle.get_child_slot_activity(character_id, slot)
+                if entertainment_id and entertainment_id in game_config.config_entertainment:
+                    now_name = game_config.config_entertainment[entertainment_id].name
+                else:
+                    now_name = _("未设置")
+                growth_data = cache.character_data[character_id].child_growth
+                override_mark = ""
+                if growth_data is not None and slot in growth_data.schedule_override:
+                    override_mark = _("（单独指定）")
+                now_draw = draw.LeftButton(
+                    _(" [{0}：{1}{2}]").format(
+                        schedule_template_handle.SLOT_NAME[slot], now_name, override_mark),
+                    f"CHILD_SLOT_{slot}", int(self.width / 2))
+                now_draw.draw()
+                return_list.append(now_draw.return_text)
+                slot_by_return[now_draw.return_text] = slot
+                line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回日程"), int(self.width / 2))
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            line_feed.draw()
+
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                return
+            if yrn == change_draw.return_text:
+                template_id = template_panel._select_template()
+                if template_id is not None:
+                    schedule_template_handle.apply_template(character_id, template_id)
+                continue
+            if yrn in slot_by_return:
+                entertainment_id = template_panel._select_activity()
+                if entertainment_id is not None:
+                    schedule_template_handle.set_child_override(
+                        character_id, slot_by_return[yrn], entertainment_id)
 
     def _copy_to_others(self, character_id: int, student_list: List[int]):
         """

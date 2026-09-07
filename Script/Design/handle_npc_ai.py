@@ -355,6 +355,12 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
         from Script.System.Education_System import class_ai
 
         judge = class_ai.judge_class_state_machine(character_id)
+    # 然后判断幼女见学，需要是幼女、本节没排课（或日程排了跟随母亲）、且母亲有效（Plan 22 二期 §3.24）
+    # ⚠️ 排在上课之后、工作之前：有课就上课，没课才跟母亲；幼女本就没有工作，走到工作链也是空转
+    if judge == 0:
+        from Script.System.Education_System import class_ai
+
+        judge = class_ai.judge_follow_mother_state_machine(character_id)
     # 然后判断工作，需要有工作，且在工作时间或到岗时间
     if judge == 0 and handle_premise.handle_have_work(character_id) and handle_premise.handle_to_work_time_or_work_time(character_id):
         # 当前工作数据
@@ -806,6 +812,11 @@ def get_chara_entertainment(character_id: int):
             # 照料卵娱乐不进入随机池，仅由每日替换钩子分配给持卵的卵生角色
             if 175 in entertainment_list:
                 entertainment_list.remove(175)
+            # 跟随母亲(176)/自由玩耍(177)/自习(178)是孩子的日程专用活动（Plan 22 二期），
+            # 只由日程模板指派，随机抽给成年干员没有意义
+            for schedule_only_id in (176, 177, 178):
+                if schedule_only_id in entertainment_list:
+                    entertainment_list.remove(schedule_only_id)
             # 循环获得上午、下午、晚上的三个娱乐活动
             for i in range(3):
 

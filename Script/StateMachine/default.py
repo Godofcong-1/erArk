@@ -2812,6 +2812,77 @@ def character_education_do_course(character_id: int):
     character_data.state = state_id
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.EDUCATION_MOVE_TO_MOTHER)
+def character_education_move_to_mother(character_id: int):
+    """
+    见学：移动到母亲当前所在的场景（Plan 22 二期 §3.24）
+    ⚠️ 每次都重新读母亲的位置：母亲自己也在走班/上下工，钉死一个目标点会追丢
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    from Script.System.Education_System import class_ai
+
+    mother_id = class_ai.judge_mother_available(character_id)
+    # 走到半路母亲失效了（下班进了H、被叫去外勤），本函数直接返回，
+    # 下一轮 AI 会重新判定并改走育儿室分支
+    if mother_id == -1:
+        return
+    mother_data: game_type.Character = cache.character_data[mother_id]
+    general_movement_module(character_id, mother_data.position)
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.EDUCATION_FOLLOW_MOTHER)
+def character_education_follow_mother(character_id: int):
+    """
+    见学：与母亲同场景，跟着她见学（Plan 22 二期 §3.24）
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    from Script.System.Education_System import class_ai
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    mother_id = class_ai.judge_mother_available(character_id)
+    if mother_id == -1:
+        return
+    character_data.target_character_id = mother_id
+    character_data.behavior.behavior_id = constant.Behavior.FOLLOW_MOTHER
+    character_data.behavior.duration = 60
+    character_data.state = constant.CharacterStatus.STATUS_FOLLOW_MOTHER
+    # 见学期间置跟随标记，供口上前提与面板判定使用。
+    # ⚠️ 不复用 sp_flag.is_follow：那是"跟随玩家"的语义，且会被移动逻辑清零（方案 §2.3）
+    from Script.System.Education_System import growth_handle
+
+    growth_handle.get_child_growth(character_id).follow_mother_flag = True
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_FREE_PLAY)
+def character_entertain_free_play(character_id: int):
+    """
+    娱乐：在育儿室自由玩耍（Plan 22 二期）
+    既是日程模板里的一项活动，也是幼女见学回落链的唯一出口——
+    母亲无效时把孩子送到这里，而不是交回既有AI链让她随机游荡
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    # 人还不在育儿室，先过去
+    now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    if now_scene_str not in cache.scene_data or "Nursery" not in cache.scene_data[now_scene_str].scene_tag:
+        to_target = map_handle.get_map_system_path_for_str(
+            random.choice(constant.place_data["Nursery"])
+        )
+        general_movement_module(character_id, to_target)
+        return
+    # 到了育儿室才真正开始玩，并清掉见学标记
+    from Script.System.Education_System import growth_handle
+
+    growth_handle.get_child_growth(character_id).follow_mother_flag = False
+    character_data.behavior.behavior_id = constant.Behavior.FREE_PLAY
+    character_data.behavior.duration = 60
+    character_data.state = constant.CharacterStatus.STATUS_FREE_PLAY
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_LIBRARY_1)
 def character_work_library_1(character_id: int):
     """

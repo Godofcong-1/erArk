@@ -451,6 +451,10 @@ class BehaviorEffect:
     """ 指令_专用结算 （检查成绩单用）输出该女儿本学期的各科成长与出勤，按成绩档位加好感与亲密，并清除成绩单flag """
     INTERN_CLASS_ADD_ADJUST = 552
     """ 指令_专用结算 （实习课用）找同场景中该岗位的在岗干员当导师，按师徒等级差学该岗位的能力，无人在岗则降级见习 """
+    FOLLOW_MOTHER_ADD_ADJUST = 553
+    """ 结算跟随母亲见学的收益 """
+    FREE_PLAY_ADD_ADJUST = 554
+    """ 结算自由玩耍的收益（心情回复，无学习收益） """
     BAGGING_AND_MOVING_ADD_ADJUST = 513
     """ 指令_专用结算 （装袋搬走用）交互对象获得装袋搬走flag，玩家增加搬运人id，对方离线 """
     PUT_INTO_PRISON_ADD_ADJUST = 514

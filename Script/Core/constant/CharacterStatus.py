@@ -181,6 +181,10 @@ class CharacterStatus:
     """ 检查成绩单 """
     STATUS_INTERN_CLASS = 230
     """ 实习 """
+    STATUS_FOLLOW_MOTHER = 231
+    """ 跟随母亲见学 """
+    STATUS_FREE_PLAY = 232
+    """ 自由玩耍 """
     STATUS_MAINTENANCE_FACILITIES = 215
     """ 维护设施 """
     STATUS_REPAIR_EQUIPMENT = 216

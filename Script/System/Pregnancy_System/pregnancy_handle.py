@@ -654,12 +654,20 @@ def check_grow_to_girl(character_id: int):
             character_data.talent[28] = 0
             chest_grow_text = chest_grow(character_id)
             body_part_grow_text = body_part_grow(character_id)
+            # 成年结算（Plan 22 二期 §3.8）：能力已在一期做成即时成长，成年时只结算性格与职业倾向
+            # ⚠️ 守卫是 handle_self_is_loli，上面已把 talent[103] 清零，天然幂等，不需要额外防重复
+            from Script.System.Education_System import growth_handle
+
+            personality_text = growth_handle.settle_personality_talent(character_id)
+            career_text = growth_handle.get_career_suggestion_text(character_id)
             draw_text = "\n※※※※※※※※※\n"
             draw_text += _("\n{0}的身体完全长成，迎来了自己的成人礼，成为了一位亭亭玉立的少女\n").format(character_data.name)
             draw_text += _("\n{0}从[萝莉]成长为了[少女]\n").format(character_data.name)
             draw_text += _("\n{0}失去了[未成年]\n").format(character_data.name)
             draw_text += chest_grow_text
             draw_text += body_part_grow_text
+            draw_text += personality_text
+            draw_text += career_text
             draw_text += _("\n{0}可以进行正常的工作了\n").format(character_data.name)
             draw_text += "\n※※※※※※※※※\n"
             now_draw = draw.WaitDraw()
@@ -741,7 +749,12 @@ def chest_grow(character_id: int,print_flag = False):
     # 母亲胸部0时从长0~长3生长比例是 0.6 0.25 0.1 0.05，母亲胸部6时反过来
     randow_grow = random.randint(1,100)
     grow_rate = mom_chest_id - 121
-    grow_0 = 60 - 11 * grow_rate
+    # 照料值作为母亲属性之外的第二输入（Plan 22 二期 §3.8）：
+    # 只收窄"不长"那一档的窗口，长1/长2的宽度不动，于是照料越多越容易往上跳一档
+    from Script.System.Education_System import growth_handle
+
+    care_bonus = growth_handle.get_care_point_grow_bonus(character_id)
+    grow_0 = max(0, 60 - 11 * grow_rate - care_bonus)
     grow_1 = 25 - 3 *grow_rate
     grow_2 = 10 + 3 *grow_rate
     if randow_grow > grow_0 + grow_1 + grow_2:
