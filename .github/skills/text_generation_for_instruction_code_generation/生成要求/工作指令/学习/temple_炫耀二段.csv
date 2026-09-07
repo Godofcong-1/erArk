@@ -1,0 +1,7 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|45_G_0,{Name}一看见博士就跑了过来，鞋子在地上蹭出一串响。\n“博士博士！我今天会读那个字了！”{Name}举起自己的笔记本，上面歪歪扭扭地写着一个新学的词。\n虽然还是写反了一笔，但{Name}的眼睛亮得不行，一直等着回应。
+0,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|45_G_0,{Name}装作只是路过，走到一半才像是忽然想起来似的停下脚步。\n“今天那节课……讲到的东西，我全都跟上了。”说完就低头去整理本来就很整齐的书页。\n博士的回应传过来时，{Name}把脸转向了另一边，耳朵却一直支着。
