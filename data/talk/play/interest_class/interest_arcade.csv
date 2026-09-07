@@ -4,6 +4,6 @@ str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
 1000,play_arcade_game,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}够不着操作台，只好踮着脚，玩一会儿就得歇一下。\n第一局撑了不到一分钟，{Name}不服气地又投了一次。\n玩到最后{Name}的记录翻了三倍，虽然还是垫底。
-1001,play_arcade_game,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,机厅里声音又吵又亮，{Name}兴奋得眼睛都直了。\n{Name}挨个机器试过去，每个都只玩一局。\n"下次要专心玩一个。"下课时{Name}这么对自己说，但明显没什么说服力。
-1002,play_arcade_game,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}这次只玩了一台机器，反复挑战同一关。\n死了七次之后{Name}摸清了规律，第八次终于过了。\n"其实跟练收招是一回事。"{Name}想。
+1001,play_arcade_game,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,机厅里声音又吵又亮，{Name}兴奋得眼睛都直了。\n{Name}挨个机器试过去，每个都只玩一局。\n“下次要专心玩一个。”下课时{Name}这么对自己说，但明显没什么说服力。
+1002,play_arcade_game,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}这次只玩了一台机器，反复挑战同一关。\n死了七次之后{Name}摸清了规律，第八次终于过了。\n“其实跟练收招是一回事。”{Name}想。
 1003,play_arcade_game,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}发现自己每次都死在同一个地方，于是停下来看别人怎么过。\n看了两遍之后{Name}明白了：不是手速不够，是进去的时机不对。\n换了时机之后{Name}一次就过了。

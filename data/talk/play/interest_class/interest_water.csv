@@ -3,7 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,play_water,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}一进去就玩疯了，衣服很快湿了大半。\n"这个也算上课吗？"{Name}一边溅水一边问，得到肯定答复之后笑得更响了。\n一节课结束时{Name}浑身滴水，但精神好得不得了。
+1000,play_water,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}一进去就玩疯了，衣服很快湿了大半。\n“这个也算上课吗？”{Name}一边溅水一边问，得到肯定答复之后笑得更响了。\n一节课结束时{Name}浑身滴水，但精神好得不得了。
 1001,play_water,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}蹲在水边，专心地用手把水推来推去，看它怎么荡回来。\n荡了很多次之后{Name}发现推得越用力，回来得越快。\n这个发现让{Name}高兴了很久，虽然并不知道有什么用。
-1002,play_water,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}本来觉得玩水算不上什么正经兴趣课，去了之后倒是玩得很开心。\n玩到一半{Name}忽然停下来看着水面的波纹发呆。\n"一圈推一圈……"{Name}想起了什么，但一时说不上来。
+1002,play_water,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}本来觉得玩水算不上什么正经兴趣课，去了之后倒是玩得很开心。\n玩到一半{Name}忽然停下来看着水面的波纹发呆。\n“一圈推一圈……”{Name}想起了什么，但一时说不上来。
 1003,play_water,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,难得有一节课什么也不用学，{Name}索性放空了自己。\n最近课排得满，{Name}好像很久没有这样单纯地待着了。\n结束的时候{Name}觉得比上完一节理论课还轻松。

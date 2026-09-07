@@ -3,7 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,play_house,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,过家家里{Name}被分到了"医生"的角色，立刻认真了起来。\n"先判断，再动手。"{Name}一本正经地对着"病人"说，还真的按顺序问了一遍。\n旁边的人都笑了，{Name}却觉得自己演得挺好。
-1001,play_house,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}这次演的是"老师"，站在小板凳上讲课。\n讲的内容全是从真正的课上听来的，还学着老师的样子敲了敲桌子。\n"你们记笔记要分三栏。"{Name}说得有模有样。
+1000,play_house,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,过家家里{Name}被分到了“医生”的角色，立刻认真了起来。\n“先判断，再动手。”{Name}一本正经地对着“病人”说，还真的按顺序问了一遍。\n旁边的人都笑了，{Name}却觉得自己演得挺好。
+1001,play_house,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}这次演的是“老师”，站在小板凳上讲课。\n讲的内容全是从真正的课上听来的，还学着老师的样子敲了敲桌子。\n“你们记笔记要分三栏。”{Name}说得有模有样。
 1002,play_house,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,过家家玩到一半就吵起来了，因为谁也不肯当被指挥的那个。\n{Name}想起指挥课上的内容，提议大家轮流来。\n轮了一圈之后果然没人再吵，{Name}有点小小的得意。
-1003,play_house,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}演的是"博士"，站在那儿一句话也不说，只是听别人讲。\n"博士就是这样的。"{Name}解释道，"他会先听完。"\n说完{Name}自己有点不好意思，赶紧换了个角色。
+1003,play_house,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}演的是“博士”，站在那儿一句话也不说，只是听别人讲。\n“博士就是这样的。”{Name}解释道，“他会先听完。”\n说完{Name}自己有点不好意思，赶紧换了个角色。

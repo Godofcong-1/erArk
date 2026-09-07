@@ -3,7 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|42_G_0,{Name}一见到博士就摆了个自以为很帅的架势。\n"看！这样打！"{Name}挥了一下手，差点把自己转个圈。\n站稳之后{Name}若无其事地整了整衣服："我今天摔了六次，比上次少了两次。"
-1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|42_G_0,{Name}跑过来，撩起袖子给博士看胳膊上的一小块青。\n"这个是今天练的时候撞的，"{Name}说得很骄傲，"但是老师说我护头护得对。"\n说完{Name}才想起来这大概不是值得骄傲的事，赶紧把袖子放下了。
-1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|42_G_0,{Name}走过来时脚步很稳，跟以前那种冲过来的样子不太一样。\n"我今天没有用全力，"{Name}说，"结果撑到了最后。以前三分钟就不行了。"\n"老师说这才是对的。"{Name}顿了顿，"虽然我一下都没打中。"
-1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|42_G_0,"我学会一件事。"{Name}说，"打不过的时候要跑。"\n看见博士的表情，{Name}赶紧补充："老师说这是标准答案！能跑掉的人才有下一次。"\n说完{Name}小声加了一句："……我本来以为会被笑话的。"
+1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|42_G_0,{Name}一见到博士就摆了个自以为很帅的架势。\n“看！这样打！”{Name}挥了一下手，差点把自己转个圈。\n站稳之后{Name}若无其事地整了整衣服：“我今天摔了六次，比上次少了两次。”
+1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|42_G_0,{Name}跑过来，撩起袖子给博士看胳膊上的一小块青。\n“这个是今天练的时候撞的，”{Name}说得很骄傲，“但是老师说我护头护得对。”\n说完{Name}才想起来这大概不是值得骄傲的事，赶紧把袖子放下了。
+1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|42_G_0,{Name}走过来时脚步很稳，跟以前那种冲过来的样子不太一样。\n“我今天没有用全力，”{Name}说，“结果撑到了最后。以前三分钟就不行了。”\n“老师说这才是对的。”{Name}顿了顿，“虽然我一下都没打中。”
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|42_G_0,“我学会一件事。”{Name}说，“打不过的时候要跑。”\n看见博士的表情，{Name}赶紧补充：“老师说这是标准答案！能跑掉的人才有下一次。”\n说完{Name}小声加了一句：“……我本来以为会被笑话的。”

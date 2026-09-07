@@ -3,6 +3,6 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,read_book,0,have_intern_student&in_library,借还的书都归完位之后{Name}就坐下看书了，跟着的孩子愣在原地不知道该干什么。\n"这也是工作。"{Name}头也不抬，"没看过，你怎么知道该推荐给谁。"\n孩子于是也抽了一本，坐到了对面。
-1001,read_book,0,have_intern_student&in_library,{Name}看书的时候会随手在纸上记几笔，跟着的孩子偷偷看了一眼，发现记的全是书名。\n"这本里提到了那本，"{Name}说，"顺着记下去，架子就在你脑子里连起来了。"\n孩子把那张纸的格式照抄了一遍。
-1002,read_book,0,have_intern_student&in_library,一整个下午图书馆里没有别人，只有翻页的声音。\n跟着的孩子几次想开口，又都咽了回去。\n快下课时{Name}才合上书："今天你安静了两个小时，这比归架难学。"
+1000,read_book,0,have_intern_student&in_library,借还的书都归完位之后{Name}就坐下看书了，跟着的孩子愣在原地不知道该干什么。\n“这也是工作。”{Name}头也不抬，“没看过，你怎么知道该推荐给谁。”\n孩子于是也抽了一本，坐到了对面。
+1001,read_book,0,have_intern_student&in_library,{Name}看书的时候会随手在纸上记几笔，跟着的孩子偷偷看了一眼，发现记的全是书名。\n“这本里提到了那本，”{Name}说，“顺着记下去，架子就在你脑子里连起来了。”\n孩子把那张纸的格式照抄了一遍。
+1002,read_book,0,have_intern_student&in_library,一整个下午图书馆里没有别人，只有翻页的声音。\n跟着的孩子几次想开口，又都咽了回去。\n快下课时{Name}才合上书：“今天你安静了两个小时，这比归架难学。”

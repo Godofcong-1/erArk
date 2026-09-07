@@ -3,9 +3,9 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,check_report_card,0,target_is_player_daughter&CVP_A2_T|102_E_1,{TargetName}把成绩单双手递过来，然后立刻把脸转到一边去。\n"你、你看吧。"{TargetName}的耳朵红着，眼睛却时不时偷瞄过来。\n看到一半时{TargetName}忍不住小声补了一句："那门课老师讲得好快……"
-1001,check_report_card,0,target_is_player_daughter&CVP_A2_T|102_E_1,{TargetName}举着成绩单跑过来，跑得太急，纸都被攥皱了。\n"我给你看！"{TargetName}把纸铺在桌上，用两只手压平，"这里，这个是最好的。"\n手指按着的那一栏确实是全表最高的一门。
-1002,check_report_card,0,target_is_player_daughter&CVP_A2_T|103_E_1,{TargetName}把成绩单放在桌上，推过来，然后退开一步站着。\n"我知道有几门不太好。"{TargetName}先开了口，"下学期我打算把课调一调。"\n说完{TargetName}才抬起眼睛，看博士是什么反应。
-1003,check_report_card,0,target_is_player_daughter&CVP_A2_T|103_E_1,{TargetName}递成绩单的时候很平静，但手指一直在纸边上摩挲。\n"出勤那一栏……"{TargetName}顿了一下，"有几节我确实没去。"\n{TargetName}没有解释原因，只是站在那里等着。
-1004,check_report_card,0,target_is_player_daughter,{TargetName}把成绩单交出来的时候，顺手把另一张纸也塞了过来。\n那是{TargetName}自己整理的、这学期每门课的心得，字迹密密麻麻。\n"这个不用看也行，"{TargetName}小声说，"就是……写都写了。"
-1005,check_report_card,0,target_is_player_daughter,成绩单上有一门格外突出，{TargetName}显然很清楚这一点。\n"那门课我上得最认真。"{TargetName}说，然后飞快地补充，"不是因为容易。"\n{TargetName}讲起那门课的时候，语速明显快了起来。
+1000,check_report_card,0,target_is_player_daughter&CVP_A2_T|102_E_1,{TargetName}把成绩单双手递过来，然后立刻把脸转到一边去。\n“你、你看吧。”{TargetName}的耳朵红着，眼睛却时不时偷瞄过来。\n看到一半时{TargetName}忍不住小声补了一句：“那门课老师讲得好快……”
+1001,check_report_card,0,target_is_player_daughter&CVP_A2_T|102_E_1,{TargetName}举着成绩单跑过来，跑得太急，纸都被攥皱了。\n“我给你看！”{TargetName}把纸铺在桌上，用两只手压平，“这里，这个是最好的。”\n手指按着的那一栏确实是全表最高的一门。
+1002,check_report_card,0,target_is_player_daughter&CVP_A2_T|103_E_1,{TargetName}把成绩单放在桌上，推过来，然后退开一步站着。\n“我知道有几门不太好。”{TargetName}先开了口，“下学期我打算把课调一调。”\n说完{TargetName}才抬起眼睛，看博士是什么反应。
+1003,check_report_card,0,target_is_player_daughter&CVP_A2_T|103_E_1,{TargetName}递成绩单的时候很平静，但手指一直在纸边上摩挲。\n“出勤那一栏……”{TargetName}顿了一下，“有几节我确实没去。”\n{TargetName}没有解释原因，只是站在那里等着。
+1004,check_report_card,0,target_is_player_daughter,{TargetName}把成绩单交出来的时候，顺手把另一张纸也塞了过来。\n那是{TargetName}自己整理的、这学期每门课的心得，字迹密密麻麻。\n“这个不用看也行，”{TargetName}小声说，“就是……写都写了。”
+1005,check_report_card,0,target_is_player_daughter,成绩单上有一门格外突出，{TargetName}显然很清楚这一点。\n“那门课我上得最认真。”{TargetName}说，然后飞快地补充，“不是因为容易。”\n{TargetName}讲起那门课的时候，语速明显快了起来。

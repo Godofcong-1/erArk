@@ -3,7 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_power_dispatch,调控室里全是闪着灯的仪表，{Name}看得眼睛都不够用。\n调控员指着其中一块说"只看这个"，{Name}就盯着那一块看了半节课。\n那根针一直没怎么动，{Name}却觉得很紧张。
-1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_power_dispatch,{Name}的活儿是照着表把读数抄下来，每十分钟一次。\n抄到第三次时{Name}发现数字变了，赶紧报告。\n"正常波动。"调控员说。{Name}有点失望，但还是继续认真地抄。
-1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_power_dispatch,{Name}学着看整面墙的仪表，试图找出它们之间的关系。\n找了很久之后{Name}发现有两块表总是同时变。\n调控员听完{Name}的观察，说："对，它们是一路的。"
-1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_power_dispatch,今天有一处读数偏了一点，调控员立刻起身去查。\n{Name}跟在后面，一路问"这样就要去看吗"。\n"大部分故障，在它发生之前就能看出来。"这句话{Name}在制造课上听过一次。
+1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_power_dispatch,调控室里全是闪着灯的仪表，{Name}看得眼睛都不够用。\n调控员指着其中一块说“只看这个”，{Name}就盯着那一块看了半节课。\n那根针一直没怎么动，{Name}却觉得很紧张。
+1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_power_dispatch,{Name}的活儿是照着表把读数抄下来，每十分钟一次。\n抄到第三次时{Name}发现数字变了，赶紧报告。\n“正常波动。”调控员说。{Name}有点失望，但还是继续认真地抄。
+1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_power_dispatch,{Name}学着看整面墙的仪表，试图找出它们之间的关系。\n找了很久之后{Name}发现有两块表总是同时变。\n调控员听完{Name}的观察，说：“对，它们是一路的。”
+1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_power_dispatch,今天有一处读数偏了一点，调控员立刻起身去查。\n{Name}跟在后面，一路问“这样就要去看吗”。\n“大部分故障，在它发生之前就能看出来。”这句话{Name}在制造课上听过一次。

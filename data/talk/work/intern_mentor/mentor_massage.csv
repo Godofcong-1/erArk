@@ -3,6 +3,6 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,massage,0,have_intern_student,{Name}让跟来的孩子先在垫子上练，按了几十下就喊手酸。\n"力气是从肩膀来的，不是手指。"{Name}纠正了姿势。\n那孩子照做之后，动作一下子像样了。
-1001,massage,0,have_intern_student,休息室里很安静，{Name}要求跟来的孩子先学会"不说话"。\n那孩子憋了很久，最后还是没忍住小声问了个问题。\n{Name}没有责怪，只是把答案压得更低地说了一遍。
-1002,massage,0,have_intern_student,今天教的是判断力度，{Name}让跟来的孩子闭着眼睛感受对方的反应。\n"肌肉一紧就是重了。"\n那孩子试了几次，忽然说："跟打磨那个面有点像。"{Name}想了想，说："差不多。"
+1000,massage,0,have_intern_student,{Name}让跟来的孩子先在垫子上练，按了几十下就喊手酸。\n“力气是从肩膀来的，不是手指。”{Name}纠正了姿势。\n那孩子照做之后，动作一下子像样了。
+1001,massage,0,have_intern_student,休息室里很安静，{Name}要求跟来的孩子先学会“不说话”。\n那孩子憋了很久，最后还是没忍住小声问了个问题。\n{Name}没有责怪，只是把答案压得更低地说了一遍。
+1002,massage,0,have_intern_student,今天教的是判断力度，{Name}让跟来的孩子闭着眼睛感受对方的反应。\n“肌肉一紧就是重了。”\n那孩子试了几次，忽然说：“跟打磨那个面有点像。”{Name}想了想，说：“差不多。”

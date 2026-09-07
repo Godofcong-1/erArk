@@ -3,7 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_dormitory_manager_room,{Name}被安排整理住宿登记表，一张张对着名字看。\n对到一半{Name}发现有两张写着同一个人，赶紧举起来问。\n"你眼力不错。"管理员说。{Name}高兴了整整一下午。
-1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_dormitory_manager_room,今天有人来反映宿舍的问题，{Name}在旁边听着。\n听着听着{Name}就开始替对方着急，差点插嘴。\n管理员用眼神制止了{Name}，等人走了才说："先让他说完。"
-1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_dormitory_manager_room,{Name}学着做本周的房间分配，第一版排出来就撞了两处。\n{Name}没有直接改，而是先把冲突的地方圈出来，再一处处调。\n"这跟排课表是一回事。"{Name}忽然发现。
-1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_dormitory_manager_room,两位干员为了同一间房吵起来了，{Name}站在一旁手足无措。\n管理员没有偏袒任何一边，而是把两边各自的理由复述了一遍。\n"复述。"{Name}想起了话术课上那个练习，忽然明白了它有什么用。
+1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_dormitory_manager_room,{Name}被安排整理住宿登记表，一张张对着名字看。\n对到一半{Name}发现有两张写着同一个人，赶紧举起来问。\n“你眼力不错。”管理员说。{Name}高兴了整整一下午。
+1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_dormitory_manager_room,今天有人来反映宿舍的问题，{Name}在旁边听着。\n听着听着{Name}就开始替对方着急，差点插嘴。\n管理员用眼神制止了{Name}，等人走了才说：“先让他说完。”
+1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_dormitory_manager_room,{Name}学着做本周的房间分配，第一版排出来就撞了两处。\n{Name}没有直接改，而是先把冲突的地方圈出来，再一处处调。\n“这跟排课表是一回事。”{Name}忽然发现。
+1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_dormitory_manager_room,两位干员为了同一间房吵起来了，{Name}站在一旁手足无措。\n管理员没有偏袒任何一边，而是把两边各自的理由复述了一遍。\n“复述。”{Name}想起了话术课上那个练习，忽然明白了它有什么用。

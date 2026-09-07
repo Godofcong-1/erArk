@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|71_G_0,没有训练模型，{Name}就对着镜子练习舌尖的移动，慢慢地练。\n练了一会儿{Name}发现自己确实能更精准地控制方向了。\n“先慢，再准”，{Name}把老师的话当成了自习的座右铭。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|71_G_0,{Name}试着保持一个动作尽量久，没多久就觉得舌头发酸。\n酸了也没停，{Name}想起老师说酸了才说明真的在用力。\n坚持到最后，{Name}觉得比早上多撑了不少时间。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|71_G_0,{Name}练习一边呼吸一边不憋气，一开始总是忘记，动作就变僵。\n练了几次之后终于找到了呼吸和动作配合的感觉。\n“原来是这样”，{Name}小声感叹了一句。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|71_G_0,{Name}含着一口水练习湿润度的控制，含一会儿吐一会儿反复试。\n试了很多次才大概摸到“不干不湿”是种什么感觉。\n{Name}把这个感觉悄悄记在心里，怕自习课一结束就忘了。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|71_G_0,{Name}对着空气模拟练习节奏与呼吸的配合，没有对象也没有模型。\n练到后来{Name}竟然能保持很长一段时间不间断。\n“下次上课要试试给老师看看”，{Name}这样想着，又练了几遍。

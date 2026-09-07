@@ -4,6 +4,6 @@ str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
 1000,play_chess,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}下棋全凭直觉，想到哪儿走到哪儿，很快就输了。\n输完之后{Name}要求再来一局，第二局输得更快。\n第三局{Name}终于赢了一次——虽然对方明显是让着的。
-1001,play_chess,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}把棋子排得整整齐齐，比下棋本身还上心。\n轮到自己走的时候{Name}想得特别久，久到对方开始打哈欠。\n"再等一下嘛！"{Name}说，然后走了一步很随意的。
-1002,play_chess,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}这局走得很慢，每一步之前都要往后想两三步。\n中盘时{Name}主动弃了一子，换来了更好的位置。\n"这个跟指挥课上说的取舍好像是一回事。"{Name}想。
+1001,play_chess,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}把棋子排得整整齐齐，比下棋本身还上心。\n轮到自己走的时候{Name}想得特别久，久到对方开始打哈欠。\n“再等一下嘛！”{Name}说，然后走了一步很随意的。
+1002,play_chess,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}这局走得很慢，每一步之前都要往后想两三步。\n中盘时{Name}主动弃了一子，换来了更好的位置。\n“这个跟指挥课上说的取舍好像是一回事。”{Name}想。
 1003,play_chess,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,输了之后{Name}没有立刻收棋，而是把整局倒推了一遍。\n推到中间某一步时{Name}停住了——问题出在那里，而不是最后的失误。\n{Name}把那一步的局面记了下来，准备回去再想想。

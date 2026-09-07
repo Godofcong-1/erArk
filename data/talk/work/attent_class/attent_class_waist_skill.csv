@@ -1,0 +1,16 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|76_G_0&CVP_A1_CourseType|0_G_0,老师讲腰部发力的原理，说关键不在腰本身，而在核心力量。\n{Name}听得有点困惑，一直以为腰扭得越厉害就越有用。\n“力量要从核心传出来”——{Name}把这句话记了下来。
+1001,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|76_G_0&CVP_A1_CourseType|0_G_0,黑板上的人体侧面图被{Name}仔细描了一遍，标出的力量传导路径也一一记下。\n“从髋部到腰再到上身，是一条线”，{Name}想着自己是不是哪一节卡住了。\n有人问怎么判断，老师说要慢慢感受，{Name}悄悄记下了这句话。
+1002,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|76_G_0&CVP_A1_CourseType|0_G_0,老师讲到节奏，{Name}下意识地想象了一下快慢交替的动作。\n“一成不变的节奏很快就会让人疲惫”——{Name}把这句话记在了心里。\n老师比划的那段动作看起来简单，{Name}猜想学起来肯定没那么容易。
+1003,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|76_G_0&CVP_A1_CourseType|0_G_0,老师提醒腰部很容易拉伤，{Name}想起自己平时坐姿也总是很随意。\n“练之前一定要先热身，图快图猛只会让自己受伤”——{Name}把这句话默默念了两遍。\n{Name}决定以后练习前一定先做热身。
+1004,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|76_G_0&CVP_A1_CourseType|1_G_0,核心发力的练习对{Name}来说很难，一开始还是习惯只用腰。\n老师让{Name}重新找感觉，按着腹部示范了一次力量的源头。\n“腰只是传递，不是源头”——{Name}跟着又试了好几次。
+1005,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|76_G_0&CVP_A1_CourseType|1_G_0,快慢交替的节奏练习让{Name}一开始总是一个速度到底。\n老师反复提醒变化才是重点，{Name}又耐心地重新试了一遍。\n练到最后，{Name}居然真的能自然地切换快慢了。
+1006,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|76_G_0&CVP_A1_CourseType|1_G_0,{Name}练习力量传导，从髋部到腰再到上身，一节一节地感受，中途卡在了某一节。\n老师说这很常见，慢慢练就好，{Name}又耐心地重新调整。\n下课时{Name}发现自己确实比刚开始更能顺畅传导力量了。
+1007,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|76_G_0&CVP_A1_CourseType|1_G_0,保持动作没多久{Name}就觉得腰有点酸，忍不住想加快速度。\n老师让{Name}先停下来歇一下别硬撑，{Name}照做之后感觉舒服了不少。\n下课前{Name}已经能撑住比刚开始更久的时间了。
+1008,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|76_G_0&CVP_A1_CourseType|2_G_0,大礼堂里，老师讲动作越猛越有效果是个误区。\n“猛只会让人更快疲惫，效果反而更差”——{Name}若有所思地点了点头。\n这句话{Name}回去之后想了很久。
+1009,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|76_G_0&CVP_A1_CourseType|2_G_0,有人问腰容易拉伤怎么办，{Name}也悄悄竖起了耳朵。\n老师说热身和控制力度是关键，别图快图猛，{Name}这才松了口气。\n{Name}把这句话当成了给自己打气的话。
+1010,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|76_G_0&CVP_A1_CourseType|2_G_0,老师最后讲力量传导的重要性，说只靠腰扭是很多人容易犯的错。\n“力量要从核心传出来，腰只是中间那一环”——{Name}当场把这句话记在了笔记本上。\n虽然只是坐在台下，{Name}却觉得自己好像也上了一堂实践课。

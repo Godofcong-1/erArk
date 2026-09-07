@@ -3,8 +3,8 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|47_G_0,农业课自习，{Name}趁机溜去看了看自己那盆苗。\n苗还是老样子，一点没长，{Name}蹲在旁边看了好一会儿。\n回到座位上{Name}在观察记录里认真地写下："今天也没有变化。"
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|47_G_0,农业课自习，{Name}趁机溜去看了看自己那盆苗。\n苗还是老样子，一点没长，{Name}蹲在旁边看了好一会儿。\n回到座位上{Name}在观察记录里认真地写下：“今天也没有变化。”
 1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|47_G_0,{Name}把四种土的名字和特征抄在小纸条上，抄完发现自己已经分不清哪个是哪个了。\n于是{Name}闭上眼睛回想那天闻到的味道，一个一个对过去。\n对到第三个的时候{Name}忽然想起来了，赶紧睁眼把答案写上。
 1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|47_G_0,自习课上{Name}把那张四年轮作表重新排了一遍，这次是按罗德岛实际的种植区排的。\n排到第三年时{Name}发现有一块地会连着种两年同样的东西，赶紧调换了顺序。\n改完之后{Name}在旁边注明了原因，字写得很小很密。
 1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|47_G_0,{Name}翻着自己的观察记录，从第一天一路看到今天。\n看到中间某几天的记录明显敷衍，{Name}有点脸红，但没有撕掉。\n从那天起{Name}的记录变长了一些，还开始附上简单的草图。
-1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|47_G_0,应急收割的三种顺序{Name}默写了一遍，然后自己给自己出了个情况题。\n题设是"只来得及收一半"，{Name}想了很久该先收哪一半。\n最后{Name}写下的答案不是产量最高的那半，而是最不耐放的那半。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|47_G_0,应急收割的三种顺序{Name}默写了一遍，然后自己给自己出了个情况题。\n题设是“只来得及收一半”，{Name}想了很久该先收哪一半。\n最后{Name}写下的答案不是产量最高的那半，而是最不耐放的那半。

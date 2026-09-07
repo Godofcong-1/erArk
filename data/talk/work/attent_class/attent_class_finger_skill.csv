@@ -1,0 +1,16 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|70_G_0&CVP_A1_CourseType|0_G_0,老师在讲台上慢慢屈伸手指，说指技的核心是控制不是力气。\n{Name}盯着老师的手指看了很久，自己也悄悄在桌下比划了一下。\n这节课没有碰任何模型，{Name}却记了满满一页力度该怎么分配。
+1001,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|70_G_0&CVP_A1_CourseType|0_G_0,黑板上画着一只手掌，几个点被圈了出来。\n“同样的按压，落在不同点上完全不一样”——{Name}把这句话抄了两遍。\n有人问背下来是不是就够了，{Name}也很想知道答案，结果老师说光背没用。
+1002,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|70_G_0&CVP_A1_CourseType|0_G_0,节拍器放在讲台上，交替响着两种速度，{Name}的手指跟着在桌面上无声地比划。\n“快不等于有用”，{Name}把这句话默默记在心里。\n下课后{Name}还在想，自己平时是不是总习惯用最快的速度。
+1003,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|70_G_0&CVP_A1_CourseType|0_G_0,老师讲到指尖容易疲劳，{Name}下意识地看了看自己的手指。\n“用整只手比只用两根手指更持久”，老师边说边做了一个放松的手势。\n{Name}学着做了一次，果然感觉轻松了不少。
+1004,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|70_G_0&CVP_A1_CourseType|1_G_0,硅胶手模摆在面前，{Name}闭着眼睛去摸，一开始完全分不清软硬。\n“用眼睛看会骗你”，老师的声音在旁边响起。\n{Name}又摸了几遍，慢慢开始能分辨出细微的差别。
+1005,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|70_G_0&CVP_A1_CourseType|1_G_0,{Name}捏着软胶球，捏扁了又看着它慢慢弹回原样。\n“能捏扁但不弄坏才是本事”——老师的示范让{Name}看得入了神。\n练到后来手指有点发酸，{Name}却觉得这种酸胀的感觉还挺新奇。
+1006,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|70_G_0&CVP_A1_CourseType|1_G_0,训练模型上的小灯总是在{Name}用力的时候亮起红光。\n老师走过来，握着{Name}的手重新示范了一次力度。\n“感觉到了吗”——{Name}点点头，红灯真的没有再亮。
+1007,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|70_G_0&CVP_A1_CourseType|1_G_0,蒙上眼睛之后{Name}连方向都摸错了，闹了个小笑话。\n老师提醒先找边缘再找中心，{Name}照着做，慢慢摸对了位置。\n下课时{Name}已经能不看手也找到正确的地方了。
+1008,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|70_G_0&CVP_A1_CourseType|2_G_0,大礼堂里，老师做了一次完整的手法演示，动作不快却很稳。\n{Name}看得目不转睛，连眨眼都忘了。\n“这门课看着简单，”老师说，“练熟需要的时间比想象中长得多”——{Name}把这句话记住了。
+1009,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|70_G_0&CVP_A1_CourseType|2_G_0,老师讲到一个常见误区：用力越大越有效。\n“错的，用力过猛反而会让对方紧张”——{Name}第一次听到这个说法，愣了一下。\n台下一片安静，{Name}也跟着安静了下来，认真想了想这句话。
+1010,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|70_G_0&CVP_A1_CourseType|2_G_0,有人举手问手指酸了怎么办，{Name}也悄悄竖起了耳朵。\n老师认真讲了休息与拉伸的方法，说技巧是练出来的，不是硬扛出来的。\n这句话被{Name}认认真真地记在了笔记本最上面一行。

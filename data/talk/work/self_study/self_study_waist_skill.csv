@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|76_G_0,没有人指导，{Name}就自己练习核心发力，按着腹部感受力量的源头。\n试了很多次{Name}才隐约感觉到力量确实不是从腰开始的。\n“原来是这样的感觉”，{Name}小声嘀咕了一句。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|76_G_0,{Name}练习快慢交替的节奏，一开始总是一个速度到底。\n慢慢地{Name}好像找到了一点点变化节奏的感觉。\n“变化才是这门课的重点”，{Name}把老师的话当成了自习的座右铭。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|76_G_0,{Name}练习力量传导，从髋部到腰再到上身，一开始总是卡在中间。\n慢慢调整之后，{Name}终于感觉到力量顺畅地传了过去。\n“力量要从核心传出来”，{Name}小声重复了一遍。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|76_G_0,{Name}保持动作练习耐力，中途觉得腰有点酸也没有立刻停下来。\n酸的感觉慢慢缓解之后，{Name}才觉得松了一口气，决定还是要注意力度。\n{Name}把这次坚持的时间悄悄记在心里，想着下次要更久。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|76_G_0,{Name}对着空的房间反复练习核心发力和节奏变化，没有人指导也没有反馈。\n练到后来{Name}竟然能保持很长一段时间动作不乱。\n“下次上课要试试给老师看看”，{Name}这样想着，又练了几遍。

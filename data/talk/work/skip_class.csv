@@ -3,8 +3,8 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,skip_class,0,self_is_player_daughter&CVP_A1_T|102_E_1,{Name}把课本抱在怀里，绕着走廊走了一圈又一圈，就是不往教室那边去。\n"就今天……就今天一次。"{Name}小声给自己找理由。\n最后{Name}找了个没人的角落坐下来，把课本摊在膝盖上，一页也没翻。
+1000,skip_class,0,self_is_player_daughter&CVP_A1_T|102_E_1,{Name}把课本抱在怀里，绕着走廊走了一圈又一圈，就是不往教室那边去。\n“就今天……就今天一次。”{Name}小声给自己找理由。\n最后{Name}找了个没人的角落坐下来，把课本摊在膝盖上，一页也没翻。
 1001,skip_class,0,self_is_player_daughter&CVP_A1_T|102_E_1,{Name}躲在宿舍里没有去上课，每听见门外有脚步声就屏住呼吸。\n等脚步声走远，{Name}才敢重新呼吸。\n这样折腾了几回之后，{Name}发现翘课比上课还累。
-1002,skip_class,0,self_is_player_daughter&CVP_A1_T|103_E_1,今天{Name}没有去教室，而是一个人待着，什么也不想做。\n课本就在手边，{Name}看了它好几眼，最后还是没有伸手。\n"明天再说吧。"{Name}对自己说，然后知道自己在骗自己。
+1002,skip_class,0,self_is_player_daughter&CVP_A1_T|103_E_1,今天{Name}没有去教室，而是一个人待着，什么也不想做。\n课本就在手边，{Name}看了它好几眼，最后还是没有伸手。\n“明天再说吧。”{Name}对自己说，然后知道自己在骗自己。
 1003,skip_class,0,self_is_player_daughter&CVP_A1_T|103_E_1,{Name}算过了：这一节缺了，后面的内容大概能自己补上。\n可是真的坐下来之后，{Name}什么也没补。\n窗外的天色一点点变了，{Name}就那么坐着，直到这一节的时间过完。
 1004,skip_class,0,self_is_player_daughter,{Name}没有去上课。这不是第一次想，但是第一次真的没去。\n最初那一阵轻松只持续了很短的时间，之后剩下的全是空。\n{Name}把自己缩起来，谁也不想见——尤其不想被博士看见。
