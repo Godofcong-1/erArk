@@ -132,6 +132,102 @@ def settle_absent(character_id: int) -> None:
     growth_data.absent_count += 1
 
 
+def judge_must_attend_sex_class(character_id: int, now_course: Optional[dict] = None) -> bool:
+    """
+    判断本节课是不是玩家点名要这名学生必修的性技实操课
+
+    必修名单存在临时课程条目里，由玩家排课时手动指定；被点名的学生无论原本排了什么课都来，
+    且不会因为心情差而翘课。
+    Keyword arguments:
+    character_id -- 角色id
+    now_course -- 本节课数据，None时不查（仅按当前时刻的临时课判定）
+    Return arguments:
+    bool -- 是否为必修
+    """
+    from Script.System.Education_System import sex_class_handle
+
+    period = game_time.get_class_period(character_id)
+    if period == -1:
+        return False
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = character_data.behavior.start_time
+    if now_time is None:
+        now_time = cache.game_time
+    temp_class = sex_class_handle.get_temp_class(now_time.date().toordinal(), period)
+    if temp_class is None:
+        return False
+    return character_id in temp_class.get("must_attend", [])
+
+
+def judge_pre_arrive_sex_class(character_id: int) -> int:
+    """
+    预到岗判定：下一节是自己要上的性技实操课时，提前若干分钟就动身去教室
+
+    ⚠️ 既有节次表首尾相接、没有课间（game_time.py:519 CLASS_PERIOD_START），9个节次里有7个的
+       "提前10分钟"落在上一节课的最后10分钟内。命中时学生会**中止当前节次的课**转为移动
+       （口径62 提前退场）——这是有意为之，玩家踩着点到教室时人应该已经在了。
+    ⚠️ 提前退场的那一节**不算缺课**：这里绝不能调 settle_absent()。那个函数用 last_absent_period
+       对「日期序数+节次」做去重，被提前退场占掉标记后，当天真正的缺课就再也记不上了（口径66）。
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 状态机id，不该预到岗则为0
+    """
+    from Script.System.Education_System import sex_class_handle
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = character_data.behavior.start_time
+    if now_time is None:
+        now_time = cache.game_time
+    temp_class, classroom = get_next_sex_class(character_id, now_time)
+    if temp_class is None:
+        return 0
+    # 人已经在目标教室了就不用走了
+    if judge_in_scene(character_id, classroom):
+        return 0
+    return constant.StateMachine.MOVE_TO_CLASS_ROOM
+
+
+def get_next_sex_class(character_id: int, now_time) -> tuple:
+    """
+    取该角色下一节要上的性技实操课（仅在距开始 PRE_ARRIVE_MINUTE 分钟内时返回）
+
+    "要上"有两种：被玩家点名必修，或个人课表里这一节本来就选了这间教室（选修）。
+    后者是零改动的那一半——学生的个人课表存的是"这一节去哪间教室"而不是"上什么科目"，
+    教室里的内容从料理实践换成性技实操，她照旧走进来。
+    Keyword arguments:
+    character_id -- 角色id
+    now_time -- 参照时刻
+    Return arguments:
+    tuple -- (临时课程dict, 教室名str)，不该去则为(None, "")
+    """
+    import datetime
+
+    from Script.System.Education_System import sex_class_handle
+
+    date_ordinal = now_time.date().toordinal()
+    week_day = now_time.weekday()
+    for period, (hour, minute) in enumerate(game_time.CLASS_PERIOD_START):
+        start_time = now_time.replace(hour=hour, minute=minute, second=0, microsecond=0)
+        # 只看还没开始的节次
+        if start_time <= now_time:
+            continue
+        if start_time - now_time > datetime.timedelta(minutes=sex_class_handle.PRE_ARRIVE_MINUTE):
+            break
+        temp_class = sex_class_handle.get_temp_class(date_ordinal, period)
+        if temp_class is None:
+            continue
+        classroom = temp_class.get("classroom", "")
+        # 必修：玩家点了名
+        if character_id in temp_class.get("must_attend", []):
+            return temp_class, classroom
+        # 选修：个人课表这一节本来就指向这间教室
+        selected = schedule_handle.get_selected_course(character_id, week_day, period)
+        if selected is not None and selected[0] in schedule_handle.CLASSROOM_COURSE_TYPE_SET and selected[1] == classroom:
+            return temp_class, classroom
+    return None, ""
+
+
 def judge_class_state_machine(character_id: int) -> int:
     """
     上课时段的行为决策总入口，返回本节该执行的状态机id
@@ -146,18 +242,26 @@ def judge_class_state_machine(character_id: int) -> int:
         return 0
     character_data: game_type.Character = cache.character_data[character_id]
 
+    # 本节是不是玩家指定的必修性技实操课——两道闸对必修生的处理都不一样（Plan 22 四期 口径65）
+    must_attend_flag = judge_must_attend_sex_class(character_id, now_course)
+
     # 第一道闸：体力。上不动课就去休息，并记一节缺课
     if character_data.hit_point_max and character_data.hit_point / character_data.hit_point_max < ABSENT_HP_RATE:
-        settle_absent(character_id)
-        return constant.StateMachine.REST
+        # 必修的实操课例外：人照常到场、不计缺课，只是到了教室也不进H模板，站在一边旁观（口径65）。
+        # 体力不足是"做不动"而不是"不想来"，缺席的板子不该打在被玩家点名的学生头上
+        if not must_attend_flag:
+            settle_absent(character_id)
+            return constant.StateMachine.REST
 
     # 第二道闸：心情。今日已经翘了就翘到底，否则按四个负面状态的等级和掷一次
+    # ⚠️ 必修的实操课整道闸都跳过——玩家点了名就不许翘（口径60）
     growth_data = growth_handle.get_child_growth(character_id)
-    if growth_data.skip_class_flag:
-        return constant.StateMachine.EDUCATION_SKIP_CLASS
-    skip_rate = get_skip_class_rate(character_id)
-    if skip_rate and random.random() < skip_rate:
-        return constant.StateMachine.EDUCATION_SKIP_CLASS
+    if not must_attend_flag:
+        if growth_data.skip_class_flag:
+            return constant.StateMachine.EDUCATION_SKIP_CLASS
+        skip_rate = get_skip_class_rate(character_id)
+        if skip_rate and random.random() < skip_rate:
+            return constant.StateMachine.EDUCATION_SKIP_CLASS
 
     # 派课：班级式的教室课
     if now_course["course_type"] in schedule_handle.CLASSROOM_COURSE_TYPE_SET:

@@ -1,0 +1,12 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,join_sex_class,0,CVP_A1_T|103_E_1,{Name}走进教室，在自己的位置上站好，等着课开始。
+1001,join_sex_class,0,CVP_A1_T|103_E_1,{Name}深吸了一口气，才推开实践教室的门。这一节课的内容，她昨晚翻了好几遍课本。
+1002,join_sex_class,0,CVP_A1_T|103_E_1,{Name}到了。她看了看四周，小声地打了个招呼，然后乖乖站到一边。
+1003,join_sex_class,0,CVP_A1_T|102_E_1,{Name}被带进了教室。她还不太明白这节课要做什么，只是老老实实地站着。
+1004,join_sex_class,0,CVP_A1_T|102_E_1,{Name}攥着衣角走了进来，眼睛一直往{PlayerName}的方向看。
+1005,join_sex_class,0,self_not_underage,{Name}到场了。作为已经成年的干员，她对接下来要发生的事显然比孩子们清楚得多。
+1006,join_sex_class,0,,{Name}走进教室，神色平静地朝{PlayerName}点了点头，像是已经做好了准备。

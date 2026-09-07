@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+2000,start_sex_class,0,CVP_A1_Course|72_G_0,{Name}让学生把鞋袜脱掉。「足技看着简单，实际上最考验控制力。」
+2001,start_sex_class,0,CVP_A1_Course|72_G_0,「脚踝要放松，不要绷得那么紧。」{Name}托着学生的脚，一点点调整她的姿势。
+2002,start_sex_class,0,CVP_A1_Course|72_G_0,这节足技课上，{Name}反复强调力道的均匀——「一下重一下轻，是最糟糕的。」

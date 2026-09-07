@@ -3079,6 +3079,68 @@ def handle_group_sex_mode_off(
     cache.group_sex_mode = False
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SEX_CLASS_MODE_ON)
+def handle_sex_class_mode_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    开启性技实操课（课堂H）模式，并把场景内可参加的学生全部拉进H状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    from Script.System.Education_System import sex_class_handle
+
+    # 如果已经开启，则不处理
+    if cache.sex_class_mode:
+        return
+    cache.sex_class_mode = True
+    # ⚠️ 必须同时置群交模式：群交模板面板、射精面板、Web状态栏等十余处读取点判的都是那个标志，
+    #    只置 sex_class_mode 的话整个模板界面都不会出现。行为效果串里的10010已经置过，这里兜底
+    cache.group_sex_mode = True
+    # 把在场可参加的学生一并拉进H状态——效果串里的462/464只管玩家自己与当前交互对象，
+    # 其余到场学生要在这里补上，否则她们会被NPC AI派去做别的事
+    for student_id in sex_class_handle.get_scene_student_list():
+        student_data: game_type.Character = cache.character_data[student_id]
+        if not student_data.sp_flag.is_h:
+            character_move.cancel_movement_plan(student_id)
+        student_data.sp_flag.is_h = True
+        student_data.sp_flag.see_pl_h = True
+        # 到场的口上走二段行为：一段行为得靠NPC AI派发，而H中的NPC完全不进AI链（handle_npc_ai.py:290）
+        second_behavior.character_get_second_behavior(student_id, constant.Behavior.JOIN_SEX_CLASS)
+        # 出勤只在开课时记这一次；拖堂占用的后续节次既不记出勤也不记缺课
+        sex_class_handle.settle_attend(student_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SEX_CLASS_MODE_OFF)
+def handle_sex_class_mode_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    关闭性技实操课（课堂H）模式
+
+    ⚠️ 口上在效果结算之前就已经输出了（settle_behavior.py:407 早于 :410 的效果循环），
+       所以这里清 running 不会影响"提前/按时/拖堂"三档下课口上的判定。
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    from Script.System.Education_System import sex_class_handle
+
+    cache.sex_class_mode = False
+    sex_class_handle.end_sex_class()
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RETAIN_COMMAND_WITH_EVENT_TEXT)
 def handle_retain_command_with_event_text(
         character_id: int,

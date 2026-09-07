@@ -42,10 +42,17 @@ def update_new_day():
     from Script.System.Education_System import schedule_template_handle
     from Script.System.Official_Event_System import official_event_handle
 
+    from Script.System.Education_System import sex_class_handle
+
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
     now_draw.text = _("\n已过24点，开始结算各种数据\n\n")
     now_draw.draw()
+
+    # 清理过期的临时性技实操课，避免字典随游戏天数无限膨胀并进存档（Plan 22 四期 §7-16）
+    # ⚠️ 该函数会跳过 running 为真的那条：下课时间由玩家决定，一节课可以从昨天一直上到今天，
+    #    把正在上的这节删掉，下课时就找不到课程数据了（§7-27）
+    sex_class_handle.clean_expired_temp_class()
 
     # 角色刷新
     all_chara_id_set = cache.npc_id_got.copy()

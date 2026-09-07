@@ -6,7 +6,7 @@ from typing import Set, List, Optional, Union
 from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, flow_handle
-from Script.Design import handle_ability, update, map_handle, character_behavior, instuct_judege, handle_npc_ai_in_h, handle_premise
+from Script.Design import handle_ability, update, map_handle, character_behavior, instuct_judege, handle_npc_ai_in_h, handle_premise, game_time
 from Script.UI.Panel import achievement_panel, normal_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
@@ -1618,6 +1618,110 @@ def handle_exhibitionism_sex_end():
     now_draw.draw()
     character_data.behavior.duration = 5
     update.game_update_flow(5)
+
+@add_instruct(constant.Instruct.START_SEX_CLASS)
+def handle_start_sex_class():
+    """处理性技实操课（开课）指令"""
+    from Script.System.Education_System import sex_class_handle
+
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    student_list = sex_class_handle.get_scene_student_list()
+    if not student_list:
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _("\n这里没有可以上课的学生。\n")
+        now_draw.draw()
+        return
+    # 选主修科目：预约的那节课已经定好了，当场开课则现选一门
+    today = cache.game_time.date().toordinal()
+    period = game_time.get_class_period_by_time(cache.game_time)
+    temp_class = sex_class_handle.get_temp_class(today, period)
+    ability_id = -1
+    if temp_class is not None:
+        ability_id = temp_class.get("ability_id", -1)
+    if ability_id not in sex_class_handle.SEX_CLASS_ABILITY_LIST:
+        ability_id = ask_for_sex_class_ability()
+        if ability_id == -1:
+            return
+    # 建/取本节课的数据并记出勤，之后模式开关、主修加成、旁观结算都从这条数据读
+    sex_class_handle.start_sex_class(ability_id, student_list)
+    # 交互对象取第一名学生：行为效果串里的464会让交互对象进H，其余学生由10014的结算器补上
+    character_data.target_character_id = student_list[0]
+    chara_handle_instruct_common_settle(constant.Behavior.START_SEX_CLASS, target_character_id=student_list[0])
+
+
+def ask_for_sex_class_ability() -> int:
+    """
+    让玩家选一门本节课的主修性技科目
+
+    ⚠️ 只列女学生学得了的七门。76腰技的 sex_need 为0（男性专属，data/csv/Ability.csv:76），
+       选了它全场学生一节课都吃不到加成，还不会报错，所以在源头就不列出来。
+    Keyword arguments:
+    无
+    Return arguments:
+    int -- 选中的能力id，取消则为-1
+    """
+    from Script.System.Education_System import sex_class_handle
+
+    while 1:
+        now_draw = draw.NormalDraw()
+        now_draw.width = width
+        now_draw.text = _("\n这节实操课主要练哪一门？\n（其他动作照样可以做，只是不会有本门的加成）\n\n")
+        now_draw.draw()
+        return_list = []
+        id_to_return = {}
+        for ability_id in sex_class_handle.SEX_CLASS_ABILITY_LIST:
+            ability_name = game_config.config_ability[ability_id].name
+            now_button = draw.CenterButton(
+                _("[{0}]").format(ability_name), ability_name, int(width / 4)
+            )
+            now_button.draw()
+            return_list.append(now_button.return_text)
+            id_to_return[now_button.return_text] = ability_id
+        line_draw = draw.NormalDraw()
+        line_draw.text = "\n"
+        line_draw.draw()
+        back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(width / 4))
+        back_draw.draw()
+        return_list.append(back_draw.return_text)
+        yrn = flow_handle.askfor_all(return_list)
+        if yrn == back_draw.return_text:
+            return -1
+        if yrn in id_to_return:
+            return id_to_return[yrn]
+
+
+@add_instruct(constant.Instruct.END_SEX_CLASS)
+def handle_end_sex_class():
+    """处理结束性技实操课（下课）指令"""
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    special_end_list = constant.special_end_H_list
+
+    # 非特殊中断的情况下，正常下课
+    if character_data.behavior.behavior_id not in special_end_list:
+        character_data.behavior.behavior_id = constant.Behavior.END_SEX_CLASS
+        character_data.state = constant.Behavior.END_SEX_CLASS
+
+    # 场景内所有H中的角色原地待机10分钟
+    now_scene_character_list = map_handle.get_chara_now_scene_all_chara_id_list(0, remove_own_character=True)
+    for chara_id in now_scene_character_list:
+        target_data: game_type.Character = cache.character_data[chara_id]
+        if not handle_premise.handle_self_is_h(chara_id):
+            continue
+        target_data.behavior.behavior_id = constant.Behavior.WAIT
+        target_data.behavior.duration = 10
+        target_data.behavior.start_time = character_data.behavior.start_time
+        target_data.state = constant.CharacterStatus.STATUS_WAIT
+
+    now_draw = draw.WaitDraw()
+    now_draw.width = width
+    now_draw.text = _("\n下课\n")
+    now_draw.draw()
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
 
 @add_instruct(constant.Instruct.GROUP_SEX_END)
 def handle_group_sex_end():

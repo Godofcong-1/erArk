@@ -128,6 +128,17 @@ def get_class_cell(classroom: str, week_day: int, period: int) -> Optional[List[
     Return arguments:
     Optional[List[int]] -- [科目能力id, 授课教师id]，未排课则为None
     """
+    # 临时性技实操课的覆盖层（Plan 22 四期 §3.28.3）：这是全局课表的唯一读取入口，
+    # 在这里插一层，下游的 get_now_course / 派课 / 移动 / 课表面板 / <课>标识 就全部自动跟上
+    # ⚠️ 只在查询的星期正好是今天时才覆盖——临时课程是一次性的（键含具体日期序数），
+    #    不能像 class_schedule 那样每周重复上演
+    if week_day == cache.game_time.weekday():
+        from Script.System.Education_System import sex_class_handle
+
+        temp_class = sex_class_handle.get_temp_class(cache.game_time.date().toordinal(), period)
+        if temp_class is not None and temp_class.get("classroom", "") == classroom:
+            # 教师id为0即玩家亲自授课
+            return [temp_class.get("ability_id", -1), 0]
     schedule = cache.rhodes_island.class_schedule
     return schedule.get(classroom, {}).get(week_day, {}).get(period, None)
 

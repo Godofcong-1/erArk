@@ -441,10 +441,24 @@ def character_move_to_class_room(character_id: int):
     """
     from Script.System.Education_System import schedule_handle
 
+    from Script.System.Education_System import class_ai
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = character_data.behavior.start_time
+    if now_time is None:
+        now_time = cache.game_time
+
     target_room = ""
+    # 预到岗：下一节是自己要上的性技实操课时，目标教室要查**下一节**而不是当前节次，
+    # 否则学生会走去上一节课的教室（Plan 22 四期 §3.28.5）
+    next_class, next_classroom = class_ai.get_next_sex_class(character_id, now_time)
+    if next_class is not None:
+        target_room = next_classroom
     # 教师视角：反查全局课表
     teaching = schedule_handle.get_now_teaching(character_id)
-    if teaching is not None:
+    if target_room:
+        pass
+    elif teaching is not None:
         target_room = teaching["classroom"]
     else:
         # 学生视角：查个人课表，只有班级式课型才在教室里上

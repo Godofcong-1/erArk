@@ -1264,6 +1264,15 @@ class Rhodes_Island:
         """ 全局课表（Plan 22） 键str:教室场景名(如"理论教室一") 值dict:{星期int(0~6): {节次int(0~8): [科目能力id int, 授课教师id int]}}
             未排的格子表示该教室该节次空闲；教师id为-1表示排了课但未指派教师（本节降级为自习）
             ⚠️ 只存班级式的教室课；体育/兴趣/实习课存在各角色的 child_growth.selected_course 里 """
+        self.temp_sex_class: Dict[str, dict] = {}
+        """ 临时性技实操课（Plan 22 四期 §4.3.2）
+            键str:"日期序数-节次"(如"739510-3")  值dict:
+            {"classroom": 教室场景名str, "ability_id": 性技科目能力id int(只填70~75、77，76腰技男性专属),
+             "must_attend": 必修学生角色id列表 list,
+             "notified": [起床提醒已发bool, 半小时提醒已发bool, 下课时刻提醒已发bool],
+             "running": 本节课是否正在进行中 bool}
+            ⚠️ 一次性课程，键含具体日期序数——不能并进 class_schedule（那里键是星期0~6，会每周重复上演）
+            ⚠️ 过期条目在跨天结算时清理，但 running 为真的那条要跳过（拖堂可跨天） """
         self.child_schedule_template: Dict[int, dict] = {}
         """ 孩子日程模板（Plan 22） 键int:模板编号 值dict:{"name": 模板名str, "slot": {时段int(0~2): 活动id int}}
             活动id 复用 Entertainment 配置 id。⚠️ 本期只建字段，写入方在二期 """
@@ -1970,6 +1979,10 @@ class Cache:
         """ 时间停止模式 """
         self.group_sex_mode: bool = False
         """ 群交模式 """
+        self.sex_class_mode: bool = False
+        """ 性技实操课（课堂H）模式（Plan 22 四期 §3.28）
+            ⚠️ 开启时须同时置 group_sex_mode = True，群交模板与其全部读取点才生效；
+               本标志只用于口上差分、前提区分与结算差分（主修加成、旁观收益、出勤） """
         self.game_round: int = 1
         """ 当前周目数 """
         self.all_npc_position_panel_select_type: int = 0

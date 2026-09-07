@@ -348,6 +348,12 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
             target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
             premise_data = new_premise_data
+    # 先判断性技实操课的预到岗：下一节是自己要上的实操课时，提前动身去教室（Plan 22 四期 §3.28.5）
+    # ⚠️ 必须排在上课判定之前：节次首尾相接没有课间，预到岗要能中止当前节次的课把人放走
+    if judge == 0:
+        from Script.System.Education_System import class_ai
+
+        judge = class_ai.judge_pre_arrive_sex_class(character_id)
     # 然后判断上课，需要本节次在个人课表上排了课（Plan 22 §2.8）
     # ⚠️ 排在工作之前：孩子的"工作"就是上学，走到下面的工作链只会随机挑一间教室；
     #    成年干员自选了课时，本节同样以课优先

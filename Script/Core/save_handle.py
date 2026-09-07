@@ -556,6 +556,10 @@ def input_load_save(save_id: str):
     if not hasattr(loaded_dict["rhodes_island"], "child_schedule_template"):
         loaded_dict["rhodes_island"].child_schedule_template = {}
         update_count += 1
+    # 临时性技实操课（Plan 22 四期）
+    if not hasattr(loaded_dict["rhodes_island"], "temp_sex_class"):
+        loaded_dict["rhodes_island"].temp_sex_class = {}
+        update_count += 1
     # 公务事件待处理队列与全局履历（Plan 23，由 Plan 22 三期的养成事件队列升格而来）
     if not hasattr(loaded_dict["rhodes_island"], "official_event_queue"):
         old_queue = getattr(loaded_dict["rhodes_island"], "growth_event_queue", [])

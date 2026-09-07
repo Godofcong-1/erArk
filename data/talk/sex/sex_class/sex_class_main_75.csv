@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+2000,start_sex_class,0,CVP_A1_Course|75_G_0,「这里比你想的更需要放松。」{Name}耐心地讲解着肛技的入门要点。
+2001,start_sex_class,0,CVP_A1_Course|75_G_0,{Name}强调了准备工作的重要性——「急着来只会受伤，这一点务必记住。」
+2002,start_sex_class,0,CVP_A1_Course|75_G_0,这节肛技课上，{Name}让学生们先学会控制呼吸，再谈别的。

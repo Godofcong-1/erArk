@@ -722,8 +722,11 @@ class Edit_Group_Sex_Temple_Panel:
                 if chara_id in now_scene_character_list:
                     continue
                 # 判断实行值是否足够，不够的也跳过
-                if instuct_judege.calculation_instuct_judege(0, chara_id, _("群交"), not_draw_flag = True)[0] == False:
-                    continue
+                # ⚠️ 性技实操课不判实行值（Plan 22 四期 口径58）：孩子是玩家自己养的、课是玩家自己排的，
+                #    两道决策已经做过；成年干员的门槛在 sex_class_handle.judge_can_join_sex_class 里另判
+                if not cache.sex_class_mode:
+                    if instuct_judege.calculation_instuct_judege(0, chara_id, _("群交"), not_draw_flag = True)[0] == False:
+                        continue
                 # 力竭/疲劳/重度困倦者不再提供邀请
                 if handle_premise.handle_self_exhausted(chara_id):
                     continue

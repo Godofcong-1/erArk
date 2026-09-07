@@ -187,6 +187,8 @@ int,str,str
 
 380,ask_hidden_sex,405 - 464 - 603 - 605 - 631 - 704 - 1409 - CVE_A1_E|35_G_1 - CVE_A2_E|35_G_1
 381,ask_hidden_sex_fail,526 - 528 - 404 - 631 - 153
+383,start_sex_class,406 - 462 - 464 - 608 - 636 - 1410 - 10010 - 10014
+384,end_sex_class,529 - 407 - 636 - 800 - 10011 - 10015
 382,other_sex_be_found_to_hidden_sex,476 - 1404 - CVE_A1_E|35_G_1 - CVE_A2_E|35_G_1
 
 386,ask_exhibitionism_sex,405 - 462 - 464 - 603 - 605 - 631 - 704 - 1409 - CVE_A1_E|34_G_1 - CVE_A2_E|34_G_1
@@ -771,4 +773,6 @@ int,str,str
 
 1501,has_been_primary_hypnosis,999
 1502,has_been_deep_hypnosis,999
+1504,join_sex_class,998
+1505,watch_sex_class,998
 1503,has_been_complete_hypnosis,999
