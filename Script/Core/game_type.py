@@ -356,6 +356,9 @@ class PREGNANCY:
         """ 本次怀孕是否为单胎胎生种族的同卵双胞胎（受精成功时按概率置位，生产结算后清除；与多胎胎生的一次多卵区分显示） """
         self.external_ovulation_chance: bool = False
         """ 无壳卵生：本排卵日的体外排卵机会是否可用（周期推进到排卵日时置True，体外排卵触发或离开排卵日时置False） """
+        self.prenatal_point: float = 0.0
+        """ 妊娠期胎教累积值（Plan 22 四期 §3.27）：每次胎教 +0.5，上限见 baby_growth_handle.PRENATAL_POINT_MAX；
+            生产时逐个转写到每个新生儿的 child_growth.prenatal_point（多胎各自全额、不平分）后清零 """
 
 
 class CHILD_GROWTH:

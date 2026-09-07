@@ -6,8 +6,8 @@
 > **角色字段定义以 `plan_22_生长养成系统_一期_方案.md` §4 为准**（下文简称"一期方案"）。
 > 本文件只写"怎么做、怎么验、怎么回滚"，实施过程与结果记入 §6。
 
-- 状态：**4-C 功能闭环已实施**（2026-09-07），①~⑦ 全部完成、⑧ 口上完成约 30%（49/165 条）；
-  游戏内整体测试（§4.2）与 §4.1 的行为级单元测试待补；4-A / 4-B 暂缓
+- 状态：**4-A / 4-B 已实施、4-C 功能闭环已实施**（2026-09-07）。4-C 的口上仍是 49/165、§4.1 行为级单元测试待补；
+  4-A / 4-B 单元测试 101 条全绿（§6.8）；游戏内整体测试待用户执行
 - 适用代码快照：`master @ 1667df589`
 - **前置**：一期已实施完毕（`Script/System/Education_System/` 9 个模块 3448 行，教育区地图已改建）
 - 实施前提：先通读方案 §3.28 全节与 §4.3；实施中发现与方案冲突的事实，**先更新方案再动代码**
@@ -20,9 +20,9 @@
 
 | 块 | 内容 | 方案位置 | 依赖 | 本轮 |
 | --- | --- | --- | --- | --- |
-| 4-A | 妊娠期胎教 | §3.27、§4.1 | 一期 | **暂缓** |
-| 4-B | 婴儿期 6 个照料行为差异化 | §3.20 | 一期 | **暂缓** |
-| **4-C** | **性技实操课 / 课堂 H 模式** | **§3.28 全节、§4.3、§5** | 一期（重度） | **实施** |
+| 4-A | 妊娠期胎教 | §3.27、§4.1 | 一期 | **✅ 已实施 2026-09-07**（§6.6） |
+| 4-B | 婴儿期 6 个照料行为差异化 | §3.20 | 一期 | **✅ 已实施 2026-09-07**（§6.7） |
+| **4-C** | **性技实操课 / 课堂 H 模式** | **§3.28 全节、§4.3、§5** | 一期（重度） | **功能闭环已实施**（口上 49/165，§6.1~§6.5） |
 
 三块互不依赖，可任意顺序做。4-A / 4-B 的原步骤保留在 §7 备查。
 
@@ -428,13 +428,94 @@
 
 ### 6.5 第二轮追加调整实施记录
 
-（与方案 §9.x 成对，每轮一节，附回归测试计数）
+**2026-09-07 第二轮（随 4-A / 4-B 一并做的 4-C 收尾）**
+
+1. **修正一个会让游戏起不来的 BUG**：`join_sex_class.csv:1006`、`watch_sex_class.csv:1005/1006` 三条口上的前提列为空，
+   `game_config.load_talk()` 读到没有 `premise` 属性的对象直接 AttributeError。第一轮只跑了增量构建、
+   `Character_Talk.json` 还是旧的，所以整个 `sex_class/` 目录当时**根本没被编译过**，静态验证也就没暴露。
+   本轮全量重建后才炸出来，已把三条补上 `self_not_underage`（它们本就是成年干员那一档的文案）。
+   ⚠️ 教训：**新增口上目录后必须删 `Character_Talk.json` 再验**，增量构建会静默跳过。
+2. **发现但未处理：7 个 `sex_class_main_*.csv` 目前是死文本。** 它们挂在 `start_sex_class`（玩家行为）上、
+   前提写的是 `CVP_A1_Course|7X_G_0`，而 `handle_premise.get_now_course_ability(0)` 对玩家走的是
+   `get_now_teaching()` → `get_teacher_now_class()`，那条教师反查**不经过临时课程覆盖层**（§6.2 假设 2 的后果），
+   `get_now_course(0)` 又查不到玩家的个人课表，所以这 7 个文件的前提对玩家**永远不成立**；当场开课在节次外时
+   学生侧同样取不到科目。要修得让 `get_now_course_ability()` 在 `sex_class_handle.get_running_class()` 非空时
+   直接返回本节主修科目。本轮未动，留给 4-C 的口上补全一并处理。
+3. 4-C 的口上仍是 49/165，本轮未补。
+
+### 6.6 4-A 妊娠期胎教实施记录（2026-09-07）
+
+**实际改动**（新增 1 模块、改 11 处、口上 3 文件 30 条）：
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/System/Education_System/baby_growth_handle.py` | **新增** | 胎教累积 / 封顶 / 清零、出生转写 `settle_prenatal_to_child()`、换算常量；顺带承载 4-B 喂奶的常量（约 170 行）|
+| `Script/Core/game_type.py` | 改 | `PREGNANCY.prenatal_point: float = 0.0` |
+| `Script/Core/save_handle.py` | 改 | 逐角色循环里并入 `hasattr` 回填（紧接 `external_ovulation_chance`）|
+| `Script/Core/constant_effect.py` | 改 | `PRENATAL_ADD_ADJUST = 555` |
+| `Script/Core/constant/Behavior.py` / `BehaviorStr.py` / `Behavior_Int.py` | 改 | `PRENATAL_TALK` / `_MUSIC` / `_TOUCH`（Int 取 952~954，即 Introduce 的 cid）|
+| `Script/System/Instruct_System/Instruct.py` / `handle_instruct.py` | 改 | 三条指令常量与处理函数（照 `listen_inflation` 的写法，一行 `chara_handle_instruct_common_settle`）|
+| `Script/Settle/default.py` | 改 | `handle_prenatal_add_adjust()`：交互对象 `pregnancy.prenatal_point += 0.5`，无交互对象不结算 |
+| `Script/System/Pregnancy_System/born_event_panel.py` | 改 | 每个新生儿创建后立即 `settle_prenatal_to_child()` 并显示说明；全部起完名后 `clear_prenatal_point()` |
+| `data/csv/Behavior_Data.csv`（+ ArkEditor 同步） | 改 | 270 `prenatal_talk` / 271 `prenatal_music` / 272 `prenatal_touch`，各 30 分钟、pl、娱乐 |
+| `data/csv/Behavior_Effect.csv` | 改 | `1511 - 1512 - 21 - 22 - 55 - 555`（抚摸另带 53 亲密），照抄 `listen_inflation` 再接 555 |
+| `data/csv/Behavior_Introduce.csv` | 改 | 952~954 |
+| `data/csv/InstructConfig.csv` | 改 | 3031~3033，PLAY 组，前提 `HAVE_TARGET|NOT_IN_TOILET|T_INFLATION_1|T_FAKE_INFLATION_0`，部位 belly |
+| `data/talk/daily/prenatal_talk.csv` / `prenatal_music.csv` / `prenatal_touch.csv` | **新增** | 各 10 条：妊娠（`t_pregnancy_1`）5 + 临盆（`t_parturient_1`）5 |
+
+**与方案的偏离**：
+
+1. **转写换算率方案没定，本轮取 0.5 经验/点、胎教值封顶 100**：满值 → 每科 50 经验，对照 `AbilityUp.csv` 累计需求（10/35/75/145）落在 2 级附近，是"底子好"而非"先修"的量级。
+2. **转写覆盖 17 门而非 18 门**：不含 76 腰技（男性专属，女儿学不了），与 4-C 排课面板不列腰技同一口径。
+3. **指令前提用 `T_INFLATION_1|T_FAKE_INFLATION_0`（真孕肚）而不是 `T_PREGNANCY_1`**：后者只覆盖妊娠（素质 21），会把临盆期（22）排除在外；孕肚素质 26 从妊娠一直挂到生产，且假孕（25）要单独排掉。
+4. **转写时经验直接写 `experience` 字典**，不走 `base_chara_experience_common_settle()`——出生时没有行为，走通用函数会刷一屏升级提示，且会撞上 4-C 挂在那里的主修加成钩子。
+5. **卵生分娩同样走转写**：胎教指令要求真孕肚，卵生母亲攒不到值，转写拿到 0 静默跳过，不必在面板里分支。
+6. 方案 §3.27 说"母子好感与亲密"另加，实际由效果串里既有的 21/53 承担，未另建效果。
+
+### 6.7 4-B 婴儿期照料差异化实施记录（2026-09-07）
+
+**实际改动**（改 3 处、口上 6 文件 55 条）：
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `data/csv/Behavior_Effect.csv:261~266` | 改 | 在既有 `1513 - 1514 - 21 - 22 - 71 - 53` **之后追加**，既有 6 项一字未动：抱小孩 `CVE_A2_Growth|20_G_0.3 - CVE_A2_Growth|11_L_0.5`；哼唱儿歌 `CVE_A2_E|85_G_8 - CVE_A2_Growth|12_G_0.5`；喂奶 `CVE_A2_Growth|20_G_0.3 - 556`；换尿布 `CVE_A2_Growth|20_G_0.2 - CVE_A2_Growth|13_G_0.5`；教说话 `CVE_A2_E|80_G_8 - CVE_A2_E|82_G_4`；给玩具 `CVE_A2_E|91_G_5 - CVE_A2_E|90_G_5 - CVE_A2_Growth|10_G_0.3` |
+| `Script/Core/constant_effect.py` | 改 | `NUIRSE_CHILD_ADD_ADJUST = 556` |
+| `Script/Settle/default.py` | 改 | `handle_nuirse_child_add_adjust()`：婴儿体力/气力上限各 +2；发起者是玩家时另加好感（固定 10）与好意（基础 10）；非婴儿目标不生效 |
+| `data/talk/daily/hold_child.csv` 等 5 个 | 改 | 占位文本换成 玩家（`sys_0`）5 + 保育员（`sys_1`）5 |
+| `data/talk/daily/change_diapers.csv` | 改 | 原 9 条（`high_1`）原样保留，追加 5 条 `sys_0` |
+| `tools/ArkEditor/csv/Effect.csv` | 改 | 顺带补登记一期～四期一直缺的 548~556 与 10014/10015 |
+
+**与方案的偏离**：
+
+1. **除喂奶外全部用 CVE token 写在效果串里，零新效果 id**：三期已经把养成数值接进了 `CVE_A2_Growth|N`（性格倾向 10~13、照料值 20，支持浮点），技能经验走既有 `CVE_A2_E|N`。经验 id 由 `AbilityUp.csv` 解出：话术 40→80、音乐 44→85、学识 45→82、制造 48→90、绘画 49→91。
+2. **"体质相关初始值"落为体力/气力上限各 +2 / 次**；"母子好感额外加成"落为**玩家亲自喂奶**才有的好感 +10 与好意，保育员喂奶只长体质——方案 §2.2 说的"差异化对保育员同样生效、玩家亲自才额外加好感"就是这个分法。
+3. 性格倾向的符号：偏坚强是 `11_L_0.5`（脆弱/坚强对，负数偏后者），其余三对都偏前者用 `G`。
+4. 保育员的等权重随机选择逻辑（`StateMachine/default.py:1765`）**未动**。
+
+### 6.8 4-A / 4-B 单元测试结果
+
+脚本 `test_plan22_4ab.py`（headless-game-test 模式 A），**101 条断言全绿**，分组：
+
+| 组 | 断言数 | 关键实测值 |
+| --- | --- | --- |
+| 注册与生成物 | 39 | 555/556 已注册；3 个行为与 3 条指令（含前提逐条可解）；胎教口上每档 5 条；5 个照料文件玩家档/NPC 档各 5 条且占位文本已清；换尿布 9 + 5 |
+| 数据层 | 3 | `PREGNANCY()` 默认 0.0；回填代码在位；旧档缺字段时读口兜底为 0 |
+| 胎教累积（555） | 5 | 一次 +0.5、两次 1.0、`add_time=0` 不累积、99.8 → 封顶 100.0、无交互对象不累积 |
+| 出生转写 | 11 | 双胎各自 20 点；学识/指技各 10 经验、腰技 0；17 门全部命中；转写不清零、`clear` 后为 0；1 点时经验 0 但仍记录；无胎教不出文本 |
+| 照料效果链 | 20 | 六个行为前 6 项与改动前逐项相同、追加项逐项相同、六条链互不相同；CVE 实跑：倾向 -0.5/+0.5、照料 +0.3、音乐 +8、话术 +8/学识 +4；保育员发起同样生效 |
+| 喂奶（556） | 9 | 玩家：体力/气力上限 +2、好感与好意增加；保育员：体质 +2 但好感/好意不变；非婴儿不生效；`add_time=0` 不生效 |
+| 口上前提 | 9 | `sys_0`/`sys_1` 对玩家与 NPC 取值正确；妊娠/临盆两档互斥；假孕时 `t_fake_inflation_0` 为假 |
+| 生产面板集成 | 4 | `Born_Panel._draw_born_event_content()` 生双胎：两名新生儿各 30 点、每科 15 经验；母亲侧清零；面板输出胎教说明 |
+
+⚠️ 断言"通用口上每档 5 条"要**过滤 `adv_id != 0`**：`data/talk/chara/0377_澄闪.csv` 里也有这几个行为的 `sys_0` 行。
+
+**尚未覆盖**：游戏内实际点三条胎教指令看指令出现条件与文本；保育员随机照料后在养成总览看倾向值变化；Web 模式；PO 词条（同前）。
 
 ---
 
-## 7. 4-A / 4-B 的步骤（暂缓，备查）
+## 7. 4-A / 4-B 的原步骤（已于 2026-09-07 实施，备查）
 
-⚠️ 以下两块本轮不实施，步骤保留自 v3，实施前需重新核对代码快照。
+⚠️ 以下是 v3 时期拟的步骤，实际改动与偏离见 §6.6 / §6.7，以那两节为准。
 
 ### 7.1 4-A 妊娠期胎教
 

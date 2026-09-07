@@ -340,6 +340,9 @@ def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
             # 无壳卵生旧存档兼容：补全体外排卵机会标记
             if pregnancy_data is not None and not hasattr(pregnancy_data, "external_ovulation_chance"):
                 pregnancy_data.external_ovulation_chance = False
+            # 胎教旧存档兼容：补全妊娠期胎教累积值（Plan 22 四期）
+            if pregnancy_data is not None and not hasattr(pregnancy_data, "prenatal_point"):
+                pregnancy_data.prenatal_point = 0.0
             # 生长养成系统旧存档兼容：补全养成数据结构体的挂载位（Plan 22）
             # 默认None，由 growth_handle.get_child_growth() 惰性创建，此处只保证属性存在
             if not hasattr(character, "child_growth"):

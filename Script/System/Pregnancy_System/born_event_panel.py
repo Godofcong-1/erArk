@@ -198,6 +198,15 @@ class Born_Panel:
                     info_draw.text = _("\n孩子的名字叫做{0}，她是{1}的第{2}个孩子，也是{3}的第{4}个孩子，请慢慢养育她长大成人吧\n").format(child_character_data.name, pl_character_data.name, len(pl_character_data.relationship.child_id_list), mom_character_data.name, len(mom_character_data.relationship.child_id_list))
                     info_draw.draw()
                     line_feed.draw()
+                    # 胎教转写（Plan 22 四期 §3.27）：母亲的累积值逐个**全额**写给每个新生儿，多胎不平分——
+                    # 胎教是对着孕肚做的，双胞胎都听见了；平分会让多胎变成惩罚
+                    from Script.System.Education_System import baby_growth_handle
+
+                    prenatal_text = baby_growth_handle.settle_prenatal_to_child(self.mother_character_id, new_child_id)
+                    if prenatal_text:
+                        info_draw.text = prenatal_text
+                        info_draw.draw()
+                        line_feed.draw()
                 # 多子总结
                 if identical_twins_flag:
                     info_draw.text = _("\n{0}生下了一对同卵双胞胎：{1}与{2}\n").format(mom_character_data.name, child_name_list[0], child_name_list[1])
@@ -211,6 +220,10 @@ class Born_Panel:
                     info_draw.text = _("\n{0}一次生下了{1}个孩子：{2}\n").format(mom_character_data.name, born_count, "、".join(child_name_list))
                     info_draw.draw()
                     line_feed.draw()
+                # 全部孩子都转写完了才清零母亲侧的胎教累积，下一胎从头攒（Plan 22 四期 §3.27）
+                from Script.System.Education_System import baby_growth_handle
+
+                baby_growth_handle.clear_prenatal_point(self.mother_character_id)
                 break
 
             if self.egg_mode:

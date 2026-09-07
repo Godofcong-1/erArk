@@ -3,4 +3,13 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,hold_child,0,high_1,{Name}触发了抱小孩指令的地文
+0,hold_child,0,sys_0,{Name}把{TargetName}从小床里抱起来，让她的脑袋靠在自己肩上，一下一下地轻拍着她的背。
+1,hold_child,0,sys_0,{TargetName}一被{Name}抱起来就不哭了，小手攥着{Name}的衣领，眼睛慢慢地眯了起来。
+2,hold_child,0,sys_0,{Name}抱着{TargetName}在育儿室里慢慢地走，一边走一边低声说着话。{TargetName}听不懂，但一直盯着{Name}的脸。
+3,hold_child,0,sys_0,{Name}托着{TargetName}的后脑，把她稳稳地抱在臂弯里。小小的身子暖乎乎的，让{Name}一时舍不得放下。
+4,hold_child,0,sys_0,{TargetName}在{Name}怀里打了个哈欠，往{Name}胸口拱了拱，安心地睡着了。
+5,hold_child,0,sys_1,{Name}熟练地把{TargetName}抱起来，用手臂托稳她的身子，轻轻晃着哄她。
+6,hold_child,0,sys_1,{Name}抱着{TargetName}走到窗边，让她看外面的光。{TargetName}伸出小手，想去抓什么。
+7,hold_child,0,sys_1,{TargetName}哭闹起来，{Name}把她抱在怀里轻轻拍着，哼了两句不成调的调子，她便慢慢安静下来。
+8,hold_child,0,sys_1,{Name}把{TargetName}竖着抱起来，让她的下巴搭在自己肩上，一下一下地顺着她的背。
+9,hold_child,0,sys_1,{Name}抱着{TargetName}在育儿室里踱步，直到怀里的小家伙呼吸变得均匀绵长。

@@ -8,5 +8,5 @@ str,str,int,str,str
 1002,watch_sex_class,0,CVP_A1_T|103_E_1,轮不到{Name}的时候，她就站在旁边默默记着——她知道下一次可能就轮到自己了。
 1003,watch_sex_class,0,CVP_A1_T|102_E_1,{Name}歪着头看着，似懂非懂，但眼睛一直没有离开。
 1004,watch_sex_class,0,CVP_A1_T|102_E_1,{Name}安静地待在角落里，把看到的一切都记进了小小的脑袋里。
-1005,watch_sex_class,0,,{Name}在旁边看着，偶尔点点头，像是在心里对照着自己的经验。
-1006,watch_sex_class,0,,轮候中的{Name}把目光落在{PlayerName}手上，学着记下每一个细节。
+1005,watch_sex_class,0,self_not_underage,{Name}在旁边看着，偶尔点点头，像是在心里对照着自己的经验。
+1006,watch_sex_class,0,self_not_underage,轮候中的{Name}把目光落在{PlayerName}手上，学着记下每一个细节。

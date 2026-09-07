@@ -9,4 +9,4 @@ str,str,int,str,str
 1003,join_sex_class,0,CVP_A1_T|102_E_1,{Name}被带进了教室。她还不太明白这节课要做什么，只是老老实实地站着。
 1004,join_sex_class,0,CVP_A1_T|102_E_1,{Name}攥着衣角走了进来，眼睛一直往{PlayerName}的方向看。
 1005,join_sex_class,0,self_not_underage,{Name}到场了。作为已经成年的干员，她对接下来要发生的事显然比孩子们清楚得多。
-1006,join_sex_class,0,,{Name}走进教室，神色平静地朝{PlayerName}点了点头，像是已经做好了准备。
+1006,join_sex_class,0,self_not_underage,{Name}走进教室，神色平静地朝{PlayerName}点了点头，像是已经做好了准备。

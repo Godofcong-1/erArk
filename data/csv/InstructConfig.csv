@@ -128,6 +128,9 @@ int,str,str,str,str,int,int,str,str,int,str,str,str,str
 3028,hydrotherapy_treatment,水疗护理,PLAY,0,1,2,IN_SPA_ROOM,HYDROTHERAPY_TREATMENT,1,,hand,hand_play,
 3029,onsen_bath,泡温泉,PLAY,0,1,2,IN_ONSEN,ONSEN_BATH,1,,hand,hand_play,
 3030,aromatherapy,香薰疗愈,PLAY,0,1,2,IN_AROMATHERAPY_ROOM,,2,AROMATHERAPY,hand,hand_play,face
+3031,prenatal_talk,对孕肚说话,PLAY,0,1,2,HAVE_TARGET|NOT_IN_TOILET|T_INFLATION_1|T_FAKE_INFLATION_0,PRENATAL_TALK,1,,hand,hand_play,belly
+3032,prenatal_music,给孕肚放音乐,PLAY,0,1,2,HAVE_TARGET|NOT_IN_TOILET|T_INFLATION_1|T_FAKE_INFLATION_0,PRENATAL_MUSIC,1,,hand,hand_play,belly
+3033,prenatal_touch,抚摸孕肚,PLAY,0,1,2,HAVE_TARGET|NOT_IN_TOILET|T_INFLATION_1|T_FAKE_INFLATION_0,PRENATAL_TOUCH,1,,hand,hand_play,belly
 4001,hypnosis_one,单人催眠,ARTS,0,1,1,PRIMARY_HYPNOSIS|HAVE_TARGET|SCENE_ONLY_TWO|T_NORMAL_5_6|SANITY_POINT_GE_5,HYPNOSIS_ONE,1,,arts,arts_hypnosis,head
 4002,deepening_hypnosis,加深催眠,ARTS,0,1,1,PRIMARY_HYPNOSIS|HAVE_TARGET|SCENE_ALL_UNCONSCIOUS|T_UNCONSCIOUS_HYPNOSIS_FLAG|SANITY_POINT_GE_5,,1,,arts,arts_hypnosis,head
 4003,hypnosis_all,集体催眠,ARTS,0,1,2,ADVANCED_HYPNOSIS|HAVE_TARGET|SCENE_OVER_TWO|T_NORMAL_5_6|SANITY_POINT_GE_5,HYPNOSIS_ALL,1,,arts,arts_hypnosis,head

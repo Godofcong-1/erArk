@@ -11327,3 +11327,79 @@ def handle_official_event_temp_commission(
         reward="r_1_2000&声望_0_10",
         description=_("公务里递上来的急件：附近的定居点遭了灾，请求罗德岛派人支援。\\n博士已经答应下来，需要尽快组队出发。"),
     )
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PRENATAL_ADD_ADJUST)
+def handle_prenatal_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （胎教用）给交互对象（孕妇）的妊娠期胎教累积值 +0.5（Plan 22 四期 §3.27）
+
+    ⚠️ 只累积不转写：孩子此时还不存在，出生时由 born_event_panel 逐个全额转写给每个新生儿。
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    Return arguments:
+    无
+    """
+    if not add_time:
+        return
+    from Script.System.Education_System import baby_growth_handle
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_id = character_data.target_character_id
+    if target_id == character_id or target_id not in cache.character_data:
+        return
+    baby_growth_handle.add_prenatal_point(target_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NUIRSE_CHILD_ADD_ADJUST)
+def handle_nuirse_child_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （喂奶用）婴儿的体力与气力上限微增；发起者是玩家时额外给婴儿加好感与好意（Plan 22 四期 §3.20）
+
+    照料值本身走效果串里的 CVE_A2_Growth|20，这里只做 CVE 表达不了的两件事：
+    体质（上限值不是养成数值）与"玩家亲自照料才有"的加成（CVE 没有发起者判定）。
+    ⚠️ 保育员喂奶同样给体质，只是没有玩家那份额外的好感——差异化对 NPC 照料同样生效（方案 §2.2）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    Return arguments:
+    无
+    """
+    if not add_time:
+        return
+    from Script.System.Education_System import baby_growth_handle
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_id = character_data.target_character_id
+    if target_id == character_id or target_id not in cache.character_data:
+        return
+    target_data: game_type.Character = cache.character_data[target_id]
+    # 只对婴儿生效
+    if not target_data.talent.get(101, 0):
+        return
+    target_data.hit_point_max += baby_growth_handle.NUIRSE_CHILD_HP_MAX_ADD
+    target_data.mana_point_max += baby_growth_handle.NUIRSE_CHILD_MP_MAX_ADD
+    if character_id != 0:
+        return
+    base_chara_favorability_and_trust_common_settle(
+        character_id, add_time, True, base_value=baby_growth_handle.NUIRSE_CHILD_FAVOR_BASE, change_data=change_data
+    )
+    base_chara_state_common_settle(
+        target_id, add_time, 11, base_value=baby_growth_handle.NUIRSE_CHILD_FRIENDLY_BASE,
+        ability_level=target_data.ability.get(32, 0), change_data_to_target_change=change_data,
+    )

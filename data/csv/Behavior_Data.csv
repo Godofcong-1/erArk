@@ -122,6 +122,9 @@ int,str,str,int,str,str
 267,identify_eggs,鉴定卵,30,npc,工作
 268,hatch_eggs,孵化卵,60,npc,工作
 269,identify_held_eggs,鉴定持有的卵,30,pl,工作
+270,prenatal_talk,对孕肚说话,30,pl,娱乐
+271,prenatal_music,给孕肚放音乐,30,pl,娱乐
+272,prenatal_touch,抚摸孕肚,30,pl,娱乐
 
 301,hand_in_hand,牵手,10,both,猥亵
 302,embrace,拥抱,3,both,猥亵

@@ -331,6 +331,12 @@ class Behavior_Int:
     """ 到场参加性技实操课（Plan 22 四期） """
     WATCH_SEX_CLASS = 951
     """ 旁观性技实操课（Plan 22 四期） """
+    PRENATAL_TALK = 952
+    """ 对孕肚说话（Plan 22 四期） """
+    PRENATAL_MUSIC = 953
+    """ 给孕肚放音乐（Plan 22 四期） """
+    PRENATAL_TOUCH = 954
+    """ 抚摸孕肚（Plan 22 四期） """
     GROUP_SEX_TO_H = 385
     """ 群交时NPC数量不足转为单人H """
     JOIN_GROUP_SEX = 386

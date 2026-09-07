@@ -3,4 +3,13 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,give_toy,0,high_1,{Name}触发了给玩具指令的地文
+0,give_toy,0,sys_0,{Name}把一个会响的小铃铛放到{TargetName}手里。{TargetName}握着晃了两下，被自己弄出的声音吓了一跳，然后咯咯地笑了。
+1,give_toy,0,sys_0,{Name}把几个颜色鲜亮的积木摆在{TargetName}面前。{TargetName}挑了最红的那一块，塞进了嘴里。
+2,give_toy,0,sys_0,{Name}给{TargetName}拿来一个软软的布偶。{TargetName}抱着它翻来覆去地看，怎么也看不够。
+3,give_toy,0,sys_0,{Name}把一个小球滚到{TargetName}面前，{TargetName}扑上去把它按住，抬头朝{Name}露出得意的表情。
+4,give_toy,0,sys_0,{Name}陪着{TargetName}摆弄新玩具，看她试了一次又一次，终于把两块积木叠在了一起。
+5,give_toy,0,sys_1,{Name}给{TargetName}拿了一个摇铃，{TargetName}抓住就不肯松手，摇个不停。
+6,give_toy,0,sys_1,{Name}把玩具一个个摆到{TargetName}够得着的地方，让她自己挑。{TargetName}最后选了一只小鸭子。
+7,give_toy,0,sys_1,{Name}陪{TargetName}玩了一会儿布偶，{TargetName}把布偶的耳朵咬得湿漉漉的。
+8,give_toy,0,sys_1,{Name}把一个会转的小风车放在{TargetName}面前，{TargetName}盯着它看了很久，然后伸手去拍。
+9,give_toy,0,sys_1,{Name}给{TargetName}换了一件新玩具，看她抱着玩了半天才心满意足。

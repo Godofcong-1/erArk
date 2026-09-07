@@ -1056,6 +1056,24 @@ def handle_play_with_child():
     chara_handle_instruct_common_settle(constant.Behavior.PLAY_WITH_CHILD)
 
 
+@add_instruct(constant.Instruct.PRENATAL_TALK)
+def handle_prenatal_talk():
+    """处理对孕肚说话指令（胎教，Plan 22 四期）"""
+    chara_handle_instruct_common_settle(constant.Behavior.PRENATAL_TALK)
+
+
+@add_instruct(constant.Instruct.PRENATAL_MUSIC)
+def handle_prenatal_music():
+    """处理给孕肚放音乐指令（胎教，Plan 22 四期）"""
+    chara_handle_instruct_common_settle(constant.Behavior.PRENATAL_MUSIC)
+
+
+@add_instruct(constant.Instruct.PRENATAL_TOUCH)
+def handle_prenatal_touch():
+    """处理抚摸孕肚指令（胎教，Plan 22 四期）"""
+    chara_handle_instruct_common_settle(constant.Behavior.PRENATAL_TOUCH)
+
+
 @add_instruct(constant.Instruct.TAKE_CARE_BABY)
 def handle_take_care_baby():
     """处理照顾婴儿指令"""
