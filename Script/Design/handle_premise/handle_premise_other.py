@@ -1171,6 +1171,36 @@ def handle_self_not_player_daughter(character_id: int) -> int:
     return not handle_self_is_player_daughter(character_id)
 
 
+@add_premise(constant_promise.Premise.SELF_HAVE_SIBLING_CHILD)
+def handle_self_have_sibling_child(character_id: int) -> int:
+    """
+    校验自己有同为孩子的兄弟姐妹（Plan 22 三期，孩子间互动事件用）
+    ⚠️ 兄弟姐妹关系直接读既有的 relationship，不新建亲缘结构（方案 §3.25）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import growth_event_handle
+
+    return 1 if growth_event_handle.get_sibling_child_list(character_id) else 0
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_CLASSMATE)
+def handle_self_have_classmate(character_id: int) -> int:
+    """
+    校验自己的个人课表与别的孩子有重合节次（Plan 22 三期，同班同学事件用）
+    ⚠️ 同学关系由课表反查而非落成字段：课表一改同学就跟着变，存字段反而多一处同步点
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import growth_event_handle
+
+    return 1 if growth_event_handle.get_classmate_list(character_id) else 0
+
+
 @add_premise(constant_promise.Premise.TARGET_IS_PLAYER_DAUGHTER)
 def handle_target_is_player_daughter(character_id: int) -> int:
     """

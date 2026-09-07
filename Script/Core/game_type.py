@@ -1267,6 +1267,11 @@ class Rhodes_Island:
         self.child_schedule_template: Dict[int, dict] = {}
         """ 孩子日程模板（Plan 22） 键int:模板编号 值dict:{"name": 模板名str, "slot": {时段int(0~2): 活动id int}}
             活动id 复用 Entertainment 配置 id。⚠️ 本期只建字段，写入方在二期 """
+        self.growth_event_queue: list = []
+        """ 待玩家在公务中处理的养成事件队列（Plan 22 三期）
+            元素dict:{"uid": 事件uid str, "chara_id": 孩子角色id int,
+                      "partner_id": 互动对象角色id int（无则0）, "add_time": datetime}
+            每日最多入队2条（口径32）；处理后出队并写入该孩子的 event_history """
         self.total_favorability_increased: int = 0
         """ 每日总好感度提升 """
         self.total_semen_count: int = 0

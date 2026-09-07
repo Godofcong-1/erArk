@@ -765,6 +765,7 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         "Father": "father",
         "ChangeTargetId": "change_target_id",
         "Move": "move",
+        "Growth": "child_growth",
     }
     
     # 创建一个字典来映射操作
@@ -791,8 +792,20 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         # print(f"debug attribute_name = {attribute_name}, operation = {operation}")
     
         # 特殊处理
+        # 养成数值（Plan 22 三期）：性格倾向与照料值，编号见 growth_handle.GROWTH_VALUE_*
+        # ⚠️ 只走 growth_handle 的写口，不直接摸 child_growth——出勤数与胎教值不允许被事件改写
+        if attribute_name == "child_growth":
+            from Script.System.Education_System import growth_handle
+
+            # 养成数值是浮点的，不能照其他属性那样 int()，否则「倾向+0.5」会被抹成0
+            growth_value = float(effect_all_value_list[3])
+            if operation == "E":
+                growth_handle.set_growth_value(final_character_id, type_son_id, growth_value)
+            else:
+                growth_handle.change_growth_value(
+                    final_character_id, type_son_id, growth_value if operation == "G" else -growth_value)
         # 好感
-        if attribute_name == "favorability":
+        elif attribute_name == "favorability":
             final_character_data.favorability[0] = operation_func(final_character_data.favorability[0], int(effect_all_value_list[3]))
         # 信赖
         elif attribute_name == "trust":

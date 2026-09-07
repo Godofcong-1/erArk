@@ -11,6 +11,7 @@ talk_common_dir = os.path.join("data", "talk_common")
 target_dir = os.path.join("data", "target")
 character_dir = os.path.join("data","character")
 ui_text_dir = os.path.join("data", "ui_text")
+growth_event_dir = os.path.join("data", "growth_event")
 po_csv_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_csv.po")
 po_cook_question_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_cook_question.po")
 po_talk_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_talk.po")
@@ -21,6 +22,7 @@ config_data_path = os.path.join("data", "data.json")
 cook_question_data_path = os.path.join("data", "Cook_Question.json")
 ui_text_data_path = os.path.join("data", "ui_text.json")
 character_talk_data_path = os.path.join("data", "Character_Talk.json")
+growth_event_data_path = os.path.join("data", "Growth_Event.json")
 character_event_data_path = os.path.join("data", "Character_Event.json")
 talk_common_data_path = os.path.join("data", "Talk_Common.json")
 config_path = os.path.join("Script", "Config", "config_def.py")
@@ -32,6 +34,7 @@ character_data = {}
 ui_text_data = {}
 character_talk_data = {}
 character_event_data = {}
+growth_event_data = {}
 talk_common_data = {}
 built = set()
 msgData = set()
@@ -47,6 +50,7 @@ event_po_lines = []
 # 是否覆盖原有数据
 BUILD_CONFIG = True
 BUILD_EVENT = True
+BUILD_GROWTH_EVENT = True
 BUILD_TALK = True
 BUILD_TALK_COMMON = True
 BUILD_CHARACTER = True
@@ -82,7 +86,7 @@ try:
 except:
     character_talk_data = {}
 
-def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, talk_common: bool = False, cook_question: bool = False):
+def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, talk_common: bool = False, cook_question: bool = False, growth_event: bool = False):
     """
     输入：
         file_path (str): 文件路径
@@ -91,6 +95,7 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, t
         target (bool): 是否为target
         talk_common (bool): 是否为talk_common
         cook_question (bool): 是否为烹饪问题库（多个食物题库csv合并为同一张 Cook_Question 表）
+        growth_event (bool): 是否为养成事件（多个阶段csv合并为同一张 Growth_Event 表，Plan 22 三期）
     返回：None
     功能：读取csv并更新全局配置数据
     """
@@ -122,6 +127,9 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, t
             type_text = "Talk_Common"
         if cook_question:
             type_text = "Cook_Question"
+        # 养成事件统一合并为 Growth_Event 表（各阶段事件按 stage 列区分，Plan 22 三期）
+        if growth_event:
+            type_text = "Growth_Event"
         if talk:
             character_talk_data.setdefault(type_text, {})
             character_talk_data[type_text].setdefault("data", [])
@@ -130,6 +138,10 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, t
             cook_question_data.setdefault(type_text, {})
             cook_question_data[type_text].setdefault("data", [])
             cook_question_data[type_text].setdefault("gettext", {})
+        elif growth_event:
+            growth_event_data.setdefault(type_text, {})
+            growth_event_data[type_text].setdefault("data", [])
+            growth_event_data[type_text].setdefault("gettext", {})
         elif talk_common:
             talk_common_data.setdefault(type_text, {})
             talk_common_data[type_text].setdefault("data", [])
@@ -190,12 +202,15 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, t
                     row[k] = file_id + row[k]
                 if k == "talk_id" and talk:
                     row[k] = file_id.split("-")[0] + row[k]
+                # 养成事件的uid用「文件名+cid」，以防不同阶段文件的cid冲突（照口上的做法）
+                if k == "cid" and growth_event:
+                    row[k] = file_id + str(row[k])
                 if k == "cid" and target:
                     row[k] = path_list[-2] + row[k]
                 elif k == "target_id" and target:
                     row[k] = path_list[-2] + row[k]
                 if get_text_data[k]:
-                    build_config_po(row[k], file_path, now_index, talk = talk, common_talk = talk_common, cook_question = cook_question)
+                    build_config_po(row[k], file_path, now_index, talk = talk, common_talk = talk_common, cook_question = cook_question, event = growth_event)
             if talk:
                 row["version"] = 1
                 # 如果口上的文件名中存在下划线标记的版本号，则将最后一个下划线之后的数字记录为版本号
@@ -205,6 +220,8 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, t
                 character_talk_data[type_text]["data"].append(row)
             elif cook_question:
                 cook_question_data[type_text]["data"].append(row)
+            elif growth_event:
+                growth_event_data[type_text]["data"].append(row)
             elif talk_common:
                 talk_common_data[type_text]["data"].append(row)
             else:
@@ -214,6 +231,8 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, t
             character_talk_data[type_text]["gettext"] = get_text_data
         elif cook_question:
             cook_question_data[type_text]["gettext"] = get_text_data
+        elif growth_event:
+            growth_event_data[type_text]["gettext"] = get_text_data
         elif talk_common:
             talk_common_data[type_text]["gettext"] = get_text_data
         else:
@@ -444,6 +463,15 @@ if os.path.isdir(cook_question_dir):
     # if count:
     #     print(f"[进度] 已处理烹饪库，共 {count} 个食物文件合并为烹饪细节表")
 
+# 构建养成事件表（data/growth_event 下每个阶段csv合并为 Growth_Event 表，Plan 22 三期）
+if BUILD_GROWTH_EVENT and os.path.isdir(growth_event_dir):
+    for ge_file in sorted(os.listdir(growth_event_dir)):
+        # 仅处理 csv 文件
+        if not ge_file.endswith(".csv"):
+            continue
+        config_def_str += "\n"
+        build_csv_config(os.path.join(growth_event_dir, ge_file), ge_file, False, False, growth_event=True)
+
 # 在写入 talk 数据时根据 BUILD_TALK 判断是否覆盖
 if BUILD_TALK:
     print("开始写入角色口上数据，该处理耗时较长，仅在第一次启动游戏时处理")
@@ -555,6 +583,12 @@ if BUILD_EVENT:
 else:
     # 不覆盖 event 数据，保持原有数据
     pass
+
+# 写入养成事件数据（Plan 22 三期）。空表也要写出，否则运行时读到的是上一次构建的残留
+if BUILD_GROWTH_EVENT:
+    growth_event_data.setdefault("Growth_Event", {"data": [], "gettext": {}})
+    with open(growth_event_data_path, "w", encoding="utf-8") as growth_event_data_file:
+        json.dump(growth_event_data, growth_event_data_file, ensure_ascii=False)
 
 map_path = os.path.join("data", "map")
 build_scene_config(map_path)

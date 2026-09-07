@@ -19,6 +19,8 @@ ui_text_path = os.path.join("data", "ui_text.json")
 """ 原始ui文本数据文件路径 """
 cook_question_path = os.path.join("data", "Cook_Question.json")
 """ 原始烹饪问题库数据文件路径 """
+growth_event_path = os.path.join("data", "Growth_Event.json")
+""" 原始养成事件数据文件路径（Plan 22 三期） """
 config_data = {}
 """ 原始json数据 """
 character_data = {}
@@ -31,6 +33,8 @@ ui_text_data = {}
 """ 原始ui文本数据 """
 cook_question_data = {}
 """ 原始烹饪问题库数据 """
+growth_event_data = {}
+""" 原始养成事件数据（Plan 22 三期） """
 config_bar: Dict[int, config_def.BarConfig] = {}
 """ 比例条配置数据 """
 config_bar_data: Dict[str, int] = {}
@@ -355,6 +359,12 @@ config_food_quality: Dict[int, config_def.Food_Quality] = {}
 """ 食物质量数据 """
 config_cook_question: Dict[int, Dict[str, list]] = {}
 """ 烹饪问题库 食物id:烹饪阶段:[问题dict列表] """
+config_growth_event: Dict[str, dict] = {}
+""" 养成事件（Plan 22 三期） 事件uid:事件原始dict。
+    ⚠️ 存的是原始dict不是config_def对象：CSV里空着的选项列在构建时会被整列删掉，
+       用对象取属性会 AttributeError，用dict.get()才能安全地表达「这个选项不存在」 """
+config_growth_event_by_stage: Dict[int, list] = {}
+""" 养成事件按适用阶段分桶 阶段素质id(0通用/101~104):[事件uid列表] """
 config_prts_data: Dict[int, Dict[int, Dict[int, config_def.Prts]]] = {}
 """ 教程数据的具体整理 父id:子id:0问1答:内容 """
 config_productformula: Dict[int, config_def.ProductFormula] = {}
@@ -482,7 +492,7 @@ config_instruct_by_id: Dict[str, int] = {}
 
 def load_data_json():
     """载入data.json、character.json与ui_text.json内配置数据"""
-    global config_data, character_data, ui_text_data, character_talk_data, character_event_data, talk_common_data, cook_question_data
+    global config_data, character_data, ui_text_data, character_talk_data, character_event_data, talk_common_data, cook_question_data, growth_event_data
     config_data = json_handle.load_json(data_path)
     character_data = json_handle.load_json(character_path)
     ui_text_data = json_handle.load_json(ui_text_path)
@@ -494,6 +504,11 @@ def load_data_json():
         cook_question_data = json_handle.load_json(cook_question_path)
     else:
         cook_question_data = {}
+    # 兼容旧构建产物：若养成事件文件缺失，则按空事件表处理（Plan 22 三期）
+    if os.path.exists(growth_event_path):
+        growth_event_data = json_handle.load_json(growth_event_path)
+    else:
+        growth_event_data = {}
 
 def reload_talk_data():
     """重新载入口上配置数据"""
@@ -1647,6 +1662,22 @@ def load_cook_question():
         config_cook_question.setdefault(food_id, {}).setdefault(stage, []).append(tem_data)
 
 
+def load_growth_event():
+    """载入养成事件数据（Plan 22 三期，按 适用阶段 -> 事件uid列表 建索引）"""
+    # 若尚未生成事件表，则该表不存在，直接返回
+    if "Growth_Event" not in growth_event_data:
+        return
+    now_data = growth_event_data["Growth_Event"]
+    translate_data(now_data)
+    config_growth_event.clear()
+    config_growth_event_by_stage.clear()
+    for tem_data in now_data["data"]:
+        # ⚠️ 直接存原始dict：CSV里空着的选项列在构建时已被删掉，用get()判断选项是否存在
+        uid = tem_data["cid"]
+        config_growth_event[uid] = tem_data
+        config_growth_event_by_stage.setdefault(tem_data.get("stage", 0), []).append(uid)
+
+
 def load_favorability_level():
     """载入好感度等级数据"""
     now_data = config_data["Favorability_Level"]
@@ -2301,6 +2332,7 @@ def init():
     load_hidden_level()
     load_food_quality()
     load_cook_question()
+    load_growth_event()
     load_favorability_level()
     load_trust_level()
     load_seasoning()

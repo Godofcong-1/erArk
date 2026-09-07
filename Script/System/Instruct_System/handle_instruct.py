@@ -1849,6 +1849,11 @@ def handle_aromatherapy():
 @add_instruct(constant.Instruct.OFFICIAL_WORK)
 def handle_official_work():
     """处理处理公务指令"""
+    from Script.System.Education_System import growth_event_panel
+
+    # 先把待决断的养成事件逐条处理掉，再办公务本身（Plan 22 三期 §3.7）
+    # ⚠️ 放在通用结算之前：通用结算末尾会推进游戏流程并重绘主面板，放在其后弹出的事件会被盖掉
+    growth_event_panel.handle_growth_event_queue(width)
     chara_handle_instruct_common_settle(constant.Behavior.OFFICIAL_WORK, force_taget_wait = True)
 
 

@@ -660,6 +660,11 @@ def check_grow_to_girl(character_id: int):
 
             personality_text = growth_handle.settle_personality_talent(character_id)
             career_text = growth_handle.get_career_suggestion_text(character_id)
+            # 毕业典礼与成年纪念插到养成事件队首，玩家下次处理公务时举行（Plan 22 三期 §3.26）
+            from Script.System.Education_System import growth_event_handle
+
+            growth_event_handle.push_graduation_event(character_id)
+            ceremony_text = _("\n大礼堂已为{0}备好了毕业典礼，等你下次处理公务时定夺\n").format(character_data.name)
             draw_text = "\n※※※※※※※※※\n"
             draw_text += _("\n{0}的身体完全长成，迎来了自己的成人礼，成为了一位亭亭玉立的少女\n").format(character_data.name)
             draw_text += _("\n{0}从[萝莉]成长为了[少女]\n").format(character_data.name)
@@ -668,6 +673,7 @@ def check_grow_to_girl(character_id: int):
             draw_text += body_part_grow_text
             draw_text += personality_text
             draw_text += career_text
+            draw_text += ceremony_text
             draw_text += _("\n{0}可以进行正常的工作了\n").format(character_data.name)
             draw_text += "\n※※※※※※※※※\n"
             now_draw = draw.WaitDraw()

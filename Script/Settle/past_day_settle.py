@@ -39,7 +39,7 @@ def update_new_day():
     from Script.System.Cooking_System import cooking
     from Script.UI.Panel import nation_diplomacy_panel, navigation_panel, assistant_panel
     from Script.System.Pregnancy_System import pregnancy_handle, egg_handle
-    from Script.System.Education_System import schedule_template_handle
+    from Script.System.Education_System import growth_event_handle, schedule_template_handle
 
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
@@ -102,6 +102,9 @@ def update_new_day():
     # 每周一的助理轮换
     if cache.game_time.weekday() == 0 and handle_premise.handle_pl_assistant_change_every_week_on(0):
         assistant_panel.select_random_assistant()
+    # 按前提筛选并入队今日的养成事件（Plan 22 三期）。⚠️ 必须在上面的角色刷新之后：
+    # 事件前提要读当天刷新过的状态，顺序颠倒会拿到昨天的数据
+    growth_event_handle.check_new_day_growth_event()
     # 清空今日触发事件记录
     cache.today_taiggered_event_record = set()
     # 更新游戏时间

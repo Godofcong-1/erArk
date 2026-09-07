@@ -479,3 +479,94 @@ def get_career_suggestion_text(character_id: int) -> str:
         return _("\n{0}在[{1}]上的天赋最为突出\n").format(character_data.name, ability_name)
     return _("\n{0}在[{1}]上的天赋最为突出，或许适合去做[{2}]\n").format(
         character_data.name, ability_name, work_name)
+
+
+# ---------------------------------------------------------------------------
+# 养成数值的统一读写口（Plan 22 三期）
+# ---------------------------------------------------------------------------
+
+GROWTH_VALUE_ATTEND = 0
+""" 养成数值编号：累计听课节数 """
+GROWTH_VALUE_ABSENT = 1
+""" 养成数值编号：累计缺课节数 """
+GROWTH_VALUE_ATTEND_RATE = 2
+""" 养成数值编号：出勤率百分比（0~100），一节课都没上过时算作100 """
+GROWTH_VALUE_PERSONALITY_BASE = 10
+""" 养成数值编号：四对性格倾向占用 10~13（10+性格对编号），正数偏前者、负数偏后者 """
+GROWTH_VALUE_CARE = 20
+""" 养成数值编号：照料累积 """
+GROWTH_VALUE_PRENATAL = 21
+""" 养成数值编号：胎教累积 """
+GROWTH_VALUE_EVENT_COUNT = 22
+""" 养成数值编号：已触发的养成事件条数 """
+
+
+def get_growth_value(character_id: int, value_id: int) -> float:
+    """
+    读取养成数值，供 CVP_A1_Growth|N_运算_值 前提与面板共用
+
+    ⚠️ 这是养成数值的**唯一读口**：前提、事件、面板都从这里取，
+       免得同一个「出勤率」在三处各算各的、口径不一致
+    Keyword arguments:
+    character_id -- 角色id
+    value_id -- 养成数值编号（GROWTH_VALUE_* 常量）
+    Return arguments:
+    float -- 数值，角色没有养成数据时一律为0（出勤率为100）
+    """
+    growth_data = cache.character_data[character_id].child_growth
+    if growth_data is None:
+        return 100.0 if value_id == GROWTH_VALUE_ATTEND_RATE else 0.0
+    if value_id == GROWTH_VALUE_ATTEND:
+        return float(growth_data.attend_class_count)
+    if value_id == GROWTH_VALUE_ABSENT:
+        return float(growth_data.absent_count)
+    if value_id == GROWTH_VALUE_ATTEND_RATE:
+        total = growth_data.attend_class_count + growth_data.absent_count
+        # 一节课都还没轮到过的孩子不该被当成全勤缺席，按满勤算
+        if not total:
+            return 100.0
+        return growth_data.attend_class_count * 100.0 / total
+    if GROWTH_VALUE_PERSONALITY_BASE <= value_id <= GROWTH_VALUE_PERSONALITY_BASE + 3:
+        return float(growth_data.personality_point.get(value_id - GROWTH_VALUE_PERSONALITY_BASE, 0.0))
+    if value_id == GROWTH_VALUE_CARE:
+        return float(growth_data.care_point)
+    if value_id == GROWTH_VALUE_PRENATAL:
+        return float(growth_data.prenatal_point)
+    if value_id == GROWTH_VALUE_EVENT_COUNT:
+        return float(len(growth_data.event_history))
+    return 0.0
+
+
+def change_growth_value(character_id: int, value_id: int, add_value: float):
+    """
+    改写养成数值，供 CVE_A1_Growth|N_G/L/E_值 结算使用
+
+    ⚠️ 只有性格倾向与照料值是可写的：出勤数由上课结算记账、胎教值由妊娠期写入，
+       让事件去改它们会让面板上的「听课N节」变成一个谁都对不上的数（口径33 也不允许事件动能力）
+    Keyword arguments:
+    character_id -- 角色id
+    value_id -- 养成数值编号（GROWTH_VALUE_* 常量）
+    add_value -- 增减量，已按运算符取好正负；运算符为E时是直接赋的目标值
+    """
+    growth_data = get_child_growth(character_id)
+    if GROWTH_VALUE_PERSONALITY_BASE <= value_id <= GROWTH_VALUE_PERSONALITY_BASE + 3:
+        pair_id = value_id - GROWTH_VALUE_PERSONALITY_BASE
+        growth_data.personality_point[pair_id] = growth_data.personality_point.get(pair_id, 0.0) + add_value
+    elif value_id == GROWTH_VALUE_CARE:
+        # 照料值不设上限但不允许为负
+        growth_data.care_point = max(0.0, growth_data.care_point + add_value)
+
+
+def set_growth_value(character_id: int, value_id: int, new_value: float):
+    """
+    直接把养成数值设为指定值（CVE 的 E 运算）
+    Keyword arguments:
+    character_id -- 角色id
+    value_id -- 养成数值编号（GROWTH_VALUE_* 常量）
+    new_value -- 目标值
+    """
+    growth_data = get_child_growth(character_id)
+    if GROWTH_VALUE_PERSONALITY_BASE <= value_id <= GROWTH_VALUE_PERSONALITY_BASE + 3:
+        growth_data.personality_point[value_id - GROWTH_VALUE_PERSONALITY_BASE] = new_value
+    elif value_id == GROWTH_VALUE_CARE:
+        growth_data.care_point = max(0.0, new_value)

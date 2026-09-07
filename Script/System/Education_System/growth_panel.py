@@ -1,11 +1,12 @@
 """养成总览面板（Plan 22 一期 §5.4）
 
 一屏看完一个孩子的状态：当前阶段与已成长天数、18 门科目的等级、出勤与缺课、
-四对性格倾向、待处理的成绩单与炫耀 flag。
+四对性格倾向、养成事件履历（三期 §5.2）、待处理的成绩单与炫耀 flag。
 
 ⚠️ 成长天数必须标明是**日历天**还是**可游玩天**（总纲 §2.3-7）：erArk 的一年只有
    3/6/9/12 四个月，日历天与实际能玩到的天数约为 3:1，不写清楚玩家会按现实直觉误判。
 """
+import datetime
 from types import FunctionType
 from typing import List
 
@@ -35,7 +36,13 @@ PERSONALITY_PAIR_NAME = {
     3: ("开放", "羞耻"),
 }
 """ 四对性格倾向：值为正偏前者、为负偏后者（game_type.CHILD_GROWTH.personality_point）。
-    ⚠️ 写入方在三期与四期，本期只读不写，全为0时显示「尚未形成」 """
+    ⚠️ 三期的养成事件是它的主要写入方，全为0时显示「尚未形成」 """
+
+HISTORY_SHOW_MAX = 8
+""" 养成履历最多列出的条数。养到成年会攒下几十条，全列出来会把总览面板顶爆 """
+
+HISTORY_TEXT_MAX = 24
+""" 履历里事件正文的截断长度，只留能认出是哪件事的开头 """
 
 
 class Growth_Panel:
@@ -90,6 +97,7 @@ class Growth_Panel:
             self._draw_subject(now_student)
             self._draw_attendance(now_student)
             self._draw_personality(now_student)
+            self._draw_event_history(now_student)
             self._draw_flag(now_student)
 
             line_feed.draw()
@@ -177,7 +185,7 @@ class Growth_Panel:
         绘制四对性格倾向
         输入类型: character_id(int)
         输出类型: 无
-        功能: 正数偏前者、负数偏后者；⚠️ 写入方在三期与四期，本期恒为0
+        功能: 正数偏前者、负数偏后者；主要写入方是三期的养成事件与四期的照料行为
         """
         growth_data = cache.character_data[character_id].child_growth
         if growth_data is None:
@@ -195,6 +203,48 @@ class Growth_Panel:
             else:
                 now_draw.text = _(" {0}/{1}：尚未形成").format(_(front), _(back))
                 now_draw.style = "deep_gray"
+            now_draw.draw()
+        line_feed.draw()
+
+    def _draw_event_history(self, character_id: int):
+        """
+        绘制养成事件履历（Plan 22 三期 §5.2）
+        输入类型: character_id(int)
+        输出类型: 无
+        功能: 列出已触发过的养成事件与当时的选择，读 child_growth.event_history
+        """
+        from Script.Config import game_config as _game_config
+
+        growth_data = cache.character_data[character_id].child_growth
+        if growth_data is None or not growth_data.event_history:
+            return
+        draw.LittleTitleLineDraw(_("养成履历"), self.width).draw()
+        # 按发生时间正序，最近的排在最后，读起来是一条成长线而不是一堆条目
+        # ⚠️ 缺 time 的旧记录要给一个 datetime 兜底，混着int排序会直接 TypeError
+        history_list = sorted(
+            growth_data.event_history.items(),
+            key=lambda one: one[1].get("time") or datetime.datetime(1, 1, 1))
+        # 只列最近的HISTORY_SHOW_MAX条：养到成年会攒下几十条，全列出来会把总览面板顶爆
+        if len(history_list) > HISTORY_SHOW_MAX:
+            omit_draw = draw.NormalDraw()
+            omit_draw.width = self.width
+            omit_draw.text = _("  （更早的 {0} 条已略去）\n").format(len(history_list) - HISTORY_SHOW_MAX)
+            omit_draw.style = "deep_gray"
+            omit_draw.draw()
+            history_list = history_list[-HISTORY_SHOW_MAX:]
+        for uid, record in history_list:
+            event_data = _game_config.config_growth_event.get(uid)
+            # 配置里已删掉的事件只留一条占位，不让履历出现空行
+            if event_data is None:
+                continue
+            choice_index = record.get("choice", 0)
+            choice_text = event_data.get(f"option_{choice_index}", _("（未作选择）"))
+            now_draw = draw.NormalDraw()
+            now_draw.width = self.width
+            time_data = record.get("time")
+            time_text = time_data.strftime("%Y/%m/%d") if hasattr(time_data, "strftime") else ""
+            now_draw.text = _("  {0} {1} → {2}\n").format(
+                time_text, event_data.get("text", "").split("\n")[0][:HISTORY_TEXT_MAX], choice_text)
             now_draw.draw()
         line_feed.draw()
 
@@ -218,6 +268,15 @@ class Growth_Panel:
             text_list.append(_("有想炫耀的进步：{0}（下次见到你时会说）").format("、".join(name_list)))
         if growth_data.skip_class_flag:
             text_list.append(_("今天正在翘课"))
+        # 队列是全岛共用的，这里只数这个孩子的那几条（Plan 22 三期）
+        # ⚠️ 不提示的话玩家不知道要去博士办公室处理公务，事件会一直躺在队列里
+        from Script.System.Education_System import growth_event_handle
+
+        growth_event_handle.clean_growth_event_queue()
+        wait_count = sum(1 for one in cache.rhodes_island.growth_event_queue
+                         if one.get("chara_id") == character_id)
+        if wait_count:
+            text_list.append(_("有 {0} 件关于她的事等你在博士办公室「处理公务」时决断").format(wait_count))
         if not text_list:
             return
         draw.LittleTitleLineDraw(_("待处理"), self.width).draw()

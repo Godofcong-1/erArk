@@ -378,7 +378,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
         if final_character_id not in cache.npc_id_got:
             return 0
 
-    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场,Dirty污浊,Bondage绳子捆绑,Roleplay角色扮演,PenisPos阴茎位置,ShootPos射精位置,Relationship身份关系,Course当前课程科目,CourseType当前课型,CourseShowOff待炫耀的已升级科目
+    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场,Dirty污浊,Bondage绳子捆绑,Roleplay角色扮演,PenisPos阴茎位置,ShootPos射精位置,Relationship身份关系,Course当前课程科目,CourseType当前课型,CourseShowOff待炫耀的已升级科目,Growth养成数值
     if (
         len(premise_all_value_list[1]) > 1 and
         "Time" not in premise_all_value_list[1] and
@@ -436,13 +436,21 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
             else:
                 final_value = final_character_data.dirty.cloth_semen[part_cid][1]
     elif premise_all_value_list[1][0] == "G":
+        # 养成数值前提（Plan 22 三期）：出勤、性格倾向、照料值等，编号见 growth_handle.GROWTH_VALUE_*
+        # ⚠️ 必须排在攻略程度之前——"Growth" 与 "Gift" 的首字母都是 G，落到默认分支会被当成攻略程度
+        if "Growth" in premise_all_value_list[1]:
+            from Script.System.Education_System import growth_handle
+
+            final_value = growth_handle.get_growth_value(final_character_id, type_son_id)
         # 礼物前提
-        if "Gift" in premise_all_value_list[1]:
+        elif "Gift" in premise_all_value_list[1]:
             if final_character_data.behavior.gift_id == type_son_id:
                 return 1
             else:
                 return 0
-        final_value = attr_calculation.get_character_fall_level(final_character_id, minus_flag=True)
+        # 攻略程度
+        else:
+            final_value = attr_calculation.get_character_fall_level(final_character_id, minus_flag=True)
     elif premise_all_value_list[1][0] == "B":
         if "Bondage" in premise_all_value_list[1]:
             if final_character_data.h_state.bondage == type_son_id:
@@ -540,8 +548,8 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
     judge_value = int(premise_all_value_list[3])
     # print(f"debug final_value = {final_value}, judge_value = {judge_value}")
 
-    # 攻略程度的不过0处理
-    if premise_all_value_list[1][0] == "G":
+    # 攻略程度的不过0处理。⚠️ 养成数值同样以G开头，但它是可正可负的普通数值，不能套这套夹逼
+    if premise_all_value_list[1][0] == "G" and "Growth" not in premise_all_value_list[1]:
         # 如果当前值与判定值的正负号不同，则直接返回0
         if (final_value > 0 and judge_value < 0) or (final_value < 0 and judge_value > 0):
             return 0

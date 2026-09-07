@@ -556,6 +556,10 @@ def input_load_save(save_id: str):
     if not hasattr(loaded_dict["rhodes_island"], "child_schedule_template"):
         loaded_dict["rhodes_island"].child_schedule_template = {}
         update_count += 1
+    # 养成事件待处理队列（Plan 22 三期）
+    if not hasattr(loaded_dict["rhodes_island"], "growth_event_queue"):
+        loaded_dict["rhodes_island"].growth_event_queue = []
+        update_count += 1
     # 更新罗德岛的设施等级
     for all_cid in game_config.config_facility:
         # 没有记录的设施改为初始等级0
