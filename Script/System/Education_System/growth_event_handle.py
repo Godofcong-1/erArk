@@ -1,43 +1,53 @@
-"""养成事件系统的入队、出队与结算（Plan 22 三期 §3.7）
+"""养成事件：公务事件系统里「教育区」这个部门的候选提供者（Plan 23 方案 §3.2）
 
-养成事件与既有事件系统（`Script/Design/event.py`）**触发模型不同**：
-既有事件是「做了某个行为时触发」，养成事件是「孩子的成长状态满足条件时，按日入队」。
-所以这里复用它的数据形态（uid / premise / effect）与 CVP/CVE token，但另起一套触发逻辑。
+通用的入队/出队/结算/履历都在 `Script/System/Official_Event_System/official_event_handle.py`，
+这里只留养成专属的三件事：
 
-流程：
-    每日结算 → check_new_day_growth_event() 按前提筛选、加权随机入队（每日最多2条）
-    → 玩家在博士办公室「处理公务」→ growth_event_panel 逐条弹出决断
-    → settle_growth_event_option() 结算选项并写入该孩子的 event_history
+    1. 候选从**玩家的女儿**里找，按成长阶段分桶（本阶段桶 + 跨阶段的通用桶）
+    2. 互动对象从兄弟姐妹或同班同学里挑（事件里的 A2 于是指向本次事件的对手）
+    3. 事件抬头写成「薇薇安 · 萝莉期第 38 天」
 
-⚠️ 两条不可省的护栏：
-   1. **入队节流**：多孩时不节流，一次公务会涌出十几条，玩家会直接失去判断意愿（口径32）
-   2. **一次性事件的幂等**：`once == 1` 的事件入队前查 `event_history`，出队结算时写入
+触发频率（方案 §3.4）：**按女儿逐个判定**，每个女儿每天最多 1 条、有 70% 的概率派到，
+于是单个女儿约一两天一条，女儿越多每天的事件越多，但总量仍受公务事件系统的全局硬顶约束。
 """
 import random
 from types import FunctionType
-from typing import List, Optional
+from typing import List
 
-from Script.Core import cache_control, constant, game_type, get_text
+from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config
 from Script.System.Education_System import growth_handle
+from Script.System.Official_Event_System import official_event_handle
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 _: FunctionType = get_text._
 """ 翻译api """
 
-GROWTH_EVENT_DAILY_MAX = 2
-""" 每日入队上限（口径32）。⚠️ 这是**全局**上限不是每孩上限：养三个孩子也只会每天多出两条待决断 """
+GROWTH_EVENT_DEPARTMENT = 15
+""" 养成事件所属的部门id：教育区（Facility.csv 中 type 为 -1 的区块cid） """
 
-GROWTH_EVENT_QUEUE_MAX = 12
-""" 队列长度硬上限。玩家可以很久不处理公务，不封顶的话回来时会面对一长串陈年旧事；
-    满了就不再入队（丢弃新事件而非挤掉旧事件，旧的至少还有上下文） """
+GROWTH_EVENT_DAILY_CHANCE = 70
+""" 每个女儿每天入队一条养成事件的概率（百分比）。约1.4天一条，
+    ⚠️ 不设成100：天天都有事要定夺会让养成变成日常打卡，留出空白日子反而更像在过日子 """
+
+GROWTH_EVENT_DAILY_MAX_PER_CHILD = 1
+""" 每个女儿每天最多入队的条数。⚠️ 这是**每孩**上限，全局上限在公务事件系统那边 """
+
+GROWTH_EVENT_QUEUE_PER_CHILD = 4
+""" 每个女儿为队列贡献的容量。女儿多的时候待办清单本来就该更长，否则后面的事件会被直接丢掉 """
 
 STAGE_ANY = 0
-""" 事件的 stage 列取0时表示适用于全部成长阶段（101婴儿~103萝莉），⚠️ 不含已成年的104 """
+""" 事件的 sub_key 取0时表示适用于全部成长阶段（101婴儿~103萝莉），⚠️ 不含已成年的104 """
 
 STAGE_ALL_CHILD = (101, 102, 103)
-""" stage 为 0 的事件实际覆盖的阶段。成年（104）只接 stage 明确写 104 的事件（如毕业典礼） """
+""" sub_key 为 0 的事件实际覆盖的阶段。成年（104）只接 sub_key 明确写 104 的事件（如毕业典礼） """
+
+GRADUATION_EVENT_UID = "通用1"
+""" 毕业典礼的事件uid。uid由「文件名+cid」拼成，对应 data/official_event/通用.csv 的 cid=1 """
+
+ADULT_MEMORIAL_EVENT_UID = "通用2"
+""" 成年纪念的事件uid，紧跟在毕业典礼之后 """
 
 
 def get_character_stage(character_id: int) -> int:
@@ -80,7 +90,7 @@ def get_growth_event_character_list() -> List[int]:
 
 def get_sibling_child_list(character_id: int) -> List[int]:
     """
-    取同为孩子的兄弟姐妹列表（方案 §3.25）
+    取同为孩子的兄弟姐妹列表
 
     ⚠️ 直接读既有的 relationship，不新建亲缘结构：同父同母、同父异母都算兄弟姐妹，
        判据是「父亲相同或母亲相同」
@@ -110,7 +120,7 @@ def get_sibling_child_list(character_id: int) -> List[int]:
 
 def get_classmate_list(character_id: int) -> List[int]:
     """
-    取同班同学列表：个人课表上有重合节次的其他孩子（方案 §3.25）
+    取同班同学列表：个人课表上有重合节次的其他孩子
 
     ⚠️ 同学关系由课表反查，不落成字段——课表一改，同学关系就跟着变，
        存成字段反而要多一处同步点
@@ -161,7 +171,7 @@ def get_event_partner(uid: str, character_id: int) -> int:
     """
     from Script.Core import constant_promise
 
-    event_data = game_config.config_growth_event.get(uid)
+    event_data = official_event_handle.get_event_data(uid)
     if event_data is None:
         return 0
     premise_text = event_data.get("premise", "")
@@ -175,101 +185,29 @@ def get_event_partner(uid: str, character_id: int) -> int:
     return random.choice(candidate)
 
 
-def get_premise_set(premise_text: str) -> set:
+def judge_stage_pass(uid: str, character_id: int) -> bool:
     """
-    把CSV里 & 连接的前提串拆成集合
-    Keyword arguments:
-    premise_text -- 前提串
-    Return arguments:
-    set -- 前提id集合，空串返回空集合
-    """
-    if not premise_text:
-        return set()
-    return {one.strip() for one in premise_text.split("&") if one.strip()}
-
-
-def judge_premise_pass(premise_text: str, character_id: int, partner_id: int = 0) -> int:
-    """
-    判定一组前提对该孩子是否成立，返回总权重
-
-    ⚠️ 判定期间临时把孩子的交互对象指向 partner_id：前提里的 A2 与 target_* 系列
-       于是指向本次事件的互动对象（无互动对象时为博士），判完立刻还原，
-       不能留着不还——孩子的交互对象是行为循环在用的实时字段
-    Keyword arguments:
-    premise_text -- & 连接的前提串
-    character_id -- 孩子角色id
-    partner_id -- 互动对象角色id，默认0为玩家
-    Return arguments:
-    int -- 总权重，0为不通过
-    """
-    from Script.Design import handle_premise
-
-    premise_set = get_premise_set(premise_text)
-    if not premise_set:
-        return 1
-    character_data: game_type.Character = cache.character_data[character_id]
-    old_target_id = character_data.target_character_id
-    character_data.target_character_id = partner_id
-    try:
-        now_weight, _unused = handle_premise.get_weight_from_premise_dict(
-            premise_set, character_id, {}, unconscious_pass_flag=True)
-    finally:
-        character_data.target_character_id = old_target_id
-    return now_weight
-
-
-def judge_event_already_in_queue(uid: str, character_id: int) -> bool:
-    """
-    判定同一个孩子的同一条事件是否已在队列里等着
+    判定一条养成事件的适用阶段与孩子当前的成长阶段是否对得上
     Keyword arguments:
     uid -- 事件uid
     character_id -- 孩子角色id
     Return arguments:
-    bool -- 是否已在队列中
+    bool -- 阶段是否匹配
     """
-    for one in cache.rhodes_island.growth_event_queue:
-        if one.get("uid") == uid and one.get("chara_id") == character_id:
-            return True
-    return False
-
-
-def judge_event_can_enqueue(uid: str, character_id: int) -> bool:
-    """
-    判定一条事件当前能否派给这个孩子（不含权重与随机）
-
-    ⚠️ 幂等在这里：`once == 1` 的事件查过 `event_history` 就不再入队（方案 §7-2）
-    Keyword arguments:
-    uid -- 事件uid
-    character_id -- 孩子角色id
-    Return arguments:
-    bool -- 能否入队
-    """
-    event_data = game_config.config_growth_event.get(uid)
+    event_data = official_event_handle.get_event_data(uid)
     if event_data is None:
         return False
-    # 阶段筛选：stage 为 0 时覆盖全部未成年阶段，写了具体阶段就只派给该阶段
-    stage = event_data.get("stage", STAGE_ANY)
+    sub_key = event_data.get("sub_key", STAGE_ANY)
     now_stage = get_character_stage(character_id)
-    if stage == STAGE_ANY:
-        if now_stage not in STAGE_ALL_CHILD:
-            return False
-    elif stage != now_stage:
-        return False
-    # 一次性事件的幂等
-    if event_data.get("once", 0):
-        growth_data = cache.character_data[character_id].child_growth
-        if growth_data is not None and uid in growth_data.event_history:
-            return False
-    # 同一条事件不重复排队
-    if judge_event_already_in_queue(uid, character_id):
-        return False
-    return True
+    # sub_key 为 0 时覆盖全部未成年阶段，写了具体阶段就只派给该阶段
+    if sub_key == STAGE_ANY:
+        return now_stage in STAGE_ALL_CHILD
+    return sub_key == now_stage
 
 
 def get_candidate_event_list(character_id: int) -> List[list]:
     """
     列出这个孩子当前可触发的全部事件
-
     Keyword arguments:
     character_id -- 孩子角色id
     Return arguments:
@@ -278,253 +216,112 @@ def get_candidate_event_list(character_id: int) -> List[list]:
     result = []
     now_stage = get_character_stage(character_id)
     # 只翻本阶段桶与通用桶，不遍历全表
-    for stage in (STAGE_ANY, now_stage):
-        for uid in game_config.config_growth_event_by_stage.get(stage, ()):
-            if not judge_event_can_enqueue(uid, character_id):
+    for sub_key in (STAGE_ANY, now_stage):
+        for uid in game_config.config_official_event_by_sub_key.get((GROWTH_EVENT_DEPARTMENT, sub_key), ()):
+            if not official_event_handle.judge_event_can_enqueue(uid, character_id):
                 continue
-            event_data = game_config.config_growth_event[uid]
+            if not judge_stage_pass(uid, character_id):
+                continue
+            event_data = game_config.config_official_event[uid]
             partner_id = get_event_partner(uid, character_id)
-            now_weight = judge_premise_pass(event_data.get("premise", ""), character_id, partner_id)
+            now_weight = official_event_handle.judge_premise_pass(event_data.get("premise", ""), character_id, partner_id)
             if not now_weight:
                 continue
             # 配置权重与前提权重相乘：前提里的 high_ 系列照样能拉高稀有事件的出场率
-            result.append([uid, max(1, int(event_data.get("weight", 1))) * now_weight, partner_id])
+            result.append([uid, official_event_handle.get_event_weight(uid) * now_weight, partner_id])
     return result
 
 
-def push_growth_event(uid: str, character_id: int, partner_id: int = 0, to_front: bool = False) -> bool:
+@official_event_handle.register_provider(GROWTH_EVENT_DEPARTMENT)
+def get_today_growth_event_pick_list() -> List[dict]:
     """
-    把一条事件推进待处理队列
+    每日结算时给出今日的养成事件候选（已按女儿逐个节流）
+
+    ⚠️ 遍历前先 shuffle：撞上公务事件系统的全局硬顶时，不打散的话永远是 id 小的那几个女儿吃满名额
     Keyword arguments:
-    uid -- 事件uid
-    character_id -- 孩子角色id
-    partner_id -- 互动对象角色id，默认0为玩家
-    to_front -- 是否插到队首（阶段跃迁类事件用，如毕业典礼）
+    无
     Return arguments:
-    bool -- 是否成功入队
+    List[dict] -- [{"uid": str, "chara_id": int, "partner_id": int}, ...]
     """
-    if uid not in game_config.config_growth_event:
-        return False
-    queue = cache.rhodes_island.growth_event_queue
-    if len(queue) >= GROWTH_EVENT_QUEUE_MAX:
-        return False
-    now_data = {
-        "uid": uid,
-        "chara_id": character_id,
-        "partner_id": partner_id,
-        "add_time": cache.game_time,
-    }
-    if to_front:
-        queue.insert(0, now_data)
-    else:
-        queue.append(now_data)
-    return True
+    character_list = get_growth_event_character_list()
+    random.shuffle(character_list)
+    result = []
+    for character_id in character_list:
+        # 每个女儿每天只有一定概率派到事件，于是单个女儿约一两天一条
+        if random.randint(1, 100) > GROWTH_EVENT_DAILY_CHANCE:
+            continue
+        candidate = get_candidate_event_list(character_id)
+        if not candidate:
+            continue
+        for _index in range(GROWTH_EVENT_DAILY_MAX_PER_CHILD):
+            if not candidate:
+                break
+            weight_list = [one[1] for one in candidate]
+            chosen = random.choices(candidate, weights=weight_list, k=1)[0]
+            candidate.remove(chosen)
+            result.append({"uid": chosen[0], "chara_id": character_id, "partner_id": chosen[2]})
+    return result
 
 
-GRADUATION_EVENT_UID = "通用1"
-""" 毕业典礼的事件uid（方案 §3.26）。uid由「文件名+cid」拼成，对应 data/growth_event/通用.csv 的 cid=1 """
+@official_event_handle.register_capacity(GROWTH_EVENT_DEPARTMENT)
+def get_growth_event_queue_capacity() -> int:
+    """
+    养成事件为公务队列贡献的容量：每个女儿 4 条
+    Keyword arguments:
+    无
+    Return arguments:
+    int -- 容量
+    """
+    return GROWTH_EVENT_QUEUE_PER_CHILD * len(get_growth_event_character_list())
 
-ADULT_MEMORIAL_EVENT_UID = "通用2"
-""" 成年纪念的事件uid（方案 §3.26），紧跟在毕业典礼之后 """
+
+@official_event_handle.register_title(GROWTH_EVENT_DEPARTMENT)
+def get_growth_event_title(queue_data: dict) -> str:
+    """
+    取养成事件的抬头："薇薇安 · 萝莉期第 38 天"
+    Keyword arguments:
+    queue_data -- 队列元素dict
+    Return arguments:
+    str -- 抬头文本
+    """
+    from Script.System.Education_System import growth_panel
+    from Script.System.Pregnancy_System import pregnancy_handle
+
+    character_id = queue_data.get("chara_id", 0)
+    if character_id not in cache.character_data:
+        return official_event_handle.get_department_name(GROWTH_EVENT_DEPARTMENT)
+    character_data: game_type.Character = cache.character_data[character_id]
+    stage = get_character_stage(character_id)
+    stage_name = _(growth_panel.STAGE_TALENT_NAME.get(stage, "少女"))
+    # 成长天数由妊娠系统统一计算（含成长加速药），这里只取用不重算
+    grow_day = pregnancy_handle.get_child_grow_day(character_id)
+    return _("{0} · {1}期第 {2} 天").format(character_data.name, stage_name, grow_day)
 
 
 def push_graduation_event(character_id: int):
     """
-    成年结算时把毕业典礼与成年纪念插到队首（方案 §3.26）
+    成年结算时把毕业典礼与成年纪念插到队首
 
     ⚠️ **不做成玩家指令**（口径44）：一辈子只触发一次的叙事节点，
        做成指令要配行为、时长、口上、前提一整套，事件系统的一次性叙事正是为此而生
     ⚠️ 插队首而不是追加：成年是叙事上的大节点，让它排在一堆日常事件后面会很怪
-    ⚠️ 幂等由成年结算本身的守卫保证（素质 103→104，一个孩子只会经过一次），
-       这里不再另查 event_history
+    ⚠️ 幂等由成年结算本身的守卫保证（素质 103→104，一个孩子只会经过一次）
     Keyword arguments:
     character_id -- 刚成年的孩子角色id
     Return arguments:
     无
     """
     # 倒序插入，使毕业典礼最终排在成年纪念之前
-    push_growth_event(ADULT_MEMORIAL_EVENT_UID, character_id, to_front=True)
-    push_growth_event(GRADUATION_EVENT_UID, character_id, to_front=True)
+    official_event_handle.push_official_event(ADULT_MEMORIAL_EVENT_UID, character_id, to_front=True)
+    official_event_handle.push_official_event(GRADUATION_EVENT_UID, character_id, to_front=True)
 
 
-def check_new_day_growth_event():
+def get_growth_event_queue_count(character_id: int) -> int:
     """
-    每日结算时筛选并入队养成事件（方案 §3.7 的第1步）
-
-    ⚠️ 先把所有孩子的候选汇成一个池子再抽，而不是每个孩子各抽一条：
-       后者等于把上限变成「孩子数×1」，节流就没了
+    取某个孩子待处理的养成事件条数（养成总览的「待处理」栏用）
     Keyword arguments:
-    无
-    Return arguments:
-    无
-    """
-    if not game_config.config_growth_event:
-        return
-    all_candidate = []
-    for character_id in get_growth_event_character_list():
-        for uid, weight, partner_id in get_candidate_event_list(character_id):
-            all_candidate.append([uid, weight, character_id, partner_id])
-    if not all_candidate:
-        return
-    for _index in range(GROWTH_EVENT_DAILY_MAX):
-        if not all_candidate:
-            break
-        if len(cache.rhodes_island.growth_event_queue) >= GROWTH_EVENT_QUEUE_MAX:
-            break
-        weight_list = [one[1] for one in all_candidate]
-        chosen = random.choices(all_candidate, weights=weight_list, k=1)[0]
-        all_candidate.remove(chosen)
-        push_growth_event(chosen[0], chosen[2], chosen[3])
-
-
-def clean_growth_event_queue():
-    """
-    清掉队列里已经失效的项（方案 §7-4）
-
-    失效的两种：孩子已不在角色表里（跨版本存档、周目切换），事件已从配置里删掉。
-    ⚠️ 静默丢弃，不报错也不提示——玩家对一条自己从没见过的事件消失没有感知，
-       但一个 KeyError 会直接打断公务流程
-    Keyword arguments:
-    无
-    Return arguments:
-    无
-    """
-    queue = cache.rhodes_island.growth_event_queue
-    valid = []
-    for one in queue:
-        if not isinstance(one, dict):
-            continue
-        if one.get("chara_id") not in cache.character_data:
-            continue
-        if one.get("uid") not in game_config.config_growth_event:
-            continue
-        valid.append(one)
-    if len(valid) != len(queue):
-        cache.rhodes_island.growth_event_queue = valid
-
-
-def get_growth_event_queue_count() -> int:
-    """
-    取当前待处理的养成事件条数（清理失效项后）
-    Keyword arguments:
-    无
+    character_id -- 孩子角色id
     Return arguments:
     int -- 待处理条数
     """
-    clean_growth_event_queue()
-    return len(cache.rhodes_island.growth_event_queue)
-
-
-def pop_growth_event() -> Optional[dict]:
-    """
-    取出队首的一条待处理事件
-    Keyword arguments:
-    无
-    Return arguments:
-    Optional[dict] -- 队列元素，队列为空则None
-    """
-    clean_growth_event_queue()
-    queue = cache.rhodes_island.growth_event_queue
-    if not queue:
-        return None
-    return queue.pop(0)
-
-
-def get_option_list(uid: str, character_id: int, partner_id: int = 0) -> List[dict]:
-    """
-    取一条事件的选项列表，并判定各选项的前提（口径34）
-
-    ⚠️ 不满足前提的选项**置灰保留**而不是隐藏：让玩家看见「这里本来有更好的选择，
-       但我没养到」，隐藏了就等于这条养成线从没存在过
-    Keyword arguments:
-    uid -- 事件uid
-    character_id -- 孩子角色id
-    partner_id -- 互动对象角色id
-    Return arguments:
-    List[dict] -- [{"index": 选项序号1~4, "text": 选项文本, "tip": 后果提示,
-                    "can_use": 是否可选, "reason": 不可选的原因, "effect": 结算串}]
-    """
-    event_data = game_config.config_growth_event.get(uid)
-    if event_data is None:
-        return []
-    result = []
-    for index in range(1, 5):
-        option_text = event_data.get(f"option_{index}", "")
-        # 空着的选项列在构建时已被整列删掉，取不到就是这条事件没有这个选项
-        if not option_text:
-            continue
-        can_use = bool(judge_premise_pass(event_data.get(f"option_{index}_premise", ""), character_id, partner_id))
-        result.append({
-            "index": index,
-            "text": option_text,
-            "tip": event_data.get(f"option_{index}_tip", ""),
-            "can_use": can_use,
-            "reason": event_data.get(f"option_{index}_reason", ""),
-            "effect": event_data.get(f"option_{index}_effect", ""),
-        })
-    return result
-
-
-def handle_effect_text(effect_text: str, character_id: int, partner_id: int = 0):
-    """
-    执行一串 & 连接的结算
-
-    支持两类写法，与既有事件的 effect 一致（`settle_behavior.handle_event_data`）：
-        CVE_...  综合数值结算（含本期新增的 CVE_A1_Growth|N_G_值 养成数值）
-        纯数字   Behavior_Effect 表里的结算函数id
-    ⚠️ 结算全程把孩子的交互对象指向 partner_id，使 A2 指向本次事件的互动对象；
-       结算完立刻还原
-    ⚠️ 结算用的 change_data 是一次性的、不往界面上抛数字（方案 §5.1）：
-       养成事件写方向不写数值，抛出「好感+8」会把养成变成算数题
-    Keyword arguments:
-    effect_text -- & 连接的结算串
-    character_id -- 孩子角色id
-    partner_id -- 互动对象角色id
-    """
-    from Script.Design import settle_behavior
-
-    if not effect_text:
-        return
-    character_data: game_type.Character = cache.character_data[character_id]
-    old_target_id = character_data.target_character_id
-    character_data.target_character_id = partner_id
-    change_data = game_type.CharacterStatusChange()
-    try:
-        for effect in effect_text.split("&"):
-            effect = effect.strip()
-            if not effect:
-                continue
-            if effect.startswith("CVE"):
-                settle_behavior.handle_comprehensive_value_effect(
-                    character_id, effect.split("_")[1:], change_data)
-            elif effect.isdigit():
-                handler = constant.settle_behavior_effect_data.get(int(effect))
-                if handler is not None:
-                    handler(character_id, 1, change_data, cache.game_time)
-                else:
-                    print(f"\ndebug 养成事件的结算{effect}不存在，请检查结算是否正确\n")
-            else:
-                print(f"\ndebug 养成事件的结算{effect}格式不正确，请检查结算是否正确\n")
-    finally:
-        character_data.target_character_id = old_target_id
-
-
-def settle_growth_event_option(uid: str, character_id: int, partner_id: int, option_index: int):
-    """
-    结算玩家选定的选项，并把这次选择写进该孩子的养成事件履历
-
-    ⚠️ 无论事件是不是一次性都写 `event_history`：一次性事件靠它防重复触发，
-       非一次性事件靠它给养成总览的履历栏提供内容（方案 §5.2）
-    Keyword arguments:
-    uid -- 事件uid
-    character_id -- 孩子角色id
-    partner_id -- 互动对象角色id
-    option_index -- 玩家选定的选项序号（1~4）
-    """
-    for option in get_option_list(uid, character_id, partner_id):
-        if option["index"] != option_index:
-            continue
-        handle_effect_text(option["effect"], character_id, partner_id)
-        break
-    growth_data = growth_handle.get_child_growth(character_id)
-    growth_data.event_history[uid] = {"time": cache.game_time, "choice": option_index}
+    return official_event_handle.get_official_event_queue_count(character_id)

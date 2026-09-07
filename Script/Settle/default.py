@@ -11198,3 +11198,70 @@ def handle_eat_last_two_food(
         handle_set_target_food_from_bag_last(character_id, add_time, change_data, now_time)
         handle_eat_add_just(character_id, add_time, change_data, now_time)
         handle_delete_last_food(character_id, add_time, change_data, now_time)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.OFFICIAL_EVENT_ACCEPT_RECRUIT)
+def handle_official_event_accept_recruit(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    公务事件用：接收一名待确认的招募干员（Plan 23）
+
+    这类效果没法用数值 token 表达（要建角色、分宿舍、发成就），所以走纯数字结算id这条路。
+    ⚠️ 直接复用招募面板的 recruit_new_chara：宿舍已满或没有待确认干员时它自己会给提示并返回，
+       不要在这里另写一套判定，否则两处的门槛迟早会对不上
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    Return arguments:
+    无
+    """
+    if not add_time:
+        return
+    from Script.UI.Panel import recruit_panel
+
+    recruit_panel.recruit_new_chara()
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.OFFICIAL_EVENT_TEMP_COMMISSION)
+def handle_official_event_temp_commission(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    公务事件用：生成一条突发的临时外勤委托（Plan 23）
+
+    ⚠️ 复用外勤委托系统的 create_temp_commission：委托的需求与奖励用的是外勤自己的前缀语法
+       （r_资源id_数量、声望_势力id_值），与 CVE token 是两套，别混着写
+    ⚠️ 该函数会把新委托**追加写进 data/csv/Commission.csv**（不是只改内存），所以
+       描述里的换行必须写成两个字符的 \\n 转义、且不能出现英文逗号，
+       否则写出去的那一行会把 CSV 撑断，下次构建直接报错
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    Return arguments:
+    无
+    """
+    if not add_time:
+        return
+    from Script.System.Field_Commission_System import field_commission_function
+
+    field_commission_function.create_temp_commission(
+        name=_("突发：受灾点的紧急支援"),
+        level=2,
+        type=_("资源"),
+        people=2,
+        time=2,
+        demand="a_42_2&a_46_2",
+        reward="r_1_2000&声望_0_10",
+        description=_("公务里递上来的急件：附近的定居点遭了灾，请求罗德岛派人支援。\\n博士已经答应下来，需要尽快组队出发。"),
+    )

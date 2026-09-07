@@ -233,7 +233,7 @@ class Growth_Panel:
             omit_draw.draw()
             history_list = history_list[-HISTORY_SHOW_MAX:]
         for uid, record in history_list:
-            event_data = _game_config.config_growth_event.get(uid)
+            event_data = _game_config.config_official_event.get(uid)
             # 配置里已删掉的事件只留一条占位，不让履历出现空行
             if event_data is None:
                 continue
@@ -268,13 +268,11 @@ class Growth_Panel:
             text_list.append(_("有想炫耀的进步：{0}（下次见到你时会说）").format("、".join(name_list)))
         if growth_data.skip_class_flag:
             text_list.append(_("今天正在翘课"))
-        # 队列是全岛共用的，这里只数这个孩子的那几条（Plan 22 三期）
+        # 队列是全岛共用的，这里只数这个孩子的那几条（Plan 23）
         # ⚠️ 不提示的话玩家不知道要去博士办公室处理公务，事件会一直躺在队列里
-        from Script.System.Education_System import growth_event_handle
+        from Script.System.Official_Event_System import official_event_handle
 
-        growth_event_handle.clean_growth_event_queue()
-        wait_count = sum(1 for one in cache.rhodes_island.growth_event_queue
-                         if one.get("chara_id") == character_id)
+        wait_count = official_event_handle.get_official_event_queue_count(character_id)
         if wait_count:
             text_list.append(_("有 {0} 件关于她的事等你在博士办公室「处理公务」时决断").format(wait_count))
         if not text_list:

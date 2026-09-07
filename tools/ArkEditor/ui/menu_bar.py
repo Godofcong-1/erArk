@@ -100,6 +100,38 @@ class MenuBar(QMenuBar):
             dialog.exec()
         self.commission_path_info_action.triggered.connect(show_commission_path_info)
 
+        # 公务事件菜单（Plan 23）
+        official_event_menu = QMenu("公务事件", self)
+        self.select_official_event_dir_action = QWidgetAction(self)
+        self.select_official_event_dir_action.setText("读取公务事件目录")
+        official_event_menu.addAction(self.select_official_event_dir_action)
+        self.official_event_path_info_action = QWidgetAction(self)
+        self.official_event_path_info_action.setText("公务事件目录说明")
+        official_event_menu.addAction(self.official_event_path_info_action)
+        official_event_menu.setFont(self.font)
+        self.addMenu(official_event_menu)
+
+        def show_official_event_path_info():
+            """弹出公务事件目录的说明"""
+            dialog = QDialog(self)
+            dialog.setWindowTitle("公务事件目录说明")
+            layout = QVBoxLayout(dialog)
+            text = QTextEdit(dialog)
+            text.setReadOnly(True)
+            text.setFont(self.font)
+            text.setPlainText(
+                "公务事件目录为游戏本体目录下的 \\data\\official_event，"
+                "选择这个目录即可一次读入全部部门的事件表。\n"
+                "每个 csv 是一个部门（婴儿/幼女/萝莉/通用为教育区的养成事件），"
+                "改完保存后需要跑一次 buildconfig.py 才会在游戏里生效。"
+            )
+            layout.addWidget(text)
+            dialog.setLayout(layout)
+            dialog.resize(460, 160)
+            dialog.exec()
+
+        self.official_event_path_info_action.triggered.connect(show_official_event_path_info)
+
         # 设置菜单
         setting_menu = QMenu("设置", self)
         self.setting_action = QAction("设置", self)

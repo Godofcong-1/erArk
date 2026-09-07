@@ -1774,15 +1774,19 @@ class Cook_Question:
     wrong_answer_3: str
     """ 错误答案3 """
 
-class Growth_Event:
+class Official_Event:
     """ 婴儿期养成事件 """
 
     cid: str
     """ 事件uid（文件名自动加前缀） """
-    stage: int
-    """ 适用阶段素质id（0全成长阶段/101婴儿/102幼女/103萝莉/104少女） """
+    department: int
+    """ 部门id（Facility.csv中type为-1的区块cid，15为教育区） """
+    subject: int
+    """ 事件主体（0无主体的部门事务/1角色） """
+    sub_key: int
+    """ 分类内子桶键（养成填成长阶段素质id：0全成长阶段/101婴儿/102幼女/103萝莉/104少女） """
     once: int
-    """ 是否一次性（1则查event_history防重复） """
+    """ 是否里程碑（仅作者标注，不影响触发） """
     weight: int
     """ 入队权重 """
     premise: str

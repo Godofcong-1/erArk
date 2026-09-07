@@ -313,3 +313,67 @@ def save_commission_csv(file_path, commissions):
                 "people": c.people, "time": c.time, "demand": c.demand, "reward": c.reward,
                 "related_id": c.related_id, "special": c.special, "description": c.description
             })
+
+
+OFFICIAL_EVENT_HEAD_ROW = 5
+""" 公务事件表的表头行数（列名/中文说明/类型/是否翻译/表名） """
+
+
+def load_official_event_dir(dir_path):
+    """
+    读取整个公务事件目录（Plan 23）
+    参数:
+        dir_path: str 目录路径，通常是游戏本体的 data/official_event
+    返回:
+        (event_list, head_data): list[OfficialEvent] 与 {文件名: 表头5行}
+    功能:
+        目录下每个 csv 是一个部门的事件表，一次全读进来，
+        左侧列表按文件分组显示，保存时只重写被改过的那个文件。
+        ⚠️ 跳表头按**行号**跳前5行，不能照抄外勤委托那种「找表名行」的写法——
+           这里每个文件第5行的表名各不相同。
+    """
+    import os
+    from game_type import OfficialEvent
+
+    event_list = []
+    head_data = {}
+    for file_name in sorted(os.listdir(dir_path)):
+        if not file_name.endswith(".csv"):
+            continue
+        file_path = os.path.join(dir_path, file_name)
+        with open(file_path, encoding="utf-8", newline="") as f:
+            rows = list(csv.reader(f))
+        if len(rows) < OFFICIAL_EVENT_HEAD_ROW:
+            continue
+        head = rows[0]
+        head_data[file_name] = rows[:OFFICIAL_EVENT_HEAD_ROW]
+        for row in rows[OFFICIAL_EVENT_HEAD_ROW:]:
+            if not row or not row[0].strip():
+                continue
+            event_list.append(OfficialEvent(dict(zip(head, row)), os.path.splitext(file_name)[0]))
+    return event_list, head_data
+
+
+def save_official_event_csv(dir_path, file_name, head_rows, event_list):
+    """
+    把一个部门的事件写回 CSV（Plan 23）
+    参数:
+        dir_path: str 目录路径
+        file_name: str 文件名（含扩展名）
+        head_rows: list 该文件的表头5行
+        event_list: list[OfficialEvent] 属于该文件的事件
+    返回:
+        None
+    功能:
+        整个文件重写。⚠️ 表头与数据行**一律走 csv.writer**，
+        行尾统一 CRLF、编码 UTF-8 无 BOM——
+        外勤委托那边表头用 f.write 数据行用 DictWriter，写出来是混合行尾，别照抄。
+    """
+    import os
+
+    file_path = os.path.join(dir_path, file_name)
+    rows = [list(one) for one in head_rows]
+    for one in event_list:
+        rows.append(one.to_row())
+    with open(file_path, "w", encoding="utf-8", newline="") as f:
+        csv.writer(f, lineterminator="\r\n").writerows(rows)

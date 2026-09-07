@@ -1201,6 +1201,40 @@ def handle_self_have_classmate(character_id: int) -> int:
     return 1 if growth_event_handle.get_classmate_list(character_id) else 0
 
 
+@add_premise(constant_promise.Premise.SELF_MOTHER_AVAILABLE)
+def handle_self_mother_available(character_id: int) -> int:
+    """
+    校验自己的母亲仍在队中且当前可跟随（Plan 23，母亲相关的公务事件用）
+    ⚠️ 直接复用二期的 judge_mother_available：母亲正在H、被监禁、外出委托或住院时算不可跟随，
+       与幼女跟随见学的判定口径保持一致，免得事件里写「母亲带她去岗位」时母亲其实不在
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import class_ai
+
+    return 1 if class_ai.judge_mother_available(character_id) != -1 else 0
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_ANY_COURSE)
+def handle_self_have_any_course(character_id: int) -> int:
+    """
+    校验自己的个人课表非空（Plan 23，上课相关的公务事件用）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    growth_data = cache.character_data[character_id].child_growth
+    if growth_data is None or not growth_data.selected_course:
+        return 0
+    for day_data in growth_data.selected_course.values():
+        if day_data:
+            return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.TARGET_IS_PLAYER_DAUGHTER)
 def handle_target_is_player_daughter(character_id: int) -> int:
     """

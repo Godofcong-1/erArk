@@ -491,6 +491,10 @@ GROWTH_VALUE_ABSENT = 1
 """ 养成数值编号：累计缺课节数 """
 GROWTH_VALUE_ATTEND_RATE = 2
 """ 养成数值编号：出勤率百分比（0~100），一节课都没上过时算作100 """
+GROWTH_VALUE_STAGE_PROGRESS = 3
+""" 养成数值编号：本成长阶段已过的进度百分比（0~100，只读）。
+    ⚠️ 事件表靠它把同一阶段的几十条事件分出早/中/后期——
+       婴儿期的「第一次睁眼」和「扶着床沿站起来」不该同时在池子里 """
 GROWTH_VALUE_PERSONALITY_BASE = 10
 """ 养成数值编号：四对性格倾向占用 10~13（10+性格对编号），正数偏前者、负数偏后者 """
 GROWTH_VALUE_CARE = 20
@@ -499,6 +503,35 @@ GROWTH_VALUE_PRENATAL = 21
 """ 养成数值编号：胎教累积 """
 GROWTH_VALUE_EVENT_COUNT = 22
 """ 养成数值编号：已触发的养成事件条数 """
+
+
+def get_stage_progress(character_id: int) -> float:
+    """
+    取角色在当前成长阶段里已经走过的进度百分比
+
+    ⚠️ 阶段阈值是**累计**天数（婴儿0~90 / 幼女90~270 / 萝莉270~450），
+       所以进度要减掉本阶段的起点，否则幼女期一开始就会显示成 33%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    float -- 0~100 的进度百分比；已成年或不在成长阶段时为100
+    """
+    from Script.System.Pregnancy_System import pregnancy_constant, pregnancy_handle
+
+    stage_end = pregnancy_handle.get_child_growth_stage_total_day(character_id)
+    if not stage_end:
+        # 已经不在成长阶段（成年或不是孩子），按走完算
+        return 100.0
+    stage_start = 0
+    if stage_end == pregnancy_constant.GROW_TO_LOLI_DAY:
+        stage_start = pregnancy_constant.REARING_COMPLETE_DAY
+    elif stage_end == pregnancy_constant.GROW_TO_GIRL_DAY:
+        stage_start = pregnancy_constant.GROW_TO_LOLI_DAY
+    stage_day = stage_end - stage_start
+    if stage_day <= 0:
+        return 100.0
+    now_day = pregnancy_handle.get_child_grow_day(character_id) - stage_start
+    return max(0.0, min(100.0, now_day * 100.0 / stage_day))
 
 
 def get_growth_value(character_id: int, value_id: int) -> float:
@@ -513,6 +546,10 @@ def get_growth_value(character_id: int, value_id: int) -> float:
     Return arguments:
     float -- 数值，角色没有养成数据时一律为0（出勤率为100）
     """
+    # ⚠️ 阶段进度不依赖养成数据，要在下面的提前返回之前算：
+    #    没有 child_growth 的孩子（旧档、刚出生）照样有成长天数
+    if value_id == GROWTH_VALUE_STAGE_PROGRESS:
+        return get_stage_progress(character_id)
     growth_data = cache.character_data[character_id].child_growth
     if growth_data is None:
         return 100.0 if value_id == GROWTH_VALUE_ATTEND_RATE else 0.0

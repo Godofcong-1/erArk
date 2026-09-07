@@ -345,6 +345,35 @@ def get_now_course_ability(character_id: int) -> int:
     return -1
 
 
+def judge_value_by_operator(final_value: float, operator_text: str, judge_text: str) -> int:
+    """
+    按运算符比较两个数值，供不需要角色主体的前提复用（如 Plan 23 的 CVP_RI_ 全局数值）
+    Keyword arguments:
+    final_value -- 当前值
+    operator_text -- 运算符（G大于/L小于/E等于/GE大于等于/LE小于等于/NE不等于）
+    judge_text -- 判定值文本
+    Return arguments:
+    int -- 成立为1，不成立为0
+    """
+    try:
+        judge_value = float(judge_text)
+    except (TypeError, ValueError):
+        return 0
+    if operator_text == "G":
+        return 1 if final_value > judge_value else 0
+    if operator_text == "L":
+        return 1 if final_value < judge_value else 0
+    if operator_text == "E":
+        return 1 if final_value == judge_value else 0
+    if operator_text == "GE":
+        return 1 if final_value >= judge_value else 0
+    if operator_text == "LE":
+        return 1 if final_value <= judge_value else 0
+    if operator_text == "NE":
+        return 1 if final_value != judge_value else 0
+    return 0
+
+
 def handle_comprehensive_value_premise(character_id: int, premise_all_value_list: list) -> int:
     """
     综合型基础数值前提
@@ -359,6 +388,14 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
     pl_target_character_id = pl_character_data.target_character_id
     pl_target_character_data = cache.character_data[pl_target_character_id]
     # print(f"debug character_id = {character_id}, premise_all_value_list = {premise_all_value_list}")
+
+    # 罗德岛全局数值的主体RI（Plan 23）：资源、声望、公务量这类不属于任何角色的数值
+    # ⚠️ 必须在角色主体的判别之前提前返回：下面那段数值B的判别是按「类型|子id」拆的，
+    #    而 RI 的类型可以不带子id（如 CVE_RI_Work_G_20），落进去会直接 IndexError
+    if premise_all_value_list[0] == "RI":
+        from Script.System.Official_Event_System import ri_value
+
+        return judge_value_by_operator(ri_value.get_ri_value(premise_all_value_list[1]), premise_all_value_list[2], premise_all_value_list[3])
 
     # 进行主体A的判别，A1为自己，A2为交互对象，A3为指定id角色(格式为A3|15)
     if premise_all_value_list[0] == "A1":

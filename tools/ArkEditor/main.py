@@ -591,6 +591,78 @@ def load_commission_data():
     is_modified = False
     update_window_title()
 
+def load_official_event_data():
+    """
+    载入公务事件目录并显示在编辑器中（Plan 23）
+    参数: 无
+    返回: 无
+    功能:
+        选择 data/official_event 目录，一次读入全部部门的事件表，
+        左侧按文件分组列出，右侧编辑该条事件的基本字段与四个选项块。
+        ⚠️ 装配前先重建 centralWidget：主布局从不 removeWidget，
+           不重建的话上一个页面的控件会叠在同一格上。
+    """
+    global last_open_dir
+    from ui.official_event_list import OfficialEventListWidget
+    from ui.official_event_edit import OfficialEventEditWidget
+    import load_csv
+    from PySide6.QtWidgets import QFileDialog
+
+    dir_path = QFileDialog.getExistingDirectory(menu_bar, "选择公务事件目录（data/official_event）", last_open_dir)
+    if not dir_path:
+        return
+    last_open_dir = dir_path
+    save_editor_config()
+    event_list, head_data = load_csv.load_official_event_dir(dir_path)
+    if not event_list and not head_data:
+        return
+    # 部门名直接查游戏本体的 Facility.csv（type为-1的区块行），不另维护一份分类名
+    department_name_data = {}
+    facility_path = os.path.join(os.path.dirname(dir_path), "csv", "Facility.csv")
+    if os.path.exists(facility_path):
+        import csv as csv_module
+
+        with open(facility_path, encoding="utf-8", newline="") as facility_file:
+            for row_index, row in enumerate(csv_module.reader(facility_file)):
+                if row_index < 5 or len(row) < 3:
+                    continue
+                try:
+                    if int(row[2]) == -1:
+                        department_name_data[int(row[0])] = row[1]
+                except ValueError:
+                    continue
+    file_name_list = [os.path.splitext(one)[0] for one in head_data]
+    official_event_list = OfficialEventListWidget(event_list, file_name_list)
+    official_event_edit = OfficialEventEditWidget(department_name_data)
+
+    def save_one_file(file_name: str):
+        """把某个文件里的全部事件写回磁盘"""
+        csv_name = file_name + ".csv"
+        if csv_name not in head_data:
+            return
+        now_list = [one for one in event_list if one.file_name == file_name]
+        load_csv.save_official_event_csv(dir_path, csv_name, head_data[csv_name], now_list)
+
+    official_event_list.event_selected.connect(official_event_edit.set_event)
+    # ⚠️ 右键增删也立刻落盘：外勤委托页要再点一次保存才写文件，很容易丢改动
+    official_event_list.event_changed.connect(save_one_file)
+
+    def on_event_saved(event):
+        """保存一条事件后重写它所属的文件并刷新列表"""
+        save_one_file(event.file_name)
+        official_event_list.refresh_filter()
+
+    official_event_edit.event_saved.connect(on_event_saved)
+    main_window.main_layout.addWidget(official_event_list, 0, 0, 1, 1)
+    main_window.main_layout.addWidget(official_event_edit, 0, 1, 1, 1)
+    main_window.main_layout.setColumnStretch(0, 1)
+    main_window.main_layout.setColumnStretch(1, 2)
+    main_window.completed_layout()
+    global is_modified
+    is_modified = False
+    update_window_title()
+
+
 data_list.list_widget.clicked.connect(update_premise_and_settle_list)
 update_status_menu()
 
@@ -630,6 +702,8 @@ menu_bar.new_chara_file_action.triggered.connect(create_chara_data)
 menu_bar.setting_action.triggered.connect(font_update)
 # 绑定外勤委托菜单的信号到主函数
 menu_bar.select_commission_file_action.triggered.connect(load_commission_data)
+# 绑定公务事件菜单的信号到主函数（Plan 23）
+menu_bar.select_official_event_dir_action.triggered.connect(load_official_event_data)
 
 # 编辑操作：所有可编辑控件的内容变更都应调用 mark_modified
 # 文本编辑区

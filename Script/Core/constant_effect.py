@@ -1016,6 +1016,11 @@ class BehaviorEffect:
     EAT_LAST_TWO_FOOD = 3001
     """ 复合 吃掉背包里的最后两个食物，助理送饭时用 """
 
+    OFFICIAL_EVENT_ACCEPT_RECRUIT = 3002
+    """ 公务事件 接收一名待确认的招募干员（Plan 23，人事部门事件用） """
+    OFFICIAL_EVENT_TEMP_COMMISSION = 3003
+    """ 公务事件 生成一条突发的临时外勤委托（Plan 23，外勤部门事件用） """
+
 
 class SecondEffect:
     """二段结算效果函数"""

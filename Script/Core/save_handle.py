@@ -556,9 +556,21 @@ def input_load_save(save_id: str):
     if not hasattr(loaded_dict["rhodes_island"], "child_schedule_template"):
         loaded_dict["rhodes_island"].child_schedule_template = {}
         update_count += 1
-    # 养成事件待处理队列（Plan 22 三期）
-    if not hasattr(loaded_dict["rhodes_island"], "growth_event_queue"):
-        loaded_dict["rhodes_island"].growth_event_queue = []
+    # 公务事件待处理队列与全局履历（Plan 23，由 Plan 22 三期的养成事件队列升格而来）
+    if not hasattr(loaded_dict["rhodes_island"], "official_event_queue"):
+        old_queue = getattr(loaded_dict["rhodes_island"], "growth_event_queue", [])
+        new_queue = []
+        # ⚠️ 旧档的队列元素没有 department，按 uid 回查配置补上；事件已被删掉的直接丢弃，
+        #    留着会在出队时查不到配置而被清理，不如在载入时就清干净
+        for one in old_queue:
+            if not isinstance(one, dict) or one.get("uid") not in game_config.config_official_event:
+                continue
+            one["department"] = game_config.config_official_event[one["uid"]].get("department", 0)
+            new_queue.append(one)
+        loaded_dict["rhodes_island"].official_event_queue = new_queue
+        update_count += 1
+    if not hasattr(loaded_dict["rhodes_island"], "official_event_history"):
+        loaded_dict["rhodes_island"].official_event_history = {}
         update_count += 1
     # 更新罗德岛的设施等级
     for all_cid in game_config.config_facility:
