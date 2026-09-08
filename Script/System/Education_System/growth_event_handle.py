@@ -49,6 +49,15 @@ GRADUATION_EVENT_UID = "通用1"
 ADULT_MEMORIAL_EVENT_UID = "通用2"
 """ 成年纪念的事件uid，紧跟在毕业典礼之后 """
 
+SEMESTER_EVENT_SUB_KEY = 200
+""" 期末事件的**保留**子桶键（对应 data/official_event/期末.csv 的 sub_key 列）。
+
+    ⚠️ 绝不能用 0 或 101~104：get_candidate_event_list() 每天翻的正是
+       (15, 0) 与 (15, 当前阶段) 这两个桶，期末事件写进去会天天被抽到。
+       用一个日常池永远不会翻的键，期末事件就只能由学期结算显式推入。
+    ⚠️ 于是期末事件的**阶段区分只能写进 premise**（CVP_A1_T|102_E_1 等），
+       不能像日常养成事件那样靠 sub_key 分桶 """
+
 
 def get_character_stage(character_id: int) -> int:
     """
@@ -314,6 +323,50 @@ def push_graduation_event(character_id: int):
     # 倒序插入，使毕业典礼最终排在成年纪念之前
     official_event_handle.push_official_event(ADULT_MEMORIAL_EVENT_UID, character_id, to_front=True)
     official_event_handle.push_official_event(GRADUATION_EVENT_UID, character_id, to_front=True)
+
+
+def push_semester_event(character_id: int) -> bool:
+    """
+    学期结算时给某个孩子推一条期末事件（Plan 22 一期 §3.13 第2条）
+
+    ⚠️ 事件是**按角色去重**的（official_event_handle.judge_event_done），
+       同一个孩子不会重复遇到同一条期末事件。幼女到少女约十几个学期，
+       所以池子迟早会被抽干——抽干时本函数只是返回 False，不报错也不重复派发
+    Keyword arguments:
+    character_id -- 孩子的角色id
+    Return arguments:
+    bool -- 是否成功入队
+    """
+    candidate = []
+    for uid in game_config.config_official_event_by_sub_key.get(
+            (GROWTH_EVENT_DEPARTMENT, SEMESTER_EVENT_SUB_KEY), ()):
+        if not official_event_handle.judge_event_can_enqueue(uid, character_id):
+            continue
+        partner_id = get_event_partner(uid, character_id)
+        now_weight = official_event_handle.judge_premise_pass(
+            game_config.config_official_event[uid].get("premise", ""), character_id, partner_id)
+        if not now_weight:
+            continue
+        candidate.append([uid, official_event_handle.get_event_weight(uid) * now_weight, partner_id])
+    if not candidate:
+        return False
+    chosen = random.choices(candidate, weights=[one[1] for one in candidate], k=1)[0]
+    return official_event_handle.push_official_event(chosen[0], character_id, chosen[2])
+
+
+def push_semester_event_for_list(character_list: List[int]) -> int:
+    """
+    给一批刚出了成绩单的孩子各推一条期末事件
+    Keyword arguments:
+    character_list -- 孩子角色id列表
+    Return arguments:
+    int -- 实际入队的条数
+    """
+    push_count = 0
+    for character_id in character_list:
+        if push_semester_event(character_id):
+            push_count += 1
+    return push_count
 
 
 def get_growth_event_queue_count(character_id: int) -> int:

@@ -544,6 +544,20 @@ GROWTH_VALUE_STAGE_PROGRESS = 3
 """ 养成数值编号：本成长阶段已过的进度百分比（0~100，只读）。
     ⚠️ 事件表靠它把同一阶段的几十条事件分出早/中/后期——
        婴儿期的「第一次睁眼」和「扶着床沿站起来」不该同时在池子里 """
+GROWTH_VALUE_SEMESTER_ATTEND = 4
+""" 养成数值编号：本学期听课节数（累计减学期基线，Plan 22 一期 §3.13） """
+GROWTH_VALUE_SEMESTER_ABSENT = 5
+""" 养成数值编号：本学期缺课节数 """
+GROWTH_VALUE_SEMESTER_ATTEND_RATE = 6
+""" 养成数值编号：本学期出勤率百分比（0~100），本学期一节课都没轮到过时算作100 """
+GROWTH_VALUE_REPORT_GRADE = 7
+""" 养成数值编号：上一份成绩单的档位 0优秀/1良好/2待努力/3无课可评；
+    还没有过成绩单时为 -1。⚠️ 成绩单口上与期末事件的差分全靠它，取值口径见 semester_handle """
+GROWTH_VALUE_REPORT_LEVEL_UP = 8
+""" 养成数值编号：上一份成绩单里升了级的科目数 """
+GROWTH_VALUE_SEMESTER_PROGRESS = 9
+""" 养成数值编号：本学期已过的进度百分比（0~100，只读）。
+    ⚠️ 与角色无关（学期是全岛共用的），但仍走同一个读口，免得事件表要记两套取数方式 """
 GROWTH_VALUE_PERSONALITY_BASE = 10
 """ 养成数值编号：四对性格倾向占用 10~13（10+性格对编号），正数偏前者、负数偏后者 """
 GROWTH_VALUE_CARE = 20
@@ -595,13 +609,24 @@ def get_growth_value(character_id: int, value_id: int) -> float:
     Return arguments:
     float -- 数值，角色没有养成数据时一律为0（出勤率为100）
     """
+    from Script.System.Education_System import semester_handle
+
     # ⚠️ 阶段进度不依赖养成数据，要在下面的提前返回之前算：
     #    没有 child_growth 的孩子（旧档、刚出生）照样有成长天数
     if value_id == GROWTH_VALUE_STAGE_PROGRESS:
         return get_stage_progress(character_id)
+    # 学期进度同理，它是全岛共用的时间量，与这个角色有没有养成数据无关
+    if value_id == GROWTH_VALUE_SEMESTER_PROGRESS:
+        return semester_handle.get_semester_progress()
     growth_data = cache.character_data[character_id].child_growth
     if growth_data is None:
-        return 100.0 if value_id == GROWTH_VALUE_ATTEND_RATE else 0.0
+        # ⚠️ 没有养成数据时，成绩单档位要回落到 -1（尚无成绩单）而不是 0——
+        #    0 是「优秀」，回落成 0 会让全岛没上过学的人都通过优秀档的口上前提
+        if value_id == GROWTH_VALUE_REPORT_GRADE:
+            return -1.0
+        if value_id in {GROWTH_VALUE_ATTEND_RATE, GROWTH_VALUE_SEMESTER_ATTEND_RATE}:
+            return 100.0
+        return 0.0
     if value_id == GROWTH_VALUE_ATTEND:
         return float(growth_data.attend_class_count)
     if value_id == GROWTH_VALUE_ABSENT:
@@ -612,6 +637,23 @@ def get_growth_value(character_id: int, value_id: int) -> float:
         if not total:
             return 100.0
         return growth_data.attend_class_count * 100.0 / total
+    # 本学期的三个数走 semester_handle：那边是「累计减基线」的唯一算口
+    if value_id in {GROWTH_VALUE_SEMESTER_ATTEND, GROWTH_VALUE_SEMESTER_ABSENT, GROWTH_VALUE_SEMESTER_ATTEND_RATE}:
+        semester_attend, semester_absent = semester_handle.get_semester_attend(character_id)
+        if value_id == GROWTH_VALUE_SEMESTER_ATTEND:
+            return float(semester_attend)
+        if value_id == GROWTH_VALUE_SEMESTER_ABSENT:
+            return float(semester_absent)
+        semester_total = semester_attend + semester_absent
+        # 本学期还一节课都没轮到过的孩子不该被当成全勤缺席，按满勤算（与终身出勤率同口径）
+        if not semester_total:
+            return 100.0
+        return semester_attend * 100.0 / semester_total
+    if value_id == GROWTH_VALUE_REPORT_GRADE:
+        # ⚠️ 没有成绩单时是 -1 而不是 0：0 是「优秀」档
+        return float(growth_data.last_report_card.get("grade", -1)) if growth_data.last_report_card else -1.0
+    if value_id == GROWTH_VALUE_REPORT_LEVEL_UP:
+        return float(len(growth_data.last_report_card.get("level_change", {})))
     if GROWTH_VALUE_PERSONALITY_BASE <= value_id <= GROWTH_VALUE_PERSONALITY_BASE + 3:
         return float(growth_data.personality_point.get(value_id - GROWTH_VALUE_PERSONALITY_BASE, 0.0))
     if value_id == GROWTH_VALUE_CARE:

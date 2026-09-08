@@ -13,6 +13,7 @@ from typing import List
 from Script.Core import cache_control, game_type, get_text, flow_handle
 from Script.Config import game_config, normal_config
 from Script.Design import attr_calculation
+from Script.System.Education_System import semester_handle
 from Script.System.Education_System.class_schedule_panel import SUBJECT_ABILITY_LIST
 from Script.UI.Moudle import draw
 
@@ -102,6 +103,7 @@ class Growth_Panel:
         self._draw_stage(self.now_student)
         self._draw_subject(self.now_student)
         self._draw_attendance(self.now_student)
+        self._draw_report_card(self.now_student)
         self._draw_personality(self.now_student)
         self._draw_event_history(self.now_student)
         self._draw_flag(self.now_student)
@@ -184,9 +186,47 @@ class Growth_Panel:
         rate = growth_data.attend_class_count / total if total else 1.0
         info_draw = draw.NormalDraw()
         info_draw.width = self.width
-        info_draw.text = _("  听课 {0} 节，缺课 {1} 节（出勤率 {2}%）\n").format(
+        info_draw.text = _("  累计：听课 {0} 节，缺课 {1} 节（出勤率 {2}%）\n").format(
             growth_data.attend_class_count, growth_data.absent_count, int(rate * 100))
         info_draw.draw()
+        # 本学期的数走 semester_handle 的唯一算口（累计减学期基线），不在这里另算一遍
+        semester_attend, semester_absent = semester_handle.get_semester_attend(character_id)
+        now_draw = draw.NormalDraw()
+        now_draw.width = self.width
+        now_draw.text = _("  本学期：听课 {0} 节，缺课 {1} 节（出勤率 {2}%）\n").format(
+            semester_attend, semester_absent,
+            semester_handle.get_semester_attend_rate(semester_attend, semester_absent))
+        now_draw.draw()
+
+    def _draw_report_card(self, character_id: int):
+        """
+        绘制上一份成绩单
+        输入类型: character_id(int)
+        输出类型: 无
+        功能: 学期切换时冻结的那一份快照；还没经历过学期切换就整节不画
+        """
+        growth_data = cache.character_data[character_id].child_growth
+        if growth_data is None or not growth_data.last_report_card:
+            return
+        report_data = growth_data.last_report_card
+        draw.LittleTitleLineDraw(_("上一份成绩单"), self.width).draw()
+        info_draw = draw.NormalDraw()
+        info_draw.width = self.width
+        info_draw.text = _("  {0}　评定：{1}　出勤 {2} 节／缺课 {3} 节（出勤率 {4}%）\n").format(
+            semester_handle.get_semester_name(report_data.get("year", 0), report_data.get("month", 0)),
+            _(semester_handle.REPORT_GRADE_NAME.get(
+                report_data.get("grade", semester_handle.REPORT_GRADE_NO_CLASS), "无课可评")),
+            report_data.get("attend", 0), report_data.get("absent", 0), report_data.get("rate", 100))
+        info_draw.draw()
+        level_text = semester_handle.get_level_change_text(report_data.get("level_change", {}))
+        now_draw = draw.NormalDraw()
+        now_draw.width = self.width
+        if level_text:
+            now_draw.text = _("  那个学期的进步：{0}\n").format(level_text)
+        else:
+            now_draw.text = _("  那个学期没有科目升级\n")
+            now_draw.style = "deep_gray"
+        now_draw.draw()
 
     def _draw_personality(self, character_id: int):
         """

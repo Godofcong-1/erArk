@@ -95,6 +95,7 @@ class Education_Manage_Panel:
             return_list: List[str] = []
             tab_return_map: Dict[str, str] = {}
             title_draw.draw()
+            self._draw_semester_head()
             for now_panel in self.panel_list:
                 panel_width = int(self.width / len(self.panel_list))
                 if now_panel == self.now_panel:
@@ -128,6 +129,29 @@ class Education_Manage_Panel:
                 self.change_panel(tab_return_map[yrn])
                 continue
             now_sub_panel.handle_yrn(yrn)
+
+    def _draw_semester_head(self):
+        """
+        绘制学期抬头
+        输入类型: 无
+        输出类型: 无
+        功能: 一行学期名与进度，四个页签共用；过半时追加改课表的提示（方案 §3.13 第3条）
+        """
+        from Script.System.Education_System import semester_handle
+
+        head_draw = draw.NormalDraw()
+        head_draw.width = self.width
+        head_draw.text = "  {0}".format(semester_handle.get_semester_head_text())
+        head_draw.draw()
+        # 学期中途改课表是允许的，但要让玩家知道改动只在剩下的日子里生效，别以为整个学期都算数
+        if semester_handle.judge_semester_half_passed():
+            tip_draw = draw.NormalDraw()
+            tip_draw.width = self.width
+            tip_draw.text = _("　本学期已过半，现在改课表只影响剩下的 {0} 天").format(
+                semester_handle.get_semester_left_day())
+            tip_draw.style = "gold_enrod"
+            tip_draw.draw()
+        line_feed.draw()
 
     def change_panel(self, now_panel: str):
         """

@@ -7816,7 +7816,7 @@ def handle_check_report_card_add_just(
     """
     if not add_time:
         return
-    from Script.System.Education_System import growth_handle
+    from Script.System.Education_System import growth_handle, semester_handle
 
     character_data: game_type.Character = cache.character_data[character_id]
     target_id = character_data.target_character_id
@@ -7825,33 +7825,29 @@ def handle_check_report_card_add_just(
     target_data: game_type.Character = cache.character_data[target_id]
     growth_data = growth_handle.get_child_growth(target_id)
 
-    # 汇总本学期各科等级与出勤
-    ability_text_list = []
-    for ability_id in list(range(40, 50)) + list(range(70, 78)):
-        level = int(target_data.ability.get(ability_id, 0))
-        if level > 0:
-            ability_text_list.append("{0}{1}".format(
-                game_config.config_ability[ability_id].name, attr_calculation.judge_grade(level)))
-    total = growth_data.attend_class_count + growth_data.absent_count
-    rate = growth_data.attend_class_count / total if total else 1.0
-
-    info_text = _("\n※※※※※※※※※\n")
-    info_text += _("\n{0}的成绩单\n").format(target_data.name)
-    info_text += _("\n出勤：{0} 节，缺课：{1} 节（出勤率 {2}%）\n").format(
-        growth_data.attend_class_count, growth_data.absent_count, int(rate * 100))
-    info_text += _("\n各科水平：{0}\n").format("、".join(ability_text_list) if ability_text_list else _("尚无成绩"))
-    info_text += _("\n※※※※※※※※※\n")
+    # 两条路径：学期已经结束就发学期结算时**冻结**的那一份；还没结束就现算一份「截至目前」的
+    # ⚠️ 不能因为还没有成绩单就什么都不显示：指令本身没有「有成绩单」这条前提，
+    #    玩家学期中途照样能用，那时也该给他看到东西
+    report_data = growth_data.last_report_card
+    finished = bool(report_data)
+    if not finished:
+        report_data = semester_handle.build_report_card(target_id)
     now_draw = draw.NormalDraw()
     now_draw.width = normal_config.config_normal.text_width
-    now_draw.text = info_text
+    now_draw.text = semester_handle.get_report_card_text(target_id, report_data, finished)
     now_draw.draw()
 
-    # 出勤率越高，检查成绩单时的反馈越正面
+    # 成绩档位越高，检查成绩单时的反馈越正面
+    # ⚠️ 档位已经把「出勤率 + 有没有真学出东西」并进一个口径了，
+    #    这里再单写一遍出勤率阈值，会与成绩单正文里的评定对不上
     base_chara_favorability_and_trust_common_settle(
         character_id, add_time, True, 0, target_data.ability[32], change_data, target_data.cid)
-    if rate >= 0.8:
+    if report_data.get("grade", semester_handle.REPORT_GRADE_POOR) in {
+            semester_handle.REPORT_GRADE_EXCELLENT, semester_handle.REPORT_GRADE_GOOD}:
         base_chara_state_common_settle(target_id, add_time, 13, change_data_to_target_change=change_data)
-    growth_data.report_card_flag = False
+    # 只有发的是冻结那一份才算「看过了」；学期中途看的是进行时数据，flag 不动
+    if finished:
+        growth_data.report_card_flag = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BAGGING_AND_MOVING_ADD_ADJUST)

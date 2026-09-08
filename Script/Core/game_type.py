@@ -409,6 +409,21 @@ class CHILD_GROWTH:
         """ 本孩子对日程模板的单项覆盖 键int:时段(0~2) 值int:活动id。⚠️ 写入方在二期 """
         self.follow_mother_flag: bool = False
         """ 当前是否正在跟随母亲见学（不复用 sp_flag.is_follow）。⚠️ 写入方在二期 """
+        self.semester_id: list = []
+        """ 本孩子当前记账中的学期 [年int, 季月int]，季月取值3/6/9/12（§3.13）。
+            空列表表示还没记过账（刚出生 / 旧存档），此时只立基线不出成绩单 """
+        self.semester_base_attend: int = 0
+        """ 本学期开始时的累计听课节数，本学期听课数 = attend_class_count - 本字段。
+            ⚠️ attend_class_count 与 absent_count 的语义不变，仍是**终身累计**，
+               本学期的数一律由「累计 - 基线」得出，上课结算那三个写入点因此一行都不用改 """
+        self.semester_base_absent: int = 0
+        """ 本学期开始时的累计缺课节数 """
+        self.semester_base_ability: dict = {}
+        """ 本学期开始时的18门科目等级 键int:能力id 值int:等级，用来算本学期的等级增量 """
+        self.last_report_card: dict = {}
+        """ 上一份成绩单的**冻结快照**，学期切换时生成，结构见 semester_handle.build_report_card。
+            ⚠️ 必须冻结而不是查看时现算：新学期一开课，现算出来的数就变了，
+               玩家隔两天再看同一份成绩单会得到不一样的内容 """
 
 
 class RELATIONSHIP:

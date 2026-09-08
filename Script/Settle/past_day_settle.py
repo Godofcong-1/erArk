@@ -39,7 +39,7 @@ def update_new_day():
     from Script.System.Cooking_System import cooking
     from Script.UI.Panel import nation_diplomacy_panel, navigation_panel, assistant_panel
     from Script.System.Pregnancy_System import pregnancy_handle, egg_handle
-    from Script.System.Education_System import schedule_template_handle
+    from Script.System.Education_System import schedule_template_handle, semester_handle, growth_event_handle
     from Script.System.Official_Event_System import official_event_handle
 
     from Script.System.Education_System import sex_class_handle
@@ -101,6 +101,18 @@ def update_new_day():
                 fall_chara_give_pink_voucher(character_id)
 
     # 非角色部分
+    # 学期切换（Plan 22 一期 §3.13）：一个季月即一个学期，切季月即切学期，期末给每个在学的女儿出成绩单
+    # ⚠️ 必须排在上面的角色刷新之后：出勤数要等昨天的课全部结算完才算数
+    # ⚠️ settle_semester_change 靠逐孩比对学期号来判定，本身幂等，不需要额外的「今天是否已结算」标记
+    report_character_list = semester_handle.settle_semester_change()
+    if report_character_list:
+        growth_event_handle.push_semester_event_for_list(report_character_list)
+        now_draw.text = _("\n【学期结束】{0}的成绩单出来了，可以用「检查成绩单」指令查看\n").format(
+            "、".join(cache.character_data[one].name for one in report_character_list))
+        # ⚠️ now_draw 是本函数复用的同一个对象，改了 style 必须改回来，否则后面所有输出都变成金色
+        now_draw.style = "gold_enrod"
+        now_draw.draw()
+        now_draw.style = "standard"
     basement.update_base_resouce_newday() # 更新基地资源
     navigation_panel.judge_arrive() # 判断是否到达目的地
     # 每周一次
