@@ -646,17 +646,21 @@ class Edit_Group_Sex_Temple_Panel:
     def show_status_list(self, temple_id: str, body_part: str):
         """绘制可选择的状态列表"""
         # 如果当前已指定对象角色id，则将其设为玩家的交互对象
-        if body_part != _("侍奉"):
-            target_chara_id = self.pl_character_data.h_state.group_sex_body_template_dict[temple_id][0][body_part][0]
-            if target_chara_id != -1:
-                self.pl_character_data.target_character_id = target_chara_id
-        else:
-            target_chara_id_list = self.pl_character_data.h_state.group_sex_body_template_dict[temple_id][1][0]
-            # 侍奉中则将最后一位设为玩家的交互对象
-            if -1 not in target_chara_id_list:
-                target_chara_id = target_chara_id_list[-1]
-                self.pl_character_data.target_character_id = target_chara_id
-        new_status_id_list = get_status_id_list_from_group_sex_body_part(body_part)
+        old_target_character_id = self.pl_character_data.target_character_id
+        try:
+            if body_part != _("侍奉"):
+                target_chara_id = self.pl_character_data.h_state.group_sex_body_template_dict[temple_id][0][body_part][0]
+                if target_chara_id != -1:
+                    self.pl_character_data.target_character_id = target_chara_id
+            else:
+                target_chara_id_list = self.pl_character_data.h_state.group_sex_body_template_dict[temple_id][1][0]
+                # 侍奉中则将最后一位设为玩家的交互对象
+                if -1 not in target_chara_id_list:
+                    target_chara_id = target_chara_id_list[-1]
+                    self.pl_character_data.target_character_id = target_chara_id
+            new_status_id_list = get_status_id_list_from_group_sex_body_part(body_part)
+        finally:
+            self.pl_character_data.target_character_id = old_target_character_id
         while 1:
             line = draw.LineDraw("-", self.width)
             line.draw()
