@@ -37,7 +37,7 @@ GROWTH_EVENT_DAILY_MAX_PER_CHILD = 1
 GROWTH_EVENT_QUEUE_PER_CHILD = 4
 """ 每个女儿为队列贡献的容量。女儿多的时候待办清单本来就该更长，否则后面的事件会被直接丢掉 """
 
-STAGE_ANY = 0
+STAGE_ANY = official_event_handle.SUB_KEY_ANY
 """ 事件的 sub_key 取0时表示适用于全部成长阶段（101婴儿~103萝莉），⚠️ 不含已成年的104 """
 
 STAGE_ALL_CHILD = (101, 102, 103)
