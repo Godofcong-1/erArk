@@ -25,7 +25,6 @@ def cancel_movement_plan(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.behavior.move_final_target = []
-    character_data.behavior.move_target = character_data.position
 
 
 def own_charcter_move(target_scene: list):
