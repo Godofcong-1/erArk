@@ -4166,7 +4166,32 @@ def handle_target_move_to_pre_scene(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    handle_move_to_pre_scene(character_data.target_character_id, add_time, change_data, now_time)
+    target_character_id = character_data.target_character_id
+    if target_character_id not in cache.character_data:
+        return
+    target_data: game_type.Character = cache.character_data[target_character_id]
+
+    while (
+d            and target_data.action_info.past_move_position_list[-1] == target_data.position
+    ):
+        target_data.action_info.past_move_position_list.pop()
+
+    if target_data.action_info.past_move_position_list:
+        target_data.behavior.move_target = (
+            target_data.action_info.past_move_position_list[-1]
+        )
+        handle_move_to_target_scene(
+            target_character_id,
+            add_time,
+            change_data,
+            now_time,
+        )
+        target_data.action_info.past_move_position_list.pop()
+
+    # 玩家被赶出后，无论是否存在历史路径，都必须结束原来的最终移动目标。
+    if target_character_id == 0:
+        character_move.cancel_movement_plan(0)
+        target_data.behavior.move_target = target_data.position
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SCENE_OTHERS_MOVE_TO_PRE_SCENE)
