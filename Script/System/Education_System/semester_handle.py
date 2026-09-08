@@ -62,6 +62,11 @@ EXCELLENT_LEVEL_UP = 2
 GOOD_RATE = 70
 """ 评为良好所需的出勤率下限（百分比），低于此为待努力 """
 
+REPORT_CARD_HISTORY_MAX = 8
+""" 每个孩子保留的历年成绩单份数上限，超出时丢掉最旧的那份。
+    8 份约两年（一年四个学期），够玩家回看整段成长；
+    ⚠️ 必须有上限——一个孩子养到成年约十几个学期，多孩存档不设上限会让存档持续变大 """
+
 
 def get_semester_name(year: int, month: int) -> str:
     """
@@ -282,6 +287,52 @@ def build_report_card(character_id: int) -> dict:
     }
 
 
+def get_report_card_history(character_id: int) -> List[dict]:
+    """
+    取某个孩子的历年成绩单列表
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    List[dict] -- 成绩单快照列表，最新的一份在末尾；没有则为空列表
+    """
+    if character_id not in cache.character_data:
+        return []
+    growth_data = cache.character_data[character_id].child_growth
+    if growth_data is None:
+        return []
+    return growth_data.report_card_history
+
+
+def get_last_report_card(character_id: int) -> dict:
+    """
+    取某个孩子最近的那份成绩单
+    ⚠️ 全项目取「最近一份」都走这里，别在各处写 history[-1]——空列表下标会直接 IndexError
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    dict -- 最近一份成绩单快照，一份都没有则为空dict
+    """
+    history_list = get_report_card_history(character_id)
+    return history_list[-1] if history_list else {}
+
+
+def push_report_card(character_id: int, report_data: dict) -> None:
+    """
+    把一份新出的成绩单追加进历史，超出上限时丢掉最旧的
+    Keyword arguments:
+    character_id -- 角色id
+    report_data -- 成绩单快照
+    Return arguments:
+    无
+    """
+    growth_data = growth_handle.get_child_growth(character_id)
+    growth_data.report_card_history.append(report_data)
+    if len(growth_data.report_card_history) > REPORT_CARD_HISTORY_MAX:
+        # 只留最近的那几份。⚠️ 用切片重新赋值而不是 pop(0)：切片一次到位，
+        #    旧存档里若因上限调小而攒了超量的份数，一次就能收敛
+        growth_data.report_card_history = growth_data.report_card_history[-REPORT_CARD_HISTORY_MAX:]
+
+
 def reset_semester_baseline(character_id: int, semester_id: List[int]) -> None:
     """
     把某个孩子的学期基线重置为当前值，并记下现在是哪个学期
@@ -327,7 +378,7 @@ def settle_semester_change() -> List[int]:
             continue
         if growth_data.semester_id == now_semester:
             continue
-        growth_data.last_report_card = build_report_card(character_id)
+        push_report_card(character_id, build_report_card(character_id))
         growth_data.report_card_flag = True
         reset_semester_baseline(character_id, now_semester)
         report_list.append(character_id)

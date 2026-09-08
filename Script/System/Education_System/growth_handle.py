@@ -623,7 +623,7 @@ def get_growth_value(character_id: int, value_id: int) -> float:
         # ⚠️ 没有养成数据时，成绩单档位要回落到 -1（尚无成绩单）而不是 0——
         #    0 是「优秀」，回落成 0 会让全岛没上过学的人都通过优秀档的口上前提
         if value_id == GROWTH_VALUE_REPORT_GRADE:
-            return -1.0
+            return float(semester_handle.REPORT_GRADE_NONE)
         if value_id in {GROWTH_VALUE_ATTEND_RATE, GROWTH_VALUE_SEMESTER_ATTEND_RATE}:
             return 100.0
         return 0.0
@@ -649,11 +649,14 @@ def get_growth_value(character_id: int, value_id: int) -> float:
         if not semester_total:
             return 100.0
         return semester_attend * 100.0 / semester_total
+    last_report_card = semester_handle.get_last_report_card(character_id)
     if value_id == GROWTH_VALUE_REPORT_GRADE:
         # ⚠️ 没有成绩单时是 -1 而不是 0：0 是「优秀」档
-        return float(growth_data.last_report_card.get("grade", -1)) if growth_data.last_report_card else -1.0
+        if not last_report_card:
+            return float(semester_handle.REPORT_GRADE_NONE)
+        return float(last_report_card.get("grade", semester_handle.REPORT_GRADE_NONE))
     if value_id == GROWTH_VALUE_REPORT_LEVEL_UP:
-        return float(len(growth_data.last_report_card.get("level_change", {})))
+        return float(len(last_report_card.get("level_change", {})))
     if GROWTH_VALUE_PERSONALITY_BASE <= value_id <= GROWTH_VALUE_PERSONALITY_BASE + 3:
         return float(growth_data.personality_point.get(value_id - GROWTH_VALUE_PERSONALITY_BASE, 0.0))
     if value_id == GROWTH_VALUE_CARE:

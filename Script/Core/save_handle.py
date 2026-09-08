@@ -357,6 +357,12 @@ def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
                     if not hasattr(character.child_growth, growth_attr_name):
                         setattr(character.child_growth, growth_attr_name,
                                 getattr(default_growth_data, growth_attr_name))
+                # 成绩单由「只存最近一份」改为「存历年列表」：把早先那份并进列表头，别让它凭空消失
+                old_report_card = getattr(character.child_growth, "last_report_card", None)
+                if old_report_card and not character.child_growth.report_card_history:
+                    character.child_growth.report_card_history = [old_report_card]
+                if hasattr(character.child_growth, "last_report_card"):
+                    del character.child_growth.last_report_card
             # 无壳卵生旧存档兼容：无壳卵生种族此前按单胎胎生运行，读档时一次性清除其正在进行的胎生孕程（受精/妊娠/临盆及伴生状态），产后/育儿/泌乳与已出生的孩子保留
             _clear_soft_egg_race_pregnancy(character, soft_egg_enabled)
             if pl_collection is not None and not hasattr(pl_collection, "held_eggs"):

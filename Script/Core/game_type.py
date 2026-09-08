@@ -420,10 +420,12 @@ class CHILD_GROWTH:
         """ 本学期开始时的累计缺课节数 """
         self.semester_base_ability: dict = {}
         """ 本学期开始时的18门科目等级 键int:能力id 值int:等级，用来算本学期的等级增量 """
-        self.last_report_card: dict = {}
-        """ 上一份成绩单的**冻结快照**，学期切换时生成，结构见 semester_handle.build_report_card。
+        self.report_card_history: list = []
+        """ 历年成绩单的**冻结快照**列表，学期切换时追加，最新的一份在末尾。
+            单份结构见 semester_handle.build_report_card，条数上限见 REPORT_CARD_HISTORY_MAX。
             ⚠️ 必须冻结而不是查看时现算：新学期一开课，现算出来的数就变了，
-               玩家隔两天再看同一份成绩单会得到不一样的内容 """
+               玩家隔两天再看同一份成绩单会得到不一样的内容
+            ⚠️ 有上限：一个孩子养到成年约十几个学期，多孩存档不设上限会让存档持续变大 """
 
 
 class RELATIONSHIP:

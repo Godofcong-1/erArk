@@ -62,10 +62,6 @@ PE_PLACE_DATA = {
 TEACHER_WORK_TYPE = 151
 """ 教师岗位的工作id（WorkType.csv:24），只有该岗位的干员可被排进课表 """
 
-STUDENT_WORK_TYPE = 152
-""" 学生岗位的工作id（WorkType.csv:25） """
-
-
 CLASSROOM_NUMBER_ORDER = "一二三四五六七八九十"
 """ 教室名末尾中文数字的**数值**序。默认的 sorted() 按 Unicode 码位排，
     会把「理论教室一~六」排成「一三二五六四」——码位序不是数值序 """
@@ -272,6 +268,10 @@ def get_selected_course(character_id: int, week_day: int, period: int) -> Option
 def set_selected_course(character_id: int, week_day: int, period: int, course_type: int, target) -> None:
     """
     往某角色的个人课表上填一个格子
+
+    ⚠️ 这里是**直接覆盖**。所以方案 §3.14 列的三类冲突里，「学生撞课」在本结构下
+       根本不可能发生——一个 (星期, 节次) 只存一门课，重选即替换。
+       原先为它写的 judge_student_conflict 是死代码，已删
     Keyword arguments:
     character_id -- 角色id
     week_day -- 星期，0周一~6周日
@@ -405,23 +405,6 @@ def judge_teacher_conflict(teacher_id: int, week_day: int, period: int, classroo
     cell = get_teacher_cell(teacher_id, week_day, period)
     if cell is not None and cell[0] != classroom:
         return "第{0}节已在{1}".format(period + 1, cell[0])
-    return ""
-
-
-def judge_student_conflict(character_id: int, week_day: int, period: int, target) -> str:
-    """
-    判断某学生在某节次是否已经选了别的课
-    Keyword arguments:
-    character_id -- 角色id
-    week_day -- 星期，0周一~6周日
-    period -- 节次，0~8
-    target -- 想选的目标
-    Return arguments:
-    str -- 空字符串表示不冲突，否则为冲突原因文本
-    """
-    course = get_selected_course(character_id, week_day, period)
-    if course is not None and course[1] != target:
-        return "第{0}节已选{1}".format(period + 1, course[1])
     return ""
 
 

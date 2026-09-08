@@ -7828,13 +7828,17 @@ def handle_check_report_card_add_just(
     # 两条路径：学期已经结束就发学期结算时**冻结**的那一份；还没结束就现算一份「截至目前」的
     # ⚠️ 不能因为还没有成绩单就什么都不显示：指令本身没有「有成绩单」这条前提，
     #    玩家学期中途照样能用，那时也该给他看到东西
-    report_data = growth_data.last_report_card
+    report_data = semester_handle.get_last_report_card(target_id)
     finished = bool(report_data)
     if not finished:
         report_data = semester_handle.build_report_card(target_id)
     now_draw = draw.NormalDraw()
     now_draw.width = normal_config.config_normal.text_width
     now_draw.text = semester_handle.get_report_card_text(target_id, report_data, finished)
+    # 更早的学期不在这里翻——指令是一段式的打印，翻页要有面板才做得了
+    history_count = len(semester_handle.get_report_card_history(target_id))
+    if history_count > 1:
+        now_draw.text += _("（更早的 {0} 个学期可以在教育管理系统的养成总览里翻看）\n").format(history_count - 1)
     now_draw.draw()
 
     # 成绩档位越高，检查成绩单时的反馈越正面

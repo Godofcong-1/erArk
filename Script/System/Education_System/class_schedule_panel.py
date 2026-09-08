@@ -619,7 +619,7 @@ class Class_Schedule_Panel:
             draw.TitleLineDraw(_("选择授课教师"), self.width).draw()
             tip_draw = draw.NormalDraw()
             tip_draw.width = self.width
-            tip_draw.text = _("  名字后是该教师的{0}等级；灰色的是本节已在别处上课的。\n").format(ability_name)
+            tip_draw.text = _("  名字后是该教师的{0}等级与本周已排的节数；灰色的是本节已在别处上课的。\n").format(ability_name)
             tip_draw.draw()
 
             return_list: List[str] = []
@@ -643,7 +643,10 @@ class Class_Schedule_Panel:
             for teacher_id in teacher_list:
                 teacher_data: game_type.Character = cache.character_data[teacher_id]
                 level = int(teacher_data.ability.get(ability_id, 0))
-                level_text = "{0}{1}".format(attr_calculation.judge_grade(level), level)
+                # 本周已排节数：反查全局课表数出来，让玩家一眼看出谁已经被排满了。
+                # ⚠️ 不能只看本节冲不冲——不冲突的老师里也有已经排了三十节的
+                week_load = sum(len(one) for one in schedule_handle.get_teacher_week_schedule(teacher_id).values())
+                level_text = "{0}{1}/{2}节".format(attr_calculation.judge_grade(level), level, week_load)
                 conflict = schedule_handle.judge_teacher_conflict(teacher_id, week_day, period, classroom)
                 if conflict:
                     # 撞课的不做成按钮，但仍占一个格位，否则整行网格会左移错位。
