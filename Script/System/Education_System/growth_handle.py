@@ -17,7 +17,7 @@
        所以性技理论课只能攒珠，经验要靠实操课（四期）来补 —— 理论与实操天然两条腿。
 """
 from types import FunctionType
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config
 
@@ -28,6 +28,10 @@ _: FunctionType = get_text._
 
 CHILD_TALENT_SET = {101, 102, 103, 104}
 """ 成长链的四个年龄素质：101婴儿 / 102幼女 / 103萝莉 / 104少女 """
+
+STUDENT_STAGE_TALENT_SET = {102, 103, 104}
+""" 可排课、可查养成总览的三个阶段：102幼女 / 103萝莉 / 104少女。
+    婴儿(101)上不了课也没什么可排的，不列入 """
 
 EDUCATION_ZONE_NAME = "教育区"
 """ 教育区在 Facility_effect.csv 中的设施名（该表按名字索引） """
@@ -93,6 +97,51 @@ def judge_is_child(character_id: int) -> bool:
         if character_data.talent.get(talent_id, 0):
             return True
     return False
+
+
+def get_character_stage(character_id: int) -> int:
+    """
+    取角色当前所处的成长阶段素质id
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 101婴儿/102幼女/103萝莉/104少女，都不是则0
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # ⚠️ 必须按 id 升序遍历：成长链正常情况下四个素质只会挂一个，
+    #    但世界设定「萝莉化」会批量覆写年龄素质，遍历 set 的哈希序会取到不确定的那个
+    for talent_id in sorted(CHILD_TALENT_SET):
+        if character_data.talent.get(talent_id, 0):
+            return talent_id
+    return 0
+
+
+def get_student_candidate_list() -> List[int]:
+    """
+    取可排个人课表、可查养成总览的学生列表
+    Keyword arguments:
+    无
+    Return arguments:
+    List[int] -- 角色id列表，按id升序
+    功能: 玩家的女儿中处于幼女/萝莉/少女阶段的。
+          ⚠️ 血缘条件不能省：judge_is_child() 只看素质，而世界设定「萝莉化」
+             (character_handle.handle_character_setting) 会给全岛干员挂上萝莉素质103，
+             只按素质筛会把全岛的人都塞进课表页签栏
+          ⚠️ 按 id 升序而不是遍历 npc_id_got(set)：两个面板都用 [0] 做默认选中回落，
+             set 的迭代顺序不定会让页签顺序飘
+    """
+    from Script.Design import handle_premise
+
+    result = []
+    for character_id in sorted(cache.npc_id_got):
+        if character_id not in cache.character_data:
+            continue
+        if get_character_stage(character_id) not in STUDENT_STAGE_TALENT_SET:
+            continue
+        if not handle_premise.handle_self_is_player_daughter(character_id):
+            continue
+        result.append(character_id)
+    return result
 
 
 def get_subject_exp_id(ability_id: int) -> int:

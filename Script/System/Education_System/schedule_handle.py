@@ -66,26 +66,70 @@ STUDENT_WORK_TYPE = 152
 """ 学生岗位的工作id（WorkType.csv:25） """
 
 
+CLASSROOM_NUMBER_ORDER = "一二三四五六七八九十"
+""" 教室名末尾中文数字的**数值**序。默认的 sorted() 按 Unicode 码位排，
+    会把「理论教室一~六」排成「一三二五六四」——码位序不是数值序 """
+
+
+def judge_classroom_open(classroom: str) -> bool:
+    """
+    校验一间教室当前是否已开放
+    Keyword arguments:
+    classroom -- 教室场景名
+    Return arguments:
+    bool -- 是否已开放
+    功能: ⚠️ constant.place_data 装的是**全部**教室——它在配置载入期由 data/map/ 的目录树
+             静态构建（map_config.load_dir_now），与存档、facility_level、facility_open 全都无关。
+             所以开放与否必须另查 Rhodes_Island.facility_open。
+          ⚠️ 理论教室一 / 实践教室一 / 大礼堂 是 Lv1 基础设施，压根不在 Facility_open.csv 里，
+             不给它们兜底会被误判成未开放，面板直接空掉（宿舍区同样处理，见 Dormitory_System/common.py）
+    """
+    if classroom not in game_config.config_facility_open_name_set:
+        return True
+    open_cid = game_config.config_facility_open_name_to_cid[classroom]
+    return bool(cache.rhodes_island.facility_open.get(open_cid, False))
+
+
+def get_classroom_sort_key(classroom: str) -> int:
+    """
+    取教室名在同类教室中的排序键
+    Keyword arguments:
+    classroom -- 教室场景名
+    Return arguments:
+    int -- 末尾中文数字的数值（一为0、二为1……），没有中文数字后缀的排在最后
+    """
+    for index, word in enumerate(CLASSROOM_NUMBER_ORDER):
+        if classroom.endswith(word):
+            return index
+    return len(CLASSROOM_NUMBER_ORDER)
+
+
 def get_classroom_list(course_type: int = -1) -> List[str]:
     """
     取可排课的教室场景名列表
     Keyword arguments:
     course_type -- 课型编号，-1为全部班级式课型
     Return arguments:
-    List[str] -- 教室场景名列表（如["理论教室一", ...]），按场景名排序
+    List[str] -- 已开放的教室场景名列表，顺序为 理论教室一~六 → 实践教室一~三 → 大礼堂
+    功能: ⚠️ 按课型分组而不是全表 sorted()：全表排序会把三类教室混排、
+             并让默认页签落在「大礼堂」上，而玩家最常用的是理论教室一
     """
     if course_type == -1:
-        tag_list = list(CLASSROOM_TAG_BY_COURSE_TYPE.values())
+        type_list = sorted(CLASSROOM_TAG_BY_COURSE_TYPE.keys())
     elif course_type in CLASSROOM_TAG_BY_COURSE_TYPE:
-        tag_list = [CLASSROOM_TAG_BY_COURSE_TYPE[course_type]]
+        type_list = [course_type]
     else:
         return []
     room_list = []
-    for tag in tag_list:
-        for scene_path_str in constant.place_data.get(tag, []):
+    for now_type in type_list:
+        now_group = []
+        for scene_path_str in constant.place_data.get(CLASSROOM_TAG_BY_COURSE_TYPE[now_type], []):
             scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-            room_list.append(scene_data.scene_name)
-    return sorted(room_list)
+            if not judge_classroom_open(scene_data.scene_name):
+                continue
+            now_group.append(scene_data.scene_name)
+        room_list.extend(sorted(now_group, key=get_classroom_sort_key))
+    return room_list
 
 
 def get_course_type_by_classroom(classroom: str) -> int:

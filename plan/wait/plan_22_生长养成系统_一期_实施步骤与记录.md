@@ -969,6 +969,163 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 
 （留给用户的游戏内清单）
 
-### 6.5 第二轮追加调整实施记录
+### 6.5 追加调整实施记录
 
-（与方案 §9.x 成对，每轮一节，附回归测试计数）
+**2026-09-08 第二轮（与方案 §9.2 成对）：面板架构重构 + 九项界面调整**
+
+分两批做：先修玩家反馈的三个面板 BUG（§9.2.1），再做九项界面调整（§9.2.2~9.2.5）。
+
+#### 实际改动
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/System/Education_System/class_schedule_panel.py` | 改 | 容器 `Education_Manage_Panel` 改为持有四个子面板实例并统一 `askfor_all`，页签按钮去掉 `cmd_func` 改显式派发，while 顶部加 `basement.get_base_updata()`；`Class_Schedule_Panel.draw()` 拆为 `draw_page/handle_yrn`、删「返回上级」、教室 return_text 加 `ROOM_` 前缀；`_select_teacher` 加 `ability_id` 参数、包 `while 1`、每行6人、显示科目等级、可切排序；`_select_must_attend` 换人口来源并改每行6个；`_edit_sex_class` 主修科目加 `gold_enrod` |
+| `Script/System/Education_System/course_select_panel.py` | 改 | `draw()` 拆为 `draw_page/handle_yrn`、删「返回上级」；`get_student_candidate_list()` 改为委托数据层；`_select_course_type` 删除，新增 `_select_course`（班级式课直接列本节各教室的课）；`_select_target` 只留三个个人式分支，三类都改每行6个 |
+| `Script/System/Education_System/schedule_template_panel.py` | 改 | `draw()` 拆为 `draw_page/handle_yrn`、删与容器撞名的 `[返回]`；`_select_activity` 改每行6个并固定第一行三项；`_batch_apply` / `_select_template` 补换行 |
+| `Script/System/Education_System/growth_panel.py` | 改 | `draw()` 拆为 `draw_page/handle_yrn`、删「返回上级」 |
+| `Script/System/Education_System/growth_handle.py` | 改 | 新增 `STUDENT_STAGE_TALENT_SET`、`get_character_stage()`、`get_student_candidate_list()`（口径的唯一出处） |
+| `Script/System/Education_System/schedule_handle.py` | 改 | 新增 `CLASSROOM_NUMBER_ORDER`、`judge_classroom_open()`、`get_classroom_sort_key()`；`get_classroom_list()` 重写为「按课型分组 + 开放过滤 + 组内数值序」 |
+| `Script/System/Education_System/schedule_template_handle.py` | 改 | `ENTERTAINMENT_SELF_STUDY` 由错值 154 改为 178；新增 `CHILD_SCHEDULE_FIRST_ROW`；`PRESET_TEMPLATE_SLOT_NAME` 同步改名 |
+| `data/csv/Entertainment.csv` | 改 | cid 178 娱乐名 `自习` → `上课（无课时自习）` |
+| `update.log` | 改 | v0.67 段追加 调整 7 条、修正 3 条 |
+
+#### 实施中发现的偏离（§9.2）
+
+31. **「返回上级」的语义直到重构时才被识别清楚。** 它不是一个功能按钮，而是「退出子面板的 while、
+    让容器重新接管输入」——也就是「解锁上面那排页签」。方案 §5.2/§5.3/二期 §5.1 的线框图里画的
+    `[返回]` 被实现成了这个东西，容器自己的 `[返回]` 反而要等它之后才画得出来。本轮把三个
+    「返回上级」整个删除，线框图同步改为标注「由页签容器统一提供」。
+    ⚠️ 这**打破了宿舍面板确立的既有范式**（`Dormitory_System/宿舍管理系统设计文档.md` 写着
+    「每页均提供返回上级按钮，保持与现有基建面板一致」）。教育面板不再有它，是因为宿舍面板的
+    子页面本就不持有自己的循环，那里的「返回上级」是真的进出子流程；教育面板的则是循环嵌套的副产物。
+
+32. **方案 §5.2 线框图那句"只列已解锁的（§3.11）"，一期实现时并未真正成立。**
+    代码里写着「未解锁的教室不会出现在 place_data 里」，但 `place_data` 是配置载入期由
+    `data/map/` 目录树静态构建的，与存档无关——十间教室从一开始就全在里面。
+    本轮才真正接上 `facility_open`（§9.2.3）。
+
+33. **口径 24 被推翻。** 「成年干员自选了课时也要能改」的分支随学生口径收紧一并取消，
+    详见 §9.2.2。方案 §5.3 与本文件未再出现该口径的描述。
+
+34. **`_select_teacher` 的签名变更是被迫的。** 要在教师名后显示「该科目」的等级，就必须知道是哪一科，
+    而原签名里没有 `ability_id`——它在调用方 `_edit_cell` 的局部变量里。加参数是最小改动。
+
+35. **发现一个与本期无关的既有缺陷，未处理**：`Script/Design/basement.py:211-214`，
+    `green_house_line` 尚无 0 号线时，那段会用到尚未赋值的 `produce_effect` 而抛 `UnboundLocalError`
+    （追溯到 2025-12-01 的 `eb4730bc5`）。异常抛出前 0 号线已被种下，所以第二次调用起就正常，
+    真实存档不受影响；但**首次 `get_base_updata()` 会炸**。本轮给教育面板加了这个调用，
+    风险与宿舍/基建面板完全同级，故未改动 `basement.py`——它不属于本期范围。
+
+#### 单元测试结果
+
+三套无头测试，共 **67 条断言全绿**（`headless-game-test` 模式 A，捕获面板每一屏的 `return_list`）：
+
+| 测试 | 条数 | 覆盖 |
+| --- | --- | --- |
+| 面板架构回归 | 27 | 四个页签在每一屏都可点、同屏 return_text 无撞名、切教室后页签仍在、选中态跨页签保持、首屏即有 `[返回]`、「返回上级」零残留 |
+| 数据层 | 16 | 教育区 Lv1~Lv5 各自的教室名单与顺序精确匹配 `Facility_open.csv`；默认页签落在理论教室一；候选人只剩三阶段的女儿，**且开启萝莉化世界设定后结果不变** |
+| 九项界面 | 24 | 改名与预设模板一致性；教师排序升降序、8人分栏；必修学生只列女儿；选课首屏含已排课教室、班级式类型按钮消失；六处屏幕的最宽一行均 ≤ 190 列 |
+
+排版断言的做法：替换全部绘制类的 `draw`，按 `line_feed` 切行、用 `text_handle.get_text_index`
+实算每个元素的显示列宽（**不能用 `len()`**，中文只算 1 会漏掉一半宽度），断言每行 ≤ `text_width`。
+这条断言在改前会对「选择活动」报出 1102 列。
+
+反向验证：把四个面板文件 `git checkout` 回改前版本再跑同一套测试，第一屏捕获到 74 项、
+其中**零个面板页签、也没有 `[返回]`**，三个症状同时复现——证明测试确实能抓到原 BUG。
+
+#### 尚未覆盖的验证
+
+- 排版观感与 Web 绘制模式仍需人工各跑一遍。无头测试验的是 `return_list` 判定链路与列宽算术，
+  不是最终观感。Tk 模式全程不清屏、内容向下追加，验收时看最底下那一屏。
+- 存量存档里若已把课排在了「当前等级尚未开放」的教室上，那些排课数据仍在，只是不再显示。
+  未做迁移——教室只会随等级增加而开放，不会反向关闭。
+
+**2026-09-08 第三轮（与方案 §9.3 成对）：一键自动排课 + 基建面板入口 + 日程模板排版**
+
+#### 实际改动
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/System/Education_System/auto_schedule.py` | **新增** | 纯函数层：`auto_fill_class_schedule()`（全局课表，均衡铺满周一~周五）、`auto_fill_selected_course()`（个人课表，有课就上）、`pick_best_teacher()`、`judge_subject_fit_classroom()`、`get_auto_subject_list()` |
+| `Script/System/Education_System/class_schedule_panel.py` | 改 | 加 `[一键排满全部教室]` 按钮与 `_auto_fill_schedule()`，结果用 `NormalDraw` + `gold_enrod` |
+| `Script/System/Education_System/course_select_panel.py` | 改 | 加 `[一键选课]` 按钮与 `_auto_fill_course()` |
+| `Script/System/Education_System/schedule_template_panel.py` | 改 | 新增 `COLUMN_INDENT` / `COLUMN_WIDTH_ID` / `COLUMN_WIDTH_NAME` / `COLUMN_WIDTH_SLOT` 四个常量；`_draw_head` 与 `_draw_template_table` 改为共用这组常量并走 `pad_display_width`；三个孤立按钮的宽度由 `width/2` 改为满宽 |
+| `Script/UI/Panel/manage_basement_panel.py` | 改 | 教育区的子系统按钮加 `[教育管理系统]`；`jump_to_son_panel` 加对应分支（函数内 import） |
+| `update.log` | 改 | v0.67 段追加 新增 3 条、修正 2 条 |
+| `plan_22_生长养成系统_一期_方案.md` | 改 | §5.2/§5.3 线框图加回一键按钮；新增 §9.3 |
+| `plan_22_生长养成系统_总纲.md` | 改 | 口径 23/28 标注实装状态与差距 |
+
+#### 实施中发现的偏离（§9.3）
+
+36. **偏离 21 本轮兑现。** 一期把 `auto_schedule.py` 推给二期，理由是「三种模式依赖二期的日程模板」——
+    该依赖在二期实施（2026-09-07）时就已解除，但二/三/四期文档里 `自动排课` 零命中，
+    这条一直没人认领，直到本轮才补上。**教训：跨期推迟的欠账要在目标期的方案里落一条，否则会永久悬空。**
+    （`semester_handle.py`（学期切换 / 成绩单）仍未建，继续挂账。）
+
+37. **口径 28 只落实三分之一。** 只做「均衡」。另两种的硬障碍写在方案 §9.3.2：
+    补弱项会被**升不了级的性技科目**刷屏（性技升级要真实性交经验，理论课只攒通用珠）；
+    主修优先缺 `CHILD_GROWTH` 的主修/副修字段。两者都不是「顺手加个分支」能解决的。
+
+38. **方案 §3.3 的「实践课侧重动手类」此前从未落实过。** 那一条一直只是方案里的文字，
+    代码对 18 门科目一视同仁，手排时实践教室照样能排话术。本轮的自动排课**第一次把它变成代码**
+    （`PRACTICE_SUBJECT_SET`）。⚠️ 但**手排仍不受限**——`_select_subject` 没改，
+    这是有意的：自动排课给的是合理默认值，不该反过来限制玩家手排。
+
+39. **教育管理系统新增第二个入口，且不需要任何新机制。** 管理罗德岛跳子系统走的是嵌套函数调用
+    而非 `now_panel_id` 切换，所以 `[返回]` 里那句 `now_panel_id = IN_SCENE` 在这条路径上
+    是无害空操作。全仓库没有「记住来源面板」机制，也不需要。详见方案 §9.3.4。
+
+40. **日程模板的列错位是 `{:<10}` 对中文失效。** `str.__format__` 按 `len()` 补齐、终端按显示列排版。
+    四行的字符数**全都是 57**，显示列宽却是 82/75/71/61。⚠️ 这类错位**用 `len()` 是测不出来的**，
+    回归断言必须用 `text_handle.get_text_index()` 实算显示宽。
+
+#### 单元测试结果
+
+新增 `test_auto_schedule`（21 条），连同既有三套共 **88 条断言全绿**：
+
+| 测试 | 条数 | 覆盖 |
+| --- | --- | --- |
+| 面板架构回归 | 27 | 页签、撞名、选中态、首屏 `[返回]` |
+| 数据层 | 16 | 教室开放与排序、学生候选人口径 |
+| 九项界面 | 24 | 改名一致性、教师排序、选课链路、六处屏幕列宽 |
+| **自动排课等三项** | **21** | 周末不排、无教师撞课、76腰技零命中、实践教室科目约束、每格教师是最优、学科均衡极差、只填空格、**幂等**、**可复现**、个人选课取等级最低、基建入口、**日程模板表头与四行列起点完全一致** |
+
+8 名教师铺满 10 间教室的周一~周五：排上 360 节、留空 90 节
+（教师同时只能在一处，10 间教室同一节次最多同时开 8 节课，符合预期）。
+
+关键断言的写法：
+- **无教师撞课**用「遍历全表自查」而不是信任 `judge_teacher_conflict`——后者正是被测对象。
+- **可复现**：清空后重排两次，断言两次的 `class_schedule` 完全相等（验 `sorted()` 是否到位）。
+- **幂等**：连点两次，断言第二次 `filled_count == 0` 且课表快照不变。
+- **列对齐**：按显示宽度切出每列起点，断言表头与四行的起点列表完全相同。改前会得到 82/75/71/61 四个值。
+
+#### 尚未覆盖的验证
+
+- Tk 与 Web 两种模式的实际观感仍需人工各跑一遍。
+- 自动排课在**教师数远大于教室数**时的分布未测（本轮 fixture 是 8 教师 / 10 教室，
+  教师是瓶颈；反过来教师富余时「均衡」的极差表现如何没验）。
+- `semester_handle.py`（学期切换与成绩单）仍未建，学期之间的整体重排（方案 §3.13）无从谈起。
+
+**2026-09-08 第四轮（与方案 §9.3.6 成对）：个人课表格子同时写科目名与教室名**
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/System/Education_System/course_select_panel.py` | 改 | `_get_cell_text()` 对班级式课回查 `get_class_cell()` 取科目名，成「学识技能/理论教室一」（不带课型缩写，教室名已说明课型）；那节课被清空时显示「/已停课」。`COURSE_TYPE_SHORT` 收窄到只剩个人式三种课型 |
+| `update.log` | 改 | v0.67 段追加 调整 1 条 |
+| `plan_22_生长养成系统_一期_方案.md` | 改 | §5.3 线框图更新；新增 §9.3.6 |
+
+#### 实施中发现的偏离（§9.3.6）
+
+41. **课型缩写被去掉了，因为教室名已经说明了课型。** 「理论教室一」必然是理论课，
+    再标一个「[理]」是重复；`COURSE_TYPE_SHORT` 随之收窄到只剩个人式的三种课型。
+    副产物是宽度余量从 2 列涨到 6 列——最坏组合由 23 列降到 19 列，格子宽 25 列。
+    ⚠️ `CenterButton` 超宽时走的截断分支（`draw.py`）**砍 2 个字符补 `~` 且完全不补齐宽度**，
+    一旦触发，整行网格会左移错位而不是简单地截断。所以回归里穷举了
+    **全部 18 科目 × 10 教室 = 180 种组合**逐一算显示宽，而不是只测几个样本。
+    今后若新增更长的科目名或教室名，这一格会先坏——测试会先报出来。
+
+#### 单元测试结果
+
+新增 `test_cell_text`（12 条），连同既有四套共 **100 条断言全绿**：
+班级式课两者都有、非班级式三种课型显示逻辑不变、未选课仍为 `--`、
+课被清空时标「已停课」、**180 种组合穷举无一超宽**。

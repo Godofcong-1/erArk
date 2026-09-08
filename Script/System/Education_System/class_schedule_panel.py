@@ -13,7 +13,7 @@ from typing import Dict, List
 
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.Config import game_config, normal_config
-from Script.Design import game_time
+from Script.Design import game_time, attr_calculation, basement
 from Script.System.Education_System import schedule_handle
 from Script.UI.Moudle import draw
 
@@ -59,26 +59,44 @@ class Education_Manage_Panel:
 
     def __init__(self, width: int):
         """初始化绘制对象"""
+        # ⚠️ 这三个模块在自己的模块顶层反向 import 本模块（取 WEEK_NAME 等共用常量），
+        #    所以只能在函数内 import，提到文件顶层会循环导入
+        from Script.System.Education_System import course_select_panel, growth_panel, schedule_template_panel
+
         self.width: int = width
         self.now_panel: str = _("全局课表")
+        self.panel_list: List[str] = [_("全局课表"), _("个人课表"), _("日程模板"), _("养成总览")]
+        """ 四个页签的显示名，同时也是 panel_map 的键 """
+        # ⚠️ 子面板实例只创建一次并存起来：容器每轮 while 都会重画，
+        #    如果每轮 new 一个，子面板里的选中态（当前教室 / 当前孩子）必然被重置
+        self.panel_map: Dict[str, object] = {
+            _("全局课表"): Class_Schedule_Panel(width),
+            _("个人课表"): course_select_panel.Course_Select_Panel(width),
+            _("日程模板"): schedule_template_panel.Schedule_Template_Panel(width),
+            _("养成总览"): growth_panel.Growth_Panel(width),
+        }
+        """ 页签名到子面板实例的映射 """
 
     def draw(self):
         """
         绘制主循环
         输入类型: 无
         输出类型: 无
-        功能: 绘制页签并分发到对应子页面
+        功能: 绘制页签并分发到对应子页面。
+              ⚠️ 全面板**只有这一处** askfor_all：子面板只负责往共享的 return_list 里加按钮、
+                 以及事后处理自己那份 yrn。子面板一旦自带 while+askfor_all，
+                 页签按钮就会因为不在当前 return_list 里而报「选项无效」
         """
-        from Script.System.Education_System import course_select_panel, growth_panel, schedule_template_panel
-
         title_draw = draw.TitleLineDraw(_("教育管理系统"), self.width)
-        panel_list = [_("全局课表"), _("个人课表"), _("日程模板"), _("养成总览")]
 
         while 1:
+            # 按设施等级刷新各房间的开放状态，教室列表要靠它（照宿舍管理面板的写法）
+            basement.get_base_updata()
             return_list: List[str] = []
+            tab_return_map: Dict[str, str] = {}
             title_draw.draw()
-            for now_panel in panel_list:
-                panel_width = int(self.width / len(panel_list))
+            for now_panel in self.panel_list:
+                panel_width = int(self.width / len(self.panel_list))
                 if now_panel == self.now_panel:
                     now_draw = draw.CenterDraw()
                     now_draw.text = f"[{now_panel}]"
@@ -86,26 +104,17 @@ class Education_Manage_Panel:
                     now_draw.width = panel_width
                     now_draw.draw()
                 else:
-                    now_draw = draw.CenterButton(
-                        f"[{now_panel}]",
-                        f"\n{now_panel}",
-                        panel_width,
-                        cmd_func=self.change_panel,
-                        args=(now_panel,),
-                    )
+                    # ⚠️ 这里不能用 cmd_func：askfor_all 是先执行 cmd_func 再 return，
+                    #    那样返回时 self.now_panel 已经变了，下面就会把本屏的 yrn 派发给新页签的面板
+                    now_draw = draw.CenterButton(f"[{now_panel}]", f"\n{now_panel}", panel_width)
                     now_draw.draw()
                     return_list.append(now_draw.return_text)
+                    tab_return_map[now_draw.return_text] = now_panel
             line_feed.draw()
             draw.LineDraw("+", self.width).draw()
 
-            if self.now_panel == _("全局课表"):
-                Class_Schedule_Panel(self.width).draw()
-            elif self.now_panel == _("个人课表"):
-                course_select_panel.Course_Select_Panel(self.width).draw()
-            elif self.now_panel == _("日程模板"):
-                schedule_template_panel.Schedule_Template_Panel(self.width).draw()
-            else:
-                growth_panel.Growth_Panel(self.width).draw()
+            now_sub_panel = self.panel_map[self.now_panel]
+            now_sub_panel.draw_page(return_list)
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -115,6 +124,10 @@ class Education_Manage_Panel:
             if yrn == back_draw.return_text:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
+            if yrn in tab_return_map:
+                self.change_panel(tab_return_map[yrn])
+                continue
+            now_sub_panel.handle_yrn(yrn)
 
     def change_panel(self, now_panel: str):
         """
@@ -137,75 +150,97 @@ class Class_Schedule_Panel:
     def __init__(self, width: int):
         """初始化绘制对象"""
         self.width: int = width
+        self.now_room: str = ""
+        """ 当前展示的教室场景名，空串表示尚未选择，由 draw_page 回落到第一间 """
+        self.room_list: List[str] = []
+        """ 本轮可排课的教室列表，每轮在 draw_page 里重算 """
+        self.cell_return: Dict[str, tuple] = {}
+        """ 本轮课表格子按钮的返回值 → (星期, 节次)，由 draw_page 写、handle_yrn 读 """
 
-    def draw(self):
+    def draw_page(self, return_list: List[str]):
         """
-        绘制主循环
-        输入类型: 无
+        绘制本页内容
+        输入类型: return_list(List[str])，容器的共享返回值列表，本页的按钮往里加
         输出类型: 无
-        功能: 教室页签 + 周表 + 排课入口
+        功能: 教室页签 + 周表 + 排课入口。
+              ⚠️ 只画不取输入，askfor_all 由容器 Education_Manage_Panel 统一调用
         """
-        room_list = schedule_handle.get_classroom_list()
-        if not room_list:
+        # 每轮重算：教室会在游戏过程中解锁，不能在 __init__ 里快照
+        self.room_list = schedule_handle.get_classroom_list()
+        # ⚠️ 先清空派发字典再早退，否则 handle_yrn 会拿上一轮的残留去匹配
+        self.cell_return = {}
+        if not self.room_list:
             info_draw = draw.NormalDraw()
             info_draw.width = self.width
             info_draw.text = _("\n  尚未开放任何教室\n")
             info_draw.draw()
             return
-        now_room = room_list[0]
+        # 选中态失效（首次进入，或原教室被移除）时回落到第一间
+        if self.now_room not in self.room_list:
+            self.now_room = self.room_list[0]
 
-        while 1:
-            return_list: List[str] = []
-            # 教室页签：只列已解锁的（未解锁的教室不会出现在 place_data 里）
-            for room in room_list:
-                room_width = max(1, int(self.width / max(1, len(room_list))))
-                if room == now_room:
-                    now_draw = draw.CenterDraw()
-                    now_draw.text = f"[{room}]"
-                    now_draw.style = "onbutton"
-                    now_draw.width = room_width
-                    now_draw.draw()
-                else:
-                    now_draw = draw.CenterButton(f"[{room}]", f"\n{room}", room_width)
-                    now_draw.draw()
-                    return_list.append(now_draw.return_text)
-            line_feed.draw()
-            draw.LineDraw("-", self.width).draw()
+        # 教室页签：只列已开放的。
+        # ⚠️ constant.place_data 装的是**全部**教室（配置载入期由 data/map/ 的目录树静态构建），
+        #    开放与否由 schedule_handle.get_classroom_list() 里的 judge_classroom_open 另查 facility_open
+        for room in self.room_list:
+            room_width = max(1, int(self.width / max(1, len(self.room_list))))
+            if room == self.now_room:
+                now_draw = draw.CenterDraw()
+                now_draw.text = f"[{room}]"
+                now_draw.style = "onbutton"
+                now_draw.width = room_width
+                now_draw.draw()
+            else:
+                # ⚠️ 加 ROOM_ 前缀：教室名取自场景数据，和容器页签的 return_text 同处一个列表，不加前缀留有撞名的余地
+                now_draw = draw.CenterButton(f"[{room}]", f"\nROOM_{room}", room_width)
+                now_draw.draw()
+                return_list.append(now_draw.return_text)
+        line_feed.draw()
+        draw.LineDraw("-", self.width).draw()
 
-            course_type = schedule_handle.get_course_type_by_classroom(now_room)
-            info_draw = draw.NormalDraw()
-            info_draw.width = self.width
-            info_draw.text = _("  {0}｜承载课型：{1}\n").format(
-                now_room, schedule_handle.COURSE_TYPE_NAME.get(course_type, _("未知")))
-            info_draw.draw()
+        course_type = schedule_handle.get_course_type_by_classroom(self.now_room)
+        info_draw = draw.NormalDraw()
+        info_draw.width = self.width
+        info_draw.text = _("  {0}｜承载课型：{1}\n").format(
+            self.now_room, schedule_handle.COURSE_TYPE_NAME.get(course_type, _("未知")))
+        info_draw.draw()
 
-            cell_return = self._draw_week_table(now_room)
-            return_list.extend(cell_return.keys())
-            line_feed.draw()
-            draw.LineDraw("-", self.width).draw()
+        self.cell_return = self._draw_week_table(self.now_room)
+        return_list.extend(self.cell_return.keys())
+        line_feed.draw()
+        draw.LineDraw("-", self.width).draw()
 
-            clear_draw = draw.CenterButton(_("[清空本教室]"), _("清空本教室"), int(self.width / 2))
-            clear_draw.draw()
-            return_list.append(clear_draw.return_text)
-            back_draw = draw.CenterButton(_("[返回上级]"), _("返回上级"), int(self.width / 2))
-            back_draw.draw()
-            return_list.append(back_draw.return_text)
-            line_feed.draw()
+        auto_draw = draw.CenterButton(_("[一键排满全部教室]"), _("一键排课"), int(self.width / 2))
+        auto_draw.draw()
+        return_list.append(auto_draw.return_text)
+        clear_draw = draw.CenterButton(_("[清空本教室]"), _("清空本教室"), int(self.width / 2))
+        clear_draw.draw()
+        return_list.append(clear_draw.return_text)
+        line_feed.draw()
 
-            yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
+    def handle_yrn(self, yrn: str):
+        """
+        处理本页按钮的选择结果
+        输入类型: yrn(str)，容器 askfor_all 的返回值
+        输出类型: 无
+        功能: 切换教室 / 清空本教室 / 编辑某一格
+        """
+        if not self.room_list:
+            return
+        if yrn == _("一键排课"):
+            self._auto_fill_schedule()
+            return
+        if yrn == _("清空本教室"):
+            self._clear_room(self.now_room)
+            return
+        if yrn in self.cell_return:
+            week_day, period = self.cell_return[yrn]
+            self._edit_cell(self.now_room, week_day, period)
+            return
+        for room in self.room_list:
+            if yrn == f"\nROOM_{room}":
+                self.now_room = room
                 return
-            if yrn == clear_draw.return_text:
-                self._clear_room(now_room)
-                continue
-            if yrn in cell_return:
-                week_day, period = cell_return[yrn]
-                self._edit_cell(now_room, week_day, period)
-                continue
-            for room in room_list:
-                if yrn == f"\n{room}":
-                    now_room = room
-                    break
 
     def _draw_week_table(self, classroom: str) -> Dict[str, tuple]:
         """
@@ -251,6 +286,31 @@ class Class_Schedule_Panel:
             line_feed.draw()
         return cell_return
 
+    def _auto_fill_schedule(self):
+        """
+        一键把全部已开放教室的空格子排满
+        输入类型: 无
+        输出类型: 无
+        功能: 只填空格，已有的排课一格不动，所以重复点击是幂等的。
+              ⚠️ 排的是**全部教室**而不是当前这间——口径23立这个功能就是为了省下630格的操作量
+        """
+        from Script.System.Education_System import auto_schedule
+
+        filled_count, skip_count = auto_schedule.auto_fill_class_schedule()
+        info_draw = draw.NormalDraw()
+        info_draw.width = self.width
+        info_draw.style = "gold_enrod"
+        if filled_count:
+            info_draw.text = _("\n已自动排课 {0} 节（周一~周五）").format(filled_count)
+            if skip_count:
+                info_draw.text += _("；另有 {0} 节因为当时没有空闲教师而留空").format(skip_count)
+            info_draw.text += "\n"
+        elif skip_count:
+            info_draw.text = _("\n没能排上任何一节课：{0} 个空格子在当时都找不到空闲教师\n").format(skip_count)
+        else:
+            info_draw.text = _("\n课表已经排满了，没有空格子可排\n")
+        info_draw.draw()
+
     def _clear_room(self, classroom: str):
         """
         清空一间教室的全部排课
@@ -279,7 +339,7 @@ class Class_Schedule_Panel:
         if ability_id == 0:
             schedule_handle.clear_class_cell(classroom, week_day, period)
             return
-        teacher_id = self._select_teacher(classroom, week_day, period)
+        teacher_id = self._select_teacher(classroom, week_day, period, ability_id)
         if teacher_id == -2:
             return
         schedule_handle.set_class_cell(classroom, week_day, period, ability_id, teacher_id)
@@ -323,7 +383,11 @@ class Class_Schedule_Panel:
                     button_text = _("[{0}]").format(ability_name)
                 else:
                     button_text = _(" {0} ").format(ability_name)
-                now_draw = draw.CenterButton(button_text, "SUB_%d" % now_ability_id, int(self.width / 8))
+                # 选中的主修科目用金色高亮。⚠️ 只改 normal_style，on_mouse_style 保持默认，
+                # 动它会破坏全局的悬停一致性；文本上的 [x] / x 差异也保留——两者宽度刻意相等，不会跳动
+                now_draw = draw.CenterButton(
+                    button_text, "SUB_%d" % now_ability_id, int(self.width / 8),
+                    normal_style="gold_enrod" if now_ability_id == ability_id else "standard")
                 now_draw.draw()
                 return_list.append(now_draw.return_text)
                 id_by_return[now_draw.return_text] = now_ability_id
@@ -387,42 +451,67 @@ class Class_Schedule_Panel:
         指定必修这节实操课的学生
         输入类型: must_attend(List[int]) 当前名单, classroom(str), week_day(int), period(int)
         输出类型: List[int]，新的名单
-        功能: 列出全部可参加的角色，点一下切换选中状态。
-              ⚠️ 每人后面标出会顶掉她原本的哪一节课，免得玩家不知道自己动了什么
+        功能: 列出可参加的学生，每行6个，点一下切换选中状态。
+              ⚠️ 会顶掉原有课的学生名字后标「*」，具体顶掉哪一节集中列在下方——
+                 一个格位只有31列，「（将顶替 X 的 Y）」这种尾注放不下
         """
-        from Script.System.Education_System import sex_class_handle
+        from Script.System.Education_System import sex_class_handle, growth_handle
 
         must_attend = list(must_attend)
         while 1:
             draw.TitleLineDraw(_("指定必修学生"), self.width).draw()
             tip_draw = draw.NormalDraw()
             tip_draw.width = self.width
-            tip_draw.text = _("  被点名的学生无论原本排了什么课都会来，且不会翘课。\n\n")
+            tip_draw.text = _("  被点名的学生无论原本排了什么课都会来，且不会翘课。名字前的√为已选中。\n")
             tip_draw.draw()
+
             return_list: List[str] = []
             id_by_return: Dict[str, int] = {}
-            for character_id in sorted(cache.npc_id_got):
+            replace_text_list = []
+            # 人口来源与个人课表、养成总览共用一份口径：玩家的女儿且处于幼女/萝莉/少女阶段。
+            # judge_can_join_sex_class 保留作状态守卫（死亡/临盆/意识模糊/监禁等）
+            student_width = int(self.width / 6)
+            count = 0
+            for character_id in growth_handle.get_student_candidate_list():
                 if not sex_class_handle.judge_can_join_sex_class(character_id):
                     continue
                 character_data: game_type.Character = cache.character_data[character_id]
                 mark = "√" if character_id in must_attend else "  "
-                # 会顶掉她原本的哪一节
+                # 会顶掉她原本的哪一节——按钮里只放一个「*」，明细汇总到下方
                 old_course = schedule_handle.get_selected_course(character_id, week_day, period)
-                old_text = ""
+                replace_mark = ""
                 if old_course is not None and old_course[0] in schedule_handle.CLASSROOM_COURSE_TYPE_SET:
+                    replace_mark = "*"
                     old_cell = schedule_handle.get_class_cell(old_course[1], week_day, period)
                     if old_cell is not None and old_cell[0] in game_config.config_ability:
-                        old_text = _("（将顶替 {0} 的{1}）").format(
-                            old_course[1], game_config.config_ability[old_cell[0]].name)
+                        replace_text_list.append(_("{0}→{1}的{2}").format(
+                            character_data.name, old_course[1],
+                            game_config.config_ability[old_cell[0]].name))
                     else:
-                        old_text = _("（将顶替 {0}）").format(old_course[1])
+                        replace_text_list.append(_("{0}→{1}").format(character_data.name, old_course[1]))
                 now_draw = draw.LeftButton(
-                    _("[{0}]{1}{2}").format(mark, character_data.name, old_text),
-                    "MUST_%d" % character_id, self.width)
+                    _("[{0}{1}{2}]").format(mark, character_data.name, replace_mark),
+                    "MUST_%d" % character_id, student_width)
                 now_draw.draw()
                 return_list.append(now_draw.return_text)
                 id_by_return[now_draw.return_text] = character_id
+                count += 1
+                if count % 6 == 0:
+                    line_feed.draw()
+            if count % 6:
                 line_feed.draw()
+            if not count:
+                empty_draw = draw.NormalDraw()
+                empty_draw.width = self.width
+                empty_draw.text = _("\n  目前没有可参加的学生\n")
+                empty_draw.draw()
+
+            if replace_text_list:
+                replace_draw = draw.NormalDraw()
+                replace_draw.width = self.width
+                replace_draw.style = "deep_gray"
+                replace_draw.text = _("  *会顶替原本的课：{0}\n").format("、".join(replace_text_list))
+                replace_draw.draw()
             line_feed.draw()
             back_draw = draw.CenterButton(_("[完成]"), "DONE", int(self.width / 3))
             back_draw.draw()
@@ -490,45 +579,97 @@ class Class_Schedule_Panel:
             return 0
         return id_by_return.get(yrn, -1)
 
-    def _select_teacher(self, classroom: str, week_day: int, period: int) -> int:
+    def _select_teacher(self, classroom: str, week_day: int, period: int, ability_id: int) -> int:
         """
         选教师
-        输入类型: classroom(str), week_day(int), period(int)
+        输入类型: classroom(str), week_day(int), period(int), ability_id(int) 本节要教的科目
         输出类型: int，教师角色id；-1为本节不排教师（学生自习），-2为取消
-        功能: 只列教师岗干员；撞课的置灰并标"第N节已在X教室"
+        功能: 只列教师岗干员，每行6个，名字后跟该科目的等级；默认按等级降序，可切升序。
+              撞课的置灰并标"第N节已在X教室"
         """
-        draw.TitleLineDraw(_("选择授课教师"), self.width).draw()
-        return_list: List[str] = []
-        id_by_return: Dict[str, int] = {}
-        for teacher_id in schedule_handle.get_teacher_candidate_list():
-            teacher_data: game_type.Character = cache.character_data[teacher_id]
-            conflict = schedule_handle.judge_teacher_conflict(teacher_id, week_day, period, classroom)
-            if conflict:
-                # 撞课的不做成按钮，直接置灰并标出他这一节在哪——比事后报错好懂
-                now_draw = draw.LeftDraw()
-                now_draw.width = int(self.width / 2)
-                now_draw.style = "deep_gray"
-                now_draw.text = _(" {0}（{1}）").format(teacher_data.name, conflict)
-                now_draw.draw()
-            else:
-                now_draw = draw.LeftButton(
-                    _("[{0}]").format(teacher_data.name), str(teacher_id), int(self.width / 2))
-                now_draw.draw()
-                return_list.append(now_draw.return_text)
-                id_by_return[now_draw.return_text] = teacher_id
-            line_feed.draw()
-        line_feed.draw()
-        none_draw = draw.CenterButton(_("[本节不排教师（学生自习）]"), _("不排教师"), int(self.width / 2))
-        none_draw.draw()
-        return_list.append(none_draw.return_text)
-        back_draw = draw.CenterButton(_("[取消]"), _("取消"), int(self.width / 2))
-        back_draw.draw()
-        return_list.append(back_draw.return_text)
-        line_feed.draw()
+        sort_desc = True
+        """ 是否按该科目等级降序排。玩家找的通常是「谁教这门最好」，所以默认降序 """
+        ability_name = game_config.config_ability[ability_id].name if ability_id in game_config.config_ability else _("该科目")
 
-        yrn = flow_handle.askfor_all(return_list)
-        if yrn == back_draw.return_text:
-            return -2
-        if yrn == none_draw.return_text:
-            return -1
-        return id_by_return.get(yrn, -2)
+        while 1:
+            draw.TitleLineDraw(_("选择授课教师"), self.width).draw()
+            tip_draw = draw.NormalDraw()
+            tip_draw.width = self.width
+            tip_draw.text = _("  名字后是该教师的{0}等级；灰色的是本节已在别处上课的。\n").format(ability_name)
+            tip_draw.draw()
+
+            return_list: List[str] = []
+            id_by_return: Dict[str, int] = {}
+            sort_draw = draw.CenterButton(
+                _("[按{0}等级↓]").format(ability_name) if sort_desc else _("[按{0}等级↑]").format(ability_name),
+                "SORT_TEACHER", int(self.width / 3))
+            sort_draw.draw()
+            return_list.append(sort_draw.return_text)
+            line_feed.draw()
+            draw.LineDraw("-", self.width).draw()
+
+            # ⚠️ ability 的值可能是 float，一律套 int() 再比较与显示
+            teacher_list = sorted(
+                schedule_handle.get_teacher_candidate_list(),
+                key=lambda cid: (int(cache.character_data[cid].ability.get(ability_id, 0)), -cid),
+                reverse=sort_desc)
+            # 每行6个：190/6=31列，6×31=186≤190
+            teacher_width = int(self.width / 6)
+            count = 0
+            for teacher_id in teacher_list:
+                teacher_data: game_type.Character = cache.character_data[teacher_id]
+                level = int(teacher_data.ability.get(ability_id, 0))
+                level_text = "{0}{1}".format(attr_calculation.judge_grade(level), level)
+                conflict = schedule_handle.judge_teacher_conflict(teacher_id, week_day, period, classroom)
+                if conflict:
+                    # 撞课的不做成按钮，但仍占一个格位，否则整行网格会左移错位。
+                    # 具体撞在哪一节写在按钮上放不下，缩成「※」，完整冲突信息在下方汇总
+                    now_draw = draw.LeftDraw()
+                    now_draw.width = teacher_width
+                    now_draw.style = "deep_gray"
+                    now_draw.text = _(" {0} {1}※").format(teacher_data.name, level_text)
+                    now_draw.draw()
+                else:
+                    now_draw = draw.LeftButton(
+                        _("[{0} {1}]").format(teacher_data.name, level_text),
+                        str(teacher_id), teacher_width)
+                    now_draw.draw()
+                    return_list.append(now_draw.return_text)
+                    id_by_return[now_draw.return_text] = teacher_id
+                count += 1
+                if count % 6 == 0:
+                    line_feed.draw()
+            if count % 6:
+                line_feed.draw()
+
+            # 撞课的教师逐个说明撞在哪——按钮格位里塞不下，集中放在列表下方
+            conflict_text_list = []
+            for teacher_id in teacher_list:
+                conflict = schedule_handle.judge_teacher_conflict(teacher_id, week_day, period, classroom)
+                if conflict:
+                    conflict_text_list.append("{0}（{1}）".format(cache.character_data[teacher_id].name, conflict))
+            if conflict_text_list:
+                conflict_draw = draw.NormalDraw()
+                conflict_draw.width = self.width
+                conflict_draw.style = "deep_gray"
+                conflict_draw.text = _("  ※本节已有课：{0}\n").format("、".join(conflict_text_list))
+                conflict_draw.draw()
+            line_feed.draw()
+
+            none_draw = draw.CenterButton(_("[本节不排教师（学生自习）]"), _("不排教师"), int(self.width / 2))
+            none_draw.draw()
+            return_list.append(none_draw.return_text)
+            back_draw = draw.CenterButton(_("[取消]"), _("取消"), int(self.width / 2))
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            line_feed.draw()
+
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                return -2
+            if yrn == none_draw.return_text:
+                return -1
+            if yrn == sort_draw.return_text:
+                sort_desc = not sort_desc
+                continue
+            return id_by_return.get(yrn, -2)

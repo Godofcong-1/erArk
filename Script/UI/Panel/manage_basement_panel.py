@@ -94,7 +94,7 @@ class Manage_Basement_Panel:
             _("图书馆"):[_("[图书馆管理系统]")],
             _("贸易区"):[_("[资源交易系统]")],
             _("文职部"):[_("[招募系统]")],
-            _("教育区"):[_("[妊娠总览系统]")],
+            _("教育区"):[_("[妊娠总览系统]"), _("[教育管理系统]")],
             _("医疗部"):[_("[医疗经营系统]"), _("[诊疗病人系统]")],
             _("访客区"):[_("[势力外交系统]"), _("[邀请访客系统]")],
             _("机库"):[_("[外勤委托系统]"), _("[载具管理系统]")],
@@ -877,6 +877,9 @@ class Manage_Basement_Panel:
         elif _("妊娠总览系统") in son_panel:
             from Script.System.Pregnancy_System import pregnancy_panel
             now_panel = pregnancy_panel.Pregnancy_Overview_Panel(self.width)
+        elif _("教育管理系统") in son_panel:
+            from Script.System.Education_System import class_schedule_panel
+            now_panel = class_schedule_panel.Education_Manage_Panel(self.width)
         elif _("诊疗病人系统") in son_panel:
             # 输出提示
             info_draw = draw.WaitDraw()

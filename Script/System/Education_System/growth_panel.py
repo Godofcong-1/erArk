@@ -56,64 +56,72 @@ class Growth_Panel:
     def __init__(self, width: int):
         """初始化绘制对象"""
         self.width: int = width
+        self.now_student: int = -1
+        """ 当前展示的孩子角色id，-1表示尚未选择，由 draw_page 回落到第一个 """
+        self.student_list: List[int] = []
+        """ 本轮在养成中的孩子列表，每轮在 draw_page 里重算 """
 
-    def draw(self):
+    def draw_page(self, return_list: List[str]):
         """
-        绘制主循环
-        输入类型: 无
+        绘制本页内容
+        输入类型: return_list(List[str])，容器的共享返回值列表，本页的按钮往里加
         输出类型: 无
-        功能: 孩子页签 + 总览正文
+        功能: 孩子页签 + 总览正文。
+              ⚠️ 只画不取输入，askfor_all 由容器 Education_Manage_Panel 统一调用
         """
         from Script.System.Education_System import course_select_panel
 
-        student_list = course_select_panel.get_student_candidate_list()
-        if not student_list:
+        # 每轮重算：孩子会在游戏过程中出生与长大，不能在 __init__ 里快照
+        self.student_list = course_select_panel.get_student_candidate_list()
+        if not self.student_list:
             info_draw = draw.NormalDraw()
             info_draw.width = self.width
             info_draw.text = _("\n  目前还没有在养成中的孩子\n")
             info_draw.draw()
             return
-        now_student = student_list[0]
+        # 选中态失效（首次进入，或原来那个孩子已不在列表里）时回落到第一个
+        if self.now_student not in self.student_list:
+            self.now_student = self.student_list[0]
 
-        while 1:
-            return_list: List[str] = []
-            for student_id in student_list:
-                name = cache.character_data[student_id].name
-                tab_width = max(1, int(self.width / max(1, len(student_list))))
-                if student_id == now_student:
-                    now_draw = draw.CenterDraw()
-                    now_draw.text = f"[{name}]"
-                    now_draw.style = "onbutton"
-                    now_draw.width = tab_width
-                    now_draw.draw()
-                else:
-                    now_draw = draw.CenterButton(f"[{name}]", f"\nGSTU_{student_id}", tab_width)
-                    now_draw.draw()
-                    return_list.append(now_draw.return_text)
-            line_feed.draw()
-            draw.LineDraw("-", self.width).draw()
+        for student_id in self.student_list:
+            name = cache.character_data[student_id].name
+            tab_width = max(1, int(self.width / max(1, len(self.student_list))))
+            if student_id == self.now_student:
+                now_draw = draw.CenterDraw()
+                now_draw.text = f"[{name}]"
+                now_draw.style = "onbutton"
+                now_draw.width = tab_width
+                now_draw.draw()
+            else:
+                now_draw = draw.CenterButton(f"[{name}]", f"\nGSTU_{student_id}", tab_width)
+                now_draw.draw()
+                return_list.append(now_draw.return_text)
+        line_feed.draw()
+        draw.LineDraw("-", self.width).draw()
 
-            self._draw_stage(now_student)
-            self._draw_subject(now_student)
-            self._draw_attendance(now_student)
-            self._draw_personality(now_student)
-            self._draw_event_history(now_student)
-            self._draw_flag(now_student)
+        self._draw_stage(self.now_student)
+        self._draw_subject(self.now_student)
+        self._draw_attendance(self.now_student)
+        self._draw_personality(self.now_student)
+        self._draw_event_history(self.now_student)
+        self._draw_flag(self.now_student)
 
-            line_feed.draw()
-            draw.LineDraw("-", self.width).draw()
-            back_draw = draw.CenterButton(_("[返回上级]"), _("返回上级"), int(self.width / 2))
-            back_draw.draw()
-            return_list.append(back_draw.return_text)
-            line_feed.draw()
+        line_feed.draw()
+        draw.LineDraw("-", self.width).draw()
 
-            yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
+    def handle_yrn(self, yrn: str):
+        """
+        处理本页按钮的选择结果
+        输入类型: yrn(str)，容器 askfor_all 的返回值
+        输出类型: 无
+        功能: 切换孩子。本页是只读总览，没有别的可点项
+        """
+        if not self.student_list:
+            return
+        for student_id in self.student_list:
+            if yrn == f"\nGSTU_{student_id}":
+                self.now_student = student_id
                 return
-            for student_id in student_list:
-                if yrn == f"\nGSTU_{student_id}":
-                    now_student = student_id
-                    break
 
     def _draw_stage(self, character_id: int):
         """

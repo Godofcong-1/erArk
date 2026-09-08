@@ -51,8 +51,14 @@ ENTERTAINMENT_FOLLOW_MOTHER = 176
 ENTERTAINMENT_FREE_PLAY = 177
 """ 娱乐配置「自由玩耍」的cid，地点为育儿室，也是见学的回落目标 """
 
-ENTERTAINMENT_SELF_STUDY = 154
-""" 娱乐配置「自习」的cid，实施时按名字反查，此处只作为查不到时的兜底 """
+ENTERTAINMENT_SELF_STUDY = 178
+""" 娱乐配置「上课（无课时自习）」的cid（Entertainment.csv:37），
+    行为指向 self_study(211)：有课就去上课，没课就在理论教室自习。
+    ⚠️ 原值写的是154，而 Entertainment.csv 里根本没有154这个cid """
+
+CHILD_SCHEDULE_FIRST_ROW = [ENTERTAINMENT_SELF_STUDY, ENTERTAINMENT_FREE_PLAY, ENTERTAINMENT_FOLLOW_MOTHER]
+""" 「选择活动」面板第一行固定的三项：它们是孩子日程的主力选项，
+    摊进29项娱乐的列表里玩家不好找 """
 
 TEMPLATE_ACADEMIC = 1
 """ 预设模板：学业优先 """
@@ -72,8 +78,8 @@ PRESET_TEMPLATE_NAME = {
 """ 四套预设模板的名字（方案 §3.6 的表） """
 
 PRESET_TEMPLATE_SLOT_NAME = {
-    TEMPLATE_ACADEMIC: ("自习", "自习", "读书"),
-    TEMPLATE_BALANCED: ("自习", "下棋", "自由玩耍"),
+    TEMPLATE_ACADEMIC: ("上课（无课时自习）", "上课（无课时自习）", "读书"),
+    TEMPLATE_BALANCED: ("上课（无课时自习）", "下棋", "自由玩耍"),
     TEMPLATE_PLAYFUL: ("过家家", "下棋", "自由玩耍"),
     TEMPLATE_CUSTOM: ("", "", ""),
 }
