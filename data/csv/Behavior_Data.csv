@@ -122,6 +122,9 @@ int,str,str,int,str,str
 267,identify_eggs,鉴定卵,30,npc,工作
 268,hatch_eggs,孵化卵,60,npc,工作
 269,identify_held_eggs,鉴定持有的卵,30,pl,工作
+270,prenatal_talk,对孕肚说话,30,pl,娱乐
+271,prenatal_music,给孕肚放音乐,30,pl,娱乐
+272,prenatal_touch,抚摸孕肚,30,pl,娱乐
 
 301,hand_in_hand,牵手,10,both,猥亵
 302,embrace,拥抱,3,both,猥亵
@@ -188,6 +191,8 @@ int,str,str,int,str,str
 
 380,ask_hidden_sex,邀请隐奸,5,pl,性爱
 381,ask_hidden_sex_fail,邀请隐奸失败,5,pl,猥亵
+383,start_sex_class,开始性技实操课,5,pl,性爱
+384,end_sex_class,结束性技实操课,5,pl,性爱
 382,other_sex_be_found_to_hidden_sex,其他H中被发现转隐奸,5,pl,性爱
 
 386,ask_exhibitionism_sex,邀请露出性爱,5,pl,性爱
@@ -774,4 +779,6 @@ int,str,str,int,str,str
 
 1501,has_been_primary_hypnosis,获得被浅层催眠素质,0,npc,二段结算
 1502,has_been_deep_hypnosis,获得被深层催眠素质,0,npc,二段结算
+1504,join_sex_class,到场参加性技实操课,0,npc,二段结算
+1505,watch_sex_class,旁观性技实操课,0,npc,二段结算
 1503,has_been_complete_hypnosis,获得被完全催眠素质,0,npc,二段结算

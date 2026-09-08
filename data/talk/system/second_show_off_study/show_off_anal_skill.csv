@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|75_G_0,{Name}凑到博士面前，小声说自己今天学会放松了。\n“老师说我进步很快，”{Name}说得有点不好意思，又有点骄傲。\n说完{Name}脸有点红，赶紧转移了话题。
+1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|75_G_0,“我今天没有一直紧张！”{Name}兴奋地跑过来汇报。\n“老师说松才是重点，我现在懂了。”\n{Name}说着说着又开始小声念叨这句话，像是怕自己忘记。
+1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|75_G_0,{Name}走过来，语气带着点小骄傲，说自己今天能主动放松了。\n“越逼越紧，越紧越难受，”{Name}把老师的话搬出来，像背课文一样认真。\n“博士要不要……不是，没什么。”{Name}说到一半又不好意思地停住了。
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|75_G_0,{Name}小声说自己今天练习的时候没有觉得难，坚持了很久。\n“这个很难形容，”{Name}皱着眉头想解释清楚，越解释脸越红。\n最后{Name}放弃了解释，只说“反正老师说我做对了。”

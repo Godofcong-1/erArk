@@ -6,4 +6,4 @@ str,str,int,str,str
 1000,rehearse_dance,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}跟着做动作，总是慢半拍，转身的时候还差点撞到人。\n撞完之后{Name}赶紧道歉，然后重新站回队里。\n虽然一直跟不上，但{Name}一次也没有停下来。
 1001,rehearse_dance,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}分到的是最边上的位置，动作也最简单。\n{Name}把那几个动作练了一遍又一遍，练到自己都觉得腻了。\n可是等到合排的时候，{Name}是全场唯一一个没出错的。
 1002,rehearse_dance,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,排到中间那段时{Name}和旁边的人总是对不齐。\n{Name}没有埋怨，而是提议两个人先单独对一遍。\n对完之后果然齐了——问题出在起手的那一拍上。
-1003,rehearse_dance,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}发现自己一紧张动作就会变大，看起来反而不好看。\n试着把幅度收了三成之后，镜子里的样子顺眼多了。\n"原来不是越用力越好。"{Name}想起战斗课上也听过类似的话。
+1003,rehearse_dance,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}发现自己一紧张动作就会变大，看起来反而不好看。\n试着把幅度收了三成之后，镜子里的样子顺眼多了。\n“原来不是越用力越好。”{Name}想起战斗课上也听过类似的话。

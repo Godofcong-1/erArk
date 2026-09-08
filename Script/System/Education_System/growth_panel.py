@@ -13,7 +13,7 @@ from typing import List
 from Script.Core import cache_control, game_type, get_text, flow_handle
 from Script.Config import game_config, normal_config
 from Script.Design import attr_calculation
-from Script.System.Education_System.class_schedule_panel import SUBJECT_ABILITY_LIST
+from Script.System.Education_System import education_constant, semester_handle
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -25,24 +25,6 @@ line_feed.text = "\n"
 line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
-
-STAGE_TALENT_NAME = {101: "婴儿", 102: "幼女", 103: "萝莉", 104: "少女"}
-""" 成长链的四个年龄素质（growth_handle.CHILD_TALENT_SET）对应的阶段名 """
-
-PERSONALITY_PAIR_NAME = {
-    0: ("勤劳", "懒散"),
-    1: ("坚强", "脆弱"),
-    2: ("热情", "孤僻"),
-    3: ("开放", "羞耻"),
-}
-""" 四对性格倾向：值为正偏前者、为负偏后者（game_type.CHILD_GROWTH.personality_point）。
-    ⚠️ 三期的养成事件是它的主要写入方，全为0时显示「尚未形成」 """
-
-HISTORY_SHOW_MAX = 8
-""" 养成履历最多列出的条数。养到成年会攒下几十条，全列出来会把总览面板顶爆 """
-
-HISTORY_TEXT_MAX = 24
-""" 履历里事件正文的截断长度，只留能认出是哪件事的开头 """
 
 
 class Growth_Panel:
@@ -56,64 +38,86 @@ class Growth_Panel:
     def __init__(self, width: int):
         """初始化绘制对象"""
         self.width: int = width
+        self.now_student: int = -1
+        """ 当前展示的孩子角色id，-1表示尚未选择，由 draw_page 回落到第一个 """
+        self.student_list: List[int] = []
+        """ 本轮在养成中的孩子列表，每轮在 draw_page 里重算 """
+        self.report_card_index: int = -1
+        """ 成绩单历史当前翻到第几份（0起），-1表示尚未翻过、由 _draw_report_card 回落到最新那份。
+            ⚠️ 必须是面板的状态而不是局部变量：容器每轮 while 都重画，局部变量会被冲掉 """
 
-    def draw(self):
+    def draw_page(self, return_list: List[str]):
         """
-        绘制主循环
-        输入类型: 无
+        绘制本页内容
+        输入类型: return_list(List[str])，容器的共享返回值列表，本页的按钮往里加
         输出类型: 无
-        功能: 孩子页签 + 总览正文
+        功能: 孩子页签 + 总览正文。
+              ⚠️ 只画不取输入，askfor_all 由容器 Education_Manage_Panel 统一调用
         """
         from Script.System.Education_System import course_select_panel
 
-        student_list = course_select_panel.get_student_candidate_list()
-        if not student_list:
+        # 每轮重算：孩子会在游戏过程中出生与长大，不能在 __init__ 里快照
+        self.student_list = course_select_panel.get_student_candidate_list()
+        if not self.student_list:
             info_draw = draw.NormalDraw()
             info_draw.width = self.width
             info_draw.text = _("\n  目前还没有在养成中的孩子\n")
             info_draw.draw()
             return
-        now_student = student_list[0]
+        # 选中态失效（首次进入，或原来那个孩子已不在列表里）时回落到第一个
+        if self.now_student not in self.student_list:
+            self.now_student = self.student_list[0]
 
-        while 1:
-            return_list: List[str] = []
-            for student_id in student_list:
-                name = cache.character_data[student_id].name
-                tab_width = max(1, int(self.width / max(1, len(student_list))))
-                if student_id == now_student:
-                    now_draw = draw.CenterDraw()
-                    now_draw.text = f"[{name}]"
-                    now_draw.style = "onbutton"
-                    now_draw.width = tab_width
-                    now_draw.draw()
-                else:
-                    now_draw = draw.CenterButton(f"[{name}]", f"\nGSTU_{student_id}", tab_width)
-                    now_draw.draw()
-                    return_list.append(now_draw.return_text)
-            line_feed.draw()
-            draw.LineDraw("-", self.width).draw()
+        for student_id in self.student_list:
+            name = cache.character_data[student_id].name
+            tab_width = max(1, int(self.width / max(1, len(self.student_list))))
+            if student_id == self.now_student:
+                now_draw = draw.CenterDraw()
+                now_draw.text = f"[{name}]"
+                now_draw.style = "onbutton"
+                now_draw.width = tab_width
+                now_draw.draw()
+            else:
+                now_draw = draw.CenterButton(f"[{name}]", f"\nGSTU_{student_id}", tab_width)
+                now_draw.draw()
+                return_list.append(now_draw.return_text)
+        line_feed.draw()
+        draw.LineDraw("-", self.width).draw()
 
-            self._draw_stage(now_student)
-            self._draw_subject(now_student)
-            self._draw_attendance(now_student)
-            self._draw_personality(now_student)
-            self._draw_event_history(now_student)
-            self._draw_flag(now_student)
+        self._draw_stage(self.now_student)
+        self._draw_subject(self.now_student)
+        self._draw_attendance(self.now_student)
+        self._draw_report_card(self.now_student, return_list)
+        self._draw_personality(self.now_student)
+        self._draw_event_history(self.now_student)
+        self._draw_flag(self.now_student)
 
-            line_feed.draw()
-            draw.LineDraw("-", self.width).draw()
-            back_draw = draw.CenterButton(_("[返回上级]"), _("返回上级"), int(self.width / 2))
-            back_draw.draw()
-            return_list.append(back_draw.return_text)
-            line_feed.draw()
+        line_feed.draw()
+        draw.LineDraw("-", self.width).draw()
 
-            yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
+    def handle_yrn(self, yrn: str):
+        """
+        处理本页按钮的选择结果
+        输入类型: yrn(str)，容器 askfor_all 的返回值
+        输出类型: 无
+        功能: 切换孩子、翻成绩单。除此之外本页是只读总览
+        """
+        # 成绩单翻页与孩子无关，先判掉，省得白扫一遍名单
+        if yrn == education_constant.REPORT_CARD_PREV:
+            self.report_card_index -= 1
+            return
+        if yrn == education_constant.REPORT_CARD_NEXT:
+            self.report_card_index += 1
+            return
+        if not self.student_list:
+            return
+        for student_id in self.student_list:
+            if yrn == f"\nGSTU_{student_id}":
+                # ⚠️ 换孩子必须把成绩单下标清掉：上一个孩子翻到第3份、换过来的孩子只有1份时，
+                #    留着旧下标会莫名其妙地跳页（虽然会被夹回去，但表现很怪）
+                self.now_student = student_id
+                self.report_card_index = -1
                 return
-            for student_id in student_list:
-                if yrn == f"\nGSTU_{student_id}":
-                    now_student = student_id
-                    break
 
     def _draw_stage(self, character_id: int):
         """
@@ -126,9 +130,9 @@ class Growth_Panel:
 
         character_data: game_type.Character = cache.character_data[character_id]
         stage_name = _("已成年")
-        for talent_id in sorted(STAGE_TALENT_NAME.keys()):
+        for talent_id in sorted(education_constant.STAGE_TALENT_NAME.keys()):
             if character_data.talent.get(talent_id, 0):
-                stage_name = _(STAGE_TALENT_NAME[talent_id])
+                stage_name = _(education_constant.STAGE_TALENT_NAME[talent_id])
                 break
         # 成长天数由妊娠系统统一计算（含成长加速药），这里只取用不重算
         grow_day = pregnancy_handle.get_child_grow_day(character_id)
@@ -138,24 +142,46 @@ class Growth_Panel:
         info_draw.text = _("\n  当前阶段：{0}｜本阶段已成长 {1} 个可游玩天（非日历天）\n").format(
             stage_name, grow_day)
         info_draw.draw()
+        # 胎教带来的初始经验是这孩子上学前就有的「底子」，只有出生时提示过一次，
+        # 之后玩家再也看不到，放在阶段行下面正好（四期方案 §3.19）
+        from Script.System.Education_System import baby_growth_handle
+
+        prenatal_exp_dict = baby_growth_handle.get_prenatal_exp_dict(character_id)
+        if prenatal_exp_dict:
+            prenatal_draw = draw.NormalDraw()
+            prenatal_draw.width = self.width
+            prenatal_draw.text = _("  胎教底子：出生时{0}门科目各获得了 {1} 点初始经验\n").format(
+                len(prenatal_exp_dict), list(prenatal_exp_dict.values())[0])
+            prenatal_draw.style = "deep_gray"
+            prenatal_draw.draw()
 
     def _draw_subject(self, character_id: int):
         """
-        绘制18门科目的等级
+        绘制18门科目的等级与本学期增量（方案 §5.4）
         输入类型: character_id(int)
         输出类型: 无
-        功能: 每行4门，0级的也灰显列出，好让玩家知道还有哪些没学
+        功能: 每行4门，0级的也灰显列出，好让玩家知道还有哪些没学；
+              本学期涨过级的标出涨了几级并高亮——光看等级看不出这学期的课有没有白上
         """
         character_data: game_type.Character = cache.character_data[character_id]
         draw.LittleTitleLineDraw(_("科目水平"), self.width).draw()
-        for index, ability_id in enumerate(SUBJECT_ABILITY_LIST):
+        # 本学期的增量走 semester_handle 的唯一算口（现等级 - 学期基线），不在这里另算一遍
+        level_change = semester_handle.get_semester_level_change(character_id)
+        for index, ability_id in enumerate(education_constant.SUBJECT_ABILITY_LIST):
             level = int(character_data.ability.get(ability_id, 0))
             now_draw = draw.LeftDraw()
             now_draw.width = int(self.width / 4)
-            now_draw.text = _(" {0}：{1}").format(
-                game_config.config_ability[ability_id].name, attr_calculation.judge_grade(level))
-            if level == 0:
-                now_draw.style = "deep_gray"
+            grade_text = attr_calculation.judge_grade(level)
+            if ability_id in level_change:
+                old_level, new_level = level_change[ability_id]
+                now_draw.text = _(" {0}：{1}（本学期+{2}）").format(
+                    game_config.config_ability[ability_id].name, grade_text, new_level - old_level)
+                now_draw.style = "gold_enrod"
+            else:
+                now_draw.text = _(" {0}：{1}").format(
+                    game_config.config_ability[ability_id].name, grade_text)
+                if level == 0:
+                    now_draw.style = "deep_gray"
             now_draw.draw()
             if index % 4 == 3:
                 line_feed.draw()
@@ -176,9 +202,84 @@ class Growth_Panel:
         rate = growth_data.attend_class_count / total if total else 1.0
         info_draw = draw.NormalDraw()
         info_draw.width = self.width
-        info_draw.text = _("  听课 {0} 节，缺课 {1} 节（出勤率 {2}%）\n").format(
+        info_draw.text = _("  累计：听课 {0} 节，缺课 {1} 节（出勤率 {2}%）\n").format(
             growth_data.attend_class_count, growth_data.absent_count, int(rate * 100))
         info_draw.draw()
+        # 本学期的数走 semester_handle 的唯一算口（累计减学期基线），不在这里另算一遍
+        semester_attend, semester_absent = semester_handle.get_semester_attend(character_id)
+        now_draw = draw.NormalDraw()
+        now_draw.width = self.width
+        now_draw.text = _("  本学期：听课 {0} 节，缺课 {1} 节（出勤率 {2}%）\n").format(
+            semester_attend, semester_absent,
+            semester_handle.get_semester_attend_rate(semester_attend, semester_absent))
+        now_draw.draw()
+
+    def _draw_report_card(self, character_id: int, return_list: List[str]):
+        """
+        绘制历年成绩单，一次一份，可前后翻页
+        输入类型: character_id(int), return_list(List[str]) 容器的共享返回值列表
+        输出类型: 无
+        功能: 列出学期切换时冻结的那些快照。还没经历过学期切换就整节不画。
+              ⚠️ 翻页下标存在面板上而不是每次重算：容器每轮 while 都会重画本函数，
+                 算出来的下标会被冲掉，玩家点一次「上一学期」马上又跳回最新那份
+        """
+        history_list = semester_handle.get_report_card_history(character_id)
+        if not history_list:
+            return
+        # 下标越界（换了个孩子、或旧的那几份被上限挤掉了）时回落到最新那份
+        if not 0 <= self.report_card_index < len(history_list):
+            self.report_card_index = len(history_list) - 1
+        report_data = history_list[self.report_card_index]
+        draw.LittleTitleLineDraw(_("学期成绩单"), self.width).draw()
+        info_draw = draw.NormalDraw()
+        info_draw.width = self.width
+        info_draw.text = _("  {0}　评定：{1}　出勤 {2} 节／缺课 {3} 节（出勤率 {4}%）\n").format(
+            semester_handle.get_semester_name(report_data.get("year", 0), report_data.get("month", 0)),
+            _(education_constant.REPORT_GRADE_NAME.get(
+                report_data.get("grade", education_constant.REPORT_GRADE_NO_CLASS), "无课可评")),
+            report_data.get("attend", 0), report_data.get("absent", 0), report_data.get("rate", 100))
+        info_draw.draw()
+        level_text = semester_handle.get_level_change_text(report_data.get("level_change", {}))
+        now_draw = draw.NormalDraw()
+        now_draw.width = self.width
+        if level_text:
+            now_draw.text = _("  那个学期的进步：{0}\n").format(level_text)
+        else:
+            now_draw.text = _("  那个学期没有科目升级\n")
+            now_draw.style = "deep_gray"
+        now_draw.draw()
+
+        # 只有一份时不画翻页按钮：两个点不动的箭头比没有箭头更让人困惑
+        if len(history_list) <= 1:
+            return
+        button_width = int(self.width / 3)
+        if self.report_card_index > 0:
+            prev_draw = draw.CenterButton(_("[← 上一学期]"), education_constant.REPORT_CARD_PREV, button_width)
+            prev_draw.draw()
+            return_list.append(prev_draw.return_text)
+        else:
+            # 到头了也要占住格位，否则中间那行「第N/M份」会整体左移
+            blank_draw = draw.CenterDraw()
+            blank_draw.width = button_width
+            blank_draw.style = "deep_gray"
+            blank_draw.text = _("　← 上一学期")
+            blank_draw.draw()
+        index_draw = draw.CenterDraw()
+        index_draw.width = button_width
+        index_draw.text = _("第 {0} / {1} 份（含最近一份）").format(
+            self.report_card_index + 1, len(history_list))
+        index_draw.draw()
+        if self.report_card_index < len(history_list) - 1:
+            next_draw = draw.CenterButton(_("[下一学期 →]"), education_constant.REPORT_CARD_NEXT, button_width)
+            next_draw.draw()
+            return_list.append(next_draw.return_text)
+        else:
+            blank_draw = draw.CenterDraw()
+            blank_draw.width = button_width
+            blank_draw.style = "deep_gray"
+            blank_draw.text = _("　下一学期 →")
+            blank_draw.draw()
+        line_feed.draw()
 
     def _draw_personality(self, character_id: int):
         """
@@ -191,9 +292,9 @@ class Growth_Panel:
         if growth_data is None:
             return
         draw.LittleTitleLineDraw(_("性格倾向"), self.width).draw()
-        for pair_id in sorted(PERSONALITY_PAIR_NAME.keys()):
+        for pair_id in sorted(education_constant.PERSONALITY_PAIR_NAME.keys()):
             point = growth_data.personality_point.get(pair_id, 0.0)
-            front, back = PERSONALITY_PAIR_NAME[pair_id]
+            front, back = education_constant.PERSONALITY_PAIR_NAME[pair_id]
             now_draw = draw.LeftDraw()
             now_draw.width = int(self.width / 4)
             if point > 0:
@@ -225,13 +326,13 @@ class Growth_Panel:
             growth_data.event_history.items(),
             key=lambda one: one[1].get("time") or datetime.datetime(1, 1, 1))
         # 只列最近的HISTORY_SHOW_MAX条：养到成年会攒下几十条，全列出来会把总览面板顶爆
-        if len(history_list) > HISTORY_SHOW_MAX:
+        if len(history_list) > education_constant.HISTORY_SHOW_MAX:
             omit_draw = draw.NormalDraw()
             omit_draw.width = self.width
-            omit_draw.text = _("  （更早的 {0} 条已略去）\n").format(len(history_list) - HISTORY_SHOW_MAX)
+            omit_draw.text = _("  （更早的 {0} 条已略去）\n").format(len(history_list) - education_constant.HISTORY_SHOW_MAX)
             omit_draw.style = "deep_gray"
             omit_draw.draw()
-            history_list = history_list[-HISTORY_SHOW_MAX:]
+            history_list = history_list[-education_constant.HISTORY_SHOW_MAX:]
         for uid, record in history_list:
             event_data = _game_config.config_official_event.get(uid)
             # 配置里已删掉的事件只留一条占位，不让履历出现空行
@@ -244,7 +345,7 @@ class Growth_Panel:
             time_data = record.get("time")
             time_text = time_data.strftime("%Y/%m/%d") if hasattr(time_data, "strftime") else ""
             now_draw.text = _("  {0} {1} → {2}\n").format(
-                time_text, event_data.get("text", "").split("\n")[0][:HISTORY_TEXT_MAX], choice_text)
+                time_text, event_data.get("text", "").split("\n")[0][:education_constant.HISTORY_TEXT_MAX], choice_text)
             now_draw.draw()
         line_feed.draw()
 
@@ -270,9 +371,11 @@ class Growth_Panel:
             text_list.append(_("今天正在翘课"))
         # 队列是全岛共用的，这里只数这个孩子的那几条（Plan 23）
         # ⚠️ 不提示的话玩家不知道要去博士办公室处理公务，事件会一直躺在队列里
-        from Script.System.Official_Event_System import official_event_handle
+        # ⚠️ 走教育侧的封装而不是直接调公务事件系统：养成事件的口径由 growth_event_handle 负责，
+        #    面板越过它直接问底层，日后那边改了口径这里不会跟着变
+        from Script.System.Education_System import growth_event_handle
 
-        wait_count = official_event_handle.get_official_event_queue_count(character_id)
+        wait_count = growth_event_handle.get_growth_event_queue_count(character_id)
         if wait_count:
             text_list.append(_("有 {0} 件关于她的事等你在博士办公室「处理公务」时决断").format(wait_count))
         if not text_list:

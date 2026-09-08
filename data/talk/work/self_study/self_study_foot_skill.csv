@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|72_G_0,没有软垫，{Name}就在地上光脚练习脚趾的抓握动作，慢慢地练。\n练了一会儿{Name}发现自己确实能更精准地控制脚趾了。\n“像抓一件很轻的东西”，{Name}把老师的话当成了自习的座右铭。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|72_G_0,{Name}试着单脚站立尽量久，没多久就开始晃。\n晃也没停，{Name}想起老师说晃着晃着才能找到重心。\n坚持到最后，{Name}觉得比早上多站了不少时间。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|72_G_0,{Name}练习用脚背和脚底分别做动作，一开始总是分不清区别。\n练了几次之后终于摸到了两个部位给出的不同感觉。\n“原来是这样”，{Name}小声感叹了一句。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|72_G_0,{Name}保持一个姿势练习耐力，中途脚有点麻也没有停下来。\n麻的感觉慢慢退去之后，{Name}才觉得松了一口气。\n{Name}把这次坚持的时间悄悄记在心里，想着下次要更久。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|72_G_0,{Name}对着空的房间模拟平衡练习，没有人指导也没有垫子。\n练到后来{Name}竟然能单脚站立很长一段时间不晃。\n“下次上课要试试给老师看看”，{Name}这样想着，又练了几遍。

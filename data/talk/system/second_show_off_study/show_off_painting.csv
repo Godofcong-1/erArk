@@ -3,7 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|49_G_0,{Name}把一张画得满满当当的纸推到博士面前，上面全是小杯子。\n"我画了好多好多个！"{Name}说，"到后面不用看就能画出来了。"\n虽然每个杯子都歪歪扭扭，但确实一个比一个像。
-1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|49_G_0,{Name}指着自己画的一棵树，很郑重地介绍："这个影子是对的。"\n"因为我先想好了太阳在哪边，"{Name}说，"老师说要先定这个。"\n说完{Name}又补充："第一张画反了，那张我扔了。"
-1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|49_G_0,{Name}拿出两张画，是同一处景色，画的时间隔了几天。\n"你说哪张更好？"{Name}问，然后没等回答就说，"其实我也说不清。"\n"老师上次也说他说不清。原来这种事是可以说不清的。"
-1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|49_G_0,{Name}把一张画着手的纸摆出来，然后把自己的手放在旁边比。\n"还是不太像。"{Name}承认，"但是手指的长短对了，上次全都不对。"\n"看见和看是两回事——我以前不懂这句话是什么意思。"
+1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|49_G_0,{Name}把一张画得满满当当的纸推到博士面前，上面全是小杯子。\n“我画了好多好多个！”{Name}说，“到后面不用看就能画出来了。”\n虽然每个杯子都歪歪扭扭，但确实一个比一个像。
+1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|49_G_0,{Name}指着自己画的一棵树，很郑重地介绍：“这个影子是对的。”\n“因为我先想好了太阳在哪边，”{Name}说，“老师说要先定这个。”\n说完{Name}又补充：“第一张画反了，那张我扔了。”
+1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|49_G_0,{Name}拿出两张画，是同一处景色，画的时间隔了几天。\n“你说哪张更好？”{Name}问，然后没等回答就说，“其实我也说不清。”\n“老师上次也说他说不清。原来这种事是可以说不清的。”
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|49_G_0,{Name}把一张画着手的纸摆出来，然后把自己的手放在旁边比。\n“还是不太像。”{Name}承认，“但是手指的长短对了，上次全都不对。”\n“看见和看是两回事——我以前不懂这句话是什么意思。”

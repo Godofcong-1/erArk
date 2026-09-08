@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|73_G_0,没有训练模型，{Name}就抱着一个枕头练习夹持的力度，慢慢地试。\n试了一会儿{Name}发现自己确实能更精准地控制力度了。\n“太松夹不住，太紧又不舒服”，{Name}把老师的话当成了自习的座右铭。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|73_G_0,{Name}试着找一个能稳住的摇晃节奏，一开始总是忽快忽慢。\n慢慢调整之后，{Name}终于找到了一个自己能坚持住的速度。\n“先稳，再谈快慢”，{Name}小声重复了一遍。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|73_G_0,{Name}练习分辨上下和左右的不同感觉，一开始总是分不清。\n练了几次之后终于摸到了两个方向给出的不同效果。\n“原来是这样”，{Name}小声感叹了一句。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|73_G_0,{Name}保持一个姿势练习耐力，中途觉得有点累也没有停下来。\n累的感觉慢慢缓解之后，{Name}才觉得松了一口气。\n{Name}把这次坚持的时间悄悄记在心里，想着下次要更久。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|73_G_0,{Name}对着空的房间模拟摇晃练习，没有模型也没有指导。\n练到后来{Name}竟然能保持很长一段时间节奏不乱。\n“下次上课要试试给老师看看”，{Name}这样想着，又练了几遍。

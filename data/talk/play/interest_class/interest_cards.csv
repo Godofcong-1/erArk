@@ -3,7 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,play_cards,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}的手太小，一整把牌拿不住，只好摊在桌上看。\n"这样不是全被看见了吗！"有人提醒，{Name}赶紧用另一只手挡住。\n挡着挡着{Name}自己也看不见了。
-1001,play_cards,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}一拿到好牌就藏不住表情，每次都被看穿。\n被说了几次之后{Name}开始练"面无表情"，结果绷得太用力反而更明显。\n"这个好难。"{Name}泄气地把牌扣在了桌上。
-1002,play_cards,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}这次刻意在拿到差牌的时候也停顿了同样长的时间。\n对方果然犹豫了，最后没有跟。\n"话术课说的，"{Name}在心里想，"停顿也是一种说法。"
-1003,play_cards,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,一局结束之后{Name}把出过的牌在心里过了一遍。\n"如果我第三轮不出那张，后面就不会被压住。"\n{Name}没有说出口，只是默默把这个记住了。
+1000,play_cards,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}的手太小，一整把牌拿不住，只好摊在桌上看。\n“这样不是全被看见了吗！”有人提醒，{Name}赶紧用另一只手挡住。\n挡着挡着{Name}自己也看不见了。
+1001,play_cards,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}一拿到好牌就藏不住表情，每次都被看穿。\n被说了几次之后{Name}开始练“面无表情”，结果绷得太用力反而更明显。\n“这个好难。”{Name}泄气地把牌扣在了桌上。
+1002,play_cards,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}这次刻意在拿到差牌的时候也停顿了同样长的时间。\n对方果然犹豫了，最后没有跟。\n“话术课说的，”{Name}在心里想，“停顿也是一种说法。”
+1003,play_cards,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,一局结束之后{Name}把出过的牌在心里过了一遍。\n“如果我第三轮不出那张，后面就不会被压住。”\n{Name}没有说出口，只是默默把这个记住了。

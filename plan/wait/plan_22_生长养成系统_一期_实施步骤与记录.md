@@ -79,9 +79,10 @@
 
 | 文件 | 内容 |
 | --- | --- |
+| `education_constant.py` | ⚠️ 实施时新增（§1.6 原表没有）：子系统常量统一定义文件，照 `Pregnancy_System/pregnancy_constant.py` 的成例。2026-09-08 第七轮把散在 13 个模块里的 114 个常量集中于此，见方案 §9.6 |
 | `growth_handle.py` | 能力成长计算（速度曲线、教育区加成、上限判定） |
 | `class_ai.py` | ⚠️ 实施时新增（§1.6 原表没有）：上课时段的行为决策——体力闸、翘课闸、按课型派状态机 |
-| `auto_schedule.py` / `semester_handle.py` | ⚠️ **本期未建**：自动排课与学期切换属二期范围，一期先把手动排课跑通（见偏离 21） |
+| `auto_schedule.py` / `semester_handle.py` | ⚠️ 立项时**本期未建**：自动排课与学期切换推给二期，一期先把手动排课跑通（见偏离 21）。→ 均已于 2026-09-08 补上：`auto_schedule.py` 见第三轮与方案 §9.3，`semester_handle.py` 见第五轮与方案 §9.4 |
 | `schedule_handle.py` | 课表读写、教师/学生视角反查、节次查询、冲突判定 |
 | `auto_schedule.py` | 自动排课三种模式（补弱项 / 均衡 / 主修优先，口径 28） |
 | `semester_handle.py` | 学期切换、成绩单生成（方案 §3.13） |
@@ -256,7 +257,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 - [ ] 上课后能力当场增长，等级变化有提示
 - [ ] 能力升级后不当场出文本；等孩子与玩家同场景时触发「炫耀」二段行为
 - [ ] 把孩子排去木桩房上体育课、棋牌室上兴趣课、厨房上实习课，三者都能正常执行
-- [ ] 学期末出成绩单 flag，用「检查成绩单」指令能查看
+- [x] 学期末出成绩单 flag，用「检查成绩单」指令能查看（2026-09-08 第五轮，方案 §9.4）
 - [ ] 角色状态栏能看到 `<课>`，悬停显示当前课程；翘课时显示红色 `<翘>`
 - [ ] Web 模式（`web_draw = 1`）下三个面板与 `<课>` 标识表现一致
 - [ ] 旧存档载入不报错，既有的教师/学生干员行为未被破坏
@@ -969,6 +970,542 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 
 （留给用户的游戏内清单）
 
-### 6.5 第二轮追加调整实施记录
+### 6.5 追加调整实施记录
 
-（与方案 §9.x 成对，每轮一节，附回归测试计数）
+**2026-09-08 第二轮（与方案 §9.2 成对）：面板架构重构 + 九项界面调整**
+
+分两批做：先修玩家反馈的三个面板 BUG（§9.2.1），再做九项界面调整（§9.2.2~9.2.5）。
+
+#### 实际改动
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/System/Education_System/class_schedule_panel.py` | 改 | 容器 `Education_Manage_Panel` 改为持有四个子面板实例并统一 `askfor_all`，页签按钮去掉 `cmd_func` 改显式派发，while 顶部加 `basement.get_base_updata()`；`Class_Schedule_Panel.draw()` 拆为 `draw_page/handle_yrn`、删「返回上级」、教室 return_text 加 `ROOM_` 前缀；`_select_teacher` 加 `ability_id` 参数、包 `while 1`、每行6人、显示科目等级、可切排序；`_select_must_attend` 换人口来源并改每行6个；`_edit_sex_class` 主修科目加 `gold_enrod` |
+| `Script/System/Education_System/course_select_panel.py` | 改 | `draw()` 拆为 `draw_page/handle_yrn`、删「返回上级」；`get_student_candidate_list()` 改为委托数据层；`_select_course_type` 删除，新增 `_select_course`（班级式课直接列本节各教室的课）；`_select_target` 只留三个个人式分支，三类都改每行6个 |
+| `Script/System/Education_System/schedule_template_panel.py` | 改 | `draw()` 拆为 `draw_page/handle_yrn`、删与容器撞名的 `[返回]`；`_select_activity` 改每行6个并固定第一行三项；`_batch_apply` / `_select_template` 补换行 |
+| `Script/System/Education_System/growth_panel.py` | 改 | `draw()` 拆为 `draw_page/handle_yrn`、删「返回上级」 |
+| `Script/System/Education_System/growth_handle.py` | 改 | 新增 `STUDENT_STAGE_TALENT_SET`、`get_character_stage()`、`get_student_candidate_list()`（口径的唯一出处） |
+| `Script/System/Education_System/schedule_handle.py` | 改 | 新增 `CLASSROOM_NUMBER_ORDER`、`judge_classroom_open()`、`get_classroom_sort_key()`；`get_classroom_list()` 重写为「按课型分组 + 开放过滤 + 组内数值序」 |
+| `Script/System/Education_System/schedule_template_handle.py` | 改 | `ENTERTAINMENT_SELF_STUDY` 由错值 154 改为 178；新增 `CHILD_SCHEDULE_FIRST_ROW`；`PRESET_TEMPLATE_SLOT_NAME` 同步改名 |
+| `data/csv/Entertainment.csv` | 改 | cid 178 娱乐名 `自习` → `上课（无课时自习）` |
+| `update.log` | 改 | v0.67 段追加 调整 7 条、修正 3 条 |
+
+#### 实施中发现的偏离（§9.2）
+
+31. **「返回上级」的语义直到重构时才被识别清楚。** 它不是一个功能按钮，而是「退出子面板的 while、
+    让容器重新接管输入」——也就是「解锁上面那排页签」。方案 §5.2/§5.3/二期 §5.1 的线框图里画的
+    `[返回]` 被实现成了这个东西，容器自己的 `[返回]` 反而要等它之后才画得出来。本轮把三个
+    「返回上级」整个删除，线框图同步改为标注「由页签容器统一提供」。
+    ⚠️ 这**打破了宿舍面板确立的既有范式**（`Dormitory_System/宿舍管理系统设计文档.md` 写着
+    「每页均提供返回上级按钮，保持与现有基建面板一致」）。教育面板不再有它，是因为宿舍面板的
+    子页面本就不持有自己的循环，那里的「返回上级」是真的进出子流程；教育面板的则是循环嵌套的副产物。
+
+32. **方案 §5.2 线框图那句"只列已解锁的（§3.11）"，一期实现时并未真正成立。**
+    代码里写着「未解锁的教室不会出现在 place_data 里」，但 `place_data` 是配置载入期由
+    `data/map/` 目录树静态构建的，与存档无关——十间教室从一开始就全在里面。
+    本轮才真正接上 `facility_open`（§9.2.3）。
+
+33. **口径 24 被推翻。** 「成年干员自选了课时也要能改」的分支随学生口径收紧一并取消，
+    详见 §9.2.2。方案 §5.3 与本文件未再出现该口径的描述。
+
+34. **`_select_teacher` 的签名变更是被迫的。** 要在教师名后显示「该科目」的等级，就必须知道是哪一科，
+    而原签名里没有 `ability_id`——它在调用方 `_edit_cell` 的局部变量里。加参数是最小改动。
+
+35. **发现一个与本期无关的既有缺陷，未处理**：`Script/Design/basement.py:211-214`，
+    `green_house_line` 尚无 0 号线时，那段会用到尚未赋值的 `produce_effect` 而抛 `UnboundLocalError`
+    （追溯到 2025-12-01 的 `eb4730bc5`）。异常抛出前 0 号线已被种下，所以第二次调用起就正常，
+    真实存档不受影响；但**首次 `get_base_updata()` 会炸**。本轮给教育面板加了这个调用，
+    风险与宿舍/基建面板完全同级，故未改动 `basement.py`——它不属于本期范围。
+
+#### 单元测试结果
+
+三套无头测试，共 **67 条断言全绿**（`headless-game-test` 模式 A，捕获面板每一屏的 `return_list`）：
+
+| 测试 | 条数 | 覆盖 |
+| --- | --- | --- |
+| 面板架构回归 | 27 | 四个页签在每一屏都可点、同屏 return_text 无撞名、切教室后页签仍在、选中态跨页签保持、首屏即有 `[返回]`、「返回上级」零残留 |
+| 数据层 | 16 | 教育区 Lv1~Lv5 各自的教室名单与顺序精确匹配 `Facility_open.csv`；默认页签落在理论教室一；候选人只剩三阶段的女儿，**且开启萝莉化世界设定后结果不变** |
+| 九项界面 | 24 | 改名与预设模板一致性；教师排序升降序、8人分栏；必修学生只列女儿；选课首屏含已排课教室、班级式类型按钮消失；六处屏幕的最宽一行均 ≤ 190 列 |
+
+排版断言的做法：替换全部绘制类的 `draw`，按 `line_feed` 切行、用 `text_handle.get_text_index`
+实算每个元素的显示列宽（**不能用 `len()`**，中文只算 1 会漏掉一半宽度），断言每行 ≤ `text_width`。
+这条断言在改前会对「选择活动」报出 1102 列。
+
+反向验证：把四个面板文件 `git checkout` 回改前版本再跑同一套测试，第一屏捕获到 74 项、
+其中**零个面板页签、也没有 `[返回]`**，三个症状同时复现——证明测试确实能抓到原 BUG。
+
+#### 尚未覆盖的验证
+
+- 排版观感与 Web 绘制模式仍需人工各跑一遍。无头测试验的是 `return_list` 判定链路与列宽算术，
+  不是最终观感。Tk 模式全程不清屏、内容向下追加，验收时看最底下那一屏。
+- 存量存档里若已把课排在了「当前等级尚未开放」的教室上，那些排课数据仍在，只是不再显示。
+  未做迁移——教室只会随等级增加而开放，不会反向关闭。
+
+**2026-09-08 第三轮（与方案 §9.3 成对）：一键自动排课 + 基建面板入口 + 日程模板排版**
+
+#### 实际改动
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/System/Education_System/auto_schedule.py` | **新增** | 纯函数层：`auto_fill_class_schedule()`（全局课表，均衡铺满周一~周五）、`auto_fill_selected_course()`（个人课表，有课就上）、`pick_best_teacher()`、`judge_subject_fit_classroom()`、`get_auto_subject_list()` |
+| `Script/System/Education_System/class_schedule_panel.py` | 改 | 加 `[一键排满全部教室]` 按钮与 `_auto_fill_schedule()`，结果用 `NormalDraw` + `gold_enrod` |
+| `Script/System/Education_System/course_select_panel.py` | 改 | 加 `[一键选课]` 按钮与 `_auto_fill_course()` |
+| `Script/System/Education_System/schedule_template_panel.py` | 改 | 新增 `COLUMN_INDENT` / `COLUMN_WIDTH_ID` / `COLUMN_WIDTH_NAME` / `COLUMN_WIDTH_SLOT` 四个常量；`_draw_head` 与 `_draw_template_table` 改为共用这组常量并走 `pad_display_width`；三个孤立按钮的宽度由 `width/2` 改为满宽 |
+| `Script/UI/Panel/manage_basement_panel.py` | 改 | 教育区的子系统按钮加 `[教育管理系统]`；`jump_to_son_panel` 加对应分支（函数内 import） |
+| `update.log` | 改 | v0.67 段追加 新增 3 条、修正 2 条 |
+| `plan_22_生长养成系统_一期_方案.md` | 改 | §5.2/§5.3 线框图加回一键按钮；新增 §9.3 |
+| `plan_22_生长养成系统_总纲.md` | 改 | 口径 23/28 标注实装状态与差距 |
+
+#### 实施中发现的偏离（§9.3）
+
+36. **偏离 21 本轮兑现。** 一期把 `auto_schedule.py` 推给二期，理由是「三种模式依赖二期的日程模板」——
+    该依赖在二期实施（2026-09-07）时就已解除，但二/三/四期文档里 `自动排课` 零命中，
+    这条一直没人认领，直到本轮才补上。**教训：跨期推迟的欠账要在目标期的方案里落一条，否则会永久悬空。**
+    （`semester_handle.py`（学期切换 / 成绩单）仍未建，继续挂账。**该挂账已于同日第五轮结清**。）
+
+37. **口径 28 只落实三分之一。** 只做「均衡」。另两种的硬障碍写在方案 §9.3.2：
+    补弱项会被**升不了级的性技科目**刷屏（性技升级要真实性交经验，理论课只攒通用珠）；
+    主修优先缺 `CHILD_GROWTH` 的主修/副修字段。两者都不是「顺手加个分支」能解决的。
+
+38. **方案 §3.3 的「实践课侧重动手类」此前从未落实过。** 那一条一直只是方案里的文字，
+    代码对 18 门科目一视同仁，手排时实践教室照样能排话术。本轮的自动排课**第一次把它变成代码**
+    （`PRACTICE_SUBJECT_SET`）。⚠️ 但**手排仍不受限**——`_select_subject` 没改，
+    这是有意的：自动排课给的是合理默认值，不该反过来限制玩家手排。
+
+39. **教育管理系统新增第二个入口，且不需要任何新机制。** 管理罗德岛跳子系统走的是嵌套函数调用
+    而非 `now_panel_id` 切换，所以 `[返回]` 里那句 `now_panel_id = IN_SCENE` 在这条路径上
+    是无害空操作。全仓库没有「记住来源面板」机制，也不需要。详见方案 §9.3.4。
+
+40. **日程模板的列错位是 `{:<10}` 对中文失效。** `str.__format__` 按 `len()` 补齐、终端按显示列排版。
+    四行的字符数**全都是 57**，显示列宽却是 82/75/71/61。⚠️ 这类错位**用 `len()` 是测不出来的**，
+    回归断言必须用 `text_handle.get_text_index()` 实算显示宽。
+
+#### 单元测试结果
+
+新增 `test_auto_schedule`（21 条），连同既有三套共 **88 条断言全绿**：
+
+| 测试 | 条数 | 覆盖 |
+| --- | --- | --- |
+| 面板架构回归 | 27 | 页签、撞名、选中态、首屏 `[返回]` |
+| 数据层 | 16 | 教室开放与排序、学生候选人口径 |
+| 九项界面 | 24 | 改名一致性、教师排序、选课链路、六处屏幕列宽 |
+| **自动排课等三项** | **21** | 周末不排、无教师撞课、76腰技零命中、实践教室科目约束、每格教师是最优、学科均衡极差、只填空格、**幂等**、**可复现**、个人选课取等级最低、基建入口、**日程模板表头与四行列起点完全一致** |
+
+8 名教师铺满 10 间教室的周一~周五：排上 360 节、留空 90 节
+（教师同时只能在一处，10 间教室同一节次最多同时开 8 节课，符合预期）。
+
+关键断言的写法：
+- **无教师撞课**用「遍历全表自查」而不是信任 `judge_teacher_conflict`——后者正是被测对象。
+- **可复现**：清空后重排两次，断言两次的 `class_schedule` 完全相等（验 `sorted()` 是否到位）。
+- **幂等**：连点两次，断言第二次 `filled_count == 0` 且课表快照不变。
+- **列对齐**：按显示宽度切出每列起点，断言表头与四行的起点列表完全相同。改前会得到 82/75/71/61 四个值。
+
+#### 尚未覆盖的验证
+
+- Tk 与 Web 两种模式的实际观感仍需人工各跑一遍。
+- 自动排课在**教师数远大于教室数**时的分布未测（本轮 fixture 是 8 教师 / 10 教室，
+  教师是瓶颈；反过来教师富余时「均衡」的极差表现如何没验）。
+- `semester_handle.py`（学期切换与成绩单）仍未建，学期之间的整体重排（方案 §3.13）无从谈起　→ **已于 2026-09-08 第五轮结清，见本文件末尾与方案 §9.4**。
+
+**2026-09-08 第四轮（与方案 §9.3.6 成对）：个人课表格子同时写科目名与教室名**
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/System/Education_System/course_select_panel.py` | 改 | `_get_cell_text()` 对班级式课回查 `get_class_cell()` 取科目名，成「学识技能/理论教室一」（不带课型缩写，教室名已说明课型）；那节课被清空时显示「/已停课」。`COURSE_TYPE_SHORT` 收窄到只剩个人式三种课型 |
+| `update.log` | 改 | v0.67 段追加 调整 1 条 |
+| `plan_22_生长养成系统_一期_方案.md` | 改 | §5.3 线框图更新；新增 §9.3.6 |
+
+#### 实施中发现的偏离（§9.3.6）
+
+41. **课型缩写被去掉了，因为教室名已经说明了课型。** 「理论教室一」必然是理论课，
+    再标一个「[理]」是重复；`COURSE_TYPE_SHORT` 随之收窄到只剩个人式的三种课型。
+    副产物是宽度余量从 2 列涨到 6 列——最坏组合由 23 列降到 19 列，格子宽 25 列。
+    ⚠️ `CenterButton` 超宽时走的截断分支（`draw.py`）**砍 2 个字符补 `~` 且完全不补齐宽度**，
+    一旦触发，整行网格会左移错位而不是简单地截断。所以回归里穷举了
+    **全部 18 科目 × 10 教室 = 180 种组合**逐一算显示宽，而不是只测几个样本。
+    今后若新增更长的科目名或教室名，这一格会先坏——测试会先报出来。
+
+#### 单元测试结果
+
+新增 `test_cell_text`（12 条），连同既有四套共 **100 条断言全绿**：
+班级式课两者都有、非班级式三种课型显示逻辑不变、未选课仍为 `--`、
+课被清空时标「已停课」、**180 种组合穷举无一超宽**。
+
+**2026-09-08 第五轮（与方案 §9.4 成对）：学期切换与成绩单**
+
+一期最后一笔挂账结清。`semester_handle.py` 自 §1.6 立项起被记了三次
+（偏离 21 推给二期 → 二/三/四期无人认领 → 第三轮偏离 36 再记一次挂账），本轮兑现。
+
+#### 实际改动
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/System/Education_System/semester_handle.py` | **新增** | 纯函数层：`settle_semester_change()`（总入口）、`build_report_card()`、`get_report_grade()`、`get_semester_attend()`、`reset_semester_baseline()`、学期进度与抬头文本、成绩单正文拼装 |
+| `Script/Core/game_type.py` | 改 | `CHILD_GROWTH` 加 `semester_id` / `semester_base_attend` / `semester_base_absent` / `semester_base_ability` / `last_report_card` 五个字段 |
+| `Script/Core/save_handle.py` | 改 | `CHILD_GROWTH` 的**字段级**旧档回填（按属性表整体补，不逐字段 `hasattr`） |
+| `Script/Settle/past_day_settle.py` | 改 | `update_new_day()` 的非角色部分开头调学期切换，出了成绩单则推期末事件并给一条 `gold_enrod` 提示 |
+| `Script/Settle/default.py` | 改 | 「检查成绩单」结算改走 `semester_handle`：有冻结快照发那份并清 flag，没有则现算「截至目前」且不动 flag；加状态 13 的判据由出勤率阈值改为读成绩档位 |
+| `Script/System/Education_System/growth_handle.py` | 改 | 新增养成数值编号 4~9（本学期听课/缺课/出勤率、成绩档位、升级科目数、学期进度）并接进 `get_growth_value()` 的读口 |
+| `Script/System/Education_System/growth_event_handle.py` | 改 | 加 `SEMESTER_EVENT_SUB_KEY = 200`、`push_semester_event()`、`push_semester_event_for_list()` |
+| `Script/System/Education_System/class_schedule_panel.py` | 改 | 容器加 `_draw_semester_head()`，四个页签共用的学期抬头与过半提示 |
+| `Script/System/Education_System/growth_panel.py` | 改 | 出勤栏拆为「累计 / 本学期」两行；新增 `_draw_report_card()` |
+| `data/official_event/期末.csv` | **新增** | 16 条期末事件（优秀 4 / 良好 4 / 待努力 4 / 中性 4） |
+| `data/talk/daily/check_report_card.csv` | 改 | 现有 6 条按语气挂上档位前提（正文未改），补写 8 条，凑齐 3 档 × 2 年龄 × 2 条 + 2 条兜底 |
+| `update.log` | 改 | v0.67 段追加 新增 4 条、调整 2 条、修正 2 条 |
+| `plan_22_生长养成系统_一期_方案.md` | 改 | §3.13 就地更正学期长度口径；新增 §9.4（含 9.4.1~9.4.8） |
+| `plan_22_生长养成系统_总纲.md` | 改 | 口径 35 / 43 标注实装状态与实际口径 |
+
+#### 实施中发现的偏离（§9.4）
+
+42. **偏离 21 与 36 本轮全部结清，一期不再有挂账。** 这条欠账跨了四期没人认领，
+    印证了第三轮偏离 36 的教训——**跨期推迟的欠账要在目标期的方案里落一条**。
+    本轮之所以能找回来，靠的是回头对着总纲的口径表逐条盘实装状态，不是靠代码里有任何报错。
+
+43. **`report_card_flag` 此前从无写入方，是一个「先有字段、后无写入」的半截功能。**
+    字段在一期就写进了 `CHILD_GROWTH`，「检查成绩单」指令、行为、结算、口上也都齐了，
+    唯独没有任何一处把它置 True，养成总览的「本学期成绩单待查看」永远不出现。
+    ⚠️ **这种半截状态不会报任何错**——面板照画、指令照能用，只是内容是错的
+    （给的是终身累计而不是本学期）。**教训：字段与它的写入方要在同一轮里落地**，
+    否则只能靠人工盘口径才发现。
+
+44. **`sub_key` 必须用保留桶键 200，这是期末事件唯一的硬约束。**
+    `get_candidate_event_list()` 每天翻 `(15, 0)` 与 `(15, 当前阶段)`，
+    期末事件用 0 或 101~104 会**天天被日常池抽到**。回归里为此写了双向断言：
+    正向断言期末桶里 16 条一条都不在日常桶里，反向断言日常候选列表里不含任何期末事件。
+
+45. **`CHILD_GROWTH` 的字段级旧档兼容此前整体缺失。**
+    `save_handle` 只保证 `child_growth` 这个**挂载位**存在，没有任何字段级补全——
+    二期加的 `schedule_template_id` / `schedule_override` / `follow_mother_flag`、
+    四期加的字段，在更早的存档里其实都是缺的，只是还没人撞上 `AttributeError`。
+    本轮改成**按新结构体的属性表整体回填**，一次补齐历史欠账。
+    ⚠️ 每个角色各 `new` 一个默认体，否则 dict/list 这类可变默认值会被多个角色共享。
+
+46. **成绩档位的空值必须是 −1 而不是 0。** 0 是「优秀」档，
+    没有养成数据的角色若回落成 0，全岛没上过学的人都会通过优秀档的口上前提。
+    `get_growth_value()` 里为此专门写了一条分支，而不是沿用「没数据一律返回 0」的通例。
+
+47. **口上的档位差分是加权随机，不是「最具体的独占」。**
+    `weight_all_to_1_flag=True` 让权重等于满足的前提条数，档位条权重 3、兜底条权重 1，
+    **兜底条仍有约四分之一的概率出场**。所以那 2 条兜底的正文必须保持档位中立——
+    一开始按「加了档位前提，兜底就轮不到了」设计的话，成绩很差时也会读到一条中性偏正面的文本。
+
+48. **学期长度是季月的日历天数（28~31），方案原文的「约 30 天」是错的。**
+    非季月被时钟整段跳过，季月本身的每一天都是可游玩日，两者重合，
+    所以直接 `calendar.monthrange` 即可。⚠️ 写死 30 会在 2 月与大月上各错一两天，
+    进度条与「还剩几天」都会偏。已先改方案 §3.13 再改代码。
+
+#### 单元测试结果
+
+新增 `test_semester`（90 条），连同既有五套共 **190 条断言全绿**：
+
+| 测试 | 条数 | 覆盖 |
+| --- | --- | --- |
+| 面板架构回归 | 27 | 页签、撞名、选中态、首屏 `[返回]` |
+| 数据层 | 16 | 教室开放与排序、学生候选人口径 |
+| 九项界面 | 24 | 改名一致性、教师排序、选课链路、六处屏幕列宽 |
+| 自动排课等三项 | 21 | 周末不排、无教师撞课、实践教室科目约束、幂等、可复现、日程模板列对齐 |
+| **学期切换与成绩单** | **90** | 见下 |
+
+关键断言的写法：
+- **幂等与自愈**：同一学期连调两次不出第二份成绩单；学期中途新出现的孩子第一次只立基线，
+  下一个学期的成绩单**只算她入学后的那一段**（断言 `attend == 4` 而不是终身的那个数）。
+- **终身累计不被污染**：切学期后再上 3 节，断言本学期为 3 而 `attend_class_count` 仍是 13。
+- **档位边界逐个打**：出勤率 89 差一点不算优秀、满勤但只升 1 门不算优秀、
+  出勤率 70 整算良好、`0/0` 是「无课可评」而**不是**待努力。
+- **桶隔离双向验**：正向查期末桶与日常桶无交集，反向查日常候选列表不含期末事件。
+- **池子抽干**：把 16 条全写进 `event_history`，断言 `push_semester_event()` 返回 `False`
+  且不往队列里塞东西。
+- **档位覆盖**：优秀 / 良好 / 待努力三档各自都要抽得到至少 3 条（实测 5 / 5 / 4），
+  否则某个档位的孩子期末永远没事件；并静态校验 16 条里全部 `CVE_` / `CVP_` token 的形状，
+  写错的 token 不会在加载时报错，要等玩家做决断时才炸。
+- **旧档回填**：`delattr` 掉 5 个字段再跑 `_normalize_loaded_save_paths()`，
+  断言属性集合与新结构体一致，且**两个角色的 dict/list 不是同一个对象**。
+- **结算两条路径**：把 `base_chara_*_common_settle` 换成空操作以隔离被测分支，
+  抓 `NormalDraw.draw` 的文本，断言有快照时发冻结那份并清 flag、无快照时发「截至目前」且 flag 不动。
+
+⚠️ 三个 fixture 陷阱（今后写养成相关的无头测试都会撞上）：
+1. 前提系统的通用闸门会读 `h_state.body_item[14]`，最小角色 fixture 必须
+   先 `attr_calculation.get_h_state_reset()`，否则 `KeyError: 14`；
+2. 同一个闸门还会顺带判**交互对象**（默认是玩家 0）的同一个字段，所以玩家也要初始化；
+3. `favorability` 是 `{0: 0}` 起步的（`character_handle.py:70`），空 dict 会让
+   `CVP_*_F_*` 前提在 `favorability[0]` 上 `KeyError`。
+
+⚠️ 还有一个测试脚本本身的坑：`os._exit()` **不会 flush 缓冲区**，
+输出重定向到文件时会把全部 PASS 行丢光、只留下一个 `EXIT=0`。
+要么在 `os._exit` 前 `sys.stdout.flush()`，要么用 `python -u`。
+
+#### 尚未覆盖的验证
+
+- Tk 与 Web 两种模式的实际观感仍需人工各跑一遍：学期抬头与过半提示、成绩单正文的排版、
+  期末事件在处理公务界面里的显示。
+- 16 条期末事件的**抽取分布**未测：一个孩子养到成年约十几个学期，
+  档位若长期固定（例如一直优秀），只能从那一档的 4 条 + 中性 4 条里抽，
+  实际会不会在成年前抽干、抽干后连着几个学期没有期末事件，需要长盘验证。
+- 成绩档位的阈值（90/2 门、70）是拍的，没有按实际课表密度校准过。
+
+**2026-09-08 第六轮（与方案 §9.5 成对）：成绩单历史页 / 本学期增量 / 死代码清理**
+
+第五轮上线学期制之后，回头对着一期方案**逐条盘实装状态**扫出来的活。
+盘查方式不是读文档凭印象，而是四轮机扫：`CHILD_GROWTH` 逐字段查写入点、
+教育子系统全部非私有函数查调用点、模块级常量查读取点、
+`Behavior_Effect.csv` 的效果号对 Settle 的注册表。
+
+#### 实际改动
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/Core/game_type.py` | 改 | `last_report_card`（单份）→ `report_card_history`（列表，最新在末尾） |
+| `Script/Core/save_handle.py` | 改 | 存档迁移：把已有的单份并进列表头再删掉旧属性 |
+| `Script/System/Education_System/semester_handle.py` | 改 | 新增 `REPORT_CARD_HISTORY_MAX = 8`、`get_report_card_history()`、`get_last_report_card()`、`push_report_card()`；`settle_semester_change` 改走 push |
+| `Script/System/Education_System/growth_handle.py` | 改 | 成绩档位与升级科目数改读历史末尾那份；两处 `-1.0` 字面量改用 `REPORT_GRADE_NONE` |
+| `Script/System/Education_System/growth_panel.py` | 改 | `_draw_report_card` 改为带前后翻页的历史页；`_draw_subject` 加本学期增量并高亮；`_draw_stage` 加胎教底子行；`_draw_flag` 改走 `growth_event_handle` 的读口；新增 `report_card_index` 状态与两个翻页返回值常量 |
+| `Script/System/Education_System/class_schedule_panel.py` | 改 | 选教师时名字后加「本周已排 N 节」（接上 `get_teacher_week_schedule`） |
+| `Script/System/Education_System/schedule_handle.py` | 改 | 删 `judge_student_conflict` 与 `STUDENT_WORK_TYPE`；`set_selected_course` 的docstring就地说明学生撞课为何不可能 |
+| `Script/System/Sex_System/group_sex_panel.py` | 改 | 模板编辑面板里，课堂模式下体力 < 30% 的学生改为灰显「体力不足，只能旁观」且不可选 |
+| `Script/Settle/default.py` | 改 | 「检查成绩单」改走 `get_last_report_card`，并在末尾提示更早的学期去哪翻 |
+| `update.log` | 改 | v0.67 段追加 新增 2 条、调整 3 条、修正 1 条 |
+| `plan_22_生长养成系统_一期_方案.md` | 改 | §3.13 / §3.14 / §5.4 就地更正；新增 §9.5 |
+| `plan_22_生长养成系统_四期_方案.md` | 改 | §682 与 §757-26 标注实装时间 |
+
+#### 实施中发现的偏离（§9.5）
+
+49. **成绩单只存一份是第五轮自己埋的坑。** 「冻结快照」这个决定是对的（避免查看时现算），
+    但存成**单份**就把历史一并弄丢了——学期成绩本来就该能纵向比，
+    玩家看不出「上学期是不是比这学期好」。改成带上限的列表，并给第五轮那几天的存档做迁移。
+    ⚠️ **必须有上限**：一个孩子养到成年约十几个学期，多孩存档不设上限会让存档持续变大。
+
+50. **翻页下标必须是面板的属性，不能是局部变量。** 容器 `Education_Manage_Panel` 每轮 `while`
+    都会重画子页，局部变量每轮都被重置，玩家点一次「上一学期」马上又跳回最新那份。
+    这与 §9.2 里「子面板实例只创建一次」是同一个坑的两种表现——**凡是跨轮要保留的选中态，
+    都得挂在面板实例上**。
+
+51. **§5.4 的「本学期增量」写了五轮才落实。** 不是遗漏，是**依赖没到位**：
+    「本学期」这个概念要等第五轮的学期制上线才存在。⚠️ 这类「方案写了但当期做不了」的条目，
+    应当在方案里当场标出依赖与预计落地期，否则就会像 `semester_handle` 那样悬空好几期。
+
+52. **四期口径 65 此前只落实了一半。** 「体力不足的必修学生到场、不计缺课」那半在
+    `class_ai.py:249` 实装了；但四期方案 §682 与 §757-26 明写的另一半——
+    「模板编辑面板实时判体力，不可选中并标『体力不足，仅旁观』」——**从未实装**，
+    `judge_hp_low_only_watch` 写好了却没有任何调用者，玩家仍能把体力低的学生拖进群交模板。
+    本轮接上。⚠️ **只在 `cache.sex_class_mode` 下生效**：`show_target_chara_list` 是
+    普通群交共用的面板，不加这道闸会改掉既有玩法。
+
+53. **`judge_student_conflict` 是设计冗余，不是漏接。** §3.14 列了三类冲突，
+    但「学生撞课」在个人课表的结构下**不可能发生**——一个 (星期, 节次) 只存一门课，
+    `set_selected_course` 直接覆盖。删掉并在 §3.14 与函数注释里就地说明，
+    免得下一轮盘查的人又把它当成漏接的功能补一遍。
+
+54. **6 个「未注册效果号」是扫描脚本的假阳性，本项经用户判断不做改动。**
+    271 / 410 / 420 / 421 / 998 / 999 全在 `SecondEffect` 里且都注册了。
+    扫错的两个原因值得记住：**效果号有两套号段重叠的独立注册表**
+    （`BehaviorEffect` 496 个 / `SecondEffect` 158 个），只搜一套必然把另一套全报成缺失；
+    **行为的 `tag` 是「二段结算|H装备」这种带子标签的形式**，用 `== "二段结算"` 精确匹配会漏判。
+    按一段/二段拆开重扫后两侧都是零缺口。
+
+#### 单元测试结果
+
+`test_semester` 由 90 条扩到 **120 条**，连同既有五套共 **220 条断言全绿**。
+
+新增断言的重点：
+- **历史上限与顺序**：连过 11 个学期，断言被裁到 8 份、最新在末尾、列表按时间正序、
+  最旧那几份确实被丢掉、`get_last_report_card()` 取的就是末尾那个对象。
+- **翻页边界**：首次进入回落到最新那份；最新那份只画一个按钮、中间页两个都在；
+  连点 20 次「上一页」被夹回有效区间；换孩子清掉下标；只有一份时一个按钮都不画。
+- **死代码接线**：六个符号逐个断言——两个已从模块上消失（`hasattr` 为假），
+  四个能在对应函数的源码里搜到调用。
+- **宽度**：教师按钮加了「/N节」之后穷举最坏组合，断言不超过 31 列的格位
+  （超了会触发 `LeftButton` 的截断分支，整行网格左移）。
+
+⚠️ 本轮的测试脚本自身踩了两个坑，记下来：
+`Growth_Panel.student_list` 平时由 `draw_page` 每轮重算，直接调 `handle_yrn` 要先手动喂一份，
+否则它在换孩子之前就 `return` 了；群交模板面板的类名是 `Edit_Group_Sex_Temple_Panel`
+而不是想当然的 `Group_Sex_Panel`。
+
+#### 尚未覆盖的验证
+
+- Tk 与 Web 两种模式的人工验收：成绩单翻页区的排版、科目栏加了「（本学期+N）」之后的对齐、
+  选教师那一屏加了「/N节」之后的网格。
+- 群交模板面板的改动**只在课堂模式下生效**，普通群交的表现未回归——需要人工开一次普通群交确认没变。
+- 成绩单上限 8 份是拍的，没有按实际养成周期（幼女到少女约十几个学期）校准过。
+
+**2026-09-08 第七轮（与方案 §9.6 成对）：教育系统常量集中到 `education_constant.py`**
+
+照怀孕系统 `pregnancy_constant.py` 的成例做的一次纯搬家。盘查方式是 AST 逐文件取模块级
+`ALL_CAPS` 赋值，再对全仓库反查引用点（裸引用 / `<模块>.常量` 两种写法都扫）。
+
+#### 实际改动
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/System/Education_System/education_constant.py` | **新建** | 402 行，113 个常量分 15 组；原 114 个去重合并掉 1 个 |
+| `Script/System/Education_System/` 其余 13 个模块 | 改 | 删掉全部 116 处模块级常量定义，补 `education_constant` 的 import，209 处引用改写 |
+| `Script/Settle/default.py` | 改 | 11 处引用改写；`handle_nuirse_child_add_adjust` 的 `baby_growth_handle` 导入随之作废 |
+| `Script/StateMachine/default.py` | 改 | 6 处；`character_education_skip_class` 的 `schedule_handle` 导入随之作废 |
+| `Script/UI/Panel/character_info_head.py` | 改 | 8 处；`get_course_text` 的 `schedule_handle` 导入随之作废 |
+| `Script/Design/handle_premise/__init__.py` | 改 | 2 处引用 + 1 处注释里的编号出处 |
+| `Script/Design/handle_premise/handle_premise_work.py` | 改 | 1 处 |
+| `Script/System/Instruct_System/handle_instruct.py` | 改 | 2 处；`ask_for_sex_class_ability` 的 `sex_class_handle` 导入随之作废 |
+| `Script/Design/settle_behavior.py` | 改 | 注释里的养成数值编号出处 |
+| `Script/Core/game_type.py` | 改 | `prenatal_point` 字段注释里的上限出处 |
+| `update.log` | 改 | v0.67 段追加 调整 1 条 |
+| `plan_22_生长养成系统_一期_方案.md` | 改 | 新增 §9.6 |
+| `plan_22_生长养成系统_一期_实施步骤与记录.md` | 改 | §1.6 文件清单补一行；新增本节 |
+
+#### 实施中发现的偏离（§9.6，编号接 54 往下）
+
+55. **散落不是「不整齐」，是让作者只能重复写。** 扫出 2 个同名常量各写两份
+    （`ABSENT_HP_RATE`、`CLASSROOM_COURSE_TYPE_SET`）、1 个同物两名
+    （`FOLLOW_MOTHER_ENTERTAINMENT_ID` 与 `ENTERTAINMENT_FOLLOW_MOTHER` 都是娱乐 176）。
+    ⚠️ **三份重复里有两份的注释明写了「此处另写一份是为了避免循环导入」**——
+    问题当时就被记下来了，只是**没有解法**：两个模块都要用同一个数，互相 import 会成环。
+    常量单独成文件正是那个解法。这类「注释里写着已知缺陷」的地方，
+    往后盘查时应当当成待办来读，而不是当成说明。
+
+56. **6 处函数内 import 只为取一个常量。** `semester_handle` 有 4 处、
+    `auto_schedule` 与 `growth_panel` 各 1 处，都是 `from ... class_schedule_panel import SUBJECT_ABILITY_LIST`，
+    理由是「面板模块提到文件顶层会循环导入」。⚠️ 这些 import 在函数体里，
+    **每次调用都要走一次导入机制**，而 `get_semester_level_change` 是成绩单结算的热路径。
+    搬家后 6 处全删，改成模块顶层一次性 import 常量文件。
+
+57. **`class_schedule_panel` 的循环导入注释本身也过期了。** 原文写「这三个模块在自己的模块顶层
+    反向 import 本模块（取 `WEEK_NAME` 等共用常量）」。搬家后 `growth_panel` 与
+    `schedule_template_panel` 已不再 import 它，只剩 `course_select_panel` 为取
+    `get_period_time_text()` 这个**函数**而 import。环还在，但理由变了，注释照实改写。
+
+58. **分组按「谁在用」而不是「原来在哪个文件」。** 譬如 `MALE_ONLY_ABILITY_ID`、
+    `SEX_CLASS_ABILITY_LIST`、`PRENATAL_SUBJECT_LIST` 原本分居三个文件，
+    注释各自解释了同一件事——为什么不含 76 腰技。归到「科目」一组后，
+    第一条写清楚、后两条引用它，重复的解释才消得掉。
+
+59. **三对该相等的常量改为派生，从结构上杜绝漂移。**
+    `WEEK_DAY_COUNT = len(WEEK_NAME)`、`CHILD_TALENT_SET = set(STAGE_TALENT_NAME)`、
+    `CLASSROOM_COURSE_TYPE_SET` 由三个 `COURSE_TYPE_*` 推出。
+    ⚠️ 派生要节制：只对**注释里已经写明「两者必须一致」**的那几对做，
+    别把普通常量也算成表达式——常量文件的第一价值是「一眼能看见这个数是多少」。
+
+60. **搬家不许顺手改语义。** 两条自设红线：
+    ⚠️ **不给字符串加 `_()`**——`SLOT_NAME`、`COURSE_TYPE_NAME` 等原本没有翻译标记，
+    加上去会改变 PO 词条集合，那是另一件事；
+    ⚠️ **不搬函数内的局部常量表**——它们只服务一处，搬出去反而要跳文件读。
+
+61. **改写必须按 token 走，不能按文本替换。** 用 `tokenize` 逐 NAME 令牌改，
+    天然不碰字符串与注释。⚠️ 唯一踩到的坑是**括号式 from-import**：
+    `from ... import (\n    WEEK_NAME, get_period_time_text)` 里的 `WEEK_NAME`
+    前一个令牌是 `(` 而不是 `import`，被当成裸引用改成了
+    `education_constant.WEEK_NAME`，写出一行语法错误。单行的
+    `from ... import SUBJECT_ABILITY_LIST` 反而没事（前一个令牌正是 `import`）。
+    往后做同类改写，**from-import 一律先单独处理掉，再跑令牌改写**。
+
+62. **删定义会顺手吃掉 black 要求的两行空行。** 常量块与其后的 `def` 之间原本是两行空行，
+    连块带空行一起删之后只剩一行。本机没装 black，改用「与 HEAD 版逐个 `def` 比对空行数、
+    只补回变少的那些」的办法修，15 处。⚠️ 判据要排除**装饰器**（`@register_provider`
+    下面的 `def` 本来就是 0 行空行）与**区块横幅**（`# ---` 三行注释块的中间两行同理），
+    否则会误报一大片。
+
+#### 单元测试结果
+
+新增 `test_const_move.py` **28 条**，连同既有三套共 **257 条全绿**
+（本轮 28 + 一期 120 + 二期 65 + 三期 44）。
+
+本轮断言的核心只有一条，其余都围着它转：
+
+- **114 个常量的取值搬家前后完全一致**——逐个 `git show HEAD:<文件>` 取出原定义的表达式源码，
+  在受限命名空间里求值，与新文件的运行时值逐个比对。⚠️ 这是纯搬家唯一真正要证明的事，
+  「能 import」「能跑」都证明不了某个数字有没有被抄错。
+- **HEAD 版本确实有 114 个不同名常量、且跨文件同名重复正好是那 2 个**——
+  反向锁住基线，免得日后有人加了常量却不更新这条断言还以为它在保护自己。
+- **13 个模块里一个模块级常量都不剩**、**全仓库没有裸引用与 `<模块>.常量` 的旧写法**、
+  **没有因搬家而变成死引用的 import**（放过带 `noqa: F401` 的副作用导入）。
+- 派生关系四条各断言一次；性格倾向的正负顺序两表一致；腰技 76 不在任何女儿可选的科目表里。
+
+#### 尚未覆盖的验证
+
+- 游戏内没有跑过：本轮不改任何行为，风险集中在 import 期，
+  而 13 个教育模块 + 子系统外 5 个引用方的导入都已在无头环境里实跑过。
+- `education_constant` 依赖 `official_event_handle`，若日后公务事件系统在**模块顶层**
+  反向 import 教育系统，这个环会立刻炸在 import 期。⚠️ 目前它只在函数内 import
+  （`official_event_handle.py:128`，带 `noqa: F401` 的注册用副作用导入），
+  那条注释里也写明了理由。
+- 本机没有 black，新文件与改动文件的格式只按「与 HEAD 比对空行数」这一条修过，
+  未跑过完整的 `black --line-length 200`。
+
+**2026-09-08 第八轮（与方案 §9.7 成对）：常量改为从配置现算，字符串接入翻译api**
+
+紧接第七轮。集中之后再做两件事：能从配置推出来的不写死，要给玩家看的一律过翻译。
+
+#### 实际改动
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/System/Education_System/education_constant.py` | 改 | 三张科目表改为按 `ability_type` 现算；阶段名与性格倾向名改读 Talent.csv；46 处显示字符串接入 `_()`；新增「未初始化就导入」的守卫 |
+| `Script/System/Education_System/auto_schedule.py` | 改 | `get_auto_subject_list()` 不再自己算一遍，直接取 `FEMALE_SUBJECT_LIST` 的副本 |
+| `Script/System/Education_System/baby_growth_handle.py` | 改 | 两处跟着 `PRENATAL_SUBJECT_LIST` → `FEMALE_SUBJECT_LIST` 改名 |
+| `update.log` | 改 | v0.67 段追加 调整 1 条、修正 1 条 |
+| `plan_22_生长养成系统_一期_方案.md` | 改 | 新增 §9.7 |
+| `plan_22_生长养成系统_一期_实施步骤与记录.md` | 改 | 新增本节 |
+
+#### 实施中发现的偏离（§9.7，编号接 62 往下）
+
+63. **按 `ability_type` 筛科目会多筛出一个 90 隐蔽。** 类型5（技术）里除了 70~77 八门性技，
+    还有一个隐蔽——它是隐奸系统的熟练度，不是能开课教的科目。
+    ⚠️ 只按类型筛会让课表里冒出一门「隐蔽课」，实操课也会把它列进主修。
+    立 `NOT_SUBJECT_ABILITY_SET = {90}` 显式排除并写明理由，**不用 `cid < 90` 这类边界条件**——
+    那种写法挡不住下一次往类型5里加非科目的能力。
+    ⚠️ 这条也说明「改为从配置现算」不是无脑替换：**先要确认那一维在配置里真的存在**。
+
+64. **`PRACTICE_SUBJECT_SET` 推不出来，只能继续列举。** Ability.csv 没有「是不是动手类」这一维。
+    注释里写明它是例外，免得下一个人以为漏改了。同理 `CHILD_TALENT_ID_LIST` 的四个id 也写死：
+    Talent.csv 里 101~104 的类型都是「身体素质」，与其他几十个身体素质并无区别，按类型筛不出来。
+
+65. **三张科目表其实是一条链，此前各算各的。** 理成
+    `SUBJECT_ABILITY_LIST` → `MALE_ONLY_SUBJECT_SET` → `FEMALE_SUBJECT_LIST` → `SEX_CLASS_ABILITY_LIST`。
+    ⚠️ 顺带发现 `auto_schedule.get_auto_subject_list()` 与 `PRENATAL_SUBJECT_LIST`
+    **算的是同一个东西**（全部科目去掉腰技），只是一个叫「自动排课能排的」、一个叫「胎教覆盖的」。
+    改名为 `FEMALE_SUBJECT_LIST`（女儿学得了的科目）后两处共用一张。
+
+66. **`MALE_ONLY_ABILITY_ID = 76` 改成集合。** 从 `sex_need == 0` 现算出来的本来就是一个集合，
+    写成单个 id 等于假定「男性专属科目永远只有一门」。
+
+67. **给硬编码中文包 `_()`，不如直接读配置。** 素质名走 `config_talent[id].name` 时**自带翻译**——
+    `game_config` 载入时对所有 `name` 列跑过 `get_text._()`（`game_config.py:536`），
+    PO 里早有 `婴儿 → Baby`。⚠️ 因此这类现取的名字**绝不能再包一层 `_()`**，包了反而对不上词条。
+    这条得写进注释，否则下一个人按「字符串就包 `_()`」的规律一扫就会包上去。
+
+68. **有三处 `_()` 不是体例问题，是活BUG。** `EDUCATION_ZONE_NAME`、`PRESET_TEMPLATE_SLOT_NAME`、
+    `PE_PLACE_DATA` 的键都不是拿来显示的，是拿去和**翻译过的**配置/场景数据比对的。
+    写死中文在非中文语言下分别导致：教育区成长加成整个失效、四套预设日程模板全部套用失败、
+    体育课永远找不到上课地点。⚠️ **判断一个字符串该不该翻译，看的不是它长什么样，
+    而是它要和谁比对**——同一个文件里 `Class_Room`（场景标签）、`通用1`（事件uid）、
+    `GROWTH_REPORT_PREV`（面板哨兵）就一个都不能包。
+
+69. **场景名走的是 pickle 缓存，翻译只在冷构建那一次生效。** `map_config.init_map_data()`
+    有缓存就直接 `pickle.load`，只有冷构建才走 `get_text._(SceneName)`。
+    ⚠️ 于是**场景名跟的是「缓存生成时的语言」而不是当前语言**——我第一次验证时正是撞在
+    「缓存中文、会话英文」这个状态里，一度以为自己把体育课改坏了。
+    改用「照 `map_config.py:64` 那行的写法直接对 Scene.json 求值」验证，
+    冷构建下 `scene_name` 就是 `'Stake Room'`，与 `_("木桩房")` 一致。
+    ⚠️ **验证一个「载入期做的转换」，不能只看缓存里的成品**。
+    这是整个游戏的既有问题（改语言不重建缓存则全岛地名不变），不是本表独有，记在这里备查。
+
+#### 单元测试结果
+
+`test_const_move` 由 28 条扩到 **56 条**，连同既有三套共 **285 条全绿**。
+
+新增断言的重点：
+
+- **现算的结果与改造前写死的值逐个相等**：科目18门、女儿可学17门、实操课7门、
+  阶段名四个、性格倾向名四对，全部与硬编码版本比对通过。
+- **90 隐蔽确实是类型5、且确实被排除**——正反两面都断言，免得哪天有人把排除表删了还以为没事。
+- **`_()` 的正反覆盖**：用 AST 走每个常量的取值表达式，分出「裸字符串」与「`_()` 包着的字符串」，
+  11 个必须全包、6 个必须一个都不包（场景标签、事件uid、面板哨兵、排版空白）。
+  ⚠️ 反向那半更要紧：正向漏了只是不翻译，反向误包会直接写坏数据键。
+- **现取的名字没有被再包一层 `_()`**。
+
+#### 尚未覆盖的验证
+
+- 新加的 46 处 `_()` 需要跑一次 `buildpo.py`（扫全仓库 `.py` 交给 `xgettext`）才会进 PO，
+  本机没有 `xgettext`，未跑。在跑通之前，这批词条在英文模式下仍显示中文——
+  与改造前一模一样，不构成回退。
+- 英文模式的实机验收：本轮只在无头环境里比对了键能否对上，没有真开一局英文游戏。
+- `NOT_SUBJECT_ABILITY_SET` 目前只有 90 一项，是照当前 Ability.csv 盘出来的；
+  日后往类型4/5 里加非科目的能力时必须同步。

@@ -1,0 +1,7 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|45_G_0,讲台空着，教室里没有人管，很快就有人开始说话。\n{Name}把课本立起来挡在面前，试图看进去，可是眼睛总往声音那边飘。\n一节课下来{Name}翻过去了三页，其中两页都不记得写了什么。
+0,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|45_G_0,老师没来，{Name}把上次记的笔记翻出来，从头看了一遍。\n看到一处自己都认不出的字，{Name}皱着眉猜了半天，最后猜了个八九不离十。\n“下次要写清楚一点。”{Name}在旁边端端正正地重写了一遍。

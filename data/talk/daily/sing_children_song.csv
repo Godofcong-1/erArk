@@ -3,4 +3,13 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,sing_children_song,0,high_1,{Name}触发了哼唱儿歌指令的地文
+0,sing_children_song,0,sys_0,{Name}坐在小床边，轻轻哼起一支儿歌。{TargetName}安静下来，眼睛随着{Name}的声音一动一动。
+1,sing_children_song,0,sys_0,{Name}的儿歌唱得并不算好，但{TargetName}听得很认真，小手跟着节拍一张一合。
+2,sing_children_song,0,sys_0,{Name}把{TargetName}抱在腿上，一边轻轻晃着一边哼歌。唱到重复的那一句时，{TargetName}忽然咯咯地笑了。
+3,sing_children_song,0,sys_0,{Name}哼着一首很老的摇篮曲，那是{Name}自己也说不清从哪里学来的。{TargetName}听着听着就闭上了眼睛。
+4,sing_children_song,0,sys_0,{Name}给{TargetName}唱了一首又一首，直到嗓子有些发干。{TargetName}还睁着眼睛，像是在等下一首。
+5,sing_children_song,0,sys_1,{Name}一边收拾着育儿室，一边哼着儿歌。{TargetName}躺在小床里，跟着旋律轻轻蹬着腿。
+6,sing_children_song,0,sys_1,{Name}坐到{TargetName}的小床边，压低声音唱起儿歌。不多久，小床里就传来了均匀的呼吸声。
+7,sing_children_song,0,sys_1,{Name}唱的儿歌带着一点家乡的口音，{TargetName}听不懂词，却被那调子逗得直乐。
+8,sing_children_song,0,sys_1,{Name}抱着{TargetName}轻轻地摇，嘴里哼着一首简单的小曲。{TargetName}的目光一直追着{Name}的嘴唇。
+9,sing_children_song,0,sys_1,{Name}把儿歌哼了两遍，{TargetName}的小手慢慢松开，睡着了。

@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|75_G_0,没有人指导，{Name}就自己练习深呼吸放松，吸气，慢慢吐。\n试了很多次{Name}才觉得身体好像真的松下来一点点。\n“原来是这样的感觉”，{Name}小声嘀咕了一句。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|75_G_0,{Name}练习收紧和放松的交替，才发现自己确实只会紧，不太会松。\n慢慢地{Name}好像找到了一点点放松下来的感觉。\n“松才是这门课的重点”，{Name}把老师的话当成了自习的座右铭。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|75_G_0,{Name}练习在紧张状态下主动放松，一开始总是做不到，越想放松越紧。\n慢慢调整呼吸之后，{Name}终于能稍微松下来一点了。\n“越逼越紧，越紧越难受”，{Name}小声重复了一遍提醒自己。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|75_G_0,{Name}保持放松的状态练习耐力，中途觉得有点难也没有放弃。\n难的感觉慢慢缓解之后，{Name}才觉得松了一口气。\n{Name}把这次坚持的时间悄悄记在心里，想着下次要更久。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|75_G_0,{Name}对着空的房间反复练习深呼吸和放松的配合，没有人指导也没有反馈。\n练到后来{Name}竟然能保持很长一段时间不紧张。\n“下次上课要试试给老师看看”，{Name}这样想着，又练了几遍。

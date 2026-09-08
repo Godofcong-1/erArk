@@ -128,6 +128,9 @@ int,str,str,str,str,int,int,str,str,int,str,str,str,str
 3028,hydrotherapy_treatment,水疗护理,PLAY,0,1,2,IN_SPA_ROOM,HYDROTHERAPY_TREATMENT,1,,hand,hand_play,
 3029,onsen_bath,泡温泉,PLAY,0,1,2,IN_ONSEN,ONSEN_BATH,1,,hand,hand_play,
 3030,aromatherapy,香薰疗愈,PLAY,0,1,2,IN_AROMATHERAPY_ROOM,,2,AROMATHERAPY,hand,hand_play,face
+3031,prenatal_talk,对孕肚说话,PLAY,0,1,2,HAVE_TARGET|NOT_IN_TOILET|T_INFLATION_1|T_FAKE_INFLATION_0,PRENATAL_TALK,1,,hand,hand_play,belly
+3032,prenatal_music,给孕肚放音乐,PLAY,0,1,2,HAVE_TARGET|NOT_IN_TOILET|T_INFLATION_1|T_FAKE_INFLATION_0,PRENATAL_MUSIC,1,,hand,hand_play,belly
+3033,prenatal_touch,抚摸孕肚,PLAY,0,1,2,HAVE_TARGET|NOT_IN_TOILET|T_INFLATION_1|T_FAKE_INFLATION_0,PRENATAL_TOUCH,1,,hand,hand_play,belly
 4001,hypnosis_one,单人催眠,ARTS,0,1,1,PRIMARY_HYPNOSIS|HAVE_TARGET|SCENE_ONLY_TWO|T_NORMAL_5_6|SANITY_POINT_GE_5,HYPNOSIS_ONE,1,,arts,arts_hypnosis,head
 4002,deepening_hypnosis,加深催眠,ARTS,0,1,1,PRIMARY_HYPNOSIS|HAVE_TARGET|SCENE_ALL_UNCONSCIOUS|T_UNCONSCIOUS_HYPNOSIS_FLAG|SANITY_POINT_GE_5,,1,,arts,arts_hypnosis,head
 4003,hypnosis_all,集体催眠,ARTS,0,1,2,ADVANCED_HYPNOSIS|HAVE_TARGET|SCENE_OVER_TWO|T_NORMAL_5_6|SANITY_POINT_GE_5,HYPNOSIS_ALL,1,,arts,arts_hypnosis,head
@@ -223,6 +226,8 @@ int,str,str,str,str,int,int,str,str,int,str,str,str,str
 6006,hidden_sex_end,结束隐奸,SEX,0,0,0,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_HIDDEN_SEX_MODE_GE_1|TARGET_NOT_IN_EXHIBITIONISM_SEX_MODE|GROUP_SEX_MODE_OFF|IS_H,END_H,1,,sex,sex_start_end,
 6007,exhibitionism_sex_end,结束露出,SEX,0,0,0,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_NOT_IN_HIDDEN_SEX_MODE|TARGET_EXHIBITIONISM_SEX_MODE_GE_1|GROUP_SEX_MODE_OFF|IS_H,END_H,1,,sex,sex_start_end,
 6008,group_sex_end,结束群交,SEX,0,0,0,GROUP_SEX_MODE_ON|IS_H,GROUP_SEX_END,1,,sex,sex_start_end,
+6906,start_sex_class,性技实操课,OBSCENITY,0,1,1,SEX_CLASS_MODE_OFF|IN_SEX_CLASS_PLACE|SCENE_HAVE_SEX_CLASS_STUDENT|SCENE_ALL_NOT_H|HIDDEN_SEX_MODE_0,START_SEX_CLASS,1,,sex,sex_start_end,
+6907,end_sex_class,结束性技实操课,SEX,0,0,0,SEX_CLASS_MODE_ON|IS_H,END_SEX_CLASS,1,,sex,sex_start_end,
 6009,undress,脱衣服,SEX,0,2,0,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_IS_H,,1,UNDRESS,hand,hand_dress,
 6010,change_top_and_bottom,交给对方,SEX,0,2,0,HAVE_TARGET|T_NORMAL_5_6|T_NPC_NOT_ACTIVE_H|GROUP_SEX_MODE_OFF|TARGET_NOT_BONDAGE|TARGET_IS_H,,1,,sex,sex_base,
 6011,keep_enjoy,继续享受,SEX,0,2,0,HAVE_TARGET|T_NPC_ACTIVE_H|TARGET_IS_H,,1,,sex,sex_base,

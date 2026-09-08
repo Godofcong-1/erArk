@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+2000,start_sex_class,0,CVP_A1_Course|70_G_0,「手指的力道要这样控制——太重会疼，太轻又不够。」{Name}一边示范一边讲解。
+2001,start_sex_class,0,CVP_A1_Course|70_G_0,{Name}握住学生的手腕，纠正着她手指的角度。「感觉到了吗？就是这个位置。」
+2002,start_sex_class,0,CVP_A1_Course|70_G_0,这节课练的是指技。{Name}让每个人都把手伸出来，一根一根地检查过去。

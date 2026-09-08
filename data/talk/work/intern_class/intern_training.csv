@@ -4,6 +4,6 @@ str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
 1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_training_room,训练场里全是比{Name}高一大截的干员，{Name}站在边上有点怯。\n带教的学员让{Name}先跟着做热身，动作跟着比划就行。\n热身做完{Name}就出了一身汗，但胆子也大了些。
-1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_training_room,{Name}的任务是数别人的次数，一边数一边记。\n数到后来{Name}发现自己也跟着在心里使劲。\n"数着数着好像自己也练了。"{Name}小声说。
-1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_training_room,{Name}第一次看到真正的干员是怎么训练的，量比课上大出好几倍。\n"你们上课那个是让你们别受伤，"带教的学员说，"我们这个是让敌人受伤。"\n{Name}认真地把这句话记住了。
-1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_training_room,今天{Name}被允许跟着做一组完整的训练，做到一半就撑不住了。\n带教的学员没有让{Name}硬撑，直接叫停了。\n"知道自己什么时候该停，这也是本事。"{Name}把这句话和战斗课上的"跑"放在了一起。
+1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_training_room,{Name}的任务是数别人的次数，一边数一边记。\n数到后来{Name}发现自己也跟着在心里使劲。\n“数着数着好像自己也练了。”{Name}小声说。
+1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_training_room,{Name}第一次看到真正的干员是怎么训练的，量比课上大出好几倍。\n“你们上课那个是让你们别受伤，”带教的学员说，“我们这个是让敌人受伤。”\n{Name}认真地把这句话记住了。
+1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_training_room,今天{Name}被允许跟着做一组完整的训练，做到一半就撑不住了。\n带教的学员没有让{Name}硬撑，直接叫停了。\n“知道自己什么时候该停，这也是本事。”{Name}把这句话和战斗课上的“跑”放在了一起。

@@ -3,6 +3,6 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,manage_facility_power,0,have_intern_student,{Name}指着整面墙里的一块表，对跟来的孩子说"只看这个"。\n那孩子真的盯了半节课，中途报告了一次读数变化。\n"正常波动。"{Name}说。孩子有点失望，但没有停下记录。
-1001,manage_facility_power,0,have_intern_student,今天有一处读数偏了一点，{Name}立刻起身去查。\n跟着的孩子一路追问"这样就要去看吗"。\n"大部分故障，在它发生之前就能看出来。"{Name}边走边答。
-1002,manage_facility_power,0,have_intern_student,跟来的孩子说自己发现有两块表总是同时变。\n{Name}停下来看了一眼那孩子指的位置。\n"对，它们是一路的。"{Name}说，"你看了多久？""……大半节课。"
+1000,manage_facility_power,0,have_intern_student,{Name}指着整面墙里的一块表，对跟来的孩子说“只看这个”。\n那孩子真的盯了半节课，中途报告了一次读数变化。\n“正常波动。”{Name}说。孩子有点失望，但没有停下记录。
+1001,manage_facility_power,0,have_intern_student,今天有一处读数偏了一点，{Name}立刻起身去查。\n跟着的孩子一路追问“这样就要去看吗”。\n“大部分故障，在它发生之前就能看出来。”{Name}边走边答。
+1002,manage_facility_power,0,have_intern_student,跟来的孩子说自己发现有两块表总是同时变。\n{Name}停下来看了一眼那孩子指的位置。\n“对，它们是一路的。”{Name}说，“你看了多久？”“……大半节课。”

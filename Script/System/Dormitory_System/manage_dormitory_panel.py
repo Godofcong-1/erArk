@@ -850,8 +850,7 @@ class Manage_Dormitory_Panel:
             return
 
         character_data = cache.character_data[character_id]
-        if not self._is_manager_room_path(character_data.dormitory) and character_data.permanent_dormitory == "":
-            character_data.permanent_dormitory = character_data.dormitory
+        common.register_permanent_dormitory(character_id)
         character_data.dormitory = manager_room_path
 
         character_position = character_data.position

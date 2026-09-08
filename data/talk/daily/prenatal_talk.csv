@@ -1,0 +1,15 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,prenatal_talk,0,t_pregnancy_1,{Name}把手轻轻放在{TargetName}的肚子上，凑近了低声说话。「听得见吗？我是爸爸。」{TargetName}忍不住笑了出来。
+1,prenatal_talk,0,t_pregnancy_1,{Name}对着{TargetName}微微隆起的肚子讲起了今天罗德岛上发生的事，从食堂的新菜讲到走廊里的趣闻，讲得认真极了。
+2,prenatal_talk,0,t_pregnancy_1,「今天也要乖乖长大哦。」{Name}对着{TargetName}的肚子叮嘱道。{TargetName}用手掌盖住{Name}的手背，轻轻按了按。
+3,prenatal_talk,0,t_pregnancy_1,{Name}把耳朵贴在{TargetName}的肚子上，一边听一边小声地自言自语，像是在和里面的小家伙商量着什么。
+4,prenatal_talk,0,t_pregnancy_1,{Name}给{TargetName}肚子里的孩子念了一段书。念到一半，{TargetName}说：「她好像动了一下。」
+5,prenatal_talk,0,t_parturient_1,{TargetName}的肚子已经很大了。{Name}靠在床边，对着孕肚说：「快要见面了呢。别急，慢慢来。」
+6,prenatal_talk,0,t_parturient_1,「等你出来，第一个抱你的人会是我。」{Name}对着{TargetName}高高隆起的肚子许下了承诺。{TargetName}笑着说这话她记下了。
+7,prenatal_talk,0,t_parturient_1,{Name}一边替{TargetName}掖好被角，一边对着肚子里的孩子说话，声音放得很轻，生怕吵到了母女两个。
+8,prenatal_talk,0,t_parturient_1,{Name}把这几天想好的几个名字一个个念给{TargetName}的肚子听，问里面的小家伙喜欢哪一个。{TargetName}在旁边笑得直不起腰。
+9,prenatal_talk,0,t_parturient_1,{Name}握着{TargetName}的手，对着肚子说了很久。临了，{TargetName}轻声道：「她一定都听见了。」

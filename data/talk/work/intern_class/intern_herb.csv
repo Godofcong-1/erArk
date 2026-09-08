@@ -4,6 +4,6 @@ str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
 1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_herb_garden,药田里的味道很冲，{Name}进去就打了个喷嚏。\n种植员让{Name}先认三种最常用的，别的先不管。\n一节课下来{Name}认全了三种，还多认了一种自己觉得好看的。
-1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_herb_garden,{Name}蹲在垄边拔草，拔着拔着把一株药材也拔了。\n{Name}小心翼翼地想把它插回去，被种植员看见了。\n"没关系，"种植员说，"这一株本来就该间掉。"{Name}这才松了口气。
+1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_herb_garden,{Name}蹲在垄边拔草，拔着拔着把一株药材也拔了。\n{Name}小心翼翼地想把它插回去，被种植员看见了。\n“没关系，”种植员说，“这一株本来就该间掉。”{Name}这才松了口气。
 1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_herb_garden,{Name}学的是判断采收的时机，种植员让{Name}自己选三株。\n{Name}挑得很慢，每一株都要看叶子、摸茎、闻一闻。\n三株里对了两株，种植员说第一次能对两株已经很好。
-1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_herb_garden,今天{Name}问了一个问题："如果天灾来了，这些怎么办？"\n种植员愣了一下，然后指了指最外面那一垄："先收那边的。"\n"最不耐放的那半。"{Name}小声接了一句，种植员回头看了{Name}一眼。
+1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_herb_garden,今天{Name}问了一个问题：“如果天灾来了，这些怎么办？”\n种植员愣了一下，然后指了指最外面那一垄：“先收那边的。”\n“最不耐放的那半。”{Name}小声接了一句，种植员回头看了{Name}一眼。

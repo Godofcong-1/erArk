@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|70_G_0,没有模型可以练手，{Name}就对着自己的手指反复做屈伸动作。\n做了几十次之后，{Name}发现每节指关节确实能分开控制了。\n“原来真的可以做到”，{Name}小声说给自己听。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|70_G_0,{Name}把老师讲过的几个敏感点位置又在脑子里过了一遍。\n想着想着{Name}忍不住看了看自己的手，琢磨着下次上课要注意力度。\n自习结束前{Name}把这几个点悄悄画在了笔记本的空白处。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|70_G_0,自习课上{Name}拿了颗橡皮泥代替软胶球，捏了又松，松了又捏。\n捏到后来手指发酸，{Name}想起老师说过酸了才说明真的在用力。\n{Name}又坚持捏了几十次才停下来。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|70_G_0,{Name}闭着眼睛在桌下练习分辨软硬的感觉，什么都没有，只能想象。\n想象久了{Name}居然也能大致说出自己刚刚“摸到的是硬还是软。\n“这样练到底有没有用啊”，{Name}半信半疑地想。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|70_G_0,{Name}把节拍器的两种速度在心里默念了一遍，试着用手指敲桌子模仿。\n敲快了又敲慢了，敲到最后终于找到了两种节奏切换的感觉。\n“下次上课要试试能不能真的做到”，{Name}握紧了手指，有点期待又有点紧张。

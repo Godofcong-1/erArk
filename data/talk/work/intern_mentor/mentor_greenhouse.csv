@@ -3,6 +3,6 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,plant_manage_crop,0,have_intern_student&in_greenhouse,跟来的孩子浇水浇成了积水，{Name}示范了一遍。\n"少一点，多几次。"\n第二盆那孩子就做对了，{Name}便没有再看。
+1000,plant_manage_crop,0,have_intern_student&in_greenhouse,跟来的孩子浇水浇成了积水，{Name}示范了一遍。\n“少一点，多几次。”\n第二盆那孩子就做对了，{Name}便没有再看。
 1001,plant_manage_crop,0,have_intern_student&in_greenhouse,{Name}交给跟来的孩子一件很轻松的活——数花苞。\n数到第三排乱了，那孩子从头再来，第二遍学会了用手指点着数。\n{Name}在旁边看着，没有出声提醒。
-1002,plant_manage_crop,0,have_intern_student&in_greenhouse,今天跟来的孩子说，靠窗和靠里的同一种花长得完全不一样。\n"光照。"{Name}答得很简短。\n那孩子摘了两片叶子夹进本子，还标了位置。{Name}这才多看了他一眼。
+1002,plant_manage_crop,0,have_intern_student&in_greenhouse,今天跟来的孩子说，靠窗和靠里的同一种花长得完全不一样。\n“光照。”{Name}答得很简短。\n那孩子摘了两片叶子夹进本子，还标了位置。{Name}这才多看了他一眼。

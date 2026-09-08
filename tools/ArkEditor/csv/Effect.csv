@@ -11,6 +11,8 @@ cid,effect_name,effect_type,effect
 10010,GROUP_SEX_MODE_ON,系统量_基础,开启群交模式
 10011,GROUP_SEX_MODE_OFF,系统量_基础,关闭群交模式
 10012,RETAIN_COMMAND_WITH_EVENT_TEXT,二段结算,用事件文本代替指令文本，限指令后置
+10014,SEX_CLASS_MODE_ON,系统量_基础,开启性技实操课（课堂H）模式
+10015,SEX_CLASS_MODE_OFF,系统量_基础,关闭性技实操课（课堂H）模式
 
 10000,INTERRUPT_TARGET_ACTIVITY,系统量_交互,打断交互对象活动
 10002,TARGET_TO_PLAYER,系统量_交互,将交互对象设为对玩家交互
@@ -261,6 +263,14 @@ cid,effect_name,effect_type,effect
 545,TASTE_WINE_ADD_ADJUST,指令_专用结算,（品酒用）根据酒量随机选一个酒，并结算部分饮用效果
 546,TAKE_CHARA_EGGS_SETTLE,指令_专用结算,（拿走产下的卵用）拿走交互对象的全部未鉴定卵，卵数据留原处标记被拿走并写入玩家临时持有索引
 547,IDENTIFY_HELD_EGGS_SETTLE,指令_专用结算,（鉴定持有的卵用）鉴定玩家临时持有的全部卵并经索引回写原角色卵数据，无精删卵、受精进入孵化
+548,SELF_STUDY_ADD_ADJUST,指令_专用结算,（自习用）本节无教师时的降级行为，按自习基础值增加习得与所选科目的经验，不受师生等级差影响
+549,SKIP_CLASS_ADD_ADJUST,指令_专用结算,（翘课用）置翘课flag，小幅回复心情，本节不获得任何学习收益
+550,CHECK_REPORT_CARD_ADD_ADJUST,指令_专用结算,（检查成绩单用）输出该女儿本学期的各科成长与出勤，按成绩档位加好感与亲密，并清除成绩单flag
+552,INTERN_CLASS_ADD_ADJUST,指令_专用结算,（实习课用）找同场景中该岗位的在岗干员当导师，按师徒等级差学该岗位的能力，无人在岗则降级见习
+553,FOLLOW_MOTHER_ADD_ADJUST,指令_专用结算,结算跟随母亲见学的收益
+554,FREE_PLAY_ADD_ADJUST,指令_专用结算,结算自由玩耍的收益（心情回复，无学习收益）
+555,PRENATAL_ADD_ADJUST,指令_专用结算,（胎教用）交互对象的妊娠期胎教累积值+0.5，生产时转写为新生儿的全科目少量初始经验
+556,NUIRSE_CHILD_ADD_ADJUST,指令_专用结算,（喂奶用）婴儿体力气力上限微增；发起者是玩家时额外加婴儿的好感与好意
 
 601,CHANGE_UNDERWERA,属性_服装,换新的内衣（胸衣+内裤）
 602,BRA_SEE,属性_服装,胸罩可视

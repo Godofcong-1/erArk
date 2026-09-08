@@ -3,7 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|41_G_0,{Name}跑过来，两只手叉着腰，努力做出很威严的样子。\n"我今天指挥了！"{Name}宣布，"我说'大家安静'，然后……过了一会儿，他们真的安静了。"\n中间那"过了一会儿"{Name}说得特别小声。
-1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|41_G_0,{Name}举着一张画满格子的纸跑来，纸上是自己排的编队图。\n"这个人在这里，这个人在这里，"{Name}一个个指过去，"然后如果这个人不行了，就换他上。"\n讲到最后{Name}抬起头："我有想第二个人哦。"
-1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|41_G_0,{Name}把一张写满字又划掉大半的纸递过来。\n"这是我上次说的话，"{Name}指着划掉的部分，"这些全是废话。"\n然后{Name}指着剩下的那几行："这样就够了。短了一半，但清楚了一倍。"
-1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|41_G_0,{Name}这次没有炫耀自己做对了什么，反而先说了一个自己没想明白的问题。\n"如果那时候有人受伤了，我应该怎么办？"{Name}问完，自己又补了一句，"我想了很久，还是不知道。"\n"不过老师说，会问这个问题就已经不一样了。"
+1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|41_G_0,{Name}跑过来，两只手叉着腰，努力做出很威严的样子。\n“我今天指挥了！”{Name}宣布，“我说'大家安静'，然后……过了一会儿，他们真的安静了。”\n中间那“过了一会儿”{Name}说得特别小声。
+1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|41_G_0,{Name}举着一张画满格子的纸跑来，纸上是自己排的编队图。\n“这个人在这里，这个人在这里，”{Name}一个个指过去，“然后如果这个人不行了，就换他上。”\n讲到最后{Name}抬起头：“我有想第二个人哦。”
+1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|41_G_0,{Name}把一张写满字又划掉大半的纸递过来。\n“这是我上次说的话，”{Name}指着划掉的部分，“这些全是废话。”\n然后{Name}指着剩下的那几行：“这样就够了。短了一半，但清楚了一倍。”
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|41_G_0,{Name}这次没有炫耀自己做对了什么，反而先说了一个自己没想明白的问题。\n“如果那时候有人受伤了，我应该怎么办？”{Name}问完，自己又补了一句，“我想了很久，还是不知道。”\n“不过老师说，会问这个问题就已经不一样了。”

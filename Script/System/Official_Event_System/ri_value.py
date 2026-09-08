@@ -125,6 +125,8 @@ def set_ri_value(type_text: str, new_value: float):
     """
     type_name, son_id = parse_value_type(type_text)
     if type_name in READ_ONLY_TYPE_SET:
+        # ⚠️ 静默返回会让作者以为自己写的结算生效了，把值名打出来才查得动
+        print(f"\ndebug 公务事件试图改写只读的全局数值「{get_value_name(type_text)}」，已忽略\n")
         return
     if type_name == RI_TYPE_RESOURCE:
         # 资源不允许为负，否则仓库面板会显示出一个谁也还不上的负数
@@ -151,6 +153,7 @@ def change_ri_value(type_text: str, add_value: float):
     """
     type_name, _son_id = parse_value_type(type_text)
     if type_name in READ_ONLY_TYPE_SET:
+        print(f"\ndebug 公务事件试图增减只读的全局数值「{get_value_name(type_text)}」，已忽略\n")
         return
     set_ri_value(type_text, get_ri_value(type_text) + add_value)
 

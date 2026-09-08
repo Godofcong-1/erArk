@@ -176,6 +176,11 @@ def handle_official_event_queue(width: int = 0):
             break
         now_draw = Official_Event_Draw(queue_data, width)
         option_index = now_draw.draw()
+        # 一条选项都不可选而被跳过：不结算，但**必须记履历**。
+        # ⚠️ 只 continue 的话事件出了队却没进履历，judge_event_done 仍为假，
+        #    明天照样会被重新派下来，玩家于是反复看到同一条「已经不需要你来决定了」。
+        #    记 0 号选项，养成履历里会显示为「（未作选择）」——那条兜底文案本就是为它写的
         if not option_index:
+            official_event_handle.record_event_done(queue_data["uid"], queue_data.get("chara_id", 0), 0)
             continue
         official_event_handle.settle_official_event_option(queue_data["uid"], queue_data.get("chara_id", 0), queue_data.get("partner_id", 0), option_index)

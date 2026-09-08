@@ -4,5 +4,5 @@ str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
 1000,investigate_resource_market,0,have_intern_student,数字跳得飞快，{Name}让跟来的孩子只盯一样东西的价格看。\n半节课之后那孩子说自己看出了一点起伏的规律。\n{Name}没有评价，只是把另一份记录也推了过去。
-1001,investigate_resource_market,0,have_intern_student,{Name}跟对方来回压价，全程没有提高过嗓门。\n跟着的孩子在旁边数着对方说了多少句话。\n成交之后{Name}才说："说得最多的那个，通常是输的那个。"
+1001,investigate_resource_market,0,have_intern_student,{Name}跟对方来回压价，全程没有提高过嗓门。\n跟着的孩子在旁边数着对方说了多少句话。\n成交之后{Name}才说：“说得最多的那个，通常是输的那个。”
 1002,investigate_resource_market,0,have_intern_student,今天{Name}让跟来的孩子试着报一次价，那孩子的声音都在抖。\n对方沉默了几秒，孩子差点忍不住往下降——{Name}在桌下按住了他的手。\n最后对方接受了原价。{Name}松开手，什么也没说。

@@ -3,6 +3,6 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,repair_equipment,0,have_intern_student&in_blacksmith_shop,炉火太旺，{Name}让跟来的孩子先站远一点，什么也别碰。\n那孩子就站在那儿看了整整一节课，一句话没说。\n收工时{Name}才开口："耳朵嗡嗡的吧？习惯就好。"
-1001,repair_equipment,0,have_intern_student&in_blacksmith_shop,{Name}让跟着的孩子拉风箱，看着他拉了不到十分钟就开始换姿势。\n"力气是从腰来的。"{Name}头也不抬地说了一句。\n那孩子照做之后果然顺了，{Name}这才继续手上的活。
-1002,repair_equipment,0,have_intern_student&in_blacksmith_shop,今天打出来的东西有一处小瑕疵，{Name}直接扔回了炉子。\n跟着的孩子明显愣了一下，像是觉得可惜。\n"这里差一点，用起来就断在这里。"{Name}说完，那孩子的表情变了。
+1000,repair_equipment,0,have_intern_student&in_blacksmith_shop,炉火太旺，{Name}让跟来的孩子先站远一点，什么也别碰。\n那孩子就站在那儿看了整整一节课，一句话没说。\n收工时{Name}才开口：“耳朵嗡嗡的吧？习惯就好。”
+1001,repair_equipment,0,have_intern_student&in_blacksmith_shop,{Name}让跟着的孩子拉风箱，看着他拉了不到十分钟就开始换姿势。\n“力气是从腰来的。”{Name}头也不抬地说了一句。\n那孩子照做之后果然顺了，{Name}这才继续手上的活。
+1002,repair_equipment,0,have_intern_student&in_blacksmith_shop,今天打出来的东西有一处小瑕疵，{Name}直接扔回了炉子。\n跟着的孩子明显愣了一下，像是觉得可惜。\n“这里差一点，用起来就断在这里。”{Name}说完，那孩子的表情变了。

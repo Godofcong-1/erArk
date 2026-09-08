@@ -3,6 +3,6 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,plant_manage_crop,0,have_intern_student&in_herb_garden,{Name}让跟来的孩子先认三种最常用的药材，别的先不管。\n一节课下来那孩子认全了三种，还多认了一种自己觉得好看的。\n"好看的那种没什么用。"{Name}说，"但记住了也不亏。"
-1001,plant_manage_crop,0,have_intern_student&in_herb_garden,跟着的孩子拔草时把一株药材也拔了，一脸想插回去的样子。\n"没关系，"{Name}说，"这一株本来就该间掉。"\n那孩子松了口气，手上的动作却更小心了。
-1002,plant_manage_crop,0,have_intern_student&in_herb_garden,今天跟来的孩子问了一个{Name}没料到的问题："如果天灾来了，这些怎么办？"\n{Name}指了指最外面那一垄："先收那边的。"\n"最不耐放的那半。"孩子小声接了一句。{Name}回头看了他一眼。
+1000,plant_manage_crop,0,have_intern_student&in_herb_garden,{Name}让跟来的孩子先认三种最常用的药材，别的先不管。\n一节课下来那孩子认全了三种，还多认了一种自己觉得好看的。\n“好看的那种没什么用。”{Name}说，“但记住了也不亏。”
+1001,plant_manage_crop,0,have_intern_student&in_herb_garden,跟着的孩子拔草时把一株药材也拔了，一脸想插回去的样子。\n“没关系，”{Name}说，“这一株本来就该间掉。”\n那孩子松了口气，手上的动作却更小心了。
+1002,plant_manage_crop,0,have_intern_student&in_herb_garden,今天跟来的孩子问了一个{Name}没料到的问题：“如果天灾来了，这些怎么办？”\n{Name}指了指最外面那一垄：“先收那边的。”\n“最不耐放的那半。”孩子小声接了一句。{Name}回头看了他一眼。

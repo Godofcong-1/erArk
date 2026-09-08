@@ -3079,6 +3079,68 @@ def handle_group_sex_mode_off(
     cache.group_sex_mode = False
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SEX_CLASS_MODE_ON)
+def handle_sex_class_mode_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    开启性技实操课（课堂H）模式，并把场景内可参加的学生全部拉进H状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    from Script.System.Education_System import sex_class_handle
+
+    # 如果已经开启，则不处理
+    if cache.sex_class_mode:
+        return
+    cache.sex_class_mode = True
+    # ⚠️ 必须同时置群交模式：群交模板面板、射精面板、Web状态栏等十余处读取点判的都是那个标志，
+    #    只置 sex_class_mode 的话整个模板界面都不会出现。行为效果串里的10010已经置过，这里兜底
+    cache.group_sex_mode = True
+    # 把在场可参加的学生一并拉进H状态——效果串里的462/464只管玩家自己与当前交互对象，
+    # 其余到场学生要在这里补上，否则她们会被NPC AI派去做别的事
+    for student_id in sex_class_handle.get_scene_student_list():
+        student_data: game_type.Character = cache.character_data[student_id]
+        if not student_data.sp_flag.is_h:
+            character_move.cancel_movement_plan(student_id)
+        student_data.sp_flag.is_h = True
+        student_data.sp_flag.see_pl_h = True
+        # 到场的口上走二段行为：一段行为得靠NPC AI派发，而H中的NPC完全不进AI链（handle_npc_ai.py:290）
+        second_behavior.character_get_second_behavior(student_id, constant.Behavior.JOIN_SEX_CLASS)
+        # 出勤只在开课时记这一次；拖堂占用的后续节次既不记出勤也不记缺课
+        sex_class_handle.settle_attend(student_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SEX_CLASS_MODE_OFF)
+def handle_sex_class_mode_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    关闭性技实操课（课堂H）模式
+
+    ⚠️ 口上在效果结算之前就已经输出了（settle_behavior.py:407 早于 :410 的效果循环），
+       所以这里清 running 不会影响"提前/按时/拖堂"三档下课口上的判定。
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    from Script.System.Education_System import sex_class_handle
+
+    cache.sex_class_mode = False
+    sex_class_handle.end_sex_class()
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RETAIN_COMMAND_WITH_EVENT_TEXT)
 def handle_retain_command_with_event_text(
         character_id: int,
@@ -7537,13 +7599,13 @@ def handle_teach_add_just(
     """
     if not add_time:
         return
-    from Script.System.Education_System import growth_handle, schedule_handle
+    from Script.System.Education_System import education_constant, growth_handle, schedule_handle
 
     character_data: game_type.Character = cache.character_data[character_id]
 
     # 取本节所授科目与课型：教师视角反查全局课表
     ability_id = 45
-    course_type = schedule_handle.COURSE_TYPE_THEORY
+    course_type = education_constant.COURSE_TYPE_THEORY
     teaching = schedule_handle.get_now_teaching(character_id)
     if teaching is not None and teaching["ability_id"] > 0:
         ability_id = teaching["ability_id"]
@@ -7612,7 +7674,7 @@ def handle_self_study_add_just(
     """
     if not add_time:
         return
-    from Script.System.Education_System import growth_handle, schedule_handle
+    from Script.System.Education_System import education_constant, growth_handle, schedule_handle
 
     now_course = schedule_handle.get_now_course(character_id)
     # 查不到课表就没有科目可自习，回落为学识
@@ -7621,7 +7683,7 @@ def handle_self_study_add_just(
         ability_id = now_course["ability_id"]
     # 教师id传-1即走自习分支：基础值降档、速度系数恒取1.0
     growth_handle.settle_student_class_gain(
-        character_id, -1, ability_id, schedule_handle.COURSE_TYPE_THEORY, add_time, change_data=change_data
+        character_id, -1, ability_id, education_constant.COURSE_TYPE_THEORY, add_time, change_data=change_data
     )
 
 
@@ -7672,10 +7734,10 @@ def handle_intern_class_add_just(
     """
     if not add_time:
         return
-    from Script.System.Education_System import growth_handle, schedule_handle
+    from Script.System.Education_System import education_constant, growth_handle, schedule_handle
 
     now_course = schedule_handle.get_now_course(character_id)
-    if now_course is None or now_course["course_type"] != schedule_handle.COURSE_TYPE_INTERN:
+    if now_course is None or now_course["course_type"] != education_constant.COURSE_TYPE_INTERN:
         return
     work_type_id = now_course["target"]
     if work_type_id not in game_config.config_work_type:
@@ -7686,7 +7748,7 @@ def handle_intern_class_add_just(
     # 导师 = 此刻和自己在同一场景、且正干着这个岗位的干员；找不到就是无人在岗，降级为见习
     mentor_id = schedule_handle.get_intern_mentor(character_id, work_type_id)
     growth_handle.settle_student_class_gain(
-        character_id, mentor_id, ability_id, schedule_handle.COURSE_TYPE_INTERN, add_time,
+        character_id, mentor_id, ability_id, education_constant.COURSE_TYPE_INTERN, add_time,
         change_data=change_data,
     )
 
@@ -7763,7 +7825,7 @@ def handle_check_report_card_add_just(
     """
     if not add_time:
         return
-    from Script.System.Education_System import growth_handle
+    from Script.System.Education_System import education_constant, growth_handle, semester_handle
 
     character_data: game_type.Character = cache.character_data[character_id]
     target_id = character_data.target_character_id
@@ -7772,33 +7834,33 @@ def handle_check_report_card_add_just(
     target_data: game_type.Character = cache.character_data[target_id]
     growth_data = growth_handle.get_child_growth(target_id)
 
-    # 汇总本学期各科等级与出勤
-    ability_text_list = []
-    for ability_id in list(range(40, 50)) + list(range(70, 78)):
-        level = int(target_data.ability.get(ability_id, 0))
-        if level > 0:
-            ability_text_list.append("{0}{1}".format(
-                game_config.config_ability[ability_id].name, attr_calculation.judge_grade(level)))
-    total = growth_data.attend_class_count + growth_data.absent_count
-    rate = growth_data.attend_class_count / total if total else 1.0
-
-    info_text = _("\n※※※※※※※※※\n")
-    info_text += _("\n{0}的成绩单\n").format(target_data.name)
-    info_text += _("\n出勤：{0} 节，缺课：{1} 节（出勤率 {2}%）\n").format(
-        growth_data.attend_class_count, growth_data.absent_count, int(rate * 100))
-    info_text += _("\n各科水平：{0}\n").format("、".join(ability_text_list) if ability_text_list else _("尚无成绩"))
-    info_text += _("\n※※※※※※※※※\n")
+    # 两条路径：学期已经结束就发学期结算时**冻结**的那一份；还没结束就现算一份「截至目前」的
+    # ⚠️ 不能因为还没有成绩单就什么都不显示：指令本身没有「有成绩单」这条前提，
+    #    玩家学期中途照样能用，那时也该给他看到东西
+    report_data = semester_handle.get_last_report_card(target_id)
+    finished = bool(report_data)
+    if not finished:
+        report_data = semester_handle.build_report_card(target_id)
     now_draw = draw.NormalDraw()
     now_draw.width = normal_config.config_normal.text_width
-    now_draw.text = info_text
+    now_draw.text = semester_handle.get_report_card_text(target_id, report_data, finished)
+    # 更早的学期不在这里翻——指令是一段式的打印，翻页要有面板才做得了
+    history_count = len(semester_handle.get_report_card_history(target_id))
+    if history_count > 1:
+        now_draw.text += _("（更早的 {0} 个学期可以在教育管理系统的养成总览里翻看）\n").format(history_count - 1)
     now_draw.draw()
 
-    # 出勤率越高，检查成绩单时的反馈越正面
+    # 成绩档位越高，检查成绩单时的反馈越正面
+    # ⚠️ 档位已经把「出勤率 + 有没有真学出东西」并进一个口径了，
+    #    这里再单写一遍出勤率阈值，会与成绩单正文里的评定对不上
     base_chara_favorability_and_trust_common_settle(
         character_id, add_time, True, 0, target_data.ability[32], change_data, target_data.cid)
-    if rate >= 0.8:
+    if report_data.get("grade", education_constant.REPORT_GRADE_POOR) in {
+            education_constant.REPORT_GRADE_EXCELLENT, education_constant.REPORT_GRADE_GOOD}:
         base_chara_state_common_settle(target_id, add_time, 13, change_data_to_target_change=change_data)
-    growth_data.report_card_flag = False
+    # 只有发的是冻结那一份才算「看过了」；学期中途看的是进行时数据，flag 不动
+    if finished:
+        growth_data.report_card_flag = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BAGGING_AND_MOVING_ADD_ADJUST)
@@ -11273,4 +11335,80 @@ def handle_official_event_temp_commission(
         demand="a_42_2&a_46_2",
         reward="r_1_2000&声望_0_10",
         description=_("公务里递上来的急件：附近的定居点遭了灾，请求罗德岛派人支援。\\n博士已经答应下来，需要尽快组队出发。"),
+    )
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PRENATAL_ADD_ADJUST)
+def handle_prenatal_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （胎教用）给交互对象（孕妇）的妊娠期胎教累积值 +0.5（Plan 22 四期 §3.27）
+
+    ⚠️ 只累积不转写：孩子此时还不存在，出生时由 born_event_panel 逐个全额转写给每个新生儿。
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    Return arguments:
+    无
+    """
+    if not add_time:
+        return
+    from Script.System.Education_System import baby_growth_handle
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_id = character_data.target_character_id
+    if target_id == character_id or target_id not in cache.character_data:
+        return
+    baby_growth_handle.add_prenatal_point(target_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NUIRSE_CHILD_ADD_ADJUST)
+def handle_nuirse_child_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （喂奶用）婴儿的体力与气力上限微增；发起者是玩家时额外给婴儿加好感与好意（Plan 22 四期 §3.20）
+
+    照料值本身走效果串里的 CVE_A2_Growth|20，这里只做 CVE 表达不了的两件事：
+    体质（上限值不是养成数值）与"玩家亲自照料才有"的加成（CVE 没有发起者判定）。
+    ⚠️ 保育员喂奶同样给体质，只是没有玩家那份额外的好感——差异化对 NPC 照料同样生效（方案 §2.2）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    Return arguments:
+    无
+    """
+    if not add_time:
+        return
+    from Script.System.Education_System import education_constant
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_id = character_data.target_character_id
+    if target_id == character_id or target_id not in cache.character_data:
+        return
+    target_data: game_type.Character = cache.character_data[target_id]
+    # 只对婴儿生效
+    if not target_data.talent.get(101, 0):
+        return
+    target_data.hit_point_max += education_constant.NUIRSE_CHILD_HP_MAX_ADD
+    target_data.mana_point_max += education_constant.NUIRSE_CHILD_MP_MAX_ADD
+    if character_id != 0:
+        return
+    base_chara_favorability_and_trust_common_settle(
+        character_id, add_time, True, base_value=education_constant.NUIRSE_CHILD_FAVOR_BASE, change_data=change_data
+    )
+    base_chara_state_common_settle(
+        target_id, add_time, 11, base_value=education_constant.NUIRSE_CHILD_FRIENDLY_BASE,
+        ability_level=target_data.ability.get(32, 0), change_data_to_target_change=change_data,
     )

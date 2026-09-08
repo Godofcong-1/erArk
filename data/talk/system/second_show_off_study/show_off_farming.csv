@@ -3,7 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|47_G_0,{Name}拉着博士就往教育区走，一路上都在说"你来看嘛"。\n到了地方，{Name}指着一盆看起来毫无变化的土："它今天冒出来一点点了！"\n凑近了看，土面上确实有一小截极细的绿色。{Name}守在旁边不肯走。
-1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|47_G_0,{Name}把手伸到博士面前，手指缝里还有洗不干净的泥。\n"我今天摸土了，"{Name}很自豪地说，"干的和湿的摸起来不一样，我能摸出来。"\n说完{Name}才想起来自己没洗干净手，讪讪地把手背到了身后。
-1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|47_G_0,{Name}把观察记录本递过来，翻到中间几页。\n"这几天我记得很敷衍。"{Name}坦白，"后来看到了，就没有再那样了。"\n后面的记录明显长了很多，还配了草图。{Name}没有把前面那几页撕掉。
-1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|47_G_0,"如果只来得及收一半，你会先收哪一半？"{Name}忽然问。\n没等回答，{Name}就自己说了："我选了最不耐放的那半。产量高的那半，晚几天也还在。"\n"老师还没看过，"{Name}补了一句，"但我觉得应该是对的。"
+1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|47_G_0,{Name}拉着博士就往教育区走，一路上都在说“你来看嘛”。\n到了地方，{Name}指着一盆看起来毫无变化的土：“它今天冒出来一点点了！”\n凑近了看，土面上确实有一小截极细的绿色。{Name}守在旁边不肯走。
+1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|47_G_0,{Name}把手伸到博士面前，手指缝里还有洗不干净的泥。\n“我今天摸土了，”{Name}很自豪地说，“干的和湿的摸起来不一样，我能摸出来。”\n说完{Name}才想起来自己没洗干净手，讪讪地把手背到了身后。
+1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|47_G_0,{Name}把观察记录本递过来，翻到中间几页。\n“这几天我记得很敷衍。”{Name}坦白，“后来看到了，就没有再那样了。”\n后面的记录明显长了很多，还配了草图。{Name}没有把前面那几页撕掉。
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|47_G_0,“如果只来得及收一半，你会先收哪一半？”{Name}忽然问。\n没等回答，{Name}就自己说了：“我选了最不耐放的那半。产量高的那半，晚几天也还在。”\n“老师还没看过，”{Name}补了一句，“但我觉得应该是对的。”

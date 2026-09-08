@@ -323,6 +323,20 @@ class Behavior_Int:
     """ 群交时博士体力为零中断 """
     GROUP_SEX_NPC_HP_0_END = 384
     """ 群交时自己体力为零退出 """
+    START_SEX_CLASS = 948
+    """ 开始性技实操课（Plan 22 四期） """
+    END_SEX_CLASS = 949
+    """ 结束性技实操课（Plan 22 四期） """
+    JOIN_SEX_CLASS = 950
+    """ 到场参加性技实操课（Plan 22 四期） """
+    WATCH_SEX_CLASS = 951
+    """ 旁观性技实操课（Plan 22 四期） """
+    PRENATAL_TALK = 952
+    """ 对孕肚说话（Plan 22 四期） """
+    PRENATAL_MUSIC = 953
+    """ 给孕肚放音乐（Plan 22 四期） """
+    PRENATAL_TOUCH = 954
+    """ 抚摸孕肚（Plan 22 四期） """
     GROUP_SEX_TO_H = 385
     """ 群交时NPC数量不足转为单人H """
     JOIN_GROUP_SEX = 386

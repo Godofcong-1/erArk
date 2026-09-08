@@ -1,0 +1,16 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|75_G_0&CVP_A1_CourseType|0_G_0,老师讲放松的原理，说这门课最难的部分不是收紧，是学会放松。\n{Name}听得有点困惑，觉得放松应该很简单才对。\n“越紧张越紧，越紧越难受”——{Name}把这句话记了下来。
+1001,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|75_G_0&CVP_A1_CourseType|0_G_0,黑板上的示意图被{Name}仔细描了一遍，标出的肌肉分布也一一记下。\n“这里的肌肉比想象中更听指挥”，{Name}想着自己从来没试过去控制它。\n有人问是不是很难，老师说难在没试过，{Name}悄悄松了口气。
+1002,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|75_G_0&CVP_A1_CourseType|0_G_0,老师讲到呼吸的重要性，{Name}下意识地跟着深呼吸了一下。\n“先让呼吸慢下来，身体才有可能跟着放松”——{Name}把这句话记在了心里。\n老师示范的深呼吸慢得几乎能听见气息进出的声音，{Name}学着做了一次。
+1003,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|75_G_0&CVP_A1_CourseType|0_G_0,老师提醒不要一开始就追求太多，{Name}想起自己平时总是急着求快。\n“一点一点来，急着求快反而容易适得其反”——{Name}把这句话默默念了两遍。\n{Name}决定上实践课的时候一定慢慢来。
+1004,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|75_G_0&CVP_A1_CourseType|1_G_0,深呼吸练习让{Name}一开始还是很紧张，怎么都放松不下来。\n老师让{Name}多做几次别着急，慢慢地呼吸真的顺了一点。\n“吸气，慢慢吐”——{Name}跟着节奏又试了好几次。
+1005,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|75_G_0&CVP_A1_CourseType|1_G_0,收紧和放松的交替练习让{Name}才发现自己只会紧，不会松。\n老师说松才是这门课的重点，{Name}又耐心地重新试了一遍。\n练到最后，{Name}居然真的感觉到了放松下来是什么感觉。
+1006,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|75_G_0&CVP_A1_CourseType|1_G_0,{Name}练习在紧张状态下主动放松，比平时练习难得多，一开始总是绷得很紧。\n老师说这需要反复练别急，{Name}又耐心地重新调整。\n下课时{Name}发现自己确实比刚开始更能主动放松了。
+1007,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|75_G_0&CVP_A1_CourseType|1_G_0,保持放松的状态没多久{Name}就觉得有点难，忍不住又绷紧了。\n老师让{Name}先深呼吸再继续，别硬撑着紧，{Name}照做之后感觉舒服了不少。\n下课前{Name}已经能撑住比刚开始更久的放松状态了。
+1008,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|75_G_0&CVP_A1_CourseType|2_G_0,大礼堂里，老师讲越用力控制越好是个误区。\n“越用力反而越紧张，效果适得其反”——{Name}若有所思地点了点头。\n这句话{Name}回去之后想了很久。
+1009,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|75_G_0&CVP_A1_CourseType|2_G_0,有人问一直很紧张怎么办，{Name}也悄悄竖起了耳朵。\n老师说别逼自己，越逼越紧，越紧越难受，{Name}这才松了口气。\n{Name}把这句话当成了给自己打气的话。
+1010,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|75_G_0&CVP_A1_CourseType|2_G_0,老师最后讲耐力不足的处理方法，说保持放松其实比保持紧张更累。\n“累了就先停下来，节奏慢慢来”——{Name}当场把这句话记在了笔记本上。\n虽然只是坐在台下，{Name}却觉得自己好像也上了一堂实践课。

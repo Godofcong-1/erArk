@@ -4,6 +4,6 @@ str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
 1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_hr_office,人事办公室里全是表格，{Name}看得眼花。\n{Name}的活儿是把资料按日期排好，排了整整一节课。\n排完之后{Name}发现自己已经能记住不少名字了。
-1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_hr_office,有人来问招募的事，{Name}被示意在旁边听着。\n专员说的话{Name}大半听不懂，但注意到对方每句话都很短。\n"命令要短"——{Name}忽然想起指挥课上的这一条。
-1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_hr_office,{Name}第一次看到完整的招募流程，从接触到定下来要走这么多步。\n"中间任何一步谈崩了都得重来。"专员这么说。\n{Name}把整个流程画成了一张图，回去以后又补了几处。
-1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_hr_office,今天有一次谈得不太顺利，对方最后没有答应。\n{Name}以为专员会沮丧，结果对方只是把记录写完就去忙别的了。\n"谈不成是常态。"{Name}想起了话术课上的这句话，第一次觉得它是真的。
+1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_hr_office,有人来问招募的事，{Name}被示意在旁边听着。\n专员说的话{Name}大半听不懂，但注意到对方每句话都很短。\n“命令要短”——{Name}忽然想起指挥课上的这一条。
+1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_hr_office,{Name}第一次看到完整的招募流程，从接触到定下来要走这么多步。\n“中间任何一步谈崩了都得重来。”专员这么说。\n{Name}把整个流程画成了一张图，回去以后又补了几处。
+1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_hr_office,今天有一次谈得不太顺利，对方最后没有答应。\n{Name}以为专员会沮丧，结果对方只是把记录写完就去忙别的了。\n“谈不成是常态。”{Name}想起了话术课上的这句话，第一次觉得它是真的。

@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+2000,start_sex_class,0,CVP_A1_Course|73_G_0,{Name}讲解着胸技的基础。「大小不是决定性的，怎么用才是。」
+2001,start_sex_class,0,CVP_A1_Course|73_G_0,「夹住之后不要停在那里，要动起来。」{Name}一边说一边做了个示范。
+2002,start_sex_class,0,CVP_A1_Course|73_G_0,这节课练的是胸技。{Name}让学生们轮流上前，逐个纠正她们的姿势。

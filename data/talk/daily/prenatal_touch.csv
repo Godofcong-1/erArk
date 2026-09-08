@@ -1,0 +1,15 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,prenatal_touch,0,t_pregnancy_1,{Name}把手掌贴在{TargetName}微微隆起的肚子上，慢慢地画着圈。{TargetName}安静地看着{Name}的手。
+1,prenatal_touch,0,t_pregnancy_1,{Name}的手掌覆在{TargetName}的肚子上，暖意一点点渗过去。{TargetName}说：「这样很舒服。」
+2,prenatal_touch,0,t_pregnancy_1,{Name}轻轻抚摸着{TargetName}的肚子，动作小心得像是在触碰什么易碎的东西。{TargetName}忍不住笑了。
+3,prenatal_touch,0,t_pregnancy_1,{Name}隔着衣服抚摸着{TargetName}的肚子，一边摸一边低声念叨着「乖」。{TargetName}把头靠在了{Name}的肩上。
+4,prenatal_touch,0,t_pregnancy_1,{Name}的手停在{TargetName}肚子上，感受着那一点点新的弧度。「长大了一些呢。」{Name}说。
+5,prenatal_touch,0,t_parturient_1,{Name}用手掌托着{TargetName}沉甸甸的肚子，帮她分担了一点重量。{TargetName}松了口气，靠在了床头。
+6,prenatal_touch,0,t_parturient_1,{Name}抚摸着{TargetName}的肚子，忽然感到掌心下轻轻一动。两个人同时愣住，然后一起笑了出来。
+7,prenatal_touch,0,t_parturient_1,{Name}替{TargetName}揉了揉发胀的腰，再把手掌贴回孕肚上，一下一下地安抚着里面不安分的小家伙。
+8,prenatal_touch,0,t_parturient_1,{Name}的手掌在{TargetName}高高隆起的肚子上停了很久。「再等等，」{Name}说，「很快就能抱到你了。」
+9,prenatal_touch,0,t_parturient_1,{Name}把手放在{TargetName}的肚子上，掌心传来清晰的胎动。{TargetName}笑着说：「她认得你的手。」

@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|70_G_0,{Name}一见到博士就举起手，屈伸了几下手指。\n“我今天学会控制力度了！”{Name}说得很骄傲，“老师说我进步很快。”\n说完{Name}又给博士看了一次，动作比刚才更慢更稳。
+1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|70_G_0,{Name}凑过来，小声说自己今天摸到了一个“特别软的东西”。\n“是练习用的模型啦，”{Name}赶紧解释，脸有点红，“不是别的意思。”\n博士没说话，{Name}却越解释越不好意思，最后干脆不说了。
+1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|70_G_0,“我今天没有再乱用力了，”{Name}走过来说，语气里带着点自豪。\n“老师说用力过猛反而不好，我现在懂控制了。”\n{Name}顿了顿，又补充了一句：“虽然还是没有老师做得那么好。”
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|70_G_0,{Name}给博士看自己有点发红的指尖，说这是今天练习捏握留下的。\n“酸了才说明真的在用力，”{Name}把老师的话原样搬了出来，像是背课文。\n“博士要不要也试试看？”{Name}忽然问了一句，然后自己先红了脸。

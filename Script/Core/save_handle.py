@@ -340,10 +340,29 @@ def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
             # 无壳卵生旧存档兼容：补全体外排卵机会标记
             if pregnancy_data is not None and not hasattr(pregnancy_data, "external_ovulation_chance"):
                 pregnancy_data.external_ovulation_chance = False
+            # 胎教旧存档兼容：补全妊娠期胎教累积值（Plan 22 四期）
+            if pregnancy_data is not None and not hasattr(pregnancy_data, "prenatal_point"):
+                pregnancy_data.prenatal_point = 0.0
             # 生长养成系统旧存档兼容：补全养成数据结构体的挂载位（Plan 22）
             # 默认None，由 growth_handle.get_child_growth() 惰性创建，此处只保证属性存在
             if not hasattr(character, "child_growth"):
                 character.child_growth = None
+            # 生长养成系统旧存档兼容：补全养成数据结构体在后续各期新增的字段
+            # ⚠️ 用属性表整体回填而不是逐字段 hasattr：CHILD_GROWTH 在二期（日程模板）、
+            #    四期（胎教）、学期制各加过字段，逐个写漏一个就是一次读档崩溃
+            # ⚠️ 每个角色各 new 一个默认体：dict/list 这类可变默认值不能被多个角色共享
+            elif character.child_growth is not None:
+                default_growth_data = game_type.CHILD_GROWTH()
+                for growth_attr_name in vars(default_growth_data):
+                    if not hasattr(character.child_growth, growth_attr_name):
+                        setattr(character.child_growth, growth_attr_name,
+                                getattr(default_growth_data, growth_attr_name))
+                # 成绩单由「只存最近一份」改为「存历年列表」：把早先那份并进列表头，别让它凭空消失
+                old_report_card = getattr(character.child_growth, "last_report_card", None)
+                if old_report_card and not character.child_growth.report_card_history:
+                    character.child_growth.report_card_history = [old_report_card]
+                if hasattr(character.child_growth, "last_report_card"):
+                    del character.child_growth.last_report_card
             # 无壳卵生旧存档兼容：无壳卵生种族此前按单胎胎生运行，读档时一次性清除其正在进行的胎生孕程（受精/妊娠/临盆及伴生状态），产后/育儿/泌乳与已出生的孩子保留
             _clear_soft_egg_race_pregnancy(character, soft_egg_enabled)
             if pl_collection is not None and not hasattr(pl_collection, "held_eggs"):
@@ -555,6 +574,10 @@ def input_load_save(save_id: str):
         update_count += 1
     if not hasattr(loaded_dict["rhodes_island"], "child_schedule_template"):
         loaded_dict["rhodes_island"].child_schedule_template = {}
+        update_count += 1
+    # 临时性技实操课（Plan 22 四期）
+    if not hasattr(loaded_dict["rhodes_island"], "temp_sex_class"):
+        loaded_dict["rhodes_island"].temp_sex_class = {}
         update_count += 1
     # 公务事件待处理队列与全局履历（Plan 23，由 Plan 22 三期的养成事件队列升格而来）
     if not hasattr(loaded_dict["rhodes_island"], "official_event_queue"):

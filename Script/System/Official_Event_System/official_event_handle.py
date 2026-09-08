@@ -394,6 +394,11 @@ def get_default_department_pick_list() -> List[dict]:
             if not judge_event_can_enqueue(uid, 0):
                 continue
             event_data = game_config.config_official_event[uid]
+            # ⚠️ 需要角色主体的事件跳过：本路径固定以博士（0号）为主体，
+            #    把一条写给某个干员/孩子的事件派到博士头上，正文里的称呼与结算都会落错人。
+            #    这类事件要由该部门自己注册提供者来挑主体（教育区的 get_today_growth_event_pick_list 即是）
+            if int(event_data.get("subject", SUBJECT_NONE) or SUBJECT_NONE) == SUBJECT_CHARACTER:
+                continue
             now_weight = judge_premise_pass(event_data.get("premise", ""), 0, 0)
             if not now_weight:
                 continue
@@ -563,7 +568,7 @@ def handle_ri_effect(effect_list: List[str]):
     try:
         value = float(effect_list[3])
     except (TypeError, ValueError):
-        print(f"\ndebug 公务事件的全局结算{effect_list}的数值不是数字\n")
+        print(f"\ndebug 公务事件的全局结算{effect_list}的数值不是数字（目标数值：{ri_value.get_value_name(type_text)}）\n")
         return
     if operator_text == "G":
         ri_value.change_ri_value(type_text, value)
@@ -572,7 +577,7 @@ def handle_ri_effect(effect_list: List[str]):
     elif operator_text == "E":
         ri_value.set_ri_value(type_text, value)
     else:
-        print(f"\ndebug 公务事件的全局结算{effect_list}的运算符{operator_text}不支持\n")
+        print(f"\ndebug 公务事件的全局结算{effect_list}的运算符{operator_text}不支持（目标数值：{ri_value.get_value_name(type_text)}）\n")
 
 
 def handle_effect_text(effect_text: str, character_id: int = 0, partner_id: int = 0):
