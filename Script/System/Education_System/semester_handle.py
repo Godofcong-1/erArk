@@ -23,49 +23,12 @@ from typing import Dict, List, Tuple
 from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config
 from Script.Design import game_time, attr_calculation
-from Script.System.Education_System import growth_handle
+from Script.System.Education_System import education_constant, growth_handle
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 _ = get_text._
 """ 翻译api """
-
-SEMESTER_NAME = {3: "春季学期", 6: "夏季学期", 9: "秋季学期", 12: "冬季学期"}
-""" 四个季月各自对应的学期名，键即 game_time.get_season_month() 的返回值 """
-
-REPORT_GRADE_EXCELLENT = 0
-""" 成绩档位：优秀 """
-REPORT_GRADE_GOOD = 1
-""" 成绩档位：良好 """
-REPORT_GRADE_POOR = 2
-""" 成绩档位：待努力 """
-REPORT_GRADE_NO_CLASS = 3
-""" 成绩档位：无课可评。本学期一节课都没排，不该被评成「待努力」——那是玩家没排课，不是孩子的问题 """
-REPORT_GRADE_NONE = -1
-""" 档位读口的空值：这孩子还没有过成绩单。
-    ⚠️ 绝不能用0兜底——0是「优秀」，会让全岛没上过学的人都通过优秀档的口上前提 """
-
-REPORT_GRADE_NAME = {
-    REPORT_GRADE_EXCELLENT: "优秀",
-    REPORT_GRADE_GOOD: "良好",
-    REPORT_GRADE_POOR: "待努力",
-    REPORT_GRADE_NO_CLASS: "本学期没有排课",
-}
-""" 各档位的显示名 """
-
-EXCELLENT_RATE = 90
-""" 评为优秀所需的出勤率下限（百分比） """
-
-EXCELLENT_LEVEL_UP = 2
-""" 评为优秀所需的本学期升级科目数下限。⚠️ 光靠不缺课评不上优秀，还得真学出东西来 """
-
-GOOD_RATE = 70
-""" 评为良好所需的出勤率下限（百分比），低于此为待努力 """
-
-REPORT_CARD_HISTORY_MAX = 8
-""" 每个孩子保留的历年成绩单份数上限，超出时丢掉最旧的那份。
-    8 份约两年（一年四个学期），够玩家回看整段成长；
-    ⚠️ 必须有上限——一个孩子养到成年约十几个学期，多孩存档不设上限会让存档持续变大 """
 
 
 def get_semester_name(year: int, month: int) -> str:
@@ -77,7 +40,7 @@ def get_semester_name(year: int, month: int) -> str:
     Return arguments:
     str -- 如 "2026年 秋季学期"
     """
-    return _("{0}年 {1}").format(year, _(SEMESTER_NAME.get(month, "学期")))
+    return _("{0}年 {1}").format(year, _(education_constant.SEMESTER_NAME.get(month, "学期")))
 
 
 def get_semester_day_total(year: int, month: int) -> int:
@@ -191,9 +154,6 @@ def get_semester_level_change(character_id: int) -> Dict[int, List[int]]:
     Return arguments:
     Dict[int, List[int]] -- 键为科目能力id，值为[本学期开始时的等级, 现在的等级]，只含真涨了的
     """
-    # ⚠️ 函数内import：class_schedule_panel 是面板模块，提到文件顶层会循环导入
-    from Script.System.Education_System.class_schedule_panel import SUBJECT_ABILITY_LIST
-
     result: Dict[int, List[int]] = {}
     if character_id not in cache.character_data:
         return result
@@ -201,7 +161,7 @@ def get_semester_level_change(character_id: int) -> Dict[int, List[int]]:
     growth_data = character_data.child_growth
     if growth_data is None:
         return result
-    for ability_id in SUBJECT_ABILITY_LIST:
+    for ability_id in education_constant.SUBJECT_ABILITY_LIST:
         # ⚠️ ability 的值可能是 float，比较前一律 int()
         now_level = int(character_data.ability.get(ability_id, 0))
         base_level = int(growth_data.semester_base_ability.get(ability_id, 0))
@@ -218,7 +178,6 @@ def get_top_ability(character_id: int) -> Tuple[int, int]:
     Return arguments:
     Tuple[int, int] -- (科目能力id, 等级)，一门都没学过则为(-1, 0)
     """
-    from Script.System.Education_System.class_schedule_panel import SUBJECT_ABILITY_LIST
 
     if character_id not in cache.character_data:
         return -1, 0
@@ -226,7 +185,7 @@ def get_top_ability(character_id: int) -> Tuple[int, int]:
     top_ability_id = -1
     top_level = 0
     # ⚠️ SUBJECT_ABILITY_LIST 本身是升序列表，用严格大于比较，并列时取id小的那门，结果可复现
-    for ability_id in SUBJECT_ABILITY_LIST:
+    for ability_id in education_constant.SUBJECT_ABILITY_LIST:
         now_level = int(character_data.ability.get(ability_id, 0))
         if now_level > top_level:
             top_level = now_level
@@ -246,14 +205,14 @@ def get_report_grade(attend_count: int, absent_count: int, level_up_count: int) 
     """
     # 一节课都没排过的学期不评档：那是玩家没排课，评成「待努力」是冤枉孩子
     if attend_count + absent_count == 0:
-        return REPORT_GRADE_NO_CLASS
+        return education_constant.REPORT_GRADE_NO_CLASS
     attend_rate = get_semester_attend_rate(attend_count, absent_count)
     # 优秀要「既没缺课、又真学出了东西」，光靠出勤刷不出来
-    if attend_rate >= EXCELLENT_RATE and level_up_count >= EXCELLENT_LEVEL_UP:
-        return REPORT_GRADE_EXCELLENT
-    if attend_rate >= GOOD_RATE:
-        return REPORT_GRADE_GOOD
-    return REPORT_GRADE_POOR
+    if attend_rate >= education_constant.EXCELLENT_RATE and level_up_count >= education_constant.EXCELLENT_LEVEL_UP:
+        return education_constant.REPORT_GRADE_EXCELLENT
+    if attend_rate >= education_constant.GOOD_RATE:
+        return education_constant.REPORT_GRADE_GOOD
+    return education_constant.REPORT_GRADE_POOR
 
 
 def build_report_card(character_id: int) -> dict:
@@ -327,10 +286,10 @@ def push_report_card(character_id: int, report_data: dict) -> None:
     """
     growth_data = growth_handle.get_child_growth(character_id)
     growth_data.report_card_history.append(report_data)
-    if len(growth_data.report_card_history) > REPORT_CARD_HISTORY_MAX:
+    if len(growth_data.report_card_history) > education_constant.REPORT_CARD_HISTORY_MAX:
         # 只留最近的那几份。⚠️ 用切片重新赋值而不是 pop(0)：切片一次到位，
         #    旧存档里若因上限调小而攒了超量的份数，一次就能收敛
-        growth_data.report_card_history = growth_data.report_card_history[-REPORT_CARD_HISTORY_MAX:]
+        growth_data.report_card_history = growth_data.report_card_history[-education_constant.REPORT_CARD_HISTORY_MAX:]
 
 
 def reset_semester_baseline(character_id: int, semester_id: List[int]) -> None:
@@ -342,7 +301,6 @@ def reset_semester_baseline(character_id: int, semester_id: List[int]) -> None:
     Return arguments:
     无
     """
-    from Script.System.Education_System.class_schedule_panel import SUBJECT_ABILITY_LIST
 
     character_data: game_type.Character = cache.character_data[character_id]
     growth_data = growth_handle.get_child_growth(character_id)
@@ -351,7 +309,7 @@ def reset_semester_baseline(character_id: int, semester_id: List[int]) -> None:
     growth_data.semester_base_attend = growth_data.attend_class_count
     growth_data.semester_base_absent = growth_data.absent_count
     growth_data.semester_base_ability = {
-        ability_id: int(character_data.ability.get(ability_id, 0)) for ability_id in SUBJECT_ABILITY_LIST}
+        ability_id: int(character_data.ability.get(ability_id, 0)) for ability_id in education_constant.SUBJECT_ABILITY_LIST}
 
 
 def settle_semester_change() -> List[int]:
@@ -415,7 +373,6 @@ def get_report_card_text(character_id: int, report_data: dict, finished: bool) -
     Return arguments:
     str -- 成绩单正文
     """
-    from Script.System.Education_System.class_schedule_panel import SUBJECT_ABILITY_LIST
 
     character_data: game_type.Character = cache.character_data[character_id]
     semester_text = get_semester_name(report_data.get("year", 0), report_data.get("month", 0))
@@ -435,13 +392,13 @@ def get_report_card_text(character_id: int, report_data: dict, finished: bool) -
         info_text += _("\n本学期的进步：没有科目升级\n")
     # 各科水平只列已经学出等级的那几门：全18门铺开会把结算界面刷屏
     ability_text_list = []
-    for ability_id in SUBJECT_ABILITY_LIST:
+    for ability_id in education_constant.SUBJECT_ABILITY_LIST:
         now_level = int(character_data.ability.get(ability_id, 0))
         if now_level > 0:
             ability_text_list.append("{0}{1}".format(
                 game_config.config_ability[ability_id].name, attr_calculation.judge_grade(now_level)))
     info_text += _("\n各科水平：{0}\n").format("、".join(ability_text_list) if ability_text_list else _("尚无成绩"))
     info_text += _("\n评定：{0}\n").format(
-        _(REPORT_GRADE_NAME.get(report_data.get("grade", REPORT_GRADE_NO_CLASS), "无课可评")))
+        _(education_constant.REPORT_GRADE_NAME.get(report_data.get("grade", education_constant.REPORT_GRADE_NO_CLASS), "无课可评")))
     info_text += _("\n※※※※※※※※※\n")
     return info_text

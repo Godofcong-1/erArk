@@ -16,39 +16,12 @@ from types import FunctionType
 from typing import Dict, List
 
 from Script.Core import cache_control, game_type, get_text
-from Script.System.Education_System import growth_handle
+from Script.System.Education_System import education_constant, growth_handle
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 _: FunctionType = get_text._
 """ 翻译api """
-
-PRENATAL_POINT_PER_TIME = 0.5
-""" 每次胎教给母亲累积的胎教值（一期方案 §3.9 的数值表） """
-
-PRENATAL_POINT_MAX = 100.0
-""" 胎教值上限。妊娠期约 60 个可游玩日，每天两三次也到不了顶，上限只是防止极端刷值 """
-
-PRENATAL_EXP_PER_POINT = 0.5
-""" 每 1 点胎教值转写为每门科目多少初始经验。
-    满值 100 点 → 每科 50 经验，对照 AbilityUp.csv 的累计需求（10/35/75/145...）落在 2 级附近，
-    是"这孩子底子好"的量级，不喧宾夺主 """
-
-PRENATAL_SUBJECT_LIST: List[int] = [40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 70, 71, 72, 73, 74, 75, 77]
-""" 转写覆盖的全部科目：10 门技能 + 7 门性技。⚠️ 不含 76 腰技（男性专属，女儿学不了） """
-
-NUIRSE_CHILD_HP_MAX_ADD = 2
-""" 喂奶一次给婴儿增加的体力上限（体质相关初始值） """
-
-NUIRSE_CHILD_MP_MAX_ADD = 2
-""" 喂奶一次给婴儿增加的气力上限 """
-
-NUIRSE_CHILD_FAVOR_BASE = 10
-""" 玩家亲自喂奶时额外的好感固定值（照料行为通用的 21 号效果之外再加这一份） """
-
-NUIRSE_CHILD_FRIENDLY_BASE = 10
-""" 玩家亲自喂奶时额外的好意（亲密）结算基础值 """
-
 
 # ---------------------------------------------------------------------------
 # 母亲侧的胎教累积
@@ -69,7 +42,7 @@ def get_prenatal_point(mother_id: int) -> float:
     return float(getattr(pregnancy_data, "prenatal_point", 0.0))
 
 
-def add_prenatal_point(mother_id: int, value: float = PRENATAL_POINT_PER_TIME) -> float:
+def add_prenatal_point(mother_id: int, value: float = education_constant.PRENATAL_POINT_PER_TIME) -> float:
     """
     给母亲累积一次胎教值（封顶 PRENATAL_POINT_MAX）
     Keyword arguments:
@@ -82,7 +55,7 @@ def add_prenatal_point(mother_id: int, value: float = PRENATAL_POINT_PER_TIME) -
         return 0.0
     pregnancy_data = cache.character_data[mother_id].pregnancy
     now_point = float(getattr(pregnancy_data, "prenatal_point", 0.0))
-    now_point = min(PRENATAL_POINT_MAX, now_point + value)
+    now_point = min(education_constant.PRENATAL_POINT_MAX, now_point + value)
     pregnancy_data.prenatal_point = now_point
     return now_point
 
@@ -113,7 +86,7 @@ def get_prenatal_exp_value(prenatal_point: float) -> int:
     Return arguments:
     int -- 每科经验，向下取整
     """
-    return int(max(0.0, prenatal_point) * PRENATAL_EXP_PER_POINT)
+    return int(max(0.0, prenatal_point) * education_constant.PRENATAL_EXP_PER_POINT)
 
 
 def settle_prenatal_to_child(mother_id: int, child_id: int) -> str:
@@ -137,7 +110,7 @@ def settle_prenatal_to_child(mother_id: int, child_id: int) -> str:
     exp_value = get_prenatal_exp_value(prenatal_point)
     child_data: game_type.Character = cache.character_data[child_id]
     if exp_value > 0:
-        for ability_id in PRENATAL_SUBJECT_LIST:
+        for ability_id in education_constant.FEMALE_SUBJECT_LIST:
             exp_id = growth_handle.get_subject_exp_id(ability_id)
             if not exp_id:
                 continue
@@ -145,7 +118,7 @@ def settle_prenatal_to_child(mother_id: int, child_id: int) -> str:
             child_data.experience[exp_id] += exp_value
     if exp_value > 0:
         return _("\n{0}在孕期听过{1}次胎教，底子比别的孩子好一些：全部科目各获得了{2}点初始经验\n").format(
-            child_data.name, int(prenatal_point / PRENATAL_POINT_PER_TIME), exp_value
+            child_data.name, int(prenatal_point / education_constant.PRENATAL_POINT_PER_TIME), exp_value
         )
     return _("\n{0}在孕期听过几次胎教，虽然还不足以留下什么，但她一定记得那个声音\n").format(child_data.name)
 
@@ -166,4 +139,4 @@ def get_prenatal_exp_dict(child_id: int) -> Dict[int, int]:
     exp_value = get_prenatal_exp_value(growth_data.prenatal_point)
     if not exp_value:
         return {}
-    return {ability_id: exp_value for ability_id in PRENATAL_SUBJECT_LIST}
+    return {ability_id: exp_value for ability_id in education_constant.FEMALE_SUBJECT_LIST}

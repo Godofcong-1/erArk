@@ -12,59 +12,10 @@ from typing import Dict, List, Optional, Tuple
 from Script.Core import cache_control, game_type, constant
 from Script.Config import game_config
 from Script.Design import game_time, map_handle
+from Script.System.Education_System import education_constant
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
-
-COURSE_TYPE_THEORY = 0
-""" 课型：理论课（教室课，班级式） """
-COURSE_TYPE_PRACTICE = 1
-""" 课型：实践课（教室课，班级式） """
-COURSE_TYPE_PUBLIC = 2
-""" 课型：公开课（大礼堂，班级式） """
-COURSE_TYPE_PE = 3
-""" 课型：体育课（训练场各地点，个人式） """
-COURSE_TYPE_INTEREST = 4
-""" 课型：兴趣课（娱乐地点，个人式） """
-COURSE_TYPE_INTERN = 5
-""" 课型：实习课（干员在岗工作，个人式） """
-
-CLASSROOM_COURSE_TYPE_SET = {COURSE_TYPE_THEORY, COURSE_TYPE_PRACTICE, COURSE_TYPE_PUBLIC}
-""" 班级式课型（目标为教室场景名，科目与教师查全局课表） """
-
-COURSE_TYPE_NAME = {
-    COURSE_TYPE_THEORY: "理论课",
-    COURSE_TYPE_PRACTICE: "实践课",
-    COURSE_TYPE_PUBLIC: "公开课",
-    COURSE_TYPE_PE: "体育课",
-    COURSE_TYPE_INTEREST: "兴趣课",
-    COURSE_TYPE_INTERN: "实习课",
-}
-""" 课型编号到中文名的映射，供面板与状态标识使用 """
-
-CLASSROOM_TAG_BY_COURSE_TYPE = {
-    COURSE_TYPE_THEORY: "Class_Room",
-    COURSE_TYPE_PRACTICE: "Practice_Room",
-    COURSE_TYPE_PUBLIC: "Auditorium",
-}
-""" 班级式课型对应的场景标签，用于列出可排课的教室 """
-
-PE_PLACE_DATA = {
-    "木桩房": ("Fight_Room", "training", 205),
-    "射击房": ("Shoot_Room", "training", 205),
-    "健身区": ("Gym", "exercise", 206),
-    "游泳池": ("Swimming_Pool", "swimming", 161),
-}
-""" 体育课的四处地点（方案 §3.21）：地点名 → (场景标签, 行为en_name, 状态cid)。
-    ⚠️ 用固定表而不是查配置，是因为这四处各自对应不同的既有行为，没有一张现成的表能推出来。
-    模拟对战室不在其中：它的 SceneTag 只有 Room，全仓库没有任何行为挂在它上面 """
-
-TEACHER_WORK_TYPE = 151
-""" 教师岗位的工作id（WorkType.csv:24），只有该岗位的干员可被排进课表 """
-
-CLASSROOM_NUMBER_ORDER = "一二三四五六七八九十"
-""" 教室名末尾中文数字的**数值**序。默认的 sorted() 按 Unicode 码位排，
-    会把「理论教室一~六」排成「一三二五六四」——码位序不是数值序 """
 
 
 def judge_classroom_open(classroom: str) -> bool:
@@ -94,10 +45,10 @@ def get_classroom_sort_key(classroom: str) -> int:
     Return arguments:
     int -- 末尾中文数字的数值（一为0、二为1……），没有中文数字后缀的排在最后
     """
-    for index, word in enumerate(CLASSROOM_NUMBER_ORDER):
+    for index, word in enumerate(education_constant.CLASSROOM_NUMBER_ORDER):
         if classroom.endswith(word):
             return index
-    return len(CLASSROOM_NUMBER_ORDER)
+    return len(education_constant.CLASSROOM_NUMBER_ORDER)
 
 
 def get_classroom_list(course_type: int = -1) -> List[str]:
@@ -111,15 +62,15 @@ def get_classroom_list(course_type: int = -1) -> List[str]:
              并让默认页签落在「大礼堂」上，而玩家最常用的是理论教室一
     """
     if course_type == -1:
-        type_list = sorted(CLASSROOM_TAG_BY_COURSE_TYPE.keys())
-    elif course_type in CLASSROOM_TAG_BY_COURSE_TYPE:
+        type_list = sorted(education_constant.CLASSROOM_TAG_BY_COURSE_TYPE.keys())
+    elif course_type in education_constant.CLASSROOM_TAG_BY_COURSE_TYPE:
         type_list = [course_type]
     else:
         return []
     room_list = []
     for now_type in type_list:
         now_group = []
-        for scene_path_str in constant.place_data.get(CLASSROOM_TAG_BY_COURSE_TYPE[now_type], []):
+        for scene_path_str in constant.place_data.get(education_constant.CLASSROOM_TAG_BY_COURSE_TYPE[now_type], []):
             scene_data: game_type.Scene = cache.scene_data[scene_path_str]
             if not judge_classroom_open(scene_data.scene_name):
                 continue
@@ -136,7 +87,7 @@ def get_course_type_by_classroom(classroom: str) -> int:
     Return arguments:
     int -- 课型编号，查不到则为-1
     """
-    for course_type, tag in CLASSROOM_TAG_BY_COURSE_TYPE.items():
+    for course_type, tag in education_constant.CLASSROOM_TAG_BY_COURSE_TYPE.items():
         for scene_path_str in constant.place_data.get(tag, []):
             if cache.scene_data[scene_path_str].scene_name == classroom:
                 return course_type
@@ -151,7 +102,7 @@ def get_classroom_position(classroom: str) -> List[str]:
     Return arguments:
     List[str] -- 场景路径列表，查不到则为空列表
     """
-    for tag in CLASSROOM_TAG_BY_COURSE_TYPE.values():
+    for tag in education_constant.CLASSROOM_TAG_BY_COURSE_TYPE.values():
         for scene_path_str in constant.place_data.get(tag, []):
             if cache.scene_data[scene_path_str].scene_name == classroom:
                 return map_handle.get_map_system_path_for_str(scene_path_str)
@@ -338,7 +289,7 @@ def get_now_course(character_id: int) -> Optional[dict]:
         "teacher_id": -1,
     }
     # 班级式课：科目与教师要到全局课表里查，学生只记了"这节去哪间教室"
-    if course_type in CLASSROOM_COURSE_TYPE_SET:
+    if course_type in education_constant.CLASSROOM_COURSE_TYPE_SET:
         result["classroom"] = target
         cell = get_class_cell(target, week_day, period)
         if cell is not None:
@@ -386,7 +337,7 @@ def get_teacher_candidate_list() -> List[int]:
     result = []
     for character_id in cache.npc_id_got:
         character_data: game_type.Character = cache.character_data[character_id]
-        if character_data.work.work_type == TEACHER_WORK_TYPE:
+        if character_data.work.work_type == education_constant.TEACHER_WORK_TYPE:
             result.append(character_id)
     return result
 
@@ -447,18 +398,18 @@ def get_course_place(now_course: dict) -> List[str]:
 
     course_type = now_course["course_type"]
     # 班级式：目标就是教室名
-    if course_type in CLASSROOM_COURSE_TYPE_SET:
+    if course_type in education_constant.CLASSROOM_COURSE_TYPE_SET:
         return get_classroom_position(now_course["classroom"])
     place_tag = ""
     # 体育课：目标是训练场的场景名，标签查固定表
-    if course_type == COURSE_TYPE_PE:
-        place_tag = PE_PLACE_DATA.get(now_course["target"], ("", "", 0))[0]
+    if course_type == education_constant.COURSE_TYPE_PE:
+        place_tag = education_constant.PE_PLACE_DATA.get(now_course["target"], ("", "", 0))[0]
     # 兴趣课：目标是娱乐cid，地点标签直接读 Entertainment.csv
-    elif course_type == COURSE_TYPE_INTEREST:
+    elif course_type == education_constant.COURSE_TYPE_INTEREST:
         if now_course["target"] in game_config.config_entertainment:
             place_tag = game_config.config_entertainment[now_course["target"]].place_tag
     # 实习课：目标是工作cid，地点标签直接读 WorkType.csv
-    elif course_type == COURSE_TYPE_INTERN:
+    elif course_type == education_constant.COURSE_TYPE_INTERN:
         if now_course["target"] in game_config.config_work_type:
             place_tag = game_config.config_work_type[now_course["target"]].place_tag
     if not place_tag:
@@ -467,7 +418,7 @@ def get_course_place(now_course: dict) -> List[str]:
     if not scene_list:
         return []
     # 体育课要精确到具体那间房（木桩房与射击房同属 Training_Room）
-    if course_type == COURSE_TYPE_PE:
+    if course_type == education_constant.COURSE_TYPE_PE:
         for scene_path_str in scene_list:
             if cache.scene_data[scene_path_str].scene_name == now_course["target"]:
                 return map_handle.get_map_system_path_for_str(scene_path_str)
@@ -477,7 +428,7 @@ def get_course_place(now_course: dict) -> List[str]:
     #    射击房与木桩房、生产车间1~5 同理。
     #    所以按"谁在岗就去谁那间"优先（口径53：实习就是跟着此刻在做这份工作的人），
     #    其次取与岗位 place 同名的那间，都取不到才退回第一间
-    if course_type == COURSE_TYPE_INTERN:
+    if course_type == education_constant.COURSE_TYPE_INTERN:
         work_type_id = now_course["target"]
         for scene_path_str in scene_list:
             for other_id in cache.scene_data[scene_path_str].character_list:

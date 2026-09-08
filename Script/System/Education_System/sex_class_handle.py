@@ -21,44 +21,12 @@ from typing import Optional, List
 
 from Script.Core import cache_control, game_type, get_text
 from Script.Design import game_time, map_handle
-from Script.System.Education_System import growth_handle
+from Script.System.Education_System import education_constant, growth_handle
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 _: FunctionType = get_text._
 """ 翻译api """
-
-SEX_CLASS_ABILITY_LIST = [70, 71, 72, 73, 74, 75, 77]
-""" 实操课可选的性技科目能力id：指技70/舌技71/足技72/胸技73/膣技74/肛技75/榨精77。
-    ⚠️ 不含 76 腰技——`data/csv/Ability.csv:76` 的 sex_need 为 0（男性专属），
-       女学生选了它一节课都吃不到加成，还不会报错，所以在源头就不列出来 """
-
-PRE_ARRIVE_MINUTE = 10
-""" 选修学生提前到岗的分钟数（方案 §3.28.5）。
-    ⚠️ 既有节次表首尾相接、没有课间（game_time.py:519），9个节次里有7个的"提前10分钟"
-       落在上一节课的最后10分钟内，届时学生会中止当前节次的课转为移动（口径62 提前退场） """
-
-NOTIFY_BEFORE_MINUTE = 30
-""" 第二次提醒的提前量（分钟） """
-
-SUBJECT_BONUS = 2.0
-""" 主修科目的经验加成倍率（草案）。对照一期的课型经验值（理论3/实践5/公开1/自习1），
-    与"实践课比理论课高"是同一量级 """
-
-WATCH_EXP_RATE = 0.25
-""" 旁观学生获得的主修科目经验比例。观摩不如亲身，1/4 让"多排学生"有意义又不喧宾夺主 """
-
-WATCH_STATE_BASE = 15
-""" 旁观学生的状态结算基础值。既有露出补正对被操作者本人用默认的30
-    （Script/Settle/default.py:3627 handle_target_add_small_shy），旁观是二手刺激，取一半 """
-
-WATCH_TALK_RATE = 0.30
-""" 旁观口上的触发概率。⚠️ 只限流口上，收益结算每个动作都给——
-    玩家一节课可能做20个动作，每次都描写一遍旁观者会刷满屏幕 """
-
-ABSENT_HP_RATE = 0.3
-""" 体力低于该比例的必修学生降级为旁观（口径65）。与 class_ai.ABSENT_HP_RATE 同一口径 """
-
 
 # ---------------------------------------------------------------------------
 # 临时课程的存取
@@ -281,7 +249,7 @@ def get_selected_student_list(classroom: str, week_day: int, period: int) -> Lis
         course = schedule_handle.get_selected_course(character_id, week_day, period)
         if course is None:
             continue
-        if course[0] in schedule_handle.CLASSROOM_COURSE_TYPE_SET and course[1] == classroom:
+        if course[0] in education_constant.CLASSROOM_COURSE_TYPE_SET and course[1] == classroom:
             result.append(character_id)
     return result
 
@@ -386,7 +354,7 @@ def get_subject_bonus(student_id: int) -> float:
     teacher_level = pl_data.ability.get(ability_id, 0)
     student_level = student_data.ability.get(ability_id, 0)
     speed = growth_handle.get_learn_speed(teacher_level, student_level)
-    return SUBJECT_BONUS * speed * growth_handle.get_education_zone_adjust()
+    return education_constant.SUBJECT_BONUS * speed * growth_handle.get_education_zone_adjust()
 
 
 # ---------------------------------------------------------------------------
@@ -485,7 +453,7 @@ def check_and_send_notify(last_time: datetime.datetime, now_time: datetime.datet
         if not notified[1]:
             start_time = get_period_start_time(date_ordinal, period)
             if start_time is not None:
-                notify_time = start_time - datetime.timedelta(minutes=NOTIFY_BEFORE_MINUTE)
+                notify_time = start_time - datetime.timedelta(minutes=education_constant.NOTIFY_BEFORE_MINUTE)
                 if judge_time_crossed(notify_time, last_time, now_time):
                     notified[1] = True
                     result.append(
@@ -580,7 +548,7 @@ def start_sex_class(ability_id: int, join_id_list: Optional[List[int]] = None) -
     now_class = get_temp_class(today, period)
     if now_class is not None and now_class.get("classroom", "") == classroom:
         now_class["running"] = True
-        if ability_id in SEX_CLASS_ABILITY_LIST:
+        if ability_id in education_constant.SEX_CLASS_ABILITY_LIST:
             now_class["ability_id"] = ability_id
     else:
         now_class = set_temp_class(today, period, classroom, ability_id, running=True)
@@ -698,7 +666,7 @@ def judge_hp_low_only_watch(character_id: int) -> bool:
     character_data: game_type.Character = cache.character_data[character_id]
     if not character_data.hit_point_max:
         return False
-    return character_data.hit_point / character_data.hit_point_max < ABSENT_HP_RATE
+    return character_data.hit_point / character_data.hit_point_max < education_constant.ABSENT_HP_RATE
 
 
 def judge_show_watch_talk() -> bool:
@@ -712,7 +680,7 @@ def judge_show_watch_talk() -> bool:
     Return arguments:
     bool -- 本次是否出旁观口上
     """
-    return random.random() < WATCH_TALK_RATE
+    return random.random() < education_constant.WATCH_TALK_RATE
 
 
 def settle_watcher(add_time: int, change_data: game_type.CharacterStatusChange) -> None:
@@ -747,7 +715,7 @@ def settle_watcher(add_time: int, change_data: game_type.CharacterStatusChange) 
     if exp_id:
         for target_change in change_data.target_change.values():
             main_exp = max(main_exp, target_change.experience.get(exp_id, 0))
-    watch_exp = int(main_exp * WATCH_EXP_RATE)
+    watch_exp = int(main_exp * education_constant.WATCH_EXP_RATE)
     # 口上限流：本轮是否描写旁观者，与收益是否结算无关
     show_talk = judge_show_watch_talk()
     for watcher_id in watcher_list:
@@ -762,12 +730,12 @@ def settle_watcher(add_time: int, change_data: game_type.CharacterStatusChange) 
             watcher_change.experience[exp_id] += watch_exp
         # 羞耻与欲情。能力与状态的配对沿用既有约定：羞耻配露出(34)、欲情配欲望(33)
         base_chara_state_common_settle(
-            watcher_id, add_time, 16, base_value=WATCH_STATE_BASE,
+            watcher_id, add_time, 16, base_value=education_constant.WATCH_STATE_BASE,
             ability_level=watcher_data.ability.get(34, 0), tenths_add=False,
             change_data_to_target_change=change_data,
         )
         base_chara_state_common_settle(
-            watcher_id, add_time, 12, base_value=WATCH_STATE_BASE,
+            watcher_id, add_time, 12, base_value=education_constant.WATCH_STATE_BASE,
             ability_level=watcher_data.ability.get(33, 0), tenths_add=False,
             change_data_to_target_change=change_data,
         )

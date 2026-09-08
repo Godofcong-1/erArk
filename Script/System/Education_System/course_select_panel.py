@@ -11,9 +11,8 @@ from typing import Dict, List
 from Script.Core import cache_control, game_type, get_text, flow_handle
 from Script.Config import game_config, normal_config
 from Script.Design import game_time
-from Script.System.Education_System import schedule_handle, growth_handle, schedule_template_handle
-from Script.System.Education_System.class_schedule_panel import (
-    WEEK_NAME, get_period_time_text)
+from Script.System.Education_System import education_constant, schedule_handle, growth_handle, schedule_template_handle
+from Script.System.Education_System.class_schedule_panel import get_period_time_text
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -25,14 +24,6 @@ line_feed.text = "\n"
 line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
-
-COURSE_TYPE_SHORT = {3: "体", 4: "兴", 5: "实"}
-""" 课型在格子里的单字缩写。
-    ⚠️ 只有个人式的三种课型需要它——班级式（理论/实践/公开）的格子里写的是教室名，
-       「理论教室一」本身就说明了是理论课，再标一个「[理]」是重复 """
-
-EXCLUDE_INTERN_WORK_TYPE = {151, 152}
-""" 实习课不开放的岗位：教师与学生是孩子自己在学校里的身份，作为"实习"语义重复（方案 §3.21） """
 
 
 def get_student_candidate_list() -> List[int]:
@@ -172,13 +163,13 @@ class Course_Select_Panel:
         """
         cell_return: Dict[str, tuple] = {}
         head_width = 14
-        cell_width = max(8, int((self.width - head_width) / len(WEEK_NAME)))
+        cell_width = max(8, int((self.width - head_width) / len(education_constant.WEEK_NAME)))
 
         head_draw = draw.NormalDraw()
         head_draw.width = head_width
         head_draw.text = _("  节次        ")
         head_draw.draw()
-        for name in WEEK_NAME:
+        for name in education_constant.WEEK_NAME:
             now_draw = draw.CenterDraw()
             now_draw.width = cell_width
             now_draw.text = _(name)
@@ -190,7 +181,7 @@ class Course_Select_Panel:
             head_draw.width = head_width
             head_draw.text = "  {0} {1} ".format(period + 1, get_period_time_text(period)[:5])
             head_draw.draw()
-            for week_day in range(len(WEEK_NAME)):
+            for week_day in range(len(education_constant.WEEK_NAME)):
                 now_draw = draw.CenterButton(
                     self._get_cell_text(character_id, week_day, period),
                     "\nMYCELL_{0}_{1}".format(week_day, period), cell_width)
@@ -214,7 +205,7 @@ class Course_Select_Panel:
         if course is None:
             return "--"
         course_type, target = course[0], course[1]
-        if course_type in schedule_handle.CLASSROOM_COURSE_TYPE_SET:
+        if course_type in education_constant.CLASSROOM_COURSE_TYPE_SET:
             # ⚠️ 必须走 get_class_cell：它是全局课表的唯一读取入口，
             #    直接读 class_schedule 会漏掉临时性技实操课的覆盖层
             cell = schedule_handle.get_class_cell(target, week_day, period)
@@ -222,10 +213,10 @@ class Course_Select_Panel:
                 return "{0}/{1}".format(game_config.config_ability[cell[0]].name, target)
             # 选了这间教室，但那节课后来被清掉了——照实显示，别让玩家以为还有课
             return _("{0}/已停课").format(target)
-        short = COURSE_TYPE_SHORT.get(course_type, "?")
-        if course_type == schedule_handle.COURSE_TYPE_INTEREST:
+        short = education_constant.COURSE_TYPE_SHORT.get(course_type, "?")
+        if course_type == education_constant.COURSE_TYPE_INTEREST:
             target = game_config.config_entertainment[target].name
-        elif course_type == schedule_handle.COURSE_TYPE_INTERN:
+        elif course_type == education_constant.COURSE_TYPE_INTERN:
             target = game_config.config_work_type[target].name
         return "[{0}]{1}".format(short, target)
 
@@ -262,7 +253,7 @@ class Course_Select_Panel:
         输出类型: 无
         功能: 逐格调用 clear_selected_course
         """
-        for week_day in range(len(WEEK_NAME)):
+        for week_day in range(len(education_constant.WEEK_NAME)):
             for period in range(len(game_time.CLASS_PERIOD_START)):
                 schedule_handle.clear_selected_course(character_id, week_day, period)
 
@@ -291,7 +282,7 @@ class Course_Select_Panel:
             line_feed.draw()
             draw.LineDraw("-", self.width).draw()
             # 三个时段，点进去单独覆盖
-            for slot in range(schedule_template_handle.SLOT_COUNT):
+            for slot in range(education_constant.SLOT_COUNT):
                 entertainment_id = schedule_template_handle.get_child_slot_activity(character_id, slot)
                 if entertainment_id and entertainment_id in game_config.config_entertainment:
                     now_name = game_config.config_entertainment[entertainment_id].name
@@ -303,7 +294,7 @@ class Course_Select_Panel:
                     override_mark = _("（单独指定）")
                 now_draw = draw.LeftButton(
                     _(" [{0}：{1}{2}]").format(
-                        schedule_template_handle.SLOT_NAME[slot], now_name, override_mark),
+                        education_constant.SLOT_NAME[slot], now_name, override_mark),
                     f"CHILD_SLOT_{slot}", int(self.width / 2))
                 now_draw.draw()
                 return_list.append(now_draw.return_text)
@@ -358,7 +349,7 @@ class Course_Select_Panel:
             return
         target_id = id_by_return[yrn]
         self._clear_student(target_id)
-        for week_day in range(len(WEEK_NAME)):
+        for week_day in range(len(education_constant.WEEK_NAME)):
             for period in range(len(game_time.CLASS_PERIOD_START)):
                 course = schedule_handle.get_selected_course(character_id, week_day, period)
                 if course is None:
@@ -395,7 +386,7 @@ class Course_Select_Panel:
         info_draw = draw.NormalDraw()
         info_draw.width = self.width
         info_draw.text = _("  {0}｜{1} 第{2}节 {3}\n\n").format(
-            cache.character_data[character_id].name, _(WEEK_NAME[week_day]),
+            cache.character_data[character_id].name, _(education_constant.WEEK_NAME[week_day]),
             period + 1, get_period_time_text(period))
         info_draw.draw()
 
@@ -429,7 +420,7 @@ class Course_Select_Panel:
             now_draw = draw.LeftButton(
                 _("[{0}] {1}/{2}（{3}）").format(
                     classroom, game_config.config_ability[cell[0]].name, teacher_name,
-                    schedule_handle.COURSE_TYPE_NAME.get(course_type, _("未知"))),
+                    education_constant.COURSE_TYPE_NAME.get(course_type, _("未知"))),
                 f"CLS_{classroom}", int(self.width / 2))
             now_draw.draw()
             return_list.append(now_draw.return_text)
@@ -451,11 +442,11 @@ class Course_Select_Panel:
         type_head_draw.text = _("  不去教室，改上：\n")
         type_head_draw.draw()
         type_by_return: Dict[str, int] = {}
-        for course_type in (schedule_handle.COURSE_TYPE_PE,
-                            schedule_handle.COURSE_TYPE_INTEREST,
-                            schedule_handle.COURSE_TYPE_INTERN):
+        for course_type in (education_constant.COURSE_TYPE_PE,
+                            education_constant.COURSE_TYPE_INTEREST,
+                            education_constant.COURSE_TYPE_INTERN):
             now_draw = draw.CenterButton(
-                _("[{0}]").format(schedule_handle.COURSE_TYPE_NAME[course_type]),
+                _("[{0}]").format(education_constant.COURSE_TYPE_NAME[course_type]),
                 f"CT_{course_type}", int(self.width / 6))
             now_draw.draw()
             return_list.append(now_draw.return_text)
@@ -496,7 +487,7 @@ class Course_Select_Panel:
               实习课周日整列不可选（方案 §3.21）
         """
         draw.TitleLineDraw(_("选择{0}的内容").format(
-            schedule_handle.COURSE_TYPE_NAME[course_type]), self.width).draw()
+            education_constant.COURSE_TYPE_NAME[course_type]), self.width).draw()
         return_list: List[str] = []
         target_by_return: Dict[str, object] = {}
         empty_flag = True
@@ -505,8 +496,8 @@ class Course_Select_Panel:
         index = 0
 
         # 体育课：四处训练场地点
-        if course_type == schedule_handle.COURSE_TYPE_PE:
-            for place_name in schedule_handle.PE_PLACE_DATA:
+        if course_type == education_constant.COURSE_TYPE_PE:
+            for place_name in education_constant.PE_PLACE_DATA:
                 if not schedule_handle.get_course_place(
                         {"course_type": course_type, "target": place_name}):
                     now_draw = draw.LeftDraw()
@@ -526,7 +517,7 @@ class Course_Select_Panel:
                     line_feed.draw()
 
         # 兴趣课：class_ok == 1 的娱乐项
-        elif course_type == schedule_handle.COURSE_TYPE_INTEREST:
+        elif course_type == education_constant.COURSE_TYPE_INTEREST:
             for cid in game_config.config_entertainment:
                 if not game_config.config_entertainment[cid].class_ok:
                     continue
@@ -552,7 +543,7 @@ class Course_Select_Panel:
             else:
                 for cid in game_config.config_work_type:
                     work_data = game_config.config_work_type[cid]
-                    if work_data.tag or cid in EXCLUDE_INTERN_WORK_TYPE or not work_data.ability_id:
+                    if work_data.tag or cid in education_constant.EXCLUDE_INTERN_WORK_TYPE or not work_data.ability_id:
                         continue
                     empty_flag = False
                     now_draw = draw.LeftButton(

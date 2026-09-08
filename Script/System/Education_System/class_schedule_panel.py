@@ -14,7 +14,7 @@ from typing import Dict, List
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.Config import game_config, normal_config
 from Script.Design import game_time, attr_calculation, basement
-from Script.System.Education_System import schedule_handle
+from Script.System.Education_System import education_constant, schedule_handle
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -26,12 +26,6 @@ line_feed.text = "\n"
 line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
-
-WEEK_NAME = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
-""" 星期的显示名，下标即 datetime 的 weekday() """
-
-SUBJECT_ABILITY_LIST = list(range(40, 50)) + list(range(70, 78))
-""" 可排课的18门科目：40~49 通用技能、70~77 性技（方案 §3.4） """
 
 
 def get_period_time_text(period: int) -> str:
@@ -59,8 +53,9 @@ class Education_Manage_Panel:
 
     def __init__(self, width: int):
         """初始化绘制对象"""
-        # ⚠️ 这三个模块在自己的模块顶层反向 import 本模块（取 WEEK_NAME 等共用常量），
-        #    所以只能在函数内 import，提到文件顶层会循环导入
+        # ⚠️ course_select_panel 在自己的模块顶层反向 import 本模块（取 get_period_time_text），
+        #    所以只能在函数内 import，提到文件顶层会循环导入。
+        #    共用常量已集中到 education_constant，不再是造成这个环的原因
         from Script.System.Education_System import course_select_panel, growth_panel, schedule_template_panel
 
         self.width: int = width
@@ -226,7 +221,7 @@ class Class_Schedule_Panel:
         info_draw = draw.NormalDraw()
         info_draw.width = self.width
         info_draw.text = _("  {0}｜承载课型：{1}\n").format(
-            self.now_room, schedule_handle.COURSE_TYPE_NAME.get(course_type, _("未知")))
+            self.now_room, education_constant.COURSE_TYPE_NAME.get(course_type, _("未知")))
         info_draw.draw()
 
         self.cell_return = self._draw_week_table(self.now_room)
@@ -275,13 +270,13 @@ class Class_Schedule_Panel:
         """
         cell_return: Dict[str, tuple] = {}
         head_width = 14
-        cell_width = max(8, int((self.width - head_width) / len(WEEK_NAME)))
+        cell_width = max(8, int((self.width - head_width) / len(education_constant.WEEK_NAME)))
 
         head_draw = draw.NormalDraw()
         head_draw.width = head_width
         head_draw.text = _("  节次        ")
         head_draw.draw()
-        for name in WEEK_NAME:
+        for name in education_constant.WEEK_NAME:
             now_draw = draw.CenterDraw()
             now_draw.width = cell_width
             now_draw.text = _(name)
@@ -293,7 +288,7 @@ class Class_Schedule_Panel:
             head_draw.width = head_width
             head_draw.text = "  {0} {1} ".format(period + 1, get_period_time_text(period)[:5])
             head_draw.draw()
-            for week_day in range(len(WEEK_NAME)):
+            for week_day in range(len(education_constant.WEEK_NAME)):
                 cell = schedule_handle.get_class_cell(classroom, week_day, period)
                 if cell is None:
                     cell_text = "--"
@@ -342,7 +337,7 @@ class Class_Schedule_Panel:
         输出类型: 无
         功能: 逐格调用 clear_class_cell
         """
-        for week_day in range(len(WEEK_NAME)):
+        for week_day in range(len(education_constant.WEEK_NAME)):
             for period in range(len(game_time.CLASS_PERIOD_START)):
                 schedule_handle.clear_class_cell(classroom, week_day, period)
 
@@ -382,7 +377,7 @@ class Class_Schedule_Panel:
         date_ordinal = sex_class_handle.get_date_ordinal_by_week_day(week_day, period)
         now_class = sex_class_handle.get_temp_class(date_ordinal, period)
         # 新排的默认取第一门（指技），已排过的沿用原来的
-        ability_id = now_class.get("ability_id", sex_class_handle.SEX_CLASS_ABILITY_LIST[0]) if now_class else sex_class_handle.SEX_CLASS_ABILITY_LIST[0]
+        ability_id = now_class.get("ability_id", education_constant.SEX_CLASS_ABILITY_LIST[0]) if now_class else education_constant.SEX_CLASS_ABILITY_LIST[0]
         must_attend = list(now_class.get("must_attend", [])) if now_class else []
 
         while 1:
@@ -391,7 +386,7 @@ class Class_Schedule_Panel:
             info_draw = draw.NormalDraw()
             info_draw.width = self.width
             info_draw.text = _("  教室：{0}\n  日期：{1}（{2}）\n  节次：第{3}节 {4}\n\n").format(
-                classroom, date_text, _(WEEK_NAME[week_day]), period + 1, get_period_time_text(period))
+                classroom, date_text, _(education_constant.WEEK_NAME[week_day]), period + 1, get_period_time_text(period))
             info_draw.draw()
 
             # 主修科目：只列女学生学得了的七门，76腰技是男性专属，列出来只会让人白选
@@ -401,7 +396,7 @@ class Class_Schedule_Panel:
             subject_draw.draw()
             return_list: List[str] = []
             id_by_return: Dict[str, int] = {}
-            for now_ability_id in sex_class_handle.SEX_CLASS_ABILITY_LIST:
+            for now_ability_id in education_constant.SEX_CLASS_ABILITY_LIST:
                 ability_name = game_config.config_ability[now_ability_id].name
                 if now_ability_id == ability_id:
                     button_text = _("[{0}]").format(ability_name)
@@ -504,7 +499,7 @@ class Class_Schedule_Panel:
                 # 会顶掉她原本的哪一节——按钮里只放一个「*」，明细汇总到下方
                 old_course = schedule_handle.get_selected_course(character_id, week_day, period)
                 replace_mark = ""
-                if old_course is not None and old_course[0] in schedule_handle.CLASSROOM_COURSE_TYPE_SET:
+                if old_course is not None and old_course[0] in education_constant.CLASSROOM_COURSE_TYPE_SET:
                     replace_mark = "*"
                     old_cell = schedule_handle.get_class_cell(old_course[1], week_day, period)
                     if old_cell is not None and old_cell[0] in game_config.config_ability:
@@ -562,12 +557,12 @@ class Class_Schedule_Panel:
         info_draw = draw.NormalDraw()
         info_draw.width = self.width
         info_draw.text = _("  {0}｜{1} 第{2}节 {3}\n").format(
-            classroom, _(WEEK_NAME[week_day]), period + 1, get_period_time_text(period))
+            classroom, _(education_constant.WEEK_NAME[week_day]), period + 1, get_period_time_text(period))
         info_draw.draw()
 
         return_list: List[str] = []
         id_by_return: Dict[str, int] = {}
-        for index, ability_id in enumerate(SUBJECT_ABILITY_LIST):
+        for index, ability_id in enumerate(education_constant.SUBJECT_ABILITY_LIST):
             now_draw = draw.LeftButton(
                 _("[{0}]{1}").format(index, game_config.config_ability[ability_id].name),
                 str(index), int(self.width / 4))
@@ -580,7 +575,7 @@ class Class_Schedule_Panel:
         # 性技实操课只在实践教室与大礼堂开（方案 §3.28.2），别的教室不列这个入口
         sex_class_draw = None
         if schedule_handle.get_course_type_by_classroom(classroom) in (
-                schedule_handle.COURSE_TYPE_PRACTICE, schedule_handle.COURSE_TYPE_PUBLIC):
+                education_constant.COURSE_TYPE_PRACTICE, education_constant.COURSE_TYPE_PUBLIC):
             sex_class_draw = draw.CenterButton(
                 _("[排一节性技实操课]"), _("排一节性技实操课"), int(self.width / 2))
             sex_class_draw.draw()

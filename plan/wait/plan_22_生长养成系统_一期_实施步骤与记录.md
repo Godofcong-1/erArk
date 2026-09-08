@@ -79,6 +79,7 @@
 
 | 文件 | 内容 |
 | --- | --- |
+| `education_constant.py` | ⚠️ 实施时新增（§1.6 原表没有）：子系统常量统一定义文件，照 `Pregnancy_System/pregnancy_constant.py` 的成例。2026-09-08 第七轮把散在 13 个模块里的 114 个常量集中于此，见方案 §9.6 |
 | `growth_handle.py` | 能力成长计算（速度曲线、教育区加成、上限判定） |
 | `class_ai.py` | ⚠️ 实施时新增（§1.6 原表没有）：上课时段的行为决策——体力闸、翘课闸、按课型派状态机 |
 | `auto_schedule.py` / `semester_handle.py` | ⚠️ 立项时**本期未建**：自动排课与学期切换推给二期，一期先把手动排课跑通（见偏离 21）。→ 均已于 2026-09-08 补上：`auto_schedule.py` 见第三轮与方案 §9.3，`semester_handle.py` 见第五轮与方案 §9.4 |
@@ -1326,3 +1327,185 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
   选教师那一屏加了「/N节」之后的网格。
 - 群交模板面板的改动**只在课堂模式下生效**，普通群交的表现未回归——需要人工开一次普通群交确认没变。
 - 成绩单上限 8 份是拍的，没有按实际养成周期（幼女到少女约十几个学期）校准过。
+
+**2026-09-08 第七轮（与方案 §9.6 成对）：教育系统常量集中到 `education_constant.py`**
+
+照怀孕系统 `pregnancy_constant.py` 的成例做的一次纯搬家。盘查方式是 AST 逐文件取模块级
+`ALL_CAPS` 赋值，再对全仓库反查引用点（裸引用 / `<模块>.常量` 两种写法都扫）。
+
+#### 实际改动
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/System/Education_System/education_constant.py` | **新建** | 402 行，113 个常量分 15 组；原 114 个去重合并掉 1 个 |
+| `Script/System/Education_System/` 其余 13 个模块 | 改 | 删掉全部 116 处模块级常量定义，补 `education_constant` 的 import，209 处引用改写 |
+| `Script/Settle/default.py` | 改 | 11 处引用改写；`handle_nuirse_child_add_adjust` 的 `baby_growth_handle` 导入随之作废 |
+| `Script/StateMachine/default.py` | 改 | 6 处；`character_education_skip_class` 的 `schedule_handle` 导入随之作废 |
+| `Script/UI/Panel/character_info_head.py` | 改 | 8 处；`get_course_text` 的 `schedule_handle` 导入随之作废 |
+| `Script/Design/handle_premise/__init__.py` | 改 | 2 处引用 + 1 处注释里的编号出处 |
+| `Script/Design/handle_premise/handle_premise_work.py` | 改 | 1 处 |
+| `Script/System/Instruct_System/handle_instruct.py` | 改 | 2 处；`ask_for_sex_class_ability` 的 `sex_class_handle` 导入随之作废 |
+| `Script/Design/settle_behavior.py` | 改 | 注释里的养成数值编号出处 |
+| `Script/Core/game_type.py` | 改 | `prenatal_point` 字段注释里的上限出处 |
+| `update.log` | 改 | v0.67 段追加 调整 1 条 |
+| `plan_22_生长养成系统_一期_方案.md` | 改 | 新增 §9.6 |
+| `plan_22_生长养成系统_一期_实施步骤与记录.md` | 改 | §1.6 文件清单补一行；新增本节 |
+
+#### 实施中发现的偏离（§9.6，编号接 54 往下）
+
+55. **散落不是「不整齐」，是让作者只能重复写。** 扫出 2 个同名常量各写两份
+    （`ABSENT_HP_RATE`、`CLASSROOM_COURSE_TYPE_SET`）、1 个同物两名
+    （`FOLLOW_MOTHER_ENTERTAINMENT_ID` 与 `ENTERTAINMENT_FOLLOW_MOTHER` 都是娱乐 176）。
+    ⚠️ **三份重复里有两份的注释明写了「此处另写一份是为了避免循环导入」**——
+    问题当时就被记下来了，只是**没有解法**：两个模块都要用同一个数，互相 import 会成环。
+    常量单独成文件正是那个解法。这类「注释里写着已知缺陷」的地方，
+    往后盘查时应当当成待办来读，而不是当成说明。
+
+56. **6 处函数内 import 只为取一个常量。** `semester_handle` 有 4 处、
+    `auto_schedule` 与 `growth_panel` 各 1 处，都是 `from ... class_schedule_panel import SUBJECT_ABILITY_LIST`，
+    理由是「面板模块提到文件顶层会循环导入」。⚠️ 这些 import 在函数体里，
+    **每次调用都要走一次导入机制**，而 `get_semester_level_change` 是成绩单结算的热路径。
+    搬家后 6 处全删，改成模块顶层一次性 import 常量文件。
+
+57. **`class_schedule_panel` 的循环导入注释本身也过期了。** 原文写「这三个模块在自己的模块顶层
+    反向 import 本模块（取 `WEEK_NAME` 等共用常量）」。搬家后 `growth_panel` 与
+    `schedule_template_panel` 已不再 import 它，只剩 `course_select_panel` 为取
+    `get_period_time_text()` 这个**函数**而 import。环还在，但理由变了，注释照实改写。
+
+58. **分组按「谁在用」而不是「原来在哪个文件」。** 譬如 `MALE_ONLY_ABILITY_ID`、
+    `SEX_CLASS_ABILITY_LIST`、`PRENATAL_SUBJECT_LIST` 原本分居三个文件，
+    注释各自解释了同一件事——为什么不含 76 腰技。归到「科目」一组后，
+    第一条写清楚、后两条引用它，重复的解释才消得掉。
+
+59. **三对该相等的常量改为派生，从结构上杜绝漂移。**
+    `WEEK_DAY_COUNT = len(WEEK_NAME)`、`CHILD_TALENT_SET = set(STAGE_TALENT_NAME)`、
+    `CLASSROOM_COURSE_TYPE_SET` 由三个 `COURSE_TYPE_*` 推出。
+    ⚠️ 派生要节制：只对**注释里已经写明「两者必须一致」**的那几对做，
+    别把普通常量也算成表达式——常量文件的第一价值是「一眼能看见这个数是多少」。
+
+60. **搬家不许顺手改语义。** 两条自设红线：
+    ⚠️ **不给字符串加 `_()`**——`SLOT_NAME`、`COURSE_TYPE_NAME` 等原本没有翻译标记，
+    加上去会改变 PO 词条集合，那是另一件事；
+    ⚠️ **不搬函数内的局部常量表**——它们只服务一处，搬出去反而要跳文件读。
+
+61. **改写必须按 token 走，不能按文本替换。** 用 `tokenize` 逐 NAME 令牌改，
+    天然不碰字符串与注释。⚠️ 唯一踩到的坑是**括号式 from-import**：
+    `from ... import (\n    WEEK_NAME, get_period_time_text)` 里的 `WEEK_NAME`
+    前一个令牌是 `(` 而不是 `import`，被当成裸引用改成了
+    `education_constant.WEEK_NAME`，写出一行语法错误。单行的
+    `from ... import SUBJECT_ABILITY_LIST` 反而没事（前一个令牌正是 `import`）。
+    往后做同类改写，**from-import 一律先单独处理掉，再跑令牌改写**。
+
+62. **删定义会顺手吃掉 black 要求的两行空行。** 常量块与其后的 `def` 之间原本是两行空行，
+    连块带空行一起删之后只剩一行。本机没装 black，改用「与 HEAD 版逐个 `def` 比对空行数、
+    只补回变少的那些」的办法修，15 处。⚠️ 判据要排除**装饰器**（`@register_provider`
+    下面的 `def` 本来就是 0 行空行）与**区块横幅**（`# ---` 三行注释块的中间两行同理），
+    否则会误报一大片。
+
+#### 单元测试结果
+
+新增 `test_const_move.py` **28 条**，连同既有三套共 **257 条全绿**
+（本轮 28 + 一期 120 + 二期 65 + 三期 44）。
+
+本轮断言的核心只有一条，其余都围着它转：
+
+- **114 个常量的取值搬家前后完全一致**——逐个 `git show HEAD:<文件>` 取出原定义的表达式源码，
+  在受限命名空间里求值，与新文件的运行时值逐个比对。⚠️ 这是纯搬家唯一真正要证明的事，
+  「能 import」「能跑」都证明不了某个数字有没有被抄错。
+- **HEAD 版本确实有 114 个不同名常量、且跨文件同名重复正好是那 2 个**——
+  反向锁住基线，免得日后有人加了常量却不更新这条断言还以为它在保护自己。
+- **13 个模块里一个模块级常量都不剩**、**全仓库没有裸引用与 `<模块>.常量` 的旧写法**、
+  **没有因搬家而变成死引用的 import**（放过带 `noqa: F401` 的副作用导入）。
+- 派生关系四条各断言一次；性格倾向的正负顺序两表一致；腰技 76 不在任何女儿可选的科目表里。
+
+#### 尚未覆盖的验证
+
+- 游戏内没有跑过：本轮不改任何行为，风险集中在 import 期，
+  而 13 个教育模块 + 子系统外 5 个引用方的导入都已在无头环境里实跑过。
+- `education_constant` 依赖 `official_event_handle`，若日后公务事件系统在**模块顶层**
+  反向 import 教育系统，这个环会立刻炸在 import 期。⚠️ 目前它只在函数内 import
+  （`official_event_handle.py:128`，带 `noqa: F401` 的注册用副作用导入），
+  那条注释里也写明了理由。
+- 本机没有 black，新文件与改动文件的格式只按「与 HEAD 比对空行数」这一条修过，
+  未跑过完整的 `black --line-length 200`。
+
+**2026-09-08 第八轮（与方案 §9.7 成对）：常量改为从配置现算，字符串接入翻译api**
+
+紧接第七轮。集中之后再做两件事：能从配置推出来的不写死，要给玩家看的一律过翻译。
+
+#### 实际改动
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/System/Education_System/education_constant.py` | 改 | 三张科目表改为按 `ability_type` 现算；阶段名与性格倾向名改读 Talent.csv；46 处显示字符串接入 `_()`；新增「未初始化就导入」的守卫 |
+| `Script/System/Education_System/auto_schedule.py` | 改 | `get_auto_subject_list()` 不再自己算一遍，直接取 `FEMALE_SUBJECT_LIST` 的副本 |
+| `Script/System/Education_System/baby_growth_handle.py` | 改 | 两处跟着 `PRENATAL_SUBJECT_LIST` → `FEMALE_SUBJECT_LIST` 改名 |
+| `update.log` | 改 | v0.67 段追加 调整 1 条、修正 1 条 |
+| `plan_22_生长养成系统_一期_方案.md` | 改 | 新增 §9.7 |
+| `plan_22_生长养成系统_一期_实施步骤与记录.md` | 改 | 新增本节 |
+
+#### 实施中发现的偏离（§9.7，编号接 62 往下）
+
+63. **按 `ability_type` 筛科目会多筛出一个 90 隐蔽。** 类型5（技术）里除了 70~77 八门性技，
+    还有一个隐蔽——它是隐奸系统的熟练度，不是能开课教的科目。
+    ⚠️ 只按类型筛会让课表里冒出一门「隐蔽课」，实操课也会把它列进主修。
+    立 `NOT_SUBJECT_ABILITY_SET = {90}` 显式排除并写明理由，**不用 `cid < 90` 这类边界条件**——
+    那种写法挡不住下一次往类型5里加非科目的能力。
+    ⚠️ 这条也说明「改为从配置现算」不是无脑替换：**先要确认那一维在配置里真的存在**。
+
+64. **`PRACTICE_SUBJECT_SET` 推不出来，只能继续列举。** Ability.csv 没有「是不是动手类」这一维。
+    注释里写明它是例外，免得下一个人以为漏改了。同理 `CHILD_TALENT_ID_LIST` 的四个id 也写死：
+    Talent.csv 里 101~104 的类型都是「身体素质」，与其他几十个身体素质并无区别，按类型筛不出来。
+
+65. **三张科目表其实是一条链，此前各算各的。** 理成
+    `SUBJECT_ABILITY_LIST` → `MALE_ONLY_SUBJECT_SET` → `FEMALE_SUBJECT_LIST` → `SEX_CLASS_ABILITY_LIST`。
+    ⚠️ 顺带发现 `auto_schedule.get_auto_subject_list()` 与 `PRENATAL_SUBJECT_LIST`
+    **算的是同一个东西**（全部科目去掉腰技），只是一个叫「自动排课能排的」、一个叫「胎教覆盖的」。
+    改名为 `FEMALE_SUBJECT_LIST`（女儿学得了的科目）后两处共用一张。
+
+66. **`MALE_ONLY_ABILITY_ID = 76` 改成集合。** 从 `sex_need == 0` 现算出来的本来就是一个集合，
+    写成单个 id 等于假定「男性专属科目永远只有一门」。
+
+67. **给硬编码中文包 `_()`，不如直接读配置。** 素质名走 `config_talent[id].name` 时**自带翻译**——
+    `game_config` 载入时对所有 `name` 列跑过 `get_text._()`（`game_config.py:536`），
+    PO 里早有 `婴儿 → Baby`。⚠️ 因此这类现取的名字**绝不能再包一层 `_()`**，包了反而对不上词条。
+    这条得写进注释，否则下一个人按「字符串就包 `_()`」的规律一扫就会包上去。
+
+68. **有三处 `_()` 不是体例问题，是活BUG。** `EDUCATION_ZONE_NAME`、`PRESET_TEMPLATE_SLOT_NAME`、
+    `PE_PLACE_DATA` 的键都不是拿来显示的，是拿去和**翻译过的**配置/场景数据比对的。
+    写死中文在非中文语言下分别导致：教育区成长加成整个失效、四套预设日程模板全部套用失败、
+    体育课永远找不到上课地点。⚠️ **判断一个字符串该不该翻译，看的不是它长什么样，
+    而是它要和谁比对**——同一个文件里 `Class_Room`（场景标签）、`通用1`（事件uid）、
+    `GROWTH_REPORT_PREV`（面板哨兵）就一个都不能包。
+
+69. **场景名走的是 pickle 缓存，翻译只在冷构建那一次生效。** `map_config.init_map_data()`
+    有缓存就直接 `pickle.load`，只有冷构建才走 `get_text._(SceneName)`。
+    ⚠️ 于是**场景名跟的是「缓存生成时的语言」而不是当前语言**——我第一次验证时正是撞在
+    「缓存中文、会话英文」这个状态里，一度以为自己把体育课改坏了。
+    改用「照 `map_config.py:64` 那行的写法直接对 Scene.json 求值」验证，
+    冷构建下 `scene_name` 就是 `'Stake Room'`，与 `_("木桩房")` 一致。
+    ⚠️ **验证一个「载入期做的转换」，不能只看缓存里的成品**。
+    这是整个游戏的既有问题（改语言不重建缓存则全岛地名不变），不是本表独有，记在这里备查。
+
+#### 单元测试结果
+
+`test_const_move` 由 28 条扩到 **56 条**，连同既有三套共 **285 条全绿**。
+
+新增断言的重点：
+
+- **现算的结果与改造前写死的值逐个相等**：科目18门、女儿可学17门、实操课7门、
+  阶段名四个、性格倾向名四对，全部与硬编码版本比对通过。
+- **90 隐蔽确实是类型5、且确实被排除**——正反两面都断言，免得哪天有人把排除表删了还以为没事。
+- **`_()` 的正反覆盖**：用 AST 走每个常量的取值表达式，分出「裸字符串」与「`_()` 包着的字符串」，
+  11 个必须全包、6 个必须一个都不包（场景标签、事件uid、面板哨兵、排版空白）。
+  ⚠️ 反向那半更要紧：正向漏了只是不翻译，反向误包会直接写坏数据键。
+- **现取的名字没有被再包一层 `_()`**。
+
+#### 尚未覆盖的验证
+
+- 新加的 46 处 `_()` 需要跑一次 `buildpo.py`（扫全仓库 `.py` 交给 `xgettext`）才会进 PO，
+  本机没有 `xgettext`，未跑。在跑通之前，这批词条在英文模式下仍显示中文——
+  与改造前一模一样，不构成回退。
+- 英文模式的实机验收：本轮只在无头环境里比对了键能否对上，没有真开一局英文游戏。
+- `NOT_SUBJECT_ABILITY_SET` 目前只有 90 一项，是照当前 Ability.csv 盘出来的；
+  日后往类型4/5 里加非科目的能力时必须同步。

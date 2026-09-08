@@ -20,54 +20,12 @@ from types import FunctionType
 from typing import Dict, List, Optional
 from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config
+from Script.System.Education_System import education_constant
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 _: FunctionType = get_text._
 """ 翻译api """
-
-CHILD_TALENT_SET = {101, 102, 103, 104}
-""" 成长链的四个年龄素质：101婴儿 / 102幼女 / 103萝莉 / 104少女 """
-
-STUDENT_STAGE_TALENT_SET = {102, 103, 104}
-""" 可排课、可查养成总览的三个阶段：102幼女 / 103萝莉 / 104少女。
-    婴儿(101)上不了课也没什么可排的，不列入 """
-
-EDUCATION_ZONE_NAME = "教育区"
-""" 教育区在 Facility_effect.csv 中的设施名（该表按名字索引） """
-
-EDUCATION_ZONE_CID = 15
-""" 教育区在 Facility.csv:22 中的设施id，用于查 Rhodes_Island.facility_level """
-
-LEARN_STATE_ID = 9
-""" 习得状态id（CharacterState.csv:15），睡眠结算时换算为习得珠(juel 9) """
-
-COURSE_LEARN_BASE = {
-    0: 30,   # 理论课，沿用既有授课结算的默认基础值
-    1: 50,   # 实践课，教室容量小、单位收益更高
-    2: 15,   # 大礼堂公开课，容纳全部孩子、单位收益低
-    5: 40,   # 实习课，实地跟岗，介于理论(30)与实践(50)之间
-}
-""" 各班级式课型的单节课习得基础值（草案，实施时以实测为准）。
-    最终习得值 = (上课分钟数 + 本值) × 速度系数 × 教育区加成 × 素质修正 """
-
-COURSE_EXP_BASE = {
-    0: 3,    # 理论课
-    1: 5,    # 实践课
-    2: 1,    # 大礼堂公开课
-    5: 4,    # 实习课
-}
-""" 各班级式课型的单节课科目经验基础值（草案）。科目经验是分科的，决定单科能升到多高 """
-
-SELF_STUDY_LEARN_BASE = 15
-""" 自习（本节无教师）的习得基础值；无教师则无等级差可算，速度系数恒取1.0 """
-
-SELF_STUDY_EXP_BASE = 1
-""" 自习的科目经验基础值 """
-
-CLASSROOM_COURSE_TYPE_SET = {0, 1, 2}
-""" 班级式课型（理论/实践/公开）。⚠️ 与 schedule_handle 同名常量一致，此处另写一份是为了
-    避免两个模块互相 import——schedule_handle 已经在函数里反向 import 了 growth_handle """
 
 
 def get_child_growth(character_id: int) -> game_type.CHILD_GROWTH:
@@ -93,7 +51,7 @@ def judge_is_child(character_id: int) -> bool:
     bool -- 是否为成长中的孩子
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    for talent_id in CHILD_TALENT_SET:
+    for talent_id in education_constant.CHILD_TALENT_SET:
         if character_data.talent.get(talent_id, 0):
             return True
     return False
@@ -110,7 +68,7 @@ def get_character_stage(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     # ⚠️ 必须按 id 升序遍历：成长链正常情况下四个素质只会挂一个，
     #    但世界设定「萝莉化」会批量覆写年龄素质，遍历 set 的哈希序会取到不确定的那个
-    for talent_id in sorted(CHILD_TALENT_SET):
+    for talent_id in sorted(education_constant.CHILD_TALENT_SET):
         if character_data.talent.get(talent_id, 0):
             return talent_id
     return 0
@@ -136,7 +94,7 @@ def get_student_candidate_list() -> List[int]:
     for character_id in sorted(cache.npc_id_got):
         if character_id not in cache.character_data:
             continue
-        if get_character_stage(character_id) not in STUDENT_STAGE_TALENT_SET:
+        if get_character_stage(character_id) not in education_constant.STUDENT_STAGE_TALENT_SET:
             continue
         if not handle_premise.handle_self_is_player_daughter(character_id):
             continue
@@ -190,8 +148,8 @@ def get_education_zone_adjust() -> float:
     Return arguments:
     float -- 倍率，如 Lv5 时为 2.0
     """
-    now_level = cache.rhodes_island.facility_level.get(EDUCATION_ZONE_CID, 1)
-    cid_list = game_config.config_facility_effect_data.get(EDUCATION_ZONE_NAME, [])
+    now_level = cache.rhodes_island.facility_level.get(education_constant.EDUCATION_ZONE_CID, 1)
+    cid_list = game_config.config_facility_effect_data.get(education_constant.EDUCATION_ZONE_NAME, [])
     # 该表的列表下标即设施等级（构建时补了个0占位），越界则按无加成处理
     if now_level < len(cid_list):
         effect_cid = cid_list[now_level]
@@ -250,14 +208,14 @@ def settle_student_class_gain(
     from Script.Settle import common_default
 
     no_teacher = teacher_id == -1 or teacher_id not in cache.character_data
-    learn_base = COURSE_LEARN_BASE.get(course_type, COURSE_LEARN_BASE[0])
-    exp_base = COURSE_EXP_BASE.get(course_type, COURSE_EXP_BASE[0])
+    learn_base = education_constant.COURSE_LEARN_BASE.get(course_type, education_constant.COURSE_LEARN_BASE[0])
+    exp_base = education_constant.COURSE_EXP_BASE.get(course_type, education_constant.COURSE_EXP_BASE[0])
     if no_teacher:
         # 教室课没老师就是自习，有一套自己的低档基础值；
         # 实习课没导师则是"见习"——照方案 §3.21 只把本岗位的基础值减半，而不是掉到自习档
-        if course_type in CLASSROOM_COURSE_TYPE_SET:
-            learn_base = SELF_STUDY_LEARN_BASE
-            exp_base = SELF_STUDY_EXP_BASE
+        if course_type in education_constant.CLASSROOM_COURSE_TYPE_SET:
+            learn_base = education_constant.SELF_STUDY_LEARN_BASE
+            exp_base = education_constant.SELF_STUDY_EXP_BASE
         else:
             learn_base = max(1, learn_base // 2)
             exp_base = max(1, exp_base // 2)
@@ -268,7 +226,7 @@ def settle_student_class_gain(
     common_default.base_chara_state_common_settle(
         student_id,
         add_time,
-        LEARN_STATE_ID,
+        education_constant.LEARN_STATE_ID,
         base_value=learn_base,
         ability_level=-1,
         extra_adjust=adjust - 1.0,
@@ -319,7 +277,7 @@ def settle_teacher_class_gain(
     common_default.base_chara_state_common_settle(
         teacher_id,
         add_time,
-        LEARN_STATE_ID,
+        education_constant.LEARN_STATE_ID,
         ability_level=int(teacher_data.ability.get(ability_id, 0)),
         change_data=change_data,
     )
@@ -331,19 +289,6 @@ def settle_teacher_class_gain(
 # ---------------------------------------------------------------------------
 # 幼女跟随母亲见学（Plan 22 二期 §3.24）
 # ---------------------------------------------------------------------------
-
-FOLLOW_MOTHER_LEARN_BASE = 6
-""" 见学的习得基础值。约为理论课(30)的两成——看着母亲干活当然比正经上课慢，
-    但胜在幼女期没课的时段本来就是空的，积少成多 """
-
-FOLLOW_MOTHER_EXP_BASE = 1
-""" 见学的科目经验基础值 """
-
-FOLLOW_MOTHER_CARE_POINT = 0.5
-""" 每次见学累加的照料值。成年时参与身体发育与性格判定（方案 §3.8） """
-
-FOLLOW_MOTHER_FAVORABILITY = 2
-""" 每次见学母女双方各自增加的好感 """
 
 
 def get_mother_work_ability_id(mother_id: int) -> int:
@@ -389,12 +334,12 @@ def settle_follow_mother_gain(
     from Script.Design import character_handle
 
     growth_data = get_child_growth(character_id)
-    growth_data.care_point += FOLLOW_MOTHER_CARE_POINT
+    growth_data.care_point += education_constant.FOLLOW_MOTHER_CARE_POINT
 
     # 母女好感：直接走 add_favorability，不套 common_default 的好感链——
     # 那条链的信物/连续指令/难度修正都是围绕玩家设计的，母女之间套上去只会得到看不懂的数字
-    character_handle.add_favorability(mother_id, character_id, FOLLOW_MOTHER_FAVORABILITY, change_data, None)
-    character_handle.add_favorability(character_id, mother_id, FOLLOW_MOTHER_FAVORABILITY, change_data, None)
+    character_handle.add_favorability(mother_id, character_id, education_constant.FOLLOW_MOTHER_FAVORABILITY, change_data, None)
+    character_handle.add_favorability(character_id, mother_id, education_constant.FOLLOW_MOTHER_FAVORABILITY, change_data, None)
 
     ability_id = get_mother_work_ability_id(mother_id)
     if not ability_id:
@@ -411,8 +356,8 @@ def settle_follow_mother_gain(
     common_default.base_chara_state_common_settle(
         character_id,
         add_time,
-        LEARN_STATE_ID,
-        base_value=FOLLOW_MOTHER_LEARN_BASE,
+        education_constant.LEARN_STATE_ID,
+        base_value=education_constant.FOLLOW_MOTHER_LEARN_BASE,
         ability_level=-1,
         extra_adjust=adjust - 1.0,
         change_data=change_data,
@@ -420,7 +365,7 @@ def settle_follow_mother_gain(
     exp_id = get_subject_exp_id(ability_id)
     if exp_id:
         common_default.base_chara_experience_common_settle(
-            character_id, exp_id, base_value=max(1, int(FOLLOW_MOTHER_EXP_BASE * adjust)),
+            character_id, exp_id, base_value=max(1, int(education_constant.FOLLOW_MOTHER_EXP_BASE * adjust)),
             change_data=change_data,
         )
 
@@ -428,23 +373,6 @@ def settle_follow_mother_gain(
 # ---------------------------------------------------------------------------
 # 成年结算：性格选边 / 发育加成输入 / 职业倾向提示（Plan 22 二期 §3.8）
 # ---------------------------------------------------------------------------
-
-PERSONALITY_PAIR_TALENT = {
-    0: (271, 272),
-    1: (274, 273),
-    2: (275, 276),
-    3: (278, 277),
-}
-""" 四对性格倾向 → (正数侧素质id, 负数侧素质id)。
-    ⚠️ 正负两侧的顺序以 `growth_panel.PERSONALITY_PAIR_NAME` 为准（勤劳/懒散、坚强/脆弱、
-    热情/孤僻、开放/羞耻），两处的前后必须一致，否则面板显示"偏坚强"、结算却写了脆弱 """
-
-CARE_POINT_CHEST_MAX_BONUS = 20
-""" 照料值对胸部发育概率表的最大偏移（百分点）。
-    偏移的是 `chest_grow` 里"不长"那一档的宽度：照料得越多，落进"不长"的窗口越窄 """
-
-CARE_POINT_PER_CHEST_BONUS = 5.0
-""" 每多少点照料值换 1 个百分点的发育偏移 """
 
 
 def get_care_point_grow_bonus(character_id: int) -> int:
@@ -459,7 +387,7 @@ def get_care_point_grow_bonus(character_id: int) -> int:
     growth_data = character_data.child_growth
     if growth_data is None:
         return 0
-    return int(min(CARE_POINT_CHEST_MAX_BONUS, max(0.0, growth_data.care_point) / CARE_POINT_PER_CHEST_BONUS))
+    return int(min(education_constant.CARE_POINT_CHEST_MAX_BONUS, max(0.0, growth_data.care_point) / education_constant.CARE_POINT_PER_CHEST_BONUS))
 
 
 def settle_personality_talent(character_id: int) -> str:
@@ -478,7 +406,7 @@ def settle_personality_talent(character_id: int) -> str:
     if growth_data is None:
         return _("\n{0}的性格尚未定型\n").format(character_data.name)
     got_name_list = []
-    for pair_id, (plus_talent, minus_talent) in PERSONALITY_PAIR_TALENT.items():
+    for pair_id, (plus_talent, minus_talent) in education_constant.PERSONALITY_PAIR_TALENT.items():
         point = growth_data.personality_point.get(pair_id, 0.0)
         if point > 0:
             got_talent = plus_talent
@@ -534,39 +462,6 @@ def get_career_suggestion_text(character_id: int) -> str:
 # 养成数值的统一读写口（Plan 22 三期）
 # ---------------------------------------------------------------------------
 
-GROWTH_VALUE_ATTEND = 0
-""" 养成数值编号：累计听课节数 """
-GROWTH_VALUE_ABSENT = 1
-""" 养成数值编号：累计缺课节数 """
-GROWTH_VALUE_ATTEND_RATE = 2
-""" 养成数值编号：出勤率百分比（0~100），一节课都没上过时算作100 """
-GROWTH_VALUE_STAGE_PROGRESS = 3
-""" 养成数值编号：本成长阶段已过的进度百分比（0~100，只读）。
-    ⚠️ 事件表靠它把同一阶段的几十条事件分出早/中/后期——
-       婴儿期的「第一次睁眼」和「扶着床沿站起来」不该同时在池子里 """
-GROWTH_VALUE_SEMESTER_ATTEND = 4
-""" 养成数值编号：本学期听课节数（累计减学期基线，Plan 22 一期 §3.13） """
-GROWTH_VALUE_SEMESTER_ABSENT = 5
-""" 养成数值编号：本学期缺课节数 """
-GROWTH_VALUE_SEMESTER_ATTEND_RATE = 6
-""" 养成数值编号：本学期出勤率百分比（0~100），本学期一节课都没轮到过时算作100 """
-GROWTH_VALUE_REPORT_GRADE = 7
-""" 养成数值编号：上一份成绩单的档位 0优秀/1良好/2待努力/3无课可评；
-    还没有过成绩单时为 -1。⚠️ 成绩单口上与期末事件的差分全靠它，取值口径见 semester_handle """
-GROWTH_VALUE_REPORT_LEVEL_UP = 8
-""" 养成数值编号：上一份成绩单里升了级的科目数 """
-GROWTH_VALUE_SEMESTER_PROGRESS = 9
-""" 养成数值编号：本学期已过的进度百分比（0~100，只读）。
-    ⚠️ 与角色无关（学期是全岛共用的），但仍走同一个读口，免得事件表要记两套取数方式 """
-GROWTH_VALUE_PERSONALITY_BASE = 10
-""" 养成数值编号：四对性格倾向占用 10~13（10+性格对编号），正数偏前者、负数偏后者 """
-GROWTH_VALUE_CARE = 20
-""" 养成数值编号：照料累积 """
-GROWTH_VALUE_PRENATAL = 21
-""" 养成数值编号：胎教累积 """
-GROWTH_VALUE_EVENT_COUNT = 22
-""" 养成数值编号：已触发的养成事件条数 """
-
 
 def get_stage_progress(character_id: int) -> float:
     """
@@ -613,36 +508,36 @@ def get_growth_value(character_id: int, value_id: int) -> float:
 
     # ⚠️ 阶段进度不依赖养成数据，要在下面的提前返回之前算：
     #    没有 child_growth 的孩子（旧档、刚出生）照样有成长天数
-    if value_id == GROWTH_VALUE_STAGE_PROGRESS:
+    if value_id == education_constant.GROWTH_VALUE_STAGE_PROGRESS:
         return get_stage_progress(character_id)
     # 学期进度同理，它是全岛共用的时间量，与这个角色有没有养成数据无关
-    if value_id == GROWTH_VALUE_SEMESTER_PROGRESS:
+    if value_id == education_constant.GROWTH_VALUE_SEMESTER_PROGRESS:
         return semester_handle.get_semester_progress()
     growth_data = cache.character_data[character_id].child_growth
     if growth_data is None:
         # ⚠️ 没有养成数据时，成绩单档位要回落到 -1（尚无成绩单）而不是 0——
         #    0 是「优秀」，回落成 0 会让全岛没上过学的人都通过优秀档的口上前提
-        if value_id == GROWTH_VALUE_REPORT_GRADE:
-            return float(semester_handle.REPORT_GRADE_NONE)
-        if value_id in {GROWTH_VALUE_ATTEND_RATE, GROWTH_VALUE_SEMESTER_ATTEND_RATE}:
+        if value_id == education_constant.GROWTH_VALUE_REPORT_GRADE:
+            return float(education_constant.REPORT_GRADE_NONE)
+        if value_id in {education_constant.GROWTH_VALUE_ATTEND_RATE, education_constant.GROWTH_VALUE_SEMESTER_ATTEND_RATE}:
             return 100.0
         return 0.0
-    if value_id == GROWTH_VALUE_ATTEND:
+    if value_id == education_constant.GROWTH_VALUE_ATTEND:
         return float(growth_data.attend_class_count)
-    if value_id == GROWTH_VALUE_ABSENT:
+    if value_id == education_constant.GROWTH_VALUE_ABSENT:
         return float(growth_data.absent_count)
-    if value_id == GROWTH_VALUE_ATTEND_RATE:
+    if value_id == education_constant.GROWTH_VALUE_ATTEND_RATE:
         total = growth_data.attend_class_count + growth_data.absent_count
         # 一节课都还没轮到过的孩子不该被当成全勤缺席，按满勤算
         if not total:
             return 100.0
         return growth_data.attend_class_count * 100.0 / total
     # 本学期的三个数走 semester_handle：那边是「累计减基线」的唯一算口
-    if value_id in {GROWTH_VALUE_SEMESTER_ATTEND, GROWTH_VALUE_SEMESTER_ABSENT, GROWTH_VALUE_SEMESTER_ATTEND_RATE}:
+    if value_id in {education_constant.GROWTH_VALUE_SEMESTER_ATTEND, education_constant.GROWTH_VALUE_SEMESTER_ABSENT, education_constant.GROWTH_VALUE_SEMESTER_ATTEND_RATE}:
         semester_attend, semester_absent = semester_handle.get_semester_attend(character_id)
-        if value_id == GROWTH_VALUE_SEMESTER_ATTEND:
+        if value_id == education_constant.GROWTH_VALUE_SEMESTER_ATTEND:
             return float(semester_attend)
-        if value_id == GROWTH_VALUE_SEMESTER_ABSENT:
+        if value_id == education_constant.GROWTH_VALUE_SEMESTER_ABSENT:
             return float(semester_absent)
         semester_total = semester_attend + semester_absent
         # 本学期还一节课都没轮到过的孩子不该被当成全勤缺席，按满勤算（与终身出勤率同口径）
@@ -650,20 +545,20 @@ def get_growth_value(character_id: int, value_id: int) -> float:
             return 100.0
         return semester_attend * 100.0 / semester_total
     last_report_card = semester_handle.get_last_report_card(character_id)
-    if value_id == GROWTH_VALUE_REPORT_GRADE:
+    if value_id == education_constant.GROWTH_VALUE_REPORT_GRADE:
         # ⚠️ 没有成绩单时是 -1 而不是 0：0 是「优秀」档
         if not last_report_card:
-            return float(semester_handle.REPORT_GRADE_NONE)
-        return float(last_report_card.get("grade", semester_handle.REPORT_GRADE_NONE))
-    if value_id == GROWTH_VALUE_REPORT_LEVEL_UP:
+            return float(education_constant.REPORT_GRADE_NONE)
+        return float(last_report_card.get("grade", education_constant.REPORT_GRADE_NONE))
+    if value_id == education_constant.GROWTH_VALUE_REPORT_LEVEL_UP:
         return float(len(last_report_card.get("level_change", {})))
-    if GROWTH_VALUE_PERSONALITY_BASE <= value_id <= GROWTH_VALUE_PERSONALITY_BASE + 3:
-        return float(growth_data.personality_point.get(value_id - GROWTH_VALUE_PERSONALITY_BASE, 0.0))
-    if value_id == GROWTH_VALUE_CARE:
+    if education_constant.GROWTH_VALUE_PERSONALITY_BASE <= value_id <= education_constant.GROWTH_VALUE_PERSONALITY_BASE + 3:
+        return float(growth_data.personality_point.get(value_id - education_constant.GROWTH_VALUE_PERSONALITY_BASE, 0.0))
+    if value_id == education_constant.GROWTH_VALUE_CARE:
         return float(growth_data.care_point)
-    if value_id == GROWTH_VALUE_PRENATAL:
+    if value_id == education_constant.GROWTH_VALUE_PRENATAL:
         return float(growth_data.prenatal_point)
-    if value_id == GROWTH_VALUE_EVENT_COUNT:
+    if value_id == education_constant.GROWTH_VALUE_EVENT_COUNT:
         return float(len(growth_data.event_history))
     return 0.0
 
@@ -680,10 +575,10 @@ def change_growth_value(character_id: int, value_id: int, add_value: float):
     add_value -- 增减量，已按运算符取好正负；运算符为E时是直接赋的目标值
     """
     growth_data = get_child_growth(character_id)
-    if GROWTH_VALUE_PERSONALITY_BASE <= value_id <= GROWTH_VALUE_PERSONALITY_BASE + 3:
-        pair_id = value_id - GROWTH_VALUE_PERSONALITY_BASE
+    if education_constant.GROWTH_VALUE_PERSONALITY_BASE <= value_id <= education_constant.GROWTH_VALUE_PERSONALITY_BASE + 3:
+        pair_id = value_id - education_constant.GROWTH_VALUE_PERSONALITY_BASE
         growth_data.personality_point[pair_id] = growth_data.personality_point.get(pair_id, 0.0) + add_value
-    elif value_id == GROWTH_VALUE_CARE:
+    elif value_id == education_constant.GROWTH_VALUE_CARE:
         # 照料值不设上限但不允许为负
         growth_data.care_point = max(0.0, growth_data.care_point + add_value)
 
@@ -697,7 +592,7 @@ def set_growth_value(character_id: int, value_id: int, new_value: float):
     new_value -- 目标值
     """
     growth_data = get_child_growth(character_id)
-    if GROWTH_VALUE_PERSONALITY_BASE <= value_id <= GROWTH_VALUE_PERSONALITY_BASE + 3:
-        growth_data.personality_point[value_id - GROWTH_VALUE_PERSONALITY_BASE] = new_value
-    elif value_id == GROWTH_VALUE_CARE:
+    if education_constant.GROWTH_VALUE_PERSONALITY_BASE <= value_id <= education_constant.GROWTH_VALUE_PERSONALITY_BASE + 3:
+        growth_data.personality_point[value_id - education_constant.GROWTH_VALUE_PERSONALITY_BASE] = new_value
+    elif value_id == education_constant.GROWTH_VALUE_CARE:
         growth_data.care_point = max(0.0, new_value)

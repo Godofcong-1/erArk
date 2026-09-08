@@ -7590,13 +7590,13 @@ def handle_teach_add_just(
     """
     if not add_time:
         return
-    from Script.System.Education_System import growth_handle, schedule_handle
+    from Script.System.Education_System import education_constant, growth_handle, schedule_handle
 
     character_data: game_type.Character = cache.character_data[character_id]
 
     # 取本节所授科目与课型：教师视角反查全局课表
     ability_id = 45
-    course_type = schedule_handle.COURSE_TYPE_THEORY
+    course_type = education_constant.COURSE_TYPE_THEORY
     teaching = schedule_handle.get_now_teaching(character_id)
     if teaching is not None and teaching["ability_id"] > 0:
         ability_id = teaching["ability_id"]
@@ -7665,7 +7665,7 @@ def handle_self_study_add_just(
     """
     if not add_time:
         return
-    from Script.System.Education_System import growth_handle, schedule_handle
+    from Script.System.Education_System import education_constant, growth_handle, schedule_handle
 
     now_course = schedule_handle.get_now_course(character_id)
     # 查不到课表就没有科目可自习，回落为学识
@@ -7674,7 +7674,7 @@ def handle_self_study_add_just(
         ability_id = now_course["ability_id"]
     # 教师id传-1即走自习分支：基础值降档、速度系数恒取1.0
     growth_handle.settle_student_class_gain(
-        character_id, -1, ability_id, schedule_handle.COURSE_TYPE_THEORY, add_time, change_data=change_data
+        character_id, -1, ability_id, education_constant.COURSE_TYPE_THEORY, add_time, change_data=change_data
     )
 
 
@@ -7725,10 +7725,10 @@ def handle_intern_class_add_just(
     """
     if not add_time:
         return
-    from Script.System.Education_System import growth_handle, schedule_handle
+    from Script.System.Education_System import education_constant, growth_handle, schedule_handle
 
     now_course = schedule_handle.get_now_course(character_id)
-    if now_course is None or now_course["course_type"] != schedule_handle.COURSE_TYPE_INTERN:
+    if now_course is None or now_course["course_type"] != education_constant.COURSE_TYPE_INTERN:
         return
     work_type_id = now_course["target"]
     if work_type_id not in game_config.config_work_type:
@@ -7739,7 +7739,7 @@ def handle_intern_class_add_just(
     # 导师 = 此刻和自己在同一场景、且正干着这个岗位的干员；找不到就是无人在岗，降级为见习
     mentor_id = schedule_handle.get_intern_mentor(character_id, work_type_id)
     growth_handle.settle_student_class_gain(
-        character_id, mentor_id, ability_id, schedule_handle.COURSE_TYPE_INTERN, add_time,
+        character_id, mentor_id, ability_id, education_constant.COURSE_TYPE_INTERN, add_time,
         change_data=change_data,
     )
 
@@ -7816,7 +7816,7 @@ def handle_check_report_card_add_just(
     """
     if not add_time:
         return
-    from Script.System.Education_System import growth_handle, semester_handle
+    from Script.System.Education_System import education_constant, growth_handle, semester_handle
 
     character_data: game_type.Character = cache.character_data[character_id]
     target_id = character_data.target_character_id
@@ -7846,8 +7846,8 @@ def handle_check_report_card_add_just(
     #    这里再单写一遍出勤率阈值，会与成绩单正文里的评定对不上
     base_chara_favorability_and_trust_common_settle(
         character_id, add_time, True, 0, target_data.ability[32], change_data, target_data.cid)
-    if report_data.get("grade", semester_handle.REPORT_GRADE_POOR) in {
-            semester_handle.REPORT_GRADE_EXCELLENT, semester_handle.REPORT_GRADE_GOOD}:
+    if report_data.get("grade", education_constant.REPORT_GRADE_POOR) in {
+            education_constant.REPORT_GRADE_EXCELLENT, education_constant.REPORT_GRADE_GOOD}:
         base_chara_state_common_settle(target_id, add_time, 13, change_data_to_target_change=change_data)
     # 只有发的是冻结那一份才算「看过了」；学期中途看的是进行时数据，flag 不动
     if finished:
@@ -11382,7 +11382,7 @@ def handle_nuirse_child_add_adjust(
     """
     if not add_time:
         return
-    from Script.System.Education_System import baby_growth_handle
+    from Script.System.Education_System import education_constant
 
     character_data: game_type.Character = cache.character_data[character_id]
     target_id = character_data.target_character_id
@@ -11392,14 +11392,14 @@ def handle_nuirse_child_add_adjust(
     # 只对婴儿生效
     if not target_data.talent.get(101, 0):
         return
-    target_data.hit_point_max += baby_growth_handle.NUIRSE_CHILD_HP_MAX_ADD
-    target_data.mana_point_max += baby_growth_handle.NUIRSE_CHILD_MP_MAX_ADD
+    target_data.hit_point_max += education_constant.NUIRSE_CHILD_HP_MAX_ADD
+    target_data.mana_point_max += education_constant.NUIRSE_CHILD_MP_MAX_ADD
     if character_id != 0:
         return
     base_chara_favorability_and_trust_common_settle(
-        character_id, add_time, True, base_value=baby_growth_handle.NUIRSE_CHILD_FAVOR_BASE, change_data=change_data
+        character_id, add_time, True, base_value=education_constant.NUIRSE_CHILD_FAVOR_BASE, change_data=change_data
     )
     base_chara_state_common_settle(
-        target_id, add_time, 11, base_value=baby_growth_handle.NUIRSE_CHILD_FRIENDLY_BASE,
+        target_id, add_time, 11, base_value=education_constant.NUIRSE_CHILD_FRIENDLY_BASE,
         ability_level=target_data.ability.get(32, 0), change_data_to_target_change=change_data,
     )

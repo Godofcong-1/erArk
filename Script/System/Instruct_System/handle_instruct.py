@@ -1640,7 +1640,7 @@ def handle_exhibitionism_sex_end():
 @add_instruct(constant.Instruct.START_SEX_CLASS)
 def handle_start_sex_class():
     """处理性技实操课（开课）指令"""
-    from Script.System.Education_System import sex_class_handle
+    from Script.System.Education_System import education_constant, sex_class_handle
 
     instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
@@ -1658,7 +1658,7 @@ def handle_start_sex_class():
     ability_id = -1
     if temp_class is not None:
         ability_id = temp_class.get("ability_id", -1)
-    if ability_id not in sex_class_handle.SEX_CLASS_ABILITY_LIST:
+    if ability_id not in education_constant.SEX_CLASS_ABILITY_LIST:
         ability_id = ask_for_sex_class_ability()
         if ability_id == -1:
             return
@@ -1680,7 +1680,7 @@ def ask_for_sex_class_ability() -> int:
     Return arguments:
     int -- 选中的能力id，取消则为-1
     """
-    from Script.System.Education_System import sex_class_handle
+    from Script.System.Education_System import education_constant
 
     while 1:
         now_draw = draw.NormalDraw()
@@ -1689,7 +1689,7 @@ def ask_for_sex_class_ability() -> int:
         now_draw.draw()
         return_list = []
         id_to_return = {}
-        for ability_id in sex_class_handle.SEX_CLASS_ABILITY_LIST:
+        for ability_id in education_constant.SEX_CLASS_ABILITY_LIST:
             ability_name = game_config.config_ability[ability_id].name
             now_button = draw.CenterButton(
                 _("[{0}]").format(ability_name), ability_name, int(width / 4)

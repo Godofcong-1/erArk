@@ -929,7 +929,7 @@ def handle_have_intern_student(character_id: int) -> int:
     int -- 权重
     """
     from Script.Design import map_handle
-    from Script.System.Education_System import schedule_handle
+    from Script.System.Education_System import education_constant, schedule_handle
 
     character_data: game_type.Character = cache.character_data[character_id]
     work_type_id = character_data.work.work_type
@@ -947,7 +947,7 @@ def handle_have_intern_student(character_id: int) -> int:
         now_course = schedule_handle.get_now_course(other_id)
         if now_course is None:
             continue
-        if now_course["course_type"] == schedule_handle.COURSE_TYPE_INTERN and now_course["target"] == work_type_id:
+        if now_course["course_type"] == education_constant.COURSE_TYPE_INTERN and now_course["target"] == work_type_id:
             return 1
     return 0
 

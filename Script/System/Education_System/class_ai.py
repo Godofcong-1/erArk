@@ -18,30 +18,10 @@ import random
 from typing import Optional
 from Script.Core import cache_control, game_type, constant
 from Script.Design import attr_calculation, game_time, map_handle
-from Script.System.Education_System import schedule_handle, growth_handle
+from Script.System.Education_System import education_constant, schedule_handle, growth_handle
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
-
-ABSENT_HP_RATE = 0.3
-""" 体力低于该比例则本节缺课去休息。取值与既有前提 `handle_premise_base_value.py:46 handle_hp_low`
-    的"体力低"口径一致，不另立一套阈值 """
-
-NEGATIVE_STATE_ID_LIST = [17, 18, 19, 20]
-""" 参与翘课判定的四个负面状态：苦痛17 / 恐怖18 / 抑郁19 / 反感20。
-    与 `Script/Core/rich_text.py:255~258` 归为负面色的那一组一致 """
-
-SKIP_CLASS_RATE_TABLE = [
-    (4, 0.0),
-    (8, 0.10),
-    (12, 0.25),
-    (16, 0.45),
-]
-""" 翘课概率阶梯（草案，实施时以实测为准）：(等级和上界, 概率)，达不到第一档则为0，
-    超过最后一档取 SKIP_CLASS_RATE_MAX。四项各0~8级，理论最大和32 """
-
-SKIP_CLASS_RATE_MAX = 0.70
-""" 四项等级和达16以上（濒临崩溃）时的每节翘课概率 """
 
 
 def get_negative_status_level_sum(character_id: int) -> int:
@@ -54,7 +34,7 @@ def get_negative_status_level_sum(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     level_sum = 0
-    for state_id in NEGATIVE_STATE_ID_LIST:
+    for state_id in education_constant.NEGATIVE_STATE_ID_LIST:
         level_sum += attr_calculation.get_status_level(character_data.status_data.get(state_id, 0))
     return level_sum
 
@@ -68,10 +48,10 @@ def get_skip_class_rate(character_id: int) -> float:
     float -- 0.0~0.7 的概率
     """
     level_sum = get_negative_status_level_sum(character_id)
-    for max_sum, rate in SKIP_CLASS_RATE_TABLE:
+    for max_sum, rate in education_constant.SKIP_CLASS_RATE_TABLE:
         if level_sum < max_sum:
             return rate
-    return SKIP_CLASS_RATE_MAX
+    return education_constant.SKIP_CLASS_RATE_MAX
 
 
 def judge_teacher_available(teacher_id: int) -> bool:
@@ -173,8 +153,6 @@ def judge_pre_arrive_sex_class(character_id: int) -> int:
     Return arguments:
     int -- 状态机id，不该预到岗则为0
     """
-    from Script.System.Education_System import sex_class_handle
-
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = character_data.behavior.start_time
     if now_time is None:
@@ -212,7 +190,7 @@ def get_next_sex_class(character_id: int, now_time) -> tuple:
         # 只看还没开始的节次
         if start_time <= now_time:
             continue
-        if start_time - now_time > datetime.timedelta(minutes=sex_class_handle.PRE_ARRIVE_MINUTE):
+        if start_time - now_time > datetime.timedelta(minutes=education_constant.PRE_ARRIVE_MINUTE):
             break
         temp_class = sex_class_handle.get_temp_class(date_ordinal, period)
         if temp_class is None:
@@ -223,7 +201,7 @@ def get_next_sex_class(character_id: int, now_time) -> tuple:
             return temp_class, classroom
         # 选修：个人课表这一节本来就指向这间教室
         selected = schedule_handle.get_selected_course(character_id, week_day, period)
-        if selected is not None and selected[0] in schedule_handle.CLASSROOM_COURSE_TYPE_SET and selected[1] == classroom:
+        if selected is not None and selected[0] in education_constant.CLASSROOM_COURSE_TYPE_SET and selected[1] == classroom:
             return temp_class, classroom
     return None, ""
 
@@ -249,7 +227,7 @@ def judge_class_state_machine(character_id: int) -> int:
     must_attend_flag = judge_must_attend_sex_class(character_id, now_course)
 
     # 第一道闸：体力。上不动课就去休息，并记一节缺课
-    if character_data.hit_point_max and character_data.hit_point / character_data.hit_point_max < ABSENT_HP_RATE:
+    if character_data.hit_point_max and character_data.hit_point / character_data.hit_point_max < education_constant.ABSENT_HP_RATE:
         # 必修的实操课例外：人照常到场、不计缺课，只是到了教室也不进H模板，站在一边旁观（口径65）。
         # 体力不足是"做不动"而不是"不想来"，缺席的板子不该打在被玩家点名的学生头上
         if not must_attend_flag:
@@ -267,7 +245,7 @@ def judge_class_state_machine(character_id: int) -> int:
             return constant.StateMachine.EDUCATION_SKIP_CLASS
 
     # 派课：班级式的教室课
-    if now_course["course_type"] in schedule_handle.CLASSROOM_COURSE_TYPE_SET:
+    if now_course["course_type"] in education_constant.CLASSROOM_COURSE_TYPE_SET:
         classroom = now_course["classroom"]
         # 人还没到教室，先走既有的移动状态机（它会按课表挑对教室，见 StateMachine/default.py:434）
         if not judge_in_scene(character_id, classroom):
@@ -290,9 +268,6 @@ def judge_class_state_machine(character_id: int) -> int:
 # ---------------------------------------------------------------------------
 # 幼女跟随母亲见学（Plan 22 二期 §3.24）
 # ---------------------------------------------------------------------------
-
-FOLLOW_MOTHER_ENTERTAINMENT_ID = 176
-""" 娱乐配置「跟随母亲」的cid。日程模板把某个时段排成它时，该时段也走见学分支 """
 
 
 def judge_mother_available(character_id: int) -> int:
@@ -356,7 +331,7 @@ def judge_should_follow_mother(character_id: int) -> bool:
     if not enter_time:
         return False
     slot = enter_time - 1
-    return character_data.entertainment.entertainment_type[slot] == FOLLOW_MOTHER_ENTERTAINMENT_ID
+    return character_data.entertainment.entertainment_type[slot] == education_constant.ENTERTAINMENT_FOLLOW_MOTHER
 
 
 def judge_follow_mother_state_machine(character_id: int) -> int:

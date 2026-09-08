@@ -13,8 +13,7 @@ from typing import List
 from Script.Core import cache_control, game_type, get_text, flow_handle
 from Script.Config import game_config, normal_config
 from Script.Design import attr_calculation
-from Script.System.Education_System import semester_handle
-from Script.System.Education_System.class_schedule_panel import SUBJECT_ABILITY_LIST
+from Script.System.Education_System import education_constant, semester_handle
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -26,31 +25,6 @@ line_feed.text = "\n"
 line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
-
-STAGE_TALENT_NAME = {101: "婴儿", 102: "幼女", 103: "萝莉", 104: "少女"}
-""" 成长链的四个年龄素质（growth_handle.CHILD_TALENT_SET）对应的阶段名 """
-
-PERSONALITY_PAIR_NAME = {
-    0: ("勤劳", "懒散"),
-    1: ("坚强", "脆弱"),
-    2: ("热情", "孤僻"),
-    3: ("开放", "羞耻"),
-}
-""" 四对性格倾向：值为正偏前者、为负偏后者（game_type.CHILD_GROWTH.personality_point）。
-    ⚠️ 三期的养成事件是它的主要写入方，全为0时显示「尚未形成」 """
-
-HISTORY_SHOW_MAX = 8
-""" 养成履历最多列出的条数。养到成年会攒下几十条，全列出来会把总览面板顶爆 """
-
-HISTORY_TEXT_MAX = 24
-""" 履历里事件正文的截断长度，只留能认出是哪件事的开头 """
-
-REPORT_CARD_PREV = "GROWTH_REPORT_PREV"
-""" 成绩单往前翻一页的返回值。⚠️ 不能用中文按钮名做返回值——
-    容器里同屏还有孩子页签，撞名会让点了张三跳到李四 """
-
-REPORT_CARD_NEXT = "GROWTH_REPORT_NEXT"
-""" 成绩单往后翻一页的返回值 """
 
 
 class Growth_Panel:
@@ -129,10 +103,10 @@ class Growth_Panel:
         功能: 切换孩子、翻成绩单。除此之外本页是只读总览
         """
         # 成绩单翻页与孩子无关，先判掉，省得白扫一遍名单
-        if yrn == REPORT_CARD_PREV:
+        if yrn == education_constant.REPORT_CARD_PREV:
             self.report_card_index -= 1
             return
-        if yrn == REPORT_CARD_NEXT:
+        if yrn == education_constant.REPORT_CARD_NEXT:
             self.report_card_index += 1
             return
         if not self.student_list:
@@ -156,9 +130,9 @@ class Growth_Panel:
 
         character_data: game_type.Character = cache.character_data[character_id]
         stage_name = _("已成年")
-        for talent_id in sorted(STAGE_TALENT_NAME.keys()):
+        for talent_id in sorted(education_constant.STAGE_TALENT_NAME.keys()):
             if character_data.talent.get(talent_id, 0):
-                stage_name = _(STAGE_TALENT_NAME[talent_id])
+                stage_name = _(education_constant.STAGE_TALENT_NAME[talent_id])
                 break
         # 成长天数由妊娠系统统一计算（含成长加速药），这里只取用不重算
         grow_day = pregnancy_handle.get_child_grow_day(character_id)
@@ -193,7 +167,7 @@ class Growth_Panel:
         draw.LittleTitleLineDraw(_("科目水平"), self.width).draw()
         # 本学期的增量走 semester_handle 的唯一算口（现等级 - 学期基线），不在这里另算一遍
         level_change = semester_handle.get_semester_level_change(character_id)
-        for index, ability_id in enumerate(SUBJECT_ABILITY_LIST):
+        for index, ability_id in enumerate(education_constant.SUBJECT_ABILITY_LIST):
             level = int(character_data.ability.get(ability_id, 0))
             now_draw = draw.LeftDraw()
             now_draw.width = int(self.width / 4)
@@ -261,8 +235,8 @@ class Growth_Panel:
         info_draw.width = self.width
         info_draw.text = _("  {0}　评定：{1}　出勤 {2} 节／缺课 {3} 节（出勤率 {4}%）\n").format(
             semester_handle.get_semester_name(report_data.get("year", 0), report_data.get("month", 0)),
-            _(semester_handle.REPORT_GRADE_NAME.get(
-                report_data.get("grade", semester_handle.REPORT_GRADE_NO_CLASS), "无课可评")),
+            _(education_constant.REPORT_GRADE_NAME.get(
+                report_data.get("grade", education_constant.REPORT_GRADE_NO_CLASS), "无课可评")),
             report_data.get("attend", 0), report_data.get("absent", 0), report_data.get("rate", 100))
         info_draw.draw()
         level_text = semester_handle.get_level_change_text(report_data.get("level_change", {}))
@@ -280,7 +254,7 @@ class Growth_Panel:
             return
         button_width = int(self.width / 3)
         if self.report_card_index > 0:
-            prev_draw = draw.CenterButton(_("[← 上一学期]"), REPORT_CARD_PREV, button_width)
+            prev_draw = draw.CenterButton(_("[← 上一学期]"), education_constant.REPORT_CARD_PREV, button_width)
             prev_draw.draw()
             return_list.append(prev_draw.return_text)
         else:
@@ -296,7 +270,7 @@ class Growth_Panel:
             self.report_card_index + 1, len(history_list))
         index_draw.draw()
         if self.report_card_index < len(history_list) - 1:
-            next_draw = draw.CenterButton(_("[下一学期 →]"), REPORT_CARD_NEXT, button_width)
+            next_draw = draw.CenterButton(_("[下一学期 →]"), education_constant.REPORT_CARD_NEXT, button_width)
             next_draw.draw()
             return_list.append(next_draw.return_text)
         else:
@@ -318,9 +292,9 @@ class Growth_Panel:
         if growth_data is None:
             return
         draw.LittleTitleLineDraw(_("性格倾向"), self.width).draw()
-        for pair_id in sorted(PERSONALITY_PAIR_NAME.keys()):
+        for pair_id in sorted(education_constant.PERSONALITY_PAIR_NAME.keys()):
             point = growth_data.personality_point.get(pair_id, 0.0)
-            front, back = PERSONALITY_PAIR_NAME[pair_id]
+            front, back = education_constant.PERSONALITY_PAIR_NAME[pair_id]
             now_draw = draw.LeftDraw()
             now_draw.width = int(self.width / 4)
             if point > 0:
@@ -352,13 +326,13 @@ class Growth_Panel:
             growth_data.event_history.items(),
             key=lambda one: one[1].get("time") or datetime.datetime(1, 1, 1))
         # 只列最近的HISTORY_SHOW_MAX条：养到成年会攒下几十条，全列出来会把总览面板顶爆
-        if len(history_list) > HISTORY_SHOW_MAX:
+        if len(history_list) > education_constant.HISTORY_SHOW_MAX:
             omit_draw = draw.NormalDraw()
             omit_draw.width = self.width
-            omit_draw.text = _("  （更早的 {0} 条已略去）\n").format(len(history_list) - HISTORY_SHOW_MAX)
+            omit_draw.text = _("  （更早的 {0} 条已略去）\n").format(len(history_list) - education_constant.HISTORY_SHOW_MAX)
             omit_draw.style = "deep_gray"
             omit_draw.draw()
-            history_list = history_list[-HISTORY_SHOW_MAX:]
+            history_list = history_list[-education_constant.HISTORY_SHOW_MAX:]
         for uid, record in history_list:
             event_data = _game_config.config_official_event.get(uid)
             # 配置里已删掉的事件只留一条占位，不让履历出现空行
@@ -371,7 +345,7 @@ class Growth_Panel:
             time_data = record.get("time")
             time_text = time_data.strftime("%Y/%m/%d") if hasattr(time_data, "strftime") else ""
             now_draw.text = _("  {0} {1} → {2}\n").format(
-                time_text, event_data.get("text", "").split("\n")[0][:HISTORY_TEXT_MAX], choice_text)
+                time_text, event_data.get("text", "").split("\n")[0][:education_constant.HISTORY_TEXT_MAX], choice_text)
             now_draw.draw()
         line_feed.draw()
 

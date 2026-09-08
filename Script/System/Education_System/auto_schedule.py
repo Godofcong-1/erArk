@@ -17,27 +17,10 @@ from typing import Dict, List, Tuple
 
 from Script.Core import cache_control, game_type
 from Script.Design import game_time
-from Script.System.Education_System import schedule_handle
+from Script.System.Education_System import education_constant, schedule_handle
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
-
-WEEK_DAY_COUNT = 7
-""" 一周的天数，与 class_schedule_panel.WEEK_NAME 的长度一致。
-    此处另写一份而不是 import，是为了避免与 class_schedule_panel 循环导入 """
-
-AUTO_SCHEDULE_WEEK_DAY_MAX = 5
-""" 自动排课只铺周一~周五（week_day 0~4）。
-    周末留给日程模板里的自由玩耍/跟随母亲等安排；实习课本来也因为周日全岛无人上班而排不了 """
-
-MALE_ONLY_ABILITY_ID = 76
-""" 腰技是男性专属科目（Ability.csv 的 sex_need=0）。
-    女学生排了它全场吃不到加成且不会报错（四期方案 §7-21），所以自动排课不排它 """
-
-PRACTICE_SUBJECT_SET = {42, 43, 46, 47, 48, 49}
-""" 实践教室的动手类科目：42战斗 / 43料理 / 46医术 / 47农业 / 48制造 / 49绘画。
-    方案 §3.3 写明实践课「侧重动手类与性技理论」，但此前只是文案、代码从未落实，
-    手排时实践教室照样能排话术。自动排课落实它——理论教室与大礼堂仍是全部科目 """
 
 
 def get_auto_subject_list() -> List[int]:
@@ -47,11 +30,10 @@ def get_auto_subject_list() -> List[int]:
     无
     Return arguments:
     List[int] -- 科目能力id列表，按id升序
-    功能: 18门科目去掉男性专属的76腰技
+    功能: 全部科目去掉男性专属的那些（女学生排了也吃不到加成）
     """
-    from Script.System.Education_System.class_schedule_panel import SUBJECT_ABILITY_LIST
-
-    return [ability_id for ability_id in SUBJECT_ABILITY_LIST if ability_id != MALE_ONLY_ABILITY_ID]
+    # 取副本返回：调用方会按需求排序与裁剪，不能让它改到常量表本身
+    return list(education_constant.FEMALE_SUBJECT_LIST)
 
 
 def judge_subject_fit_classroom(ability_id: int, course_type: int) -> bool:
@@ -64,10 +46,10 @@ def judge_subject_fit_classroom(ability_id: int, course_type: int) -> bool:
     bool -- 是否适合
     功能: 实践课只收动手类与性技（方案 §3.3），理论课与公开课来者不拒
     """
-    if course_type != schedule_handle.COURSE_TYPE_PRACTICE:
+    if course_type != education_constant.COURSE_TYPE_PRACTICE:
         return True
     # 性技科目（70~77）属于「性技理论」，与动手类一并算进实践课
-    return ability_id in PRACTICE_SUBJECT_SET or ability_id >= 70
+    return ability_id in education_constant.PRACTICE_SUBJECT_SET or ability_id >= 70
 
 
 def pick_best_teacher(ability_id: int, week_day: int, period: int, classroom: str, teacher_list: List[int]) -> int:
@@ -130,7 +112,7 @@ def auto_fill_class_schedule() -> Tuple[int, int]:
         fit_subject_list = [a for a in subject_list if judge_subject_fit_classroom(a, course_type)]
         if not fit_subject_list:
             continue
-        for week_day in range(AUTO_SCHEDULE_WEEK_DAY_MAX):
+        for week_day in range(education_constant.AUTO_SCHEDULE_WEEK_DAY_MAX):
             for period in range(period_count):
                 if schedule_handle.get_class_cell(classroom, week_day, period) is not None:
                     continue
@@ -177,7 +159,7 @@ def auto_fill_selected_course(character_id: int) -> Tuple[int, int]:
     skip_count = 0
     period_count = len(game_time.CLASS_PERIOD_START)
     # ⚠️ 遍历整整7天而不是只遍历自动排课铺的5天：玩家可能手排过周末的课
-    for week_day in range(WEEK_DAY_COUNT):
+    for week_day in range(education_constant.WEEK_DAY_COUNT):
         for period in range(period_count):
             if schedule_handle.get_selected_course(character_id, week_day, period) is not None:
                 continue

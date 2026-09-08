@@ -1421,3 +1421,125 @@ for character_id in growth_handle.get_student_candidate_list():
    精确匹配会把它们全判成一段行为。
 
 按一段/二段拆开重扫后，**两侧都是零缺口**。经用户判断，本项不做任何改动。
+
+### 9.6 教育系统常量集中到 `education_constant.py`（2026-09-08）
+
+照 `Script/System/Pregnancy_System/pregnancy_constant.py` 的成例，把本子系统 13 个模块里
+散落的 **114 个模块级常量**集中到一个 `education_constant.py`，各处改为
+`from Script.System.Education_System import education_constant` 后按 `education_constant.X` 取用。
+
+#### 9.6.1 散落带来的三个实际后果
+
+盘查（AST 逐文件取模块级 `ALL_CAPS` 赋值，再对全仓库反查引用点）扫出来的不只是「不整齐」：
+
+| 现象 | 实例 |
+| --- | --- |
+| **同名常量两处各写一份** | `ABSENT_HP_RATE` 在 `class_ai` 与 `sex_class_handle` 各有一份 0.3；`CLASSROOM_COURSE_TYPE_SET` 在 `growth_handle` 与 `schedule_handle` 各有一份 `{0,1,2}` |
+| **同一个东西两个名字** | `class_ai.FOLLOW_MOTHER_ENTERTAINMENT_ID` 与 `schedule_template_handle.ENTERTAINMENT_FOLLOW_MOTHER` 都是娱乐 176 |
+| **为了共用常量而绕出循环导入** | `semester_handle` 有 **4 处函数内 import** `class_schedule_panel`，只为取一个 `SUBJECT_ABILITY_LIST`；`auto_schedule` 与 `growth_panel` 各一处 |
+
+⚠️ 前两类都不是笔误，而是**必然结果**：两个模块都要用同一个数，而互相 import 会成环，
+于是作者只能各写一份。三份重复的注释里，有两份明写了「此处另写一份是为了避免循环导入」——
+**问题被记录下来了，但没有解法**。常量单独成文件正是那个解法：它不依赖子系统内任何模块，
+谁都可以安全地 import 它。
+
+#### 9.6.2 合并与派生
+
+- `ABSENT_HP_RATE`、`CLASSROOM_COURSE_TYPE_SET` 各合成一份。
+- `FOLLOW_MOTHER_ENTERTAINMENT_ID` 并入 `ENTERTAINMENT_FOLLOW_MOTHER`，两份注释合写。
+- 三对「值本来就该相等」的常量改为**派生**，从结构上杜绝各改各的：
+  `WEEK_DAY_COUNT = len(WEEK_NAME)`、`CHILD_TALENT_SET = set(STAGE_TALENT_NAME)`、
+  `CLASSROOM_COURSE_TYPE_SET` 由三个 `COURSE_TYPE_*` 推出。
+  `COURSE_LEARN_BASE` / `COURSE_EXP_BASE` 的字面量键 `{0:.., 1:.., 2:.., 5:..}` 也改成了课型常量。
+- `PERSONALITY_PAIR_NAME` 与 `PERSONALITY_PAIR_TALENT` 原本分居 `growth_panel` 与 `growth_handle`，
+  注释里互相叮嘱「正负顺序必须一致」。现在两张表**上下紧挨**，那句叮嘱才真的看得见。
+- `STAGE_ANY = official_event_handle.SUB_KEY_ANY` 原样保留（三期第一轮定的单一真相来源），
+  常量文件因此依赖公务事件系统——已验证不成环：`official_event_handle` 只在函数内反向
+  import 教育系统。
+
+⚠️ **一个常量都没有改值**：回归里逐个取 HEAD 版本的定义求值，与新文件比对，114 个全等。
+
+#### 9.6.3 分 15 组，按「谁在用」而不是「原来在哪个文件」
+
+分组不照搬原文件边界。譬如 `MALE_ONLY_ABILITY_ID`（原 `auto_schedule`）、
+`SEX_CLASS_ABILITY_LIST`（原 `sex_class_handle`）、`PRENATAL_SUBJECT_LIST`（原 `baby_growth_handle`）
+现在同属「2. 科目」一组——**这三条各自的注释都在解释同一件事：为什么不含 76 腰技**。
+放到一起，第一条写清楚，后两条引用它即可。
+
+#### 9.6.4 边界：什么没有搬
+
+- **不搬函数内的局部常量表**（如某个函数里临时列的档位表），它们只服务一处，搬出去反而要跳文件。
+- **不给字符串加 `_()`**：`SLOT_NAME`、`COURSE_TYPE_NAME` 等原本就没有翻译标记，
+  搬家时**原样保留**。加上去会改变 PO 词条集合，那是另一件事，不该混进一次搬家里。
+- **不动 `cache` 与 `_` 这两个模块级变量**：它们不是常量，且每个模块都要有自己的一份。
+
+### 9.7 常量改为从配置现算，字符串接入翻译api（2026-09-08）
+
+§9.6 把常量集中到一处之后，紧接着做的第二步：**能从配置推出来的不再写死，要给玩家看的一律过翻译**。
+
+#### 9.7.1 三张科目表改为从 Ability.csv 的能力类型现算
+
+原先写死的是 `list(range(40, 50)) + list(range(70, 78))`。改为按 `ability_type` 筛：
+类型4（技能）+ 类型5（技术），于是往后 Ability.csv 增删科目，课表、选课面板、成绩单、
+胎教转写会一起跟上。
+
+⚠️ **有一个陷阱：`ability_type == 5` 里混着一个 90 隐蔽**，它是隐奸系统的熟练度，不是能开课教的科目。
+只按类型筛会让课表里冒出一门「隐蔽课」、实操课也会把它列进主修。所以另立
+`NOT_SUBJECT_ABILITY_SET = {90}` 显式排除，并把理由写在注释里——这种「按类型筛却混进一个异类」
+的情形，靠 `cid < 90` 这类边界条件挡是挡不住下一次的。
+
+顺带把三张互相重叠的表理成一条链，每张只说一件事：
+
+| 常量 | 由来 |
+| --- | --- |
+| `SUBJECT_ABILITY_LIST`（18门） | 类型4 + 类型5 − `NOT_SUBJECT_ABILITY_SET` |
+| `MALE_ONLY_SUBJECT_SET` | 科目里 `sex_need == 0` 的（现算出来正是 76 腰技） |
+| `FEMALE_SUBJECT_LIST`（17门） | 科目 − 男性专属 |
+| `SEX_CLASS_ABILITY_LIST`（7门） | 女儿可学的科目里类型为性技的 |
+
+⚠️ `MALE_ONLY_ABILITY_ID = 76` 改成了集合 `MALE_ONLY_SUBJECT_SET`：从 `sex_need` 现算出来的
+本来就该是一个集合，写成单个 id 意味着「假定男性专属科目永远只有一门」。
+⚠️ `PRENATAL_SUBJECT_LIST` 改名为 `FEMALE_SUBJECT_LIST`：它原本只写了胎教一个用途，
+而 `auto_schedule.get_auto_subject_list()` 在自己那边又算了一遍同样的东西。改名之后两处共用一张。
+⚠️ `PRACTICE_SUBJECT_SET`（实践教室的动手类科目）**推不出来**——Ability.csv 没有「是不是动手类」
+这一维，只能继续列举，注释里写明了为什么它是例外。
+
+#### 9.7.2 素质名与性格倾向名改为读 Talent.csv
+
+`STAGE_TALENT_NAME` 与 `PERSONALITY_PAIR_NAME` 原先是硬编码的中文。改为按素质id 现取
+`game_config.config_talent[id].name`。这比「给硬编码中文包一层 `_()`」更好，理由有两条：
+
+1. **配置名本来就是翻译过的**：`game_config` 载入时对所有 `name` 列跑过 `get_text._()`
+   （`game_config.py:536`），而 PO 里早有 `婴儿 → Baby` 这些词条。现取即自带翻译，
+   ⚠️ **不能再包一层 `_()`**，包了反而对不上词条。
+2. **`PERSONALITY_PAIR_NAME` 从此不可能与 `PERSONALITY_PAIR_TALENT` 对不上**。这两张表原先分居
+   `growth_panel` 与 `growth_handle`，注释里互相叮嘱「正负顺序必须一致」；§9.6 让它们挨在了一起，
+   本轮直接让名字**由素质id表推出来**，那句叮嘱可以删了。
+
+⚠️ 四个阶段的 **id** 仍写死（`CHILD_TALENT_ID_LIST`）：它是成长链的定义本身
+（`pregnancy_handle` 按天数逐级换素质），配置里推不出来。Talent.csv 里 101~104 的类型都是
+「身体素质」，与其他几十个身体素质并无区别，按类型筛不出这四个。
+
+#### 9.7.3 接入翻译api：三处「写死中文」其实是非中文语言下的活BUG
+
+给显示字符串包 `_()` 是体例问题，但有三处包不包的差别是**功能能不能用**——
+它们不是拿来显示的，是拿去和**翻译过的**配置/场景数据比对的键：
+
+| 常量 | 比对对象 | 不包 `_()` 的后果 |
+| --- | --- | --- |
+| `EDUCATION_ZONE_NAME` | `config_facility_effect_data` 的键（翻译过的设施 name） | 教育区的成长效率加成整个失效 |
+| `PRESET_TEMPLATE_SLOT_NAME` | `config_entertainment[].name` | 四套预设日程模板全部套用失败（三个时段都查不到，一个都不改写） |
+| `PE_PLACE_DATA` 的键 | `scene_data[].scene_name`（`map_config.py:64` 翻译过） | 体育课永远找不到上课地点 |
+
+⚠️ **场景名还有一层**：场景数据实际走 pickle 缓存（`map_config.py:22`），只有冷构建那一次才过翻译，
+所以场景名跟的是「缓存生成时的语言」而不是当前语言。先用中文玩过再改 config.ini 成英文，
+缓存不会重建、全岛地名都还是中文——那是整个游戏的既有问题，不是本表独有。
+本轮的取舍是**跟冷构建的行为对齐**（实测冷构建下 `scene_name` 就是 `'Stake Room'`，
+与 `_("木桩房")` 一致），这样体育课地点与全局课表存教室名走的是同一套规则。
+
+同时明确标出**不能翻译**的那几类，免得下次有人照着「字符串就包 `_()`」的规律误改：
+场景标签（`Class_Room`）、事件uid（`通用1`，由文件名+cid 拼成的数据键）、
+面板返回值哨兵（`GROWTH_REPORT_PREV`）、排版空白（`COLUMN_INDENT`）。
+
+⚠️ 新加的 46 处 `_()` 需要跑一次 `buildpo.py` 才会进 PO（它扫全仓库的 `.py` 交给 `xgettext`）。
+本机没有 `xgettext`，本轮未跑。

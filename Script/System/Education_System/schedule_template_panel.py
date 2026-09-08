@@ -17,7 +17,7 @@ from typing import Dict, List
 from Script.Core import cache_control, game_type, get_text, flow_handle
 from Script.Config import game_config, normal_config
 from Script.Design import attr_calculation
-from Script.System.Education_System import schedule_template_handle, growth_handle
+from Script.System.Education_System import education_constant, schedule_template_handle, growth_handle
 from Script.UI.Moudle import draw, panel
 
 cache: game_type.Cache = cache_control.cache
@@ -29,25 +29,6 @@ line_feed.text = "\n"
 line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
-
-COLUMN_INDENT = "  "
-""" 模板表每行的前导缩进，表头与数据行必须用同一个 """
-
-COLUMN_WIDTH_ID = 4
-""" 模板表「编号」列的显示列宽 """
-
-COLUMN_WIDTH_NAME = 10
-""" 模板表「模板名」列的显示列宽。最长的预设模板名「学业优先」「玩乐优先」占8列 """
-
-TEMPLATE_NAME_MAX = 10
-""" 新建/重命名模板时允许输入的最大长度。
-    ⚠️ 与 COLUMN_WIDTH_NAME 对齐：模板表的名字列宽是10显示列，
-       输入更长的名字会把后面三个时段列整体挤右，一行对不齐 """
-
-COLUMN_WIDTH_SLOT = 20
-""" 模板表三个时段列各自的显示列宽。
-    ⚠️ pad_display_width 不截断，列宽必须≥该列最长内容：
-       娱乐名最长的是「上课（无课时自习）」，占18显示列（len() 只有9） """
 
 
 class Schedule_Template_Panel:
@@ -114,13 +95,13 @@ class Schedule_Template_Panel:
               ⚠️ 与 _draw_template_table 引用同一组列宽常量，两边都走 pad_display_width——
                  手写空格的表头对不上按显示宽补齐的数据行
         """
-        head_text = COLUMN_INDENT
+        head_text = education_constant.COLUMN_INDENT
         for column_text, column_width in (
-                (_("编号"), COLUMN_WIDTH_ID),
-                (_("模板名"), COLUMN_WIDTH_NAME),
-                (_("上午"), COLUMN_WIDTH_SLOT),
-                (_("下午"), COLUMN_WIDTH_SLOT),
-                (_("晚上"), COLUMN_WIDTH_SLOT)):
+                (_("编号"), education_constant.COLUMN_WIDTH_ID),
+                (_("模板名"), education_constant.COLUMN_WIDTH_NAME),
+                (_("上午"), education_constant.COLUMN_WIDTH_SLOT),
+                (_("下午"), education_constant.COLUMN_WIDTH_SLOT),
+                (_("晚上"), education_constant.COLUMN_WIDTH_SLOT)):
             head_text += attr_calculation.pad_display_width(column_text, column_width)
         head_text += _("套用中") + "\n"
         head_draw = draw.NormalDraw()
@@ -142,7 +123,7 @@ class Schedule_Template_Panel:
             if template_data is None:
                 continue
             slot_text_list = []
-            for slot in range(schedule_template_handle.SLOT_COUNT):
+            for slot in range(education_constant.SLOT_COUNT):
                 entertainment_id = template_data.get("slot", {}).get(slot, 0)
                 if entertainment_id and entertainment_id in game_config.config_entertainment:
                     slot_text_list.append(game_config.config_entertainment[entertainment_id].name)
@@ -152,13 +133,13 @@ class Schedule_Template_Panel:
             # ⚠️ 不能用 "{:<10}".format()：str 的 <10 按 len()（字符数）补齐，而终端按显示列排版、
             #    中文占2列。同一个 {:<10} 对「读书」产出12列、对「上课（无课时自习）」产出19列，
             #    四套模板的行字符数全都是57、显示列宽却是82/75/71/61，没有一列对得齐
-            row_text = COLUMN_INDENT
+            row_text = education_constant.COLUMN_INDENT
             for column_text, column_width in (
-                    (str(template_id), COLUMN_WIDTH_ID),
-                    (template_data["name"], COLUMN_WIDTH_NAME),
-                    (slot_text_list[0], COLUMN_WIDTH_SLOT),
-                    (slot_text_list[1], COLUMN_WIDTH_SLOT),
-                    (slot_text_list[2], COLUMN_WIDTH_SLOT)):
+                    (str(template_id), education_constant.COLUMN_WIDTH_ID),
+                    (template_data["name"], education_constant.COLUMN_WIDTH_NAME),
+                    (slot_text_list[0], education_constant.COLUMN_WIDTH_SLOT),
+                    (slot_text_list[1], education_constant.COLUMN_WIDTH_SLOT),
+                    (slot_text_list[2], education_constant.COLUMN_WIDTH_SLOT)):
                 row_text += attr_calculation.pad_display_width(column_text, column_width)
             row_text += _("{0} 人").format(use_count)
             now_draw = draw.LeftButton(row_text, f"TEMPLATE_{template_id}", self.width)
@@ -181,14 +162,14 @@ class Schedule_Template_Panel:
             return_list: List[str] = []
             slot_by_return: Dict[str, int] = {}
             draw.TitleLineDraw(_("编辑模板：{0}").format(template_data["name"]), self.width).draw()
-            for slot in range(schedule_template_handle.SLOT_COUNT):
+            for slot in range(education_constant.SLOT_COUNT):
                 entertainment_id = template_data.get("slot", {}).get(slot, 0)
                 if entertainment_id and entertainment_id in game_config.config_entertainment:
                     now_name = game_config.config_entertainment[entertainment_id].name
                 else:
                     now_name = _("未设置")
                 now_draw = draw.LeftButton(
-                    _("[{0}：{1}]").format(schedule_template_handle.SLOT_NAME[slot], now_name),
+                    _("[{0}：{1}]").format(education_constant.SLOT_NAME[slot], now_name),
                     f"SLOT_{slot}", int(self.width / 2))
                 now_draw.draw()
                 return_list.append(now_draw.return_text)
@@ -242,7 +223,7 @@ class Schedule_Template_Panel:
         功能: 走 panel.AskForOneMessage，Tk 与 Web 两种模式共用同一条输入链
         """
         ask_panel = panel.AskForOneMessage()
-        ask_panel.set(ask_text, TEMPLATE_NAME_MAX)
+        ask_panel.set(ask_text, education_constant.TEMPLATE_NAME_MAX)
         line_feed.draw()
         return ask_panel.draw().strip()
 
@@ -279,7 +260,7 @@ class Schedule_Template_Panel:
 
             candidate_list = schedule_template_handle.get_schedule_activity_candidate()
             # 第一行固定这三项：它们是孩子日程的主力选项，摊在娱乐列表里不好找
-            first_row = [cid for cid in schedule_template_handle.CHILD_SCHEDULE_FIRST_ROW
+            first_row = [cid for cid in education_constant.CHILD_SCHEDULE_FIRST_ROW
                          if cid in candidate_list]
             other_list = [cid for cid in candidate_list if cid not in first_row]
 
