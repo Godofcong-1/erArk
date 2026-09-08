@@ -1,0 +1,17 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,free_play,0,self_is_player_daughter&CVP_A1_T|102_E_1,{Name}把育儿室里的积木堆得老高，然后一巴掌推倒。\n倒下来的动静把她自己逗得咯咯直笑，笑完又从头堆起。
+1001,free_play,0,self_is_player_daughter&CVP_A1_T|102_E_1,{Name}抱着一只旧玩偶趴在垫子上，小声地跟它说着话。\n说的都是些没头没尾的事，玩偶自然也不会答她。
+1002,free_play,0,self_is_player_daughter&CVP_A1_T|102_E_1,育儿室的地毯上，{Name}一个人踢着软球跑来跑去。\n跑累了就一屁股坐下喘两口气，歇过来又爬起来接着跑。
+1003,free_play,0,self_is_player_daughter&CVP_A1_T|102_E_1,{Name}趴在窗边数外面走过去的人。\n数到七八个就数乱了，于是从头再数一遍。
+1004,free_play,0,self_is_player_daughter&CVP_A1_T|103_E_1,{Name}把育儿室的玩具一件件摆成一排，摆得整整齐齐。\n摆完端详了一会儿，又觉得哪里不对，索性全推倒重来。
+1005,free_play,0,self_is_player_daughter&CVP_A1_T|103_E_1,没人管的时候，{Name}窝在育儿室的角落里翻一本翻旧了的画册。\n那些图她早看过许多遍了，还是一页一页看得很慢。
+1006,free_play,0,self_is_player_daughter&CVP_A1_T|103_E_1,{Name}自己跟自己下了一盘不知道什么规矩的棋。\n黑子赢了，白子也赢了——反正两边都是她。
+1007,free_play,0,self_is_player_daughter&CVP_A1_T|103_E_1,{Name}绕着育儿室的柱子跑了几圈，忽然停下来发了会儿呆。\n像是想起了什么，又接着跑了起来。
+1008,free_play,0,self_is_player_daughter&CVP_A1_T|104_E_1,{Name}坐在育儿室的小凳子上，膝盖都快顶到下巴了。\n她自己也觉得这样子有点好笑，却没有起身换个地方。
+1009,free_play,0,self_is_player_daughter&CVP_A1_T|104_E_1,{Name}把小时候玩过的东西一样样拿起来，又一样样放回去。\n有几件已经想不起当初是怎么玩的了，只记得玩得很起劲。
+1010,free_play,0,sys_1,育儿室里没什么要紧事，{Name}就这么自顾自地待了一会儿。\n什么也没学到，心情倒是松快了不少。
+1011,free_play,0,sys_1,{Name}在育儿室里找了个舒服的位置坐下，什么也没做。\n偶尔抬头看看四周，又低下头去。

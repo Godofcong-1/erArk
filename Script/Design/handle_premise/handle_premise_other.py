@@ -1217,6 +1217,23 @@ def handle_self_mother_available(character_id: int) -> int:
     return 1 if class_ai.judge_mother_available(character_id) != -1 else 0
 
 
+@add_premise(constant_promise.Premise.SELF_FOLLOW_MOTHER)
+def handle_self_follow_mother(character_id: int) -> int:
+    """
+    校验自己正处于跟随母亲见学的状态（Plan 22 二期）
+    ⚠️ 读的是 child_growth.follow_mother_flag 而不是当前行为id：
+       玩家对见学中的女儿发起互动时，她的行为已经被换成被交互的那个了，
+       只有这个跨行为保留的标记还能说明「她本来在跟着妈妈」
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import class_ai
+
+    return 1 if class_ai.judge_in_follow_mother(character_id) else 0
+
+
 @add_premise(constant_promise.Premise.SELF_HAVE_ANY_COURSE)
 def handle_self_have_any_course(character_id: int) -> int:
     """

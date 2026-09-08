@@ -241,6 +241,9 @@ def judge_class_state_machine(character_id: int) -> int:
     if now_course is None:
         return 0
     character_data: game_type.Character = cache.character_data[character_id]
+    # 上课接管即离开见学状态。⚠️ 这里不能省：本函数排在见学判定之前，
+    #    幼女从见学转去上课时走不到 judge_follow_mother_state_machine，标记会一直挂着
+    clear_follow_mother_flag(character_id)
 
     # 本节是不是玩家指定的必修性技实操课——两道闸对必修生的处理都不一样（Plan 22 四期 口径65）
     must_attend_flag = judge_must_attend_sex_class(character_id, now_course)
@@ -368,6 +371,8 @@ def judge_follow_mother_state_machine(character_id: int) -> int:
     int -- 状态机id，0表示本函数不接管
     """
     if not judge_should_follow_mother(character_id):
+        # 本时刻不该见学了（上了年纪、排上课、日程换成别的），顺手把标记清掉
+        clear_follow_mother_flag(character_id)
         return 0
     mother_id = judge_mother_available(character_id)
     if mother_id == -1:
@@ -378,3 +383,41 @@ def judge_follow_mother_state_machine(character_id: int) -> int:
     if character_data.position != mother_data.position:
         return constant.StateMachine.EDUCATION_MOVE_TO_MOTHER
     return constant.StateMachine.EDUCATION_FOLLOW_MOTHER
+
+
+def judge_in_follow_mother(character_id: int) -> bool:
+    """
+    校验一个角色此刻是否处于跟随母亲见学的状态（Plan 22 二期）
+
+    这是 child_growth.follow_mother_flag 的统一读口，前提系统与角色状态标识都走它。
+    ⚠️ 不要在外部直接读那个字段：全岛绝大多数干员的 child_growth 是 None，直接读会 AttributeError
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 是否正在见学
+    """
+    if character_id not in cache.character_data:
+        return False
+    growth_data = cache.character_data[character_id].child_growth
+    if growth_data is None:
+        return False
+    return bool(getattr(growth_data, "follow_mother_flag", False))
+
+
+def clear_follow_mother_flag(character_id: int) -> None:
+    """
+    清掉见学标记（Plan 22 二期）
+
+    ⚠️ 置位只有见学状态机一处，清位却有四处——自由玩耍、见学结算、上课接管、见学判定不成立。
+       少一处，「见学中」这个状态标识就会粘在孩子身上摘不掉
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    if character_id not in cache.character_data:
+        return
+    growth_data = cache.character_data[character_id].child_growth
+    if growth_data is None:
+        return
+    growth_data.follow_mother_flag = False

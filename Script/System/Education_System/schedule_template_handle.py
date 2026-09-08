@@ -31,6 +31,16 @@ cache: game_type.Cache = cache_control.cache
 _: FunctionType = get_text._
 """ 翻译api """
 
+_KEY_NAME = "name"
+""" 模板数据里「模板名」的键 """
+_KEY_SLOT = "slot"
+""" 模板数据里「三个时段」的键 """
+
+_NEED_NONE = "无"
+""" Entertainment.csv 的 need 列里表示「无条件」的占位值 """
+_NEED_SPLIT = "&"
+""" need 列里多个条件之间的分隔符，与 handle_npc_ai 的随机抽取分支保持一致 """
+
 SLOT_COUNT = 3
 """ 日程时段数：0上午 / 1下午 / 2晚上，与 entertainment.entertainment_type 的三个槽位一一对应 """
 
@@ -164,6 +174,88 @@ def set_template_slot(template_id: int, slot: int, entertainment_id: int) -> Non
     template_data.setdefault("slot", {})[slot] = entertainment_id
 
 
+def judge_template_is_preset(template_id: int) -> bool:
+    """
+    校验一套模板是不是四套预设之一（Plan 22 二期第一轮追加）
+    Keyword arguments:
+    template_id -- 模板编号
+    Return arguments:
+    bool -- 是否为预设
+    """
+    return template_id in PRESET_TEMPLATE_NAME
+
+
+def create_template(name: str) -> int:
+    """
+    新建一套空模板（Plan 22 二期第一轮追加）
+
+    方案 §1 要的是「可定义**若干套**日常日程模板」，四套预设只是起点。
+    ⚠️ 编号从既有最大编号往后顺延而不是补空缺号：孩子身上存的是模板编号，
+       删掉 5 号后把新模板也叫 5 号，会让原来套 5 号的孩子凭空套上一套完全不同的日程。
+    Keyword arguments:
+    name -- 模板名，留空则自动命名
+    Return arguments:
+    int -- 新模板的编号，建失败为0
+    """
+    init_default_template()
+    template_dict = cache.rhodes_island.child_schedule_template
+    new_id = (max(template_dict.keys()) if template_dict else 0) + 1
+    name = name.strip() if name else ""
+    if not name:
+        name = _("模板{0}").format(new_id)
+    template_dict[new_id] = {_KEY_NAME: name, _KEY_SLOT: {}}
+    return new_id
+
+
+def rename_template(template_id: int, name: str) -> bool:
+    """
+    给一套模板改名（Plan 22 二期第一轮追加）。预设也可改名，改的只是显示用的名字
+    Keyword arguments:
+    template_id -- 模板编号
+    name -- 新名字，留空则不改
+    Return arguments:
+    bool -- 是否改成功
+    """
+    template_data = get_template_data(template_id)
+    if template_data is None:
+        return False
+    name = name.strip() if name else ""
+    if not name:
+        return False
+    template_data[_KEY_NAME] = name
+    return True
+
+
+def delete_template(template_id: int) -> bool:
+    """
+    删掉一套自建模板（Plan 22 二期第一轮追加）
+
+    ⚠️ 四套预设不可删：init_default_template 只在整张表为空时才补，
+       删掉一套预设不会被补回来，而 PRESET_TEMPLATE_NAME 的编号在代码里被引用着。
+    ⚠️ 删之前必须把引用它的孩子解开，否则那些孩子的 schedule_template_id
+       指向一个不存在的编号，get_child_slot_activity 每天都拿到 None。
+    Keyword arguments:
+    template_id -- 模板编号
+    Return arguments:
+    bool -- 是否删成功
+    """
+    init_default_template()
+    if judge_template_is_preset(template_id):
+        return False
+    if template_id not in cache.rhodes_island.child_schedule_template:
+        return False
+    for character_id in list(cache.npc_id_got):
+        if character_id not in cache.character_data:
+            continue
+        growth_data = cache.character_data[character_id].child_growth
+        if growth_data is None or growth_data.schedule_template_id != template_id:
+            continue
+        growth_data.schedule_template_id = 0
+        growth_data.schedule_override = {}
+    del cache.rhodes_island.child_schedule_template[template_id]
+    return True
+
+
 def apply_template(character_id: int, template_id: int) -> None:
     """
     给一个孩子套用模板。⚠️ 换模板时一并清空该孩子的单项覆盖——
@@ -237,6 +329,34 @@ def get_child_slot_activity(character_id: int, slot: int) -> int:
     return template_data.get("slot", {}).get(slot, 0)
 
 
+def judge_activity_need_pass(character_id: int, entertainment_id: int) -> bool:
+    """
+    校验一个孩子是否满足某项娱乐的 need 条件（Plan 22 二期第一轮追加）
+
+    ⚠️ 这道校验非做不可：模板是**全局共享**的，而 need 是**逐人**的。
+       「跟随母亲」(176) 配的 need 是 T102|1 只限幼女，同一套模板套到萝莉身上时，
+       不校验就会把 176 照写进她的 entertainment_type——而见学分支对萝莉不成立（口径10），
+       那一格于是既不见学也不玩耍，白白空转一个时段。
+    ⚠️ 引擎只在**随机抽娱乐**时校验过 need（handle_npc_ai.get_chara_entertainment），
+       日程改写是另一条写入路径，必须自己校验。
+    Keyword arguments:
+    character_id -- 角色id
+    entertainment_id -- 娱乐配置cid
+    Return arguments:
+    bool -- 是否满足；无 need 条件的一律为True
+    """
+    from Script.Design import attr_calculation
+
+    if entertainment_id not in game_config.config_entertainment:
+        return False
+    need_text = game_config.config_entertainment[entertainment_id].need
+    if not need_text or need_text == _NEED_NONE:
+        return True
+    need_list = need_text.split(_NEED_SPLIT) if _NEED_SPLIT in need_text else [need_text]
+    judge, _reason = attr_calculation.judge_require(need_list, character_id)
+    return bool(judge)
+
+
 def judge_slot_free_of_class(character_id: int, slot: int, week_day: int) -> bool:
     """
     判断某孩子某时段是否**完全没有课**（方案 §3.6：有课的节次由课表优先，日程不生效）
@@ -279,6 +399,9 @@ def apply_schedule_for_child(character_id: int) -> None:
         if not entertainment_id:
             continue
         if entertainment_id not in game_config.config_entertainment:
+            continue
+        # 不满足该娱乐 need 条件的孩子跳过这一格，留着当天的随机娱乐比空转强
+        if not judge_activity_need_pass(character_id, entertainment_id):
             continue
         if not judge_slot_free_of_class(character_id, slot, week_day):
             continue
@@ -325,21 +448,6 @@ def get_template_use_count(template_id: int) -> int:
         if character_data.child_growth.schedule_template_id == template_id:
             count += 1
     return count
-
-
-def get_child_candidate_list() -> List[int]:
-    """
-    取可安排日程的孩子列表：处于成长链四个年龄阶段之一的角色
-    Keyword arguments:
-    无
-    Return arguments:
-    List[int] -- 角色id列表，按id升序
-    """
-    child_list = []
-    for character_id in cache.npc_id_got:
-        if growth_handle.judge_is_child(character_id):
-            child_list.append(character_id)
-    return sorted(child_list)
 
 
 def get_schedule_activity_candidate() -> List[int]:

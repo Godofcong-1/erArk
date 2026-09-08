@@ -170,6 +170,21 @@ def get_character_status_list(character_id: int) -> Tuple[List[draw.LeftDraw], L
     class_draw.text = class_text
     status_list.append(class_draw)
     status_text_list.append(class_text)
+
+    # 跟随母亲见学状态（Plan 22 二期）：与上面的 <课> 一样，一处改动同时覆盖 Tk 与 Web
+    # ⚠️ 函数内延迟 import：UI 层在 Core/UI，教育逻辑在 System，模块级 import 会启动即循环（口径16）
+    from Script.System.Education_System import class_ai
+
+    # ⚠️ 用 <学> 而不是 <跟>：<跟> 已经是「智能跟随玩家」的标识，两者语义完全不同
+    follow_mother_draw = draw.LeftDraw()
+    follow_mother_draw.style = "wheat"
+    follow_mother_text = ""
+    if class_ai.judge_in_follow_mother(character_id):
+        follow_mother_text = _(" <学>")
+        follow_mother_draw.tooltip = _("正跟着母亲见学，按母亲当前工作对应的科目获得经验")
+    follow_mother_draw.text = follow_mother_text
+    status_list.append(follow_mother_draw)
+    status_text_list.append(follow_mother_text)
     
     # 非普通时输出当前心情
     angry_draw = draw.LeftDraw()
