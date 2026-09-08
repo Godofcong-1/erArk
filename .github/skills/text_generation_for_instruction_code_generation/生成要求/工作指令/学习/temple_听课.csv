@@ -1,0 +1,7 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|45_G_0&CVP_A1_CourseType|0_G_0,{Name}的椅子对她来说还是太高了，两条腿悬在半空一晃一晃，笔记本摊在桌上占了大半张桌面。\n黑板上的字有一半不认识，{Name}就照着形状一笔一划地描下来，描得比谁都认真。\n下课时{Name}低头看着满页歪歪扭扭的符号，露出了很满足的表情。
+0,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|45_G_0&CVP_A1_CourseType|0_G_0,讲到一个绕了三道弯的推论时，{Name}的笔停住了，眉头一点点皱起来。\n她没有立刻举手，而是把前面几步又重新推了一遍，确认卡住的到底是哪一环。\n等真的问出口时，问题已经缩小到了很小的一处，老师听完点了点头。

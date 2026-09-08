@@ -1,0 +1,13 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1,chat,0,self_follow_mother&sys_4,{Name}正跟在母亲身后见学，看见{TargetName}便小跑了两步过来：“今天妈妈让我在旁边看着，说看多了自然就会了。”\n说完又回头看了一眼母亲的方向，像是怕自己跟丢了。
+2,chat,0,self_follow_mother&sys_4,{Name}压低了声音对{TargetName}说：“妈妈干活的时候不太爱说话，我就只能一直看着。”\n顿了顿又补上一句：“不过看着看着，好像真的看懂了一点。”
+3,chat,0,self_follow_mother&sys_4,“博士，”{Name}拽了拽{TargetName}的衣角，“您说我每天这样跟着，以后能不能做得和妈妈一样好？”\n没等回答，她自己先点了点头，像是已经认定了会。
+4,chat,0,self_follow_mother&sys_4,{Name}把今天在母亲身边学到的东西一五一十地讲给{TargetName}听。\n讲得颠三倒四的，有些地方明显是自己想岔了，但那股认真劲儿一点不掺假。
+5,chat,0,self_follow_mother&sys_4,{Name}看了看自己的手，又看了看{TargetName}：“妈妈的手比我稳好多。”\n她把手指并拢又张开，试着摆成刚才看到的样子。
+6,chat,0,self_follow_mother&sys_4,“今天跟着妈妈，比坐在教室里有意思。”{Name}这么对{TargetName}说。\n话音刚落又赶紧摆手：“这话您别告诉老师。”
+7,chat,0,self_follow_mother&sys_4,{Name}有些不好意思地对{TargetName}承认：“我刚才走神了，妈妈做到哪一步我没看清。”\n说完便着急地回头去找母亲的身影，生怕错过了下一步。
+8,chat,0,self_follow_mother&sys_4,{Name}仰头问{TargetName}：“博士小时候也跟着谁学过东西吗？”\n问完像是意识到什么，又自己嘟囔了一句：“……好像不该问这个。”

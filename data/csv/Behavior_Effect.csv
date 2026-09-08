@@ -112,15 +112,18 @@ int,str,str
 256,night_salutation_3,11 - 12 - 21 - 22 - 71 - 113 - CVE_A2_E|3_G_1 - CVE_A2_E|21_G_1 - CVE_A1_E|42_G_1 - CVE_A1_E|25_G_1 - CVE_A1_E|153_G_1 - 520
 257,npc_assistant_cook,13 - 14 - 81 - CVE_A1_E|83_G_1 - 996
 
-261,hold_child,1513 - 1514 - 21 - 22 - 71 - 53
-262,sing_children_song,1513 - 1514 - 21 - 22 - 71 - 53
-263,nuirse_child,1513 - 1514 - 21 - 22 - 71 - 53
-264,change_diapers,1513 - 1514 - 21 - 22 - 71 - 53
-265,teach_talk,1513 - 1514 - 21 - 22 - 71 - 53
-266,give_toy,1513 - 1514 - 21 - 22 - 71 - 53
+261,hold_child,1513 - 1514 - 21 - 22 - 71 - 53 - CVE_A2_Growth|20_G_0.3 - CVE_A2_Growth|11_L_0.5
+262,sing_children_song,1513 - 1514 - 21 - 22 - 71 - 53 - CVE_A2_E|85_G_8 - CVE_A2_Growth|12_G_0.5
+263,nuirse_child,1513 - 1514 - 21 - 22 - 71 - 53 - CVE_A2_Growth|20_G_0.3 - 556
+264,change_diapers,1513 - 1514 - 21 - 22 - 71 - 53 - CVE_A2_Growth|20_G_0.2 - CVE_A2_Growth|13_G_0.5
+265,teach_talk,1513 - 1514 - 21 - 22 - 71 - 53 - CVE_A2_E|80_G_8 - CVE_A2_E|82_G_4
+266,give_toy,1513 - 1514 - 21 - 22 - 71 - 53 - CVE_A2_E|91_G_5 - CVE_A2_E|90_G_5 - CVE_A2_Growth|10_G_0.3
 267,identify_eggs,1511 - 1514 - 72 - CVE_A1_E|88_G_1
 268,hatch_eggs,1511 - 1514 - 72 - CVE_A1_E|88_G_1
 269,identify_held_eggs,1511 - 1514 - 72 - 547 - CVE_A1_E|88_G_1
+270,prenatal_talk,1511 - 1512 - 21 - 22 - 55 - 555
+271,prenatal_music,1511 - 1512 - 21 - 22 - 55 - 555
+272,prenatal_touch,1511 - 1512 - 21 - 22 - 53 - 55 - 555
 
 301,hand_in_hand,21 - 11 - 12 - 22 - 52 - 55 - 62
 302,embrace,21 - 11 - 12 - 22 - 53 - 55 - 58 - 62
@@ -187,6 +190,8 @@ int,str,str
 
 380,ask_hidden_sex,405 - 464 - 603 - 605 - 631 - 704 - 1409 - CVE_A1_E|35_G_1 - CVE_A2_E|35_G_1
 381,ask_hidden_sex_fail,526 - 528 - 404 - 631 - 153
+383,start_sex_class,406 - 462 - 464 - 608 - 636 - 1410 - 10010 - 10014
+384,end_sex_class,529 - 407 - 636 - 800 - 10011 - 10015
 382,other_sex_be_found_to_hidden_sex,476 - 1404 - CVE_A1_E|35_G_1 - CVE_A2_E|35_G_1
 
 386,ask_exhibitionism_sex,405 - 462 - 464 - 603 - 605 - 631 - 704 - 1409 - CVE_A1_E|34_G_1 - CVE_A2_E|34_G_1
@@ -771,4 +776,6 @@ int,str,str
 
 1501,has_been_primary_hypnosis,999
 1502,has_been_deep_hypnosis,999
+1504,join_sex_class,998
+1505,watch_sex_class,998
 1503,has_been_complete_hypnosis,999

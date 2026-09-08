@@ -3,4 +3,13 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,teach_talk,0,high_1,{Name}触发了教说话指令的地文
+0,teach_talk,0,sys_0,{Name}抱着{TargetName}，一遍一遍地对她说「爸爸」。{TargetName}张着嘴，发出了一个含糊的音节。
+1,teach_talk,0,sys_0,{Name}指着自己的鼻子，慢慢地念出自己的名字。{TargetName}盯着{Name}的嘴看了很久，忽然「啊」了一声。
+2,teach_talk,0,sys_0,{Name}拿起一个小玩偶，对{TargetName}说：「这是兔子。」{TargetName}伸手去抓，嘴里咿咿呀呀地应着。
+3,teach_talk,0,sys_0,{Name}耐心地教{TargetName}发音，从最简单的「妈」开始。{TargetName}学得笨拙，却把{Name}逗得笑个不停。
+4,teach_talk,0,sys_0,{Name}和{TargetName}面对面坐着，一个音一个音地示范。{TargetName}努力地模仿着，口水都流到了下巴上。
+5,teach_talk,0,sys_1,{Name}对着{TargetName}慢慢地说话，每个字都拉得长长的。{TargetName}听得认真，小嘴一张一合。
+6,teach_talk,0,sys_1,{Name}指着窗外的东西一样一样地念给{TargetName}听，{TargetName}咿咿呀呀地跟着叫。
+7,teach_talk,0,sys_1,{Name}握着{TargetName}的小手教她说「你好」。{TargetName}只会「哦哦」地叫，但已经很努力了。
+8,teach_talk,0,sys_1,{Name}一边给{TargetName}收拾玩具一边念着玩具的名字，{TargetName}在小床里跟着咕哝。
+9,teach_talk,0,sys_1,{Name}教了{TargetName}好一会儿，{TargetName}忽然清清楚楚地发出了一个音。{Name}愣了一下，随即笑了。

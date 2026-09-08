@@ -439,17 +439,31 @@ def character_move_to_class_room(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    from Script.System.Education_System import schedule_handle
+    from Script.System.Education_System import education_constant, schedule_handle
+
+    from Script.System.Education_System import class_ai
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = character_data.behavior.start_time
+    if now_time is None:
+        now_time = cache.game_time
 
     target_room = ""
+    # 预到岗：下一节是自己要上的性技实操课时，目标教室要查**下一节**而不是当前节次，
+    # 否则学生会走去上一节课的教室（Plan 22 四期 §3.28.5）
+    next_class, next_classroom = class_ai.get_next_sex_class(character_id, now_time)
+    if next_class is not None:
+        target_room = next_classroom
     # 教师视角：反查全局课表
     teaching = schedule_handle.get_now_teaching(character_id)
-    if teaching is not None:
+    if target_room:
+        pass
+    elif teaching is not None:
         target_room = teaching["classroom"]
     else:
         # 学生视角：查个人课表，只有班级式课型才在教室里上
         now_course = schedule_handle.get_now_course(character_id)
-        if now_course is not None and now_course["course_type"] in schedule_handle.CLASSROOM_COURSE_TYPE_SET:
+        if now_course is not None and now_course["course_type"] in education_constant.CLASSROOM_COURSE_TYPE_SET:
             target_room = now_course["classroom"]
     to_class_room = []
     if target_room:
@@ -2734,7 +2748,7 @@ def character_education_skip_class(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    from Script.System.Education_System import schedule_handle
+    from Script.System.Education_System import education_constant
 
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
@@ -2743,7 +2757,7 @@ def character_education_skip_class(character_id: int):
     if now_scene_str in cache.scene_data:
         now_scene_tag = cache.scene_data[now_scene_str].scene_tag
     # 还在教室（含实践教室与大礼堂）里，先离开
-    if any(tag in now_scene_tag for tag in schedule_handle.CLASSROOM_TAG_BY_COURSE_TYPE.values()):
+    if any(tag in now_scene_tag for tag in education_constant.CLASSROOM_TAG_BY_COURSE_TYPE.values()):
         to_dormitory = map_handle.get_map_system_path_for_str(character_data.dormitory)
         general_movement_module(character_id, to_dormitory)
         return
@@ -2781,7 +2795,7 @@ def character_education_do_course(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    from Script.System.Education_System import schedule_handle
+    from Script.System.Education_System import education_constant, schedule_handle
 
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
@@ -2792,17 +2806,17 @@ def character_education_do_course(character_id: int):
     behavior_name = ""
     state_id = 0
     # 体育课：四处地点各自对应不同的既有行为
-    if course_type == schedule_handle.COURSE_TYPE_PE:
-        place_data = schedule_handle.PE_PLACE_DATA.get(now_course["target"])
+    if course_type == education_constant.COURSE_TYPE_PE:
+        place_data = education_constant.PE_PLACE_DATA.get(now_course["target"])
         if place_data is not None:
             behavior_name, state_id = place_data[1], place_data[2]
     # 兴趣课：行为直接读 Entertainment.csv 的 behavior_id 列（该列的值即状态cid）
-    elif course_type == schedule_handle.COURSE_TYPE_INTEREST:
+    elif course_type == education_constant.COURSE_TYPE_INTEREST:
         if now_course["target"] in game_config.config_entertainment:
             state_id = game_config.config_entertainment[now_course["target"]].behavior_id
             behavior_name = schedule_handle.get_behavior_name_by_cid(state_id)
     # 实习课：本计划新增的行为
-    elif course_type == schedule_handle.COURSE_TYPE_INTERN:
+    elif course_type == education_constant.COURSE_TYPE_INTERN:
         behavior_name = constant.Behavior.INTERN_CLASS
         state_id = constant.CharacterStatus.STATUS_INTERN_CLASS
     if not behavior_name or not state_id:

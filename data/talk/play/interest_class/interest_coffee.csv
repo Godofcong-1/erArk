@@ -3,7 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,taste_coffee,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}喝了一口就把杯子推开了，苦得直吐舌头。\n后来{Name}要了很多糖，加到杯子里几乎化不开为止。\n"这样才好喝。"{Name}理直气壮地说。
-1001,taste_coffee,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}对咖啡的香味很喜欢，但对味道很不喜欢。\n于是{Name}把杯子捧在手里闻了很久，一口也没喝。\n"闻也算吧？"{Name}小声问，然后自己点了点头。
-1002,taste_coffee,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}这次没有加糖，认真地喝完了一整杯。\n喝到后半杯时{Name}忽然尝出了一点酸味，愣了一下。\n"原来苦里面还有别的东西。"{Name}把这个发现记住了。
-1003,taste_coffee,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}要了两种不同的豆子，分开喝，中间用水漱口。\n"料理课上说的，做完了尝，第二天冷了再尝。"{Name}索性把冷掉的那杯也喝了。\n冷掉之后的味道确实不一样，{Name}觉得这堂课没白上。
+1000,taste_coffee,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}喝了一口就把杯子推开了，苦得直吐舌头。\n后来{Name}要了很多糖，加到杯子里几乎化不开为止。\n“这样才好喝。”{Name}理直气壮地说。
+1001,taste_coffee,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}对咖啡的香味很喜欢，但对味道很不喜欢。\n于是{Name}把杯子捧在手里闻了很久，一口也没喝。\n“闻也算吧？”{Name}小声问，然后自己点了点头。
+1002,taste_coffee,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}这次没有加糖，认真地喝完了一整杯。\n喝到后半杯时{Name}忽然尝出了一点酸味，愣了一下。\n“原来苦里面还有别的东西。”{Name}把这个发现记住了。
+1003,taste_coffee,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}要了两种不同的豆子，分开喝，中间用水漱口。\n“料理课上说的，做完了尝，第二天冷了再尝。”{Name}索性把冷掉的那杯也喝了。\n冷掉之后的味道确实不一样，{Name}觉得这堂课没白上。

@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|77_G_0,没有训练模型，{Name}就对着枕头练习根部和顶端不同的力度控制。\n试了很多次{Name}才隐约摸到两处力度该有的差别。\n“慢慢来，先感受，再动手”，{Name}把老师的话当成了自习的座右铭。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|77_G_0,{Name}练习保持稳定的加压节奏，没多久手就有点抖。\n抖了也没停，{Name}想起老师说撑过这一段就好。\n坚持到最后，{Name}觉得比早上多撑了不少时间。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|77_G_0,{Name}对着空气练习判断“边缘信号”，想象着提示灯该在什么时候变色。\n想象久了{Name}居然也能大致说出该在哪个时机收网。\n“这样练到底有没有用啊”，{Name}半信半疑地想。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|77_G_0,{Name}保持加压动作练习耐力，中途手有点酸也没有停下来。\n酸的感觉慢慢缓解之后，{Name}才觉得松了一口气。\n{Name}把这次坚持的时间悄悄记在心里，想着下次要更久。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|77_G_0,{Name}对着空的房间反复练习节奏与判断的配合，没有模型也没有指导。\n练到后来{Name}竟然能在心里模拟出一整套完整的流程。\n“下次上课要试试给老师看看”，{Name}这样想着，又练了几遍。

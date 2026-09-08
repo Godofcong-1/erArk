@@ -1,0 +1,7 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,teach,0,CVP_A1_Course|43_G_0&CVP_A1_CourseType|0_G_0,{Name}把一张食材表贴在黑板上，密密麻麻全是名字。\n“背下来。”{Name}说，“哪些放一起会坏，哪些放一起会香，这是这门课的地基。”\n整节课都在讲搭配禁忌，讲到后面台下有人开始流口水，也有人开始反胃。
+0,teach,0,CVP_A1_Course|43_G_0&CVP_A1_CourseType|1_G_0,{Name}让每个人面前都摆上一块萝卜和一把刀，然后只说了一句从头切到尾。\n巡到一半{Name}停下来按住了某只手的手腕，把握刀的角度扳正了几分。\n下课时案板上厚薄不一的片子摆了一排，{Name}挨个看过去，没夸也没骂。

@@ -595,6 +595,9 @@ class Edit_Group_Sex_Temple_Panel:
 
     def show_target_chara_list(self, temple_id: str, body_part: str):
         """绘制可选择的交互对象角色列表"""
+        # ⚠️ 函数内 import：Script/System/* 之间在文件顶层互引会循环导入
+        from Script.System.Education_System import sex_class_handle
+
         # 全NPC列表
         scene_path_str = map_handle.get_map_system_path_str_for_list(self.pl_character_data.position)
         scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -622,6 +625,18 @@ class Edit_Group_Sex_Temple_Panel:
             for chara_id in all_character_list:
                 character_data = cache.character_data[chara_id]
                 button_text = f"[{str(character_data.adv).rjust(4,'0')}]{character_data.name}"
+                # 性技实操课上，体力不足的学生只能站在一边旁观，不进模板（Plan 22 四期 口径65）。
+                # ⚠️ 只在课堂模式下生效：普通群交没有这条限制，把它一并管上会改掉既有玩法
+                if cache.sex_class_mode and sex_class_handle.judge_hp_low_only_watch(chara_id):
+                    watch_draw = draw.LeftDraw()
+                    watch_draw.width = int(self.width / 5)
+                    watch_draw.style = "deep_gray"
+                    watch_draw.text = f" {button_text}（体力不足，只能旁观）"
+                    watch_draw.draw()
+                    chara_count += 1
+                    if chara_count != 0 and chara_count % 5 == 0:
+                        line_feed.draw()
+                    continue
                 name_draw = draw.LeftButton(button_text, character_data.name, int(self.width / 5), cmd_func=self.set_target_chara, args=(temple_id, body_part, chara_id))
                 # 如果已经选中，则改变绘制颜色
                 if chara_id in selected_chara_id_list:
@@ -722,8 +737,11 @@ class Edit_Group_Sex_Temple_Panel:
                 if chara_id in now_scene_character_list:
                     continue
                 # 判断实行值是否足够，不够的也跳过
-                if instuct_judege.calculation_instuct_judege(0, chara_id, _("群交"), not_draw_flag = True)[0] == False:
-                    continue
+                # ⚠️ 性技实操课不判实行值（Plan 22 四期 口径58）：孩子是玩家自己养的、课是玩家自己排的，
+                #    两道决策已经做过；成年干员的门槛在 sex_class_handle.judge_can_join_sex_class 里另判
+                if not cache.sex_class_mode:
+                    if instuct_judege.calculation_instuct_judege(0, chara_id, _("群交"), not_draw_flag = True)[0] == False:
+                        continue
                 # 力竭/疲劳/重度困倦者不再提供邀请
                 if handle_premise.handle_self_exhausted(chara_id):
                     continue

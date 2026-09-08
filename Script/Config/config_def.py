@@ -1835,7 +1835,6 @@ class Official_Event:
     """ 选项4结算，&连接，复用CVE token """
 
 
-
 class Talk:
     """ 口上配置数据 """
 

@@ -1,0 +1,16 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|72_G_0&CVP_A1_CourseType|0_G_0,老师示范了几个脚部姿势，{Name}看得很认真，悄悄动了动自己的脚趾。\n“脚背和脚底感觉完全不一样”——{Name}把这句话记了下来。\n这节课没有实际动作，{Name}却听得津津有味。
+1001,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|72_G_0&CVP_A1_CourseType|0_G_0,黑板上的脚部示意图被{Name}仔细描了一遍。\n“脚趾灵活度决定很多细节”，{Name}想着自己的脚趾是不是也有点僵硬。\n有人问天生不灵活怎么办，老师说可以练，{Name}悄悄松了口气。
+1002,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|72_G_0&CVP_A1_CourseType|0_G_0,老师说很多技巧靠的是重心控制而不是脚本身，{Name}下意识地站直了一点。\n单脚站立的示范看起来简单，{Name}猜想自己肯定做不到那么稳。\n“先把平衡感练出来”——{Name}把这句话记在了心里。
+1003,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|72_G_0&CVP_A1_CourseType|0_G_0,抽筋比酸痛麻烦得多——老师的这句话让{Name}印象很深。\n{Name}想起自己以前也抽过筋，疼得说不出话来。\n“感觉不对就要及时换姿势”，{Name}把这句话默默念了两遍。
+1004,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|72_G_0&CVP_A1_CourseType|1_G_0,软垫上{Name}第一次练习脚趾抓握，一开始完全抓不住那种感觉。\n“像抓一件很轻的东西”，老师的示范让{Name}看得很仔细。\n{Name}又试了几次，慢慢摸到了一点点感觉。
+1005,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|72_G_0&CVP_A1_CourseType|1_G_0,单脚站立没多久{Name}就开始晃，晃得有点站不住。\n老师说晃是正常的，晃着晃着才能找到重心，{Name}又坚持站了一会儿。\n下课时{Name}发现自己站得稳的时间确实比刚开始长了。
+1006,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|72_G_0&CVP_A1_CourseType|1_G_0,{Name}被分到一组，练习用脚背和脚底分别做出不同的动作。\n两个部位给出的感觉真的完全不一样，{Name}对着老师说的话点了点头。\n老师走过来纠正了{Name}的角度，动作立刻顺畅了不少。
+1007,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|72_G_0&CVP_A1_CourseType|1_G_0,保持一个姿势太久，{Name}没多久就喊脚有点麻。\n老师让{Name}慢慢活动一下再继续，麻的感觉才慢慢退去。\n下课前{Name}已经能撑住比刚开始更久的时间了。
+1008,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|72_G_0&CVP_A1_CourseType|2_G_0,大礼堂里，老师讲动作越大越好是个误区。\n“细微的动作往往比大幅度的动作更有效”——{Name}若有所思地点了点头。\n这句话{Name}回去之后想了很久。
+1009,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|72_G_0&CVP_A1_CourseType|2_G_0,有人问平衡感天生不好怎么办，{Name}也悄悄竖起了耳朵。\n老师说重心找对了哪怕天生不稳也能站得住，{Name}这才松了口气。\n{Name}把这句话当成了给自己打气的话。
+1010,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|72_G_0&CVP_A1_CourseType|2_G_0,老师最后讲抽筋的处理方法，说这是很多人第一次上课都会遇到的问题。\n“感觉不对就要及时停，硬撑只会更麻烦”——{Name}当场把这句话记在了笔记本上。\n虽然只是坐在台下，{Name}却觉得自己好像也上了一堂实践课。

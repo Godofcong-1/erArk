@@ -3,6 +3,6 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,produce,0,have_intern_student,线上多了个孩子，{Name}把他安排在了最末端——那里出不了大错。\n看了一会儿之后{Name}发现那孩子码的东西一次比一次齐。\n"齐不是为了好看，"{Name}顺口说了一句，"是为了下一个人拿得顺手。"
+1000,produce,0,have_intern_student,线上多了个孩子，{Name}把他安排在了最末端——那里出不了大错。\n看了一会儿之后{Name}发现那孩子码的东西一次比一次齐。\n“齐不是为了好看，”{Name}顺口说了一句，“是为了下一个人拿得顺手。”
 1001,produce,0,have_intern_student,{Name}让跟着的孩子做同一个动作两百遍，做到一百多遍时明显能看出烦躁。\n{Name}没有催，也没有安慰。\n后面几十遍，那孩子的动作反而比前面稳了。{Name}这才点了点头。
-1002,produce,0,have_intern_student,今天线上出了个次品，是最后一道才发现的。\n{Name}带着跟来的孩子一路往回查，一直查到第二道工序。\n"越早发现越便宜。"{Name}说完，那孩子立刻掏出本子记了下来。
+1002,produce,0,have_intern_student,今天线上出了个次品，是最后一道才发现的。\n{Name}带着跟来的孩子一路往回查，一直查到第二道工序。\n“越早发现越便宜。”{Name}说完，那孩子立刻掏出本子记了下来。

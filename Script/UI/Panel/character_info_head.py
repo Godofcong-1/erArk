@@ -34,7 +34,7 @@ def get_now_class_tip(character_id: int):
     Return arguments:
     tuple or None -- 不在上课中则为None，否则为 (是否翘课bool, 悬停提示文本str)
     """
-    from Script.System.Education_System import schedule_handle
+    from Script.System.Education_System import education_constant, schedule_handle
     from Script.Design import game_time
 
     character_data: game_type.Character = cache.character_data[character_id]
@@ -56,7 +56,7 @@ def get_now_class_tip(character_id: int):
         if teaching is not None:
             ability_name = game_config.config_ability[teaching["ability_id"]].name
             return False, _("授课中：{0}·{1}｜{2}｜第{3}节").format(
-                schedule_handle.COURSE_TYPE_NAME.get(teaching["course_type"], _("课")),
+                education_constant.COURSE_TYPE_NAME.get(teaching["course_type"], _("课")),
                 ability_name, teaching["classroom"], teaching["period"] + 1)
         return False, _("授课中")
 
@@ -68,7 +68,7 @@ def get_now_class_tip(character_id: int):
         text = get_course_text(now_course)
         # ⚠️ 只有班级式的教室课才有"教师缺席降级自习"的说法；
         #    体育/兴趣/实习课本就没有指派教师（teacher_id 恒为 -1），不能误报成自习
-        if now_course["course_type"] not in schedule_handle.CLASSROOM_COURSE_TYPE_SET:
+        if now_course["course_type"] not in education_constant.CLASSROOM_COURSE_TYPE_SET:
             return False, _("{0}｜第{1}节").format(text, period + 1)
         # 本节没有教师、或人已经在自习了，都按自习显示
         if now_course["teacher_id"] == -1 or behavior_id == constant.Behavior.SELF_STUDY:
@@ -81,14 +81,14 @@ def get_now_class_tip(character_id: int):
     #    只能靠"本节排了这门课 + 人确实在那个地点"来判定
     if period != -1:
         now_course = schedule_handle.get_now_course(character_id)
-        if now_course is not None and now_course["course_type"] not in schedule_handle.CLASSROOM_COURSE_TYPE_SET:
+        if now_course is not None and now_course["course_type"] not in education_constant.CLASSROOM_COURSE_TYPE_SET:
             from Script.Design import map_handle
 
             to_place = schedule_handle.get_course_place(now_course)
             if to_place and map_handle.get_map_system_path_str_for_list(character_data.position) ==                     map_handle.get_map_system_path_str_for_list(to_place):
                 text = get_course_text(now_course)
                 # 实习课再补一句导师是谁：导师不预先指派，到点看现场谁在岗
-                if now_course["course_type"] == schedule_handle.COURSE_TYPE_INTERN:
+                if now_course["course_type"] == education_constant.COURSE_TYPE_INTERN:
                     mentor_id = schedule_handle.get_intern_mentor(character_id, now_course["target"])
                     if mentor_id == -1:
                         return False, _("{0}｜本节无人在岗，降为见习｜第{1}节").format(text, period + 1)
@@ -107,20 +107,20 @@ def get_course_text(now_course: dict) -> str:
     Return arguments:
     str -- 可读文本
     """
-    from Script.System.Education_System import schedule_handle
+    from Script.System.Education_System import education_constant
 
-    type_name = schedule_handle.COURSE_TYPE_NAME.get(now_course["course_type"], _("课"))
+    type_name = education_constant.COURSE_TYPE_NAME.get(now_course["course_type"], _("课"))
     # 班级式课：科目与教室都查得到
-    if now_course["course_type"] in schedule_handle.CLASSROOM_COURSE_TYPE_SET:
+    if now_course["course_type"] in education_constant.CLASSROOM_COURSE_TYPE_SET:
         if now_course["ability_id"] > 0:
             ability_name = game_config.config_ability[now_course["ability_id"]].name
             return "{0}·{1}｜{2}".format(type_name, ability_name, now_course["classroom"])
         return "{0}｜{1}".format(type_name, now_course["classroom"])
     # 个人式课：目标本身就是地点名或配置cid
     target = now_course["target"]
-    if now_course["course_type"] == schedule_handle.COURSE_TYPE_INTEREST:
+    if now_course["course_type"] == education_constant.COURSE_TYPE_INTEREST:
         target = game_config.config_entertainment[target].name
-    elif now_course["course_type"] == schedule_handle.COURSE_TYPE_INTERN:
+    elif now_course["course_type"] == education_constant.COURSE_TYPE_INTERN:
         target = game_config.config_work_type[target].name
     return "{0}·{1}".format(type_name, target)
 
@@ -170,6 +170,21 @@ def get_character_status_list(character_id: int) -> Tuple[List[draw.LeftDraw], L
     class_draw.text = class_text
     status_list.append(class_draw)
     status_text_list.append(class_text)
+
+    # 跟随母亲见学状态（Plan 22 二期）：与上面的 <课> 一样，一处改动同时覆盖 Tk 与 Web
+    # ⚠️ 函数内延迟 import：UI 层在 Core/UI，教育逻辑在 System，模块级 import 会启动即循环（口径16）
+    from Script.System.Education_System import class_ai
+
+    # ⚠️ 用 <学> 而不是 <跟>：<跟> 已经是「智能跟随玩家」的标识，两者语义完全不同
+    follow_mother_draw = draw.LeftDraw()
+    follow_mother_draw.style = "wheat"
+    follow_mother_text = ""
+    if class_ai.judge_in_follow_mother(character_id):
+        follow_mother_text = _(" <学>")
+        follow_mother_draw.tooltip = _("正跟着母亲见学，按母亲当前工作对应的科目获得经验")
+    follow_mother_draw.text = follow_mother_text
+    status_list.append(follow_mother_draw)
+    status_text_list.append(follow_mother_text)
     
     # 非普通时输出当前心情
     angry_draw = draw.LeftDraw()

@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+2000,start_sex_class,0,CVP_A1_Course|77_G_0,「光是快没有用，要让对方停不下来。」{Name}讲解着榨精的核心。
+2001,start_sex_class,0,CVP_A1_Course|77_G_0,{Name}把节奏的变化讲得很细：「一直用同一种方式，效果反而会变差。」
+2002,start_sex_class,0,CVP_A1_Course|77_G_0,这一节练的是榨精。{Name}提醒学生们注意观察对方的反应——「答案都写在那上面。」

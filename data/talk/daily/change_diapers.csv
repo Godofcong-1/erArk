@@ -12,3 +12,8 @@ str,str,int,str,str
 6,change_diapers,0,high_1,{Name}轻轻地将{TargetName}抱在怀里，用身体给宝宝足够的安全感。一边哼着小曲，一边熟练地给宝宝更换尿布，动作柔和得像一阵微风。
 7,change_diapers,0,high_1,{Name}先用玩具逗乐{TargetName}，让宝宝放松心情。等宝宝笑得咯咯作响时，{Name}趁机迅速地将脏尿布换下，动作流畅自然。
 8,change_diapers,0,high_1,{Name}用湿巾温柔地擦拭{TargetName}的皮肤，动作轻柔得像羽毛拂过。随后，{Name}快速地将新尿布包裹在宝宝身上，动作敏捷迅速。
+9,change_diapers,0,sys_0,{Name}亲自给{TargetName}换尿布，动作有些生疏，但每一步都做得很仔细。换完之后，{TargetName}舒服地蹬了蹬腿。
+10,change_diapers,0,sys_0,{Name}一边换尿布一边跟{TargetName}说话，让她不要乱动。{TargetName}当然听不懂，只是一个劲地想抓{Name}的手。
+11,change_diapers,0,sys_0,{Name}把{TargetName}的小屁股擦干净，扑上一点爽身粉，再把新尿布贴好。{TargetName}咯咯地笑了起来。
+12,change_diapers,0,sys_0,{Name}给{TargetName}换好了尿布，把她抱起来晃了晃。「好了，清清爽爽。」
+13,change_diapers,0,sys_0,{Name}换尿布的手法比上次熟练了一些。{TargetName}躺着看着{Name}忙活，眼睛一眨一眨的。

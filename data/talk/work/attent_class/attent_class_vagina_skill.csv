@@ -1,0 +1,16 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|74_G_0&CVP_A1_CourseType|0_G_0,老师讲肌肉收缩的原理，说这门课练的是身体内部很难自己察觉的部分。\n{Name}听得有点茫然，悄悄想着自己是不是也感觉不到。\n“今天先讲怎么找到它”——{Name}把这句话记了下来，觉得挺神秘。
+1001,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|74_G_0&CVP_A1_CourseType|0_G_0,黑板上的截面图被{Name}仔细描了一遍，标出的收缩顺序也一一记下。\n“一下子全部收紧是没用的”，{Name}想着这个“分层次”到底是什么感觉。\n有人问要多久才能感觉到，老师说因人而异，{Name}悄悄松了口气。
+1002,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|74_G_0&CVP_A1_CourseType|0_G_0,老师讲到收紧和放松交替才是关键，{Name}下意识地想象了一下那种感觉。\n“绷太久会累，也会麻”——{Name}把这句话记在了心里。\n{Name}觉得手指开合的比喻挺好懂，至少能想象出大概的样子。
+1003,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|74_G_0&CVP_A1_CourseType|0_G_0,老师提醒这块肌肉和别处一样会疲劳，{Name}第一次听说这个说法。\n“累了就该停，硬撑没有意义”——{Name}把这句话默默念了两遍。\n{Name}决定上实践课的时候一定量力而行。
+1004,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|74_G_0&CVP_A1_CourseType|1_G_0,呼吸配合的练习让{Name}一开始完全找不到感觉，急得有点冒汗。\n老师让{Name}别着急，多试几次，慢慢地好像有了一点点头绪。\n“吸气放松，呼气试着收一下”——{Name}跟着节奏又试了好几次。
+1005,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|74_G_0&CVP_A1_CourseType|1_G_0,分层次收缩的练习对{Name}来说很难，一开始只能感觉到全部一起动。\n老师说不是一下子松开，是慢慢松，{Name}又耐心地重新试了一遍。\n练到最后，{Name}居然真的感觉到了中间那几个层次的差别。
+1006,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|74_G_0&CVP_A1_CourseType|1_G_0,{Name}练习收紧和放松的交替节奏，一开始总是乱掉。\n老师说这是正常的，慢慢找回来就好，{Name}又耐心地重新调整。\n下课时{Name}发现自己能保持稳定节奏的时间确实比刚开始长了。
+1007,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|74_G_0&CVP_A1_CourseType|1_G_0,保持轻微收紧的状态没多久{Name}就觉得有点累。\n老师让{Name}放松一下再继续，别硬撑，{Name}照做之后感觉舒服了不少。\n下课前{Name}已经能撑住比刚开始更久的时间了。
+1008,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|74_G_0&CVP_A1_CourseType|2_G_0,大礼堂里，老师讲一直用力就是有效果是个误区。\n“一直绷着只会麻木，感觉反而会变差”——{Name}若有所思地点了点头。\n这句话{Name}回去之后想了很久。
+1009,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|74_G_0&CVP_A1_CourseType|2_G_0,有人问找不到那块肌肉怎么办，{Name}也悄悄竖起了耳朵。\n老师说这很正常，需要时间，急不来，{Name}这才松了口气。\n{Name}把这句话当成了给自己打气的话。
+1010,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|74_G_0&CVP_A1_CourseType|2_G_0,老师最后讲耐力不足的处理方法，说累了就该停是很多人容易忽略的道理。\n“硬撑没有意义，节奏比持续更重要”——{Name}当场把这句话记在了笔记本上。\n虽然只是坐在台下，{Name}却觉得自己好像也上了一堂实践课。

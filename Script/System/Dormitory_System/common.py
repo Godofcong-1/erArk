@@ -223,6 +223,18 @@ def get_residence_type(character_id: int) -> str:
     return "dormitory"
 
 
+def register_permanent_dormitory(character_id: int) -> None:
+    """
+    进入特殊住宿前登记原宿舍
+    输入类型: character_id(int)
+    输出类型: 无
+    功能: 角色即将迁入特殊房间时调用；当前住在开放普通宿舍时把该宿舍记为登记宿舍，否则不改动（避免把特殊房间写入登记字段）
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dormitory in get_open_dormitory_room_occupancy():
+        character_data.permanent_dormitory = character_data.dormitory
+
+
 def restore_character_dormitory(character_id: int) -> str:
     """
     结束临时住宿状态时恢复角色的宿舍归属

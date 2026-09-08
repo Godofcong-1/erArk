@@ -3,6 +3,6 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,ward_round,0,have_intern_student,{Name}查房先敲门，哪怕病人正睡着也照敲不误。\n跟着的孩子小声问为什么不直接进去。\n"因为这是他现在的房间。"{Name}说。孩子把这句话记了下来。
-1001,ward_round,0,have_intern_student,每张床前{Name}都要问几乎一样的三个问题，跟着的孩子听到第四张床时已经能背了。\n轮到第五张，{Name}忽然侧过头："你来问。"\n孩子紧张得漏了一个，{Name}没有替他补上，就等着孩子自己想起来。
-1002,ward_round,0,have_intern_student,有位病人今天状态不好，{Name}在床边多站了一会儿，什么也没说。\n跟着的孩子也跟着站着，一直没敢动。\n出了病房{Name}才开口："查房不是查完就走，是让他知道有人来过。"
+1000,ward_round,0,have_intern_student,{Name}查房先敲门，哪怕病人正睡着也照敲不误。\n跟着的孩子小声问为什么不直接进去。\n“因为这是他现在的房间。”{Name}说。孩子把这句话记了下来。
+1001,ward_round,0,have_intern_student,每张床前{Name}都要问几乎一样的三个问题，跟着的孩子听到第四张床时已经能背了。\n轮到第五张，{Name}忽然侧过头：“你来问。”\n孩子紧张得漏了一个，{Name}没有替他补上，就等着孩子自己想起来。
+1002,ward_round,0,have_intern_student,有位病人今天状态不好，{Name}在床边多站了一会儿，什么也没说。\n跟着的孩子也跟着站着，一直没敢动。\n出了病房{Name}才开口：“查房不是查完就走，是让他知道有人来过。”

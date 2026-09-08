@@ -1,0 +1,16 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|73_G_0&CVP_A1_CourseType|0_G_0,老师拿着软垫示范夹持的角度，{Name}看得很认真，悄悄比划了一下。\n“太松夹不住，太紧又不舒服”——{Name}把这句话记了下来。\n这节课没有实际动作，{Name}却听得津津有味。”
+1001,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|73_G_0&CVP_A1_CourseType|0_G_0,黑板上的示意图被{Name}仔细描了一遍，标出的几个受力区域也一一记下。\n“上下和左右的感觉是不一样的”，{Name}想着这个区别到底有多大。\n有人问怎么判断方向对不对，老师说要靠反复练习，{Name}悄悄记下了这句话。
+1002,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|73_G_0&CVP_A1_CourseType|0_G_0,老师讲到摇晃的节奏，{Name}下意识地跟着比划了一个缓慢的动作。\n“找一个自己能稳住的节奏最重要”——{Name}把这句话记在了心里。\n{Name}觉得这个动作看起来简单，学起来应该没那么容易。
+1003,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|73_G_0&CVP_A1_CourseType|0_G_0,老师提醒长时间保持同一个姿势容易累，{Name}想起自己平时坐姿势也总是撑不久。\n“累了动作会变形，感觉不对就要及时调整”——{Name}把这句话默默念了两遍。\n{Name}决定以后要多注意自己的姿势。
+1004,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|73_G_0&CVP_A1_CourseType|1_G_0,训练用的软体模型摆在{Name}面前，第一次练习完全没有头绪。\n“慢慢夹，慢慢松”，老师的示范让{Name}看得很仔细。\n{Name}一开始夹得太紧，被老师提醒重新放松，练了几次才找到感觉。
+1005,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|73_G_0&CVP_A1_CourseType|1_G_0,保持同一个摇晃节奏没多久{Name}就乱了，有点着急。\n老师说这是正常的，慢慢找回来就好，{Name}又耐心地重新调整。\n下课时{Name}发现自己能保持稳定节奏的时间确实比刚开始长了。
+1006,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|73_G_0&CVP_A1_CourseType|1_G_0,{Name}练习分辨上下和左右方向的不同感觉，一开始怎么都分不清。\n两个方向给出的效果真的完全不一样，{Name}对着老师说的话点了点头。\n老师走过来纠正了{Name}的角度，动作立刻顺畅了不少。
+1007,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|73_G_0&CVP_A1_CourseType|1_G_0,保持一个姿势太久，{Name}没多久就觉得有点累，动作也开始变形。\n老师让{Name}稍微调整一下姿势再继续，累的感觉才慢慢缓解。\n下课前{Name}已经能撑住比刚开始更久的时间了。
+1008,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|73_G_0&CVP_A1_CourseType|2_G_0,大礼堂里，老师讲力度越大越好是个误区。\n“太紧只会让对方不舒服”——{Name}若有所思地点了点头。\n这句话{Name}回去之后想了很久。
+1009,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|73_G_0&CVP_A1_CourseType|2_G_0,有人问节奏乱了怎么办，{Name}也悄悄竖起了耳朵。\n老师说稳住比快更重要，先稳才有资格谈快，{Name}这才松了口气。\n{Name}把这句话当成了给自己打气的话。
+1010,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|73_G_0&CVP_A1_CourseType|2_G_0,老师最后讲耐力不足的处理方法，说累了动作会变形是很多人第一次遇到的问题。\n“感觉不对就要及时调整，硬撑只会更累”——{Name}当场把这句话记在了笔记本上。\n虽然只是坐在台下，{Name}却觉得自己好像也上了一堂实践课。

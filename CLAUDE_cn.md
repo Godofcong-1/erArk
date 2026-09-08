@@ -47,7 +47,7 @@ pip install -r requirements.txt
   - **`Script/Design/handle_premise/`** - 前提（条件判定）系统是一个包，按主题拆分为约 20 个模块（`handle_premise_H.py`、`handle_premise_place.py`、`handle_premise_ability.py`、`handle_premise_talent.py` 等），主入口在 `__init__.py`
 - **`Script/Settle`** - 结算模块：`default.py`、`common_default.py`（通用结算）、`Second_effect.py`（二段效果）、`default_cloth.py`、`item_effect.py`、`realtime_settle.py`、`past_day_settle.py`、`sleep_settle.py`
 - **`Script/StateMachine`** - NPC 行为原子模块（`default.py`，如移动），由 `Script/Design/handle_state_machine.py` 调度执行
-- **`Script/System`** - 自成一体的子系统，每个目录内附带自己的设计文档（`.md`）：`Cooking_System`（烹饪）、`Dormitory_System`（宿舍）、`Field_Commission_System`（外勤委托）、`Instruct_System`（指令面板与分类）、`Medical_System`（医疗）、`Sex_System`、`Web_Draw_System`（Web 绘制）
+- **`Script/System`** - 自成一体的子系统，每个目录内附带自己的设计文档（`.md`）：`Cooking_System`（烹饪）、`Dormitory_System`（宿舍）、`Education_System`（教育与养成：课表、上课、成长）、`Field_Commission_System`（外勤委托）、`First_Record_System`（性行为履历）、`Instruct_System`（指令面板与分类）、`Item_System`（道具）、`Medical_System`（医疗）、`Official_Event_System`（公务事件）、`Pregnancy_System`（妊娠）、`Sex_System`、`Web_Draw_System`（Web 绘制）
 - **`Script/UI`** - `Flow`（标题/角色创建/常规流程）、`Moudle`（绘制/面板基础模块）、`Panel`（60 多个功能面板）
 
 ### 关键系统
@@ -284,7 +284,7 @@ GitHub Actions 工作流（`.github/workflows/python-app.yml`，push/PR 到 mast
 
 ## 数据处理工作流文档
 
-`.github/prompts/数据处理工作流` 目录包含 60 个详细文档（59 个系统/工作流文档加一个 README）。这些文档解释了不同系统与代码组件之间的关系。在处理相关功能时，请参考这些文档以理解系统之间的关联、依赖和数据流。此外，每个 `Script/System/*` 子系统目录内也附带自己的设计文档。
+`.github/prompts/数据处理工作流` 目录包含 62 个详细文档（61 个系统/工作流文档加一个 README）。这些文档解释了不同系统与代码组件之间的关系。在处理相关功能时，请参考这些文档以理解系统之间的关联、依赖和数据流。此外，每个 `Script/System/*` 子系统目录内也附带自己的设计文档。
 
 ### 🏗️ 核心系统架构文档
 - **[角色行为系统](.github/prompts/数据处理工作流/角色行为系统.md)** - 核心行为循环、时间管理、状态变化

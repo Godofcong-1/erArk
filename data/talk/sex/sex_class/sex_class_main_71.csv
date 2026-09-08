@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+2000,start_sex_class,0,CVP_A1_Course|71_G_0,「舌头不能只是含着，要动。」{Name}示意学生张开嘴，一点点教她怎么用力。
+2001,start_sex_class,0,CVP_A1_Course|71_G_0,{Name}讲解着舌技的要领，学生们红着脸，却一个个都听得很认真。
+2002,start_sex_class,0,CVP_A1_Course|71_G_0,这一节的主题是舌技。{Name}强调了呼吸的节奏——「憋着气是学不好的。」

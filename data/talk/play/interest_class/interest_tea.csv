@@ -3,7 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,taste_tea,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}抿了一小口，立刻皱起了整张脸。\n"好苦。"{Name}说，但还是又抿了一口。\n一杯喝完之后{Name}宣布："第二口比第一口好喝一点点。"
+1000,taste_tea,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}抿了一小口，立刻皱起了整张脸。\n“好苦。”{Name}说，但还是又抿了一口。\n一杯喝完之后{Name}宣布：“第二口比第一口好喝一点点。”
 1001,taste_tea,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}对茶本身兴趣不大，倒是对倒茶的过程很入迷。\n{Name}学着别人的样子倒了一杯，水溢了一半出来。\n第二次{Name}倒得慢了很多，这回刚刚好。
-1002,taste_tea,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}这次留意了不同的泡法，同一种茶泡了两遍。\n"第二泡确实不一样。"{Name}在心里比较着，"没那么冲了。"\n{Name}把这个差别记了下来，虽然还形容不太清楚。
+1002,taste_tea,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}这次留意了不同的泡法，同一种茶泡了两遍。\n“第二泡确实不一样。”{Name}在心里比较着，“没那么冲了。”\n{Name}把这个差别记了下来，虽然还形容不太清楚。
 1003,taste_tea,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,茶室里很安静，{Name}把这一节课当成了休息。\n什么也没学，什么也没记，只是坐着喝完了一壶。\n起身的时候{Name}觉得脑子比来的时候清楚了些。

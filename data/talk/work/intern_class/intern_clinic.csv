@@ -5,5 +5,5 @@ str,str,int,str,str
 口上配置数据,,,,
 1000,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_clinic,门诊里人来人往，{Name}被安排坐在角落里，只能看不能碰。\n有人进来时{Name}会不自觉地伸长脖子看。\n看到包扎的那一段，{Name}忽然发现跟自己练的手法不太一样。
 1001,intern_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|5_G_0&in_clinic,{Name}的活儿是递东西，医生说什么就递什么。\n递错了两次之后{Name}干脆把常用的几样按顺序摆在了手边。\n后面就没有再错过了。
-1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_clinic,{Name}跟着看了一整轮问诊，最惊讶的是医生问的问题跟课本上不一样。\n"课本上先问哪里疼，"{Name}小声说，"你先问了他昨天睡得好不好。"\n医生笑了笑："因为他自己也不知道哪里疼。"
-1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_clinic,今天有个病人一直不肯配合，{Name}想起了课上老师扮病人的那次。\n{Name}没有插话，只是在旁边安静地待着，等对方自己开口。\n后来医生问{Name}是怎么想的，{Name}说："等一等。"医生点了点头。
+1002,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_clinic,{Name}跟着看了一整轮问诊，最惊讶的是医生问的问题跟课本上不一样。\n“课本上先问哪里疼，”{Name}小声说，“你先问了他昨天睡得好不好。”\n医生笑了笑：“因为他自己也不知道哪里疼。”
+1003,intern_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|5_G_0&in_clinic,今天有个病人一直不肯配合，{Name}想起了课上老师扮病人的那次。\n{Name}没有插话，只是在旁边安静地待着，等对方自己开口。\n后来医生问{Name}是怎么想的，{Name}说：“等一等。”医生点了点头。

@@ -3,8 +3,8 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|45_G_0,{Name}一看见博士就跑了过来，鞋子在地上蹭出一串响。\n"博士博士！我今天会读那个字了！"{Name}举起自己的笔记本，上面歪歪扭扭地写着一个新学的词。\n虽然还是写反了一笔，但{Name}的眼睛亮得不行，一直等着回应。
-1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|45_G_0,{Name}在走廊里堵住了博士，两只手背在身后，一脸憋不住的样子。\n"你问我一个问题嘛，"{Name}说，"随便什么问题都行。"\n等到真的被问了，{Name}才发现自己会答的其实只有一种，但还是答得很大声。
-1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|45_G_0,{Name}是走过来的，不是跑过来的，但脚步比平时快。\n"上次那个我没弄懂的地方，"{Name}把笔记本翻到某一页，"我自己想通了。"\n那一页上原先的问号已经被擦掉了，痕迹还留着一点。{Name}没有多说什么，但一直没有把本子收回去。
-1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|45_G_0,{Name}装作是路过，其实在门口站了一会儿了。\n"最近学的东西……有点意思。"{Name}说得很平淡，然后就把整整一段刚学的内容原原本本地讲了一遍。\n讲完之后{Name}忽然意识到自己讲了很久，耳朵一下子红了。
-1004,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|45_G_0,"我不是来炫耀的。"{Name}一开口就先声明了这一句。\n然后{Name}花了五分钟解释自己最近在学识上的进步，说到一半自己也听出来了。\n"……好吧，我就是来炫耀的。"{Name}小声承认，别开了脸。
+1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|45_G_0,{Name}一看见博士就跑了过来，鞋子在地上蹭出一串响。\n“博士博士！我今天会读那个字了！”{Name}举起自己的笔记本，上面歪歪扭扭地写着一个新学的词。\n虽然还是写反了一笔，但{Name}的眼睛亮得不行，一直等着回应。
+1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|45_G_0,{Name}在走廊里堵住了博士，两只手背在身后，一脸憋不住的样子。\n“你问我一个问题嘛，”{Name}说，“随便什么问题都行。”\n等到真的被问了，{Name}才发现自己会答的其实只有一种，但还是答得很大声。
+1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|45_G_0,{Name}是走过来的，不是跑过来的，但脚步比平时快。\n“上次那个我没弄懂的地方，”{Name}把笔记本翻到某一页，“我自己想通了。”\n那一页上原先的问号已经被擦掉了，痕迹还留着一点。{Name}没有多说什么，但一直没有把本子收回去。
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|45_G_0,{Name}装作是路过，其实在门口站了一会儿了。\n“最近学的东西……有点意思。”{Name}说得很平淡，然后就把整整一段刚学的内容原原本本地讲了一遍。\n讲完之后{Name}忽然意识到自己讲了很久，耳朵一下子红了。
+1004,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|45_G_0,“我不是来炫耀的。”{Name}一开口就先声明了这一句。\n然后{Name}花了五分钟解释自己最近在学识上的进步，说到一半自己也听出来了。\n“……好吧，我就是来炫耀的。”{Name}小声承认，别开了脸。

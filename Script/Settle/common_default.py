@@ -957,6 +957,14 @@ def base_chara_experience_common_settle(
                 base_chara_experience_common_settle(0, 124, change_data = change_data)
                 base_chara_experience_common_settle(final_character_id, 125, change_data = change_data)
 
+    # 性技实操课的主修科目加成（Plan 22 四期 §3.28.8）：本节课主修哪门性技，命中它所需经验的动作就加成，
+    # 其余动作照常结算但不加成。科目->经验id 的映射从 AbilityUp.csv 的升级需求解出，不另建映射表
+    if cache.sex_class_mode and final_character_id != 0:
+        from Script.System.Education_System import sex_class_handle
+
+        if experience_id and experience_id == sex_class_handle.get_now_bonus_exp_id():
+            base_value = int(base_value * sex_class_handle.get_subject_bonus(final_character_id))
+
     # 结算最终值
     character_data.experience.setdefault(experience_id, 0)
     character_data.experience[experience_id] += base_value

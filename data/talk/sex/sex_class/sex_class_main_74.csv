@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+2000,start_sex_class,0,CVP_A1_Course|74_G_0,「不要只是躺着等。」{Name}认真地讲着，「里面是可以主动用力的，试着感觉一下。」
+2001,start_sex_class,0,CVP_A1_Course|74_G_0,{Name}把膣技的要领拆成了几个步骤，让学生一步一步地跟着体会。
+2002,start_sex_class,0,CVP_A1_Course|74_G_0,这一节的主题是膣技。{Name}提醒道：「记住收缩的时机，比力气大小重要得多。」

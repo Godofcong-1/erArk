@@ -3,7 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,play_mahjong,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}还认不全牌面，只好把牌一张张举起来看。\n"这个是……几条来着？"{Name}问了三次同样的问题。\n虽然一局也没赢，但{Name}摸牌的时候特别开心。
+1000,play_mahjong,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}还认不全牌面，只好把牌一张张举起来看。\n“这个是……几条来着？”{Name}问了三次同样的问题。\n虽然一局也没赢，但{Name}摸牌的时候特别开心。
 1001,play_mahjong,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseType|4_G_0,{Name}把牌立得太靠前，旁边的人一眼就能看见。\n被提醒之后{Name}赶紧把牌往回收，收得太用力，哗啦倒了一片。\n重新码好之后{Name}这次学乖了，牌立得又直又靠后。
-1002,play_mahjong,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}开始注意别人打出来的牌，而不是只盯着自己手里的。\n盯了几圈之后{Name}换了个方向做牌，果然顺了不少。\n"信息不全的时候要看别人手上有什么。"{Name}想起了指挥课。
+1002,play_mahjong,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}开始注意别人打出来的牌，而不是只盯着自己手里的。\n盯了几圈之后{Name}换了个方向做牌，果然顺了不少。\n“信息不全的时候要看别人手上有什么。”{Name}想起了指挥课。
 1003,play_mahjong,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseType|4_G_0,{Name}手里的牌其实不差，但一直等不到想要的那一张。\n等到最后{Name}主动拆了，换成了一个小一点但稳妥的做法。\n结果那一局{Name}赢了，虽然赢得不多。

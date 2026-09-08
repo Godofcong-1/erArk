@@ -3,7 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|46_G_0,{Name}拽着博士的手，把绷带往上缠。\n"我练过的！"{Name}一边缠一边说，"这次不会把手指也缠进去了。"\n缠完之后{Name}退开一步，很满意地打量着自己的作品——虽然缠得有点太高了。
-1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|46_G_0,"博士你哪里疼吗？"{Name}忽然凑过来问，眼睛亮晶晶的。\n被回答"不疼"之后，{Name}明显有点失望，但很快又振作起来："那你要是疼了一定要告诉我！"\n"我现在会包扎了。"
-1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|46_G_0,{Name}把一张画着流程图的纸摊开。\n"先判断，再动手。"{Name}指着最上面那一行，"我一开始漏了一步，后来补上了。"\n"这张图我贴在本子最前面，每天都能看见。"
-1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|46_G_0,"老师讲了一个救不回来的病人。"{Name}说这话的时候语气很平静。\n"他说尽力和成功不是一回事。"{Name}顿了顿，"我以前一直以为，只要足够努力就……"\n后半句{Name}没有说完，只是把手里的笔记本抱得紧了一点。
+1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|46_G_0,{Name}拽着博士的手，把绷带往上缠。\n“我练过的！”{Name}一边缠一边说，“这次不会把手指也缠进去了。”\n缠完之后{Name}退开一步，很满意地打量着自己的作品——虽然缠得有点太高了。
+1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|46_G_0,“博士你哪里疼吗？”{Name}忽然凑过来问，眼睛亮晶晶的。\n被回答“不疼”之后，{Name}明显有点失望，但很快又振作起来：“那你要是疼了一定要告诉我！”\n“我现在会包扎了。”
+1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|46_G_0,{Name}把一张画着流程图的纸摊开。\n“先判断，再动手。”{Name}指着最上面那一行，“我一开始漏了一步，后来补上了。”\n“这张图我贴在本子最前面，每天都能看见。”
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|46_G_0,“老师讲了一个救不回来的病人。”{Name}说这话的时候语气很平静。\n“他说尽力和成功不是一回事。”{Name}顿了顿，“我以前一直以为，只要足够努力就……”\n后半句{Name}没有说完，只是把手里的笔记本抱得紧了一点。

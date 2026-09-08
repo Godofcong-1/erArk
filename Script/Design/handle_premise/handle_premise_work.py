@@ -39,6 +39,36 @@ def handle_have_work(character_id: int) -> int:
     return character_data.work.work_type > 0
 
 
+@add_premise(constant_promise.Premise.TARGET_HAVE_WORK)
+def handle_t_have_work(character_id: int) -> int:
+    """
+    交互对象有工作
+    ⚠️ have_work 判的是行为发起者自己，跟随母亲见学一类「按对方岗位分差分」的口上
+       必须用本前提，否则读到的是孩子自己那个恒为真的152学生岗（Plan 22 二期）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_have_work(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_HAVE_WORK)
+def handle_t_not_have_work(character_id: int) -> int:
+    """
+    交互对象没有工作
+    ⚠️ 与 t_have_work 成对，专供「对方没有工作」那一侧的口上做排他
+       —— 口上是加权随机不是最具体独占，不写反向前提的那一档会在两种情形下都出场
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not handle_have_work(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.WORK_IS_POWER_OPERATOR)
 def handle_work_is_power_operator(character_id: int) -> int:
     """
@@ -899,7 +929,7 @@ def handle_have_intern_student(character_id: int) -> int:
     int -- 权重
     """
     from Script.Design import map_handle
-    from Script.System.Education_System import schedule_handle
+    from Script.System.Education_System import education_constant, schedule_handle
 
     character_data: game_type.Character = cache.character_data[character_id]
     work_type_id = character_data.work.work_type
@@ -917,7 +947,7 @@ def handle_have_intern_student(character_id: int) -> int:
         now_course = schedule_handle.get_now_course(other_id)
         if now_course is None:
             continue
-        if now_course["course_type"] == schedule_handle.COURSE_TYPE_INTERN and now_course["target"] == work_type_id:
+        if now_course["course_type"] == education_constant.COURSE_TYPE_INTERN and now_course["target"] == work_type_id:
             return 1
     return 0
 

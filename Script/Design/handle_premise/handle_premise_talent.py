@@ -271,6 +271,17 @@ def handle_self_underage(character_id: int) -> int:
         return 1
     return 0
 
+@add_premise(constant_promise.Premise.SELF_NOT_UNDERAGE)
+def handle_self_not_underage(character_id: int) -> int:
+    """
+    校验自己不是未成年
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_underage(character_id)
+
 @add_premise(constant_promise.Premise.SELF_CHEST_IS_CLIFF)
 def handle_self_chest_is_cliff(character_id: int) -> int:
     """

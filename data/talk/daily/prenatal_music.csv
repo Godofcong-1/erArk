@@ -1,0 +1,15 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,prenatal_music,0,t_pregnancy_1,{Name}挑了一首舒缓的曲子，把音量调得很低，放在{TargetName}的肚子旁边。{TargetName}靠在枕头上闭起了眼睛。
+1,prenatal_music,0,t_pregnancy_1,{Name}把随身的播放器放在{TargetName}的肚子边上。轻柔的旋律流淌出来，{TargetName}的呼吸也跟着慢了下来。
+2,prenatal_music,0,t_pregnancy_1,{Name}轻轻哼着一段旋律，手掌贴着{TargetName}的肚子打着拍子。{TargetName}说：「你跑调了。」但没有让{Name}停下。
+3,prenatal_music,0,t_pregnancy_1,「据说胎儿能听见外面的声音。」{Name}一边说一边按下了播放键，让钢琴声轻轻笼住{TargetName}微隆的腹部。
+4,prenatal_music,0,t_pregnancy_1,{Name}挑了一张没有歌词的唱片，陪着{TargetName}一起听完了整整一面。房间里安静得只剩下旋律。
+5,prenatal_music,0,t_parturient_1,{Name}把耳机贴在{TargetName}高高隆起的肚子上，音乐放得很轻。{TargetName}说：「她刚才踢了一下，好像很喜欢。」
+6,prenatal_music,0,t_parturient_1,临盆前的日子过得很慢。{Name}每天都来放一会儿音乐，{TargetName}已经能凭前奏猜出今天是哪一首了。
+7,prenatal_music,0,t_parturient_1,{Name}坐在床边轻声唱着一首老歌，{TargetName}把手搭在肚子上跟着轻轻晃。曲子唱完，两个人都没有说话。
+8,prenatal_music,0,t_parturient_1,{Name}把音量调到刚好能听见的程度，让旋律陪着{TargetName}和肚子里的孩子一起打盹。
+9,prenatal_music,0,t_parturient_1,{Name}放的曲子是{TargetName}最喜欢的那一首。她听着听着就红了眼眶，说以后要放给孩子听。

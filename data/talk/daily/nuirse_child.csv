@@ -3,4 +3,13 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,nuirse_child,0,high_1,{Name}触发了喂奶指令的地文
+0,nuirse_child,0,sys_0,{Name}把温好的奶瓶试了试温度，才小心地凑到{TargetName}嘴边。{TargetName}立刻抱住奶瓶，大口大口地喝了起来。
+1,nuirse_child,0,sys_0,{Name}抱着{TargetName}喂奶，看着她鼓起的小脸颊一动一动。喝到一半，{TargetName}抬眼看了看{Name}，又低头继续。
+2,nuirse_child,0,sys_0,{TargetName}喝得急，呛了一下。{Name}连忙把她竖起来轻拍后背，等她打了个嗝，才继续喂。
+3,nuirse_child,0,sys_0,{Name}一边喂奶一边轻声数着{TargetName}喝下去的量。喝完之后，{TargetName}满足地打了个奶嗝。
+4,nuirse_child,0,sys_0,{Name}把{TargetName}抱在臂弯里喂奶。她的小手一直搭在{Name}的手指上，喝完了也没有松开。
+5,nuirse_child,0,sys_1,{Name}把奶瓶的温度试好，托着{TargetName}的后脑喂她。{TargetName}喝得很专心。
+6,nuirse_child,0,sys_1,{Name}熟练地抱起{TargetName}，把奶嘴凑到她嘴边。小家伙咕咚咕咚地喝着，没一会儿瓶子就见了底。
+7,nuirse_child,0,sys_1,{Name}喂完奶，把{TargetName}竖着抱起来拍嗝，直到她打出一个响亮的奶嗝才放回小床。
+8,nuirse_child,0,sys_1,{Name}给{TargetName}喂奶时一直在轻声说着话，{TargetName}一边喝一边眨着眼睛看她。
+9,nuirse_child,0,sys_1,{Name}给{TargetName}喂完奶，用软布擦净她嘴角的奶渍，把她轻轻放回了小床。

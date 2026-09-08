@@ -1,0 +1,16 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1000,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|71_G_0&CVP_A1_CourseType|0_G_0,{Name}看着老师对镜子做示范，自己也悄悄伸了伸舌头试试。\n“舌尖敏锐，舌根有力”——{Name}把这句话记了下来，觉得挺新奇。\n这节课没有实际练习，{Name}却听得很认真。”
+1001,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|71_G_0&CVP_A1_CourseType|0_G_0,黑板上的舌头示意图被{Name}仔细描了一遍。\n“太干会不舒服，太湿又容易失控”，{Name}想着这个“度”到底怎么把握。\n有人问怎么判断，老师说要靠经验，{Name}默默把这句话也记下来了。”
+1002,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|71_G_0&CVP_A1_CourseType|0_G_0,老师说舌肌和别的肌肉一样会疲劳，{Name}下意识地动了动自己的舌头。\n“很多人一开始又快又猛，结果撑不到三分钟”——{Name}想起自己是不是也这样。\n{Name}决定下次要从慢速开始练。
+1003,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|71_G_0&CVP_A1_CourseType|0_G_0,呼吸配合的部分让{Name}印象最深，老师说不能憋气。\n{Name}试着一边呼吸一边比划动作，发现确实比憋着气顺畅很多。\n“光靠嘴巴发力是练不长久的”——这句话{Name}默默念了两遍。
+1004,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|71_G_0&CVP_A1_CourseType|1_G_0,舌部训练模型摆在{Name}面前，第一次练习完全没有头绪。\n“先慢，再准，最后才是快”，老师的示范让{Name}看得很仔细。\n{Name}一开始想快，被老师叫停，重新从慢速练了起来。
+1005,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|71_G_0&CVP_A1_CourseType|1_G_0,保持同一个动作太久，{Name}没多久就喊了酸。\n老师说酸了才说明真的在用力，{Name}又咬牙坚持了一会儿。\n下课时{Name}发现自己能撑住的时间确实比刚开始长了。
+1006,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|71_G_0&CVP_A1_CourseType|1_G_0,一小杯水摆在{Name}面前，说是用来练湿润度的。\n喝一口，含一会儿，再慢慢练动作，{Name}觉得这个流程简单却一点都不轻松。\n老师走过来纠正了{Name}的角度，动作立刻顺畅了不少。
+1007,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|71_G_0&CVP_A1_CourseType|1_G_0,{Name}练习的时候一开始一直憋着气，动作也变得僵硬。\n“别憋”，老师反复提醒，{Name}试着放松呼吸，动作果然顺畅了一些。\n下课前{Name}已经能一边呼吸一边保持动作不断了。
+1008,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|71_G_0&CVP_A1_CourseType|2_G_0,大礼堂里，老师讲速度越快越厉害是个误区。\n“没有耐力支撑的速度撑不了多久”——{Name}若有所思地点了点头。\n这句话{Name}回去之后想了很久。
+1009,attent_class,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|71_G_0&CVP_A1_CourseType|2_G_0,有人问练习会不会很累，{Name}也很想知道答案。\n老师说前期确实很累，但耐力上去之后反而会觉得轻松，{Name}这才松了口气。\n{Name}把这句话当成了给自己打气的话。
+1010,attent_class,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|71_G_0&CVP_A1_CourseType|2_G_0,老师最后讲呼吸配合的重要性，说这是很多人容易忽略的细节。\n“呼吸顺了，动作才能顺”——{Name}当场试着调整了一下自己的呼吸节奏。\n虽然只是坐在台下，{Name}却觉得自己好像也上了一堂实践课。

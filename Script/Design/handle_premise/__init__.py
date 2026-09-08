@@ -329,7 +329,7 @@ def get_now_course_ability(character_id: int) -> int:
     Return arguments:
     int -- 科目能力id，取不到则为-1
     """
-    from Script.System.Education_System import schedule_handle
+    from Script.System.Education_System import education_constant, schedule_handle
 
     teaching = schedule_handle.get_now_teaching(character_id)
     if teaching is not None:
@@ -337,9 +337,9 @@ def get_now_course_ability(character_id: int) -> int:
     now_course = schedule_handle.get_now_course(character_id)
     if now_course is None:
         return -1
-    if now_course["course_type"] in schedule_handle.CLASSROOM_COURSE_TYPE_SET:
+    if now_course["course_type"] in education_constant.CLASSROOM_COURSE_TYPE_SET:
         return now_course["ability_id"]
-    if now_course["course_type"] == schedule_handle.COURSE_TYPE_INTERN:
+    if now_course["course_type"] == education_constant.COURSE_TYPE_INTERN:
         if now_course["target"] in game_config.config_work_type:
             return game_config.config_work_type[now_course["target"]].ability_id
     return -1
@@ -473,7 +473,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
             else:
                 final_value = final_character_data.dirty.cloth_semen[part_cid][1]
     elif premise_all_value_list[1][0] == "G":
-        # 养成数值前提（Plan 22 三期）：出勤、性格倾向、照料值等，编号见 growth_handle.GROWTH_VALUE_*
+        # 养成数值前提（Plan 22 三期）：出勤、性格倾向、照料值等，编号见 education_constant.GROWTH_VALUE_*
         # ⚠️ 必须排在攻略程度之前——"Growth" 与 "Gift" 的首字母都是 G，落到默认分支会被当成攻略程度
         if "Growth" in premise_all_value_list[1]:
             from Script.System.Education_System import growth_handle
