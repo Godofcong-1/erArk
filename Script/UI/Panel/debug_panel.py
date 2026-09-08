@@ -405,35 +405,39 @@ class TALK_QUICK_TEST:
                 draw_text += _("  交互对象：未填写，本测试中默认选择为博士\n")
                 end_chara_id = 0
         # 设置交互对象
-        cache.character_data[start_chara_id].target_character_id = end_chara_id
+        old_target_character_id = cache.character_data[start_chara_id].target_character_id
+        try:
+            cache.character_data[start_chara_id].target_character_id = end_chara_id
 
-        # 输出口上文本
-        talk_context = game_config.config_talk[full_talk_id].context
-        draw_text += _("\n口上原文本：\n  {0}\n").format(talk_context)
-        draw_text += _("口上输出文本：\n  {0}\n").format(talk.code_text_to_draw_text(talk_context, start_chara_id))
-        # 遍历前提条件
-        draw_text += _("\n前提条件：\n")
-        for premise in game_config.config_talk_premise_data[full_talk_id]:
-            # 综合数值前提判定
-            if "CVP" in premise:
-                premise_all_value_list = premise.split("_")[1:]
-                now_add_weight = handle_premise.handle_comprehensive_value_premise(start_chara_id, premise_all_value_list)
-            # 其他正常口上判定
+            # 输出口上文本
+            talk_context = game_config.config_talk[full_talk_id].context
+            draw_text += _("\n口上原文本：\n  {0}\n").format(talk_context)
+            draw_text += _("口上输出文本：\n  {0}\n").format(talk.code_text_to_draw_text(talk_context, start_chara_id))
+            # 遍历前提条件
+            draw_text += _("\n前提条件：\n")
+            for premise in game_config.config_talk_premise_data[full_talk_id]:
+                # 综合数值前提判定
+                if "CVP" in premise:
+                    premise_all_value_list = premise.split("_")[1:]
+                    now_add_weight = handle_premise.handle_comprehensive_value_premise(start_chara_id, premise_all_value_list)
+                # 其他正常口上判定
+                else:
+                    now_add_weight = constant.handle_premise_data[premise](start_chara_id)
+                if now_add_weight:
+                    draw_text += _("  {0}：满足(√)\n").format(premise)
+                else:
+                    draw_text += _("  {0}：不满足(X)\n").format(premise)
+                    pass_flag = False
+
+            # 输出测试结果
+            if pass_flag:
+                draw_text += _("\n最终结果：\n  测试通过，该口上可以触发\n")
             else:
-                now_add_weight = constant.handle_premise_data[premise](start_chara_id)
-            if now_add_weight:
-                draw_text += _("  {0}：满足(√)\n").format(premise)
-            else:
-                draw_text += _("  {0}：不满足(X)\n").format(premise)
-                pass_flag = False
+                draw_text += _("\n最终结果：\n  测试未通过，该口上无法触发\n")
 
-        # 输出测试结果
-        if pass_flag:
-            draw_text += _("\n最终结果：\n  测试通过，该口上可以触发\n")
-        else:
-            draw_text += _("\n最终结果：\n  测试未通过，该口上无法触发\n")
-
-        return draw_text, pass_flag
+            return draw_text, pass_flag
+        finally:
+            cache.character_data[start_chara_id].target_character_id = old_target_character_id
 
 
     def run_batch_talk_test_in_groups(self, target_chara_id: int, talk_id_list: List[int]):
