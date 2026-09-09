@@ -9,7 +9,7 @@
 """
 import datetime
 from types import FunctionType
-from typing import Dict, List
+from typing import Dict, List, Protocol
 
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.Config import game_config, normal_config
@@ -43,6 +43,37 @@ def get_period_time_text(period: int) -> str:
     return "{0:02d}:{1:02d}~{2:02d}:{3:02d}".format(hour, minute, end_hour, end_minute)
 
 
+class SubPanelProtocol(Protocol):
+    """
+    四个页签子面板共同遵守的接口
+    输入类型: 无
+    输出类型: 无
+    功能: 容器 Education_Manage_Panel 只按这两个方法调用子面板，全面板唯一的 askfor_all 在容器里。
+          写成 Protocol 而不是把 panel_map 标成 object，是为了让类型检查器认得这两个调用，
+          又不必在文件顶层 import 三个子面板类——那会造成循环导入，见 Education_Manage_Panel.__init__ 里的说明
+    """
+
+    def draw_page(self, return_list: List[str]) -> None:
+        """
+        绘制本页内容
+        Keyword arguments:
+        return_list -- 容器的共享返回值列表，本页的按钮返回值往里加
+        Return arguments:
+        无
+        """
+        ...
+
+    def handle_yrn(self, yrn: str) -> None:
+        """
+        处理属于本页的那一份返回值
+        Keyword arguments:
+        yrn -- 容器的 askfor_all 拿到的返回值
+        Return arguments:
+        无
+        """
+        ...
+
+
 class Education_Manage_Panel:
     """
     教育管理系统主面板（教师办公室入口，方案 §5.1）
@@ -64,7 +95,7 @@ class Education_Manage_Panel:
         """ 四个页签的显示名，同时也是 panel_map 的键 """
         # 子面板实例只创建一次并存起来：容器每轮 while 都会重画，
         #    如果每轮 new 一个，子面板里的选中态（当前教室 / 当前孩子）必然被重置
-        self.panel_map: Dict[str, object] = {
+        self.panel_map: Dict[str, SubPanelProtocol] = {
             _("全局课表"): Class_Schedule_Panel(width),
             _("个人课表"): course_select_panel.Course_Select_Panel(width),
             _("日程模板"): schedule_template_panel.Schedule_Template_Panel(width),

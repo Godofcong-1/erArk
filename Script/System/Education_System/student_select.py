@@ -2,7 +2,7 @@
 
 个人课表与养成总览原来在顶部铺一排人名页签（每页 8 人、翻页），现在改为一个「选择学生」按钮：
 点开走既有的通用 NPC 选择面板（Script/UI/Panel/common_select_NPC.py），名单由调用方预筛后传入
-（个人课表 = 学生岗 ∪ 女儿，养成总览 = 养成中的女儿），玩家再在那个面板里按收藏 / 名字 / 区块等筛一遍挑人。
+（个人课表 = 学生岗 U 女儿，养成总览 = 养成中的女儿），玩家再在那个面板里按收藏 / 名字 / 区块等筛一遍挑人。
 没选人时不写「尚未选择学生」，[选择学生] 按钮直接顶在行首（2026-09-09 第三轮调整）；已选人时才是「当前学生：X」+ 居中的 [选择学生]。
 
 通用面板的人名按钮靠 cmd_func 把选中者传回来，而无头测试的 askfor_all 桩不执行 cmd_func，
@@ -87,7 +87,7 @@ def select_student(candidate_list: List[int], title_text: str, info_text: str, n
         selected["id"] = character_id
         selected["hit"] = True
 
-    now_draw_panel: panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 80, 8, window_width, 1, 0, 0)
+    now_draw_panel: panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 80, 8, window_width, True, False, 0)
     select_state: dict = {}
     name_to_id: Dict[str, int] = {}
     yrn = ""

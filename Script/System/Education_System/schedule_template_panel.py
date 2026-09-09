@@ -325,6 +325,9 @@ class Schedule_Template_Panel:
             return_list: List[str] = []
             id_by_return: Dict[str, int] = {}
             template_data = schedule_template_handle.get_template_data(template_id)
+            # 模板取不到（编号非法，或已被删掉）就直接退出，不画一个空面板
+            if template_data is None:
+                return
             draw.TitleLineDraw(_("批量套用：{0}").format(template_data["name"]), self.width).draw()
             # 每行6个：190/6=31列。原来整个循环没有换行，孩子一多就会串行
             index = 0
@@ -384,6 +387,9 @@ class Schedule_Template_Panel:
         index = 0
         for template_id in schedule_template_handle.get_all_template_id():
             template_data = schedule_template_handle.get_template_data(template_id)
+            # 编号来自 get_all_template_id，正常取得到；取不到就跳过这一项，不崩在下标上
+            if template_data is None:
+                continue
             now_draw = draw.LeftButton(
                 _("[{0}]").format(template_data["name"]),
                 f"PICK_{template_id}", int(self.width / 6))

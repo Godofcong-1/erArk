@@ -28,7 +28,7 @@ def judge_classroom_open(classroom: str) -> bool:
     功能: constant.place_data 装的是**全部**教室——它在配置载入期由 data/map/ 的目录树
              静态构建（map_config.load_dir_now），与存档、facility_level、facility_open 全都无关。
              所以开放与否必须另查 Rhodes_Island.facility_open。
-          理论教室一 / 实践教室一 / 大礼堂 是 Lv1 基础设施，压根不在 Facility_open.csv 里，
+             理论教室一 / 实践教室一 / 大礼堂 是 Lv1 基础设施，压根不在 Facility_open.csv 里，
              不给它们兜底会被误判成未开放，面板直接空掉（宿舍区同样处理，见 Dormitory_System/common.py）
     """
     if classroom not in game_config.config_facility_open_name_set:

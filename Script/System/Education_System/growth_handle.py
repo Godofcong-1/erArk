@@ -359,7 +359,7 @@ def settle_follow_mother_gain(
         character_id: int,
         mother_id: int,
         add_time: int,
-        change_data=None,
+        change_data: Optional[game_type.CharacterStatusChange] = None,
 ) -> None:
     """
     一次见学的结算：按母亲的工作科目加习得与经验，并累加照料值与母女好感
