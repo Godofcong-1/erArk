@@ -405,10 +405,30 @@ def handle_to_work_time_or_work_time(character_id: int) -> int:
     return 0
 
 
+def _judge_free_daytime(character_data: game_type.Character) -> bool:
+    """
+    判断一个角色的白天（9~12、14~18）是否也算娱乐时间
+    Keyword arguments:
+    character_data -- 角色数据
+    Return arguments:
+    bool -- 非工作日、没有工作、或职业为学生时为True
+    功能: 全娱乐时间 / 非全娱乐时间两个前提共用的判据。
+          ⚠️ 学生岗（Plan 22 二期 §9.2.9）：学生的"工作"只有课表，有课的节次由上课判定接管，
+             没课的节次要能走到娱乐链按日程 / 随机娱乐自由行动，所以白天对学生也算娱乐时间；
+             原来只有周日算，周一~周六没课的节次会被工作链送进空教室
+    """
+    if not game_time.judge_work_today(0) or character_data.work.work_type == 0:
+        return True
+    # 教育系统的常量从配置现算，在函数内延迟 import（与 handle_npc_ai 的写法一致）
+    from Script.System.Education_System import education_constant
+
+    return character_data.work.work_type == education_constant.STUDENT_WORK_TYPE
+
+
 @add_premise(constant_promise.Premise.ALL_ENTERTAINMENT_TIME)
 def handle_all_entertainment_time(character_id: int) -> int:
     """
-    全娱乐时间（休息日为工作时间+下班，工作日为仅下班）
+    全娱乐时间（休息日、无工作或学生岗为工作时间+下班，其余工作日为仅下班）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -416,11 +436,11 @@ def handle_all_entertainment_time(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
 
-    # 如果是非工作日，则为工作时间+下班
-    if not game_time.judge_work_today(0) or character_data.work.work_type == 0:
+    # 白天也算娱乐时间的人：工作时间+下班
+    if _judge_free_daytime(character_data):
         if 9 <= character_data.behavior.start_time.hour < 12 or 14 <= character_data.behavior.start_time.hour < 18 or 19 <= character_data.behavior.start_time.hour < 22:
             return 50
-    # 如果是工作日，仅取19:00~22:00的晚上时间
+    # 其余工作日，仅取19:00~22:00的晚上时间
     else:
         if 19 <= character_data.behavior.start_time.hour < 22:
             return 50
@@ -430,7 +450,7 @@ def handle_all_entertainment_time(character_id: int) -> int:
 @add_premise(constant_promise.Premise.NOT_ALL_ENTERTAINMENT_TIME)
 def handle_not_all_entertainment_time(character_id: int) -> int:
     """
-    非全娱乐时间（休息日为工作时间+下班，工作日为仅下班）
+    非全娱乐时间（休息日、无工作或学生岗为工作时间+下班，其余工作日为仅下班）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -438,8 +458,8 @@ def handle_not_all_entertainment_time(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
 
-    # 如果是非工作日，则为工作时间+下班
-    if not game_time.judge_work_today(0) or character_data.work.work_type == 0:
+    # 白天也算娱乐时间的人：工作时间+下班
+    if _judge_free_daytime(character_data):
         if 9 <= character_data.behavior.start_time.hour < 12 or 14 <= character_data.behavior.start_time.hour < 22:
             return 0
     # 如果是工作日，仅取18:00~22:00的下班时间

@@ -12,6 +12,11 @@
 否则当天写进去的值立刻被随机值冲掉，症状是"日程时灵时不灵"，极难查。挂点照抄
 `egg_handle.replace_entertainment_for_eggs`。
 
+⚠️ **优先级是节次级别的**（2026-09-10，二期方案 §9.2.9）：有课的节次由 class_ai 的上课判定先接管，没课的节次才轮到
+槽位里的活动，所以改写时不避让有课的时段。幼女在节次内没课、且该时段是「自由选择」时默认见学
+（class_ai.judge_should_follow_mother），明确排了活动就去做活动；学生岗不走工作链、白天也算娱乐时间
+（handle_npc_ai.find_character_target / handle_premise_time），否则周一~周六的白天根本走不到娱乐链。
+
 数据分两层存（口径 4「操作量不随孩子数翻倍」的落点）：
 
     模板本体  Rhodes_Island.child_schedule_template   全局共享一份
@@ -305,30 +310,14 @@ def judge_activity_need_pass(character_id: int, entertainment_id: int) -> bool:
     return bool(judge)
 
 
-def judge_slot_free_of_class(character_id: int, slot: int, week_day: int) -> bool:
-    """
-    判断某孩子某时段是否**完全没有课**（方案 §3.6：有课的节次由课表优先，日程不生效）
-    Keyword arguments:
-    character_id -- 角色id
-    slot -- 时段0~2
-    week_day -- 星期，0周一~6周日
-    Return arguments:
-    bool -- 该时段的每一节次都没排课则为True
-    """
-    start, end = education_constant.SLOT_PERIOD_RANGE.get(slot, (0, 0))
-    for period in range(start, end):
-        if schedule_handle.get_selected_course(character_id, week_day, period) is not None:
-            return False
-    return True
-
-
 def apply_schedule_for_child(character_id: int) -> None:
     """
     按日程把一个孩子今天的 entertainment_type 三个槽位改写掉（每日一次）
 
     ⚠️ 本函数必须在 `handle_npc_ai.get_chara_entertainment` **之后**调用，见模块头注释。
-    ⚠️ 只改"该时段完全没有课"的槽位；有课的时段留着随机值也无所谓——
-       那个时段的 AI 根本走不到娱乐链，会被上课分支先接管。
+    ⚠️ 时段里有课的节次不用避让：上课判定（class_ai.judge_class_state_machine）在**节次**级别排在娱乐链之前，
+       有课的节次照常上课，同一时段里没课的节次才按这里写进去的活动走（2026-09-10 二期方案 §9.2.9；
+       此前要求整段没课才改写，结果上午只要有一节课，整个上午的日程都不生效）。
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -341,7 +330,6 @@ def apply_schedule_for_child(character_id: int) -> None:
         return
     if not growth_data.schedule_template_id and not growth_data.schedule_override:
         return
-    week_day = cache.game_time.weekday()
     for slot in range(education_constant.SLOT_COUNT):
         entertainment_id = get_child_slot_activity(character_id, slot)
         if not entertainment_id:
@@ -350,8 +338,6 @@ def apply_schedule_for_child(character_id: int) -> None:
             continue
         # 不满足该娱乐 need 条件的孩子跳过这一格，留着当天的随机娱乐比空转强
         if not judge_activity_need_pass(character_id, entertainment_id):
-            continue
-        if not judge_slot_free_of_class(character_id, slot, week_day):
             continue
         character_data.entertainment.entertainment_type[slot] = entertainment_id
 

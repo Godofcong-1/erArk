@@ -180,17 +180,10 @@ SLOT_COUNT = 3
 """ 日程时段数：0上午 / 1下午 / 2晚上，与 entertainment.entertainment_type 的三个槽位一一对应 """
 SLOT_NAME = {0: _("上午"), 1: _("下午"), 2: _("晚上")}
 """ 时段编号到显示名 """
-SLOT_PERIOD_RANGE = {
-    0: (0, 4),
-    1: (4, 9),
-    2: (9, 9),
-}
-""" 每个时段覆盖的课表节次区间 [起, 止)（`game_time.CLASS_PERIOD_START`：上午4节 + 下午5节）。
-    晚上是空区间——19~22 点本就不排课，所以晚上的日程永远生效 """
 ENTERTAINMENT_PLAY_HOUSE = 151
 """ 娱乐配置「过家家」的cid（Entertainment.csv）。教育区的娱乐编号按「区块id×10+序号」排在 15x 段，
     过家家是该段的第一项，其后依次是 152 照料卵（妊娠系统，见 pregnancy_constant.TEND_EGGS_ENTERTAINMENT_ID）/
-    153 跟随母亲 / 154 自由玩耍 / 155 上课（无课时自习）。幼女的每日随机娱乐固定是过家家（handle_npc_ai.get_chara_entertainment） """
+    153 跟随母亲 / 154 自由玩耍 / 155 上课（无课时自习）。幼女没排日程时的默认池见 CHILD_DEFAULT_ENTERTAINMENT_LIST """
 ENTERTAINMENT_FOLLOW_MOTHER = 153
 """ 娱乐配置「跟随母亲」的cid（Entertainment.csv）。它没有固定地点，执行走 class_ai 的见学分支；
     日程模板把某个时段排成它时，该时段也走见学分支。
@@ -200,6 +193,11 @@ ENTERTAINMENT_FREE_PLAY = 154
 ENTERTAINMENT_SELF_STUDY = 155
 """ 娱乐配置「上课（无课时自习）」的cid（原 178），
     行为指向 self_study(211)：有课就去上课，没课就在理论教室自习。need 列为 W152|1，只有学生岗能排 """
+CHILD_DEFAULT_ENTERTAINMENT_LIST = [ENTERTAINMENT_PLAY_HOUSE, ENTERTAINMENT_FREE_PLAY]
+""" 幼女没排日程（时段为「自由选择」）时每日随机的默认池：每个时段在过家家 / 自由玩耍之间随机
+    （handle_npc_ai.get_chara_entertainment，2026-09-10 二期方案 §9.2.9；此前固定写过家家）。
+    ⚠️ 只管晚上等不在课表节次内的时间：白天没课的节次幼女默认见学（class_ai.judge_should_follow_mother），
+       日程明确排了活动的时段则做那个活动 """
 SCHEDULE_ONLY_ENTERTAINMENT_SET = {ENTERTAINMENT_FOLLOW_MOTHER, ENTERTAINMENT_FREE_PLAY, ENTERTAINMENT_SELF_STUDY}
 """ 只由日程模板指派、不进每日随机娱乐池的三项（handle_npc_ai.get_chara_entertainment 用它排除）。
     从上面三个常量派生，改编号时只动一处 """

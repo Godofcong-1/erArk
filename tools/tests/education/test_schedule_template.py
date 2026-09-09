@@ -116,9 +116,7 @@ check("少女的每日改写：条件不符的时段退回随机值，下棋照�
 schedule_template_handle.apply_template(203, 0)
 open_all_classroom()
 schedule_handle.set_selected_course(201, cache.game_time.weekday(), 0, T.COURSE_TYPE_THEORY, _("理论教室一"))
-check("上午有课 → 时段 0 不空", not schedule_template_handle.judge_slot_free_of_class(201, 0, cache.game_time.weekday()))
-check("下午没课 → 时段 1 空", schedule_template_handle.judge_slot_free_of_class(201, 1, cache.game_time.weekday()))
-check("晚上永远空", schedule_template_handle.judge_slot_free_of_class(201, 2, cache.game_time.weekday()))
+check("上午第一节排了课", schedule_handle.get_selected_course(201, cache.game_time.weekday(), 0) is not None)
 
 section("每日改写")
 loli.entertainment.entertainment_type = [11, 12, 13]
@@ -126,7 +124,7 @@ schedule_template_handle.apply_schedule_for_child(201)
 check("没套模板不改写", loli.entertainment.entertainment_type == [11, 12, 13])
 schedule_template_handle.apply_template(201, T.TEMPLATE_BALANCED)
 schedule_template_handle.apply_schedule_for_child(201)
-check("有课的时段保留随机值、没课的按模板改写", loli.entertainment.entertainment_type == [11, CHESS, FREE_PLAY], loli.entertainment.entertainment_type)
+check("上午有课也照写（有课的节次由课表在节次级别优先），三段全按模板", loli.entertainment.entertainment_type == [SELF_STUDY, CHESS, FREE_PLAY], loli.entertainment.entertainment_type)
 custom = schedule_template_handle.create_template("跟妈")
 schedule_template_handle.set_template_slot(custom, 2, FOLLOW)
 schedule_template_handle.batch_apply_template([201, 202, 203], custom)
@@ -140,5 +138,18 @@ check("跟随母亲：萝莉与幼女都写入，少女不满足 need 的时段�
 check("候选活动表不含 0 号", 0 not in schedule_template_handle.get_schedule_activity_candidate() and FOLLOW in schedule_template_handle.get_schedule_activity_candidate())
 schedule_template_handle.apply_schedule_for_child(102)
 check("没有养成数据的干员不报错", True)
+
+section("幼女的默认池（2026-09-10）")
+from Script.Design import handle_npc_ai
+
+# 派对计划表由新游戏的 basement 初始化铺满 7 天，最小 fixture 里没有，这里补上（get_chara_entertainment 会按星期直接下标）
+cache.rhodes_island.party_day_of_week = {day: 0 for day in range(7)}
+random.seed(20260910)
+_pool = set()
+for _ in range(100):
+    handle_npc_ai.get_chara_entertainment(202)
+    _pool.update(child.entertainment.entertainment_type)
+check("幼女没排日程时每个时段在过家家 / 自由玩耍之间随机", _pool == {PLAY_HOUSE, FREE_PLAY}, _pool)
+random.seed()
 
 finish()

@@ -168,7 +168,7 @@ SCENE_DORM = ["宿舍", "1区", "101"]
 """ 一间真实宿舍 """
 SCENE_EDU_ENTRY = ["教", "0"]
 """ 教育区入口 """
-SCENE_NURSERY = ["教", "育儿室"]
+SCENE_NURSERY = ["教", "育儿"]
 """ 育儿室 """
 assert map_handle.get_map_system_path_str_for_list(SCENE_DORM) in cache.scene_data
 assert map_handle.get_map_system_path_str_for_list(SCENE_EDU_ENTRY) in cache.scene_data

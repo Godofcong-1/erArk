@@ -128,6 +128,22 @@ cache.character_data[202].relationship.mother_id = 102
 section("见学：触发与回落链")
 set_time(period_time(0))
 check("幼女在节次内没课 → 该见学", class_ai.judge_should_follow_mother(202))
+# 2026-09-10 §9.2.9：该时段明确排了别的活动且已写进槽位 → 不见学，交给娱乐链去做那个活动
+_tpl = schedule_template_handle.create_template("幼女白天")
+schedule_template_handle.set_template_slot(_tpl, 0, education_constant.ENTERTAINMENT_FREE_PLAY)
+schedule_template_handle.apply_template(202, _tpl)
+schedule_template_handle.apply_schedule_for_child(202)
+check("幼女上午明确排了自由玩耍且已写入 → 不见学", not class_ai.judge_should_follow_mother(202) and child.entertainment.entertainment_type[0] == education_constant.ENTERTAINMENT_FREE_PLAY)
+schedule_template_handle.set_template_slot(_tpl, 0, education_constant.ENTERTAINMENT_FOLLOW_MOTHER)
+schedule_template_handle.apply_schedule_for_child(202)
+check("幼女上午排了跟随母亲 → 见学", class_ai.judge_should_follow_mother(202))
+schedule_template_handle.set_template_slot(_tpl, 0, education_constant.ENTERTAINMENT_FREE_PLAY)
+child.entertainment.entertainment_type[0] = education_constant.ENTERTAINMENT_PLAY_HOUSE
+check("模板排了活动但没写进槽位（退回自由选择）→ 仍默认见学", class_ai.judge_should_follow_mother(202))
+schedule_template_handle.set_template_slot(_tpl, 0, 0)
+check("时段为自由选择 → 默认见学", class_ai.judge_should_follow_mother(202))
+schedule_template_handle.apply_template(202, 0)
+child.entertainment.entertainment_type = [0, 0, 0]
 check("萝莉不见学", not class_ai.judge_should_follow_mother(201))
 schedule_handle.set_selected_course(202, 0, 0, education_constant.COURSE_TYPE_THEORY, ROOM1)
 check("幼女本节有课 → 不见学", not class_ai.judge_should_follow_mother(202))
@@ -170,6 +186,88 @@ class_ai.clear_follow_mother_flag(202)
 check("清标记", not class_ai.judge_in_follow_mother(202))
 class_ai.clear_follow_mother_flag(999)
 check("对不存在的角色清标记不报错", True)
+
+section("没课节次的去向（2026-09-10 §9.2.9）")
+from Script.Design import handle_npc_ai, clothing
+
+set_time(period_time(0))
+check("周一上午：学生岗算娱乐时间、教师岗与普通岗不算", handle_premise.handle_all_entertainment_time(201) > 0 and handle_premise.handle_all_entertainment_time(101) == 0
+      and handle_premise.handle_all_entertainment_time(102) == 0)
+check("非全娱乐时间前提与之互补", handle_premise.handle_not_all_entertainment_time(201) == 0 and handle_premise.handle_not_all_entertainment_time(102) > 0)
+set_time(period_time(0, DEFAULT_TIME.date() + datetime.timedelta(days=6)))
+check("周日上午：谁都算娱乐时间", handle_premise.handle_all_entertainment_time(201) > 0 and handle_premise.handle_all_entertainment_time(102) > 0)
+
+
+def prepare_ai(cid: int) -> None:
+    """
+    把最小 fixture 补成能跑通完整 AI 链的样子：已起床、穿好衣服、异常位刷新
+    Keyword arguments:
+    cid -- 角色id
+    Return arguments:
+    无
+    功能: 没起床会先被「起床」目标（target 205）接管；全裸则 normal_all 不成立，娱乐的自动 AI 根本不跑
+    """
+    cd = cache.character_data[cid]
+    cd.action_info.wake_time = cache.game_time
+    clothing.get_npc_cloth(cid)
+    handle_premise.refresh_unnormal_flag(cid)
+
+
+def dispatch(cid: int) -> int:
+    """
+    跑一遍 find_character_target，记下它派发的状态机id
+    Keyword arguments:
+    cid -- 角色id
+    Return arguments:
+    int -- 派发的状态机id，没派发则为 0
+    功能: 每次先把上一轮留下的移动 / 行为清掉，否则会被「继续移动」目标接管
+    """
+    cd = cache.character_data[cid]
+    cd.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+    cd.behavior.duration = 0
+    cd.behavior.move_target = []
+    cd.behavior.move_final_target = []
+    cd.state = constant.CharacterStatus.STATUS_ARDER
+    hit = []
+    origin = dict(constant.handle_state_machine_data)
+    for sid, func in origin.items():
+        constant.handle_state_machine_data[sid] = (lambda s, f: (lambda c: (hit.append(s), f(c))[1]))(sid, func)
+    try:
+        set_time(period_time(0))
+        handle_npc_ai.find_character_target(cid, cache.game_time)
+    finally:
+        constant.handle_state_machine_data.clear()
+        constant.handle_state_machine_data.update(origin)
+    return hit[0] if hit else 0
+
+
+set_time(period_time(0))
+for _cid in (201, 202):
+    prepare_ai(_cid)
+clear_schedules()
+move_to(201, SCENE_DORM)
+student.entertainment.entertainment_type = [education_constant.ENTERTAINMENT_FREE_PLAY, 0, 0]
+check("萝莉周一上午没课、日程排了自由玩耍 → 去育儿室，而不是被工作链送进教室", dispatch(201) == constant.StateMachine.MOVE_TO_NURSERY)
+move_to(201, SCENE_NURSERY)
+check("到了育儿室 → 自由玩耍", dispatch(201) == constant.StateMachine.ENTERTAIN_FREE_PLAY)
+move_to(201, SCENE_DORM)
+student.entertainment.entertainment_type = [education_constant.ENTERTAINMENT_SELF_STUDY, 0, 0]
+check("排了上课（无课时自习）、人在宿舍 → 去教室", dispatch(201) == constant.StateMachine.MOVE_TO_CLASS_ROOM)
+move_to(201, classroom_path(ROOM1))
+check("到了教室 → 自习", dispatch(201) == constant.StateMachine.EDUCATION_SELF_STUDY)
+move_to(201, SCENE_DORM)
+student.entertainment.entertainment_type = [0, 0, 0]
+move_to(202, SCENE_DORM)
+move_to(102, SCENE_EDU_ENTRY)
+_tpl2 = schedule_template_handle.create_template("幼女白天2")
+schedule_template_handle.set_template_slot(_tpl2, 0, education_constant.ENTERTAINMENT_FREE_PLAY)
+schedule_template_handle.apply_template(202, _tpl2)
+schedule_template_handle.apply_schedule_for_child(202)
+check("幼女周一上午没课、日程排了自由玩耍 → 去育儿室而不是见学", dispatch(202) == constant.StateMachine.MOVE_TO_NURSERY)
+schedule_template_handle.apply_template(202, 0)
+child.entertainment.entertainment_type = [0, 0, 0]
+check("幼女时段为自由选择 → 默认见学（移动到母亲身边）", dispatch(202) == constant.StateMachine.EDUCATION_MOVE_TO_MOTHER)
+set_time(period_time(0))
 
 section("预到岗")
 clear_schedules()
