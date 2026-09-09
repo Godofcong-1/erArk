@@ -49,7 +49,7 @@
 | `tools/ArkEditor/ui/{premise_menu,CVP_menu,CVE_menu,effect_menu,item_premise_list,item_effect_list}.py` | 改 | 写入点改走间接层；CVP/CVE 下拉补 `Growth` 与 `RI` |
 | `tools/ArkEditor/function.py` | 改 | token 反解链补 `Growth` 与 `RI` |
 | `tools/ArkEditor/csv/{Premise.csv,Facility.csv}` | 改/新增 | 同步两个新前提；新增部门参照表 |
-| `plan/wait/plan_22_*` 三份 | 改 | 事件相关章节改为指向本 Plan |
+| `plan/done/plan_22_*` 三份 | 改 | 事件相关章节改为指向本 Plan |
 | `update.log` | 改 | 按 `update-changelog` 体例补条目 |
 
 ---
@@ -192,7 +192,7 @@ git checkout -- data/po/           # 本机无 xgettext/polib，buildconfig 重�
 | `tools/ArkEditor/ui/official_event_edit.py` | 新增 | 右表单：基本字段 + 4 个选项块 + 前提/结算选择器接入 |
 | `tools/ArkEditor/ui/menu_bar.py` / `main.py` | 改 | 「公务事件」菜单块与页面装配、信号接线 |
 | `tools/ArkEditor/csv/Premise.csv` | 改 | 同步两个新前提 |
-| `plan/wait/plan_22_*` 三份 | 改 | 三期两份加指向本 Plan 的说明；总纲的口径 16、32 标注为已被本 Plan 推翻/改写 |
+| `plan/done/plan_22_*` 三份 | 改 | 三期两份加指向本 Plan 的说明；总纲的口径 16、32 标注为已被本 Plan 推翻/改写 |
 
 **与方案的偏离**：
 

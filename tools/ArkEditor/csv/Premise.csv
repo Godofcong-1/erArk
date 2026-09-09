@@ -345,8 +345,6 @@ in_practice_room,IN_PRACTICE_ROOM,地点_定位,在实践教室
 not_in_practice_room,NOT_IN_PRACTICE_ROOM,地点_定位,不在实践教室
 in_auditorium,IN_AUDITORIUM,地点_定位,在大礼堂
 not_in_auditorium,NOT_IN_AUDITORIUM,地点_定位,不在大礼堂
-have_intern_student,HAVE_INTERN_STUDENT,工作,此刻同场景有人正在自己这个岗位上实习
-not_have_intern_student,NOT_HAVE_INTERN_STUDENT,工作,此刻同场景没有人在自己这个岗位上实习
 in_teacher_office,IN_TEACHER_OFFICE,地点_定位,在教师办公室
 not_in_teacher_office,NOT_IN_TEACHER_OFFICE,地点_定位,不在教师办公室
 in_herb_garden,IN_HERB_GARDEN,地点_定位,在药田
@@ -1263,6 +1261,7 @@ loli_1,SELF_IS_LOLI,属性_素质,自己是萝莉
 self_child_or_loli_1,SELF_CHILD_OR_LOLI_1,属性_素质,自己幼女或萝莉==1
 t_child_or_loli_1,T_CHILD_OR_LOLI_1,属性_素质,交互对象幼女或萝莉==1
 self_underage,SELF_UNDERAGE,属性_素质,自己是未成年
+self_not_underage,SELF_NOT_UNDERAGE,属性_素质,自己不是未成年
 patient_0,TARGET_NOT_PATIENT,属性_素质,交互对象不是源石病感染者
 patient_1,TARGET_IS_PATIENT,属性_素质,交互对象是源石病感染者
 crystal_0,TARGET_HAVE_NO_CRYSTAL,属性_素质,交互对象没有体表源石结晶
@@ -1666,6 +1665,19 @@ self_sex_assistant_1,SEX_ASSISTANT_1,H_群交,性爱助手目标为玩家同部�
 self_sex_assistant_2,SEX_ASSISTANT_2,H_群交,性爱助手目标为避开玩家部位
 self_sex_assistant_3,SEX_ASSISTANT_3,H_群交,性爱助手目标为指定指令列表
 
+sex_class_mode_on,SEX_CLASS_MODE_ON,H_性技实操,性技实操课（课堂H）模式开启中
+sex_class_mode_off,SEX_CLASS_MODE_OFF,H_性技实操,性技实操课（课堂H）模式未开启
+sex_class_end_early,SEX_CLASS_END_EARLY,H_性技实操,性技实操课提前下课（早于预定下课时刻5分钟以上）
+sex_class_end_on_time,SEX_CLASS_END_ON_TIME,H_性技实操,性技实操课按时下课（预定下课时刻前后5分钟内）
+sex_class_end_late,SEX_CLASS_END_LATE,H_性技实操,性技实操课拖堂（晚于预定下课时刻5分钟以上）
+in_sex_class_place,IN_SEX_CLASS_PLACE,H_性技实操,自己在可上性技实操课的场所（实践教室或大礼堂）
+scene_have_sex_class_student,SCENE_HAVE_SEX_CLASS_STUDENT,H_性技实操,该地点有至少一名可参加性技实操课的学生
+self_in_sex_class,SELF_IN_SEX_CLASS,H_性技实操,自己正在参加性技实操课
+sex_class_reserved,SEX_CLASS_RESERVED,H_性技实操,正在进行的性技实操课是预约排进课表的那节（开课口上分档用）
+sex_class_impromptu,SEX_CLASS_IMPROMPTU,H_性技实操,正在进行的性技实操课是当场开的、不在课表上（开课口上分档用）
+self_sex_class_must_attend,SELF_SEX_CLASS_MUST_ATTEND,H_性技实操,自己是本节性技实操课被点名的必修学生（到场口上分档用）
+self_sex_class_elective,SELF_SEX_CLASS_ELECTIVE,H_性技实操,自己是本节性技实操课的选修学生，不在必修名单上（到场口上分档用）
+
 self_sleep_h_awake_but_pretend_sleep,SELF_SLEEP_H_AWAKE_BUT_PRETEND_SLEEP,H_其他,自己在睡奸中醒来但是装睡
 self_not_sleep_h_awake_but_pretend_sleep,SELF_NOT_SLEEP_H_AWAKE_BUT_PRETEND_SLEEP,H_其他,自己没有在睡奸中醒来但是装睡
 target_sleep_h_awake_but_pretend_sleep,TARGET_SLEEP_H_AWAKE_BUT_PRETEND_SLEEP,H_其他,交互对象在睡奸中醒来但是装睡
@@ -1844,6 +1856,8 @@ c_bonus_103,COLLECT_BONUS_102,收集,收藏奖励_102_解锁索要内裤
 c_bonus_203,COLLECT_BONUS_202,收集,收藏奖励_202_解锁索要袜子
 
 have_work,HAVE_WORK,工作_角色,自己有工作
+t_have_work,TARGET_HAVE_WORK,工作_角色,交互对象有工作
+t_not_have_work,TARGET_NOT_HAVE_WORK,工作_角色,交互对象没有工作
 work_is_power_operator,WORK_IS_POWER_OPERATOR,工作_角色,自己的工作为供能调控员
 t_work_is_power_operator,TARGET_WORK_IS_POWER_OPERATOR,工作_角色,交互对象的工作为供能调控员
 work_is_maintenance_engineer,WORK_IS_MAINTENANCE_ENGINEER,工作_角色,自己的工作为检修工程师
@@ -1908,6 +1922,8 @@ have_office_work_need_to_do,HAVE_OFFICE_WORK_NEED_TO_DO,工作_经营,有需要�
 not_have_office_work_need_to_do,NOT_HAVE_OFFICE_WORK_NEED_TO_DO,工作_经营,没有需要处理的公务
 pink_certificate_g_10,PINK_CERTIFICATE_G_10,工作_经营,拥有粉红凭证数量大于10
 prisoner_in_custody,PRISONER_IN_CUSTODY,工作_经营,当前有关押的囚犯
+have_intern_student,HAVE_INTERN_STUDENT,工作,此刻同场景有人正在自己这个岗位上实习
+not_have_intern_student,NOT_HAVE_INTERN_STUDENT,工作,此刻同场景没有人在自己这个岗位上实习
 prisoner_daily_management_set,PRISONER_DAILY_MANAGEMENT_SET,工作_经营,已设定对囚犯的日常管理
 
 pl_action_sleep,PL_ACTION_SLEEP,行动,玩家正在睡觉
@@ -1987,10 +2003,11 @@ self_is_player_daughter,SELF_IS_PLAYER_DAUGHTER,生育,自己是玩家的女儿
 self_not_player_daughter,SELF_NOT_PLAYER_DAUGHTER,生育,自己不是玩家的女儿
 target_is_player_daughter,TARGET_IS_PLAYER_DAUGHTER,生育,交互对象是玩家的女儿
 target_not_player_daughter,TARGET_NOT_PLAYER_DAUGHTER,生育,交互对象不是玩家的女儿
-self_have_sibling_child,SELF_HAVE_SIBLING_CHILD,生育,自己有同为孩子的兄弟姐妹
-self_have_classmate,SELF_HAVE_CLASSMATE,生育,自己的个人课表与别的孩子有重合节次
-self_mother_available,SELF_MOTHER_AVAILABLE,生育,自己的母亲仍在队中且当前可跟随
-self_have_any_course,SELF_HAVE_ANY_COURSE,生育,自己的个人课表非空
+self_have_sibling_child,SELF_HAVE_SIBLING_CHILD,生育,自己有同为孩子的兄弟姐妹（Plan
+self_have_classmate,SELF_HAVE_CLASSMATE,生育,自己的个人课表与别的孩子有重合节次（Plan
+self_mother_available,SELF_MOTHER_AVAILABLE,生育,自己的母亲仍在队中且当前可跟随（Plan
+self_follow_mother,SELF_FOLLOW_MOTHER,生育,自己正处于跟随母亲见学的状态（Plan
+self_have_any_course,SELF_HAVE_ANY_COURSE,生育,自己的个人课表非空（Plan
 self_birth_type_egg,SELF_BIRTH_TYPE_EGG,生育,自己是带壳卵生种族
 t_birth_type_egg,T_BIRTH_TYPE_EGG,生育,交互对象是带壳卵生种族
 self_birth_type_multiple,SELF_BIRTH_TYPE_MULTIPLE,生育,自己是多胎胎生种族

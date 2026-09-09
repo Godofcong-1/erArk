@@ -118,6 +118,48 @@ def write_save_data(save_id: str, data_id: str, write_data: dict):
         pickle.dump(write_data, f)
 
 
+_ENTERTAINMENT_CID_MIGRATE = {175: 152, 176: 153, 177: 154, 178: 155}
+""" 教育区娱乐改编号（2026-09-09）：旧编号 → 新编号。
+    照料卵 / 跟随母亲 / 自由玩耍 / 上课（无课时自习）原来排在大浴场段（17x），改到教育区段（15x）紧接 151 过家家。
+    存档里存娱乐编号的三处（日程模板的时段、单孩覆盖、当天的三个娱乐槽位）读档时都过一遍 _migrate_entertainment_cid """
+
+
+def _migrate_entertainment_cid(value):
+    """
+    把存档里的旧娱乐编号换成新编号
+    Keyword arguments:
+    value -- 存档里的娱乐cid（也可能是别的类型，原样返回）
+    Return arguments:
+    value -- 换算后的娱乐cid
+    功能: ⚠️ 只在旧编号已经不在 Entertainment.csv 里时才换：日后大浴场段真的用上 175 时，
+          新档里的 175 就是那项浴场娱乐，不该被当成旧编号改掉
+    """
+    from Script.Config import game_config
+
+    if isinstance(value, int) and not isinstance(value, bool) and value in _ENTERTAINMENT_CID_MIGRATE and value not in game_config.config_entertainment:
+        return _ENTERTAINMENT_CID_MIGRATE[value]
+    return value
+
+
+def _migrate_child_schedule_template(rhodes_island_data) -> int:
+    """
+    把罗德岛数据里日程模板各时段存的旧娱乐编号换成新编号
+    Keyword arguments:
+    rhodes_island_data -- 存档里的 Rhodes_Island 对象（须已有 child_schedule_template 字段）
+    Return arguments:
+    int -- 换掉的时段数
+    """
+    count = 0
+    for template_data in getattr(rhodes_island_data, "child_schedule_template", {}).values():
+        slot_data = template_data.get("slot", {}) if isinstance(template_data, dict) else {}
+        for slot in list(slot_data):
+            new_cid = _migrate_entertainment_cid(slot_data[slot])
+            if new_cid != slot_data[slot]:
+                slot_data[slot] = new_cid
+                count += 1
+    return count
+
+
 def _normalize_save_path(path_text):
     """
     将存档中的路径文本转换为当前系统的路径格式
@@ -363,6 +405,14 @@ def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
                     character.child_growth.report_card_history = [old_report_card]
                 if hasattr(character.child_growth, "last_report_card"):
                     del character.child_growth.last_report_card
+                # 教育区娱乐改编号（2026-09-09）：单孩日程覆盖里存的旧编号换成新编号
+                for slot in list(character.child_growth.schedule_override):
+                    character.child_growth.schedule_override[slot] = _migrate_entertainment_cid(character.child_growth.schedule_override[slot])
+            # 教育区娱乐改编号（2026-09-09）：当天三个娱乐槽位里的旧编号也换掉，
+            # 免得读档当天照料卵 / 见学 / 自习的判定对不上号
+            entertainment_data = getattr(character, "entertainment", None)
+            if entertainment_data is not None and isinstance(getattr(entertainment_data, "entertainment_type", None), list):
+                entertainment_data.entertainment_type = [_migrate_entertainment_cid(one) for one in entertainment_data.entertainment_type]
             # 无壳卵生旧存档兼容：无壳卵生种族此前按单胎胎生运行，读档时一次性清除其正在进行的胎生孕程（受精/妊娠/临盆及伴生状态），产后/育儿/泌乳与已出生的孩子保留
             _clear_soft_egg_race_pregnancy(character, soft_egg_enabled)
             if pl_collection is not None and not hasattr(pl_collection, "held_eggs"):
@@ -575,6 +625,8 @@ def input_load_save(save_id: str):
     if not hasattr(loaded_dict["rhodes_island"], "child_schedule_template"):
         loaded_dict["rhodes_island"].child_schedule_template = {}
         update_count += 1
+    # 教育区娱乐改编号（2026-09-09）：日程模板各时段里存的旧编号换成新编号
+    update_count += _migrate_child_schedule_template(loaded_dict["rhodes_island"])
     # 临时性技实操课（Plan 22 四期）
     if not hasattr(loaded_dict["rhodes_island"], "temp_sex_class"):
         loaded_dict["rhodes_island"].temp_sex_class = {}

@@ -122,13 +122,10 @@ class Schedule_Template_Panel:
             template_data = schedule_template_handle.get_template_data(template_id)
             if template_data is None:
                 continue
-            slot_text_list = []
-            for slot in range(education_constant.SLOT_COUNT):
-                entertainment_id = template_data.get("slot", {}).get(slot, 0)
-                if entertainment_id and entertainment_id in game_config.config_entertainment:
-                    slot_text_list.append(game_config.config_entertainment[entertainment_id].name)
-                else:
-                    slot_text_list.append("--")
+            # 0 显示为「自由选择娱乐活动」而不是「--」：空着的时段并不是没安排，而是保留当天的随机娱乐
+            slot_text_list = [
+                schedule_template_handle.get_activity_name(template_data.get("slot", {}).get(slot, 0))
+                for slot in range(education_constant.SLOT_COUNT)]
             use_count = schedule_template_handle.get_template_use_count(template_id)
             # ⚠️ 不能用 "{:<10}".format()：str 的 <10 按 len()（字符数）补齐，而终端按显示列排版、
             #    中文占2列。同一个 {:<10} 对「读书」产出12列、对「上课（无课时自习）」产出19列，
@@ -163,11 +160,7 @@ class Schedule_Template_Panel:
             slot_by_return: Dict[str, int] = {}
             draw.TitleLineDraw(_("编辑模板：{0}").format(template_data["name"]), self.width).draw()
             for slot in range(education_constant.SLOT_COUNT):
-                entertainment_id = template_data.get("slot", {}).get(slot, 0)
-                if entertainment_id and entertainment_id in game_config.config_entertainment:
-                    now_name = game_config.config_entertainment[entertainment_id].name
-                else:
-                    now_name = _("未设置")
+                now_name = schedule_template_handle.get_activity_name(template_data.get("slot", {}).get(slot, 0))
                 now_draw = draw.LeftButton(
                     _("[{0}：{1}]").format(education_constant.SLOT_NAME[slot], now_name),
                     f"SLOT_{slot}", int(self.width / 2))
@@ -245,11 +238,15 @@ class Schedule_Template_Panel:
         """
         从娱乐候选表里挑一项活动
         输入类型: 无
-        输出类型: Optional[int]，娱乐cid；0为清空该时段；None为取消
-        功能: 每行6个。第一行固定是三项孩子专用的日程活动
-              （上课（无课时自习）/ 自由玩耍 / 跟随母亲），其余娱乐从第二行起。
+        输出类型: Optional[int]，娱乐cid；0为「自由选择娱乐活动」（该时段不改写、保留随机）；None为取消
+        功能: 每行6个，分三组画（schedule_template_handle.get_schedule_activity_rows）：
+              第一行固定是 上课（无课时自习）与 自由选择娱乐活动；
+              第二行是有年龄需求的活动（过家家 / 跟随母亲 / 自由玩耍），按钮上标注「限幼女/萝莉」——
+              套了这种活动的模板给不符合年龄的干员用时，那个时段会退回到自由选择；
+              第三行起是其余娱乐。
               ⚠️ 原实现整个循环里没有任何换行，29个按钮×38列＝1102列画在同一逻辑行上，
-                 靠终端软换行硬折，不是网格
+                 靠终端软换行硬折，不是网格。
+              ⚠️ 原来的「清空该时段」与「自由选择娱乐活动」是同一个值 0，只保留后者一个出口
         """
         # 每行6个：190/6=31列，6×31=186≤190
         cell_width = int(self.width / 6)
@@ -258,18 +255,15 @@ class Schedule_Template_Panel:
             id_by_return: Dict[str, int] = {}
             draw.TitleLineDraw(_("选择活动"), self.width).draw()
 
-            candidate_list = schedule_template_handle.get_schedule_activity_candidate()
-            # 第一行固定这三项：它们是孩子日程的主力选项，摊在娱乐列表里不好找
-            first_row = [cid for cid in education_constant.CHILD_SCHEDULE_FIRST_ROW
-                         if cid in candidate_list]
-            other_list = [cid for cid in candidate_list if cid not in first_row]
+            first_row, age_row, other_list = schedule_template_handle.get_schedule_activity_rows()
 
             def draw_activity(entertainment_id):
-                """画一个活动按钮并登记返回值"""
-                entertainment_data = game_config.config_entertainment[entertainment_id]
-                now_draw = draw.LeftButton(
-                    _("[{0}]").format(entertainment_data.name),
-                    f"ACT_{entertainment_id}", cell_width)
+                """画一个活动按钮并登记返回值；有年龄限制的把限制写在名字后面"""
+                name = schedule_template_handle.get_activity_name(entertainment_id)
+                limit_text = schedule_template_handle.get_activity_age_limit_text(entertainment_id)
+                if limit_text:
+                    name = _("{0}（{1}）").format(name, limit_text)
+                now_draw = draw.LeftButton(_("[{0}]").format(name), f"ACT_{entertainment_id}", cell_width)
                 now_draw.draw()
                 return_list.append(now_draw.return_text)
                 id_by_return[now_draw.return_text] = entertainment_id
@@ -277,6 +271,10 @@ class Schedule_Template_Panel:
             for entertainment_id in first_row:
                 draw_activity(entertainment_id)
             if first_row:
+                line_feed.draw()
+            for entertainment_id in age_row:
+                draw_activity(entertainment_id)
+            if age_row:
                 line_feed.draw()
             index = 0
             for entertainment_id in other_list:
@@ -288,10 +286,7 @@ class Schedule_Template_Panel:
                 line_feed.draw()
 
             line_feed.draw()
-            clear_draw = draw.CenterButton(_("[清空该时段]"), _("清空该时段"), int(self.width / 2))
-            clear_draw.draw()
-            return_list.append(clear_draw.return_text)
-            back_draw = draw.CenterButton(_("[取消]"), _("取消选择活动"), int(self.width / 2))
+            back_draw = draw.CenterButton(_("[取消]"), _("取消选择活动"), self.width)
             back_draw.draw()
             return_list.append(back_draw.return_text)
             line_feed.draw()
@@ -299,8 +294,6 @@ class Schedule_Template_Panel:
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_draw.return_text:
                 return None
-            if yrn == clear_draw.return_text:
-                return 0
             if yrn in id_by_return:
                 return id_by_return[yrn]
 

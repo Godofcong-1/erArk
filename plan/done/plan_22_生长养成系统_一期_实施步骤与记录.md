@@ -5,7 +5,7 @@
 > `plan_22_生长养成系统_总纲.md`（下文简称"总纲"）为准；本文件只写"怎么做、怎么验、怎么回滚"，
 > 实施过程与结果记入 §6。
 
-- 状态：**1a 功能闭环已完成**；§2.11 的 1b 口上已完成 **96 个文件 535 条**，17 个实习岗位的师徒两侧全部覆盖；缺失性技 8 门（见偏离 22），2026-09-06
+- 状态：**已实施并完成收尾总检查**（2026-09-09 第十轮）；口上：四个按科目目录各 18 文件、性技 8 门已于 2026-09-09 补齐（提交 `f9804edbe` / `b0f0d0a54`），17 个实习岗位的师徒两侧全部覆盖
 - 适用代码快照：`master @ 6aa5090e3`
 - 实施前提：先通读总纲 §2 与方案全文；实施中发现与方案冲突的事实，**先更新方案再动代码**
 - ⚠️ **建议拆成两个提交推进**（总纲 §3）：
@@ -398,7 +398,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 **已知限制**：
 
 - ⚠️ **老存档读出来仍是旧地图**。`save_handle.py:496~516` 只在场景增删或 `scene_tag`/`scene_img`/`room_area` 变化时才刷新存档里的 `map_data`——本次确实是场景增删，理论上会刷新，但**必须用老存档实机验证**（列在 §4.2）。
-- 未解锁教室的门禁（`Facility_open.csv`）尚未配置，属步骤 §2.3，本步未做——当前 10 间教室全部可进入。
+- 未解锁教室的门禁（`Facility_open.csv`）尚未配置，属步骤 §2.3，本步未做——当前 10 间教室全部可进入。**（→ 后于步骤 §2.3 配好：`Facility_open.csv:24~30` 七间教室按教育区等级解锁，`schedule_handle.judge_classroom_open` 读取，一期方案 §9.2.3）**
 
 #### 步骤 §2.8 缺课与翘课（2026-09-06）
 
@@ -435,7 +435,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 9. **⚠️ 上一步埋的 BUG：`show_off_study` 的结算注册错了命名空间。** 二段行为的效果走 `constant.settle_second_behavior_effect_data`（`settle_behavior.py:504 add_settle_second_behavior_effect`），用的是 `constant_effect.SecondEffect` 这套**独立的编号空间**，函数签名也只有 `(character_id, change_data)` 两个参数。而 §2.3 里我把 `handle_show_off_study_add_just` 写成了一段行为的样子：`add_settle_behavior_effect` + `BehaviorEffect.SHOW_OFF_STUDY_ADD_ADJUST = 551` + 四参数签名，放在 `Script/Settle/default.py` 里。这样注册出来的函数**永远不会被二段结算找到**，运行时会打印"没有找到对应的结算效果"然后跳过。本步已改正：函数移到 `Script/Settle/Second_effect.py`、改用 `add_settle_second_behavior_effect`、编号改为 `SecondEffect.SHOW_OFF_STUDY = 622`（接在既有最大号 621 之后），`Behavior_Effect.csv` 的 1328 行同步改指 622。
    §2.3 的验证之所以没抓到，是因为当时只断言了"效果串是 `[551]`"，没有断言"551 在哪个注册表里"。本步的测试补上了这一条。
 10. **`CHILD_GROWTH` 加了一个方案里没有的字段 `last_absent_period`。** 起因是缺课计数不幂等：休息行为 30 分钟、一节课 45 分钟，同一节课里 AI 会两次走到缺课分支，`absent_count` 会多加一次，成绩单的出勤率直接失真。用 `[日期序数, 节次]` 做去重标记最省事，也天然可存档（都是 int）。**已先改方案 §4.1 再改代码**，符合本文件开头的实施前提。
-11. **`§2.7-5 个人课型（体育/兴趣/实习）的派发暂未接线**，`class_ai.judge_class_state_machine()` 对这三种课型返回 0 交回既有 AI。原因是它们的落地方式还有一处需要定夺：体育课复用 `training` / `exercise` / `swimming` 三个既有行为、效果照走既有 `Behavior_Effect` 配置（方案 §3.21 的"零新增结算公式"成立）；但**实习课不成立**——导师是"该岗位当时的在岗干员"，他执行的是自己的工作行为，身上没有任何把经验给学徒的效果，学徒侧必须另有一次结算才能拿到方案 §3.21 承诺的"按师徒等级差学该岗位 `ability_id`"。这与"零新增结算"直接冲突，需要单独处理，不适合顺手带过。
+11. **`§2.7-5 个人课型（体育/兴趣/实习）的派发暂未接线**（→ 已于偏离 13 接线，本条只作历史记录），`class_ai.judge_class_state_machine()` 对这三种课型返回 0 交回既有 AI。原因是它们的落地方式还有一处需要定夺：体育课复用 `training` / `exercise` / `swimming` 三个既有行为、效果照走既有 `Behavior_Effect` 配置（方案 §3.21 的"零新增结算公式"成立）；但**实习课不成立**——导师是"该岗位当时的在岗干员"，他执行的是自己的工作行为，身上没有任何把经验给学徒的效果，学徒侧必须另有一次结算才能拿到方案 §3.21 承诺的"按师徒等级差学该岗位 `ability_id`"。这与"零新增结算"直接冲突，需要单独处理，不适合顺手带过。
 12. **`Script.Settle` 一旦被 import，进程就不会自己退出。** 它会起一个非守护线程 `init_instruct_handle_thread`，无头测试末尾必须用 `os._exit()`（且先 `sys.stdout.flush()`，`os._exit` 不刷缓冲）。这与总纲记过的"配置初始化前 import 会挂住"是同一个线程，但表现不同：配置就绪后 import 不再报错，只是不肯退出。
 
 #### 步骤 §2.7-5 个人式课型（体育 / 兴趣 / 实习）（2026-09-06）
@@ -512,7 +512,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 | `Script/UI/Flow/normal_flow.py` | 改 | 注册面板 68，照 `MANAGE_DORMITORY` 的写法用函数内延迟 import |
 | `Script/System/Instruct_System/Instruct.py` | 改 | `EDUCATION_MANAGE` / `CHECK_REPORT_CARD` 两个指令常量 |
 | `Script/System/Instruct_System/handle_instruct.py` | 改 | 两个指令的处理函数 |
-| `data/csv/InstructConfig.csv` | 改 | `2039,education_manage`（前提 `IN_TEACHER_OFFICE`，开面板 68）、`2040,check_report_card`（前提 `TARGET_IS_PLAYER_DAUGHTER`，走 §2.3 建的行为 229） |
+| `data/csv/InstructConfig.csv` | 改 | `2039,education_manage`（前提 `IN_TEACHER_OFFICE`，开面板 68）、`2040,check_report_card`（前提 `TARGET_IS_PLAYER_DAUGHTER`，走 §2.3 建的行为 229；2026-09-09 第三轮改编号为 1036，归入日常段） |
 
 **三个面板都靠"降一个维度"来适配终端宽度**：全局课表是「10 教室 × 7 天 × 9 节」的三维数据，
 一次全画必然溢出，所以**一次只画一间教室的周表**，教室走上方横向页签；个人课表同理，一次一个孩子。
@@ -664,6 +664,8 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 #### 实施中发现的偏离（§2.11）
 
 22. **缺失 8 门性技科目（70~77 指技/舌技/足技/胸技/膣技/肛技/腰技/榨精）的课堂口上（包括上课、自习、教学、炫耀）。** 受影响的是 `teach/` `attent_class/` `self_study/` `second_show_off_study/` 四个目录里对应这 8 门科目的 **32 个文件、约 530 条**。
+    → **2026-09-09 已补齐**：用户删掉旧稿后由主代理手写 276 条（教学 3 课型 × 4、上学 3 课型 × 2 年龄 × 2、自习与炫耀各 2 年龄 × 3，每科 36 条；`teach_semen_squeeze.csv` 沿用用户保留的 11 条），前提结构与其余 10 门完全一致；运行时按 科目 × 课型 × 年龄 逐档验证进池。
+    → **2026-09-09 再扩充**：32 个文件各补到 50 条以上（287 → 1655 条），新增维度——教学按教师该科等级三档 × 课型、上午头两节（`time_0_to_9`）/ 下午、一对一 / 多人；上学按学生该科等级三档 × 年龄、出勤率（`CVP_A1_Growth|2`，<60 缺课多 / >95 全勤）、学期进度（`CVP_A1_Growth|9`，<30 初 / 30~70 中 / >70 末）；自习再加时段与有同学在场；炫耀按刚升到的等级（`LE_2 / G_2&LE_5 / G_5`）× 年龄、早晨 / 下午 / 晚上（`time_night`）、学期进度、出勤率。每个文件 20~24 个差分档，同文件内无重复 / 近似句。
    ⚠️ **机制上不受影响**：性技能力的升级需求本就是真实性交经验（方案 §3.1 的发现），课堂理论只能攒珠不能升级；
    没有专属口上时会回落到 `teach.csv` / `attent_class.csv` 里那条 `high_1` 占位地文，功能链不断。
 23. **`chara_4091_U-Official` 已经有 3 条 `attent_class` 的专属口上**，前提是 `CVP_A3|4091_A|45_LE_3` 一类的学识分档。本期新增的通用口上与它并存、互不覆盖——查总条数时要记得这几条也在里面（试点验证时按总数断言就翻了车，改成按 cid 前缀筛才对）。
@@ -1564,3 +1566,128 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 - 用户需**重新读一次档**，修复才会落到存档上；当前已在内存里跑崩的那一局修不回来。
 - 回落到区块入口之后，这 10 名角色的当前行为（`behavior.move_target` 等）没有一并重置，
   她们会在下一轮行为循环里自己重新决策——理论上没问题，但没有实机跑过。
+
+**2026-09-09 第九轮（与方案 §9.8 成对）：学生页签分页 + 个人课表口径放宽**
+
+用户反馈女儿数量多时个人课表与养成总览的人名页签显示不全，要求每页 8 人、超出翻页；
+同时个人课表从「固定为女儿」改为「职业为学生的干员都能调」，养成总览仍只看女儿。
+
+#### 实际改动
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/System/Education_System/student_tab_bar.py` | **新增** | `Student_Tab_Bar`：两个面板共用的人名页签栏，每页 8 人、多页时画翻页行；`jump_to` / `handle_page_yrn` / `get_student_by_yrn` |
+| `Script/System/Education_System/education_constant.py` | 改 | 第 3 组加 `STUDENT_WORK_TYPE = 152`，`EXCLUDE_INTERN_WORK_TYPE` 改为派生；第 15 组加 `STUDENT_TAB_PER_PAGE` 与 `STUDENT_PAGE_PREV/NEXT` 哨兵 |
+| `Script/System/Education_System/growth_handle.py` | 改 | 新增 `get_course_candidate_list()`（学生岗 ∪ 女儿，id 升序）；`get_student_candidate_list()` 的 docstring 改为只说女儿用途 |
+| `Script/System/Education_System/course_select_panel.py` | 改 | 删掉模块级的 `get_student_candidate_list` 包装，改走 `get_course_candidate_list`；页签绘制与切人改走 `Student_Tab_Bar`；文案「孩子」→「学生」、「复制到其他学生」；`_copy_to_others` 名单每行 6 人 |
+| `Script/System/Education_System/growth_panel.py` | 改 | 直接走 `growth_handle.get_student_candidate_list()`（不再绕经 course_select_panel）；页签绘制与切人改走 `Student_Tab_Bar`，切人仍重置成绩单下标 |
+| `update.log` | 改 | v0.67 段追加 调整 2 条 |
+| `plan_22_生长养成系统_一期_方案.md` | 改 | §5.3 / §5.4 补分页与口径；§9.2.2 加更正注；新增 §9.8 |
+| `plan_22_生长养成系统_总纲.md` | 改 | 口径 24 标注实装状态 |
+
+#### 实施中发现的偏离（编号接 69 往下）
+
+> ⚠️ 上一节「2026-09-09 第八轮」把编号误从 63 重编了一遍（63~66 与 2026-09-08 第八轮的 63~66 撞号），
+> 本节从 70 起，之后不要再回落。
+
+70. **页签固定宽度，不再按人数均分。** 原来 1 个人时页签占满整行、8 个人时各占 1/8，
+    翻页后同一个人的位置会随本页人数变化。改为恒取 `width / 8`，翻页时格位不动。
+    代价是只有一两个学生时页签偏窄（23 列），名字仍放得下。
+
+71. **`draw` 不自动跟随选中者跳页。** 第一版写成「每轮把页码定位到 `now_student` 所在页」，
+    结果玩家点「下一页」去找人，下一轮重画又被拉回选中者那一页——翻页按钮等于点不动。
+    翻页与选中是两个独立的状态，只在面板做「选中态失效回落」时才显式 `jump_to`。
+
+72. **个人课表的口径取并集，不是替换。** 用户要求的是「职业为学生的人都能调」，
+    直接换成 `work_type == 152` 也能覆盖女儿（幼女期自动置岗），但一个女儿的岗位被改掉后
+    她就会从个人课表里消失而养成总览里还在。并上女儿名单，两个面板的女儿集合保持包含关系。
+
+73. **`get_student_candidate_list` 不改口径，只改注释。** 它还有四个调用方（养成总览、指定必修学生、
+    日程批量套用、学期结算）都只该看女儿，改它会把成年学生带进成绩单与养成事件；
+    新口径另起一个函数，`course_select_panel` 里那个纯转发的模块级包装随之删除。
+
+74. **容器回归测试要给 `basement.get_base_updata` 打桩。** 容器每轮 `while` 顶部会按设施等级刷新房间开放状态，
+    读 `rhodes_island.facility_level`；最小 fixture 没有罗德岛数据，在测试里 stub 掉即可，
+    面板逻辑本身不依赖它。
+
+#### 单元测试结果
+
+新增 `test_student_tab.py` **58 条全绿**（scratchpad，未收进仓库）：
+
+| 组 | 条数 | 覆盖 |
+| --- | --- | --- |
+| 口径 | 8 | 20 个女儿 + 3 个成年学生 + 1 教师 + 1 普通干员 + 1 个换岗的女儿：女儿名单 20 人不含成年学生；个人课表名单 23 人、升序、含换岗的女儿、不含教师与普通干员；`EXCLUDE_INTERN_WORK_TYPE` 派生正确 |
+| 分页（两个面板各一遍） | 26 | 首页 7 按钮 + 1 选中、只有下一页；页数文本「第 1 / 3 页（共 N 人）」；第 2 页 8 个按钮且正是第 9~16 人；在第 2 页点人后选中更新且**仍停在第 2 页**；末页只有上一页且人数正确；越界夹回；上一页回退 |
+| 养成总览 | 3 | 切人重置 `report_card_index`、翻页不动它、名单不含成年学生 |
+| 缩减与空名单 | 12 | 人数缩到 5 人：页码夹回 0、无翻页哨兵、4 按钮 + 1 选中、选中态回落；空名单不报错无按钮 |
+| 组件 | 3 | `jump_to` 定位到第 3 页、不存在的人不动页码、只认自己的前缀 |
+| 容器回归 | 4 | 首屏有 `[返回]`、另三个页签可点、含学生页签、`return_list` 无重复 |
+
+#### 尚未覆盖的验证
+
+- Tk / Web 实机下翻页行的排版（三等分 63 列一格，「第 x / y 页（共 N 人）」最长约 20 列，放得下）。
+- 成年学生排课后实际去上课的完整链路（AI 侧本轮零改动，沿用 §9.2 之前已验证过的「成年干员自选了课」路径）。
+- PO 词条：新增的 4 条 `_()` 文本需跑 `buildpo.py`，本机无 `xgettext`，未跑。
+
+**2026-09-09 第十轮（与方案 §9.9 / 总纲 §8 成对）：收尾总检查**
+
+四期全部实施后，用户要求做一次总盘点：遗漏与残留、多轮测试、文档对齐、两份新文档。本轮全部由主代理完成，不用子代理。
+
+#### 实际改动
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/System/Education_System/education_constant.py` | 改 | 第 6 组加 `GROWTH_STOP_TALENT_ID = 28`、`GROWTH_STOP_LEARN_RATE = 0.5` |
+| `Script/System/Education_System/growth_handle.py` | 改 | 新增 `get_growth_stop_adjust()`；`get_class_adjust` 与 `settle_follow_mother_gain` 乘入 |
+| `Script/System/Education_System/sex_class_handle.py` | 改 | `get_subject_bonus` 乘入成长停滞倍率 |
+| `Script/System/Education_System/schedule_template_handle.py` | 改 | `create_template` 的注释改为实际行为（最大号被删后会复用，删除时已解引用） |
+| `data/talk/system/second_caught_skip_class.csv` | **新增** | 翘课被抓 16 条 |
+| `Script/Design/game_time.py` | 改 | 删掉被注释的 era 遗留 `judge_attend_class_today` |
+| `Script/Design/attr_calculation.py` | 改 | 删掉零调用的 `get_experience_level_weight` |
+| `.github/skills/game-design-dialogue/tools/C1_数值拟定.md` | 改 | 「经验→等级」一行改指 `handle_ability.gain_ability` + `AbilityUp.csv` |
+| `tools/official_event_check.py` | 改 | 占位符只认 `talk.py` 替换表；查重前去掉占位符 |
+| `tools/tests/education/`（18 个文件） | **新增** | 回归测试套件：`_bootstrap.py`、`run_all.py`、`README.md`、15 个 `test_*.py` |
+| `.github/prompts/数据处理工作流/生长养成系统.md` | **新增** | 总说明文档（16 节） |
+| `Script/System/Education_System/生长养成系统设计文档.md` | **新增** | 索引 |
+| `.github/prompts/数据处理工作流/README.md`、`CLAUDE.md`、`数据处理工作流/妊娠系统.md` | 改 | 加条目 / 改计数 / 加外部调用点 |
+| `plan_22_*`（9 份） | 改 + 移动 | 状态行、口径条数、表格与回指对齐；移入 `plan/done/` |
+| `update.log` | 改 | v0.67 段追加 新增 3 条、调整 1 条、修正 1 条 |
+
+#### 实施中发现的偏离（编号接 74 往下）
+
+75. **口径 27 悬空了四期。** 它没有归入任何一期的方案（一期方案的「本期覆盖口径」列表里有 27，但正文与代码都没有落点），
+    四期结束时代码里没有任何 `talent[28]` 判定。**教训：口径表要逐条对代码，不能只对方案**——方案里「覆盖」了不等于实装了。
+
+76. **翘课被抓是一个「行为齐全、口上为零」的静默节点。** 行为、效果、派发三层在第一轮就有了，
+    唯独 `data/talk/` 里没有一条 `caught_skip_class` 的文本，四期都没人发现——因为它不报错，撞见时只是什么都不打印。
+    **教训：新增二段行为时把「口上文件存在且 ≥N 条」列进验收**，本轮的 `test_talk_data.py` 已对全部教育行为逐个断言。
+
+77. **口径 37 从一期起就只做了一半，且没有任何文档说明另一半没做。** 收窄的理由见方案 §9.9.2。
+    **教训：口径的部分实装要在实装当轮就加注**，否则总纲会一直"承诺"一个不存在的功能。
+
+78. **`tools/official_event_check.py` 被三期的「事件点名」改造弄失效了。** 点名把 `{Name}` / `{TargetName}` 写进事件正文，
+    工具的「正文不能有花括号」规则把全部 266 条事件报成错误、「前 15 字重复」规则又把所有以点名开头的正文报成重复，
+    工具自那以后实际上没人跑过。**教训：改数据格式时同步改校验工具，并把工具跑进回归**（`test_talk_data.py` 现在会调它）。
+
+79. **`create_template` 的注释与实际行为不符（测试发现）。** 注释说「删过的编号不复用」，实现是「现存最大 + 1」，
+    删掉的正是最大号时会被下一套复用。因为 `delete_template` 删前已把引用它的孩子解开，复用不会串日程，
+    所以改注释而不改代码；二期记录里「删过的编号不被复用」的断言当时测的是删中间号的情形。
+
+80. **真实存档上的「不收敛」是慢收敛，不是卡死。** 存档 11（22 个在学女儿）跑行为循环，每轮总有 3~5 个与教育无关的干员
+    在 25 步护栏内没完成——她们没事可做时走的是「空闲 1 分钟」的 A 路径，45 分钟一轮要挪 45 步；清空课表的基线跑出来一模一样。
+    护栏上限改为 60 后全部收敛，前四轮（上午节次）女儿在课 20~22/22。**教训：护栏轮数要按「一轮的分钟数」定，25 是 skill 里按短行为写的经验值。**
+
+81. **测试 fixture 的四条新陷阱**：`from _bootstrap import *` 不导出 `_`（靠 `__all__`）；崩溃的测试进程会被非守护线程挂住
+    直到超时（`sys.excepthook` 里 `os._exit`）；实行值计算读 `assistant_services[8]`；`LittleTitleLineDraw` 的文字在 `title` 不在 `text`。已写进 `tools/tests/education/README.md`。
+
+#### 单元测试结果
+
+`tools/tests/education/run_all.py`：**15 个文件、641 条断言全绿**（R1 静态 + 单元 → 修 → R2 全部重跑 + 真实存档行为循环 → R3 全量重建后再跑）。
+分文件：schedule 44 / auto_schedule 25 / class_ai 61 / growth 55 / semester 43 / schedule_template 41 / sex_class 56 / prenatal_baby 34 /
+growth_event 32 / settle_effects 51 / premise_tokens 76 / panels 51 / talk_data 52 / save_compat 8 / behavior_loop 12。
+真实存档：15 个存档全部只读载入成功、养成字段完整、无死场景、学期结算幂等、四个面板可画；存档 11 上六轮循环收敛、跨天结算不抛异常。
+
+#### 尚未覆盖的验证
+
+- 各期 §4.2 的实机项（Tk / Web 排版与观感）与 PO 词条（本机无 `xgettext`），同前。
+- 成长停滞减半只在单元测试里验过数值，未在实机上对照养成总览的本学期增量。

@@ -462,7 +462,7 @@ def handle_entertainment_is_bathhouse_type(character_id: int) -> int:
     else:
         return 0
 
-    for cid in {171,172,173,174,175,176}:
+    for cid in {171,172,173,174}:
         if character_data.entertainment.entertainment_type[i] == cid:
             return 1
 
@@ -497,7 +497,7 @@ def handle_scene_someone_entertainment_is_bathhouse_type(character_id: int) -> i
                 else:
                     continue
 
-                for cid in {171,172,173,174,175,176}:
+                for cid in {171,172,173,174}:
                     if other_character_data.entertainment.entertainment_type[i] == cid:
                         return 1
 

@@ -99,6 +99,8 @@ def set_temp_class(date_ordinal: int, period: int, classroom: str, ability_id: i
         "must_attend": list(must_attend),
         "notified": notified,
         "running": running,
+        # 是否是预约排进课表的那节：开课时由 start_sex_class 按"复用了已有条目"来定，供开课口上分档
+        "reserved": False,
     }
     cache.rhodes_island.temp_sex_class[get_class_key(date_ordinal, period)] = now_data
     return now_data
@@ -313,6 +315,28 @@ def get_now_class_ability() -> int:
     return now_class.get("ability_id", -1)
 
 
+def judge_in_running_class(character_id: int) -> bool:
+    """
+    判断角色此刻是否正身处那节在进行的实操课
+
+    授课者恒为玩家（口径38），所以玩家只要有课在进行就算；学生则看人在不在本节课的那间教室——
+    不能只看「有课在进行」，否则同一时刻在别的教室上普通课的孩子也会被算成在上实操课。
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 是否正在这节实操课里
+    """
+    now_class = get_running_class()
+    if now_class is None:
+        return False
+    if character_id == 0:
+        return True
+    # 场景名比对复用 class_ai 的既有写法，不在这里另写一份
+    from Script.System.Education_System import class_ai
+
+    return class_ai.judge_in_scene(character_id, now_class.get("classroom", ""))
+
+
 def get_now_bonus_exp_id() -> int:
     """
     取当前实操课主修科目对应的经验id
@@ -337,8 +361,8 @@ def get_subject_bonus(student_id: int) -> float:
     """
     取某学生本节实操课的主修科目经验倍率
 
-    最终倍率 = 课程加成 × 师生等级差速度系数 × 教育区加成，
-    后两项直接用一期已实现的函数，不另造一套公式。教师即玩家。
+    最终倍率 = 课程加成 × 师生等级差速度系数 × 教育区加成 × 成长停滞倍率（口径 27），
+    后三项直接用一期已实现的函数，不另造一套公式。教师即玩家。
     Keyword arguments:
     student_id -- 学生的角色id
     Return arguments:
@@ -354,7 +378,8 @@ def get_subject_bonus(student_id: int) -> float:
     teacher_level = pl_data.ability.get(ability_id, 0)
     student_level = student_data.ability.get(ability_id, 0)
     speed = growth_handle.get_learn_speed(teacher_level, student_level)
-    return education_constant.SUBJECT_BONUS * speed * growth_handle.get_education_zone_adjust()
+    return (education_constant.SUBJECT_BONUS * speed * growth_handle.get_education_zone_adjust()
+            * growth_handle.get_growth_stop_adjust(student_id))
 
 
 # ---------------------------------------------------------------------------
@@ -548,10 +573,13 @@ def start_sex_class(ability_id: int, join_id_list: Optional[List[int]] = None) -
     now_class = get_temp_class(today, period)
     if now_class is not None and now_class.get("classroom", "") == classroom:
         now_class["running"] = True
+        # 复用了预约条目 → 这是预约的那节课；开课口上按"预约 / 当场"分档（方案 §3.28.10）
+        now_class["reserved"] = True
         if ability_id in education_constant.SEX_CLASS_ABILITY_LIST:
             now_class["ability_id"] = ability_id
     else:
         now_class = set_temp_class(today, period, classroom, ability_id, running=True)
+        now_class["reserved"] = False
     if join_id_list is None:
         join_id_list = get_scene_student_list(pl_character_data.position)
     # 出勤只在开课时记这一次：拖堂占用的后续节次既不记出勤也不记缺课（方案 §3.28.9）

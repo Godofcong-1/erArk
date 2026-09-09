@@ -78,6 +78,17 @@ def clear_prenatal_point(mother_id: int) -> None:
 # ---------------------------------------------------------------------------
 
 
+def get_prenatal_count(mother_id: int) -> int:
+    """
+    把母亲的胎教累积值折回做过的次数（供身体信息面板与生产面板共用一个算口）
+    Keyword arguments:
+    mother_id -- 母亲的角色id
+    Return arguments:
+    int -- 做过的胎教次数
+    """
+    return int(get_prenatal_point(mother_id) / education_constant.PRENATAL_POINT_PER_TIME)
+
+
 def get_prenatal_exp_value(prenatal_point: float) -> int:
     """
     把胎教值换算成每门科目的初始经验
@@ -118,7 +129,7 @@ def settle_prenatal_to_child(mother_id: int, child_id: int) -> str:
             child_data.experience[exp_id] += exp_value
     if exp_value > 0:
         return _("\n{0}在孕期听过{1}次胎教，底子比别的孩子好一些：全部科目各获得了{2}点初始经验\n").format(
-            child_data.name, int(prenatal_point / education_constant.PRENATAL_POINT_PER_TIME), exp_value
+            child_data.name, get_prenatal_count(mother_id), exp_value
         )
     return _("\n{0}在孕期听过几次胎教，虽然还不足以留下什么，但她一定记得那个声音\n").format(child_data.name)
 
