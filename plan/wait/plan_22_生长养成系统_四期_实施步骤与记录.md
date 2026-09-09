@@ -390,7 +390,7 @@
 | # | 假设 | 复核结果 |
 | --- | --- | --- |
 | 1 | 一期教育系统已实施完毕，`Education_System/` 9 个模块可用 | ✅ 成立，本轮直接复用 `growth_handle` / `schedule_handle` / `class_ai` |
-| 2 | `schedule_handle.py:121 get_class_cell` 是全局课表的唯一读取入口 | ⚠️ **部分不成立**。它是唯一的"按格子查"入口，但 `get_teacher_now_class()`（`:187`）与 `get_teacher_week_schedule()`（`:203`）直接遍历 `class_schedule` 做教师反查。判定为可接受，理由见 §6.1 偏离 5 |
+| 2 | `schedule_handle.py:121 get_class_cell` 是全局课表的唯一读取入口 | ⚠️ **部分不成立**。它是唯一的"按格子查"入口，但 `get_teacher_cell()` 与 `get_teacher_week_schedule()` 直接遍历 `class_schedule` 做教师反查。第一轮判定为可接受（§6.1 偏离 5）；**2026-09-09 已补齐**：两处教师反查在查玩家（临时课的教师恒为玩家）且星期正好是今天时，也先看 `temp_sex_class`，与 `get_class_cell` 同口径——这正是 §6.5 第 2 条死文本的根因之一，见该条 |
 | 3 | `handle_npc_ai.py:290~296` 让 H 中的 NPC 完全不进 AI 目标链 | ✅ 成立，但**有一个例外**：`group_sex_mode_on && masturebate_flag_3` 时会继续往下走。课堂模式会置 `group_sex_mode = True`，所以群交自慰中的学生仍会进链——与既有群交行为一致，不额外处理 |
 | 4 | `growth_handle.py:98 get_subject_exp_id()` 对 7 门性技解出的经验 id 互不重叠 | ✅ 成立，实测 70→41、71→42、72→44、73→43、74→61、75→62、77→24，**七个互不相同**；76 腰技→60 亦不与之冲突（已在源头排除）|
 | 5 | `handle_instruct.py:352` 只在 `judge != ""` 时才判实行值 | ✅ 成立，两条新指令的处理函数均不传 `judge`，无实行值要求由此实现 |
@@ -445,8 +445,10 @@
    玩家恒算在课中（授课者恒为玩家，口径 38），学生则看人在不在本节课的那间教室（复用
    `class_ai.judge_in_scene`，不能只看"有课在进行"，否则同一时刻在别的教室上普通课的孩子也会被算进来）；
    `handle_premise.get_now_course_ability()` 开头先问它，成立就直接返回 `get_now_class_ability()`，
-   再往下才走原来的课表两条链。教师反查 `get_teacher_cell()` 本身**未动**，它绕过覆盖层的问题仍在
-   （§6.2 假设 2），只是 Course 型取数不再依赖它。
+   再往下才走原来的课表两条链。教师反查 `get_teacher_cell()` / `get_teacher_week_schedule()` 绕过覆盖层的问题
+   随后也补上了（§6.2 假设 2）：查玩家且星期是今天时先看 `temp_sex_class`。于是 `get_now_teaching(0)` /
+   `get_now_course_type(0)` 在预约了实操课的那一节也取得到，玩家在该节手动授课时的授课状态与教学相长
+   按该节主修科目结算，与学生侧早已经过覆盖层的 `get_now_course()` 对齐；NPC 教师与其他星期不受影响。
    **端到端验证时又揪出第二处死文本**：`start_sex_class.csv` 的 5 条与 `end_sex_class.csv` 的 9 条，前提列写的是
    常量名（`SCENE_OVER_TWO` / `SCENE_ONLY_TWO` / `SEX_CLASS_END_EARLY|ON_TIME|LATE`）而不是注册值
    （`place_11` / `place_10` / `sex_class_end_early|on_time|late`），运行时报「前提不存在」、一条都进不了候选池——

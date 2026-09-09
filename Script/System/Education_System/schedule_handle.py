@@ -175,6 +175,16 @@ def get_teacher_cell(teacher_id: int, week_day: int, period: int) -> Optional[Tu
     Return arguments:
     Optional[Tuple[str, int]] -- (教室场景名, 科目能力id)，该节次没课则为None
     """
+    # 临时性技实操课的覆盖层（Plan 22 四期）：授课者恒为玩家，所以只有查玩家时才可能命中；
+    # 与 get_class_cell 同口径——只在查询的星期正好是今天时覆盖，临时课程是带具体日期的一次性条目。
+    # ⚠️ 这里不能只靠下面那个循环：临时课的教室未必在 class_schedule 里有键，玩家也从不出现在
+    #    全局课表的教师位上，漏了这一层就会像 4-C 的主修口上那样"玩家永远查不到自己"
+    if teacher_id == 0 and week_day == cache.game_time.weekday():
+        from Script.System.Education_System import sex_class_handle
+
+        temp_class = sex_class_handle.get_temp_class(cache.game_time.date().toordinal(), period)
+        if temp_class is not None:
+            return temp_class.get("classroom", ""), temp_class.get("ability_id", -1)
     for classroom, week_data in cache.rhodes_island.class_schedule.items():
         cell = week_data.get(week_day, {}).get(period, None)
         if cell is not None and cell[1] == teacher_id:
@@ -196,6 +206,15 @@ def get_teacher_week_schedule(teacher_id: int) -> Dict[int, Dict[int, Tuple[str,
             for period, cell in period_data.items():
                 if cell[1] == teacher_id:
                     result.setdefault(week_day, {})[period] = (classroom, cell[0])
+    # 玩家的周课表再并入今天的临时实操课，与 get_teacher_cell 的覆盖层保持一致
+    if teacher_id == 0:
+        from Script.System.Education_System import sex_class_handle
+
+        today = cache.game_time.date().toordinal()
+        for class_key, temp_class in cache.rhodes_island.temp_sex_class.items():
+            date_ordinal, period = sex_class_handle.parse_class_key(class_key)
+            if date_ordinal == today:
+                result.setdefault(cache.game_time.weekday(), {})[period] = (temp_class.get("classroom", ""), temp_class.get("ability_id", -1))
     return result
 
 
