@@ -90,8 +90,22 @@ check("期末桶 16 条且 sub_key 为保留键", len(game_config.config_officia
 
 section("配置一致性")
 check("Entertainment.csv 带 class_ok 列且 16 项可排兴趣课", sum(1 for cid in game_config.config_entertainment if getattr(game_config.config_entertainment[cid], "class_ok", 0)) == 16)
-check("三项日程活动存在", all(cid in game_config.config_entertainment for cid in (E.ENTERTAINMENT_FOLLOW_MOTHER, E.ENTERTAINMENT_FREE_PLAY, E.ENTERTAINMENT_SELF_STUDY)))
-check("跟随母亲只限幼女", game_config.config_entertainment[E.ENTERTAINMENT_FOLLOW_MOTHER].need == "T102|1")
+from Script.System.Pregnancy_System import pregnancy_constant
+
+check("教育区娱乐排在 15x 段：151 过家家 / 152 照料卵 / 153 跟随母亲 / 154 自由玩耍 / 155 上课",
+      [E.ENTERTAINMENT_PLAY_HOUSE, pregnancy_constant.TEND_EGGS_ENTERTAINMENT_ID, E.ENTERTAINMENT_FOLLOW_MOTHER, E.ENTERTAINMENT_FREE_PLAY, E.ENTERTAINMENT_SELF_STUDY] == [151, 152, 153, 154, 155]
+      and all(cid in game_config.config_entertainment for cid in (151, 152, 153, 154, 155)))
+check("旧编号 175~178 已不存在", not any(cid in game_config.config_entertainment for cid in (175, 176, 177, 178)))
+check("过家家 / 跟随母亲 / 自由玩耍限幼女或萝莉", all(game_config.config_entertainment[cid].need == "T102|1/T103|1" for cid in (E.ENTERTAINMENT_PLAY_HOUSE, E.ENTERTAINMENT_FOLLOW_MOTHER, E.ENTERTAINMENT_FREE_PLAY)))
+check("上课（无课时自习）限学生岗", game_config.config_entertainment[E.ENTERTAINMENT_SELF_STUDY].need == "W152|1")
+check("日程专用三项不进随机池的集合与常量一致", E.SCHEDULE_ONLY_ENTERTAINMENT_SET == {153, 154, 155})
+# 指令面板按 cid 排序并把 cid 显示为编号，段错了会排进别的类型（2026-09-09 第三轮把 2040 / 6906 / 6907 归位为 1036 / 5209 / 6021）
+INSTRUCT_TYPE_SEGMENT = {"SYSTEM": 0, "DAILY": 1, "WORK": 2, "PLAY": 3, "ARTS": 4, "OBSCENITY": 5, "SEX": 6}
+check("全部指令的 cid 都落在自己类型的段内（系统 1~99、日常 1xxx、工作 2xxx、娱乐 3xxx、技艺 4xxx、猥亵 5xxx、性爱 6xxx）",
+      all(cfg.cid // 1000 == INSTRUCT_TYPE_SEGMENT.get(cfg.instruct_type, -1) for cfg in game_config.config_instruct.values()))
+check("养成相关指令编号：1036 检查成绩单 / 2010 授课 / 2039 教育管理系统 / 3031~3033 胎教 / 5209 性技实操课 / 6021 结束性技实操课",
+      [game_config.config_instruct_by_id.get(k) for k in ("check_report_card", "teach", "education_manage", "prenatal_talk", "prenatal_music", "prenatal_touch", "start_sex_class", "end_sex_class")]
+      == [1036, 2010, 2039, 3031, 3032, 3033, 5209, 6021])
 check("教师 / 学生 / 保育员岗位", all(cid in game_config.config_work_type for cid in (E.TEACHER_WORK_TYPE, E.STUDENT_WORK_TYPE, 153)))
 check("四个成长阶段素质与成长停滞素质", all(t in game_config.config_talent for t in (28, 101, 102, 103, 104)))
 check("四对性格素质", all(t in game_config.config_talent for pair in E.PERSONALITY_PAIR_TALENT.values() for t in pair))

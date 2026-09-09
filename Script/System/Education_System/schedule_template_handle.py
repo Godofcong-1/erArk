@@ -21,7 +21,7 @@
 给三个孩子都改成玩乐优先，是改一个模板而不是改三份日程。
 """
 from types import FunctionType
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config
 from Script.System.Education_System import education_constant, growth_handle, schedule_handle
@@ -39,7 +39,10 @@ _KEY_SLOT = "slot"
 _NEED_NONE = "无"
 """ Entertainment.csv 的 need 列里表示「无条件」的占位值 """
 _NEED_SPLIT = "&"
-""" need 列里多个条件之间的分隔符，与 handle_npc_ai 的随机抽取分支保持一致 """
+""" need 列里多个条件之间的分隔符（「且」），与 handle_npc_ai 的随机抽取分支保持一致 """
+_NEED_OR_SPLIT = "/"
+""" need 列同一项内多个候选条件之间的分隔符（「或」），如 T102|1/T103|1；判定由 attr_calculation.judge_require 负责，
+    这里只在解析年龄限制标注时用它拆项 """
 
 
 def get_entertainment_cid_by_name(name: str) -> int:
@@ -278,9 +281,10 @@ def judge_activity_need_pass(character_id: int, entertainment_id: int) -> bool:
     校验一个孩子是否满足某项娱乐的 need 条件（Plan 22 二期第一轮追加）
 
     ⚠️ 这道校验非做不可：模板是**全局共享**的，而 need 是**逐人**的。
-       「跟随母亲」(176) 配的 need 是 T102|1 只限幼女，同一套模板套到萝莉身上时，
-       不校验就会把 176 照写进她的 entertainment_type——而见学分支对萝莉不成立（口径10），
-       那一格于是既不见学也不玩耍，白白空转一个时段。
+       过家家 / 跟随母亲 / 自由玩耍配的 need 是 T102|1/T103|1（限幼女或萝莉），
+       上课（无课时自习）配的是 W152|1（限学生岗）；同一套模板套到少女或非学生岗的干员身上时，
+       不校验就会把活动照写进她的 entertainment_type，那一格既做不了该活动也不会随机娱乐，白白空转一个时段。
+       不满足的时段就跳过不改写、保留当天的随机娱乐——这就是面板上说的「退回到自由选择娱乐活动」。
     ⚠️ 引擎只在**随机抽娱乐**时校验过 need（handle_npc_ai.get_chara_entertainment），
        日程改写是另一条写入路径，必须自己校验。
     Keyword arguments:
@@ -358,7 +362,8 @@ def get_child_schedule_text(character_id: int) -> str:
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
-    str -- 形如「均衡（自习 / 下棋 / 自由玩耍）」，未套用模板则为「未设置」
+    str -- 形如「均衡（上课（无课时自习） / 下棋 / 自由玩耍）」，未套用模板则为「未设置」；
+           时段值为 0 显示「自由选择娱乐活动」，这个孩子不满足条件的活动带「（条件不符→自由选择）」标注
     """
     character_data: game_type.Character = cache.character_data[character_id]
     growth_data = character_data.child_growth
@@ -366,13 +371,7 @@ def get_child_schedule_text(character_id: int) -> str:
         return _("未设置")
     template_data = get_template_data(growth_data.schedule_template_id)
     template_name = template_data["name"] if template_data is not None else _("自定义")
-    slot_text_list = []
-    for slot in range(education_constant.SLOT_COUNT):
-        entertainment_id = get_child_slot_activity(character_id, slot)
-        if entertainment_id and entertainment_id in game_config.config_entertainment:
-            slot_text_list.append(game_config.config_entertainment[entertainment_id].name)
-        else:
-            slot_text_list.append("--")
+    slot_text_list = [get_child_slot_activity_text(character_id, slot) for slot in range(education_constant.SLOT_COUNT)]
     return "{0}（{1}）".format(template_name, " / ".join(slot_text_list))
 
 
@@ -396,10 +395,106 @@ def get_template_use_count(template_id: int) -> int:
 
 def get_schedule_activity_candidate() -> List[int]:
     """
-    取可排进日程的娱乐候选表：全部娱乐，加上本期新增的两项，去掉0号模板行
+    取可排进日程的娱乐候选表：全部娱乐（含教育区 15x 段的日程专用活动），去掉0号模板行
     Keyword arguments:
     无
     Return arguments:
     List[int] -- 娱乐cid列表，按cid升序
     """
     return sorted(cid for cid in game_config.config_entertainment if cid)
+
+
+def get_activity_name(entertainment_id: int) -> str:
+    """
+    取一项日程活动的显示名
+    Keyword arguments:
+    entertainment_id -- 娱乐cid，0 表示「自由选择娱乐活动」
+    Return arguments:
+    str -- 0 为「自由选择娱乐活动」；配置里有的取娱乐名；配置里没有的（如被删掉的旧编号）为「--」
+    """
+    if entertainment_id == education_constant.SCHEDULE_FREE_CHOICE:
+        return education_constant.SCHEDULE_FREE_CHOICE_NAME
+    if entertainment_id in game_config.config_entertainment:
+        return game_config.config_entertainment[entertainment_id].name
+    return "--"
+
+
+def get_activity_age_limit_talent_list(entertainment_id: int) -> List[int]:
+    """
+    从一项娱乐的 need 列里解出它要求的成长阶段素质（年龄限制）
+    Keyword arguments:
+    entertainment_id -- 娱乐cid
+    Return arguments:
+    List[int] -- 要求持有的阶段素质id列表（101~104 之一或多个），没有年龄限制则为空表
+    功能: need 先按 & 拆成「且」项，再按 / 拆成「或」项，只认 T<阶段素质id>|1 这种写法。
+          ⚠️ 不写死「过家家 / 跟随母亲 / 自由玩耍」三项：年龄限制是配置，往后再加一项带年龄需求的活动，
+             面板的第二行与「限幼女/萝莉」标注会自动跟上
+    """
+    if entertainment_id not in game_config.config_entertainment:
+        return []
+    need_text = game_config.config_entertainment[entertainment_id].need
+    if not need_text or need_text == _NEED_NONE:
+        return []
+    result = []
+    for and_text in need_text.split(_NEED_SPLIT):
+        for one_text in and_text.split(_NEED_OR_SPLIT):
+            one_text = one_text.strip()
+            if not one_text.startswith("T") or "|" not in one_text:
+                continue
+            talent_part, value_part = one_text[1:].split("|", 1)
+            if not talent_part.isdigit() or value_part.strip() != "1":
+                continue
+            talent_id = int(talent_part)
+            if talent_id in education_constant.STAGE_TALENT_NAME and talent_id not in result:
+                result.append(talent_id)
+    return result
+
+
+def get_activity_age_limit_text(entertainment_id: int) -> str:
+    """
+    取一项娱乐的年龄限制标注文本，供「选择活动」面板显示
+    Keyword arguments:
+    entertainment_id -- 娱乐cid
+    Return arguments:
+    str -- 形如「限幼女/萝莉」，没有年龄限制则为空串
+    """
+    talent_list = get_activity_age_limit_talent_list(entertainment_id)
+    if not talent_list:
+        return ""
+    return _("限{0}").format("/".join(education_constant.STAGE_TALENT_NAME[talent_id] for talent_id in talent_list))
+
+
+def get_schedule_activity_rows() -> Tuple[List[int], List[int], List[int]]:
+    """
+    把可排进日程的活动分成「选择活动」面板的三组
+    Keyword arguments:
+    无
+    Return arguments:
+    Tuple[List[int], List[int], List[int]] -- (第一行, 第二行, 其余)：
+        第一行固定是 上课（无课时自习）与 自由选择娱乐活动（0）；
+        第二行是有年龄需求的活动（过家家 / 跟随母亲 / 自由玩耍，从 need 列现算）；
+        其余娱乐按 cid 升序
+    """
+    candidate_list = get_schedule_activity_candidate()
+    first_row = [cid for cid in education_constant.CHILD_SCHEDULE_FIRST_ROW if cid == education_constant.SCHEDULE_FREE_CHOICE or cid in candidate_list]
+    age_row = [cid for cid in candidate_list if cid not in first_row and get_activity_age_limit_talent_list(cid)]
+    other_list = [cid for cid in candidate_list if cid not in first_row and cid not in age_row]
+    return first_row, age_row, other_list
+
+
+def get_child_slot_activity_text(character_id: int, slot: int) -> str:
+    """
+    取一个孩子某时段日程活动的显示文本，条件不符时标注会退回自由选择
+    Keyword arguments:
+    character_id -- 角色id
+    slot -- 时段0~2
+    Return arguments:
+    str -- 活动名；0 为「自由选择娱乐活动」；活动存在但这个孩子不满足其 need 条件时为「X（条件不符→自由选择）」
+    功能: 供个人课表的日程行与日程微调页共用。
+          ⚠️ 只做显示：真正的「退回」发生在 apply_schedule_for_child 的 need 校验里，这里只是把它说给玩家听
+    """
+    entertainment_id = get_child_slot_activity(character_id, slot)
+    name = get_activity_name(entertainment_id)
+    if entertainment_id and entertainment_id in game_config.config_entertainment and not judge_activity_need_pass(character_id, entertainment_id):
+        return _("{0}（条件不符→自由选择）").format(name)
+    return name

@@ -361,7 +361,7 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
         from Script.System.Education_System import class_ai
 
         judge = class_ai.judge_class_state_machine(character_id)
-    # 然后判断幼女见学，需要是幼女、本节没排课（或日程排了跟随母亲）、且母亲有效（Plan 22 二期 §3.24）
+    # 然后判断见学：幼女本节没排课即默认见学，萝莉只在日程时段排了「跟随母亲」时见学，且母亲要有效（Plan 22 二期 §3.24、§9.2.3）
     # ⚠️ 排在上课之后、工作之前：有课就上课，没课才跟母亲；幼女本就没有工作，走到工作链也是空转
     if judge == 0:
         from Script.System.Education_System import class_ai
@@ -808,19 +808,23 @@ def get_chara_entertainment(character_id: int):
 
         # 否则随机当天的娱乐活动
         else:
+            # 教育系统的常量从配置现算，必须在函数内延迟 import（与本文件里 class_ai 的延迟 import 同款）
+            from Script.System.Education_System import education_constant
+            from Script.System.Pregnancy_System import pregnancy_constant
+
             # 幼女只能进行过家家的娱乐活动
             if handle_premise.handle_self_is_child(character_id):
                 for i in range(3):
-                    character_data.entertainment.entertainment_type[i] = 151
+                    character_data.entertainment.entertainment_type[i] = education_constant.ENTERTAINMENT_PLAY_HOUSE
                 return
             entertainment_list = [i for i in game_config.config_entertainment]
             entertainment_list.remove(0)
             # 照料卵娱乐不进入随机池，仅由每日替换钩子分配给持卵的卵生角色
-            if 175 in entertainment_list:
-                entertainment_list.remove(175)
-            # 跟随母亲(176)/自由玩耍(177)/自习(178)是孩子的日程专用活动（Plan 22 二期），
-            # 只由日程模板指派，随机抽给成年干员没有意义
-            for schedule_only_id in (176, 177, 178):
+            if pregnancy_constant.TEND_EGGS_ENTERTAINMENT_ID in entertainment_list:
+                entertainment_list.remove(pregnancy_constant.TEND_EGGS_ENTERTAINMENT_ID)
+            # 跟随母亲 / 自由玩耍 / 上课（无课时自习）是孩子的日程专用活动（Plan 22 二期），
+            # 只由日程模板指派，随机抽给成年干员没有意义；编号统一取 education_constant.SCHEDULE_ONLY_ENTERTAINMENT_SET
+            for schedule_only_id in education_constant.SCHEDULE_ONLY_ENTERTAINMENT_SET:
                 if schedule_only_id in entertainment_list:
                     entertainment_list.remove(schedule_only_id)
             # 循环获得上午、下午、晚上的三个娱乐活动

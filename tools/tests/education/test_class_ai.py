@@ -137,6 +137,23 @@ cache.character_data[202].entertainment.entertainment_type = [0, 0, education_co
 check("晚上日程排了跟随母亲 → 见学", class_ai.judge_should_follow_mother(202))
 cache.character_data[202].entertainment.entertainment_type = [0, 0, 0]
 check("晚上日程没排 → 不见学", not class_ai.judge_should_follow_mother(202))
+
+section("见学：萝莉按日程可见学（2026-09-09 放宽）")
+student.entertainment.entertainment_type = [0, 0, education_constant.ENTERTAINMENT_FOLLOW_MOTHER]
+check("萝莉晚上日程排了跟随母亲 → 见学", class_ai.judge_should_follow_mother(201))
+student.entertainment.entertainment_type = [0, 0, 0]
+check("萝莉晚上日程没排 → 不见学", not class_ai.judge_should_follow_mother(201))
+set_time(period_time(0))
+student.entertainment.entertainment_type = [education_constant.ENTERTAINMENT_FOLLOW_MOTHER, 0, 0]
+check("萝莉节次内没课、上午日程排了跟随母亲 → 见学", class_ai.judge_should_follow_mother(201))
+schedule_handle.set_selected_course(201, cache.game_time.weekday(), 0, education_constant.COURSE_TYPE_THEORY, ROOM1)
+check("萝莉本节有课 → 有课优先，不见学", not class_ai.judge_should_follow_mother(201))
+schedule_handle.clear_selected_course(201, cache.game_time.weekday(), 0)
+student.entertainment.entertainment_type = [0, 0, 0]
+check("萝莉节次内没课但日程没排 → 自由行动（口径 10 的默认不变）", not class_ai.judge_should_follow_mother(201))
+girl = make_character(203, "女儿C", 152, daughter=True, stage=104, mother_id=102, born_days=500)
+girl.entertainment.entertainment_type = [education_constant.ENTERTAINMENT_FOLLOW_MOTHER] * 3
+check("少女日程排了跟随母亲也不见学", not class_ai.judge_should_follow_mother(203))
 set_time(period_time(0))
 move_to(102, SCENE_EDU_ENTRY)
 move_to(202, SCENE_DORM)

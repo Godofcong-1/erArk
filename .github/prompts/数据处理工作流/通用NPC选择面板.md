@@ -20,6 +20,7 @@
 3. **群交面板** (`group_sex_panel.py`) - 群交场景
 4. **图书馆管理** (`manage_library.py`) - 图书馆操作
 5. **体检管理面板** (`physical_check_and_manage.py`) - 体检和管理功能
+6. **教育管理系统的个人课表与养成总览** (`Script/System/Education_System/student_select.py`) - 「选择学生」按钮：调用方把预筛好的名单（学生岗 ∪ 女儿 / 养成中的女儿）传入，玩家在本面板里再筛一次挑人；⚠️ 人名按钮的 `cmd_func` 在无头测试桩里不会执行，该模块在退出后按返回值（角色名）反查一次兜底
 
 ## 核心功能
 

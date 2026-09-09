@@ -47,8 +47,10 @@ GROW_TO_GIRL_DAY = 450
 # ==== 4. 卵生 ====
 HATCH_TOTAL_DAY = 265
 """ 孵化总天数（与胎生受精→标准生产时长一致，基准为卵的排出时间） """
-TEND_EGGS_ENTERTAINMENT_ID = 175
-""" 照料卵娱乐的模板id（Entertainment.csv） """
+TEND_EGGS_ENTERTAINMENT_ID = 152
+""" 照料卵娱乐的模板id（Entertainment.csv）。
+    ⚠️ 2026-09-09 由 175 改为 152：娱乐编号按「区块id×10+序号」分段，照料卵的地点是教育区（15）的育儿室，
+       原编号却排在大浴场段（17x）；旧存档里的 175 由 save_handle 读档时换成新编号 """
 NURSERY_WORKER_WORK_ID = 153
 """ 保育员工作的模板id（WorkType.csv） """
 

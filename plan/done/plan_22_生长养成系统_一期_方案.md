@@ -1244,7 +1244,7 @@ class CHILD_GROWTH:
 | 已有 | 缺失 |
 | --- | --- |
 | `CHILD_GROWTH.report_card_flag` 字段 | **全仓库没有任何一处把它置 True** |
-| 「检查成绩单」指令 2040 / 行为 229 / 结算 550 | 读的是 `attend_class_count` / `absent_count` 这两个**终身累计**数 |
+| 「检查成绩单」指令 1036（原 2040，2026-09-09 第三轮归入日常段）/ 行为 229 / 结算 550 | 读的是 `attend_class_count` / `absent_count` 这两个**终身累计**数 |
 | 6 条 `check_report_card` 口上 | 只按年龄分，**没有成绩档位前提**——口径 43 要求的差分从没落实 |
 | `game_time.get_now_semester()` | 全仓库**零调用** |
 
@@ -1575,6 +1575,10 @@ for character_id in growth_handle.get_student_candidate_list():
 | 页签**固定**宽度 `width / 8`，不按本页人数均分 | 翻页时同一个位置永远是同一格，名字不会跳来跳去 |
 | 页码存在组件属性上，`draw` **不**自动跟随选中者跳页 | 容器每轮 `while` 都重画子页（§9.2.1），局部变量会被冲掉；而「跟随选中者」会把翻到第 2 页找人的玩家拉回第 1 页。面板只在「选中态失效、回落到第一个」时显式 `jump_to` |
 | 翻页返回值用哨兵 `EDU_STUDENT_PAGE_PREV/NEXT` | 同屏还有人名页签、容器页签与成绩单翻页，中文按钮名做返回值有撞名余地（§9.5.1 同一教训） |
+
+⚠️ **本节已于 2026-09-09 被第二轮调整整体取代**（二期方案 §9.2.5）：两个面板不再画人名页签栏，改为一行
+「当前学生 + [选择学生]」（没选人时行首直接是 [选择学生]，不写「尚未选择」），点开走通用 NPC 选择面板挑人（`student_select.py`）；`student_tab_bar.py` 与
+`STUDENT_TAB_PER_PAGE` / `STUDENT_PAGE_PREV/NEXT` 已删除，只剩「返回值用哨兵」这一条取舍仍然成立（`EDU_SELECT_STUDENT`）。
 
 #### 9.8.2 个人课表：职业为学生的全部干员都能排
 

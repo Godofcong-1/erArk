@@ -512,7 +512,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 | `Script/UI/Flow/normal_flow.py` | 改 | 注册面板 68，照 `MANAGE_DORMITORY` 的写法用函数内延迟 import |
 | `Script/System/Instruct_System/Instruct.py` | 改 | `EDUCATION_MANAGE` / `CHECK_REPORT_CARD` 两个指令常量 |
 | `Script/System/Instruct_System/handle_instruct.py` | 改 | 两个指令的处理函数 |
-| `data/csv/InstructConfig.csv` | 改 | `2039,education_manage`（前提 `IN_TEACHER_OFFICE`，开面板 68）、`2040,check_report_card`（前提 `TARGET_IS_PLAYER_DAUGHTER`，走 §2.3 建的行为 229） |
+| `data/csv/InstructConfig.csv` | 改 | `2039,education_manage`（前提 `IN_TEACHER_OFFICE`，开面板 68）、`2040,check_report_card`（前提 `TARGET_IS_PLAYER_DAUGHTER`，走 §2.3 建的行为 229；2026-09-09 第三轮改编号为 1036，归入日常段） |
 
 **三个面板都靠"降一个维度"来适配终端宽度**：全局课表是「10 教室 × 7 天 × 9 节」的三维数据，
 一次全画必然溢出，所以**一次只画一间教室的周表**，教室走上方横向页签；个人课表同理，一次一个孩子。

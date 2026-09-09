@@ -1,12 +1,13 @@
 """养成总览面板（Plan 22 一期 §5.4）
 
-一屏看完一个孩子的状态：当前阶段与已成长天数、18 门科目的等级、出勤与缺课、
+一屏看完一个孩子的状态：母亲是谁、当前阶段与距下一阶段的天数和预计日期、18 门科目的等级、出勤与缺课、
 四对性格倾向、养成事件履历（三期 §5.2）、待处理的成绩单与炫耀 flag。
-顶部的孩子页签每页 8 人、超出翻页（一期 §9.8.1）；口径仍是养成中的女儿，
-与个人课表放宽后的「职业为学生的全部干员」不同（§9.8.2）。
+孩子由「选择学生」按钮走通用 NPC 选择面板挑（2026-09-09，二期方案 §9.2.5；原来的人名页签栏已删）；
+口径仍是养成中的女儿，与个人课表放宽后的「职业为学生的全部干员」不同（一期 §9.8.2）。
 
-⚠️ 成长天数必须标明是**日历天**还是**可游玩天**（总纲 §2.3-7）：erArk 的一年只有
-   3/6/9/12 四个月，日历天与实际能玩到的天数约为 3:1，不写清楚玩家会按现实直觉误判。
+⚠️ 距下一阶段的天数必须标明是**日历天**（总纲 §2.3-7）：erArk 的一年只有
+   3/6/9/12 四个月，日历天与实际能玩到的天数约为 3:1，不写清楚玩家会按现实直觉误判；
+   所以旁边同时给出时钟真正会走到的预计日期（game_time.get_predict_date）。
 """
 import datetime
 from types import FunctionType
@@ -14,8 +15,8 @@ from typing import List
 
 from Script.Core import cache_control, game_type, get_text, flow_handle
 from Script.Config import game_config, normal_config
-from Script.Design import attr_calculation
-from Script.System.Education_System import education_constant, semester_handle, growth_handle, student_tab_bar
+from Script.Design import attr_calculation, game_time
+from Script.System.Education_System import education_constant, semester_handle, growth_handle, student_select
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -41,21 +42,19 @@ class Growth_Panel:
         """初始化绘制对象"""
         self.width: int = width
         self.now_student: int = -1
-        """ 当前展示的孩子角色id，-1表示尚未选择，由 draw_page 回落到第一个 """
+        """ 当前展示的孩子角色id，-1表示尚未选择。⚠️ 不再回落到名单第一个：进面板先点「选择学生」挑人 """
         self.student_list: List[int] = []
         """ 本轮在养成中的孩子列表，每轮在 draw_page 里重算 """
         self.report_card_index: int = -1
         """ 成绩单历史当前翻到第几份（0起），-1表示尚未翻过、由 _draw_report_card 回落到最新那份。
             ⚠️ 必须是面板的状态而不是局部变量：容器每轮 while 都重画，局部变量会被冲掉 """
-        self.tab_bar = student_tab_bar.Student_Tab_Bar(width, "\nGSTU_")
-        """ 顶部的孩子页签栏，每页8人。页码同样存在它身上 """
 
     def draw_page(self, return_list: List[str]):
         """
         绘制本页内容
         输入类型: return_list(List[str])，容器的共享返回值列表，本页的按钮往里加
         输出类型: 无
-        功能: 孩子页签（每页8人，可翻页）+ 总览正文。
+        功能: 「选择学生」一行 + 总览正文。
               ⚠️ 只画不取输入，askfor_all 由容器 Education_Manage_Panel 统一调用
         """
         # 每轮重算：孩子会在游戏过程中出生与长大，不能在 __init__ 里快照。
@@ -68,12 +67,12 @@ class Growth_Panel:
             info_draw.text = _("\n  目前还没有在养成中的孩子\n")
             info_draw.draw()
             return
-        # 选中态失效（首次进入，或原来那个孩子已不在列表里）时回落到第一个，并把页签栏翻到她所在的那页
+        # 选中态失效（首次进入，或原来那个孩子已不在名单里）时清成未选择，由玩家点「选择学生」挑人（二期方案 §9.2.5）
         if self.now_student not in self.student_list:
-            self.now_student = self.student_list[0]
-            self.tab_bar.jump_to(self.student_list, self.now_student)
-
-        self.tab_bar.draw(self.student_list, self.now_student, return_list)
+            self.now_student = -1
+            self.report_card_index = -1
+        if not student_select.draw_select_student_line(self.width, self.now_student, return_list):
+            return
 
         self._draw_stage(self.now_student)
         self._draw_subject(self.now_student)
@@ -91,34 +90,38 @@ class Growth_Panel:
         处理本页按钮的选择结果
         输入类型: yrn(str)，容器 askfor_all 的返回值
         输出类型: 无
-        功能: 翻页签、切换孩子、翻成绩单。除此之外本页是只读总览
+        功能: 选孩子、翻成绩单。除此之外本页是只读总览
         """
-        # 成绩单翻页与页签翻页都与孩子无关，先判掉，省得白扫一遍名单
+        # 成绩单翻页与选中的孩子无关，先判掉
         if yrn == education_constant.REPORT_CARD_PREV:
             self.report_card_index -= 1
             return
         if yrn == education_constant.REPORT_CARD_NEXT:
             self.report_card_index += 1
             return
-        if self.tab_bar.handle_page_yrn(yrn):
-            return
         if not self.student_list:
             return
-        student_id = self.tab_bar.get_student_by_yrn(yrn, self.student_list)
-        if student_id != -1:
+        if yrn == education_constant.SELECT_STUDENT_RETURN:
+            # 走通用 NPC 选择面板，名单已预筛为养成中的女儿
+            student_id = student_select.select_student(
+                self.student_list, _("选择孩子"), _("请选择要查看养成总览的孩子：\n"), self.now_student)
             # ⚠️ 换孩子必须把成绩单下标清掉：上一个孩子翻到第3份、换过来的孩子只有1份时，
             #    留着旧下标会莫名其妙地跳页（虽然会被夹回去，但表现很怪）
+            if student_id != self.now_student:
+                self.report_card_index = -1
             self.now_student = student_id
-            self.report_card_index = -1
 
     def _draw_stage(self, character_id: int):
         """
-        绘制当前成长阶段
+        绘制母亲、当前成长阶段与距下一阶段的天数和预计日期
         输入类型: character_id(int)
         输出类型: 无
-        功能: 显示阶段名与已成长天数
+        功能: 一行「母亲：X｜当前阶段：幼女｜距成长为萝莉还有 N 天（日历天），预计 2026年秋月12日」。
+              已成年不写天数；持成长停滞素质时写明阶段不会推进。
+              ⚠️ 天数是**日历天**（get_child_grow_day 用真实 datetime 差值），与可游玩天约为 3:1，
+                 所以旁边同时给出时钟真正会走到的预计日期，走 game_time.get_predict_date 归并到季月
         """
-        from Script.System.Pregnancy_System import pregnancy_handle
+        from Script.System.Pregnancy_System import pregnancy_handle, pregnancy_panel
 
         character_data: game_type.Character = cache.character_data[character_id]
         stage_name = _("已成年")
@@ -126,13 +129,28 @@ class Growth_Panel:
             if character_data.talent.get(talent_id, 0):
                 stage_name = _(education_constant.STAGE_TALENT_NAME[talent_id])
                 break
-        # 成长天数由妊娠系统统一计算（含成长加速药），这里只取用不重算
-        grow_day = pregnancy_handle.get_child_grow_day(character_id)
+        # 母亲：血缘关系里的 mother_id，旧档或数据损坏时可能指向不存在的角色
+        mother_id = character_data.relationship.mother_id
+        mother_name = cache.character_data[mother_id].name if mother_id != -1 and mother_id in cache.character_data else _("未知")
+        text = _("\n  母亲：{0}｜当前阶段：{1}").format(mother_name, stage_name)
+        # 下一阶段：阈值与成长天数都由妊娠系统统一计算（含成长加速药），这里只取用不重算
+        stage_total_day = pregnancy_handle.get_child_growth_stage_total_day(character_id)
+        if not stage_total_day:
+            text += _("（已成年，没有下一阶段）\n")
+        else:
+            left_day = max(0, stage_total_day - pregnancy_handle.get_child_grow_day(character_id))
+            next_stage_name = pregnancy_handle.get_child_next_stage_name(character_id)
+            if character_data.talent.get(education_constant.GROWTH_STOP_TALENT_ID, 0):
+                # 成长停滞期间 check_grow_to_* 不会推进阶段，写预计日期只会误导
+                text += _("｜成长停滞中，阶段不会推进（解除后距成长为{0}还需 {1} 天）\n").format(next_stage_name, left_day)
+            else:
+                # 预计日期从今天往后数：非季月会被时钟整段跳过，get_predict_date 会归并到下一个季月的1日
+                predict_time = max(game_time.get_predict_date(left_day, cache.game_time), cache.game_time)
+                text += _("｜距成长为{0}还有 {1} 天（日历天），预计在 {2}年{3}\n").format(
+                    next_stage_name, left_day, predict_time.year, pregnancy_panel.get_date_text(predict_time))
         info_draw = draw.NormalDraw()
         info_draw.width = self.width
-        # ⚠️ 必须写明是「可游玩天」：一年只有3/6/9/12四个月，与现实日历天约为1:3
-        info_draw.text = _("\n  当前阶段：{0}｜本阶段已成长 {1} 个可游玩天（非日历天）\n").format(
-            stage_name, grow_day)
+        info_draw.text = text
         info_draw.draw()
         # 胎教带来的初始经验是这孩子上学前就有的「底子」，只有出生时提示过一次，
         # 之后玩家再也看不到，放在阶段行下面正好（四期方案 §3.19）

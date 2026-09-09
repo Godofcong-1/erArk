@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
-"""面板：页签容器、全局课表、个人课表、日程模板、养成总览、学生页签分页、临时课编辑、Web 适配器冒烟"""
+"""面板：页签容器、全局课表、个人课表、日程模板、养成总览、选人按钮（通用 NPC 选择面板）、临时课编辑、Web 适配器冒烟"""
 from _bootstrap import *  # noqa: F401,F403
-from Script.System.Education_System import class_schedule_panel, course_select_panel, growth_panel, schedule_template_panel, student_tab_bar
+from Script.System.Education_System import class_schedule_panel, course_select_panel, growth_panel, schedule_template_panel
 
 open_all_classroom()
 clear_schedules()
@@ -108,21 +108,29 @@ panel.handle_yrn(cell_key)
 check("选教师时取消不写入", schedule_handle.get_class_cell(ROOM_P, 2, 3) is None)
 flow_handle.askfor_all = fake_askfor
 
-section("个人课表面板与分页")
+section("个人课表面板与选人")
 cs = course_select_panel.Course_Select_Panel(W)
 rl = []
+drawn_text.clear()
 cs.draw_page(rl)
 check("名单 = 学生岗 ∪ 女儿，12 人", cs.student_list == [201 + i for i in range(11)] + [301])
-check("首页 7 个页签按钮 + 下一页", sum(1 for r in rl if r.startswith("\nSTU_")) == 7 and E.STUDENT_PAGE_NEXT in rl and E.STUDENT_PAGE_PREV not in rl)
-check("63 个格子 + 日程行 + 三个按钮", sum(1 for r in rl if r.startswith("\nMYCELL_")) == 63 and "EDIT_SCHEDULE" in rl and _("一键选课") in rl and _("复制") in rl and _("清空") in rl)
-cs.handle_yrn(E.STUDENT_PAGE_NEXT)
+check("首屏只有顶在行首的[选择学生]（不写「尚未选择」），没有人名页签与格子，也不画周表", E.SELECT_STUDENT_RETURN in rl and not any(r.startswith("\nSTU_") or r.startswith("\nMYCELL_") for r in rl)
+      and cs.now_student == -1 and "EDIT_SCHEDULE" not in rl and not any("尚未选择学生" in t for t in drawn_text) and any(t == "[选择学生]" for t in drawn_text))
+answers[:] = [lambda o: o == "女儿03"]
+flow_handle.askfor_all = scripted_askfor
+cs.handle_yrn(E.SELECT_STUDENT_RETURN)
+check("通用选择面板列出了预筛名单（12 人，不含教师）", "女儿01" in captured["rl"] and "成年学生" in captured["rl"] and "教师甲" not in captured["rl"] and _("返回") in captured["rl"])
+check("点人名 → 选中", cs.now_student == 203)
 rl = []
 cs.draw_page(rl)
-check("第 2 页 4 人", sum(1 for r in rl if r.startswith("\nSTU_")) == 4 and E.STUDENT_PAGE_NEXT not in rl)
-cs.handle_yrn("\nSTU_301")
-rl = []
-cs.draw_page(rl)
-check("选中成年学生且停在第 2 页", cs.now_student == 301 and cs.tab_bar.page == 1)
+check("选中后：63 个格子 + 日程行 + 三个按钮", sum(1 for r in rl if r.startswith("\nMYCELL_")) == 63 and "EDIT_SCHEDULE" in rl and _("一键选课") in rl and _("复制") in rl and _("清空") in rl)
+answers[:] = [lambda o: o == _("返回")]
+cs.handle_yrn(E.SELECT_STUDENT_RETURN)
+check("选人时点[返回] → 选中不变", cs.now_student == 203)
+answers[:] = [lambda o: o == "成年学生"]
+cs.handle_yrn(E.SELECT_STUDENT_RETURN)
+check("换成成年学生", cs.now_student == 301)
+flow_handle.askfor_all = fake_askfor
 cs.handle_yrn(_("一键选课"))
 auto_schedule.auto_fill_class_schedule()
 cs.handle_yrn(_("一键选课"))
@@ -133,7 +141,9 @@ cs.handle_yrn(_("复制"))
 check("复制到其他学生", schedule_handle.get_selected_course(201, 0, 0) == schedule_handle.get_selected_course(301, 0, 0) and schedule_handle.get_selected_course(201, 0, 0) is not None)
 cs.handle_yrn(_("清空"))
 check("清空当前学生", not any(schedule_handle.get_selected_course(301, d, p) for d in range(7) for p in range(9)))
-cs.handle_yrn("\nSTU_201")
+answers[:] = [lambda o: o == "女儿01"]
+cs.handle_yrn(E.SELECT_STUDENT_RETURN)
+check("换回女儿01", cs.now_student == 201)
 rl = []
 cs.draw_page(rl)
 cell_key = next(r for r in rl if r.startswith("\nMYCELL_0_1"))
@@ -155,13 +165,35 @@ cs.handle_yrn("EDIT_SCHEDULE")
 check("日程编辑能进能出", True)
 flow_handle.askfor_all = fake_askfor
 
-section("养成总览面板")
+section("养成总览面板与选人")
 gp = growth_panel.Growth_Panel(W)
 rl = []
 drawn_text.clear()
 gp.draw_page(rl)
-check("名单只有女儿，11 人分两页", gp.student_list == [201 + i for i in range(11)] and E.STUDENT_PAGE_NEXT in rl)
+check("名单只有女儿，11 人；首屏未选人、只有[选择学生]、不画正文", gp.student_list == [201 + i for i in range(11)] and E.SELECT_STUDENT_RETURN in rl and gp.now_student == -1
+      and not any(r.startswith("\nGSTU_") for r in rl) and not any("科目水平" in t for t in drawn_text))
+answers[:] = [lambda o: o == "女儿01"]
+flow_handle.askfor_all = scripted_askfor
+gp.handle_yrn(E.SELECT_STUDENT_RETURN)
+check("通用选择面板只列女儿", "女儿11" in captured["rl"] and "成年学生" not in captured["rl"] and "教师甲" not in captured["rl"])
+flow_handle.askfor_all = fake_askfor
+check("选中女儿01", gp.now_student == 201)
+rl = []
+drawn_text.clear()
+gp.draw_page(rl)
 check("画出阶段 / 科目 / 出勤 / 性格四栏", all(any(key in t for t in drawn_text) for key in ("当前阶段", "科目水平", "出勤", "性格倾向")))
+stage_text = next((t for t in drawn_text if "母亲" in t), "")
+check("阶段行：母亲名、距少女还有 150 天（日历天）、预计日期", mother.name in stage_text and "150" in stage_text and "日历天" in stage_text and "预计" in stage_text and "少女" in stage_text, stage_text)
+cache.character_data[201].talent[E.GROWTH_STOP_TALENT_ID] = 1
+drawn_text.clear()
+gp.draw_page([])
+check("成长停滞时写明阶段不会推进", any("停滞" in t and "不会推进" in t for t in drawn_text))
+cache.character_data[201].talent[E.GROWTH_STOP_TALENT_ID] = 0
+cache.character_data[201].relationship.mother_id = -1
+drawn_text.clear()
+gp.draw_page([])
+check("没有母亲时显示未知", any(_("未知") in t and "母亲" in t for t in drawn_text))
+cache.character_data[201].relationship.mother_id = 102
 g = growth_handle.get_child_growth(201)
 for index in range(3):
     semester_handle.push_report_card(201, {"year": 2026, "month": 3 * (index + 1), "attend": 5, "absent": 0, "rate": 100, "level_change": {}, "grade": 1})
@@ -172,12 +204,16 @@ gp.handle_yrn(E.REPORT_CARD_PREV)
 rl = []
 gp.draw_page(rl)
 check("翻到上一学期后两个方向都有", E.REPORT_CARD_PREV in rl and E.REPORT_CARD_NEXT in rl and gp.report_card_index == 1)
-gp.handle_yrn("\nGSTU_202")
+answers[:] = [lambda o: o == "女儿02"]
+flow_handle.askfor_all = scripted_askfor
+gp.handle_yrn(E.SELECT_STUDENT_RETURN)
 check("切人重置成绩单下标", gp.now_student == 202 and gp.report_card_index == -1)
 g.skip_class_flag = True
 g.show_off_ability = {45: 2}
 g.report_card_flag = True
-gp.handle_yrn("\nGSTU_201")
+answers[:] = [lambda o: o == "女儿01"]
+gp.handle_yrn(E.SELECT_STUDENT_RETURN)
+flow_handle.askfor_all = fake_askfor
 drawn_text.clear()
 gp.draw_page([])
 check("待处理栏：成绩单 / 炫耀 / 翘课三条都出", any("成绩单待查看" in t for t in drawn_text) and any("炫耀" in t for t in drawn_text) and any("翘课" in t for t in drawn_text))
@@ -191,22 +227,23 @@ tp.draw_page(rl)
 check("四套预设都列出", all(any(name in t for t in drawn_text) for name in E.PRESET_TEMPLATE_NAME.values()))
 check("有新建与批量套用入口", len(rl) >= 5)
 
-section("Student_Tab_Bar 组件")
-bar = student_tab_bar.Student_Tab_Bar(W, "\nX_")
-lst = [201 + i for i in range(11)] + [301]
-bar.jump_to(lst, 301)
-check("jump_to 定位到第 2 页", bar.page == 1)
-bar.jump_to(lst, 999)
-check("不存在的人不动页码", bar.page == 1)
-check("只认自己的前缀", bar.get_student_by_yrn("\nSTU_205", lst) == -1 and bar.get_student_by_yrn("\nX_205", lst) == 205)
-bar.page = 99
+section("student_select 组件")
+from Script.System.Education_System import student_select
+
 rl = []
-bar.draw(lst, 201, rl)
-check("越界夹回末页", bar.page == 1)
-bar.page = 0
+drawn_text.clear()
+check("未选人：返回 False、只登记选人哨兵、行首直接是[选择学生]而不是「尚未选择」、画提示", not student_select.draw_select_student_line(W, -1, rl) and rl == [E.SELECT_STUDENT_RETURN]
+      and drawn_text[0] == "[选择学生]" and not any("尚未选择学生" in t for t in drawn_text) and any("点击[选择学生]" in t for t in drawn_text))
 rl = []
-bar.draw(lst[:3], 201, rl)
-check("单页不画翻页", E.STUDENT_PAGE_NEXT not in rl and E.STUDENT_PAGE_PREV not in rl and len(rl) == 2)
+drawn_text.clear()
+check("已选人：返回 True、显示当前学生", student_select.draw_select_student_line(W, 201, rl) and rl == [E.SELECT_STUDENT_RETURN] and any("女儿01" in t for t in drawn_text))
+answers[:] = [lambda o: o == "女儿05"]
+flow_handle.askfor_all = scripted_askfor
+check("按返回值反查选中者（无 cmd_func 的桩）", student_select.select_student([201, 202, 205], "t", "", 201) == 205)
+answers[:] = [lambda o: o == _("返回")]
+check("点[返回]原样返回当前选中者", student_select.select_student([201, 202, 205], "t", "", 202) == 202)
+check("名单里不存在的角色被跳过、不报错", student_select.select_student([201, 999], "t", "", -1) in (-1, 201))
+flow_handle.askfor_all = fake_askfor
 
 section("Web 适配器冒烟")
 from Script.System.Web_Draw_System import web_draw_adapter

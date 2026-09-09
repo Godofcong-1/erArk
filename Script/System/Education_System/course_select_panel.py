@@ -2,7 +2,7 @@
 
 一次展示一个学生的周表（7 天 × 9 节），点格子先选课型、再选具体目标。
 学生 = 职业为学生的全部干员（含成年）∪ 养成中的女儿（一期方案 §9.8.2），
-顶部的人名页签每页 8 人、超出翻页（§9.8.1）。
+由「选择学生」按钮走通用 NPC 选择面板挑人（2026-09-09，二期方案 §9.2.5；原来的人名页签栏已删）。
 
 ⚠️ 「复制到其他学生」是多人场景下的关键操作（已确认口径 4）：不做这个，
    操作量会随学生数线性翻倍，三个学生就得把同一张表排三遍。
@@ -13,7 +13,7 @@ from typing import Dict, List
 from Script.Core import cache_control, game_type, get_text, flow_handle
 from Script.Config import game_config, normal_config
 from Script.Design import game_time
-from Script.System.Education_System import education_constant, schedule_handle, growth_handle, schedule_template_handle, student_tab_bar
+from Script.System.Education_System import education_constant, schedule_handle, growth_handle, schedule_template_handle, student_select
 from Script.System.Education_System.class_schedule_panel import get_period_time_text
 from Script.UI.Moudle import draw
 
@@ -40,20 +40,18 @@ class Course_Select_Panel:
         """初始化绘制对象"""
         self.width: int = width
         self.now_student: int = -1
-        """ 当前展示的学生角色id，-1表示尚未选择，由 draw_page 回落到第一个 """
+        """ 当前展示的学生角色id，-1表示尚未选择。⚠️ 不再回落到名单第一个：进面板先点「选择学生」挑人 """
         self.student_list: List[int] = []
         """ 本轮可排课的学生列表，每轮在 draw_page 里重算 """
         self.cell_return: Dict[str, tuple] = {}
         """ 本轮课表格子按钮的返回值 → (星期, 节次)，由 draw_page 写、handle_yrn 读 """
-        self.tab_bar = student_tab_bar.Student_Tab_Bar(width, "\nSTU_")
-        """ 顶部的人名页签栏，每页8人。⚠️ 页码存在它身上，容器每轮重画也不会丢 """
 
     def draw_page(self, return_list: List[str]):
         """
         绘制本页内容
         输入类型: return_list(List[str])，容器的共享返回值列表，本页的按钮往里加
         输出类型: 无
-        功能: 学生页签（每页8人，可翻页）+ 周表 + 选课入口。
+        功能: 「选择学生」一行 + 周表 + 选课入口。
               ⚠️ 只画不取输入，askfor_all 由容器 Education_Manage_Panel 统一调用
         """
         # 每轮重算：孩子会在游戏过程中出生与长大、干员会换岗，不能在 __init__ 里快照。
@@ -67,12 +65,11 @@ class Course_Select_Panel:
             info_draw.text = _("\n  目前还没有职业为学生的干员\n")
             info_draw.draw()
             return
-        # 选中态失效（首次进入，或原来那个学生已不在列表里）时回落到第一个，并把页签栏翻到她所在的那页
+        # 选中态失效（首次进入，或原来那个学生已不在名单里）时清成未选择，由玩家点「选择学生」挑人（二期方案 §9.2.5）
         if self.now_student not in self.student_list:
-            self.now_student = self.student_list[0]
-            self.tab_bar.jump_to(self.student_list, self.now_student)
-
-        self.tab_bar.draw(self.student_list, self.now_student, return_list)
+            self.now_student = -1
+        if not student_select.draw_select_student_line(self.width, self.now_student, return_list):
+            return
 
         self.cell_return = self._draw_week_table(self.now_student)
         return_list.extend(self.cell_return.keys())
@@ -104,12 +101,16 @@ class Course_Select_Panel:
         处理本页按钮的选择结果
         输入类型: yrn(str)，容器 askfor_all 的返回值
         输出类型: 无
-        功能: 翻页 / 切换学生 / 清空 / 复制 / 改日程 / 编辑某一格
+        功能: 选学生 / 清空 / 复制 / 改日程 / 编辑某一格
         """
-        # 翻页与选中的学生无关，先判掉
-        if self.tab_bar.handle_page_yrn(yrn):
-            return
         if not self.student_list:
+            return
+        # 选学生与当前选中者无关，先判掉：走通用 NPC 选择面板，名单已按「学生岗 ∪ 女儿」预筛
+        if yrn == education_constant.SELECT_STUDENT_RETURN:
+            self.now_student = student_select.select_student(
+                self.student_list, _("选择学生"), _("请选择要查看或编辑个人课表的学生：\n"), self.now_student)
+            return
+        if self.now_student == -1:
             return
         if yrn == _("一键选课"):
             self._auto_fill_course(self.now_student)
@@ -126,10 +127,6 @@ class Course_Select_Panel:
         if yrn in self.cell_return:
             week_day, period = self.cell_return[yrn]
             self._edit_cell(self.now_student, week_day, period)
-            return
-        student_id = self.tab_bar.get_student_by_yrn(yrn, self.student_list)
-        if student_id != -1:
-            self.now_student = student_id
 
     def _draw_week_table(self, character_id: int) -> Dict[str, tuple]:
         """
@@ -259,12 +256,15 @@ class Course_Select_Panel:
             line_feed.draw()
             draw.LineDraw("-", self.width).draw()
             # 三个时段，点进去单独覆盖
+            # ⚠️ 单独指定里选「自由选择娱乐活动」等于取消这一格的单独指定、回到模板的安排（覆盖表存不了 0），先把话说在前面
+            tip_draw = draw.NormalDraw()
+            tip_draw.width = self.width
+            tip_draw.text = _("  点某个时段可单独指定活动；选「自由选择娱乐活动」即取消单独指定、回到模板的安排；不符合条件的活动会退回自由选择\n")
+            tip_draw.style = "deep_gray"
+            tip_draw.draw()
             for slot in range(education_constant.SLOT_COUNT):
-                entertainment_id = schedule_template_handle.get_child_slot_activity(character_id, slot)
-                if entertainment_id and entertainment_id in game_config.config_entertainment:
-                    now_name = game_config.config_entertainment[entertainment_id].name
-                else:
-                    now_name = _("未设置")
+                # 0 显示为「自由选择娱乐活动」；这个孩子不满足条件的活动标注「条件不符→自由选择」
+                now_name = schedule_template_handle.get_child_slot_activity_text(character_id, slot)
                 growth_data = cache.character_data[character_id].child_growth
                 override_mark = ""
                 if growth_data is not None and slot in growth_data.schedule_override:

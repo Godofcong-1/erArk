@@ -187,18 +187,30 @@ SLOT_PERIOD_RANGE = {
 }
 """ 每个时段覆盖的课表节次区间 [起, 止)（`game_time.CLASS_PERIOD_START`：上午4节 + 下午5节）。
     晚上是空区间——19~22 点本就不排课，所以晚上的日程永远生效 """
-ENTERTAINMENT_FOLLOW_MOTHER = 176
+ENTERTAINMENT_PLAY_HOUSE = 151
+""" 娱乐配置「过家家」的cid（Entertainment.csv）。教育区的娱乐编号按「区块id×10+序号」排在 15x 段，
+    过家家是该段的第一项，其后依次是 152 照料卵（妊娠系统，见 pregnancy_constant.TEND_EGGS_ENTERTAINMENT_ID）/
+    153 跟随母亲 / 154 自由玩耍 / 155 上课（无课时自习）。幼女的每日随机娱乐固定是过家家（handle_npc_ai.get_chara_entertainment） """
+ENTERTAINMENT_FOLLOW_MOTHER = 153
 """ 娱乐配置「跟随母亲」的cid（Entertainment.csv）。它没有固定地点，执行走 class_ai 的见学分支；
-    日程模板把某个时段排成它时，该时段也走见学分支 """
-ENTERTAINMENT_FREE_PLAY = 177
-""" 娱乐配置「自由玩耍」的cid，地点为育儿室，也是见学的回落目标 """
-ENTERTAINMENT_SELF_STUDY = 178
-""" 娱乐配置「上课（无课时自习）」的cid（Entertainment.csv:37），
-    行为指向 self_study(211)：有课就去上课，没课就在理论教室自习。
-    ⚠️ 原值写的是154，而 Entertainment.csv 里根本没有154这个cid """
-CHILD_SCHEDULE_FIRST_ROW = [ENTERTAINMENT_SELF_STUDY, ENTERTAINMENT_FREE_PLAY, ENTERTAINMENT_FOLLOW_MOTHER]
-""" 「选择活动」面板第一行固定的三项：它们是孩子日程的主力选项，
-    摊进29项娱乐的列表里玩家不好找 """
+    日程模板把某个时段排成它时，该时段也走见学分支。
+    ⚠️ 2026-09-09 由 176 改为 153（原编号排在大浴场段 17x）：旧存档里的旧编号由 save_handle 读档时换算 """
+ENTERTAINMENT_FREE_PLAY = 154
+""" 娱乐配置「自由玩耍」的cid（原 177），地点为育儿室，也是见学的回落目标 """
+ENTERTAINMENT_SELF_STUDY = 155
+""" 娱乐配置「上课（无课时自习）」的cid（原 178），
+    行为指向 self_study(211)：有课就去上课，没课就在理论教室自习。need 列为 W152|1，只有学生岗能排 """
+SCHEDULE_ONLY_ENTERTAINMENT_SET = {ENTERTAINMENT_FOLLOW_MOTHER, ENTERTAINMENT_FREE_PLAY, ENTERTAINMENT_SELF_STUDY}
+""" 只由日程模板指派、不进每日随机娱乐池的三项（handle_npc_ai.get_chara_entertainment 用它排除）。
+    从上面三个常量派生，改编号时只动一处 """
+SCHEDULE_FREE_CHOICE = 0
+""" 日程时段的「自由选择娱乐活动」：槽位存 0，表示该时段不改写、保留当天的随机娱乐。
+    ⚠️ 它不是 Entertainment.csv 里的一行，只是 0 这个哨兵值的显示名；不满足活动条件的孩子也会退回到它 """
+SCHEDULE_FREE_CHOICE_NAME = _("自由选择娱乐活动")
+""" 「自由选择娱乐活动」的显示名。模板表、编辑页、个人日程摘要里的 0 一律显示成它，不再显示「--」或「未设置」 """
+CHILD_SCHEDULE_FIRST_ROW = [ENTERTAINMENT_SELF_STUDY, SCHEDULE_FREE_CHOICE]
+""" 「选择活动」面板第一行固定的两项：上课（无课时自习）与自由选择娱乐活动。
+    第二行是有年龄需求的活动（过家家 / 跟随母亲 / 自由玩耍），不写死、由 schedule_template_handle 从 need 列现算 """
 TEMPLATE_ACADEMIC = 1
 """ 预设模板：学业优先 """
 TEMPLATE_BALANCED = 2
@@ -450,14 +462,10 @@ REPORT_CARD_PREV = "GROWTH_REPORT_PREV"
     容器里同屏还有孩子页签，撞名会让点了张三跳到李四 """
 REPORT_CARD_NEXT = "GROWTH_REPORT_NEXT"
 """ 成绩单往后翻一页的返回值。⚠️ 同上，是内部哨兵值，不参与翻译 """
-STUDENT_TAB_PER_PAGE = 8
-""" 个人课表与养成总览顶部的学生页签每页最多列几个人（一期方案 §9.8.1）。
-    ⚠️ 原来是按人数均分整行宽度：女儿一多每个页签只剩几列，名字被截得认不出来 """
-STUDENT_PAGE_PREV = "EDU_STUDENT_PAGE_PREV"
-""" 学生页签往前翻一页的返回值。⚠️ 与 REPORT_CARD_PREV 同一做法：内部哨兵、不翻译，
-    同屏还有人名页签与容器页签，用中文按钮名做返回值留有撞名的余地 """
-STUDENT_PAGE_NEXT = "EDU_STUDENT_PAGE_NEXT"
-""" 学生页签往后翻一页的返回值。⚠️ 同上 """
+SELECT_STUDENT_RETURN = "EDU_SELECT_STUDENT"
+""" 个人课表与养成总览里「选择学生」按钮的返回值（2026-09-09 取代了原来每页 8 人的人名页签栏，见二期方案 §9.2.5）。
+    ⚠️ 与 REPORT_CARD_PREV 同一做法：内部哨兵、不翻译，同屏还有容器页签与成绩单翻页，
+       用中文按钮名做返回值留有撞名的余地 """
 COLUMN_INDENT = "  "
 """ 模板表每行的前导缩进，表头与数据行必须用同一个。⚠️ 是排版用的空白，不参与翻译 """
 COLUMN_WIDTH_ID = 4

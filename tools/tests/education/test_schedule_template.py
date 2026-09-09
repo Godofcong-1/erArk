@@ -10,6 +10,7 @@ T = education_constant
 SELF_STUDY = T.ENTERTAINMENT_SELF_STUDY
 FREE_PLAY = T.ENTERTAINMENT_FREE_PLAY
 FOLLOW = T.ENTERTAINMENT_FOLLOW_MOTHER
+PLAY_HOUSE = T.ENTERTAINMENT_PLAY_HOUSE
 CHESS = schedule_template_handle.get_entertainment_cid_by_name(_("下棋"))
 READ = schedule_template_handle.get_entertainment_cid_by_name(_("读书"))
 
@@ -72,9 +73,47 @@ schedule_template_handle.apply_template(201, 0)
 check("取消套用后为「未设置」", schedule_template_handle.get_child_schedule_text(201) == _("未设置"))
 
 section("need 校验与课表优先")
-check("跟随母亲：幼女可、萝莉不可", schedule_template_handle.judge_activity_need_pass(202, FOLLOW) and not schedule_template_handle.judge_activity_need_pass(201, FOLLOW))
-check("无 need 条件一律可", schedule_template_handle.judge_activity_need_pass(201, FREE_PLAY))
+girl = make_character(203, "少女", 152, daughter=True, stage=104, mother_id=102, born_days=500)
+adult_student = make_character(301, "成年学生", 152)
+worker = make_character(302, "成年干员", 21)
+check("跟随母亲：幼女、萝莉都可，少女与成年学生不可", schedule_template_handle.judge_activity_need_pass(202, FOLLOW) and schedule_template_handle.judge_activity_need_pass(201, FOLLOW)
+      and not schedule_template_handle.judge_activity_need_pass(203, FOLLOW) and not schedule_template_handle.judge_activity_need_pass(301, FOLLOW))
+check("自由玩耍与过家家同样限幼女或萝莉", schedule_template_handle.judge_activity_need_pass(202, FREE_PLAY) and schedule_template_handle.judge_activity_need_pass(201, PLAY_HOUSE)
+      and not schedule_template_handle.judge_activity_need_pass(203, FREE_PLAY) and not schedule_template_handle.judge_activity_need_pass(302, PLAY_HOUSE))
+check("上课（无课时自习）：学生岗可、非学生岗不可", schedule_template_handle.judge_activity_need_pass(301, SELF_STUDY) and schedule_template_handle.judge_activity_need_pass(202, SELF_STUDY)
+      and not schedule_template_handle.judge_activity_need_pass(302, SELF_STUDY))
+check("无 need 条件一律可", schedule_template_handle.judge_activity_need_pass(302, CHESS))
 check("不存在的娱乐不可", not schedule_template_handle.judge_activity_need_pass(201, 99999))
+
+section("judge_require 新语法：/ 或、W 岗位")
+judge, reason = attr_calculation.judge_require(["T102|1/T103|1"], 203)
+check("或条件：全不满足 → 不通过，reason 用「或」连接两个素质名", not judge and _("或") in reason and game_config.config_talent[102].name in reason and game_config.config_talent[103].name in reason, reason)
+check("或条件：任一满足 → 通过", attr_calculation.judge_require(["T102|1/T103|1"], 201)[0] == 1 and attr_calculation.judge_require(["T102|1/T103|1"], 202)[0] == 1)
+check("或条件与且条件混用", attr_calculation.judge_require(["T102|1/T103|1", "W152|1"], 201)[0] == 1 and attr_calculation.judge_require(["T102|1/T103|1", "W152|1"], 302)[0] == 0)
+judge, reason = attr_calculation.judge_require(["W152|1"], 302)
+check("岗位条件 |1：不是该岗位 → 不通过，reason 写岗位名", not judge and game_config.config_work_type[152].name in reason, reason)
+check("岗位条件 |0：不是该岗位 → 通过；是该岗位 → 不通过", attr_calculation.judge_require(["W152|0"], 302)[0] == 1 and attr_calculation.judge_require(["W152|0"], 301)[0] == 0)
+check("既有写法不受影响", attr_calculation.judge_require(["T7|0"], 302)[0] == 1 and attr_calculation.judge_require(["T7|0"], 202)[0] == 0)
+
+section("选活动分组与显示名")
+first_row, age_row, other_list = schedule_template_handle.get_schedule_activity_rows()
+check("第一行 = 上课（无课时自习）+ 自由选择(0)", first_row == [SELF_STUDY, 0], first_row)
+check("第二行 = 有年龄需求的三项：过家家 / 跟随母亲 / 自由玩耍", age_row == [PLAY_HOUSE, FOLLOW, FREE_PLAY], age_row)
+check("其余不含前两行、不含 0、含下棋", 0 not in other_list and not set(other_list) & set(first_row + age_row) and CHESS in other_list)
+check("年龄限制标注：限幼女/萝莉；无年龄需求的为空", schedule_template_handle.get_activity_age_limit_text(FOLLOW) == _("限{0}").format("/".join((game_config.config_talent[102].name, game_config.config_talent[103].name)))
+      and schedule_template_handle.get_activity_age_limit_text(CHESS) == "" and schedule_template_handle.get_activity_age_limit_text(SELF_STUDY) == "", schedule_template_handle.get_activity_age_limit_text(FOLLOW))
+check("显示名：0 为自由选择、未知编号为 --", schedule_template_handle.get_activity_name(0) == T.SCHEDULE_FREE_CHOICE_NAME and schedule_template_handle.get_activity_name(99999) == "--" and schedule_template_handle.get_activity_name(CHESS) == _("下棋"))
+schedule_template_handle.apply_template(203, T.TEMPLATE_PLAYFUL)
+check("少女套玩乐优先：过家家标注条件不符→自由选择，下棋照常", schedule_template_handle.get_child_slot_activity_text(203, 0) == _("{0}（条件不符→自由选择）").format(_("过家家"))
+      and schedule_template_handle.get_child_slot_activity_text(203, 1) == _("下棋"), schedule_template_handle.get_child_slot_activity_text(203, 0))
+check("日程摘要里也带标注", _("条件不符") in schedule_template_handle.get_child_schedule_text(203))
+schedule_template_handle.apply_template(203, T.TEMPLATE_CUSTOM)
+check("自定义模板的空时段显示为自由选择", schedule_template_handle.get_child_slot_activity_text(203, 0) == T.SCHEDULE_FREE_CHOICE_NAME)
+girl.entertainment.entertainment_type = [11, 12, 13]
+schedule_template_handle.apply_template(203, T.TEMPLATE_PLAYFUL)
+schedule_template_handle.apply_schedule_for_child(203)
+check("少女的每日改写：条件不符的时段退回随机值，下棋照写", girl.entertainment.entertainment_type == [11, CHESS, 13], girl.entertainment.entertainment_type)
+schedule_template_handle.apply_template(203, 0)
 open_all_classroom()
 schedule_handle.set_selected_course(201, cache.game_time.weekday(), 0, T.COURSE_TYPE_THEORY, _("理论教室一"))
 check("上午有课 → 时段 0 不空", not schedule_template_handle.judge_slot_free_of_class(201, 0, cache.game_time.weekday()))
@@ -90,12 +129,14 @@ schedule_template_handle.apply_schedule_for_child(201)
 check("有课的时段保留随机值、没课的按模板改写", loli.entertainment.entertainment_type == [11, CHESS, FREE_PLAY], loli.entertainment.entertainment_type)
 custom = schedule_template_handle.create_template("跟妈")
 schedule_template_handle.set_template_slot(custom, 2, FOLLOW)
-schedule_template_handle.batch_apply_template([201, 202], custom)
+schedule_template_handle.batch_apply_template([201, 202, 203], custom)
 loli.entertainment.entertainment_type = [11, 12, 13]
 child.entertainment.entertainment_type = [11, 12, 13]
-schedule_template_handle.apply_schedule_for_child(201)
-schedule_template_handle.apply_schedule_for_child(202)
-check("萝莉不满足 need 的时段跳过、幼女写入", loli.entertainment.entertainment_type[2] == 13 and child.entertainment.entertainment_type[2] == FOLLOW)
+girl.entertainment.entertainment_type = [11, 12, 13]
+for cid in (201, 202, 203):
+    schedule_template_handle.apply_schedule_for_child(cid)
+check("跟随母亲：萝莉与幼女都写入，少女不满足 need 的时段退回随机值", loli.entertainment.entertainment_type[2] == FOLLOW and child.entertainment.entertainment_type[2] == FOLLOW and girl.entertainment.entertainment_type[2] == 13,
+      (loli.entertainment.entertainment_type, child.entertainment.entertainment_type, girl.entertainment.entertainment_type))
 check("候选活动表不含 0 号", 0 not in schedule_template_handle.get_schedule_activity_candidate() and FOLLOW in schedule_template_handle.get_schedule_activity_candidate())
 schedule_template_handle.apply_schedule_for_child(102)
 check("没有养成数据的干员不报错", True)

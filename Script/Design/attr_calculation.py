@@ -910,7 +910,8 @@ def judge_require(judge_text_list, character_id, hypnosis_replace_trust_flag = F
     """
     判断角色是否满足文本列表里的全部需求\n
     Keyword arguments:\n
-    judge_text_list -- 需要判断的文本列表(A能力,T素质,J宝珠,E经验,F好感度,X信赖,O设施解锁,G攻略等级)\n
+    judge_text_list -- 需要判断的文本列表(A能力,T素质,J宝珠,E经验,F好感度,X信赖,O设施解锁,G攻略等级,W岗位)\n
+                       列表内各项之间是「且」；同一项内可用 / 连接多个条件表示「或」，如 T102|1/T103|1（幼女或萝莉）\n
     character_id -- 角色id\n
     hypnosis_replace_trust_flag -- 是否可以用催眠进度来代替信赖度\n
     Return arguments:\n
@@ -923,6 +924,22 @@ def judge_require(judge_text_list, character_id, hypnosis_replace_trust_flag = F
     reason = _("需要:")
 
     for judge_text in judge_text_list:
+        # 「或」条件：同一项内用 / 分开的子条件任一满足即可（2026-09-09 为日程活动的「限幼女或萝莉」加的）
+        # ⚠️ 子条件逐个递归交回本函数判定，所以每个子条件仍是标准的 X<id>|<值> 写法，不必另写一套解析
+        if "/" in judge_text:
+            sub_reason_list = []
+            sub_pass = False
+            for sub_text in judge_text.split("/"):
+                sub_judge, sub_reason = judge_require([sub_text], character_id, hypnosis_replace_trust_flag)
+                if sub_judge:
+                    sub_pass = True
+                    break
+                sub_reason_list.append(sub_reason[len(_("需要:")):].strip())
+            if sub_pass:
+                continue
+            judge = 0
+            reason += _("或").join(sub_reason_list) + "  "
+            break
         judge_type = judge_text.split('|')[0][0]
         if len(judge_text.split('|')[0]) >= 2:
             judge_type_id = int(judge_text.split('|')[0][1:])
@@ -981,6 +998,18 @@ def judge_require(judge_text_list, character_id, hypnosis_replace_trust_flag = F
             if now_level < judge_value:
                 judge = 0
                 reason += _("攻略等级>={0}  ").format(judge_value)
+                break
+        elif judge_type == "W":
+            # 岗位条件 W<岗位id>|<要求值>：|1 要求当前岗位就是它，|0 要求不是它（2026-09-09 为「上课（无课时自习）」日程活动限学生岗加的）
+            now_work_type = character_data.work.work_type
+            work_name = game_config.config_work_type[judge_type_id].name if judge_type_id in game_config.config_work_type else str(judge_type_id)
+            if judge_value and now_work_type != judge_type_id:
+                judge = 0
+                reason += _("岗位为{0}  ").format(work_name)
+                break
+            if not judge_value and now_work_type == judge_type_id:
+                judge = 0
+                reason += _("岗位非{0}  ").format(work_name)
                 break
 
     return judge, reason

@@ -312,21 +312,27 @@ def judge_should_follow_mother(character_id: int) -> bool:
 
     两种入口：
         1. 幼女期的默认行为 —— 在节次内、且本节没排课（方案 §3.24 的触发条件）
-        2. 日程模板把当前娱乐时段排成了「跟随母亲」—— 晚上或没课的时段也能跟
-    ⚠️ 只对幼女（素质102）成立：萝莉期的自由时段是自由行动（口径 10）
+        2. 日程模板把当前娱乐时段排成了「跟随母亲」—— 晚上或没课的时段也能跟；
+           **萝莉只有这一个入口**（2026-09-09 二期方案 §9.2.3 放宽：口径 10 的「萝莉自由时段自由行动」
+           仍是默认，玩家明确在日程里排了「跟随母亲」时才去见学）
+    ⚠️ 有课永远优先：在节次内且本节排了课时，两种入口都不成立
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     bool -- 是否应当见学
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if not character_data.talent.get(102, 0):
+    stage = growth_handle.get_character_stage(character_id)
+    if stage not in (102, 103):
         return False
-    # 入口1：在节次内且本节没课。get_now_course 已经把"不在节次内"和"没排课"都归为None，
-    # 所以这里要自己再判一次是不是真的在节次内
-    if game_time.get_class_period(character_id) != -1:
-        return schedule_handle.get_now_course(character_id) is None
-    # 入口2：当前娱乐时段的日程活动就是「跟随母亲」
+    # get_now_course 已经把"不在节次内"和"没排课"都归为None，所以这里要自己再判一次是不是真的在节次内
+    in_period = game_time.get_class_period(character_id) != -1
+    if in_period and schedule_handle.get_now_course(character_id) is not None:
+        return False
+    # 入口1：幼女在节次内且本节没课
+    if stage == 102 and in_period:
+        return True
+    # 入口2：当前娱乐时段的日程活动就是「跟随母亲」（幼女的课外时段 / 萝莉的全部时段）
     enter_time = game_time.judge_entertainment_time(character_id)
     if not enter_time:
         return False

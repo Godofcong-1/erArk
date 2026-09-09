@@ -350,7 +350,7 @@
 | `data/csv/Behavior_Data.csv` | 改 | 383 开课 / 384 下课（5 分钟, pl, 性爱）、1504 到场 / 1505 旁观（0 分钟, npc, 二段结算）|
 | `data/csv/Behavior_Effect.csv` | 改 | `383 = 406-462-464-608-636-1410-10010-10014`、`384 = 529-407-636-800-10011-10015`、`1504/1505 = 998` |
 | `data/csv/Behavior_Introduce.csv` | 改 | 948~951 四条介绍 |
-| `data/csv/InstructConfig.csv` | 改 | 6906 性技实操课（OBSCENITY 类）、6907 结束性技实操课（SEX 类）|
+| `data/csv/InstructConfig.csv` | 改 | 6906 性技实操课（OBSCENITY 类）、6907 结束性技实操课（SEX 类）；2026-09-09 第三轮改编号为 5209 / 6021，归入猥亵段 / 性爱段 |
 | `tools/ArkEditor/csv/Behavior_Data.csv` | 改 | 四个行为同步 |
 | `data/talk/sex/sex_class/` | **新增** | 11 个文件、**49 条**（开课 5 / 到场 7 / 旁观 7 / 下课 9 / 七门主修各 3）|
 
@@ -407,7 +407,7 @@
 | 9 条新前提（含 `SELF_NOT_UNDERAGE`）是否都进了 `constant.handle_premise_data` | ✅ 全部注册，未注册数 0 |
 | 4 个新行为能否从 `config_behavior` 按行为名取出 | ✅ `start_sex_class`(5) / `end_sex_class`(5) / `join_sex_class`(0) / `watch_sex_class`(0) |
 | 4 个行为的效果串是否都解析成已定义的效果 id | ✅ `383=[406,462,464,608,636,1410,10010,10014]`、`384=[529,407,636,800,10011,10015]`、`1504/1505=[998]`（998 = `Must_Show`）|
-| 指令 6906 / 6907 的 `premise_set` 是否逐条能解到已实现的前提 | ✅ 两条指令的全部前提均可解析，问题数 0 |
+| 指令 6906 / 6907（现 5209 / 6021）的 `premise_set` 是否逐条能解到已实现的前提 | ✅ 两条指令的全部前提均可解析，问题数 0 |
 | 7 门主修科目的经验 id 是否互不重叠 | ✅ 无重复（明细见 §6.2 假设 4）|
 | 常量三处（`Behavior` / `BehaviorStr` / `Behavior_Int`）与 `Instruct` 是否同步 | ✅ 四个行为常量与两条指令常量均可取值 |
 

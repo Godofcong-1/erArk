@@ -559,6 +559,7 @@ class Class_Schedule_Panel:
         info_draw.text = _("  {0}｜{1} 第{2}节 {3}\n").format(
             classroom, _(education_constant.WEEK_NAME[week_day]), period + 1, get_period_time_text(period))
         info_draw.draw()
+        line_feed.draw()
 
         return_list: List[str] = []
         id_by_return: Dict[str, int] = {}
@@ -581,12 +582,13 @@ class Class_Schedule_Panel:
             sex_class_draw.draw()
             return_list.append(sex_class_draw.return_text)
             line_feed.draw()
-        clear_draw = draw.CenterButton(_("[清空本格]"), _("清空本格"), int(self.width / 2))
-        clear_draw.draw()
-        return_list.append(clear_draw.return_text)
+        line_feed.draw()
         back_draw = draw.CenterButton(_("[取消]"), _("取消"), int(self.width / 2))
         back_draw.draw()
         return_list.append(back_draw.return_text)
+        clear_draw = draw.CenterButton(_("[清空本格]"), _("清空本格"), int(self.width / 2))
+        clear_draw.draw()
+        return_list.append(clear_draw.return_text)
         line_feed.draw()
 
         yrn = flow_handle.askfor_all(return_list)
