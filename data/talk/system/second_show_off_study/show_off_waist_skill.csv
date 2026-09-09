@@ -3,7 +3,9 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|76_G_0,{Name}凑到博士面前，扭了扭腰给博士看。\n“我今天学会用核心发力了！”{Name}说得很认真，“老师说我比上次进步了。”\n说完{Name}有点不好意思，赶紧站直了身子。
-1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|76_G_0,“我今天节奏一直有变化！”{Name}兴奋地跑过来汇报。\n“老师说变化才是重点，我现在能自己切换快慢了。”\n{Name}说着说着自己又扭了一次给博士看。
-1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|76_G_0,{Name}走过来，语气带着点小骄傲，说自己今天力量传导得很顺畅。\n“力量要从核心传出来，”{Name}把老师的话搬出来，像背课文一样认真。\n“博士要不要试试看我进步了多少？”
-1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|76_G_0,{Name}小声说自己今天练习的时候腰没有酸，坚持了很久。\n“这个很难形容，”{Name}皱着眉头想解释清楚，越解释脸越红。\n最后{Name}放弃了解释，只说“反正老师说我做对了。”
+1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|76_G_0,{Name}跑到博士面前，站定，然后用髋画了一个大圈，把旁边的椅子撞倒了。\n“爸爸你看！老师教的！”{Name}又画了一个，这次撞倒了另一把。\n博士扶起椅子，{Name}说：“我还会逆时针的！”
+1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|76_G_0,“爸爸，我能平板支撑一分钟！”{Name}说着就趴在地上撑了起来。\n撑到二十秒的时候{Name}开始抖，撑到三十秒的时候趴平了。\n“……上课的时候是一分钟。”{Name}趴在地上说，“真的。”
+1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|76_G_0,{Name}拉着博士的手按在自己的肋骨上，然后又按在大腿根上。\n“老师说这中间一整段都是腰！”{Name}说，“要一起动！”\n然后{Name}一起动了一下，把博士的手甩开了。
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|76_G_0,{Name}从博士身边走过，走路的姿势跟平时不太一样，上身很稳，只有下面在动。\n走了几步{Name}停下来，回头看博士有没有注意到。\n博士注意到了。{Name}的耳朵红了，说了句“老师说脊椎是用来稳的”就走了。
+1004,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|76_G_0,{Name}坐在博士对面，忽然说：“博士，我今天跟上原速的拍子了。”\n博士问什么拍子，{Name}用手指在桌上敲了一遍：快三下，慢两下，停一下。\n“……腰技课的。”{Name}小声补了一句，手指停在桌上没有收回去。
+1005,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|76_G_0,“博士，”{Name}问，“你能只动髋不动肩膀吗？”\n博士试了一下，肩膀动了。{Name}笑了，笑得很轻：“我也不行。老师说要练很久。”\n“不过我今天有一次做到了。”{Name}又补了一句，然后不说话了。

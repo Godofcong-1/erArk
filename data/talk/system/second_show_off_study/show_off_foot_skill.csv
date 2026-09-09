@@ -3,7 +3,9 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|72_G_0,{Name}凑到博士面前，抬起一只脚晃了晃脚趾。\n“我今天学会控制脚趾了！”{Name}说得很认真，“老师说我比上次进步了。”\n说完{Name}有点不好意思，赶紧把脚放下了。
-1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|72_G_0,“我今天单脚站了很久都没晃！”{Name}兴奋地跑过来汇报。\n“老师说晃着晃着才能找到重心，我现在找到了。”\n{Name}说着说着自己又单脚站了一次给博士看。
-1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|72_G_0,{Name}走过来，语气带着点小骄傲，说自己今天没有再抽筋。\n“感觉不对就及时换姿势，”{Name}把老师的话搬出来，像背课文一样认真。\n“博士要不要试试看我进步了多少？”
-1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|72_G_0,{Name}小声说自己今天练习的时候找到了脚背和脚底不一样的感觉。\n“这个很难形容，”{Name}皱着眉头想解释清楚，越解释脸越红。\n最后{Name}放弃了解释，只说“反正老师说我做对了。”
+1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|72_G_0,{Name}光着脚跑过来，用脚趾夹着一支笔，举到博士面前。\n“爸爸你看！我能用脚拿笔！”笔在脚趾间晃了晃，掉在了博士的脚上。\n{Name}又夹起来一次，这次举得很稳，脚趾都用白了。
+1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|72_G_0,{Name}跑到博士跟前，把脚伸出来：“挠我脚心！”\n博士挠了一下，{Name}笑得满地打滚。“再来一次！这次我不笑！”\n第二次{Name}只笑了一半，捂着嘴说：“进步了吧？”
+1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|72_G_0,{Name}在博士面前踮着脚走了一圈，走得很慢，眼睛盯着自己的脚。\n“听见了吗？”{Name}问。博士说没听见。\n“老师说脚要变轻！”{Name}高兴得跳了起来，落地的时候咚的一声。
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|72_G_0,{Name}从博士身边走过，走得比平时轻很多，像怕吵醒什么。\n走到门口{Name}停下来，回头问：“博士刚才听见我的脚步声了吗？”\n博士说没有，{Name}点点头，什么都没解释，但嘴角翘了一下。
+1004,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|72_G_0,{Name}坐在博士对面，脚在桌子底下把一块橡皮从左脚脚背移到了右脚脚背。\n移完{Name}抬头看博士，博士什么都没看见。\n“……没什么。”{Name}说，“我只是觉得自己的脚最近变聪明了。”
+1005,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|72_G_0,“博士，”{Name}小声问，“你有没有觉得我的脚……干净了？”\n博士愣了一下，{Name}赶紧补充：“老师说这是足技的门槛。我每天都洗。”\n然后{Name}把脚往椅子底下缩了缩，等着博士回答。

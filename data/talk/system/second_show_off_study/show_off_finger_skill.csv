@@ -3,7 +3,9 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|70_G_0,{Name}一见到博士就举起手，屈伸了几下手指。\n“我今天学会控制力度了！”{Name}说得很骄傲，“老师说我进步很快。”\n说完{Name}又给博士看了一次，动作比刚才更慢更稳。
-1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|70_G_0,{Name}凑过来，小声说自己今天摸到了一个“特别软的东西”。\n“是练习用的模型啦，”{Name}赶紧解释，脸有点红，“不是别的意思。”\n博士没说话，{Name}却越解释越不好意思，最后干脆不说了。
-1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|70_G_0,“我今天没有再乱用力了，”{Name}走过来说，语气里带着点自豪。\n“老师说用力过猛反而不好，我现在懂控制了。”\n{Name}顿了顿，又补充了一句：“虽然还是没有老师做得那么好。”
-1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|70_G_0,{Name}给博士看自己有点发红的指尖，说这是今天练习捏握留下的。\n“酸了才说明真的在用力，”{Name}把老师的话原样搬了出来，像是背课文。\n“博士要不要也试试看？”{Name}忽然问了一句，然后自己先红了脸。
+1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|70_G_0,{Name}跑过来，抓住博士的手翻过来，用一根手指在博士的手心里按了一下。\n“痒不痒？”{Name}仰着头问。博士还没回答，{Name}又换了个地方按。“那这里呢？”\n{Name}按了七八下，每一下都很认真地看着博士的脸。
+1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|70_G_0,“爸爸你看！”{Name}把手举到博士面前，努力地把无名指单独抬了起来。\n无名指抖得像风里的树叶，旁边的中指也偷偷跟着翘了一半。\n“老师说这根手指最有用！”{Name}说完，手就抽筋了。
+1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|70_G_0,{Name}拿了一叠纸来找博士，非要博士看着自己推开最上面那张。\n第一次推出了三张，第二次推出了两张，第三次{Name}屏住呼吸，推出了一张。\n{Name}高兴得把那叠纸全撒了。
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|70_G_0,{Name}装作路过，在博士旁边停下来，把手放在桌上，小指轻轻敲了三下，一快两慢。\n博士抬头看过来，{Name}赶紧把手收回去。“没什么，最近在练手指。”\n{Name}走出去两步又停下：“……博士觉得刚才那个节奏怎么样？”
+1004,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|70_G_0,{Name}递东西给博士的时候，指尖在博士手背上停了一下。\n“指甲修过了。”{Name}没头没尾地说了一句，把手背到身后。“老师说这是指技的前提。”\n说完{Name}的耳朵红了，但没有走开。
+1005,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|70_G_0,“博士，能把手借我一下吗？”{Name}问得很小声。\n博士伸出手，{Name}用指腹在手背上轻轻按了一下，然后换成指尖又按了一下。“能分出来吗？”\n博士说能，{Name}松了口气，像是通过了一场考试。

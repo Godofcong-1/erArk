@@ -3,8 +3,9 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|73_G_0,没有训练模型，{Name}就抱着一个枕头练习夹持的力度，慢慢地试。\n试了一会儿{Name}发现自己确实能更精准地控制力度了。\n“太松夹不住，太紧又不舒服”，{Name}把老师的话当成了自习的座右铭。
-1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|73_G_0,{Name}试着找一个能稳住的摇晃节奏，一开始总是忽快忽慢。\n慢慢调整之后，{Name}终于找到了一个自己能坚持住的速度。\n“先稳，再谈快慢”，{Name}小声重复了一遍。
-1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|73_G_0,{Name}练习分辨上下和左右的不同感觉，一开始总是分不清。\n练了几次之后终于摸到了两个方向给出的不同效果。\n“原来是这样”，{Name}小声感叹了一句。
-1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|73_G_0,{Name}保持一个姿势练习耐力，中途觉得有点累也没有停下来。\n累的感觉慢慢缓解之后，{Name}才觉得松了一口气。\n{Name}把这次坚持的时间悄悄记在心里，想着下次要更久。
-1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|73_G_0,{Name}对着空的房间模拟摇晃练习，没有模型也没有指导。\n练到后来{Name}竟然能保持很长一段时间节奏不乱。\n“下次上课要试试给老师看看”，{Name}这样想着，又练了几遍。
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|73_G_0,没有老师，{Name}抱着书包练习“贴”，贴着贴着趴在书包上睡着了。\n醒来的时候脸上印了一道书包带子的痕。\n{Name}觉得自习课就是睡觉课，但不敢跟老师说。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|73_G_0,{Name}跪坐在椅子上练习用手肘往中间收，收了一会儿觉得无聊，就把旁边人的橡皮夹在手肘中间。\n橡皮夹住了，{Name}很高兴，又去夹对方的笔。\n对方把笔抢回去的时候，{Name}说自己在练胸技，对方说这明明是在抢东西。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|73_G_0,{Name}对着课本上那个侧面轮廓，试着做同样的姿势。\n做出来之后{Name}觉得跟书上不太一样，主要是书上的人前面有东西，自己前面没有。\n{Name}把书包塞进衣服里，觉得像多了，又觉得有点傻。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|73_G_0,自习课上{Name}练习深呼吸，练着练着发现自己的肩膀又耸起来了。\n{Name}用手按住肩膀再吸气，胸口的起伏果然大了一些。\n按了几次之后{Name}想到这个动作是给谁练的，脸红了，把手放了下来。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|73_G_0,{Name}抱着书本贴在胸口，感受老师说的“接触面”。\n书是硬的，贴不紧。{Name}换成外套卷起来，软了一些，贴上去的时候忽然想到博士的胳膊大概就是这个硬度。\n{Name}把外套扔到了一边，翻开课本假装在看。
+1005,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|73_G_0,没有老师带练，{Name}把手臂夹紧再放松，数了二十次。\n数完{Name}摸了摸自己的手臂，好像结实了一点，也可能是错觉。\n{Name}想，等身体跟上的那一天，这些练习会不会都派上用场。

@@ -3,7 +3,9 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|74_G_0,{Name}凑到博士面前，小声说自己今天找到那块肌肉的感觉了。\n“老师说我进步很快，”{Name}说得有点不好意思，又有点骄傲。\n说完{Name}脸有点红，赶紧转移了话题。
-1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|74_G_0,“我今天分层次收缩做到了！”{Name}兴奋地跑过来汇报。\n“老师说不是一下子松开，是慢慢松，我现在懂了。”\n{Name}说着说着又开始小声念叨这句话，像是怕自己忘记。
-1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|74_G_0,{Name}走过来，语气带着点小骄傲，说自己今天的节奏一直很稳。\n“节奏比持续更重要，”{Name}把老师的话搬出来，像背课文一样认真。\n“博士要不要……不是，没什么。”{Name}说到一半又不好意思地停住了。
-1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|74_G_0,{Name}小声说自己今天练习的时候没有觉得累，坚持了很久。\n“这个很难形容，”{Name}皱着眉头想解释清楚，越解释脸越红。\n最后{Name}放弃了解释，只说“反正老师说我做对了。”
+1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|74_G_0,{Name}跑到博士跟前，深吸一口气，然后憋住，脸涨得通红。\n“我在收紧！”{Name}含糊不清地说，“老师教的！”\n博士让{Name}先呼吸，{Name}呼出一口气，说：“……刚才那个是对的。”
+1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|74_G_0,“爸爸，”{Name}很认真地问，“你知道那圈肌肉在哪吗？”\n博士不知道{Name}在说什么。{Name}说：“老师说每个人都有，能收紧的那个。我找了三天了。”\n{Name}说完，又憋了一下，屁股动了。“……是这个吗？”
+1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|74_G_0,{Name}拉着博士坐下，说要给博士看自己学到的东西。\n然后{Name}闭上眼睛，呼气，很认真的样子，什么动静都没有。\n“看见了吗？”{Name}睁开眼睛问。博士说看见了。{Name}很满意。
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|74_G_0,{Name}在博士旁边站了很久，欲言又止。\n“博士，”{Name}终于开口，声音很小，“我……找到那块肌肉了。”\n博士问什么肌肉，{Name}的脸一下子红透了，转身就走。走到门口又停下：“……膣技课的。”
+1004,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|74_G_0,{Name}递东西给博士的时候，呼吸有点不一样，很长的一次呼气。\n博士抬头，{Name}装作若无其事：“最近在练呼吸。老师说什么都建立在呼吸上。”\n说完{Name}走了，脚步比平时轻，也比平时快。
+1005,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|74_G_0,“博士能帮我数数吗？”{Name}忽然说，“数到十就行。”\n博士数了，{Name}闭着眼睛一动不动，数到十的时候松了一口气，脸有点红。\n“谢谢。”{Name}说，“老师说要一边呼吸一边保持。我做到了。”

@@ -3,8 +3,9 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|77_G_0,没有训练模型，{Name}就对着枕头练习根部和顶端不同的力度控制。\n试了很多次{Name}才隐约摸到两处力度该有的差别。\n“慢慢来，先感受，再动手”，{Name}把老师的话当成了自习的座右铭。
-1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|77_G_0,{Name}练习保持稳定的加压节奏，没多久手就有点抖。\n抖了也没停，{Name}想起老师说撑过这一段就好。\n坚持到最后，{Name}觉得比早上多撑了不少时间。
-1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|77_G_0,{Name}对着空气练习判断“边缘信号”，想象着提示灯该在什么时候变色。\n想象久了{Name}居然也能大致说出该在哪个时机收网。\n“这样练到底有没有用啊”，{Name}半信半疑地想。
-1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|77_G_0,{Name}保持加压动作练习耐力，中途手有点酸也没有停下来。\n酸的感觉慢慢缓解之后，{Name}才觉得松了一口气。\n{Name}把这次坚持的时间悄悄记在心里，想着下次要更久。
-1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|77_G_0,{Name}对着空的房间反复练习节奏与判断的配合，没有模型也没有指导。\n练到后来{Name}竟然能在心里模拟出一整套完整的流程。\n“下次上课要试试给老师看看”，{Name}这样想着，又练了几遍。
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|77_G_0,没有老师，{Name}捏着自己的橡皮练习“保持稳定力度”，捏了一会儿橡皮就捏扁了。\n{Name}换了一块，这次轻轻捏，捏着捏着就忘了在干什么，开始用橡皮擦桌子。\n下课的时候桌子擦得很干净，橡皮没剩多少。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|77_G_0,{Name}想练习观察，就盯着旁边的人看，看对方什么时候会到“极限”。\n看了十分钟对方受不了了，问{Name}到底想干什么。{Name}说在练观察力。\n对方说“再看我就到极限了”，{Name}高兴地说“老师说这时候就该收网了”。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|77_G_0,{Name}对着课本上那几个施压点，用手指在自己的手臂上找对应的位置。\n找了半天{Name}觉得手臂上根本没有这些点，可能画错地方了。\n{Name}决定回去问博士这些点长在哪里。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|77_G_0,自习课上{Name}用握力器练习保持力度，握到第三分钟手开始抖。\n老师说过“撑过这一段就好”，{Name}咬着牙撑到了第五分钟。\n松手的时候{Name}发现掌心全是汗，心跳得也很快，不知道是因为累还是因为别的。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|77_G_0,{Name}想练观察力，就观察教室里的人，谁在打瞌睡、谁在偷偷说话，都记在本子上。\n记着记着{Name}想到，老师说的观察对象不是同学，是“对方”。\n那个“对方”在{Name}脑子里有了一张脸，{Name}把本子合上了。
+1005,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|77_G_0,没有老师带练，{Name}把课本上关于节奏的那一段又读了一遍：加压，稍微放松，再加压。\n{Name}用手比划着那个节奏，比划到一半停下来，觉得自己在做很奇怪的事。\n教室里没人看{Name}，可{Name}还是把手放下了。

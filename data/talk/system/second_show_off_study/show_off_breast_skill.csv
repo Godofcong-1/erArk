@@ -3,7 +3,9 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|73_G_0,{Name}凑到博士面前，双手比划了一下夹持的角度。\n“我今天学会控制力度了！”{Name}说得很认真，“老师说我比上次进步了。”\n说完{Name}有点不好意思，赶紧把手放下了。
-1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|73_G_0,“我今天摇晃的节奏一直很稳！”{Name}兴奋地跑过来汇报。\n“老师说先稳再谈快慢，我现在能稳住了。”\n{Name}说着说着自己又比划了一次给博士看。
-1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|73_G_0,{Name}走过来，语气带着点小骄傲，说自己今天动作没有变形。\n“感觉不对就及时调整，”{Name}把老师的话搬出来，像背课文一样认真。\n“博士要不要试试看我进步了多少？”
-1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|73_G_0,{Name}小声说自己今天练习的时候找到了上下和左右不一样的感觉。\n“这个很难形容，”{Name}皱着眉头想解释清楚，越解释脸越红。\n最后{Name}放弃了解释，只说“反正老师说我做对了。”
+1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|73_G_0,{Name}跑过来，抱着一个抱枕，很用力地把胸口贴上去给博士看。\n“老师说不是压是贴！”{Name}说，然后把抱枕压扁了。\n“……这次是压。”{Name}松开手，抱枕慢慢鼓了回来。
+1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|73_G_0,“爸爸你看我的肩膀！”{Name}站得笔直，深吸一口气，肩膀一点都没耸。\n然后{Name}憋不住气了，肩膀跟着塌了下来。\n“刚才那个是对的！”{Name}强调，“老师说的！”
+1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|73_G_0,{Name}拉着博士的手，让博士摸自己的胸口，然后深呼吸。\n“在动！”{Name}说，“老师说这个比手上的动作都有用！”\n博士不知道该说什么，{Name}又吸了一口气，胸口鼓起来一点点。
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|73_G_0,{Name}从博士旁边走过，走得很直，肩膀放得很平，像在踩一根看不见的线。\n走到一半{Name}停下来问：“博士，我的姿势……是不是变好了？”\n博士说是，{Name}的耳朵红了，说了句“老师教的”就走了。
+1004,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|73_G_0,{Name}给博士递文件的时候，忽然深吸了一口气，胸口起伏了一下。\n博士没注意到。{Name}又吸了一口气，这次更明显了一点。\n“……没什么。”{Name}说，“最近学了呼吸。”然后走了，走到门口又回头看了一眼。
+1005,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|73_G_0,“博士，”{Name}靠在门框上，很小声地说，“老师说姿势练对了，等身体跟上就能用了。”\n博士问什么身体，{Name}的脸一下子红透了。\n“……胸技课的事。我先走了。”{Name}走得很快，但门没有关严。

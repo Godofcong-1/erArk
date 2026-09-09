@@ -3,7 +3,9 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|77_G_0,{Name}凑到博士面前，比划了一下挤压的动作。\n“我今天学会区分力度了！”{Name}说得很认真，“老师说我比上次进步了。”\n说完{Name}有点不好意思，赶紧把手放下了。
-1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|77_G_0,“我今天手一直没有抖！”{Name}兴奋地跑过来汇报。\n“老师说撑过去就好，我现在能撑住了。”\n{Name}说着说着自己又比划了一次给博士看。
-1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|77_G_0,{Name}走过来，语气带着点小骄傲，说自己今天判断“边缘信号”准了很多。\n“能撑到最后才算真的赢，”{Name}把老师的话搬出来，像背课文一样认真。\n“博士要不要试试看我进步了多少？”
-1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|77_G_0,{Name}小声说自己今天练习的时候手没有酸，坚持了很久。\n“这个很难形容，”{Name}皱着眉头想解释清楚，越解释脸越红。\n最后{Name}放弃了解释，只说“反正老师说我做对了。”
+1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|77_G_0,{Name}跑到博士面前，抓住博士的手腕，用力捏了一下，又轻轻捏了一下。\n“根部和顶端要用不同的力！”{Name}说，“老师说的！”\n博士不知道哪里是根部哪里是顶端，{Name}也不知道，但{Name}很自信。
+1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|77_G_0,“爸爸，你什么时候会到极限？”{Name}仰着头问。\n博士被问住了。{Name}解释：“老师说要看出对方到了极限再收网。我想练习一下。”\n然后{Name}盯着博士的脸看了很久，博士什么都没做，{Name}说“还没到”。
+1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|77_G_0,{Name}拿着一块橡皮跑过来，说要给博士看“保持稳定的力度”。\n{Name}捏着橡皮，捏了一分钟，手开始抖，橡皮被捏扁了。\n“……老师说抖是正常的。”{Name}说，把扁掉的橡皮塞给了博士。
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|77_G_0,{Name}在博士旁边站了一会儿，忽然说：“博士，我现在能撑五分钟了。”\n博士问撑什么，{Name}的脸红了：“……握力。榨精课要练的。”\n说完{Name}把手背到身后，好像怕博士要检查。
+1004,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|77_G_0,{Name}盯着博士的脸看了很久，博士问怎么了，{Name}说：“在练观察力。”\n“老师说要看出对方到了边缘。”{Name}说完，脸慢慢红了，“……博士现在没有到边缘。”\n然后{Name}转身走了，走得很快。
+1005,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|77_G_0,“博士，”{Name}小声问，“老师说用力越大越快见效是错的。真的吗？”\n博士说大概是真的。{Name}点点头，又问：“那……慢慢来是对的？”\n博士说是。{Name}说“我记住了”，然后就没有再说话，但站着没走。

@@ -3,8 +3,9 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|74_G_0,没有人指导，{Name}就自己练习呼吸配合，吸气放松，呼气试着收一下。\n试了很多次{Name}才隐约感觉到一点点不一样的地方。\n“原来是这样的感觉”，{Name}小声嘀咕了一句。
-1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|74_G_0,{Name}练习分层次收缩，一开始只能感觉到全部一起动。\n慢慢地{Name}好像能分辨出中间那一点点层次的差别了。\n“不是一下子松开，是慢慢松”，{Name}把老师的话当成了自习的座右铭。
-1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|74_G_0,{Name}练习收紧和放松的交替节奏，一开始总是忽快忽慢。\n慢慢调整之后，{Name}终于找到了一个自己能坚持住的节奏。\n“节奏比持续更重要”，{Name}小声重复了一遍。
-1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|74_G_0,{Name}保持轻微收紧的状态练习耐力，中途觉得有点累也没有停下来。\n累的感觉慢慢缓解之后，{Name}才觉得松了一口气。\n{Name}把这次坚持的时间悄悄记在心里，想着下次要更久。
-1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|74_G_0,{Name}对着空的房间反复练习呼吸和收缩的配合，没有人指导也没有反馈。\n练到后来{Name}竟然能保持很长一段时间节奏不乱。\n“下次上课要试试给老师看看”，{Name}这样想着，又练了几遍。
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|74_G_0,没有老师，{Name}坐在椅子上练习呼气收紧，练了一会儿觉得无聊，开始收紧屁股。\n收紧的时候整个人从椅子上弹起来一点，{Name}觉得好玩，弹了半节课。\n旁边的人问{Name}在干什么，{Name}说在上课。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|74_G_0,{Name}对着课本上那个环，用手指在桌上画了一个又一个环。\n画着画着{Name}想，那圈肌肉到底在哪呢，怎么老师说得那么确定。\n{Name}决定回去问博士，博士什么都知道。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|74_G_0,{Name}想练习数数收紧，数到五的时候旁边的人跟{Name}说话，{Name}就忘了。\n重新开始数，数到三又忘了。\n{Name}趴在桌上想，这门课的作业怎么全都在脑子里，连本子都用不上。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|74_G_0,自习课上{Name}闭着眼睛练呼气收紧，练到第二十次的时候忽然感觉到了什么。\n很轻的一下，像有什么东西动了。{Name}睁开眼睛，心跳得很快，不敢确定是不是错觉。\n{Name}又试了一次，那个感觉又出现了。{Name}在课本页脚画了一个很小的圈。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|74_G_0,{Name}想练习分层，但一想到“分层”这两个字就走神。\n走神想到的事情跟博士有关，{Name}赶紧翻开课本假装在看，看了半天一个字都没进脑子。\n{Name}觉得这门课最难的部分，是控制自己的脑子。
+1005,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|74_G_0,没有老师带练，{Name}做了三组保持练习，每组数到十。\n做完第三组{Name}的腿有点软，坐在椅子上缓了很久。\n{Name}想起老师说“撑到发抖就已经过了”，觉得自己今天大概又过了。

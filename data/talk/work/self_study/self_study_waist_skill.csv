@@ -3,8 +3,9 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|76_G_0,没有人指导，{Name}就自己练习核心发力，按着腹部感受力量的源头。\n试了很多次{Name}才隐约感觉到力量确实不是从腰开始的。\n“原来是这样的感觉”，{Name}小声嘀咕了一句。
-1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|76_G_0,{Name}练习快慢交替的节奏，一开始总是一个速度到底。\n慢慢地{Name}好像找到了一点点变化节奏的感觉。\n“变化才是这门课的重点”，{Name}把老师的话当成了自习的座右铭。
-1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|76_G_0,{Name}练习力量传导，从髋部到腰再到上身，一开始总是卡在中间。\n慢慢调整之后，{Name}终于感觉到力量顺畅地传了过去。\n“力量要从核心传出来”，{Name}小声重复了一遍。
-1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|76_G_0,{Name}保持动作练习耐力，中途觉得腰有点酸也没有立刻停下来。\n酸的感觉慢慢缓解之后，{Name}才觉得松了一口气，决定还是要注意力度。\n{Name}把这次坚持的时间悄悄记在心里，想着下次要更久。
-1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|76_G_0,{Name}对着空的房间反复练习核心发力和节奏变化，没有人指导也没有反馈。\n练到后来{Name}竟然能保持很长一段时间动作不乱。\n“下次上课要试试给老师看看”，{Name}这样想着，又练了几遍。
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|76_G_0,没有老师，{Name}站在教室后面练画髋圈，画着画着开始转圈。\n转了十几圈{Name}头晕了，一屁股坐在地上。\n旁边的人问{Name}在干什么，{Name}说在练腰技，对方说这明明是在转圈。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|76_G_0,{Name}想练平板支撑，趴下去十秒钟就趴平了，觉得地板很凉快。\n趴了一会儿{Name}又撑起来，又趴平了。\n{Name}决定今天的核心训练就到这里，明天再练。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|76_G_0,{Name}对着课本上那个涂成一片的侧面图，用手按自己的肋骨和大腿根。\n按了半天{Name}觉得中间这一段确实很长，难怪老师说一起动很难。\n{Name}试着一起动了一下，把旁边的椅子踢倒了。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|76_G_0,自习课上{Name}扶着墙练习只动髋不动肩，练了很久，终于有一次肩膀没动。\n{Name}又试了一次，肩膀又动了。{Name}发现只有不去想的时候才能做到。\n这个发现让{Name}有点困惑：怎么不想的时候反而对了。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|76_G_0,{Name}想练节奏，自己在桌上敲拍子，快三下慢两下停一下。\n敲着敲着{Name}走神了，想到这个节奏是用在哪里的，脸一下子热了。\n{Name}停下手，把课本翻了一页，敲拍子的声音没了，心跳的声音还在。
+1005,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|76_G_0,没有老师带练，{Name}做了两分钟平板支撑，比上课的时候多撑了一分钟。\n趴下的时候{Name}想，核心大概是练出来一点了。\n又想到老师说“没有核心什么节奏都是空谈”，{Name}觉得自己离“谈”还远得很。

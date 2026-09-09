@@ -3,8 +3,9 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|75_G_0,没有人指导，{Name}就自己练习深呼吸放松，吸气，慢慢吐。\n试了很多次{Name}才觉得身体好像真的松下来一点点。\n“原来是这样的感觉”，{Name}小声嘀咕了一句。
-1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|75_G_0,{Name}练习收紧和放松的交替，才发现自己确实只会紧，不太会松。\n慢慢地{Name}好像找到了一点点放松下来的感觉。\n“松才是这门课的重点”，{Name}把老师的话当成了自习的座右铭。
-1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|75_G_0,{Name}练习在紧张状态下主动放松，一开始总是做不到，越想放松越紧。\n慢慢调整呼吸之后，{Name}终于能稍微松下来一点了。\n“越逼越紧，越紧越难受”，{Name}小声重复了一遍提醒自己。
-1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|75_G_0,{Name}保持放松的状态练习耐力，中途觉得有点难也没有放弃。\n难的感觉慢慢缓解之后，{Name}才觉得松了一口气。\n{Name}把这次坚持的时间悄悄记在心里，想着下次要更久。
-1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|75_G_0,{Name}对着空的房间反复练习深呼吸和放松的配合，没有人指导也没有反馈。\n练到后来{Name}竟然能保持很长一段时间不紧张。\n“下次上课要试试给老师看看”，{Name}这样想着，又练了几遍。
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|75_G_0,没有老师，{Name}做了两次呼吸练习就无聊了，开始数教室里有几块地板。\n数到一半{Name}想起老师说“放松是安全的”，就趴在桌上放松。\n放松着放松着就睡着了，{Name}觉得这门课的自习是最舒服的。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|75_G_0,{Name}练习收紧三秒放松五秒，数数的时候总是数到三就忘了要放松。\n{Name}让旁边的人帮忙数，对方数得飞快，{Name}跟不上。\n两个人吵了起来，自习课变成了吵架课。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|75_G_0,{Name}对着课本上那两个圈看了半天，用手指在桌上画了一个大圈套一个小圈。\n画完{Name}想，里面那个圈真的谁都不听吗，那它平时在干什么呢。\n{Name}决定这个问题也去问博士。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|75_G_0,自习课上{Name}做呼吸练习，吸四拍呼八拍，做到第十次的时候忽然觉得肩膀松了。\n不只是肩膀，好像哪里都松了一点。{Name}睁开眼睛，觉得这大概就是老师说的“它知道放松是安全的”。\n{Name}在课本页脚画了一个很小的勾。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|75_G_0,{Name}想练习分辨外圈和内圈，练了一会儿就走神了。\n走神想到的是老师说的“第一次不疼”，然后想到第一次会是跟谁。\n{Name}把课本合上，趴在桌上，觉得自习课太安静了，安静得让人乱想。
+1005,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|75_G_0,没有老师带练，{Name}把准备工作的顺序默写了一遍，一条都没漏。\n写完{Name}看着那张纸，觉得这大概是自己上过的最认真的一门课。\n{Name}把纸折好放进了课本里，没有给任何人看。

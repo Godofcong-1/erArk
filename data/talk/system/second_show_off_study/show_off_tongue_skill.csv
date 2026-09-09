@@ -3,7 +3,9 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|71_G_0,{Name}凑到博士面前，伸了伸舌头做了个小动作。\n“我今天学会控制湿润度了！”{Name}说得很认真，“老师说我比上次进步了。”\n说完{Name}有点不好意思，赶紧闭上了嘴。
-1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|71_G_0,“我今天没有憋气！”{Name}兴奋地跑过来汇报。\n“老师说憋气动作会僵，我现在能一边呼吸一边动了。”\n{Name}说着说着自己先做了个深呼吸给博士看。
-1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|71_G_0,{Name}走过来，语气带着点小骄傲，说自己今天撑的时间比上次久。\n“酸了才说明真的在用力，”{Name}把老师的话搬出来，像背课文一样认真。\n“博士要不要试试看我进步了多少？”
-1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|71_G_0,{Name}小声说自己今天练习的时候找到了“不干不湿”的感觉。\n“这个很难形容，”{Name}皱着眉头想解释清楚，越解释脸越红。\n最后{Name}放弃了解释，只说“反正老师说我做对了。”
+1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|71_G_0,“爸爸你看！”{Name}跑过来，把舌头伸得长长的，然后让舌尖向上翘。\n舌尖翘到一半就掉了下来，{Name}又试了一次，这次翘住了，但流了一点口水。\n{Name}擦了擦嘴，很得意：“老师说这个很难！”
+1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|71_G_0,{Name}含着一颗糖跑到博士面前，张开嘴让博士看。\n“我没有咬！”{Name}含糊不清地说，“已经含了很久了！”\n然后{Name}忍不住，嘎嘣一声咬碎了，眼睛一下子睁大了。
+1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|71_G_0,{Name}拉着博士坐下，说要给博士看一个厉害的东西。\n{Name}闭上嘴，用鼻子呼吸，同时喉咙轻轻动了动——“舌头在动！我在用鼻子呼吸！”\n博士看不出来舌头在动，但{Name}坚持说这很了不起。
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|71_G_0,{Name}走过来，在博士旁边站了一会儿，忽然说：“我现在可以含着水用鼻子呼吸一分钟了。”\n博士问这是什么课教的，{Name}的脸红了一下：“……舌技课。”\n说完{Name}没有走，好像在等博士再问一句。
+1004,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|71_G_0,{Name}给博士端了杯水，放下的时候小声说：“老师说舌头能点、能压、能卷、能推。”\n博士抬头，{Name}赶紧补了一句：“我是说，我现在都分得清了。”\n然后{Name}转身走了，走得比平时快。
+1005,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|71_G_0,“博士，”{Name}在门口探进半个身子，“上颚画圈我能画四十圈不抽筋了。”\n博士还没反应过来这是什么，{Name}已经缩回去了。\n过了一会儿{Name}又探进来：“……很厉害的，真的。”

@@ -3,8 +3,9 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|72_G_0,没有软垫，{Name}就在地上光脚练习脚趾的抓握动作，慢慢地练。\n练了一会儿{Name}发现自己确实能更精准地控制脚趾了。\n“像抓一件很轻的东西”，{Name}把老师的话当成了自习的座右铭。
-1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|72_G_0,{Name}试着单脚站立尽量久，没多久就开始晃。\n晃也没停，{Name}想起老师说晃着晃着才能找到重心。\n坚持到最后，{Name}觉得比早上多站了不少时间。
-1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|72_G_0,{Name}练习用脚背和脚底分别做动作，一开始总是分不清区别。\n练了几次之后终于摸到了两个部位给出的不同感觉。\n“原来是这样”，{Name}小声感叹了一句。
-1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|72_G_0,{Name}保持一个姿势练习耐力，中途脚有点麻也没有停下来。\n麻的感觉慢慢退去之后，{Name}才觉得松了一口气。\n{Name}把这次坚持的时间悄悄记在心里，想着下次要更久。
-1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|72_G_0,{Name}对着空的房间模拟平衡练习，没有人指导也没有垫子。\n练到后来{Name}竟然能单脚站立很长一段时间不晃。\n“下次上课要试试给老师看看”，{Name}这样想着，又练了几遍。
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|72_G_0,没有老师，{Name}把鞋脱了，用脚趾练习夹铅笔。\n铅笔夹起来了，{Name}举着脚给旁边的人看，铅笔啪的一声掉在了对方头上。\n对方很生气，{Name}又夹起来一支，这次夹得很稳，没敢再举。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|72_G_0,{Name}想练习让脚心不痒，自己用手挠自己的脚心，结果笑得停不下来。\n笑到旁边的人过来看发生了什么，{Name}说“我在上课”。\n对方也脱了鞋一起挠，自习课变成了挠痒痒课。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|72_G_0,{Name}对着课本上那只脚的图，把自己的脚放在旁边比。\n书上的脚心画了个圈，{Name}用手指戳了戳自己的脚心，痒得缩了一下。\n{Name}皱着眉头想，这个圈为什么要画在最痒的地方。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|72_G_0,自习课上{Name}脱了一只鞋，在桌子底下用脚背托一块橡皮。\n托稳了，{Name}又试着把脚抬高一点，橡皮滑下去了，滚到了前排。\n前排的人回头看，{Name}装作在找东西，脸有点红。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|72_G_0,{Name}想练习轻轻走路，在教室后面来回走了十几趟。\n走到第十趟的时候旁边的人说“你能不能别晃了”，原来自己以为很轻，别人听得清清楚楚。\n{Name}坐回位置上，觉得老师那双脚一定是练了很多年。
+1005,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|72_G_0,没有老师带练，{Name}把课本上关于清洁的那一页读了两遍，然后去洗了脚。\n洗完回来{Name}把脚放在椅子上看了很久，觉得干净了，但还是不敢想象放在别人身上是什么感觉。\n那个“别人”在{Name}脑子里有一张脸，{Name}赶紧把课本翻到了下一页。

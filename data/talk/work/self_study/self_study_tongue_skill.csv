@@ -3,8 +3,9 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|71_G_0,没有训练模型，{Name}就对着镜子练习舌尖的移动，慢慢地练。\n练了一会儿{Name}发现自己确实能更精准地控制方向了。\n“先慢，再准”，{Name}把老师的话当成了自习的座右铭。
-1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|71_G_0,{Name}试着保持一个动作尽量久，没多久就觉得舌头发酸。\n酸了也没停，{Name}想起老师说酸了才说明真的在用力。\n坚持到最后，{Name}觉得比早上多撑了不少时间。
-1002,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|71_G_0,{Name}练习一边呼吸一边不憋气，一开始总是忘记，动作就变僵。\n练了几次之后终于找到了呼吸和动作配合的感觉。\n“原来是这样”，{Name}小声感叹了一句。
-1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|71_G_0,{Name}含着一口水练习湿润度的控制，含一会儿吐一会儿反复试。\n试了很多次才大概摸到“不干不湿”是种什么感觉。\n{Name}把这个感觉悄悄记在心里，怕自习课一结束就忘了。
-1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|71_G_0,{Name}对着空气模拟练习节奏与呼吸的配合，没有对象也没有模型。\n练到后来{Name}竟然能保持很长一段时间不间断。\n“下次上课要试试给老师看看”，{Name}这样想着，又练了几遍。
+1000,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|71_G_0,没有老师，{Name}从口袋里摸出一颗糖，练习含化它不碰牙。\n含到一半{Name}忘了规则，嘎嘣一声咬碎了。\n{Name}又摸出一颗，这次把注意力全放在舌头上，结果糖化完了{Name}都没发现。
+1001,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|71_G_0,{Name}对着小镜子练习让舌尖向上翘，翘着翘着开始做鬼脸。\n旁边的人看见了，也跟着做鬼脸，两个人对着镜子扮了半节课的怪相。\n下课时{Name}才想起来，好像什么都没练。
+1002,self_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_Course|71_G_0,自习课上{Name}想练习用鼻子呼吸，结果因为太用力，鼻子里发出了呼哧呼哧的声音。\n全教室都回头看{Name}。{Name}捂住鼻子，改成很小声地呼吸。\n小声呼吸的时候舌头一动就又忘了，{Name}觉得这两件事根本没法同时做。
+1003,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|71_G_0,{Name}含着一口水练习用鼻子呼吸，一边看着课本上的剖面图。\n看着看着{Name}走了神，想到博士，水就从嘴角漏了出来。\n{Name}擦干净嘴角，把课本翻到别的页，不敢再看那张图。
+1004,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|71_G_0,自习课上{Name}用舌尖在上颚上画圈，一圈一圈数着，数到三十圈的时候舌根开始酸。\n老师说过练到不抽筋就出师了，{Name}咬着牙又画了十圈。\n四十圈，没抽筋。{Name}在课本的页脚小小地写了个“40”。
+1005,self_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_Course|71_G_0,{Name}把课本上“点、线、面”那一页反复看了几遍，然后闭上眼睛，用舌尖在嘴里比划这三种用法。\n比划到“线”的时候{Name}忽然明白了老师的意思，睁开眼睛发现自己的脸很烫。\n{Name}把课本合上，趴在桌上冷静了好一会儿。
