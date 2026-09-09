@@ -1566,3 +1566,65 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 - 用户需**重新读一次档**，修复才会落到存档上；当前已在内存里跑崩的那一局修不回来。
 - 回落到区块入口之后，这 10 名角色的当前行为（`behavior.move_target` 等）没有一并重置，
   她们会在下一轮行为循环里自己重新决策——理论上没问题，但没有实机跑过。
+
+**2026-09-09 第九轮（与方案 §9.8 成对）：学生页签分页 + 个人课表口径放宽**
+
+用户反馈女儿数量多时个人课表与养成总览的人名页签显示不全，要求每页 8 人、超出翻页；
+同时个人课表从「固定为女儿」改为「职业为学生的干员都能调」，养成总览仍只看女儿。
+
+#### 实际改动
+
+| 文件 | 类型 | 实际改动 |
+| --- | --- | --- |
+| `Script/System/Education_System/student_tab_bar.py` | **新增** | `Student_Tab_Bar`：两个面板共用的人名页签栏，每页 8 人、多页时画翻页行；`jump_to` / `handle_page_yrn` / `get_student_by_yrn` |
+| `Script/System/Education_System/education_constant.py` | 改 | 第 3 组加 `STUDENT_WORK_TYPE = 152`，`EXCLUDE_INTERN_WORK_TYPE` 改为派生；第 15 组加 `STUDENT_TAB_PER_PAGE` 与 `STUDENT_PAGE_PREV/NEXT` 哨兵 |
+| `Script/System/Education_System/growth_handle.py` | 改 | 新增 `get_course_candidate_list()`（学生岗 ∪ 女儿，id 升序）；`get_student_candidate_list()` 的 docstring 改为只说女儿用途 |
+| `Script/System/Education_System/course_select_panel.py` | 改 | 删掉模块级的 `get_student_candidate_list` 包装，改走 `get_course_candidate_list`；页签绘制与切人改走 `Student_Tab_Bar`；文案「孩子」→「学生」、「复制到其他学生」；`_copy_to_others` 名单每行 6 人 |
+| `Script/System/Education_System/growth_panel.py` | 改 | 直接走 `growth_handle.get_student_candidate_list()`（不再绕经 course_select_panel）；页签绘制与切人改走 `Student_Tab_Bar`，切人仍重置成绩单下标 |
+| `update.log` | 改 | v0.67 段追加 调整 2 条 |
+| `plan_22_生长养成系统_一期_方案.md` | 改 | §5.3 / §5.4 补分页与口径；§9.2.2 加更正注；新增 §9.8 |
+| `plan_22_生长养成系统_总纲.md` | 改 | 口径 24 标注实装状态 |
+
+#### 实施中发现的偏离（编号接 69 往下）
+
+> ⚠️ 上一节「2026-09-09 第八轮」把编号误从 63 重编了一遍（63~66 与 2026-09-08 第八轮的 63~66 撞号），
+> 本节从 70 起，之后不要再回落。
+
+70. **页签固定宽度，不再按人数均分。** 原来 1 个人时页签占满整行、8 个人时各占 1/8，
+    翻页后同一个人的位置会随本页人数变化。改为恒取 `width / 8`，翻页时格位不动。
+    代价是只有一两个学生时页签偏窄（23 列），名字仍放得下。
+
+71. **`draw` 不自动跟随选中者跳页。** 第一版写成「每轮把页码定位到 `now_student` 所在页」，
+    结果玩家点「下一页」去找人，下一轮重画又被拉回选中者那一页——翻页按钮等于点不动。
+    翻页与选中是两个独立的状态，只在面板做「选中态失效回落」时才显式 `jump_to`。
+
+72. **个人课表的口径取并集，不是替换。** 用户要求的是「职业为学生的人都能调」，
+    直接换成 `work_type == 152` 也能覆盖女儿（幼女期自动置岗），但一个女儿的岗位被改掉后
+    她就会从个人课表里消失而养成总览里还在。并上女儿名单，两个面板的女儿集合保持包含关系。
+
+73. **`get_student_candidate_list` 不改口径，只改注释。** 它还有四个调用方（养成总览、指定必修学生、
+    日程批量套用、学期结算）都只该看女儿，改它会把成年学生带进成绩单与养成事件；
+    新口径另起一个函数，`course_select_panel` 里那个纯转发的模块级包装随之删除。
+
+74. **容器回归测试要给 `basement.get_base_updata` 打桩。** 容器每轮 `while` 顶部会按设施等级刷新房间开放状态，
+    读 `rhodes_island.facility_level`；最小 fixture 没有罗德岛数据，在测试里 stub 掉即可，
+    面板逻辑本身不依赖它。
+
+#### 单元测试结果
+
+新增 `test_student_tab.py` **58 条全绿**（scratchpad，未收进仓库）：
+
+| 组 | 条数 | 覆盖 |
+| --- | --- | --- |
+| 口径 | 8 | 20 个女儿 + 3 个成年学生 + 1 教师 + 1 普通干员 + 1 个换岗的女儿：女儿名单 20 人不含成年学生；个人课表名单 23 人、升序、含换岗的女儿、不含教师与普通干员；`EXCLUDE_INTERN_WORK_TYPE` 派生正确 |
+| 分页（两个面板各一遍） | 26 | 首页 7 按钮 + 1 选中、只有下一页；页数文本「第 1 / 3 页（共 N 人）」；第 2 页 8 个按钮且正是第 9~16 人；在第 2 页点人后选中更新且**仍停在第 2 页**；末页只有上一页且人数正确；越界夹回；上一页回退 |
+| 养成总览 | 3 | 切人重置 `report_card_index`、翻页不动它、名单不含成年学生 |
+| 缩减与空名单 | 12 | 人数缩到 5 人：页码夹回 0、无翻页哨兵、4 按钮 + 1 选中、选中态回落；空名单不报错无按钮 |
+| 组件 | 3 | `jump_to` 定位到第 3 页、不存在的人不动页码、只认自己的前缀 |
+| 容器回归 | 4 | 首屏有 `[返回]`、另三个页签可点、含学生页签、`return_list` 无重复 |
+
+#### 尚未覆盖的验证
+
+- Tk / Web 实机下翻页行的排版（三等分 63 列一格，「第 x / y 页（共 N 人）」最长约 20 列，放得下）。
+- 成年学生排课后实际去上课的完整链路（AI 侧本轮零改动，沿用 §9.2 之前已验证过的「成年干员自选了课」路径）。
+- PO 词条：新增的 4 条 `_()` 文本需跑 `buildpo.py`，本机无 `xgettext`，未跑。

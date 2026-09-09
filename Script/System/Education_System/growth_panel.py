@@ -2,6 +2,8 @@
 
 一屏看完一个孩子的状态：当前阶段与已成长天数、18 门科目的等级、出勤与缺课、
 四对性格倾向、养成事件履历（三期 §5.2）、待处理的成绩单与炫耀 flag。
+顶部的孩子页签每页 8 人、超出翻页（一期 §9.8.1）；口径仍是养成中的女儿，
+与个人课表放宽后的「职业为学生的全部干员」不同（§9.8.2）。
 
 ⚠️ 成长天数必须标明是**日历天**还是**可游玩天**（总纲 §2.3-7）：erArk 的一年只有
    3/6/9/12 四个月，日历天与实际能玩到的天数约为 3:1，不写清楚玩家会按现实直觉误判。
@@ -13,7 +15,7 @@ from typing import List
 from Script.Core import cache_control, game_type, get_text, flow_handle
 from Script.Config import game_config, normal_config
 from Script.Design import attr_calculation
-from Script.System.Education_System import education_constant, semester_handle
+from Script.System.Education_System import education_constant, semester_handle, growth_handle, student_tab_bar
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -45,44 +47,33 @@ class Growth_Panel:
         self.report_card_index: int = -1
         """ 成绩单历史当前翻到第几份（0起），-1表示尚未翻过、由 _draw_report_card 回落到最新那份。
             ⚠️ 必须是面板的状态而不是局部变量：容器每轮 while 都重画，局部变量会被冲掉 """
+        self.tab_bar = student_tab_bar.Student_Tab_Bar(width, "\nGSTU_")
+        """ 顶部的孩子页签栏，每页8人。页码同样存在它身上 """
 
     def draw_page(self, return_list: List[str]):
         """
         绘制本页内容
         输入类型: return_list(List[str])，容器的共享返回值列表，本页的按钮往里加
         输出类型: 无
-        功能: 孩子页签 + 总览正文。
+        功能: 孩子页签（每页8人，可翻页）+ 总览正文。
               ⚠️ 只画不取输入，askfor_all 由容器 Education_Manage_Panel 统一调用
         """
-        from Script.System.Education_System import course_select_panel
-
-        # 每轮重算：孩子会在游戏过程中出生与长大，不能在 __init__ 里快照
-        self.student_list = course_select_panel.get_student_candidate_list()
+        # 每轮重算：孩子会在游戏过程中出生与长大，不能在 __init__ 里快照。
+        # ⚠️ 直接走数据层的女儿名单，不再绕经 course_select_panel——那边的口径已放宽为「职业为学生」，
+        #    养成总览要看的仍然只是女儿（方案 §9.8.2）
+        self.student_list = growth_handle.get_student_candidate_list()
         if not self.student_list:
             info_draw = draw.NormalDraw()
             info_draw.width = self.width
             info_draw.text = _("\n  目前还没有在养成中的孩子\n")
             info_draw.draw()
             return
-        # 选中态失效（首次进入，或原来那个孩子已不在列表里）时回落到第一个
+        # 选中态失效（首次进入，或原来那个孩子已不在列表里）时回落到第一个，并把页签栏翻到她所在的那页
         if self.now_student not in self.student_list:
             self.now_student = self.student_list[0]
+            self.tab_bar.jump_to(self.student_list, self.now_student)
 
-        for student_id in self.student_list:
-            name = cache.character_data[student_id].name
-            tab_width = max(1, int(self.width / max(1, len(self.student_list))))
-            if student_id == self.now_student:
-                now_draw = draw.CenterDraw()
-                now_draw.text = f"[{name}]"
-                now_draw.style = "onbutton"
-                now_draw.width = tab_width
-                now_draw.draw()
-            else:
-                now_draw = draw.CenterButton(f"[{name}]", f"\nGSTU_{student_id}", tab_width)
-                now_draw.draw()
-                return_list.append(now_draw.return_text)
-        line_feed.draw()
-        draw.LineDraw("-", self.width).draw()
+        self.tab_bar.draw(self.student_list, self.now_student, return_list)
 
         self._draw_stage(self.now_student)
         self._draw_subject(self.now_student)
@@ -100,24 +91,25 @@ class Growth_Panel:
         处理本页按钮的选择结果
         输入类型: yrn(str)，容器 askfor_all 的返回值
         输出类型: 无
-        功能: 切换孩子、翻成绩单。除此之外本页是只读总览
+        功能: 翻页签、切换孩子、翻成绩单。除此之外本页是只读总览
         """
-        # 成绩单翻页与孩子无关，先判掉，省得白扫一遍名单
+        # 成绩单翻页与页签翻页都与孩子无关，先判掉，省得白扫一遍名单
         if yrn == education_constant.REPORT_CARD_PREV:
             self.report_card_index -= 1
             return
         if yrn == education_constant.REPORT_CARD_NEXT:
             self.report_card_index += 1
             return
+        if self.tab_bar.handle_page_yrn(yrn):
+            return
         if not self.student_list:
             return
-        for student_id in self.student_list:
-            if yrn == f"\nGSTU_{student_id}":
-                # ⚠️ 换孩子必须把成绩单下标清掉：上一个孩子翻到第3份、换过来的孩子只有1份时，
-                #    留着旧下标会莫名其妙地跳页（虽然会被夹回去，但表现很怪）
-                self.now_student = student_id
-                self.report_card_index = -1
-                return
+        student_id = self.tab_bar.get_student_by_yrn(yrn, self.student_list)
+        if student_id != -1:
+            # ⚠️ 换孩子必须把成绩单下标清掉：上一个孩子翻到第3份、换过来的孩子只有1份时，
+            #    留着旧下标会莫名其妙地跳页（虽然会被夹回去，但表现很怪）
+            self.now_student = student_id
+            self.report_card_index = -1
 
     def _draw_stage(self, character_id: int):
         """

@@ -76,12 +76,14 @@ def get_character_stage(character_id: int) -> int:
 
 def get_student_candidate_list() -> List[int]:
     """
-    取可排个人课表、可查养成总览的学生列表
+    取养成中的女儿列表（养成总览、指定必修学生、日程批量套用、学期结算共用）
     Keyword arguments:
     无
     Return arguments:
     List[int] -- 角色id列表，按id升序
     功能: 玩家的女儿中处于幼女/萝莉/少女阶段的。
+          ⚠️ 个人课表**不再**用这份名单：它已放宽为「职业为学生的全部干员」，走下面的
+             get_course_candidate_list()（一期方案 §9.8.2）。养成总览等只关心女儿的地方仍用本函数
           ⚠️ 血缘条件不能省：judge_is_child() 只看素质，而世界设定「萝莉化」
              (character_handle.handle_character_setting) 会给全岛干员挂上萝莉素质103，
              只按素质筛会把全岛的人都塞进课表页签栏
@@ -99,6 +101,31 @@ def get_student_candidate_list() -> List[int]:
         if not handle_premise.handle_self_is_player_daughter(character_id):
             continue
         result.append(character_id)
+    return result
+
+
+def get_course_candidate_list() -> List[int]:
+    """
+    取可排个人课表的角色列表
+    Keyword arguments:
+    无
+    Return arguments:
+    List[int] -- 角色id列表，按id升序
+    功能: 职业为学生（WorkType 152）的全部干员，再并上养成中的女儿（一期方案 §9.8.2）。
+          ⚠️ 取并集而不是只看职业：女儿长到幼女时会被自动置为学生岗，理论上已经包含在前者里，
+             但并上 get_student_candidate_list() 可以保证旧口径下能排课的女儿一个不少，不引入回归。
+          ⚠️ 成年学生只排课、只上课，不出成绩单、不进养成事件——那些地方仍只遍历女儿。
+             上课 AI 对成年学生早已支持（handle_npc_ai 的上课判定排在工作之前，且不看年龄）。
+          ⚠️ 与 get_student_candidate_list 一样按 id 升序：面板用 [0] 做默认选中回落，set 的迭代顺序会飘
+    """
+    daughter_set = set(get_student_candidate_list())
+    result = []
+    for character_id in sorted(cache.npc_id_got):
+        if character_id not in cache.character_data:
+            continue
+        character_data: game_type.Character = cache.character_data[character_id]
+        if character_data.work.work_type == education_constant.STUDENT_WORK_TYPE or character_id in daughter_set:
+            result.append(character_id)
     return result
 
 

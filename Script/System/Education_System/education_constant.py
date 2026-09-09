@@ -159,8 +159,12 @@ CLASSROOM_NUMBER_ORDER = _("一二三四五六七八九十")
        教室名本身是翻译过的场景名 """
 TEACHER_WORK_TYPE = 151
 """ 教师岗位的工作id（WorkType.csv:24），只有该岗位的干员可被排进课表 """
-EXCLUDE_INTERN_WORK_TYPE = {151, 152}
-""" 实习课不开放的岗位：教师与学生是孩子自己在学校里的身份，作为「实习」语义重复（一期方案 §3.21） """
+STUDENT_WORK_TYPE = 152
+""" 学生岗位的工作id（WorkType.csv:25）。女儿长到幼女时由妊娠系统自动置为此岗位，
+    成年干员也可在基建面板被分配为学生；凡此岗位的干员都可排个人课表（一期方案 §9.8.2） """
+EXCLUDE_INTERN_WORK_TYPE = {TEACHER_WORK_TYPE, STUDENT_WORK_TYPE}
+""" 实习课不开放的岗位：教师与学生是孩子自己在学校里的身份，作为「实习」语义重复（一期方案 §3.21）。
+    ⚠️ 从上面两个常量派生而不是再写一遍 151/152，改岗位id时只动一处 """
 
 # ==== 4. 星期与自动排课 ====
 WEEK_NAME = [_("周一"), _("周二"), _("周三"), _("周四"), _("周五"), _("周六"), _("周日")]
@@ -439,6 +443,14 @@ REPORT_CARD_PREV = "GROWTH_REPORT_PREV"
     容器里同屏还有孩子页签，撞名会让点了张三跳到李四 """
 REPORT_CARD_NEXT = "GROWTH_REPORT_NEXT"
 """ 成绩单往后翻一页的返回值。⚠️ 同上，是内部哨兵值，不参与翻译 """
+STUDENT_TAB_PER_PAGE = 8
+""" 个人课表与养成总览顶部的学生页签每页最多列几个人（一期方案 §9.8.1）。
+    ⚠️ 原来是按人数均分整行宽度：女儿一多每个页签只剩几列，名字被截得认不出来 """
+STUDENT_PAGE_PREV = "EDU_STUDENT_PAGE_PREV"
+""" 学生页签往前翻一页的返回值。⚠️ 与 REPORT_CARD_PREV 同一做法：内部哨兵、不翻译，
+    同屏还有人名页签与容器页签，用中文按钮名做返回值留有撞名的余地 """
+STUDENT_PAGE_NEXT = "EDU_STUDENT_PAGE_NEXT"
+""" 学生页签往后翻一页的返回值。⚠️ 同上 """
 COLUMN_INDENT = "  "
 """ 模板表每行的前导缩进，表头与数据行必须用同一个。⚠️ 是排版用的空白，不参与翻译 """
 COLUMN_WIDTH_ID = 4
