@@ -435,12 +435,28 @@
    `Character_Talk.json` 还是旧的，所以整个 `sex_class/` 目录当时**根本没被编译过**，静态验证也就没暴露。
    本轮全量重建后才炸出来，已把三条补上 `self_not_underage`（它们本就是成年干员那一档的文案）。
    ⚠️ 教训：**新增口上目录后必须删 `Character_Talk.json` 再验**，增量构建会静默跳过。
-2. **发现但未处理：7 个 `sex_class_main_*.csv` 目前是死文本。** 它们挂在 `start_sex_class`（玩家行为）上、
+2. **7 个 `sex_class_main_*.csv` 曾是死文本（2026-09-09 已修，另揪出并修掉了同类的 14 条，见本条末尾）。** 它们挂在 `start_sex_class`（玩家行为）上、
    前提写的是 `CVP_A1_Course|7X_G_0`，而 `handle_premise.get_now_course_ability(0)` 对玩家走的是
    `get_now_teaching()` → `get_teacher_now_class()`，那条教师反查**不经过临时课程覆盖层**（§6.2 假设 2 的后果），
    `get_now_course(0)` 又查不到玩家的个人课表，所以这 7 个文件的前提对玩家**永远不成立**；当场开课在节次外时
    学生侧同样取不到科目。要修得让 `get_now_course_ability()` 在 `sex_class_handle.get_running_class()` 非空时
-   直接返回本节主修科目。本轮未动，留给 4-C 的口上补全一并处理。
+   直接返回本节主修科目。
+   **修法（2026-09-09）**：`sex_class_handle` 新增 `judge_in_running_class(character_id)`——有课在进行时，
+   玩家恒算在课中（授课者恒为玩家，口径 38），学生则看人在不在本节课的那间教室（复用
+   `class_ai.judge_in_scene`，不能只看"有课在进行"，否则同一时刻在别的教室上普通课的孩子也会被算进来）；
+   `handle_premise.get_now_course_ability()` 开头先问它，成立就直接返回 `get_now_class_ability()`，
+   再往下才走原来的课表两条链。教师反查 `get_teacher_cell()` 本身**未动**，它绕过覆盖层的问题仍在
+   （§6.2 假设 2），只是 Course 型取数不再依赖它。
+   **端到端验证时又揪出第二处死文本**：`start_sex_class.csv` 的 5 条与 `end_sex_class.csv` 的 9 条，前提列写的是
+   常量名（`SCENE_OVER_TWO` / `SCENE_ONLY_TWO` / `SEX_CLASS_END_EARLY|ON_TIME|LATE`）而不是注册值
+   （`place_11` / `place_10` / `sex_class_end_early|on_time|late`），运行时报「前提不存在」、一条都进不了候选池——
+   也就是说开课与下课的口上从实施起就没出现过。已按注册值改正；其余 9 个文件经静态核对无此问题。
+   ⚠️ 改口上 CSV 后必须删 `data/Character_Talk.json` 再构建，增量构建会静默跳过口上（同 §6.5 第 1 条的教训）。
+   **验证**（headless）：开课前 `get_now_course_ability(0)` 为 -1、七条 `CVP_A1_Course|7X_G_0` 全为 0；
+   当场开课（节次外）后玩家与在场学生取到 74、场外的孩子仍为 -1，七条前提恰好只有 74 那条为 1；
+   `talk.handle_talk_sub(0, start_sex_class)` 的候选池未开课时含 3 条开课口上（三人在场，`place_11`）、
+   开课后恰好多出 main_74 的 3 条、其余六门一条不混入，2000 次抽取里主修与开课口上都会被抽中；
+   换主修为 70 后池子随之切换；课中 `end_sex_class` 的候选池恰好是一档 3 条；下课后主修三条退出池子。
 3. 4-C 的口上仍是 49/165，本轮未补。
 
 ### 6.6 4-A 妊娠期胎教实施记录（2026-09-07）

@@ -324,13 +324,20 @@ def get_now_course_ability(character_id: int) -> int:
     取角色当前这一节课的科目能力id，供 Course 型 CVP token 使用
     ⚠️ 体育课与兴趣课没有"科目"这个概念（学的是该活动自带的东西），恒返回-1不成立；
        实习课的科目取该岗位 WorkType.csv 的 ability_id 列
+    ⚠️ 正在进行的性技实操课优先于课表（Plan 22 四期）：当场开课与拖堂都发生在节次之外，
+       此时下面那两条课表链一律取不到东西；且教师反查 get_teacher_cell() 是直接扫
+       class_schedule 的，本就不经过 get_class_cell() 里的临时课程覆盖层，玩家永远查不到自己
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 科目能力id，取不到则为-1
     """
-    from Script.System.Education_System import education_constant, schedule_handle
+    from Script.System.Education_System import education_constant, schedule_handle, sex_class_handle
 
+    if sex_class_handle.judge_in_running_class(character_id):
+        now_class_ability = sex_class_handle.get_now_class_ability()
+        if now_class_ability != -1:
+            return now_class_ability
     teaching = schedule_handle.get_now_teaching(character_id)
     if teaching is not None:
         return teaching["ability_id"]

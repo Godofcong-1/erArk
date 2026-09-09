@@ -3,8 +3,8 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1000,start_sex_class,0,SCENE_OVER_TWO,{Name}让在场的学生们排好队，宣布这节性技实操课开始了。\n「课本上写的那些，接下来要一样一样在身上验证过去。」
-1001,start_sex_class,0,SCENE_OVER_TWO,{Name}把教室的门关上，回过头来面对等在里面的学生们。\n「理论课上讲过的部分就不重复了。今天这一节，全部都要亲手做一遍。」
-1002,start_sex_class,0,SCENE_OVER_TWO,实践教室里的空气有些发紧。{Name}扫过一张张年轻的脸，开口道：\n「不用紧张，做不好也没关系——这就是实操课的意义。」
-1003,start_sex_class,0,SCENE_ONLY_TWO,教室里只有一个学生。{Name}把她叫到跟前。\n「今天就我们两个人。那正好，可以从头到尾慢慢来。」
-1004,start_sex_class,0,SCENE_ONLY_TWO,{Name}看了看空荡荡的教室，又看了看唯一到场的学生。\n「其他人没选这节课。不过一对一也有一对一的好处。」
+1000,start_sex_class,0,place_11,{Name}让在场的学生们排好队，宣布这节性技实操课开始了。\n「课本上写的那些，接下来要一样一样在身上验证过去。」
+1001,start_sex_class,0,place_11,{Name}把教室的门关上，回过头来面对等在里面的学生们。\n「理论课上讲过的部分就不重复了。今天这一节，全部都要亲手做一遍。」
+1002,start_sex_class,0,place_11,实践教室里的空气有些发紧。{Name}扫过一张张年轻的脸，开口道：\n「不用紧张，做不好也没关系——这就是实操课的意义。」
+1003,start_sex_class,0,place_10,教室里只有一个学生。{Name}把她叫到跟前。\n「今天就我们两个人。那正好，可以从头到尾慢慢来。」
+1004,start_sex_class,0,place_10,{Name}看了看空荡荡的教室，又看了看唯一到场的学生。\n「其他人没选这节课。不过一对一也有一对一的好处。」

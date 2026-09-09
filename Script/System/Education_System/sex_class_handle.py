@@ -313,6 +313,28 @@ def get_now_class_ability() -> int:
     return now_class.get("ability_id", -1)
 
 
+def judge_in_running_class(character_id: int) -> bool:
+    """
+    判断角色此刻是否正身处那节在进行的实操课
+
+    授课者恒为玩家（口径38），所以玩家只要有课在进行就算；学生则看人在不在本节课的那间教室——
+    不能只看「有课在进行」，否则同一时刻在别的教室上普通课的孩子也会被算成在上实操课。
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 是否正在这节实操课里
+    """
+    now_class = get_running_class()
+    if now_class is None:
+        return False
+    if character_id == 0:
+        return True
+    # 场景名比对复用 class_ai 的既有写法，不在这里另写一份
+    from Script.System.Education_System import class_ai
+
+    return class_ai.judge_in_scene(character_id, now_class.get("classroom", ""))
+
+
 def get_now_bonus_exp_id() -> int:
     """
     取当前实操课主修科目对应的经验id
