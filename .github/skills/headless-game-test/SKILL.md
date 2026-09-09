@@ -93,7 +93,7 @@ any(t.behavior_id == "my_behavior" for t in game_config.config_talk.values())
 constant.settle_behavior_effect_data[<效果id>](<角色id>, add_time, change_data, now_time)
 ```
 
-⚠️ **`add_time` 不要传 0**：绝大多数结算器开头是 `if not add_time: return`，传 0 会静默什么都不做，断言变成假阴性。反过来，「`add_time=0` 时不生效」本身也值得单独断言一条。
+**`add_time` 不要传 0**：绝大多数结算器开头是 `if not add_time: return`，传 0 会静默什么都不做，断言变成假阴性。反过来，「`add_time=0` 时不生效」本身也值得单独断言一条。
 
 更多经实战验证的断言样式：
 

@@ -2,7 +2,7 @@
 
 玩家在博士办公室「处理公务」时，待处理队列里的公务事件逐条弹出，每条给2~4个选项。
 
-⚠️ 两条界面口径：
+两条界面口径：
    1. 选项的后果提示**写方向不写数值**（"倾向：坚强"而不是"坚强+2"）——写了数值，决断就变成算数题了
    2. 前提不满足的选项**置灰并标明原因**而不是隐藏——让玩家看见"这里本来有更好的选择，但我没养到"
 """
@@ -31,7 +31,7 @@ def get_code_text(raw_text: str, character_id: int, partner_id: int) -> str:
     """
     把事件文本里的口上代码转成可显示的文本
 
-    ⚠️ 转换期间把主体的交互对象指向本次事件的互动对象，使文本里的交互对象代码
+    转换期间把主体的交互对象指向本次事件的互动对象，使文本里的交互对象代码
        指向对的人（无互动对象时为博士）；转完立刻还原
     Keyword arguments:
     raw_text -- 原始文本
@@ -160,7 +160,7 @@ def handle_official_event_queue(width: int = 0):
     """
     逐条处理待决断的公务事件（处理公务指令的入口）
 
-    ⚠️ 出队在先、结算在后：无效项已由 pop_official_event 静默丢弃，
+    出队在先、结算在后：无效项已由 pop_official_event 静默丢弃，
        弹出的每一条都保证主体与配置都还在
     Keyword arguments:
     width -- 绘制宽度，默认取窗体宽度
@@ -177,7 +177,7 @@ def handle_official_event_queue(width: int = 0):
         now_draw = Official_Event_Draw(queue_data, width)
         option_index = now_draw.draw()
         # 一条选项都不可选而被跳过：不结算，但**必须记履历**。
-        # ⚠️ 只 continue 的话事件出了队却没进履历，judge_event_done 仍为假，
+        # 只 continue 的话事件出了队却没进履历，judge_event_done 仍为假，
         #    明天照样会被重新派下来，玩家于是反复看到同一条「已经不需要你来决定了」。
         #    记 0 号选项，养成履历里会显示为「（未作选择）」——那条兜底文案本就是为它写的
         if not option_index:

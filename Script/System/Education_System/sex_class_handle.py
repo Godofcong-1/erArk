@@ -7,7 +7,7 @@
     2. 前提区分 —— "在上课"与"在群交"要能分开判
     3. 结算差分 —— 课堂 H 要给学生加主修科目经验、给旁观者发观摩收益、记出勤
 
-⚠️ 开课时必须**同时**置 `cache.group_sex_mode = True`：群交模板面板、射精面板、Web 状态栏
+开课时必须**同时**置 `cache.group_sex_mode = True`：群交模板面板、射精面板、Web 状态栏
    等十余处读取点判的都是那个标志，只置 sex_class_mode 的话整个模板界面都不会出现。
 
 两种发起方式在数据上是**统一的**——当场开课也会创建一条 temp_sex_class 条目并置 running，
@@ -150,7 +150,7 @@ def clean_expired_temp_class() -> int:
     """
     清理过期的临时课程条目（跨天结算时调用）
 
-    ⚠️ 必须跳过 running 为真的那条：口径68允许无限拖堂，一节课可以从昨天一直上到今天，
+    必须跳过 running 为真的那条：口径68允许无限拖堂，一节课可以从昨天一直上到今天，
        跨天时若把正在上的这节删掉，下课时就找不到课程数据了。
     Keyword arguments:
     无
@@ -196,7 +196,7 @@ def judge_can_join_sex_class(character_id: int) -> bool:
     if character_data.dead:
         return False
     # 状态异常的不拉进来：2临盆/产后/监禁、5意识模糊、6意识不清、7离线（外勤/婴儿/外交访问/逃跑）
-    # ⚠️ 刻意**不查 4（服装异常）**：课上到一半学生本来就被脱光了，把它算进来会让这份名单
+    # 刻意**不查 4（服装异常）**：课上到一半学生本来就被脱光了，把它算进来会让这份名单
     #    在开课瞬间清空，旁观名单跟着变空，观摩收益整个失效
     for normal_id in (2, 5, 6, 7):
         if not getattr(handle_premise, "handle_normal_%d" % normal_id)(character_id):
@@ -214,7 +214,7 @@ def get_scene_student_list(scene_path: Optional[list] = None) -> List[int]:
     """
     取某场景内所有可参加实操课的学生
 
-    ⚠️ 这是「在场需要有至少一个学生」这条开课前提的取值来源，也是开课时把谁拉进模式的名单。
+    这是「在场需要有至少一个学生」这条开课前提的取值来源，也是开课时把谁拉进模式的名单。
     Keyword arguments:
     scene_path -- 场景路径，None时取玩家所在场景
     Return arguments:
@@ -233,7 +233,7 @@ def get_selected_student_list(classroom: str, week_day: int, period: int) -> Lis
     """
     取选修了这一节次这间教室的学生
 
-    ⚠️ 这是排课面板上"本节有 N 名学生会来"那一行的取值来源，**必显示**：
+    这是排课面板上"本节有 N 名学生会来"那一行的取值来源，**必显示**：
        选课逻辑零改动的代价就是可能一个人都不来——学生的个人课表存的是"这一节去哪间教室"，
        教室里的内容换成性技实操课后她照旧走进来，但没人选这间教室时排了也是空教室。
        玩家必须在排课当场就看得到这个数。
@@ -341,7 +341,7 @@ def get_now_bonus_exp_id() -> int:
     """
     取当前实操课主修科目对应的经验id
 
-    ⚠️ 映射不硬编码：一期的 growth_handle.get_subject_exp_id() 从 AbilityUp.csv 的升级需求串里
+    映射不硬编码：一期的 growth_handle.get_subject_exp_id() 从 AbilityUp.csv 的升级需求串里
        解出，七门性技各自解出的经验id互不重叠（指技70→手交41 / 舌技71→口交42 / 足技72→足交44 /
        胸技73→乳交43 / 膣技74→阴道性交61 / 肛技75→肛肠性交62 / 榨精77→精液24）。
        AbilityUp.csv 是唯一真相源，不在 Behavior_Data.csv 上另开一列标注每个行为属于哪门性技——
@@ -422,7 +422,7 @@ def judge_time_crossed(target_time: Optional[datetime.datetime], last_time: date
     """
     判断某个时刻是否被本次结算跨过
 
-    ⚠️ 游戏时间是按行为时长跳跃的，不逐分钟走：玩家13:00开始一个60分钟的行为，时间直接跳到14:00，
+    游戏时间是按行为时长跳跃的，不逐分钟走：玩家13:00开始一个60分钟的行为，时间直接跳到14:00，
        13:30这个时刻从来没有被"经过"过。所以提醒一律用跨越判定（上次 < 目标 <= 当前），
        用 now_time == target_time 的等于判定会永远不触发。写法同 game_time.py:153 的切月判定。
     Keyword arguments:
@@ -461,7 +461,7 @@ def check_and_send_notify(last_time: datetime.datetime, now_time: datetime.datet
     三次提醒（方案 §3.28.9）：
         1. 预约日当天玩家起床后 —— 走 get_today_class_notify_text()，不在本函数
         2. 节次开始前30分钟
-        3. 节次的结束时刻（预定下课时刻），⚠️ 只在课堂H模式进行中才发
+        3. 节次的结束时刻（预定下课时刻），只在课堂H模式进行中才发
     Keyword arguments:
     last_time -- 上次结算时刻
     now_time -- 当前时刻
@@ -592,7 +592,7 @@ def end_sex_class() -> None:
     """
     结束当前的性技实操课
 
-    ⚠️ 只由玩家手动触发（口径68），系统永不自动下课。唯二的例外是既有的体力归零兜底
+    只由玩家手动触发（口径68），系统永不自动下课。唯二的例外是既有的体力归零兜底
        （group_sex_npc_hp_0_end / group_sex_pl_hp_0_end），那两条本就在群交链上。
     Keyword arguments:
     无
@@ -655,7 +655,7 @@ def get_watcher_list() -> List[int]:
     既有H结算只给被操作者加经验，不补这一块的话玩家很快会学会"只排4个学生就够了"，
     这门课就退化成一对一，"课堂"的设定也就空了。
 
-    ⚠️ 开头的 sex_class_mode 判定是硬要求不是优化：课堂模式会同时置 group_sex_mode，
+    开头的 sex_class_mode 判定是硬要求不是优化：课堂模式会同时置 group_sex_mode，
        若这里改判群交标志，任何一场普通群交都会给全场围观干员发经验与状态。
     Keyword arguments:
     无
@@ -683,7 +683,7 @@ def judge_hp_low_only_watch(character_id: int) -> bool:
     判断某学生是否因体力不足而只能旁观（口径65）
 
     体力不足是"做不动"而不是"不想来"，所以人照常到场、不计缺课，只是不进H模板。
-    ⚠️ 这里实时判一次即可，不必给学生挂"本节只旁观"的flag——状态本来就是实时的。
+    这里实时判一次即可，不必给学生挂"本节只旁观"的flag——状态本来就是实时的。
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -701,7 +701,7 @@ def judge_show_watch_talk() -> bool:
     """
     掷一次旁观口上的触发判定
 
-    ⚠️ 只限流口上，收益结算每个动作都给。玩家一节课可能做20个动作，
+    只限流口上，收益结算每个动作都给。玩家一节课可能做20个动作，
        每次都描写一遍"学生们看着"会刷满屏幕，但经验与状态该给还是要给。
     Keyword arguments:
     无
@@ -717,10 +717,10 @@ def settle_watcher(add_time: int, change_data: game_type.CharacterStatusChange) 
 
     由 settle_behavior.handle_settle_behavior() 在玩家每个H动作结算后调用。
 
-    ⚠️ 经验**直接写入**而不走 base_chara_experience_common_settle：那个函数里挂着主修科目加成的钩子
+    经验**直接写入**而不走 base_chara_experience_common_settle：那个函数里挂着主修科目加成的钩子
        （common_default.py 的经验写入段），本次要发的 main_exp 是从被操作学生的结算结果里读来的、
        **已经含加成**，再过一遍钩子就成了双重加成。
-    ⚠️ 状态则照常走通用函数（状态没有加成钩子），但必须传 tenths_add=False：
+    状态则照常走通用函数（状态没有加成钩子），但必须传 tenths_add=False：
        该参数默认为真会额外加"当前状态值的1/10"，一节课20个动作逐次滚雪球会让旁观者涨得比被操作者还快。
     Keyword arguments:
     add_time -- 本次行为的结算时长

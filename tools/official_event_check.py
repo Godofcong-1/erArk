@@ -11,7 +11,7 @@
     .conda\\python.exe tools/official_event_check.py --full     # 额外校验条数下限（内容写完后用）
     .conda\\python.exe tools/official_event_check.py --quiet    # 只报错，不打统计
 
-⚠️ 本工具**不启动游戏**：前提名与结算id直接从 `Script/Core/constant_promise.py`、
+本工具**不启动游戏**：前提名与结算id直接从 `Script/Core/constant_promise.py`、
    `Script/Core/constant_effect.py`、`data/csv/*.csv` 里解析，跑一次不到一秒。
 """
 import csv
@@ -51,7 +51,7 @@ DORM_SUB_KEY = {102, 103, 104}
 
 DORM_TEXT_ALLOW = {"幼女": {"5"}}
 """ 上一条的例外：文件名 -> cid集合。
-    ⚠️ 只放「搬离育儿室」这类**本身就在讲这件事**的里程碑事件，别拿它当报错的消音器 """
+    只放「搬离育儿室」这类**本身就在讲这件事**的里程碑事件，别拿它当报错的消音器 """
 
 MIN_COUNT = {"婴儿": 50, "幼女": 70, "萝莉": 70, "通用": 56}
 """ --full 模式下的条数下限（通用只数跨阶段的那部分，成年后事件不计入） """
@@ -65,7 +65,7 @@ TEXT_PLACEHOLDER = {
     "PanName", "SocName",
 }
 """ 事件正文允许使用的占位符：与 Script/Design/talk.py code_text_to_draw_text() 末尾 .format() 的关键字一致。
-    ⚠️ 事件正文在绘制前会经 official_event_panel.get_code_text() → code_text_to_draw_text() 替换这些占位符
+    事件正文在绘制前会经 official_event_panel.get_code_text() → code_text_to_draw_text() 替换这些占位符
        （Plan 22 三期 §9.1 的「事件点名」就靠 {Name} / {TargetName}），所以它们不是"裸花括号"；
        除此之外的花括号才会在 .format() 时抛 KeyError """
 PLACEHOLDER_RE = re.compile(r"\{([A-Za-z_]+)\}")

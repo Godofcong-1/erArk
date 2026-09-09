@@ -322,9 +322,9 @@ def get_now_course_type(character_id: int) -> int:
 def get_now_course_ability(character_id: int) -> int:
     """
     取角色当前这一节课的科目能力id，供 Course 型 CVP token 使用
-    ⚠️ 体育课与兴趣课没有"科目"这个概念（学的是该活动自带的东西），恒返回-1不成立；
+    体育课与兴趣课没有"科目"这个概念（学的是该活动自带的东西），恒返回-1不成立；
        实习课的科目取该岗位 WorkType.csv 的 ability_id 列
-    ⚠️ 正在进行的性技实操课优先于课表（Plan 22 四期）：当场开课与拖堂都发生在节次之外，
+    正在进行的性技实操课优先于课表（Plan 22 四期）：当场开课与拖堂都发生在节次之外，
        此时下面那两条课表链一律取不到东西；且教师反查 get_teacher_cell() 是直接扫
        class_schedule 的，本就不经过 get_class_cell() 里的临时课程覆盖层，玩家永远查不到自己
     Keyword arguments:
@@ -397,7 +397,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
     # print(f"debug character_id = {character_id}, premise_all_value_list = {premise_all_value_list}")
 
     # 罗德岛全局数值的主体RI（Plan 23）：资源、声望、公务量这类不属于任何角色的数值
-    # ⚠️ 必须在角色主体的判别之前提前返回：下面那段数值B的判别是按「类型|子id」拆的，
+    # 必须在角色主体的判别之前提前返回：下面那段数值B的判别是按「类型|子id」拆的，
     #    而 RI 的类型可以不带子id（如 CVE_RI_Work_G_20），落进去会直接 IndexError
     if premise_all_value_list[0] == "RI":
         from Script.System.Official_Event_System import ri_value
@@ -481,7 +481,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
                 final_value = final_character_data.dirty.cloth_semen[part_cid][1]
     elif premise_all_value_list[1][0] == "G":
         # 养成数值前提（Plan 22 三期）：出勤、性格倾向、照料值等，编号见 education_constant.GROWTH_VALUE_*
-        # ⚠️ 必须排在攻略程度之前——"Growth" 与 "Gift" 的首字母都是 G，落到默认分支会被当成攻略程度
+        # 必须排在攻略程度之前——"Growth" 与 "Gift" 的首字母都是 G，落到默认分支会被当成攻略程度
         if "Growth" in premise_all_value_list[1]:
             from Script.System.Education_System import growth_handle
 
@@ -503,9 +503,9 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
                 final_value = 0
     elif premise_all_value_list[1][0] == "C":
         # 上课前提（Plan 22 §3.17）：一条分支覆盖全部18门科目与6种课型，日后加科目零改动
-        # ⚠️ 不新增字段，当前课程由课表现算——教师侧查全局课表、学生侧查个人课表，
+        # 不新增字段，当前课程由课表现算——教师侧查全局课表、学生侧查个人课表，
         #    与 <课> 状态标识、上课结算读的是同一个入口，三处不会各说各话
-        # ⚠️ 三者判序不能改：CourseShowOff 与 CourseType 的字符串里都含有 "Course"，
+        # 三者判序不能改：CourseShowOff 与 CourseType 的字符串里都含有 "Course"，
         #    长的必须先判，否则会被 Course 分支抢先吃掉（而且不报错，只是永远不成立）
         if "CourseShowOff" in premise_all_value_list[1]:
             growth_data = final_character_data.child_growth
@@ -592,7 +592,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
     judge_value = int(premise_all_value_list[3])
     # print(f"debug final_value = {final_value}, judge_value = {judge_value}")
 
-    # 攻略程度的不过0处理。⚠️ 养成数值同样以G开头，但它是可正可负的普通数值，不能套这套夹逼
+    # 攻略程度的不过0处理。养成数值同样以G开头，但它是可正可负的普通数值，不能套这套夹逼
     if premise_all_value_list[1][0] == "G" and "Growth" not in premise_all_value_list[1]:
         # 如果当前值与判定值的正负号不同，则直接返回0
         if (final_value > 0 and judge_value < 0) or (final_value < 0 and judge_value > 0):

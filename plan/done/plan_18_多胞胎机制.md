@@ -49,7 +49,7 @@
 ### 2.2 受精判定 `check_fertilization` 与精液量/受精概率的关系
 
 - **概率计算** [get_fertilization_rate:182](Script/System/Pregnancy_System/pregnancy_handle.py#L182)：读子宫精液 `dirty.body_semen[7][1]`（量 ml）与 `[7][2]`（等级），基础概率 `now_rate = (semen_count/1000)^2 * 100 + semen_level * 5`；假孕/事前药/事后药清零；再乘生理周期倍率 `config_reproduction_period[period].type`；最后 `round(…,2)` 写入 `pregnancy.fertilization_rate`。调用时机：每次体内射精（[ejaculation_panel.py:437](Script/UI/Panel/ejaculation_panel.py#L437)）、玩家睡眠结算 [check_all_pregnancy:579](Script/System/Pregnancy_System/pregnancy_handle.py#L579)、0 点兜底 [past_day_settle.py:66](Script/Settle/past_day_settle.py#L66)。
-- ⚠ 顺带核实到一个**既有问题**（不在本方案范围内，仅记录）：排卵促进药 ×5、催眠强制排卵 ×5、浓厚精液 ×2 三段（:225-241）把结果写进 `pregnancy.fertilization_rate` 却**不更新局部变量 `now_rate`**，而函数末尾 `fertilization_rate = now_rate` 会把它们覆盖掉——三种加成实际无效。多胎方案的每轮概率以 `fertilization_rate` 为基准按精液比例缩放（§3.3），**不依赖也不修复**该问题（见 §9）。
+- 顺带核实到一个**既有问题**（不在本方案范围内，仅记录）：排卵促进药 ×5、催眠强制排卵 ×5、浓厚精液 ×2 三段（:225-241）把结果写进 `pregnancy.fertilization_rate` 却**不更新局部变量 `now_rate`**，而函数末尾 `fertilization_rate = now_rate` 会把它们覆盖掉——三种加成实际无效。多胎方案的每轮概率以 `fertilization_rate` 为基准按精液比例缩放（§3.3），**不依赖也不修复**该问题（见 §9）。
 - **判定** [check_fertilization:247](Script/System/Pregnancy_System/pregnancy_handle.py#L247) 的顺序：`ovulation_flag` 门 → 胎生消费标记 → **清空 6/7 号部位精液**（判定前！）→ 清强制排卵 → 已受精(20/21/22)早退 → `fertilization_rate` 非零时：未初潮 / 假孕 / 无生育模组机械 三个豁免分支带文案 → `random.randint(1,100) <= fertilization_rate` 成功：三行提示 + `talent[20]=1` + `fertilization_time` + `acceleration_days=0` + 无意识妊娠 `talent[35]` + 二段 `fertilization`；失败：提示 + 二段 `fertilization_failed` → `fertilization_rate=0` → `must_show_talk_check` + `WaitDraw` 输出 → 成就 706/708。
 - 关键事实：**精液量在判定之前就被清零**，因此"总精液数量的临时值"必须在清零前读取 `body_semen[7][1]`；且 `fertilization_rate` 已把精液量折算进去，多轮判定需要按"临时精液量"重新推导每轮概率（§3.3）。
 

@@ -63,7 +63,7 @@
 
 另有先例佐证撞号的危害：`draw_setting[18]` 被 `Script/Core/web_server.py:347` 挪作"Web 全部位显示"的运行时开关，与 CSV 218（TK DPI 缩放）撞号。
 
-⚠️ **结论：新设置用 cid 220**（对应 `draw_setting[20]`，全新号，老存档必然缺失从而被填入默认值）。实施时仍需再核对一次 CSV 里 220 未被占用。
+**结论：新设置用 cid 220**（对应 `draw_setting[20]`，全新号，老存档必然缺失从而被填入默认值）。实施时仍需再核对一次 CSV 里 220 未被占用。
 
 **(c) 分段顺序不要依赖 dict 插入序。** `part_dict` 的键序来自 `Talk_Common.json` 的数据顺序，而该顺序由 `buildconfig.py:578` 的 `os.listdir(talk_common_dir)` 决定。当前恰好是 `action_A` → `action_B1` → `action_B2` → `action_C1` → `action_C2` 的字母序，A→B→C 成立，但这是巧合而非保证，实施时必须显式指定顺序。
 

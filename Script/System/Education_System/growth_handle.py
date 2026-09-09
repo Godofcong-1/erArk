@@ -1,6 +1,6 @@
 """生长养成的能力成长计算（Plan 22 一期）
 
-⚠️ 本模块**完全复用既有的能力成长链**，不另造一套平行的经验体系：
+本模块**完全复用既有的能力成长链**，不另造一套平行的经验体系：
 
     上课  →  base_chara_state_common_settle(学生, 状态9 习得)   累加习得状态值
           →  base_chara_experience_common_settle(学生, 科目经验) 累加该科目经验
@@ -66,7 +66,7 @@ def get_character_stage(character_id: int) -> int:
     int -- 101婴儿/102幼女/103萝莉/104少女，都不是则0
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    # ⚠️ 必须按 id 升序遍历：成长链正常情况下四个素质只会挂一个，
+    # 必须按 id 升序遍历：成长链正常情况下四个素质只会挂一个，
     #    但世界设定「萝莉化」会批量覆写年龄素质，遍历 set 的哈希序会取到不确定的那个
     for talent_id in sorted(education_constant.CHILD_TALENT_SET):
         if character_data.talent.get(talent_id, 0):
@@ -82,12 +82,12 @@ def get_student_candidate_list() -> List[int]:
     Return arguments:
     List[int] -- 角色id列表，按id升序
     功能: 玩家的女儿中处于幼女/萝莉/少女阶段的。
-          ⚠️ 个人课表**不再**用这份名单：它已放宽为「职业为学生的全部干员」，走下面的
+          个人课表**不再**用这份名单：它已放宽为「职业为学生的全部干员」，走下面的
              get_course_candidate_list()（一期方案 §9.8.2）。养成总览等只关心女儿的地方仍用本函数
-          ⚠️ 血缘条件不能省：judge_is_child() 只看素质，而世界设定「萝莉化」
+          血缘条件不能省：judge_is_child() 只看素质，而世界设定「萝莉化」
              (character_handle.handle_character_setting) 会给全岛干员挂上萝莉素质103，
              只按素质筛会把全岛的人都塞进课表页签栏
-          ⚠️ 按 id 升序而不是遍历 npc_id_got(set)：两个面板都用 [0] 做默认选中回落，
+          按 id 升序而不是遍历 npc_id_got(set)：两个面板都用 [0] 做默认选中回落，
              set 的迭代顺序不定会让页签顺序飘
     """
     from Script.Design import handle_premise
@@ -112,11 +112,11 @@ def get_course_candidate_list() -> List[int]:
     Return arguments:
     List[int] -- 角色id列表，按id升序
     功能: 职业为学生（WorkType 152）的全部干员，再并上养成中的女儿（一期方案 §9.8.2）。
-          ⚠️ 取并集而不是只看职业：女儿长到幼女时会被自动置为学生岗，理论上已经包含在前者里，
+          取并集而不是只看职业：女儿长到幼女时会被自动置为学生岗，理论上已经包含在前者里，
              但并上 get_student_candidate_list() 可以保证旧口径下能排课的女儿一个不少，不引入回归。
-          ⚠️ 成年学生只排课、只上课，不出成绩单、不进养成事件——那些地方仍只遍历女儿。
+          成年学生只排课、只上课，不出成绩单、不进养成事件——那些地方仍只遍历女儿。
              上课 AI 对成年学生早已支持（handle_npc_ai 的上课判定排在工作之前，且不看年龄）。
-          ⚠️ 与 get_student_candidate_list 一样按 id 升序：面板用 [0] 做默认选中回落，set 的迭代顺序会飘
+          与 get_student_candidate_list 一样按 id 升序：面板用 [0] 做默认选中回落，set 的迭代顺序会飘
     """
     daughter_set = set(get_student_candidate_list())
     result = []
@@ -167,7 +167,7 @@ def get_learn_speed(teacher_level: int, student_level: int) -> float:
 def get_education_zone_adjust() -> float:
     """
     取教育区等级带来的成长效率加成倍率
-    ⚠️ Facility_effect.csv 里教育区各级的 effect 列（Lv1=0 / Lv2=5 / Lv3=20 / Lv4=50 / Lv5=100）
+    Facility_effect.csv 里教育区各级的 effect 列（Lv1=0 / Lv2=5 / Lv3=20 / Lv4=50 / Lv5=100）
        此前在代码中从未被读取，介绍文案却已向玩家承诺了"成长效率加成提升至20%/50%/100%"。
        本计划把它接到上课结算上，兑现这个承诺。
     Keyword arguments:
@@ -193,7 +193,7 @@ def get_growth_stop_adjust(character_id: int) -> float:
     Return arguments:
     float -- 有成长停滞素质(28)时为 GROWTH_STOP_LEARN_RATE，否则为 1.0
     功能: 停滞期间可以继续上课，但一切学习收益减半，作为无限期养成的代价。
-          ⚠️ 只看学生自己的素质，教师停滞与否与教学无关
+          只看学生自己的素质，教师停滞与否与教学无关
     """
     if character_id not in cache.character_data:
         return 1.0
@@ -237,7 +237,7 @@ def settle_student_class_gain(
 ) -> None:
     """
     一节课的学生侧结算：累加习得状态值与该科目的经验
-    ⚠️ 等级不在此处提升，而是走既有链在玩家睡觉时兑现（见模块头注释）
+    等级不在此处提升，而是走既有链在玩家睡觉时兑现（见模块头注释）
     Keyword arguments:
     student_id -- 学生的角色id
     teacher_id -- 授课教师的角色id，-1表示本节无教师（降级为自习）
@@ -306,7 +306,7 @@ def settle_teacher_class_gain(
 ) -> None:
     """
     一节课的教师侧结算：教师自己也获得当节所授科目的习得与经验（教学相长）
-    ⚠️ 与既有实现的区别：既有 handle_teach_add_just 写死加学识，本函数改为加**当节所授科目**
+    与既有实现的区别：既有 handle_teach_add_just 写死加学识，本函数改为加**当节所授科目**
     Keyword arguments:
     teacher_id -- 教师的角色id
     ability_id -- 当节所授科目的能力id
@@ -364,9 +364,9 @@ def settle_follow_mother_gain(
     """
     一次见学的结算：按母亲的工作科目加习得与经验，并累加照料值与母女好感
 
-    ⚠️ 母亲没有工作时**只加照料值与好感，不加任何学习收益**（方案 §3.24 的回落表最后一行）——
+    母亲没有工作时**只加照料值与好感，不加任何学习收益**（方案 §3.24 的回落表最后一行）——
        跟着一个没在工作的母亲，学不到手艺，但相处本身是有意义的。
-    ⚠️ 不计入 attend_class_count：见学不是课，混进出勤率会让成绩单失真。
+    不计入 attend_class_count：见学不是课，混进出勤率会让成绩单失真。
     Keyword arguments:
     character_id -- 幼女的角色id
     mother_id -- 母亲的角色id
@@ -441,7 +441,7 @@ def settle_personality_talent(character_id: int) -> str:
     """
     成年时按 personality_point 的符号给四对性格素质选边
 
-    ⚠️ 全为 0 时**不随机选边**，输出"性格尚未定型"（方案 §3.8）——
+    全为 0 时**不随机选边**，输出"性格尚未定型"（方案 §3.8）——
        玩家全程没参与养成就凭空得到一套性格，会让养成事件显得可有可无。
     Keyword arguments:
     character_id -- 角色id
@@ -475,7 +475,7 @@ def get_career_suggestion_text(character_id: int) -> str:
     """
     按当前等级最高的科目反查岗位，给出职业倾向提示
 
-    ⚠️ **只提示、不自动任命**（口径 39）：成年后成为普通干员、可任命到任何岗位，任命权在玩家手里。
+    **只提示、不自动任命**（口径 39）：成年后成为普通干员、可任命到任何岗位，任命权在玩家手里。
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -514,7 +514,7 @@ def get_stage_progress(character_id: int) -> float:
     """
     取角色在当前成长阶段里已经走过的进度百分比
 
-    ⚠️ 阶段阈值是**累计**天数（婴儿0~90 / 幼女90~270 / 萝莉270~450），
+    阶段阈值是**累计**天数（婴儿0~90 / 幼女90~270 / 萝莉270~450），
        所以进度要减掉本阶段的起点，否则幼女期一开始就会显示成 33%
     Keyword arguments:
     character_id -- 角色id
@@ -543,7 +543,7 @@ def get_growth_value(character_id: int, value_id: int) -> float:
     """
     读取养成数值，供 CVP_A1_Growth|N_运算_值 前提与面板共用
 
-    ⚠️ 这是养成数值的**唯一读口**：前提、事件、面板都从这里取，
+    这是养成数值的**唯一读口**：前提、事件、面板都从这里取，
        免得同一个「出勤率」在三处各算各的、口径不一致
     Keyword arguments:
     character_id -- 角色id
@@ -553,7 +553,7 @@ def get_growth_value(character_id: int, value_id: int) -> float:
     """
     from Script.System.Education_System import semester_handle
 
-    # ⚠️ 阶段进度不依赖养成数据，要在下面的提前返回之前算：
+    # 阶段进度不依赖养成数据，要在下面的提前返回之前算：
     #    没有 child_growth 的孩子（旧档、刚出生）照样有成长天数
     if value_id == education_constant.GROWTH_VALUE_STAGE_PROGRESS:
         return get_stage_progress(character_id)
@@ -562,7 +562,7 @@ def get_growth_value(character_id: int, value_id: int) -> float:
         return semester_handle.get_semester_progress()
     growth_data = cache.character_data[character_id].child_growth
     if growth_data is None:
-        # ⚠️ 没有养成数据时，成绩单档位要回落到 -1（尚无成绩单）而不是 0——
+        # 没有养成数据时，成绩单档位要回落到 -1（尚无成绩单）而不是 0——
         #    0 是「优秀」，回落成 0 会让全岛没上过学的人都通过优秀档的口上前提
         if value_id == education_constant.GROWTH_VALUE_REPORT_GRADE:
             return float(education_constant.REPORT_GRADE_NONE)
@@ -593,7 +593,7 @@ def get_growth_value(character_id: int, value_id: int) -> float:
         return semester_attend * 100.0 / semester_total
     last_report_card = semester_handle.get_last_report_card(character_id)
     if value_id == education_constant.GROWTH_VALUE_REPORT_GRADE:
-        # ⚠️ 没有成绩单时是 -1 而不是 0：0 是「优秀」档
+        # 没有成绩单时是 -1 而不是 0：0 是「优秀」档
         if not last_report_card:
             return float(education_constant.REPORT_GRADE_NONE)
         return float(last_report_card.get("grade", education_constant.REPORT_GRADE_NONE))
@@ -614,7 +614,7 @@ def change_growth_value(character_id: int, value_id: int, add_value: float):
     """
     改写养成数值，供 CVE_A1_Growth|N_G/L/E_值 结算使用
 
-    ⚠️ 只有性格倾向与照料值是可写的：出勤数由上课结算记账、胎教值由妊娠期写入，
+    只有性格倾向与照料值是可写的：出勤数由上课结算记账、胎教值由妊娠期写入，
        让事件去改它们会让面板上的「听课N节」变成一个谁都对不上的数（口径33 也不允许事件动能力）
     Keyword arguments:
     character_id -- 角色id

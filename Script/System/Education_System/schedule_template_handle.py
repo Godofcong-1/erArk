@@ -8,11 +8,11 @@
 所以日程的执行方式不是另造一条 AI 链，而是改写既有的 `entertainment.entertainment_type`
 这三个槽位——既有的娱乐 AI 链会照着它去做事，一行新 AI 都不用写。
 
-⚠️ **改写必须发生在每日娱乐刷新之后**（`past_day_settle` 里 `get_chara_entertainment` 的下一行），
+**改写必须发生在每日娱乐刷新之后**（`past_day_settle` 里 `get_chara_entertainment` 的下一行），
 否则当天写进去的值立刻被随机值冲掉，症状是"日程时灵时不灵"，极难查。挂点照抄
 `egg_handle.replace_entertainment_for_eggs`。
 
-⚠️ **优先级是节次级别的**（2026-09-10，二期方案 §9.2.9）：有课的节次由 class_ai 的上课判定先接管，没课的节次才轮到
+**优先级是节次级别的**（2026-09-10，二期方案 §9.2.9）：有课的节次由 class_ai 的上课判定先接管，没课的节次才轮到
 槽位里的活动，所以改写时不避让有课的时段。幼女在节次内没课、且该时段是「自由选择」时默认见学
 （class_ai.judge_should_follow_mother），明确排了活动就去做活动；学生岗不走工作链、白天也算娱乐时间
 （handle_npc_ai.find_character_target / handle_premise_time），否则周一~周六的白天根本走不到娱乐链。
@@ -141,7 +141,7 @@ def create_template(name: str) -> int:
     新建一套空模板（Plan 22 二期第一轮追加）
 
     方案 §1 要的是「可定义**若干套**日常日程模板」，四套预设只是起点。
-    ⚠️ 编号取「现存最大编号 + 1」，不补中间的空缺号；但被删的**最大**编号会被下一套新模板复用
+    编号取「现存最大编号 + 1」，不补中间的空缺号；但被删的**最大**编号会被下一套新模板复用
        （收尾轮测试发现，与原注释「删过的编号不复用」不符）。这不会串日程：delete_template 删之前
        已把引用它的孩子解开（schedule_template_id 归 0、覆盖清空），不存在"孩子还指着旧编号"的情形。
     Keyword arguments:
@@ -182,9 +182,9 @@ def delete_template(template_id: int) -> bool:
     """
     删掉一套自建模板（Plan 22 二期第一轮追加）
 
-    ⚠️ 四套预设不可删：init_default_template 只在整张表为空时才补，
+    四套预设不可删：init_default_template 只在整张表为空时才补，
        删掉一套预设不会被补回来，而 PRESET_TEMPLATE_NAME 的编号在代码里被引用着。
-    ⚠️ 删之前必须把引用它的孩子解开，否则那些孩子的 schedule_template_id
+    删之前必须把引用它的孩子解开，否则那些孩子的 schedule_template_id
        指向一个不存在的编号，get_child_slot_activity 每天都拿到 None。
     Keyword arguments:
     template_id -- 模板编号
@@ -210,7 +210,7 @@ def delete_template(template_id: int) -> bool:
 
 def apply_template(character_id: int, template_id: int) -> None:
     """
-    给一个孩子套用模板。⚠️ 换模板时一并清空该孩子的单项覆盖——
+    给一个孩子套用模板。换模板时一并清空该孩子的单项覆盖——
     覆盖是"针对某套模板的微调"，留着它跨模板生效只会让玩家看不懂自己的日程
     Keyword arguments:
     character_id -- 角色id
@@ -285,12 +285,12 @@ def judge_activity_need_pass(character_id: int, entertainment_id: int) -> bool:
     """
     校验一个孩子是否满足某项娱乐的 need 条件（Plan 22 二期第一轮追加）
 
-    ⚠️ 这道校验非做不可：模板是**全局共享**的，而 need 是**逐人**的。
+    这道校验非做不可：模板是**全局共享**的，而 need 是**逐人**的。
        过家家 / 跟随母亲 / 自由玩耍配的 need 是 T102|1/T103|1（限幼女或萝莉），
        上课（无课时自习）配的是 W152|1（限学生岗）；同一套模板套到少女或非学生岗的干员身上时，
        不校验就会把活动照写进她的 entertainment_type，那一格既做不了该活动也不会随机娱乐，白白空转一个时段。
        不满足的时段就跳过不改写、保留当天的随机娱乐——这就是面板上说的「退回到自由选择娱乐活动」。
-    ⚠️ 引擎只在**随机抽娱乐**时校验过 need（handle_npc_ai.get_chara_entertainment），
+    引擎只在**随机抽娱乐**时校验过 need（handle_npc_ai.get_chara_entertainment），
        日程改写是另一条写入路径，必须自己校验。
     Keyword arguments:
     character_id -- 角色id
@@ -314,8 +314,8 @@ def apply_schedule_for_child(character_id: int) -> None:
     """
     按日程把一个孩子今天的 entertainment_type 三个槽位改写掉（每日一次）
 
-    ⚠️ 本函数必须在 `handle_npc_ai.get_chara_entertainment` **之后**调用，见模块头注释。
-    ⚠️ 时段里有课的节次不用避让：上课判定（class_ai.judge_class_state_machine）在**节次**级别排在娱乐链之前，
+    本函数必须在 `handle_npc_ai.get_chara_entertainment` **之后**调用，见模块头注释。
+    时段里有课的节次不用避让：上课判定（class_ai.judge_class_state_machine）在**节次**级别排在娱乐链之前，
        有课的节次照常上课，同一时段里没课的节次才按这里写进去的活动走（2026-09-10 二期方案 §9.2.9；
        此前要求整段没课才改写，结果上午只要有一节课，整个上午的日程都不生效）。
     Keyword arguments:
@@ -413,7 +413,7 @@ def get_activity_age_limit_talent_list(entertainment_id: int) -> List[int]:
     Return arguments:
     List[int] -- 要求持有的阶段素质id列表（101~104 之一或多个），没有年龄限制则为空表
     功能: need 先按 & 拆成「且」项，再按 / 拆成「或」项，只认 T<阶段素质id>|1 这种写法。
-          ⚠️ 不写死「过家家 / 跟随母亲 / 自由玩耍」三项：年龄限制是配置，往后再加一项带年龄需求的活动，
+          不写死「过家家 / 跟随母亲 / 自由玩耍」三项：年龄限制是配置，往后再加一项带年龄需求的活动，
              面板的第二行与「限幼女/萝莉」标注会自动跟上
     """
     if entertainment_id not in game_config.config_entertainment:
@@ -477,7 +477,7 @@ def get_child_slot_activity_text(character_id: int, slot: int) -> str:
     Return arguments:
     str -- 活动名；0 为「自由选择娱乐活动」；活动存在但这个孩子不满足其 need 条件时为「X（条件不符→自由选择）」
     功能: 供个人课表的日程行与日程微调页共用。
-          ⚠️ 只做显示：真正的「退回」发生在 apply_schedule_for_child 的 need 校验里，这里只是把它说给玩家听
+          只做显示：真正的「退回」发生在 apply_schedule_for_child 的 need 校验里，这里只是把它说给玩家听
     """
     entertainment_id = get_child_slot_activity(character_id, slot)
     name = get_activity_name(entertainment_id)

@@ -349,13 +349,13 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
             null_target_set.update(now_target_list)
             premise_data = new_premise_data
     # 先判断性技实操课的预到岗：下一节是自己要上的实操课时，提前动身去教室（Plan 22 四期 §3.28.5）
-    # ⚠️ 必须排在上课判定之前：节次首尾相接没有课间，预到岗要能中止当前节次的课把人放走
+    # 必须排在上课判定之前：节次首尾相接没有课间，预到岗要能中止当前节次的课把人放走
     if judge == 0:
         from Script.System.Education_System import class_ai
 
         judge = class_ai.judge_pre_arrive_sex_class(character_id)
     # 然后判断上课，需要本节次在个人课表上排了课（Plan 22 §2.8）
-    # ⚠️ 排在工作之前：孩子的"工作"就是上学，走到下面的工作链只会随机挑一间教室；
+    # 排在工作之前：孩子的"工作"就是上学，走到下面的工作链只会随机挑一间教室；
     #    成年干员自选了课时，本节同样以课优先
     if judge == 0:
         from Script.System.Education_System import class_ai
@@ -363,13 +363,13 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
         judge = class_ai.judge_class_state_machine(character_id)
     # 然后判断见学：幼女本节没排课、且该时段没有明确排别的日程活动时默认见学，萝莉只在日程时段排了「跟随母亲」时见学，
     # 且母亲要有效（Plan 22 二期 §3.24、§9.2.3、§9.2.9）
-    # ⚠️ 排在上课之后、娱乐之前：有课就上课，没课才跟母亲；不见学的孩子接着走下面的娱乐链做日程活动
+    # 排在上课之后、娱乐之前：有课就上课，没课才跟母亲；不见学的孩子接着走下面的娱乐链做日程活动
     if judge == 0:
         from Script.System.Education_System import class_ai
 
         judge = class_ai.judge_follow_mother_state_machine(character_id)
     # 然后判断工作，需要有工作，且在工作时间或到岗时间
-    # ⚠️ 学生岗不走工作链（Plan 22 二期 §9.2.9）：学生的"工作"只有课表，有课的节次已被上面的上课判定接管，
+    # 学生岗不走工作链（Plan 22 二期 §9.2.9）：学生的"工作"只有课表，有课的节次已被上面的上课判定接管，
     #    没课的节次交给下面的娱乐链按日程 / 当天的随机娱乐自由行动。原来会被 WorkType 152 的自动 AI 送进随机一间
     #    理论教室"上学"，没有教师在教就是零收益（上学的学习收益只由教师授课的结算发放）
     from Script.System.Education_System import education_constant
@@ -820,7 +820,7 @@ def get_chara_entertainment(character_id: int):
             from Script.System.Pregnancy_System import pregnancy_constant
 
             # 幼女没排日程时的默认池：每个时段在过家家 / 自由玩耍之间随机（Plan 22 二期 §9.2.9，此前固定写过家家）。
-            # ⚠️ 白天在课表节次内没课的时段，幼女默认仍是见学（class_ai.judge_should_follow_mother），
+            # 白天在课表节次内没课的时段，幼女默认仍是见学（class_ai.judge_should_follow_mother），
             #    这里的值只在晚上等不在节次内的时间生效；日程明确排了活动的时段会在 apply_schedule_for_child 里被改写
             if handle_premise.handle_self_is_child(character_id):
                 for i in range(3):

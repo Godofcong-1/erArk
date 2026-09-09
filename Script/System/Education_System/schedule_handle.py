@@ -25,10 +25,10 @@ def judge_classroom_open(classroom: str) -> bool:
     classroom -- 教室场景名
     Return arguments:
     bool -- 是否已开放
-    功能: ⚠️ constant.place_data 装的是**全部**教室——它在配置载入期由 data/map/ 的目录树
+    功能: constant.place_data 装的是**全部**教室——它在配置载入期由 data/map/ 的目录树
              静态构建（map_config.load_dir_now），与存档、facility_level、facility_open 全都无关。
              所以开放与否必须另查 Rhodes_Island.facility_open。
-          ⚠️ 理论教室一 / 实践教室一 / 大礼堂 是 Lv1 基础设施，压根不在 Facility_open.csv 里，
+          理论教室一 / 实践教室一 / 大礼堂 是 Lv1 基础设施，压根不在 Facility_open.csv 里，
              不给它们兜底会被误判成未开放，面板直接空掉（宿舍区同样处理，见 Dormitory_System/common.py）
     """
     if classroom not in game_config.config_facility_open_name_set:
@@ -58,7 +58,7 @@ def get_classroom_list(course_type: int = -1) -> List[str]:
     course_type -- 课型编号，-1为全部班级式课型
     Return arguments:
     List[str] -- 已开放的教室场景名列表，顺序为 理论教室一~六 → 实践教室一~三 → 大礼堂
-    功能: ⚠️ 按课型分组而不是全表 sorted()：全表排序会把三类教室混排、
+    功能: 按课型分组而不是全表 sorted()：全表排序会把三类教室混排、
              并让默认页签落在「大礼堂」上，而玩家最常用的是理论教室一
     """
     if course_type == -1:
@@ -121,7 +121,7 @@ def get_class_cell(classroom: str, week_day: int, period: int) -> Optional[List[
     """
     # 临时性技实操课的覆盖层（Plan 22 四期 §3.28.3）：这是全局课表的唯一读取入口，
     # 在这里插一层，下游的 get_now_course / 派课 / 移动 / 课表面板 / <课>标识 就全部自动跟上
-    # ⚠️ 只在查询的星期正好是今天时才覆盖——临时课程是一次性的（键含具体日期序数），
+    # 只在查询的星期正好是今天时才覆盖——临时课程是一次性的（键含具体日期序数），
     #    不能像 class_schedule 那样每周重复上演
     if week_day == cache.game_time.weekday():
         from Script.System.Education_System import sex_class_handle
@@ -177,7 +177,7 @@ def get_teacher_cell(teacher_id: int, week_day: int, period: int) -> Optional[Tu
     """
     # 临时性技实操课的覆盖层（Plan 22 四期）：授课者恒为玩家，所以只有查玩家时才可能命中；
     # 与 get_class_cell 同口径——只在查询的星期正好是今天时覆盖，临时课程是带具体日期的一次性条目。
-    # ⚠️ 这里不能只靠下面那个循环：临时课的教室未必在 class_schedule 里有键，玩家也从不出现在
+    # 这里不能只靠下面那个循环：临时课的教室未必在 class_schedule 里有键，玩家也从不出现在
     #    全局课表的教师位上，漏了这一层就会像 4-C 的主修口上那样"玩家永远查不到自己"
     if teacher_id == 0 and week_day == cache.game_time.weekday():
         from Script.System.Education_System import sex_class_handle
@@ -239,7 +239,7 @@ def set_selected_course(character_id: int, week_day: int, period: int, course_ty
     """
     往某角色的个人课表上填一个格子
 
-    ⚠️ 这里是**直接覆盖**。所以方案 §3.14 列的三类冲突里，「学生撞课」在本结构下
+    这里是**直接覆盖**。所以方案 §3.14 列的三类冲突里，「学生撞课」在本结构下
        根本不可能发生——一个 (星期, 节次) 只存一门课，重选即替换。
        原先为它写的 judge_student_conflict 是死代码，已删
     Keyword arguments:
@@ -381,7 +381,7 @@ def judge_teacher_conflict(teacher_id: int, week_day: int, period: int, classroo
 def get_intern_mentor(character_id: int, work_type_id: int) -> int:
     """
     找实习课的带教导师：此刻和自己在同一场景、且正干着这个岗位的干员
-    ⚠️ 导师不预先指派（方案 §3.21 口径 53）——"实习课就是跟着目前在做这份工作的人"，
+    导师不预先指派（方案 §3.21 口径 53）——"实习课就是跟着目前在做这份工作的人"，
        所以只能在结算的当口按现场情况找，找不到就是无人在岗，学徒降级为见习
     Keyword arguments:
     character_id -- 学徒的角色id
@@ -442,7 +442,7 @@ def get_course_place(now_course: dict) -> List[str]:
             if cache.scene_data[scene_path_str].scene_name == now_course["target"]:
                 return map_handle.get_map_system_path_for_str(scene_path_str)
         return []
-    # ⚠️ 实习课：同一标签下的房间并不等价，取第一间会让学徒扑空——
+    # 实习课：同一标签下的房间并不等价，取第一间会让学徒扑空——
     #    急诊室与门诊室同属 Clinic 但坐诊医生只在门诊室；舍管房有9间各区管理员只守自己那间；
     #    射击房与木桩房、生产车间1~5 同理。
     #    所以按"谁在岗就去谁那间"优先（口径53：实习就是跟着此刻在做这份工作的人），
@@ -467,7 +467,7 @@ _BEHAVIOR_NAME_BY_CID: Dict[int, str] = {}
 def get_behavior_name_by_cid(behavior_cid: int) -> str:
     """
     按行为cid反查它的en_name
-    ⚠️ Entertainment.csv 的 behavior_id 列存的是行为cid，而 Character.behavior.behavior_id 存的是
+    Entertainment.csv 的 behavior_id 列存的是行为cid，而 Character.behavior.behavior_id 存的是
        en_name 字符串，两者之间需要这一层转换
     Keyword arguments:
     behavior_cid -- 行为cid

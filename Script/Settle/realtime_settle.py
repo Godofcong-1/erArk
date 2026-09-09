@@ -106,7 +106,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     true_add_time = get_true_add_time(character_id, now_time, pl_start_time)
 
     # 性技实操课的三次提醒（Plan 22 四期 §3.28.6）
-    # ⚠️ 一律用跨越判定（上次结算 < 提醒时刻 <= 当前）：游戏时间按行为时长跳跃，
+    # 一律用跨越判定（上次结算 < 提醒时刻 <= 当前）：游戏时间按行为时长跳跃，
     #    玩家13:00开始一个60分钟的行为直接跳到14:00，13:30这个时刻从来没有被"经过"过，
     #    用等于判定的话提醒永远不会触发
     if character_id == 0:
@@ -203,9 +203,9 @@ def settle_sex_class_notify(pl_character_data: game_type.Character, now_behavior
 
         1. 预约日当天玩家起床后 —— "今天几点在哪间教室有一节你安排的课"
         2. 节次开始前30分钟 —— "学生们已经在往教室走了"
-        3. 预定的下课时刻 —— "可以就此结束，也可以继续下去"，⚠️ 只在课上着的时候才发
+        3. 预定的下课时刻 —— "可以就此结束，也可以继续下去"，只在课上着的时候才发
 
-    ⚠️ 第三次的措辞必须写明不强制，否则玩家会以为系统在催他下课——
+    第三次的措辞必须写明不强制，否则玩家会以为系统在催他下课——
        下课时间一律由玩家手动决定（口径68），系统永不自动下课。
     Keyword arguments:
     pl_character_data -- 玩家角色数据

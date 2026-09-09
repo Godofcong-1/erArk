@@ -12,9 +12,9 @@
 
 1. 先定性：本功能 NPC 是**主动触发者**（要写 `data/target/default/target.csv` 新行）、**被动参与者**（只在玩家指令结算里被改数值）、还是**不参与**。三者改动量差一个数量级，先问用户。
 2. 主动触发时读 `Script/Design/handle_npc_ai.py:277 find_character_target`，按它的检索顺序推演：type 0 高优先 → type 12 需求执行（门禁 `handle_premise/__init__.py:907 handle_normal_1`）→ type 13 非链需求 → type 11 进入需求链 → 工作/娱乐（`:586 npc_auto_work_or_entertainment`）。type 11/12/13 都是 `get_first_only=True`（`:316/:322/:328`），**CSV 行序即优先级**。类型含义查 `data/csv/Target_Type.csv`。
-3. grep 与本功能同一需求标记的既有行（如 `grep -n "shower_flag_1|" data/target/default/target.csv`），逐行判断新行放前还是放后、需不需要显式互斥前提。⚠️ plan_07 §2.5：靠行序做互斥不可靠，仓库约定是显式互斥前提（先例 `handle_premise/__init__.py:1561 handle_not_is_assistant_and_in_dr_room`）。
+3. grep 与本功能同一需求标记的既有行（如 `grep -n "shower_flag_1|" data/target/default/target.csv`），逐行判断新行放前还是放后、需不需要显式互斥前提。plan_07 §2.5：靠行序做互斥不可靠，仓库约定是显式互斥前提（先例 `handle_premise/__init__.py:1561 handle_not_is_assistant_and_in_dr_room`）。
 4. 按状态逐格填表：跟随（`:733 judge_same_position_npc_follow` 会把 `is_follow==1` 的 NPC 直接拽走）、助理（`:182 judge_assistant_character`）、睡眠 / 疲劳（`:41 judge_character_tired_sleep`）、无意识（`sp_flag.unconscious_h`）、监禁（`handle_premise_sp_flag.py:1050 handle_imprisonment_1`，监禁角色走 type 13 的 `unnormal_2` 分支，见 `target.csv:91` cid 130110）、H 中（`find_character_target` 开头：`is_h` 且非群交自慰时直接结束）。
-5. 每格写"表现 + 依据"；写不出依据的格子标 ⚠️ 并列为问题。
+5. 每格写"表现 + 依据"；写不出依据的格子标 并列为问题。
 6. 把"NPC 定性"写进 §1，目标链行与互斥前提写进 §3。
 
 ## 输出格式
@@ -55,7 +55,7 @@
 | 睡眠 / 疲劳 | 不进链；睡奸醒来有单独 type 0 入口 | `target.csv:17` cid 600 用 `sleep_h_awake_1` |
 | 无意识 H | `find_character_target` 开头 `is_h` 直接结束，不检索 | `handle_npc_ai.py:277` 起 |
 | 监禁 | 走 `unnormal_2` 组自己的洗澡行（状态机 70 原地淋浴，不进助理链） | `target.csv:93` cid 130120 |
-| shower_flag_4（围浴巾后） | ⚠️ type 12 门禁 `handle_normal_1` 不含 flag 4，链必须在围浴巾结束 | `handle_premise/__init__.py:907`；plan_07 §2.5 第 1 条 |
+| shower_flag_4（围浴巾后） | type 12 门禁 `handle_normal_1` 不含 flag 4，链必须在围浴巾结束 | `handle_premise/__init__.py:907`；plan_07 §2.5 第 1 条 |
 
 **抛给用户的问题**：
 1. 助理被跟随拽走时，是"走回博士房间继续洗"还是"本次洗澡作废"？（推荐：走回，靠 flag1/2/3 各配一对行全覆盖；作废需要额外清 flag 的效果。）

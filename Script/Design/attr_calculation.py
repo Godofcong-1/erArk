@@ -925,7 +925,7 @@ def judge_require(judge_text_list, character_id, hypnosis_replace_trust_flag = F
 
     for judge_text in judge_text_list:
         # 「或」条件：同一项内用 / 分开的子条件任一满足即可（2026-09-09 为日程活动的「限幼女或萝莉」加的）
-        # ⚠️ 子条件逐个递归交回本函数判定，所以每个子条件仍是标准的 X<id>|<值> 写法，不必另写一套解析
+        # 子条件逐个递归交回本函数判定，所以每个子条件仍是标准的 X<id>|<值> 写法，不必另写一套解析
         if "/" in judge_text:
             sub_reason_list = []
             sub_pass = False
@@ -951,7 +951,7 @@ def judge_require(judge_text_list, character_id, hypnosis_replace_trust_flag = F
                 break
         elif judge_type == "T":
             # 素质条件的写法是 T<素质id>|<要求值>，与上面的 A/J/E 一样，id 在竖线**前面**
-            # ⚠️ 原来这里读的是 talent[judge_value]，把竖线后的「要求值」当成了素质id：
+            # 原来这里读的是 talent[judge_value]，把竖线后的「要求值」当成了素质id：
             #    T7|0（要求非未成年）实际判成了素质0阴道处女、T102|1 与 T103|1 都判成了素质1肛门处女，
             #    于是品酒对未成年的处女角色照样开放，与总纲口径52写的正相反（Plan 22 二期第一轮追加）
             if character_data.talent[judge_type_id] != judge_value:

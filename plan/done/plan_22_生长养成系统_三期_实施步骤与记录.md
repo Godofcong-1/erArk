@@ -1,6 +1,6 @@
 # Plan 22（三期·实施步骤与记录）：养成事件系统
 
-> ⚠️ **本期建成的养成事件系统已由 Plan 23「公务事件系统」接管并泛化**（`plan/wait/plan_23_公务事件系统_方案.md`）：
+> **本期建成的养成事件系统已由 Plan 23「公务事件系统」接管并泛化**（`plan/wait/plan_23_公务事件系统_方案.md`）：
 > 模块迁到 `Script/System/Official_Event_System/`、数据目录改为 `data/official_event/`、队列改名 `official_event_queue`，
 > 养成事件成为「教育区」这一个部门分类。本文件中事件相关的落点以 Plan 23 为准，此处不再更新。
 
@@ -14,7 +14,7 @@
 - 适用代码快照：`plan22-growth-system @ 899b5b93a`
 - **前置**：一期必须先完成（`event_history` / `personality_point` / `attend_class_count` 由一期建立并回填，大礼堂由一期改建）；与二期相互独立，唯一例外是毕业典礼事件依赖二期的成年结算入口
 - 实施前提：先通读总纲 §2、一期方案 §4 与本方案；实施中发现与方案冲突的事实，**先更新方案再动代码**
-- ⚠️ **实施前先确认**：ArkEditor 的事件数据格式能否扩展出"养成事件"分类（总纲 §6-5）。不能则退回手写 CSV，不阻塞本期。
+- **实施前先确认**：ArkEditor 的事件数据格式能否扩展出"养成事件"分类（总纲 §6-5）。不能则退回手写 CSV，不阻塞本期。
   → 已确认**不能低成本扩展**，走退路手写 CSV，详见 §6.2 假设 5。
 
 ---
@@ -28,7 +28,7 @@
 | `data/growth_event/萝莉.csv` | 新增 | 萝莉期养成事件 |
 | `data/growth_event/通用.csv` | 新增 | 跨阶段事件（含毕业典礼、成年纪念、孩子间互动） |
 | `buildconfig.py` | 改 | 新增 `data/growth_event/*.csv` → `data/Growth_Event.json` 的编译分支，照烹饪题库的合并分支写 |
-| `auto_build_config.py` | 改 | ⚠️ 同样的编译分支要镜像一份，否则改完 CSV 直接跑 `game.py` 不会重建养成事件表 |
+| `auto_build_config.py` | 改 | 同样的编译分支要镜像一份，否则改完 CSV 直接跑 `game.py` 不会重建养成事件表 |
 | `Script/Config/config_def.py` | 生成 | 由 `buildconfig.py` 重生成，含 `Growth_Event` 类 |
 | `Script/Config/game_config.py` | 改 | 加载 `Growth_Event.json` 到运行时 config |
 | `Script/Core/game_type.py` | 改 | `Rhodes_Island` 加 `growth_event_queue`（方案 §4） |
@@ -49,7 +49,7 @@
 
 ## 2. 详细改动步骤
 
-> ⚠️ 事件 uid 由文件名前缀自动生成（照口上 cid 的机制），不手工分配，形如 `萝莉1`、`通用1`。
+> 事件 uid 由文件名前缀自动生成（照口上 cid 的机制），不手工分配，形如 `萝莉1`、`通用1`。
 
 ### 2.1 编译链（先跑通空表）
 
@@ -58,7 +58,7 @@
 3. 跑 `buildconfig.py`，确认生成 `data/Growth_Event.json` 与 `config_def.py` 的 `Growth_Event` 类
 4. `game_config.py` 加载到运行时 config（存**原始 dict** 而非 config 对象，见方案 §4.1）
 
-⚠️ **先跑通空表再写内容**：编译分支写错会让整个构建失败，而构建失败时游戏起不来、很难定位是哪一行 CSV 的问题。空表跑通后再灌数据。
+**先跑通空表再写内容**：编译分支写错会让整个构建失败，而构建失败时游戏起不来、很难定位是哪一行 CSV 的问题。空表跑通后再灌数据。
 
 ### 2.2 队列与存档
 
@@ -71,21 +71,21 @@
 
 1. 每日结算时遍历所有持有素质 101~104 的角色
 2. 按 `stage` 与 `premise` 筛出该孩子当前可触发的事件
-3. ⚠️ `once == 1` 的事件**入队前查该孩子的 `event_history`**，已触发过则跳过（方案 §7-2）
-4. 把所有孩子的候选汇成一个池子，按 `weight` 加权随机取 **2** 条入队（方案 §7-1 的节流，⚠️ 这是全局上限不是每孩上限，所以要先汇总再抽）
+3. `once == 1` 的事件**入队前查该孩子的 `event_history`**，已触发过则跳过（方案 §7-2）
+4. 把所有孩子的候选汇成一个池子，按 `weight` 加权随机取 **2** 条入队（方案 §7-1 的节流，这是全局上限不是每孩上限，所以要先汇总再抽）
 5. 在 `Script/Settle/past_day_settle.py` 的每日结算里调用
 
 ### 2.4 出队与决断
 
 1. 处理公务（指令 2001）流程中插入养成事件段
-2. ⚠️ 弹出前校验 `chara_id in cache.character_data`，无效则静默丢弃出队（方案 §7-4）
+2. 弹出前校验 `chara_id in cache.character_data`，无效则静默丢弃出队（方案 §7-4）
 3. 选项按 `option_N_premise` 判定：不满足则**置灰并显示原因**，不隐藏、不报错（口径 34）
 4. 玩家选定后按 `option_N_effect` 结算（复用 CVE token），并写入该孩子的 `event_history`（一次性与否都写：前者靠它防重复，后者靠它给履历栏供料）
-5. 界面按方案 §5.1；⚠️ 只用 `Script/UI/Moudle/draw.py` 的抽象绘制类
+5. 界面按方案 §5.1；只用 `Script/UI/Moudle/draw.py` 的抽象绘制类
 
 ### 2.5 事件内容编写
 
-按阶段分文件批量写入。⚠️ 结果尺度遵循口径 33：**选错会导致性格偏向不如预期、好感小幅下降，但不掉能力、不造成不可逆损失**。
+按阶段分文件批量写入。结果尺度遵循口径 33：**选错会导致性格偏向不如预期、好感小幅下降，但不掉能力、不造成不可逆损失**。
 
 四个文件的内容分工：
 
@@ -98,33 +98,33 @@
 
 ### 2.6 孩子之间的互动（方案 §3.25）
 
-1. 兄弟姐妹关系直接读既有 `relationship` 的 `father_id` / `mother_id`（⚠️ 未登记时是 -1，要排除，见 §6.2 假设 6）
+1. 兄弟姐妹关系直接读既有 `relationship` 的 `father_id` / `mother_id`（未登记时是 -1，要排除，见 §6.2 假设 6）
 2. 同班同学关系由课表反查：同一格子的学生互为同学
 3. 互动全部通过 `通用.csv` 的事件呈现，事件 effect 同时影响两个孩子
-4. ⚠️ **不给 NPC AI 加"以另一个 NPC 为目标"的行为链**（口径 36）
+4. **不给 NPC AI 加"以另一个 NPC 为目标"的行为链**（口径 36）
 
 ### 2.7 毕业典礼（依赖二期）
 
 在二期的 `check_grow_to_girl` 成年结算里调 `push_graduation_event()`，把 `通用1`（毕业典礼）与 `通用2`（成年纪念）插到队列最前，玩家下次处理公务时举行；舞台为一期改建出的大礼堂（`Auditorium`）。同时在成年结算的输出文本里加一行预告。
 
-⚠️ **不在成年结算当场弹出**：那里跑在 NPC 行为循环里，当场弹多选界面会卡住循环（方案 §3.26）。
+**不在成年结算当场弹出**：那里跑在 NPC 行为循环里，当场弹多选界面会卡住循环（方案 §3.26）。
 
-⚠️ **二期未完成时本步跳过**，其余五步可正常推进（方案 §6）。
+**二期未完成时本步跳过**，其余五步可正常推进（方案 §6）。
 
 ---
 
 ## 3. 构建与缓存
 
 ```bash
-.conda\python.exe buildconfig.py   # ⚠️ 本期新增了 CSV → JSON 的编译分支，必跑
-git checkout -- data/po/           # ⚠️ 本机没有 xgettext/polib，buildconfig 重写的 PO 要还原
+.conda\python.exe buildconfig.py   # 本期新增了 CSV → JSON 的编译分支，必跑
+git checkout -- data/po/           # 本机没有 xgettext/polib，buildconfig 重写的 PO 要还原
 .conda\python.exe buildpo.py       # 事件文本需要翻译词条（需有工具链的环境，本次未跑）
 .conda\python.exe buildmo.py
 ```
 
 本期**不涉及地图改动**，不需要删场景缓存。
 
-⚠️ `data/Growth_Event.json` 与 `data/data.json` 一样是**未纳入版本管理的构建产物**，clone 后首次跑 `game.py` 会由 `auto_build_config.py` 生成。
+`data/Growth_Event.json` 与 `data/data.json` 一样是**未纳入版本管理的构建产物**，clone 后首次跑 `game.py` 会由 `auto_build_config.py` 生成。
 
 ---
 
@@ -165,13 +165,13 @@ git checkout -- data/po/           # ⚠️ 本机没有 xgettext/polib，buildc
 | 单元 | 回滚方式 | 备注 |
 | --- | --- | --- |
 | 事件内容 | 清空四个 CSV 的数据行（保留表头）重跑 `buildconfig.py` | 系统还在但不再触发任何事件，可作为出问题时的紧急降级 |
-| 编译链 | revert `buildconfig.py` + `auto_build_config.py` + `game_config.py` 的改动，删 `data/growth_event/` 与 `data/Growth_Event.json` | ⚠️ 要同步 revert `config_def.py`（生成物） |
+| 编译链 | revert `buildconfig.py` + `auto_build_config.py` + `game_config.py` 的改动，删 `data/growth_event/` 与 `data/Growth_Event.json` | 要同步 revert `config_def.py`（生成物） |
 | 队列与存档 | revert `game_type.py` + `save_handle.py` | 旧档因 `hasattr` 回填天然兼容 |
 | 入队与出队逻辑 | 删两个新文件 + 摘掉公务入口、`past_day_settle.py` 与 `pregnancy_handle.py` 的调用 | 无外部依赖 |
-| `Growth` 子类型 | revert `handle_premise/__init__.py` + `settle_behavior.py` 的 Growth 分支 | ⚠️ `handle_premise/__init__.py` 里那处 `else:` 是**既有 BUG 的修复**，不要跟着 revert（见 §6.1 偏离 10） |
+| `Growth` 子类型 | revert `handle_premise/__init__.py` + `settle_behavior.py` 的 Growth 分支 | `handle_premise/__init__.py` 里那处 `else:` 是**既有 BUG 的修复**，不要跟着 revert（见 §6.1 偏离 10） |
 | 毕业典礼 | 删 `通用.csv` 里的对应行 | 独立于其余事件 |
 
-⚠️ 本期**没有不可回滚的部分**。「清空 CSV 数据行」这一档特别有用：系统本身出问题时可以先让它安静下来，不必回滚整套代码。
+本期**没有不可回滚的部分**。「清空 CSV 数据行」这一档特别有用：系统本身出问题时可以先让它安静下来，不必回滚整套代码。
 
 ---
 
@@ -228,10 +228,10 @@ git checkout -- data/po/           # ⚠️ 本机没有 xgettext/polib，buildc
 | --- | --- | --- |
 | 1 | 一期已建好 `event_history` / `personality_point` / `attend_class_count` / `absent_count` 并做了存档回填 | ✅ 成立，`game_type.py:361` 的 `CHILD_GROWTH` 四个字段齐备，本期直接写入 |
 | 2 | 一期已改建出大礼堂（`Auditorium` 场景标签） | ✅ 成立，`data/map/教/大礼堂/Scene.json` 的 `SceneTag` 为 `Auditorium` |
-| 3 | `buildconfig.py` 的既有事件与口上编译分支可作为新分支的范式 | ⚠️ 部分成立。既有事件是 **JSON** 不是 CSV，不能照抄；真正的范式是**烹饪题库**（`data/csv/cook_question/` 多个 CSV 合并为一张 `Cook_Question` 表 + 独立 JSON），cid 加文件名前缀则照口上 |
+| 3 | `buildconfig.py` 的既有事件与口上编译分支可作为新分支的范式 | 部分成立。既有事件是 **JSON** 不是 CSV，不能照抄；真正的范式是**烹饪题库**（`data/csv/cook_question/` 多个 CSV 合并为一张 `Cook_Question` 表 + 独立 JSON），cid 加文件名前缀则照口上 |
 | 4 | 指令 2001 `official_work` 的流程中有可插入的位置 | ✅ 成立。`handle_official_work` 只有一行通用结算，在其**之前**插入即可；已确认插入的代码不会干扰 `add_instruct` 对指令大类的源码推断（那段只认 `cache.now_panel_id` 与 `now_panel.draw()`） |
 | 5 | ArkEditor 的事件格式能扩展出"养成事件"分类 | ❌ **不成立**。编辑器的数据模型硬绑 `behavior_id` + `adv_id` + 单条 premise/effect/text（`ui/data_list.py`），而养成事件一行带四个各自独立的选项块，要另起一整套 grid 布局与序列化。按方案的退路走手写 CSV，只同步了两个新前提到 `csv/Premise.csv` |
-| 6 | 既有 `relationship.child_id_list` 可直接用于兄弟姐妹判定 | ⚠️ 改用 `father_id` / `mother_id` 比对。`child_id_list` 挂在父母身上、要先找到父母再回查，而按双亲 id 比对一步到位。⚠️ 双亲未登记时是 **-1** 不是 0，不排除掉的话两个都没登记的角色会互相认成兄弟姐妹 |
+| 6 | 既有 `relationship.child_id_list` 可直接用于兄弟姐妹判定 | 改用 `father_id` / `mother_id` 比对。`child_id_list` 挂在父母身上、要先找到父母再回查，而按双亲 id 比对一步到位。双亲未登记时是 **-1** 不是 0，不排除掉的话两个都没登记的角色会互相认成兄弟姐妹 |
 
 ### 6.3 单元测试结果
 
@@ -296,7 +296,7 @@ git checkout -- data/po/           # ⚠️ 本机没有 xgettext/polib，buildc
 12. **266 条事件的正文从不点名，而机制一直是好的。**
     `get_code_text` 专门把主体的交互对象临时指向 `partner_id`，就是为了让文本里的
     对象代码指对人；实测 `{Name}` / `{TargetName}` 都能正确解析。可 266 条正文里
-    占位符出现了 **0 次**。⚠️ **这是符号级机扫结构上看不见的一类缺口**——
+    占位符出现了 **0 次**。**这是符号级机扫结构上看不见的一类缺口**——
     代码里每个符号都有调用者，配置里每个 token 都注册了，唯独没人问过
     「这套机制有数据在用吗」。与二期 `free_play` 零口上同源，往后新建机制时
     应当把「有没有数据在用它」也列进验收。
@@ -304,11 +304,11 @@ git checkout -- data/po/           # ⚠️ 本机没有 xgettext/polib，buildc
 13. **点名分两段做，机械替换那段有三个坑。**
     38 条互动事件逐条重写（句子结构要动，机械替换做不了）；其余 222 条把正文里
     **第一个不是「她们」的「她」**换成 `{Name}`。三个坑：
-    ⚠️ **「她们」是复数**，不排除会换出「{Name}们」——全表 7 条含「她们」，
+    **「她们」是复数**，不排除会换出「{Name}们」——全表 7 条含「她们」，
     其中 6 条的第一个「她」就是它；
-    ⚠️ **首个「她」不一定是这个孩子**——`通用58` 的首个「她」是母亲，
+    **首个「她」不一定是这个孩子**——`通用58` 的首个「她」是母亲，
     判据用「首个『她』之前有没有出现别的人称」筛出 15 条人工复核；
-    ⚠️ **11 条正文里根本没有「她」**，得手写。
+    **11 条正文里根本没有「她」**，得手写。
     另外**选项文本一律不动**：选项是玩家的动作，主语是博士，§5.1 的界面示例即如此。
 
 14. **给互动对象写养成数值有一条红线：只能写给兄弟姐妹，不能写给同学。**
@@ -316,12 +316,12 @@ git checkout -- data/po/           # ⚠️ 本机没有 xgettext/polib，buildc
     成年干员挂上萝莉素质、进而可能被课表判成「同学」（§6.1 已知限制 4 记过）。
     写一次就会在成年干员身上凭空建出 `CHILD_GROWTH` 并进存档。
     兄弟姐妹判定要求双亲 id **有效且相同**，撞不进这种情况，所以 27 处全加在兄弟姐妹事件上。
-    ⚠️ 另一条自设约束：只加在「面向两个孩子且方向与本人一致」的选项上，
+    另一条自设约束：只加在「面向两个孩子且方向与本人一致」的选项上，
     后果提示才能统一写成「，对方倾向同向」——一方受益一方受损的那类方向说不清，宁可不加。
 
 15. **选项全不可选时的跳过分支会让事件循环。** 面板按 §5.1 跳过了，
     但 `continue` 同时跳过了 `record_event_done`，事件出了队却没进履历，隔天照样被派下来。
-    ⚠️ 当前 266 条事件每条都至少有一个无前提选项，**这条路径一次都走不到**，
+    当前 266 条事件每条都至少有一个无前提选项，**这条路径一次都走不到**，
     是防御代码不是活 BUG；但它是一条数据就能引爆的坑。
     改为跳过时记 0 号选项——养成履历里 `option_{choice}` 取不到时的兜底文案
     正是「（未作选择）」，那句话本就是为这个情形写的。
@@ -329,7 +329,7 @@ git checkout -- data/po/           # ⚠️ 本机没有 xgettext/polib，buildc
 16. **`subject` 列一直没有读取方。** 列的语义是真的（0 部门事务 / 1 角色），
     ArkEditor 也给了下拉，但运行时从不读它。接进 `get_default_department_pick_list`：
     那条路径固定以博士为主体，把一条写给某个角色的事件派到博士头上，
-    正文的称呼与结算都会落错人。⚠️ 当前 266 条全是 `subject=1` 且都由教育区自己的
+    正文的称呼与结算都会落错人。当前 266 条全是 `subject=1` 且都由教育区自己的
     提供者挑主体，所以这同样是**先接上、等第一条部门事务事件出现时才生效**的防御。
 
 17. **`SUB_KEY_ANY` 与 `STAGE_ANY` 是同一个 0 的两个名字。** 通用层定义、
@@ -339,18 +339,18 @@ git checkout -- data/po/           # ⚠️ 本机没有 xgettext/polib，buildc
 18. **`ri_value.get_value_name` 零调用，而它要服务的两处正好是静默的。**
     只读数值（设施等级、干员数）被写时**静默返回**，作者会以为结算生效了；
     `handle_ri_effect` 的报错只打 token 串，查不出是哪一项数值。三处都接上。
-    ⚠️ **`CVE_RI_*` 在 266 条事件里零使用**——整条通道没有数据在跑，
+    **`CVE_RI_*` 在 266 条事件里零使用**——整条通道没有数据在跑，
     但那是 Plan 23 的基建，等的是别的部门的事件；养成事件不该改罗德岛的家底（口径 33）。
     本期不为此造数据。
 
 19. **§3.7.1 的编号表漏了 7 个编号。** 3（阶段进度，Plan 23 加）与 4~9（一期第五轮加）
     都不在表里，而**编号 3 恰恰是 266 条事件里用得最多的养成数值（81 次）**。
-    ⚠️ 这类「实现加了、别处的表没跟」的过期是最难自查的：代码、CSV、编辑器三处都对，
+    这类「实现加了、别处的表没跟」的过期是最难自查的：代码、CSV、编辑器三处都对，
     只有作者查阅的那张表是错的。补全并加「加入时间」列，另注明加编号时必须同步回来。
 
 20. **写 `update.log` 时把新条目插进了旧版本段。**
     取「最后一条修正」时扫的是全文，而旧版本段里也有以「修正：」开头的行，
-    结果插到了三千多行之外。⚠️ **取本版本段的末行必须先按版本号切段**，
+    结果插到了三千多行之外。**取本版本段的末行必须先按版本号切段**，
     这条对往后每一轮都成立。已移回 v0.67 的修正段末尾，旧段无残留（`git diff` 只有 3 行新增）。
 
 #### 单元测试结果

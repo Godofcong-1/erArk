@@ -3100,7 +3100,7 @@ def handle_sex_class_mode_on(
     if cache.sex_class_mode:
         return
     cache.sex_class_mode = True
-    # ⚠️ 必须同时置群交模式：群交模板面板、射精面板、Web状态栏等十余处读取点判的都是那个标志，
+    # 必须同时置群交模式：群交模板面板、射精面板、Web状态栏等十余处读取点判的都是那个标志，
     #    只置 sex_class_mode 的话整个模板界面都不会出现。行为效果串里的10010已经置过，这里兜底
     cache.group_sex_mode = True
     # 把在场可参加的学生一并拉进H状态——效果串里的462/464只管玩家自己与当前交互对象，
@@ -3127,7 +3127,7 @@ def handle_sex_class_mode_off(
     """
     关闭性技实操课（课堂H）模式
 
-    ⚠️ 口上在效果结算之前就已经输出了（settle_behavior.py:407 早于 :410 的效果循环），
+    口上在效果结算之前就已经输出了（settle_behavior.py:407 早于 :410 的效果循环），
        所以这里清 running 不会影响"提前/按时/拖堂"三档下课口上的判定。
     Keyword arguments:
     character_id -- 角色id
@@ -7581,7 +7581,7 @@ def handle_teach_add_just(
 ):
     """
     （教学用）按课表所排的科目结算：教师与场景内所有听课角色都获得该科目的习得与经验，如果玩家是老师则再加好感和信赖
-    ⚠️ Plan 22 改造：科目从写死的学识(45)改为查全局课表取当节所授科目；查不到课表时回落学识，保证既有干员学生链不被破坏
+    Plan 22 改造：科目从写死的学识(45)改为查全局课表取当节所授科目；查不到课表时回落学识，保证既有干员学生链不被破坏
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -7699,7 +7699,7 @@ def handle_skip_class_add_just(
 
     growth_data = growth_handle.get_child_growth(character_id)
     growth_data.skip_class_flag = True
-    # 翘课换来的那点轻松：抑郁小幅回落。⚠️ 不给任何学习收益，这是翘课的代价
+    # 翘课换来的那点轻松：抑郁小幅回落。不给任何学习收益，这是翘课的代价
     character_data: game_type.Character = cache.character_data[character_id]
     if 19 in character_data.status_data:
         character_data.status_data[19] = max(0, character_data.status_data[19] - add_time)
@@ -7714,7 +7714,7 @@ def handle_intern_class_add_just(
 ):
     """
     （实习课用）找同场景中该岗位的在岗干员当导师，按师徒等级差学该岗位的能力
-    ⚠️ 实习课是三种个人式课型里唯一需要自己结算的：体育课与兴趣课执行的是自带效果串的既有行为，
+    实习课是三种个人式课型里唯一需要自己结算的：体育课与兴趣课执行的是自带效果串的既有行为，
        而实习课的导师执行的是**他自己的工作行为**，那串效果只给他自己发工作产出，
        里面没有任何把经验分给身边学徒的部分（对比理论课：教师的 teach 行为里有512效果专门结算全场学生）
     Keyword arguments:
@@ -7753,7 +7753,7 @@ def handle_follow_mother_add_just(
 ):
     """
     （见学用）幼女跟着母亲，按母亲当前工作对应的科目获得习得与经验，并累加照料值与母女好感
-    ⚠️ 母亲没有工作时只加照料值与好感，不加学习收益（方案 §3.24）
+    母亲没有工作时只加照料值与好感，不加学习收益（方案 §3.24）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -7780,7 +7780,7 @@ def handle_free_play_add_just(
 ):
     """
     （自由玩耍用）在育儿室自己玩，小幅回复心情，不获得任何学习收益
-    ⚠️ 与翘课的区别只在语义：翘课是"该上课却没去"的代价性摸鱼，自由玩耍是日程安排里正当的休息
+    与翘课的区别只在语义：翘课是"该上课却没去"的代价性摸鱼，自由玩耍是日程安排里正当的休息
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -7826,7 +7826,7 @@ def handle_check_report_card_add_just(
     growth_data = growth_handle.get_child_growth(target_id)
 
     # 两条路径：学期已经结束就发学期结算时**冻结**的那一份；还没结束就现算一份「截至目前」的
-    # ⚠️ 不能因为还没有成绩单就什么都不显示：指令本身没有「有成绩单」这条前提，
+    # 不能因为还没有成绩单就什么都不显示：指令本身没有「有成绩单」这条前提，
     #    玩家学期中途照样能用，那时也该给他看到东西
     report_data = semester_handle.get_last_report_card(target_id)
     finished = bool(report_data)
@@ -7842,7 +7842,7 @@ def handle_check_report_card_add_just(
     now_draw.draw()
 
     # 成绩档位越高，检查成绩单时的反馈越正面
-    # ⚠️ 档位已经把「出勤率 + 有没有真学出东西」并进一个口径了，
+    # 档位已经把「出勤率 + 有没有真学出东西」并进一个口径了，
     #    这里再单写一遍出勤率阈值，会与成绩单正文里的评定对不上
     base_chara_favorability_and_trust_common_settle(
         character_id, add_time, True, 0, target_data.ability[32], change_data, target_data.cid)
@@ -11273,7 +11273,7 @@ def handle_official_event_accept_recruit(
     公务事件用：接收一名待确认的招募干员（Plan 23）
 
     这类效果没法用数值 token 表达（要建角色、分宿舍、发成就），所以走纯数字结算id这条路。
-    ⚠️ 直接复用招募面板的 recruit_new_chara：宿舍已满或没有待确认干员时它自己会给提示并返回，
+    直接复用招募面板的 recruit_new_chara：宿舍已满或没有待确认干员时它自己会给提示并返回，
        不要在这里另写一套判定，否则两处的门槛迟早会对不上
     Keyword arguments:
     character_id -- 角色id
@@ -11300,9 +11300,9 @@ def handle_official_event_temp_commission(
     """
     公务事件用：生成一条突发的临时外勤委托（Plan 23）
 
-    ⚠️ 复用外勤委托系统的 create_temp_commission：委托的需求与奖励用的是外勤自己的前缀语法
+    复用外勤委托系统的 create_temp_commission：委托的需求与奖励用的是外勤自己的前缀语法
        （r_资源id_数量、声望_势力id_值），与 CVE token 是两套，别混着写
-    ⚠️ 该函数会把新委托**追加写进 data/csv/Commission.csv**（不是只改内存），所以
+    该函数会把新委托**追加写进 data/csv/Commission.csv**（不是只改内存），所以
        描述里的换行必须写成两个字符的 \\n 转义、且不能出现英文逗号，
        否则写出去的那一行会把 CSV 撑断，下次构建直接报错
     Keyword arguments:
@@ -11339,7 +11339,7 @@ def handle_prenatal_add_adjust(
     """
     （胎教用）给交互对象（孕妇）的妊娠期胎教累积值 +0.5（Plan 22 四期 §3.27）
 
-    ⚠️ 只累积不转写：孩子此时还不存在，出生时由 born_event_panel 逐个全额转写给每个新生儿。
+    只累积不转写：孩子此时还不存在，出生时由 born_event_panel 逐个全额转写给每个新生儿。
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -11371,7 +11371,7 @@ def handle_nuirse_child_add_adjust(
 
     照料值本身走效果串里的 CVE_A2_Growth|20，这里只做 CVE 表达不了的两件事：
     体质（上限值不是养成数值）与"玩家亲自照料才有"的加成（CVE 没有发起者判定）。
-    ⚠️ 保育员喂奶同样给体质，只是没有玩家那份额外的好感——差异化对 NPC 照料同样生效（方案 §2.2）
+    保育员喂奶同样给体质，只是没有玩家那份额外的好感——差异化对 NPC 照料同样生效（方案 §2.2）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间

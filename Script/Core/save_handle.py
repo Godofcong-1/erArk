@@ -131,7 +131,7 @@ def _migrate_entertainment_cid(value):
     value -- 存档里的娱乐cid（也可能是别的类型，原样返回）
     Return arguments:
     value -- 换算后的娱乐cid
-    功能: ⚠️ 只在旧编号已经不在 Entertainment.csv 里时才换：日后大浴场段真的用上 175 时，
+    功能: 只在旧编号已经不在 Entertainment.csv 里时才换：日后大浴场段真的用上 175 时，
           新档里的 175 就是那项浴场娱乐，不该被当成旧编号改掉
     """
     from Script.Config import game_config
@@ -390,9 +390,9 @@ def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
             if not hasattr(character, "child_growth"):
                 character.child_growth = None
             # 生长养成系统旧存档兼容：补全养成数据结构体在后续各期新增的字段
-            # ⚠️ 用属性表整体回填而不是逐字段 hasattr：CHILD_GROWTH 在二期（日程模板）、
+            # 用属性表整体回填而不是逐字段 hasattr：CHILD_GROWTH 在二期（日程模板）、
             #    四期（胎教）、学期制各加过字段，逐个写漏一个就是一次读档崩溃
-            # ⚠️ 每个角色各 new 一个默认体：dict/list 这类可变默认值不能被多个角色共享
+            # 每个角色各 new 一个默认体：dict/list 这类可变默认值不能被多个角色共享
             elif character.child_growth is not None:
                 default_growth_data = game_type.CHILD_GROWTH()
                 for growth_attr_name in vars(default_growth_data):
@@ -635,7 +635,7 @@ def input_load_save(save_id: str):
     if not hasattr(loaded_dict["rhodes_island"], "official_event_queue"):
         old_queue = getattr(loaded_dict["rhodes_island"], "growth_event_queue", [])
         new_queue = []
-        # ⚠️ 旧档的队列元素没有 department，按 uid 回查配置补上；事件已被删掉的直接丢弃，
+        # 旧档的队列元素没有 department，按 uid 回查配置补上；事件已被删掉的直接丢弃，
         #    留着会在出队时查不到配置而被清理，不如在载入时就清干净
         for one in old_queue:
             if not isinstance(one, dict) or one.get("uid") not in game_config.config_official_event:
