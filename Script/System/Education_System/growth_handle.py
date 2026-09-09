@@ -185,17 +185,37 @@ def get_education_zone_adjust() -> float:
     return 1.0
 
 
+def get_growth_stop_adjust(character_id: int) -> float:
+    """
+    取成长停滞带来的学习收益倍率（总纲口径 27）
+    Keyword arguments:
+    character_id -- 学生的角色id
+    Return arguments:
+    float -- 有成长停滞素质(28)时为 GROWTH_STOP_LEARN_RATE，否则为 1.0
+    功能: 停滞期间可以继续上课，但一切学习收益减半，作为无限期养成的代价。
+          ⚠️ 只看学生自己的素质，教师停滞与否与教学无关
+    """
+    if character_id not in cache.character_data:
+        return 1.0
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.talent.get(education_constant.GROWTH_STOP_TALENT_ID, 0):
+        return education_constant.GROWTH_STOP_LEARN_RATE
+    return 1.0
+
+
 def get_class_adjust(ability_id: int, student_id: int, teacher_id: int) -> float:
     """
-    算一节课的总倍率（速度系数 × 教育区加成）
+    算一节课的总倍率（速度系数 × 教育区加成 × 成长停滞倍率）
     Keyword arguments:
     ability_id -- 科目能力id
     student_id -- 学生的角色id
     teacher_id -- 授课教师的角色id，-1表示本节无教师（降级为自习）
     Return arguments:
     float -- 总倍率
+    功能: 教室课 / 自习 / 实习课都经 settle_student_class_gain 走到这里，
+          所以成长停滞的减半（口径 27）放在这一处就覆盖了三种课
     """
-    zone_adjust = get_education_zone_adjust()
+    zone_adjust = get_education_zone_adjust() * get_growth_stop_adjust(student_id)
     # 无教师则走自习：没有教师就没有等级差可算，速度系数恒取1.0
     if teacher_id == -1 or teacher_id not in cache.character_data:
         return zone_adjust
@@ -372,13 +392,13 @@ def settle_follow_mother_gain(
     if not ability_id:
         return
 
-    # 速度系数走与教室课同一套曲线：母亲该能力等级 vs 自己的等级
+    # 速度系数走与教室课同一套曲线：母亲该能力等级 vs 自己的等级；成长停滞同样减半（口径 27）
     child_data: game_type.Character = cache.character_data[character_id]
     mother_data: game_type.Character = cache.character_data[mother_id]
     adjust = get_learn_speed(
         int(mother_data.ability.get(ability_id, 0)),
         int(child_data.ability.get(ability_id, 0)),
-    ) * get_education_zone_adjust()
+    ) * get_education_zone_adjust() * get_growth_stop_adjust(character_id)
 
     common_default.base_chara_state_common_settle(
         character_id,

@@ -361,8 +361,8 @@ def get_subject_bonus(student_id: int) -> float:
     """
     取某学生本节实操课的主修科目经验倍率
 
-    最终倍率 = 课程加成 × 师生等级差速度系数 × 教育区加成，
-    后两项直接用一期已实现的函数，不另造一套公式。教师即玩家。
+    最终倍率 = 课程加成 × 师生等级差速度系数 × 教育区加成 × 成长停滞倍率（口径 27），
+    后三项直接用一期已实现的函数，不另造一套公式。教师即玩家。
     Keyword arguments:
     student_id -- 学生的角色id
     Return arguments:
@@ -378,7 +378,8 @@ def get_subject_bonus(student_id: int) -> float:
     teacher_level = pl_data.ability.get(ability_id, 0)
     student_level = student_data.ability.get(ability_id, 0)
     speed = growth_handle.get_learn_speed(teacher_level, student_level)
-    return education_constant.SUBJECT_BONUS * speed * growth_handle.get_education_zone_adjust()
+    return (education_constant.SUBJECT_BONUS * speed * growth_handle.get_education_zone_adjust()
+            * growth_handle.get_growth_stop_adjust(student_id))
 
 
 # ---------------------------------------------------------------------------

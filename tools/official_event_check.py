@@ -57,6 +57,19 @@ MIN_COUNT = {"婴儿": 50, "幼女": 70, "萝莉": 70, "通用": 56}
 """ --full 模式下的条数下限（通用只数跨阶段的那部分，成年后事件不计入） """
 
 TEXT_DUP_LEN = 15
+TEXT_PLACEHOLDER = {
+    "Name", "NickName", "NickNameToPl", "PlayerName", "PlayerNickName", "PlayerTargetName", "TargetName", "TargetNickName",
+    "TargetNickNameToPl", "FoodName", "MakeFoodTime", "AllFoodName", "SceneName", "SceneOneCharaName", "TargetSceneName",
+    "TargetOneCharaName", "SrcSceneName", "SrcOneCharaName", "SelfUpClothName", "SelfDownClothName", "TargetUpClothName",
+    "TargetDownClothName", "TargetBraName", "TargetSkiName", "TargetPanName", "TargetSocName", "UpClothName", "DownClothName",
+    "PanName", "SocName",
+}
+""" 事件正文允许使用的占位符：与 Script/Design/talk.py code_text_to_draw_text() 末尾 .format() 的关键字一致。
+    ⚠️ 事件正文在绘制前会经 official_event_panel.get_code_text() → code_text_to_draw_text() 替换这些占位符
+       （Plan 22 三期 §9.1 的「事件点名」就靠 {Name} / {TargetName}），所以它们不是"裸花括号"；
+       除此之外的花括号才会在 .format() 时抛 KeyError """
+PLACEHOLDER_RE = re.compile(r"\{([A-Za-z_]+)\}")
+""" 匹配 {Xxx} 形式的占位符 """
 """ 查重时比对的正文前缀长度 """
 
 
@@ -205,7 +218,7 @@ class Checker:
 
     def check_text(self, path: str, line: int, name: str, text: str):
         """
-        校验一段展示文本：不能有裸花括号与英文标点
+        校验一段展示文本：只允许 talk.py 认识的占位符，不能有裸花括号与英文标点
         Keyword arguments:
         path -- 文件路径
         line -- 行号
@@ -214,8 +227,12 @@ class Checker:
         Return arguments:
         无
         """
-        if "{" in text or "}" in text:
-            self.error(path, line, f"{name}里有花括号，绘制时会走 .format() 并抛异常")
+        for placeholder in PLACEHOLDER_RE.findall(text):
+            if placeholder not in TEXT_PLACEHOLDER:
+                self.error(path, line, f"{name}里的占位符 {{{placeholder}}} 不在 talk.py 的替换表里，绘制时会抛 KeyError")
+        stripped_text = PLACEHOLDER_RE.sub("", text)
+        if "{" in stripped_text or "}" in stripped_text:
+            self.error(path, line, f"{name}里有裸花括号，绘制时会走 .format() 并抛异常")
         if '"' in text:
             self.error(path, line, f"{name}里有英文双引号，构建时会被转义成 \\\" 并原样显示")
         if "," in text:
@@ -336,7 +353,8 @@ class Checker:
         if not text:
             self.error(path, line, "事件正文为空")
         self.check_text(path, line, "事件正文", text)
-        prefix = text[:TEXT_DUP_LEN]
+        # 去掉占位符再取前缀：点名之后一大半正文都以「{Name}和{TargetName}」开头，不去掉会全部误报重复
+        prefix = PLACEHOLDER_RE.sub("", text)[:TEXT_DUP_LEN]
         if prefix and prefix in text_set:
             self.error(path, line, f"事件正文的前{TEXT_DUP_LEN}字与本文件另一条重复：{prefix}")
         text_set.add(prefix)

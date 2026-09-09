@@ -247,6 +247,13 @@ SELF_STUDY_LEARN_BASE = 15
 """ 自习（本节无教师）的习得基础值；无教师则无等级差可算，速度系数恒取1.0 """
 SELF_STUDY_EXP_BASE = 1
 """ 自习的科目经验基础值 """
+GROWTH_STOP_TALENT_ID = 28
+""" 成长停滞素质的id（Talent.csv:31，由 plan_17 的成长停滞药赋予）。
+    总纲口径 27：停滞期间可以继续上课，但一切学习收益减半，作为无限期养成的代价 """
+GROWTH_STOP_LEARN_RATE = 0.5
+""" 成长停滞期间学习收益的倍率（口径 27「经验减半」）。
+    乘在学生侧的每一条收益上：教室课 / 自习 / 实习课（get_class_adjust）、见学（settle_follow_mother_gain）、
+    实操课主修加成（sex_class_handle.get_subject_bonus）；教师侧的教学相长不受影响——停滞的是学生 """
 
 # ==== 7. 上课AI：缺课与翘课 ====
 ABSENT_HP_RATE = 0.3
