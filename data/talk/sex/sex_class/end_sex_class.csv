@@ -12,3 +12,9 @@ str,str,int,str,str
 1006,end_sex_class,0,sex_class_end_late,早就过了下课的时间，{Name}这才停下来。\n「……讲得太投入了。剩下的部分下次再补。」
 1007,end_sex_class,0,sex_class_end_late,教室外面早就安静下来了，这节课却还在继续。等{Name}终于喊停时，学生们才发现时间过了这么久。
 1008,end_sex_class,0,sex_class_end_late,{Name}拖了很久的堂。\n「抱歉，占用了你们的时间。不过该学的东西，一分都不能少。」
+1009,end_sex_class,0,sex_class_end_early,{Name}提前结束了这节课。\n「今天状态都不错，没必要耗满时间。下次接着来。」
+1010,end_sex_class,0,sex_class_end_early,时间还剩不少，{Name}却收了手。\n「贪多嚼不烂。今天先记住这一点，就够了。」
+1011,end_sex_class,0,sex_class_end_on_time,钟点一到，{Name}就停了下来。\n「时间到。今天练的东西，晚上自己再回想一遍。」
+1012,end_sex_class,0,sex_class_end_on_time,{Name}准时宣布下课，学生们这才松了口气。\n「不错，一节课的量刚好。散了吧。」
+1013,end_sex_class,0,sex_class_end_late,过了预定下课的时间很久，{Name}才想起来看钟。\n「……哦，已经这个点了。今天到这里，辛苦了。」
+1014,end_sex_class,0,sex_class_end_late,{Name}拖堂拖到学生们都有些站不住了，才终于收尾。\n「抱歉。下次我会注意时间——大概。」

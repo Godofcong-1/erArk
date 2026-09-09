@@ -2323,6 +2323,80 @@ def handle_self_in_sex_class(character_id: int) -> int:
     return character_id in sex_class_handle.get_scene_student_list()
 
 
+@add_premise(constant_promise.Premise.SEX_CLASS_RESERVED)
+def handle_sex_class_reserved(character_id: int) -> int:
+    """
+    正在进行的性技实操课是预约排进课表的那节（Plan 22 四期 §3.28.10 开课口上分档）
+
+    ⚠️ 开课口上在 start_sex_class() 把课标记为 running 之后才输出，所以这里读得到 reserved 标志；
+       旧档里开课前就存在的条目没有这个键，按当场开课处理。
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import sex_class_handle
+
+    now_class = sex_class_handle.get_running_class()
+    if now_class is None:
+        return 0
+    return bool(now_class.get("reserved", False))
+
+
+@add_premise(constant_promise.Premise.SEX_CLASS_IMPROMPTU)
+def handle_sex_class_impromptu(character_id: int) -> int:
+    """
+    正在进行的性技实操课是当场开的、不在课表上（Plan 22 四期 §3.28.10 开课口上分档）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import sex_class_handle
+
+    now_class = sex_class_handle.get_running_class()
+    if now_class is None:
+        return 0
+    return not now_class.get("reserved", False)
+
+
+@add_premise(constant_promise.Premise.SELF_SEX_CLASS_MUST_ATTEND)
+def handle_self_sex_class_must_attend(character_id: int) -> int:
+    """
+    自己是本节性技实操课被点名的必修学生（Plan 22 四期 §3.28.10 到场口上分档）
+
+    到场（join_sex_class）与旁观（watch_sex_class）都是课已 running 之后由结算器派发的二段行为，
+    所以直接读进行中那节课的必修名单即可。
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import sex_class_handle
+
+    now_class = sex_class_handle.get_running_class()
+    if now_class is None:
+        return 0
+    return character_id in now_class.get("must_attend", [])
+
+
+@add_premise(constant_promise.Premise.SELF_SEX_CLASS_ELECTIVE)
+def handle_self_sex_class_elective(character_id: int) -> int:
+    """
+    自己是本节性技实操课的选修学生，不在必修名单上（Plan 22 四期 §3.28.10 到场口上分档）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import sex_class_handle
+
+    now_class = sex_class_handle.get_running_class()
+    if now_class is None:
+        return 0
+    return character_id not in now_class.get("must_attend", [])
+
+
 @add_premise(constant_promise.Premise.SLEF_NOW_GO_TO_JOIN_GROUP_SEX)
 def handle_self_now_go_to_join_group_sex(character_id: int) -> int:
     """

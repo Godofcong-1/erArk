@@ -6,3 +6,11 @@ str,str,int,str,str
 2000,start_sex_class,0,CVP_A1_Course|71_G_0,「舌头不能只是含着，要动。」{Name}示意学生张开嘴，一点点教她怎么用力。
 2001,start_sex_class,0,CVP_A1_Course|71_G_0,{Name}讲解着舌技的要领，学生们红着脸，却一个个都听得很认真。
 2002,start_sex_class,0,CVP_A1_Course|71_G_0,这一节的主题是舌技。{Name}强调了呼吸的节奏——「憋着气是学不好的。」
+2003,start_sex_class,0,CVP_A1_Course|71_G_0&CVP_A2_T|102_E_1,{Name}让{TargetName}先伸出舌头，像看牙医那样。「就这样，先练习让它听话地动。」
+2004,start_sex_class,0,CVP_A1_Course|71_G_0&CVP_A2_T|102_E_1,{TargetName}还不太会控制舌头，动作笨拙得像在舔冰淇淋。{Name}没有笑她，只是耐心地一遍遍示范。
+2005,start_sex_class,0,CVP_A1_Course|71_G_0&CVP_A2_T|102_E_1,「不用着急，先学会不把牙齿碰上去。」{Name}把这一点反复说了三遍——对幼小的学生来说，这才是第一课。
+2006,start_sex_class,0,CVP_A1_Course|71_G_0&CVP_A2_T|102_E_1,{Name}教{TargetName}从最基本的开始：舌尖怎么用力，什么时候该停。她认真得鼓起了腮帮子。
+2007,start_sex_class,0,CVP_A1_Course|71_G_0&CVP_A2_T|103_E_1,「舌头不要一直用同一个地方。」{Name}指着{TargetName}的嘴唇讲解，她听着听着，耳朵红了。
+2008,start_sex_class,0,CVP_A1_Course|71_G_0&CVP_A2_T|103_E_1,{TargetName}练得很认真，只是节奏还乱。{Name}让她数着心跳来动——「四下一轮，试试。」
+2009,start_sex_class,0,CVP_A1_Course|71_G_0&CVP_A2_T|103_E_1,{Name}让{TargetName}含住之后先别动，感受一会儿再开始。「急躁是舌技最大的敌人。」
+2010,start_sex_class,0,CVP_A1_Course|71_G_0&CVP_A2_T|103_E_1,这节舌技课上，{TargetName}终于找到了一点感觉。{Name}点了点头：「就是这样，记住。」

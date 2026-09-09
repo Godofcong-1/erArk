@@ -99,6 +99,8 @@ def set_temp_class(date_ordinal: int, period: int, classroom: str, ability_id: i
         "must_attend": list(must_attend),
         "notified": notified,
         "running": running,
+        # 是否是预约排进课表的那节：开课时由 start_sex_class 按"复用了已有条目"来定，供开课口上分档
+        "reserved": False,
     }
     cache.rhodes_island.temp_sex_class[get_class_key(date_ordinal, period)] = now_data
     return now_data
@@ -570,10 +572,13 @@ def start_sex_class(ability_id: int, join_id_list: Optional[List[int]] = None) -
     now_class = get_temp_class(today, period)
     if now_class is not None and now_class.get("classroom", "") == classroom:
         now_class["running"] = True
+        # 复用了预约条目 → 这是预约的那节课；开课口上按"预约 / 当场"分档（方案 §3.28.10）
+        now_class["reserved"] = True
         if ability_id in education_constant.SEX_CLASS_ABILITY_LIST:
             now_class["ability_id"] = ability_id
     else:
         now_class = set_temp_class(today, period, classroom, ability_id, running=True)
+        now_class["reserved"] = False
     if join_id_list is None:
         join_id_list = get_scene_student_list(pl_character_data.position)
     # 出勤只在开课时记这一次：拖堂占用的后续节次既不记出勤也不记缺课（方案 §3.28.9）

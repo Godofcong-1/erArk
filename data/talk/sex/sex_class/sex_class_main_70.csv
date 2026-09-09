@@ -6,3 +6,11 @@ str,str,int,str,str
 2000,start_sex_class,0,CVP_A1_Course|70_G_0,「手指的力道要这样控制——太重会疼，太轻又不够。」{Name}一边示范一边讲解。
 2001,start_sex_class,0,CVP_A1_Course|70_G_0,{Name}握住学生的手腕，纠正着她手指的角度。「感觉到了吗？就是这个位置。」
 2002,start_sex_class,0,CVP_A1_Course|70_G_0,这节课练的是指技。{Name}让每个人都把手伸出来，一根一根地检查过去。
+2003,start_sex_class,0,CVP_A1_Course|70_G_0&CVP_A2_T|102_E_1,{Name}把{TargetName}的小手摊开，一根一根掰着她的手指讲解。「先从最简单的开始——手指要这样并拢。」
+2004,start_sex_class,0,CVP_A1_Course|70_G_0&CVP_A2_T|102_E_1,{TargetName}的手还很小，握不住太多东西。{Name}让她先练习力道的轻重，像捏一颗软糖那样。
+2005,start_sex_class,0,CVP_A1_Course|70_G_0&CVP_A2_T|102_E_1,「不是抓，是摸。」{Name}握着{TargetName}的手腕，带着她的手指慢慢地移动。她眨着眼睛，似乎有点明白了。
+2006,start_sex_class,0,CVP_A1_Course|70_G_0&CVP_A2_T|102_E_1,这节指技课，{Name}没有急着教难的，只让{TargetName}先把手指的动作练熟——「等你的手长大一点，再教下一步。」
+2007,start_sex_class,0,CVP_A1_Course|70_G_0&CVP_A2_T|103_E_1,{Name}看着{TargetName}的手指动作，摇了摇头。「太急了。指技的关键是先找到位置，再谈力道。」
+2008,start_sex_class,0,CVP_A1_Course|70_G_0&CVP_A2_T|103_E_1,「手指第二个关节，用这里。」{Name}捉住{TargetName}的手示范了一遍。她红着脸，跟着做了一次。
+2009,start_sex_class,0,CVP_A1_Course|70_G_0&CVP_A2_T|103_E_1,{TargetName}的手指已经有了些灵巧劲。{Name}让她自己试，只在关键的地方开口纠正。
+2010,start_sex_class,0,CVP_A1_Course|70_G_0&CVP_A2_T|103_E_1,「记住这个节奏。」{Name}拍着手打拍子，让{TargetName}的手指跟上。几次之后，她的动作明显顺了。

@@ -6,3 +6,11 @@ str,str,int,str,str
 2000,start_sex_class,0,CVP_A1_Course|77_G_0,「光是快没有用，要让对方停不下来。」{Name}讲解着榨精的核心。
 2001,start_sex_class,0,CVP_A1_Course|77_G_0,{Name}把节奏的变化讲得很细：「一直用同一种方式，效果反而会变差。」
 2002,start_sex_class,0,CVP_A1_Course|77_G_0,这一节练的是榨精。{Name}提醒学生们注意观察对方的反应——「答案都写在那上面。」
+2003,start_sex_class,0,CVP_A1_Course|77_G_0&CVP_A2_T|102_E_1,{Name}没有教{TargetName}什么复杂的技巧，只让她学会观察。「看对方的表情，看对方的呼吸——什么时候变了，你要能发现。」
+2004,start_sex_class,0,CVP_A1_Course|77_G_0&CVP_A2_T|102_E_1,{TargetName}还不太明白这节课的目的。{Name}换了个她能懂的说法：「就是让对方舒服到停不下来。」
+2005,start_sex_class,0,CVP_A1_Course|77_G_0&CVP_A2_T|102_E_1,「不要一直用同一个方法。」{Name}让{TargetName}试着换着来，她像在玩游戏一样认真。
+2006,start_sex_class,0,CVP_A1_Course|77_G_0&CVP_A2_T|102_E_1,这节课上，{TargetName}第一次让对方有了反应。她瞪大了眼睛，{Name}笑着点了点头。
+2007,start_sex_class,0,CVP_A1_Course|77_G_0&CVP_A2_T|103_E_1,「节奏要变。」{Name}对{TargetName}说，「同一种方式用久了，效果只会越来越差。」
+2008,start_sex_class,0,CVP_A1_Course|77_G_0&CVP_A2_T|103_E_1,{TargetName}已经掌握了基本的动作，{Name}开始教她观察对方的反应——「答案不在你手上，在对方脸上。」
+2009,start_sex_class,0,CVP_A1_Course|77_G_0&CVP_A2_T|103_E_1,{Name}让{TargetName}试着控制快慢的切换。几次之后，对方的反应明显不一样了。
+2010,start_sex_class,0,CVP_A1_Course|77_G_0&CVP_A2_T|103_E_1,这节榨精课，{TargetName}学会了什么时候该停一下。{Name}评价道：「懂得停，比一直动更难。」
