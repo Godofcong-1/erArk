@@ -12,7 +12,7 @@ from Script.Core import (
     old_chara_to_new
 )
 from Script.Config import normal_config, game_config, character_config
-from Script.Design import attr_calculation, character_handle
+from Script.Design import attr_calculation, character_handle, map_handle
 from Script.UI.Moudle import draw
 import json
 
@@ -747,6 +747,35 @@ def update_map(loaded_dict):
         now_draw = draw.LeftDraw()
         draw_text = _("\n游戏地图已更新\n")
         now_draw.text = draw_text
+        now_draw.draw()
+
+    # 把站在已被删除的场景里的角色挪回来
+    # 地图改建会删掉旧场景（如教育区改建把原本的单间「教室」拆成了6间理论教室、3间实践教室与大礼堂），
+    # 但站在里面的角色，position 不会跟着改，此后每一次 cache.scene_data[该路径] 都会直接 KeyError
+    # 必须放在 change_map_flag 之外无条件执行：上面那个删除循环只在地图有变动的那一次读取里跑，
+    #    它把死场景删掉了却没管站在里面的人，之后每次读取 change_map_flag 都是假，
+    #    坏位置于是永远留在存档里，再也没有代码会去碰它
+    move_back_count = 0
+    for character_id, character_data in loaded_dict["character_data"].items():
+        old_position_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+        if old_position_str in cache.scene_data:
+            continue
+        # 回落到同一区块的入口——每个区块都有一个"0"号入口场景；整个区块都没了才回落到地图原点
+        new_position = [character_data.position[0], "0"] if character_data.position else ["0", "0"]
+        if map_handle.get_map_system_path_str_for_list(new_position) not in cache.scene_data:
+            new_position = ["0", "0"]
+        new_position_str = map_handle.get_map_system_path_str_for_list(new_position)
+        # 死场景可能还留在存档里（本次读取没触发上面的删除），要先把人从它的名单里摘掉
+        if old_position_str in loaded_dict["scene_data"]:
+            loaded_dict["scene_data"][old_position_str].character_list.discard(character_id)
+        loaded_dict["scene_data"][new_position_str].character_list.add(character_id)
+        character_data.position = new_position
+        update_count += 1
+        move_back_count += 1
+    if move_back_count:
+        now_draw = draw.LeftDraw()
+        now_draw.text = _("\n有{0}名角色所在的房间已不存在（地图改建），已将她们移动到所属区块的入口\n").format(move_back_count)
+        now_draw.style = "gold_enrod"
         now_draw.draw()
 
     return update_count
