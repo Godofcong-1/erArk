@@ -2,6 +2,7 @@ import os
 import pickle
 import shutil
 import datetime
+import tempfile
 from types import FunctionType
 from Script.Core import (
     cache_control,
@@ -114,8 +115,23 @@ def write_save_data(save_id: str, data_id: str, write_data: dict):
     file_path = os.path.join(save_path, data_id)
     if not os.path.exists(save_path):
         os.makedirs(save_path)
-    with open(file_path, "wb+") as f:
-        pickle.dump(write_data, f)
+    '''
+    先完整序列化到内存，再写入同目录临时文件并原子替换。debug 输入即使
+    通过了界面校验，也不能因为进程中断而留下半个 pickle 覆盖原存档。
+    '''
+    payload = pickle.dumps(write_data, protocol=pickle.HIGHEST_PROTOCOL)
+    fd, temp_path = tempfile.mkstemp(prefix=f".{data_id}.", dir=save_path)
+    try:
+        with os.fdopen(fd, "wb") as temp_file:
+            temp_file.write(payload)
+            temp_file.flush()
+            os.fsync(temp_file.fileno())
+        if os.path.exists(file_path):
+            shutil.copy2(file_path, file_path + ".bak")
+        os.replace(temp_path, file_path)
+    finally:
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
 
 
 def _normalize_save_path(path_text):
