@@ -15,6 +15,7 @@ from Script.Config import game_config, normal_config
 from Script.Design import attr_text, map_handle, attr_calculation, game_time, instuct_judege, character_image
 from Script.UI.Panel import body_info_panel, character_info_head
 from Script.System.First_Record_System import first_record_panel
+from Script.System.Sex_System import mental_virginity, sex_knowledge
 
 panel_info_data = {}
 
@@ -172,11 +173,13 @@ class See_Character_Detailed_Attributes_Panel:
         head_draw = character_info_head.CharacterInfoHead(character_id, width)
         abi_draw = CharacterabiText(character_id, width)
         experience_draw = CharacterExperienceText(character_id, width, 8, 0)
+        knowledge_draw = CharacterSexKnowledgeText(character_id, width, 4)
         juel_draw = CharacterJuelText(character_id, width, 8, 0)
         self.draw_list: List[draw.NormalDraw] = [
             head_draw,
             abi_draw,
             experience_draw,
+            knowledge_draw,
             juel_draw,
         ]
         """ 绘制的面板列表 """
@@ -201,6 +204,7 @@ class SeeCharacterThirdPanel:
         """初始化绘制对象"""
         head_draw = character_info_head.CharacterInfoHead(character_id, width)
         body_draw = body_info_panel.CharacterBodyText(character_id, width, 8, 0)
+        mental_virginity_draw = CharacterMentalVirginityText(character_id, width, 4)
         ability_draw = PlayerAbilityText(character_id, width, 8, 0)
         if character_id == 0:
             self.draw_list: List[draw.NormalDraw] = [
@@ -211,6 +215,7 @@ class SeeCharacterThirdPanel:
             self.draw_list: List[draw.NormalDraw] = [
                 head_draw,
                 body_draw,
+                mental_virginity_draw,
             ]
         """ 绘制的面板列表 """
         self.return_list: List[str] = []
@@ -817,6 +822,96 @@ class CharacterImage:
             now_draw_1.width = 1
             now_draw_1.draw()
             flow_handle.print_image_cmd(self.image_name, "立绘按钮")
+
+
+class CharacterMentalVirginityText:
+    """
+    显示角色各快感部位的心理处女状态。
+
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 面板最大宽度
+    column -- 每行显示的部位数量
+    """
+
+    def __init__(self, character_id: int, width: int, column: int = 4):
+        """初始化心理处女显示对象。"""
+        self.character_id = character_id
+        """要绘制的角色id。"""
+        self.width = width
+        """面板最大宽度。"""
+        self.column = max(1, column)
+        """每行显示的部位数量。"""
+        self.draw_list: List = []
+        """绘制对象列表。"""
+        self.return_list: List[str] = []
+        """当前面板监听的按钮列表；心理处女仅显示文本，因此保持为空。"""
+
+        mental_virginity_tooltip = _(
+            "心理处女表示角色主观上是否认定某个可获得性快感的部位仍保有第一次。"
+            "系统会综合实际经历、当时的意识状态、事后发现的身体或衣物痕迹以及相应的性知识进行判断。"
+            "它与肉体处女状态不同；“无自觉”表示角色尚不知道发生过相关经历，“怀疑”表示角色已有线索但尚未确认。"
+        )
+        # 标题在整条分隔线上居中，悬浮说明仍只覆盖标题文本。
+        title_draw = draw.LittleTitleLineDraw(_("心理处女"), width, ":", tooltip=mental_virginity_tooltip, center_title=True)
+        self.draw_list.append(title_draw)
+        info_draw = panel.CenterDrawTextListPanel()
+        info_draw.set(mental_virginity.get_character_mental_virginity_text(character_id), width, self.column)
+        self.draw_list.extend(info_draw.draw_list)
+
+    def draw(self):
+        """绘制心理处女状态。"""
+        line_feed.draw()
+        for label in self.draw_list:
+            if isinstance(label, list):
+                for value in label:
+                    value.draw()
+                line_feed.draw()
+            else:
+                label.draw()
+
+
+class CharacterSexKnowledgeText:
+    """
+    显示角色性知识面板对象。
+
+    性知识由 Sex_System.sex_knowledge 根据已有经验实时推导，不写入存档，
+    因此旧存档也可以直接显示该项目。
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 面板最大宽度
+    column -- 每行显示的部位数量
+    """
+
+    def __init__(self, character_id: int, width: int, column: int = 4):
+        """初始化性知识显示对象。"""
+        self.character_id = character_id
+        """要绘制的角色id。"""
+        self.width = width
+        """面板最大宽度。"""
+        self.column = max(1, column)
+        """每行显示的部位数量。"""
+        self.draw_list: List = []
+        """绘制对象列表。"""
+
+        # 只显示高潮系统登记过的部位，保证普通部位、口喉、兽部和心理部位使用同一范围。
+        knowledge_text_list = sex_knowledge.get_character_knowledge_text(character_id)
+        title_draw = draw.LittleTitleLineDraw(_("性知识"), width, ":")
+        self.draw_list.append(title_draw)
+        info_draw = panel.CenterDrawTextListPanel()
+        info_draw.set(knowledge_text_list, width, self.column)
+        self.draw_list.extend(info_draw.draw_list)
+
+    def draw(self):
+        """绘制性知识内容。"""
+        line_feed.draw()
+        for label in self.draw_list:
+            if isinstance(label, list):
+                for value in label:
+                    value.draw()
+                line_feed.draw()
+            else:
+                label.draw()
 
 
 class CharacterExperienceText:

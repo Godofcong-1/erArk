@@ -997,3 +997,14 @@ def base_chara_experience_common_settle(
     if final_change_data != None:
         final_change_data.experience.setdefault(experience_id, 0)
         final_change_data.experience[experience_id] += base_value
+
+    # 心理处女是经验驱动的派生认知；在经验统一入口刷新，避免各H指令分别接入时发生遗漏。
+    # 延迟导入用于隔离通用结算与Sex_System，防止启动阶段形成循环导入。
+    if final_character_id != 0:
+        from Script.System.Sex_System import mental_virginity
+
+        unconscious_flag = bool(
+            handle_premise.handle_unconscious_flag_ge_1(final_character_id)
+            or handle_premise.handle_self_time_stop_orgasm_relase(final_character_id)
+        )
+        mental_virginity.update_from_experience(final_character_id, experience_id, unconscious_flag)

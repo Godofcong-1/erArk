@@ -838,9 +838,11 @@ class LittleTitleLineDraw:
     line -- 用于绘制线条的文本
     style -- 线条样式
     title_style -- 标题样式
+    tooltip -- 鼠标悬停在标题上时显示的说明文本
+    center_title -- 是否将标题放在整条分隔线的中央
     """
 
-    def __init__(self, title: str, width: int, line: str = "=", style="standard", title_style="sontitle"):
+    def __init__(self, title: str, width: int, line: str = "=", style="standard", title_style="sontitle", tooltip: str = "", center_title: bool = False):
         """初始化绘制对象"""
         self.title = title
         """ 标题 """
@@ -852,6 +854,10 @@ class LittleTitleLineDraw:
         """ 线条默认样式 """
         self.title_style = title_style
         """ 标题样式 """
+        self.tooltip = tooltip
+        """ 鼠标悬停在标题上时显示的说明文本 """
+        self.center_title = center_title
+        """ 是否将标题放在整条分隔线的中央 """
         self.line_feed: bool = True
         """ 线尾换行 """
 
@@ -861,7 +867,13 @@ class LittleTitleLineDraw:
         # title_draw.width = self.width
         title_draw.text = self.title
         title_draw.style = self.title_style
-        line_a_width = int(self.width / 16) - len(title_draw)
+        title_draw.tooltip = self.tooltip
+        if self.center_title:
+            # 旧布局未设置标题宽度，len(title_draw) 会回传 0；居中时需先计入标题的实际宽度。
+            title_draw.width = self.width
+            line_a_width = int((self.width - len(title_draw)) / 2)
+        else:
+            line_a_width = int(self.width / 16) - len(title_draw)
         if line_a_width < 0:
             line_a_width = 0
         line_a = NormalDraw()
