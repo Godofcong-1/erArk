@@ -4199,6 +4199,12 @@ def handle_move_to_pre_scene(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
+    # 761 既用于私密地点被拒绝进入，也用于其他返回前一场景的事件。
+    # 只有博士仍有未完成的最终移动目标时，回退后才需要停止连续寻路；
+    should_stop_player_move = (
+        character_id == 0
+        and character_data.behavior.move_final_target != []
+    )
     # 如果前一场景的移动数据与当前场景相同，则删除掉前一场景的移动数据
     while character_data.action_info.past_move_position_list and character_data.action_info.past_move_position_list[-1] == character_data.position:
         character_data.action_info.past_move_position_list.pop(-1)
@@ -4208,6 +4214,9 @@ def handle_move_to_pre_scene(
         handle_move_to_target_scene(character_id, add_time, change_data, now_time)
         # 删除掉前一场景的移动数据
         character_data.action_info.past_move_position_list.pop(-1)
+    # 被赶回前一场景后，终止仍指向私密地点的连续移动，避免再次进入并触发循环。
+    if should_stop_player_move:
+        character_data.sp_flag.move_stop = True
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_MOVE_TO_PRE_SCENE)
