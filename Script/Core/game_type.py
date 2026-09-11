@@ -1756,6 +1756,12 @@ class Character:
         """ 角色信赖度数据 """
         self.food_bag: Dict[UUID, Food] = {}
         """ 角色持有的食物数据 """
+        self.recipe_favorites: Dict[int, List[Dict[str, int]]] = {}
+        """ 菜谱收藏制作方案：键为菜谱id，值为方案列表（seasoning/cook_mode/make_count），上限见cooking.MAX_FAVORITES_* """
+        self.recipe_proficiency: Dict[int, int] = {}
+        """ 菜谱熟练度：键为菜谱id，值为累计制作次数（随新周目重置） """
+        self.recipe_special: Dict[int, str] = {}
+        """ 菜谱宗师特技：键为菜谱id，值为特技名（fire/fast/batch/stable），由熟练度系统在宗师时赋予 """
         self.target_character_id: int = 0
         """ 角色当前交互对象id """
         self.adv: int = 0

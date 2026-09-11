@@ -288,6 +288,9 @@ def get_character_cookable_recipes(character_id: int = 0, weight_flag = False, f
         # 非玩家跳过咖啡
         if character_id != 0 and recipe.type in {8}:
             continue
+        # 非玩家跳过庆典料理（庆典只由博士发起）
+        if character_id != 0 and recipe.type == 10:
+            continue
         # 难度高于烹饪技能的菜谱直接跳过
         if character_data.ability[43] < recipe.difficulty:
             continue
@@ -399,6 +402,8 @@ def get_cook_from_makefood_data_by_food_type(food_type: str) -> Dict[uuid.UUID, 
         elif food_type == _("咖啡") and cache.recipe_data[int(food_id)].type != 8:
             continue
         elif food_type == _("其他") and cache.recipe_data[int(food_id)].type != 9:
+            continue
+        elif food_type == _("庆典") and cache.recipe_data[int(food_id)].type != 10:
             continue
 
         # 跳过时间为999的食谱
@@ -613,3 +618,445 @@ def handle_food_deterioration(character_id: int):
     for food_uid in remove_food_uid_list:
         character_data.food_bag.pop(food_uid)
     return len(remove_food_uid_list)
+
+# ================= 庆典料理（博士专属会食宴） =================
+# 菜谱本体（名称/时间/难度/价格/介绍/type=10）在 data/csv/Recipes.csv 中维护，
+# 本文件只保存庆典特有的结算数据与行为逻辑，新增菜谱请改 CSV 而非本块。
+
+FEAST_TYPE = 10
+""" 庆典料理的菜谱类型id """
+FEAST_TAB_NAME = _("庆典")
+""" 烹饪面板庆典页签名 """
+
+FEAST_DATA_BY_CID = {
+    9001: {"effect": "base", "mult": 1.0},
+    9002: {"effect": "reunion", "mult": 1.0},
+    9003: {"effect": "hearty", "mult": 1.0},
+    9004: {"effect": "melody", "mult": 1.0},
+    9005: {"effect": "starlight", "mult": 1.0},
+    9006: {"effect": "sakura", "mult": 1.0},
+    9007: {"effect": "family", "mult": 1.0},
+    9008: {"effect": "tea", "mult": 0.6},
+    9009: {"effect": "golden", "mult": 1.25},
+    9010: {"effect": "anniversary", "mult": 1.5},
+}
+""" 庆典料理特有数据：effect 为会食附加效果名，mult 为进食基础效果倍率 """
+
+FEAST_PROF_SPECIAL = {
+    9001: "stable",
+    9002: "fire",
+    9003: "batch",
+    9004: "fast",
+    9005: "fire",
+    9006: "fast",
+    9007: "stable",
+    9008: "fast",
+    9009: "batch",
+    9010: "fire",
+}
+""" 庆典料理到达宗师（熟练度第4阶）时获得的特技名 """
+
+
+def _get_feast_npcs() -> list:
+    """
+    获取当前与博士同场景、清醒且状态正常的干员名单
+    Return arguments:
+    list -- 干员角色id列表（不含博士）
+    """
+    pl = cache.character_data[0]
+    eaters = []
+    try:
+        from Script.Design import map_handle
+        scene_ids = map_handle.get_chara_now_scene_all_chara_id_list(0)
+    except Exception:
+        return []
+    for cid in scene_ids:
+        if cid == 0 or cid not in cache.character_data:
+            continue
+        cd = cache.character_data[cid]
+        if getattr(cd, "dead", False):
+            continue
+        if handle_premise.handle_action_sleep(cid):
+            continue
+        if not handle_premise.handle_normal_6(cid):
+            continue
+        if handle_premise.handle_unconscious_flag_ge_1(cid):
+            continue
+        eaters.append(cid)
+    return eaters
+
+
+def get_feast_eater_count(include_player: bool = False) -> int:
+    """
+    获取一场会食的参与人数
+    Keyword arguments:
+    include_player -- 是否把博士计入，默认为False
+    Return arguments:
+    int -- 参与人数
+    """
+    n = len(_get_feast_npcs())
+    if include_player:
+        n += 1
+    return n
+
+
+# ================= 烹饪辅助（大师/收藏/熟练度） =================
+
+MASTER_ABILITY_REQUIRE = 8
+""" 大师模式解锁门槛：料理技能达到绝珍品质所需等级 """
+MAX_FAVORITES_TOTAL = 100
+""" 总收藏方案上限 """
+MAX_FAVORITES_PER_RECIPE = 9
+""" 单个菜谱收藏方案上限（每行3个，3行共9个） """
+FAVORITES_ATTR = "recipe_favorites"
+""" 收藏制作方案的玩家属性名 """
+PROF_TIER_COUNTS = [3, 10, 25, 50]
+""" 熟练度各阶门槛（累计制作次数） """
+PROF_TIER_NAMES = [_("入门"), _("精通I"), _("精通II"), _("精通III"), _("宗师")]
+""" 熟练度各阶名称 """
+PROF_GAIN_PER_MAKE = 5
+""" 每次成功制作一道菜获得的熟练度 """
+PROFICIENCY_ATTR = "recipe_proficiency"
+""" 菜谱熟练度的玩家属性名 """
+SPECIAL_EFFECTS_ATTR = "recipe_special"
+""" 菜谱宗师特技的玩家属性名 """
+SPECIAL_EFFECTS = {
+    "fire": {"name": _("火候掌控"), "desc": _("品质额外+1")},
+    "fast": {"name": _("快手"), "desc": _("耗时-20%")},
+    "batch": {"name": _("分身有术"), "desc": _("批量上限+10")},
+    "stable": {"name": _("稳定发挥"), "desc": _("标准模式可冲击绝珍")},
+}
+""" 宗师特技定义 """
+
+
+def is_master_unlocked() -> bool:
+    """
+    大师模式是否解锁（料理技能达到门槛或调试模式）
+    Return arguments:
+    bool -- 是否解锁
+    """
+    pl = cache.character_data[0]
+    return pl.ability[43] >= MASTER_ABILITY_REQUIRE or cache.debug_mode
+
+
+def _fid(food_cid) -> int:
+    """
+    把可能为字符串的菜谱id统一转为 int
+    Keyword arguments:
+    food_cid -- 菜谱id（int或str）
+    Return arguments:
+    int -- 规范化后的菜谱id
+    """
+    try:
+        return int(food_cid)
+    except (TypeError, ValueError):
+        return int(0)
+
+
+def get_favorites() -> dict:
+    """
+    获取玩家收藏制作方案字典
+    Return arguments:
+    dict -- 键为菜谱id，值为方案列表
+    """
+    pl = cache.character_data.get(0)
+    if pl is None:
+        return {}
+    data = getattr(pl, FAVORITES_ATTR, None)
+    if data is None:
+        data = {}
+        setattr(pl, FAVORITES_ATTR, data)
+    return data
+
+
+def get_recipe_favorites(food_cid) -> list:
+    """
+    获取某菜谱的收藏方案列表
+    Keyword arguments:
+    food_cid -- 菜谱id
+    Return arguments:
+    list -- 方案字典列表
+    """
+    return get_favorites().get(_fid(food_cid), [])
+
+
+def save_favorite(food_cid, make_count, cook_mode, special_seasoning) -> str:
+    """
+    收藏当前制作方案，同状态去重
+    Keyword arguments:
+    food_cid -- 菜谱id
+    make_count -- 制作数量
+    cook_mode -- 烹饪模式
+    special_seasoning -- 调味cid
+    Return arguments:
+    str -- added/updated/per_recipe_limit/total_limit/invalid
+    """
+    fid = _fid(food_cid)
+    if fid not in game_config.config_recipes and fid not in cache.recipe_data:
+        return "invalid"
+    favorites = get_favorites()
+    presets = favorites.setdefault(fid, [])
+    for idx, preset in enumerate(presets):
+        if (preset.get("seasoning") == special_seasoning
+                and preset.get("cook_mode") == cook_mode
+                and preset.get("make_count") == make_count):
+            presets[idx] = {
+                "seasoning": special_seasoning,
+                "cook_mode": cook_mode,
+                "make_count": make_count,
+            }
+            return "updated"
+    if len(presets) >= MAX_FAVORITES_PER_RECIPE:
+        return "per_recipe_limit"
+    if sum(len(v) for v in favorites.values()) >= MAX_FAVORITES_TOTAL:
+        return "total_limit"
+    presets.append({
+        "seasoning": special_seasoning,
+        "cook_mode": cook_mode,
+        "make_count": make_count,
+    })
+    return "added"
+
+
+def remove_favorite(food_cid, index: int) -> bool:
+    """
+    删除某菜谱的第 index 个收藏方案
+    Keyword arguments:
+    food_cid -- 菜谱id
+    index -- 方案序号
+    Return arguments:
+    bool -- 是否删除成功
+    """
+    fid = _fid(food_cid)
+    favorites = get_favorites()
+    presets = favorites.get(fid)
+    if presets is None or index < 0 or index >= len(presets):
+        return False
+    del presets[index]
+    if not presets:
+        del favorites[fid]
+    return True
+
+
+def has_favorites(food_cid) -> bool:
+    """
+    某菜谱是否已有收藏方案
+    Keyword arguments:
+    food_cid -- 菜谱id
+    Return arguments:
+    bool -- 是否存在收藏
+    """
+    return bool(get_recipe_favorites(food_cid))
+
+
+def get_favorite_recipe_ids() -> list:
+    """
+    返回有收藏的菜谱id列表
+    Return arguments:
+    list -- 按id排序的菜谱id列表
+    """
+    return sorted(get_favorites().keys())
+
+
+def find_favorite_index(food_cid, seasoning, cook_mode, make_count) -> int:
+    """
+    查找与给定状态一致的收藏方案序号
+    Keyword arguments:
+    food_cid -- 菜谱id
+    seasoning -- 调味cid
+    cook_mode -- 烹饪模式
+    make_count -- 制作数量
+    Return arguments:
+    int -- 方案序号，未找到返回-1
+    """
+    presets = get_recipe_favorites(food_cid)
+    for idx, preset in enumerate(presets):
+        if (preset.get("seasoning") == seasoning
+                and preset.get("cook_mode") == cook_mode
+                and preset.get("make_count") == make_count):
+            return idx
+    return -1
+
+
+def get_prof_count(food_cid: int) -> int:
+    """
+    获取某菜谱的累计制作次数
+    Keyword arguments:
+    food_cid -- 菜谱id
+    Return arguments:
+    int -- 制作次数
+    """
+    pl = cache.character_data[0]
+    return getattr(pl, PROFICIENCY_ATTR, {}).get(_fid(food_cid), 0)
+
+
+def get_prof_tier(food_cid: int) -> int:
+    """
+    获取某菜谱的熟练度阶（0入门~4宗师）
+    Keyword arguments:
+    food_cid -- 菜谱id
+    Return arguments:
+    int -- 熟练度阶
+    """
+    count = get_prof_count(food_cid)
+    for tier, threshold in enumerate(PROF_TIER_COUNTS):
+        if count < threshold:
+            return tier
+    return len(PROF_TIER_COUNTS)
+
+
+def add_proficiency(food_cid: int, make_count: int) -> None:
+    """
+    制作完成后累计熟练度，跨入宗师时赋予该菜谱配置的特技
+    Keyword arguments:
+    food_cid -- 菜谱id
+    make_count -- 本次制作份数
+    """
+    pl = cache.character_data[0]
+    data = getattr(pl, PROFICIENCY_ATTR, None)
+    if data is None:
+        data = {}
+        setattr(pl, PROFICIENCY_ATTR, data)
+    fid = _fid(food_cid)
+    old_tier = get_prof_tier(fid)
+    data[fid] = data.get(fid, 0) + PROF_GAIN_PER_MAKE * make_count
+    new_tier = get_prof_tier(fid)
+    if old_tier < 4 <= new_tier:
+        special = FEAST_PROF_SPECIAL.get(fid, "")
+        if special:
+            sp = getattr(pl, SPECIAL_EFFECTS_ATTR, None)
+            if sp is None:
+                sp = {}
+                setattr(pl, SPECIAL_EFFECTS_ATTR, sp)
+            sp[fid] = special
+
+
+def get_prof_quality_bonus(food_cid: int) -> int:
+    """
+    获取熟练度提供的品质加成
+    Keyword arguments:
+    food_cid -- 菜谱id
+    Return arguments:
+    int -- 品质加成值
+    """
+    tier = get_prof_tier(food_cid)
+    bonus = 0
+    if tier >= 1:
+        bonus += 1
+    if tier >= 4 and _get_special_effect(food_cid) == "fire":
+        bonus += 1
+    return bonus
+
+
+def get_prof_time_mult(food_cid: int) -> float:
+    """
+    获取熟练度提供的耗时倍率（小于1为缩短）
+    Keyword arguments:
+    food_cid -- 菜谱id
+    Return arguments:
+    float -- 耗时倍率
+    """
+    tier = get_prof_tier(food_cid)
+    mult = 1.0
+    if tier >= 2:
+        mult *= 0.8
+    if tier >= 4 and _get_special_effect(food_cid) == "fast":
+        mult *= 0.8
+    return mult
+
+
+def get_prof_batch_bonus(food_cid: int) -> int:
+    """
+    获取熟练度提供的批量制作上限加成
+    Keyword arguments:
+    food_cid -- 菜谱id
+    Return arguments:
+    int -- 批量上限加成
+    """
+    tier = get_prof_tier(food_cid)
+    bonus = 0
+    if tier >= 4 and _get_special_effect(food_cid) == "batch":
+        bonus += 10
+    return bonus
+
+
+def _get_special_effect(food_cid: int) -> str:
+    """
+    获取某菜谱已获得的宗师特技名
+    Keyword arguments:
+    food_cid -- 菜谱id
+    Return arguments:
+    str -- 特技名（无则为空字符串）
+    """
+    pl = cache.character_data[0]
+    return getattr(pl, SPECIAL_EFFECTS_ATTR, {}).get(_fid(food_cid), "")
+
+
+def prof_std_master_active(food_cid: int) -> bool:
+    """
+    该菜谱的宗师特技是否允许标准模式冲击绝珍
+    Keyword arguments:
+    food_cid -- 菜谱id
+    Return arguments:
+    bool -- 是否生效
+    """
+    return get_prof_tier(food_cid) >= 4 and _get_special_effect(food_cid) == "stable"
+
+
+def get_helpers() -> list:
+    """
+    获取当前可协助烹饪的帮厨名单
+    优先使用玩家名单制助理（multi_assistant 风格），无名单时退回原版单助理；
+    只取智能跟随(1)且与博士同场景者，最多3名。
+    Return arguments:
+    list -- 帮厨角色id列表
+    """
+    pl = cache.character_data[0]
+    ids = getattr(pl, "mod_assistant_ids", None)
+    if ids is None:
+        ids = [pl.assistant_character_id] if pl.assistant_character_id else []
+    helpers = []
+    try:
+        from Script.Design import map_handle as _mh
+        pl_scene = _mh.get_map_system_path_str_for_list(pl.position)
+        for aid in ids:
+            if aid == 0 or aid not in cache.character_data:
+                continue
+            a = cache.character_data[aid]
+            if a.sp_flag.is_follow != 1:
+                continue
+            if _mh.get_map_system_path_str_for_list(a.position) != pl_scene:
+                continue
+            helpers.append(aid)
+            if len(helpers) >= 3:
+                break
+    except Exception:
+        return []
+    return helpers
+
+
+def get_helper_time_mult() -> float:
+    """
+    获取帮厨耗时系数：每名-10%，最多3名
+    Return arguments:
+    float -- 耗时倍率（小于1为缩短）
+    """
+    return 1.0 - 0.1 * len(get_helpers())
+
+
+def prof_summary_text(food_cid: int) -> str:
+    """
+    生成确认页的熟练度摘要文本
+    Keyword arguments:
+    food_cid -- 菜谱id
+    Return arguments:
+    str -- 摘要文本
+    """
+    count = get_prof_count(food_cid)
+    tier = get_prof_tier(food_cid)
+    text = _("熟练度: {0}（累计{1}次）").format(PROF_TIER_NAMES[tier], count)
+    if tier == 4:
+        effect_key = _get_special_effect(food_cid)
+        effect_name = SPECIAL_EFFECTS[effect_key]["name"] if effect_key else _("未选择")
+        text += _("｜特殊效果: {0}").format(effect_name)
+    return text

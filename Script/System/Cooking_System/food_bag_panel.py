@@ -240,7 +240,7 @@ class FoodBagPanel:
             if self.now_panel == _("食用") and recipe_data is not None and recipe_data.type in {2, 3, 4, 8}:
                 continue
             # 如果是饮用类型的食物，则跳过食用类型的食物
-            elif self.now_panel == _("饮用") and recipe_data is not None and recipe_data.type in {0, 1, 5}:
+            elif self.now_panel == _("饮用") and recipe_data is not None and recipe_data.type in {0, 1, 5, 10}:
                 continue
             # 如果被限定为酒类食物，则跳过非酒类食物
             elif self.now_panel == _("酒类") and recipe_data is not None and recipe_data.type != 3:
@@ -312,7 +312,7 @@ class FoodGroupDraw:
             food_recipe: game_type.Recipes = cache.recipe_data[recipe_id]
             self.food_name = food_recipe.name
             self.food_introduce = food_recipe.introduce
-            if food_recipe.type in {0, 1, 5}:
+            if food_recipe.type in {0, 1, 5, 10}:
                 now_panel = _("食用")
             else:
                 now_panel = _("饮用")

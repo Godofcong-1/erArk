@@ -6149,6 +6149,23 @@ def handle_make_food_add_adjust(
         ability_level = character_data.ability[30],
         change_data = change_data,
     )
+    # 帮厨共同成长：同场景跟随助理也获得相同的料理经验与习得
+    if character_id == 0:
+        from Script.System.Cooking_System import cooking as _cooking_mod
+        for _helper_id in _cooking_mod.get_helpers():
+            _helper_data = cache.character_data[_helper_id]
+            if _helper_data.dead:
+                continue
+            base_chara_experience_common_settle(_helper_id, 83, base_value = cook_difficulty, change_data_to_target_change = change_data)
+            _helper_data.ability.setdefault(30, 0)
+            base_chara_state_common_settle(
+                _helper_id,
+                cook_difficulty,
+                9,
+                base_value = cook_difficulty * 10,
+                ability_level = _helper_data.ability[30],
+                change_data_to_target_change = change_data,
+            )
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TASTE_WINE_ADD_ADJUST)
 def handle_taste_wine_add_adjust(
@@ -8004,6 +8021,7 @@ def handle_eat_add_just(
         return
     from Script.System.Cooking_System.food_bag_panel import calculate_food_effects
     from Script.System.Sex_System.drunk_sex_common import add_drunk_point
+    from Script.System.Cooking_System import cooking as _cooking_mod
 
     # 获取角色数据
     character_data: game_type.Character = cache.character_data[character_id]
@@ -8021,9 +8039,27 @@ def handle_eat_add_just(
         eat_flag = True
     else:
         eat_flag = False
+    # 庆典料理：作为正餐入席；博士发起会食，同场景干员共同享用
+    feast_flag = recipe_id in _cooking_mod.FEAST_DATA_BY_CID
+    feast_data = _cooking_mod.FEAST_DATA_BY_CID.get(recipe_id, {"effect": "base", "mult": 1.0})
+    feast_effect = feast_data["effect"]
+    feast_mult = feast_data["mult"]
+    if recipe_data.type == _cooking_mod.FEAST_TYPE:
+        eat_flag = True
     # 判断是谁要吃食物
     eat_food_chara_id_list = []
-    if food_seasoning == 0:
+    if feast_flag:
+        # 特殊调味是恶作剧：制作者自己不参与，只请（愿意接受的）同场景干员入席
+        if food_seasoning == 0:
+            eat_food_chara_id_list.append(character_id)
+        for _cid in _cooking_mod._get_feast_npcs():
+            if food_seasoning != 0 and _cid:
+                if not _cooking_mod.judge_accept_special_seasoning_food(_cid):
+                    cache.character_data[_cid].angry_point += 40
+                    cache.character_data[_cid].sp_flag.angry_with_player = True
+                    continue
+            eat_food_chara_id_list.append(_cid)
+    elif food_seasoning == 0:
         eat_food_chara_id_list.append(character_id)
         if character_data.target_character_id != character_id:
             eat_food_chara_id_list.append(character_data.target_character_id)
@@ -8036,6 +8072,10 @@ def handle_eat_add_just(
 
     # 计算食物效果
     state_add, hpmp_add = calculate_food_effects(character_id, add_time)
+    # 庆典料理：按菜谱倍率缩放基础效果（轻快茶会减弱，黄金/周年宴增强）
+    if feast_flag:
+        state_add = int(state_add * feast_mult)
+        hpmp_add = int(hpmp_add * feast_mult)
 
     # 删除该食物
     handle_delete_food(character_id,add_time=add_time,change_data=change_data,now_time=now_time)
@@ -8047,13 +8087,28 @@ def handle_eat_add_just(
 
         # NPC吃的时候
         if chara_id:
-            # 加好感
-            base_chara_favorability_and_trust_common_settle(character_id, state_add, True, 0, 0, change_data, chara_id)
+            # 加好感（会食多人时逐个临时指向，确保每名入席干员都获得好感）
+            if feast_flag:
+                _saved_target = character_data.target_character_id
+                character_data.target_character_id = chara_id
+            try:
+                base_chara_favorability_and_trust_common_settle(character_id, state_add, True, 0, 0, change_data, chara_id)
+            finally:
+                if feast_flag:
+                    character_data.target_character_id = _saved_target
             # 加好意
             base_chara_state_common_settle(chara_id, state_add * 4, 11, 0, change_data_to_target_change = change_data)
             # 玩家做的饭的情况下，额外加信赖
+            # 会食时博士当前交互对象可能不是该干员（甚至选自己），信赖结算需临时指向该干员
             if pl_make_flag:
-                base_chara_favorability_and_trust_common_settle(character_id, state_add, False, 0, 0, change_data, chara_id)
+                if feast_flag:
+                    _saved_target = character_data.target_character_id
+                    character_data.target_character_id = chara_id
+                try:
+                    base_chara_favorability_and_trust_common_settle(character_id, state_add, False, 0, 0, change_data, chara_id)
+                finally:
+                    if feast_flag:
+                        character_data.target_character_id = _saved_target
             # 高品质食物
             if food_quality >= 7:
                 # 变为好心情
@@ -8062,6 +8117,24 @@ def handle_eat_add_just(
                 base_chara_state_common_settle(chara_id, state_add * 3, 21, 0, change_data_to_target_change = change_data)
                 # 增加心理快感
                 base_chara_state_common_settle(chara_id, state_add * 2, 23, 0, change_data_to_target_change = change_data)
+            # 庆典氛围：花见/家规/星光带来的额外情感与状态
+            if feast_flag:
+                if feast_effect == "sakura":
+                    _saved_target = character_data.target_character_id
+                    character_data.target_character_id = chara_id
+                    try:
+                        base_chara_favorability_and_trust_common_settle(character_id, int(state_add * 0.25), True, 0, 0, change_data, chara_id)
+                    finally:
+                        character_data.target_character_id = _saved_target
+                if feast_effect == "family" and pl_make_flag:
+                    _saved_target = character_data.target_character_id
+                    character_data.target_character_id = chara_id
+                    try:
+                        base_chara_favorability_and_trust_common_settle(character_id, int(state_add * 0.5), False, 0, 0, change_data, chara_id)
+                    finally:
+                        character_data.target_character_id = _saved_target
+                if feast_effect == "starlight":
+                    base_chara_state_common_settle(chara_id, state_add * 2, 11, 0, change_data_to_target_change = change_data)
 
         # 仅食物加体力
         if eat_flag:
@@ -8075,6 +8148,18 @@ def handle_eat_add_just(
             handle_add_small_urinate_point(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
         # 清除进食状态
         handle_eat_food_flag_to_0(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
+
+        # 庆典氛围：团圆/丰盛/安眠曲/星光对入席者的身心效果
+        if feast_flag:
+            if feast_effect == "reunion":
+                target_data.tired_point = max(0, target_data.tired_point - 50)
+                target_data.angry_point = 0
+            elif feast_effect == "hearty":
+                target_data.tired_point = max(0, target_data.tired_point - 30)
+            elif feast_effect == "melody":
+                target_data.desire_point = max(0, target_data.desire_point - 30)
+            elif feast_effect == "starlight":
+                target_data.tired_point = max(0, target_data.tired_point - 20)
 
         # 酒类食物
         if recipe_data.type == 3:
@@ -8100,20 +8185,35 @@ def handle_eat_add_just(
             if semen_ml > 0:
                 target_data.h_state.shoot_position_body = 2
         # 药物食物则获得对应药物效果
-        elif food_seasoning == 102: # 事后避孕药
-            handle_target_no_pregnancy_from_last_h(0,add_time=add_time,change_data=change_data,now_time=now_time)
-        elif food_seasoning == 103: # 媚药
-            handle_target_add_huge_desire_and_submit(0,add_time=add_time,change_data=change_data,now_time=now_time)
-        elif food_seasoning == 105: # 一次性利尿剂
-            handle_target_add_urinate(0,add_time=add_time,change_data=change_data,now_time=now_time)
-        elif food_seasoning == 106: # 持续性利尿剂
-            handle_target_diuretics_on(0,add_time=add_time,change_data=change_data,now_time=now_time)
-        elif food_seasoning == 107: # 安眠药
-            handle_target_add_tired_tosleep(0,add_time=add_time,change_data=change_data,now_time=now_time)
-        elif food_seasoning == 108: # 排卵促进药
-            handle_target_add_pregnancy_chance(0,add_time=add_time,change_data=change_data,now_time=now_time)
+        elif food_seasoning >= 100:
+            # 会食中多位干员入席，逐个把药物结算对象指向当前入席者
+            _redirect_target = feast_flag and chara_id != 0
+            _saved_target = None
+            if _redirect_target:
+                _saved_target = character_data.target_character_id
+                character_data.target_character_id = chara_id
+            try:
+                if food_seasoning == 102: # 事后避孕药
+                    handle_target_no_pregnancy_from_last_h(0,add_time=add_time,change_data=change_data,now_time=now_time)
+                elif food_seasoning == 103: # 媚药
+                    handle_target_add_huge_desire_and_submit(0,add_time=add_time,change_data=change_data,now_time=now_time)
+                elif food_seasoning == 105: # 一次性利尿剂
+                    handle_target_add_urinate(0,add_time=add_time,change_data=change_data,now_time=now_time)
+                elif food_seasoning == 106: # 持续性利尿剂
+                    handle_target_diuretics_on(0,add_time=add_time,change_data=change_data,now_time=now_time)
+                elif food_seasoning == 107: # 安眠药
+                    handle_target_add_tired_tosleep(0,add_time=add_time,change_data=change_data,now_time=now_time)
+                elif food_seasoning == 108: # 排卵促进药
+                    handle_target_add_pregnancy_chance(0,add_time=add_time,change_data=change_data,now_time=now_time)
+            finally:
+                if _redirect_target:
+                    character_data.target_character_id = _saved_target
 
-
+    # 庆典开席播报
+    if feast_flag:
+        info = draw.WaitDraw()
+        info.text = _("\n○庆典开席！{0}人共同享用了{1}\n").format(len(eat_food_chara_id_list), recipe_data.name)
+        info.draw()
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_HPMP_MAX)
 def handle_add_hpmp_max(
         character_id: int,
