@@ -17,7 +17,7 @@
        所以性技理论课只能攒珠，经验要靠实操课（四期）来补 —— 理论与实操天然两条腿。
 """
 from types import FunctionType
-from typing import Dict, List, Optional
+from typing import List, Optional
 from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config
 from Script.System.Education_System import education_constant
@@ -40,21 +40,6 @@ def get_child_growth(character_id: int) -> game_type.CHILD_GROWTH:
     if character_data.child_growth is None:
         character_data.child_growth = game_type.CHILD_GROWTH()
     return character_data.child_growth
-
-
-def judge_is_child(character_id: int) -> bool:
-    """
-    校验角色是否处于成长链的四个年龄阶段之一（婴儿/幼女/萝莉/少女）
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    bool -- 是否为成长中的孩子
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    for talent_id in education_constant.CHILD_TALENT_SET:
-        if character_data.talent.get(talent_id, 0):
-            return True
-    return False
 
 
 def get_character_stage(character_id: int) -> int:
@@ -84,7 +69,7 @@ def get_student_candidate_list() -> List[int]:
     功能: 玩家的女儿中处于幼女/萝莉/少女阶段的。
           个人课表**不再**用这份名单：它已放宽为「职业为学生的全部干员」，走下面的
              get_course_candidate_list()（一期方案 §9.8.2）。养成总览等只关心女儿的地方仍用本函数
-          血缘条件不能省：judge_is_child() 只看素质，而世界设定「萝莉化」
+          血缘条件不能省：只看年龄素质的话，世界设定「萝莉化」
              (character_handle.handle_character_setting) 会给全岛干员挂上萝莉素质103，
              只按素质筛会把全岛的人都塞进课表页签栏
           按 id 升序而不是遍历 npc_id_got(set)：两个面板都用 [0] 做默认选中回落，
@@ -234,7 +219,8 @@ def settle_student_class_gain(
         add_time: int,
         change_data=None,
         change_data_to_target_change=None,
-) -> None:
+        count_attend: bool = True,
+) -> bool:
     """
     一节课的学生侧结算：累加习得状态值与该科目的经验
     等级不在此处提升，而是走既有链在玩家睡觉时兑现（见模块头注释）
@@ -246,13 +232,29 @@ def settle_student_class_gain(
     add_time -- 本次结算的分钟数
     change_data -- 结算信息记录对象
     change_data_to_target_change -- 交互对象的结算信息记录对象
+    count_attend -- 是否计一节出勤。只有课表排了课的节次才计（2026-09-12 第五轮）：
+                    日程活动「上课（无课时自习）」的自习照常给收益，但不算上过一节课
     Return arguments:
-    无
+    bool -- 是否真的结算了（同一节已结算过则为False）
+    功能: 节次内按 last_attend_period 去重，同一节课只结算一次（2026-09-12 第五轮）。
+             NPC 的行为结算发生在行为**开始**时：教师开讲那一刻的广播（512）只发得到已经坐下听课的人，
+             晚到的学生要靠自己开始听课时的那一侧结算（557）；两条路都会走到这里，不去重就会发两份。
+          节次外（玩家在午休或晚上手动授课）不去重
     """
     if not add_time:
-        return
+        return False
     # 延迟导入：Script.Settle 的包 __init__ 会连带载入指令系统，必须等配置初始化之后
     from Script.Settle import common_default
+    from Script.Design import game_time
+
+    growth_data = get_child_growth(student_id)
+    period = game_time.get_class_period(student_id)
+    now_mark = []
+    if period != -1:
+        now_time = cache.character_data[student_id].behavior.start_time or cache.game_time
+        now_mark = [now_time.toordinal(), period]
+        if growth_data.last_attend_period == now_mark:
+            return False
 
     no_teacher = teacher_id == -1 or teacher_id not in cache.character_data
     learn_base = education_constant.COURSE_LEARN_BASE.get(course_type, education_constant.COURSE_LEARN_BASE[0])
@@ -293,9 +295,12 @@ def settle_student_class_gain(
             change_data_to_target_change=change_data_to_target_change,
         )
 
-    # 记一节出勤
-    growth_data = get_child_growth(student_id)
-    growth_data.attend_class_count += 1
+    # 记下这一节已结算过，并按需记一节出勤
+    if now_mark:
+        growth_data.last_attend_period = now_mark
+    if count_attend:
+        growth_data.attend_class_count += 1
+    return True
 
 
 def settle_teacher_class_gain(

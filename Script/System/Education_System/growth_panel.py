@@ -13,7 +13,7 @@ import datetime
 from types import FunctionType
 from typing import List
 
-from Script.Core import cache_control, game_type, get_text, flow_handle
+from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.Design import attr_calculation, game_time
 from Script.System.Education_System import education_constant, semester_handle, growth_handle, student_select
@@ -125,9 +125,10 @@ class Growth_Panel:
 
         character_data: game_type.Character = cache.character_data[character_id]
         stage_name = _("已成年")
+        # STAGE_TALENT_NAME 取自 Talent.csv，载入时已翻译过，不再包 _()
         for talent_id in sorted(education_constant.STAGE_TALENT_NAME.keys()):
             if character_data.talent.get(talent_id, 0):
-                stage_name = _(education_constant.STAGE_TALENT_NAME[talent_id])
+                stage_name = education_constant.STAGE_TALENT_NAME[talent_id]
                 break
         # 母亲：血缘关系里的 mother_id，旧档或数据损坏时可能指向不存在的角色
         mother_id = character_data.relationship.mother_id
@@ -307,12 +308,13 @@ class Growth_Panel:
             front, back = education_constant.PERSONALITY_PAIR_NAME[pair_id]
             now_draw = draw.LeftDraw()
             now_draw.width = int(self.width / 4)
+            # 性格名取自 Talent.csv，载入时已翻译过，不再包 _()
             if point > 0:
-                now_draw.text = _(" 偏{0}（{1:.0f}）").format(_(front), point)
+                now_draw.text = _(" 偏{0}（{1:.0f}）").format(front, point)
             elif point < 0:
-                now_draw.text = _(" 偏{0}（{1:.0f}）").format(_(back), -point)
+                now_draw.text = _(" 偏{0}（{1:.0f}）").format(back, -point)
             else:
-                now_draw.text = _(" {0}/{1}：尚未形成").format(_(front), _(back))
+                now_draw.text = _(" {0}/{1}：尚未形成").format(front, back)
                 now_draw.style = "deep_gray"
             now_draw.draw()
         line_feed.draw()

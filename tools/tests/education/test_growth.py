@@ -48,20 +48,40 @@ exp_gain = student.experience.get(exp_id, 0) - exp_before
 check("习得状态增加", state_gain > 0, state_gain)
 check("科目经验 = 基础值 × 总倍率", exp_gain == int(education_constant.COURSE_EXP_BASE[education_constant.COURSE_TYPE_THEORY] * 2.0), exp_gain)
 check("记了一节出勤", student.child_growth.attend_class_count == 1)
+check("记下了本节的去重标记", student.child_growth.last_attend_period == [period_time(0).toordinal(), 0], student.child_growth.last_attend_period)
+# 同一节再结算一次：广播（512）与学生侧补结算（557）都会走到这里，第二次必须是空操作（第五轮）
+exp_before = student.experience.get(exp_id, 0)
+check("同一节第二次结算返回 False", growth_handle.settle_student_class_gain(201, 101, 45, education_constant.COURSE_TYPE_THEORY, 45) is False)
+check("同一节不重复发收益与出勤", student.experience.get(exp_id, 0) == exp_before and student.child_growth.attend_class_count == 1)
+# 以下几条都在同一节里验数值，每次先清掉去重标记
+student.child_growth.last_attend_period = []
 student.talent[28] = 1
 exp_before = student.experience.get(exp_id, 0)
 growth_handle.settle_student_class_gain(201, 101, 45, education_constant.COURSE_TYPE_THEORY, 45)
 check("停滞后经验减半", student.experience.get(exp_id, 0) - exp_before == int(education_constant.COURSE_EXP_BASE[0] * 1.0))
 student.talent[28] = 0
+student.child_growth.last_attend_period = []
 exp_before = student.experience.get(exp_id, 0)
 growth_handle.settle_student_class_gain(201, 101, 45, education_constant.COURSE_TYPE_THEORY, 0)
 check("add_time=0 不结算", student.experience.get(exp_id, 0) == exp_before and student.child_growth.attend_class_count == 2)
 exp_before = student.experience.get(exp_id, 0)
 growth_handle.settle_student_class_gain(201, -1, 45, education_constant.COURSE_TYPE_THEORY, 45)
 check("自习：经验按自习基础值", student.experience.get(exp_id, 0) - exp_before == education_constant.SELF_STUDY_EXP_BASE)
+student.child_growth.last_attend_period = []
 exp_before = student.experience.get(exp_id, 0)
 growth_handle.settle_student_class_gain(201, -1, 45, education_constant.COURSE_TYPE_INTERN, 45)
 check("实习无导师：见习基础值减半", student.experience.get(exp_id, 0) - exp_before == max(1, education_constant.COURSE_EXP_BASE[education_constant.COURSE_TYPE_INTERN] // 2))
+student.child_growth.last_attend_period = []
+attend_before = student.child_growth.attend_class_count
+exp_before = student.experience.get(exp_id, 0)
+growth_handle.settle_student_class_gain(201, -1, 45, education_constant.COURSE_TYPE_THEORY, 45, count_attend=False)
+check("count_attend=False：给收益不计出勤", student.experience.get(exp_id, 0) > exp_before and student.child_growth.attend_class_count == attend_before)
+set_time(period_time(0).replace(hour=12, minute=30))
+attend_before = student.child_growth.attend_class_count
+growth_handle.settle_student_class_gain(201, 101, 45, education_constant.COURSE_TYPE_THEORY, 45)
+growth_handle.settle_student_class_gain(201, 101, 45, education_constant.COURSE_TYPE_THEORY, 45)
+check("节次外（玩家午休手动授课）不去重", student.child_growth.attend_class_count == attend_before + 2)
+set_time(period_time(0))
 
 section("教师侧结算")
 t_exp_before = teacher.experience.get(exp_id, 0)
@@ -115,7 +135,6 @@ check("没有养成数据时偏移为 0", growth_handle.get_care_point_grow_bonu
 
 section("阶段与进度")
 check("阶段读取", growth_handle.get_character_stage(201) == 103 and growth_handle.get_character_stage(202) == 102 and growth_handle.get_character_stage(301) == 0)
-check("judge_is_child", growth_handle.judge_is_child(202) and not growth_handle.judge_is_child(301))
 progress = growth_handle.get_stage_progress(202)
 check("幼女出生 120 天：阶段进度约 16.7%", abs(progress - (120 - 90) * 100.0 / 180) < 0.01, progress)
 check("成年干员进度 100", growth_handle.get_stage_progress(301) == 100.0)
@@ -147,5 +166,20 @@ check("婴儿不进女儿名单", 203 not in growth_handle.get_student_candidate
 check("婴儿是学生岗时进个人课表名单", 203 in growth_handle.get_course_candidate_list())
 student.work.work_type = 0
 check("女儿换岗后仍在个人课表名单（并集）", 201 in growth_handle.get_course_candidate_list())
+
+section("待炫耀只记课程科目、只记幼女/萝莉期的女儿（第五轮）")
+from Script.Design import handle_ability
+
+for one in (student, adult):
+    growth_handle.get_child_growth(one.cid).show_off_ability = {}
+    for juel_id in list(one.juel):
+        one.juel[juel_id] = 10 ** 7
+    for exp_id_one in list(one.experience):
+        one.experience[exp_id_one] = 10 ** 7
+    handle_ability.gain_ability(one.cid)
+student_show = growth_handle.get_child_growth(201).show_off_ability
+check("萝莉女儿：升了级的科目记进待炫耀", len(student_show) > 0, student_show)
+check("萝莉女儿：只记课程科目（欲望、感觉之类的升级不记）", set(student_show) <= set(education_constant.SUBJECT_ABILITY_LIST), sorted(student_show))
+check("成年学生：升级不记待炫耀（口上只写给女儿）", growth_handle.get_child_growth(301).show_off_ability == {}, growth_handle.get_child_growth(301).show_off_ability)
 
 finish()

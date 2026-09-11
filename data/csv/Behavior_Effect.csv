@@ -83,7 +83,7 @@ int,str,str
 209,invite_visitor,11 - 12 - 21 - 22 - 71 - CVE_A2_E|80_G_1 - CVE_A1_E|80_G_1 - 518 - 1751
 210,read_book,12 - 21 - 22 - 71 - 511
 213,teach,1513 - 1514 - 512
-214,attent_class,1511 - 1512
+214,attent_class,1511 - 1512 - 557
 211,self_study,1511 - 1512 - 548
 212,skip_class,549
 229,check_report_card,550

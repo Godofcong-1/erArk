@@ -85,7 +85,8 @@ def get_now_class_tip(character_id: int):
             from Script.Design import map_handle
 
             to_place = schedule_handle.get_course_place(now_course)
-            if to_place and map_handle.get_map_system_path_str_for_list(character_data.position) ==                     map_handle.get_map_system_path_str_for_list(to_place):
+            now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+            if to_place and now_scene_str == map_handle.get_map_system_path_str_for_list(to_place):
                 text = get_course_text(now_course)
                 # 实习课再补一句导师是谁：导师不预先指派，到点看现场谁在岗
                 if now_course["course_type"] == education_constant.COURSE_TYPE_INTERN:

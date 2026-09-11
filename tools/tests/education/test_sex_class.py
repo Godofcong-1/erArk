@@ -41,10 +41,27 @@ weekday = cache.game_time.weekday()
 check("今天、还没开始的节次 → 今天", sex_class_handle.get_date_ordinal_by_week_day(weekday, 5) == today)
 check("今天、已开始的节次 → 下周", sex_class_handle.get_date_ordinal_by_week_day(weekday, 3) == today + 7)
 check("别的星期 → 未来 1~6 天内", 1 <= sex_class_handle.get_date_ordinal_by_week_day((weekday + 2) % 7, 0) - today <= 6)
+# 季月最后一天的下一天是下个季月的 1 日（9/30 周三 → 12/1 周二），星期跟着跳（第五轮）
+set_time(datetime.datetime(2026, 9, 29, 10, 0))
+month_jump = sex_class_handle.get_date_ordinal_by_week_day(4, 0)
+check("月底预约周五 → 按游戏时钟落在 12/4，而不是永远不会到的 10/2", month_jump == datetime.date(2026, 12, 4).toordinal(), datetime.date.fromordinal(month_jump))
+check("月底预约周三 → 就是明天 9/30", sex_class_handle.get_date_ordinal_by_week_day(2, 0) == datetime.date(2026, 9, 30).toordinal())
+set_time(period_time(3))
 
 section("谁能参加")
 check("玩家自己不算", not sex_class_handle.judge_can_join_sex_class(0))
 check("不存在的角色不算", not sex_class_handle.judge_can_join_sex_class(999))
+# 前置修习（口径 63 宽松版，第五轮）：个人课表里没有性技科目的教室课就不能来
+check("没修过性技课：不能参加", not sex_class_handle.judge_has_sex_skill_course(201) and not sex_class_handle.judge_can_join_sex_class(201))
+check("点名必修豁免前置修习", sex_class_handle.judge_can_join_sex_class(201, check_course=False))
+schedule_handle.set_class_cell(ROOM_P, weekday, 8, 74, -1)
+schedule_handle.set_class_cell(_("理论教室一"), weekday, 8, 45, -1)
+schedule_handle.set_selected_course(202, weekday, 8, education_constant.COURSE_TYPE_THEORY, _("理论教室一"))
+check("只修了学识：仍不能参加", not sex_class_handle.judge_has_sex_skill_course(202))
+schedule_handle.set_selected_course(201, weekday, 8, education_constant.COURSE_TYPE_PRACTICE, ROOM_P)
+schedule_handle.set_selected_course(202, (weekday + 1) % 7, 8, education_constant.COURSE_TYPE_PRACTICE, ROOM_P)
+schedule_handle.set_class_cell(ROOM_P, (weekday + 1) % 7, 8, 71, -1)
+check("个人课表里有性技教室课：可以参加", sex_class_handle.judge_has_sex_skill_course(201) and sex_class_handle.judge_has_sex_skill_course(202))
 check("女儿零门槛", sex_class_handle.judge_can_join_sex_class(201))
 student_a.sp_flag.imprisonment = True
 check("被监禁不算", not sex_class_handle.judge_can_join_sex_class(201))
@@ -115,6 +132,12 @@ check("主修加成 = 2.0 × 速度(1+0.25×6) × 教育区", abs(bonus - educat
 check("不存在的学生加成 1.0", sex_class_handle.get_subject_bonus(999) == 1.0)
 sex_class_handle.end_sex_class()
 check("下课后没有运行中的课、类型 -1、加成 1.0", sex_class_handle.get_running_class() is None and sex_class_handle.judge_end_type() == -1 and sex_class_handle.get_subject_bonus(201) == 1.0)
+# 预约的课下课后条目留到跨天，但打上已下课标记，覆盖层不再认它（第五轮）
+set_time(period_time(4) + datetime.timedelta(minutes=20))
+check("预约的课下课：条目保留、标记 ended", sex_class_handle.get_temp_class(today, 4) is reserved and reserved.get("ended") is True)
+check("已下课：不再是有效临时课", sex_class_handle.get_active_temp_class(today, 4) is None)
+check("已下课：课表格子交还原来的课", schedule_handle.get_class_cell(ROOM_P, weekday, 4) is None)
+check("已下课：玩家的教师反查也取不到", schedule_handle.get_teacher_cell(0, weekday, 4) is None)
 sex_class_handle.end_sex_class()
 check("重复下课不报错", True)
 cache.rhodes_island.temp_sex_class = {}
@@ -152,5 +175,21 @@ check("变更记录里也记了旁观者", change.target_change[201].experience.
 exp_before = student_a.experience.get(exp_id, 0)
 sex_class_handle.settle_watcher(0, change)
 check("add_time=0 不结算", student_a.experience.get(exp_id, 0) == exp_before)
+
+section("当场开的课下课即删（第五轮）")
+impromptu_key = sex_class_handle.get_running_class_key()
+check("当场开的课正在进行", impromptu_key == sex_class_handle.get_class_key(today, 5))
+sex_class_handle.end_sex_class()
+check("当场开的课下课后条目直接删掉", impromptu_key not in cache.rhodes_island.temp_sex_class)
+cache.sex_class_mode = False
+cache.group_sex_mode = False
+
+section("出勤只给女儿与学生岗记（第五轮）")
+adult_attend = make_character(302, "路过的成年干员", 21)
+sex_class_handle.settle_attend(302)
+check("非学生的成年干员：不记、不惰性创建养成数据", adult_attend.child_growth is None)
+adult_student = make_character(303, "成年学生", 152)
+sex_class_handle.settle_attend(303)
+check("成年学生：记一节", adult_student.child_growth is not None and adult_student.child_growth.attend_class_count == 1)
 
 finish()

@@ -8,14 +8,17 @@
 
 教师视角不另存字段，由全局课表反查得到，避免两处数据互相追赶。
 """
+from types import FunctionType
 from typing import Dict, List, Optional, Tuple
-from Script.Core import cache_control, game_type, constant
+from Script.Core import cache_control, game_type, constant, get_text
 from Script.Config import game_config
 from Script.Design import game_time, map_handle
 from Script.System.Education_System import education_constant
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
+_: FunctionType = get_text._
+""" 翻译api """
 
 
 def judge_classroom_open(classroom: str) -> bool:
@@ -109,24 +112,41 @@ def get_classroom_position(classroom: str) -> List[str]:
     return []
 
 
-def get_class_cell(classroom: str, week_day: int, period: int) -> Optional[List[int]]:
+def get_today_temp_class(week_day: int, period: int) -> Optional[dict]:
+    """
+    取覆盖层要用的临时性技实操课：只在查询的星期正好是今天时才有，且已下课（ended）的不算
+    Keyword arguments:
+    week_day -- 星期，0周一~6周日
+    period -- 节次，0~8
+    Return arguments:
+    Optional[dict] -- 临时课程数据，没有则为None
+    功能: 临时课程是一次性的（键含具体日期序数），不能像 class_schedule 那样每周重复上演，
+          所以只有「今天」的那一节才覆盖；下了课的那一节交还给原来的课表（2026-09-12 第五轮），
+          否则该节剩余时间里选修生会对着「授课者=玩家」空等
+    """
+    if week_day != cache.game_time.weekday():
+        return None
+    from Script.System.Education_System import sex_class_handle
+
+    return sex_class_handle.get_active_temp_class(cache.game_time.date().toordinal(), period)
+
+
+def get_class_cell(classroom: str, week_day: int, period: int, include_temp: bool = True) -> Optional[List[int]]:
     """
     取全局课表上的一个格子
     Keyword arguments:
     classroom -- 教室场景名
     week_day -- 星期，0周一~6周日
     period -- 节次，0~8
+    include_temp -- 是否叠加今天的临时性技实操课。要写进**每周循环**的个人课表时（一键选课、选课第一屏）
+                    必须传 False，否则一次性的临时课会被当成每周固定的课选进去
     Return arguments:
     Optional[List[int]] -- [科目能力id, 授课教师id]，未排课则为None
     """
     # 临时性技实操课的覆盖层（Plan 22 四期 §3.28.3）：这是全局课表的唯一读取入口，
     # 在这里插一层，下游的 get_now_course / 派课 / 移动 / 课表面板 / <课>标识 就全部自动跟上
-    # 只在查询的星期正好是今天时才覆盖——临时课程是一次性的（键含具体日期序数），
-    #    不能像 class_schedule 那样每周重复上演
-    if week_day == cache.game_time.weekday():
-        from Script.System.Education_System import sex_class_handle
-
-        temp_class = sex_class_handle.get_temp_class(cache.game_time.date().toordinal(), period)
+    if include_temp:
+        temp_class = get_today_temp_class(week_day, period)
         if temp_class is not None and temp_class.get("classroom", "") == classroom:
             # 教师id为0即玩家亲自授课
             return [temp_class.get("ability_id", -1), 0]
@@ -175,20 +195,57 @@ def get_teacher_cell(teacher_id: int, week_day: int, period: int) -> Optional[Tu
     Return arguments:
     Optional[Tuple[str, int]] -- (教室场景名, 科目能力id)，该节次没课则为None
     """
-    # 临时性技实操课的覆盖层（Plan 22 四期）：授课者恒为玩家，所以只有查玩家时才可能命中；
-    # 与 get_class_cell 同口径——只在查询的星期正好是今天时覆盖，临时课程是带具体日期的一次性条目。
-    # 这里不能只靠下面那个循环：临时课的教室未必在 class_schedule 里有键，玩家也从不出现在
-    #    全局课表的教师位上，漏了这一层就会像 4-C 的主修口上那样"玩家永远查不到自己"
-    if teacher_id == 0 and week_day == cache.game_time.weekday():
-        from Script.System.Education_System import sex_class_handle
-
-        temp_class = sex_class_handle.get_temp_class(cache.game_time.date().toordinal(), period)
-        if temp_class is not None:
-            return temp_class.get("classroom", ""), temp_class.get("ability_id", -1)
+    # 临时性技实操课的覆盖层（Plan 22 四期），与 get_class_cell 同口径：只在查询的星期正好是今天时覆盖
+    temp_class = get_today_temp_class(week_day, period)
+    # 授课者恒为玩家，所以查玩家时直接命中。这里不能只靠下面那个循环：临时课的教室未必在 class_schedule 里有键，
+    #    玩家也从不出现在全局课表的教师位上，漏了这一层就会像 4-C 的主修口上那样"玩家永远查不到自己"
+    if teacher_id == 0 and temp_class is not None:
+        return temp_class.get("classroom", ""), temp_class.get("ability_id", -1)
     for classroom, week_data in cache.rhodes_island.class_schedule.items():
         cell = week_data.get(week_day, {}).get(period, None)
-        if cell is not None and cell[1] == teacher_id:
-            return classroom, cell[0]
+        if cell is None or cell[1] != teacher_id:
+            continue
+        # 这一格今天被临时实操课顶掉了：原来排在这里的 NPC 教师这节不用来（2026-09-12 第五轮）。
+        #    不跳过的话她会按课表走进教室，在玩家的课堂 H 里原地开讲
+        if temp_class is not None and temp_class.get("classroom", "") == classroom:
+            continue
+        return classroom, cell[0]
+    return None
+
+
+def get_upcoming_teaching(character_id: int, minute_limit: int = 20) -> Optional[dict]:
+    """
+    取教师接下来 minute_limit 分钟内要开始的那一节课（到岗时间与课间用，2026-09-12 第五轮）
+    Keyword arguments:
+    character_id -- 教师的角色id
+    minute_limit -- 往后看多少分钟
+    Return arguments:
+    Optional[dict] -- 与 get_now_teaching 同结构，没有则为None
+    功能: 8:40 到岗时 get_now_teaching 查不到第一节，教师若先随便去一间教室、9:00 再挪，
+          第一节就会迟到；按「马上要上的那一节」提前去对的教室
+    """
+    import datetime
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = character_data.behavior.start_time
+    if now_time is None:
+        now_time = cache.game_time
+    for period, (hour, minute) in enumerate(game_time.CLASS_PERIOD_START):
+        start_time = now_time.replace(hour=hour, minute=minute, second=0, microsecond=0)
+        if start_time <= now_time:
+            continue
+        if start_time - now_time > datetime.timedelta(minutes=minute_limit):
+            break
+        cell = get_teacher_cell(character_id, now_time.weekday(), period)
+        if cell is None:
+            return None
+        classroom, ability_id = cell
+        return {
+            "course_type": get_course_type_by_classroom(classroom),
+            "classroom": classroom,
+            "ability_id": ability_id,
+            "period": period,
+        }
     return None
 
 
@@ -206,14 +263,14 @@ def get_teacher_week_schedule(teacher_id: int) -> Dict[int, Dict[int, Tuple[str,
             for period, cell in period_data.items():
                 if cell[1] == teacher_id:
                     result.setdefault(week_day, {})[period] = (classroom, cell[0])
-    # 玩家的周课表再并入今天的临时实操课，与 get_teacher_cell 的覆盖层保持一致
+    # 玩家的周课表再并入今天的临时实操课，与 get_teacher_cell 的覆盖层保持一致（已下课的不算）
     if teacher_id == 0:
         from Script.System.Education_System import sex_class_handle
 
         today = cache.game_time.date().toordinal()
         for class_key, temp_class in cache.rhodes_island.temp_sex_class.items():
             date_ordinal, period = sex_class_handle.parse_class_key(class_key)
-            if date_ordinal == today:
+            if date_ordinal == today and not temp_class.get("ended", False):
                 result.setdefault(cache.game_time.weekday(), {})[period] = (temp_class.get("classroom", ""), temp_class.get("ability_id", -1))
     return result
 
@@ -275,6 +332,29 @@ def clear_selected_course(character_id: int, week_day: int, period: int) -> None
         growth_data.selected_course[week_day].pop(period, None)
 
 
+def get_period_left_minute(character_id: int, default_minute: int = game_time.CLASS_PERIOD_MINUTE) -> int:
+    """
+    取角色此刻所在节次还剩多少分钟（上课类行为的时长用，2026-09-12 第五轮）
+    Keyword arguments:
+    character_id -- 角色id
+    default_minute -- 不在节次内时返回的时长
+    Return arguments:
+    int -- 剩余分钟数，最少1
+    功能: 节次首尾相接没有课间，走班的人一迟到，照满45分钟上就会压进下一节，一节节滚下去越迟越多；
+          把授课 / 听课 / 自习 / 个人式课的时长截到本节结束，下一节就能按时换教室
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = character_data.behavior.start_time
+    if now_time is None:
+        now_time = cache.game_time
+    period = game_time.get_class_period_by_time(now_time)
+    if period == -1:
+        return default_minute
+    hour, minute = game_time.CLASS_PERIOD_START[period]
+    end_minute = hour * 60 + minute + game_time.CLASS_PERIOD_MINUTE
+    return max(1, end_minute - (now_time.hour * 60 + now_time.minute))
+
+
 def get_now_course(character_id: int) -> Optional[dict]:
     """
     取角色当前这一节次要上的课（Plan 22 的统一入口，供 AI、结算与 <课> 状态标识共用）
@@ -293,8 +373,57 @@ def get_now_course(character_id: int) -> Optional[dict]:
     now_time = character_data.behavior.start_time
     if now_time is None:
         now_time = cache.game_time
+    return get_course_at(character_id, now_time, period)
+
+
+def get_upcoming_course(character_id: int, minute_limit: int = 20) -> Optional[dict]:
+    """
+    取学生接下来 minute_limit 分钟内要开始的那一节课（到岗时间用，2026-09-12 第五轮）
+    Keyword arguments:
+    character_id -- 角色id
+    minute_limit -- 往后看多少分钟
+    Return arguments:
+    Optional[dict] -- 与 get_now_course 同结构，不在节次前夕或那一节没排课则为None
+    功能: 09-10 起学生岗不走工作链，8:40~9:00、13:40~14:00 的到岗时间就没人再把她们送去第一节课的教室，
+          离得远的人要到开课后才动身、一迟到就是二十分钟；与教师的 get_upcoming_teaching 同口径提前动身
+    """
+    import datetime
+
+    if game_time.get_class_period(character_id) != -1:
+        return None
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = character_data.behavior.start_time
+    if now_time is None:
+        now_time = cache.game_time
+    for period, (hour, minute) in enumerate(game_time.CLASS_PERIOD_START):
+        start_time = now_time.replace(hour=hour, minute=minute, second=0, microsecond=0)
+        if start_time <= now_time:
+            continue
+        if start_time - now_time > datetime.timedelta(minutes=minute_limit):
+            return None
+        return get_course_at(character_id, start_time, period)
+    return None
+
+
+def get_course_at(character_id: int, now_time, period: int) -> Optional[dict]:
+    """
+    取角色在某一天某一节要上的课（get_now_course / get_upcoming_course 的共用实现）
+    Keyword arguments:
+    character_id -- 角色id
+    now_time -- 那一节所在的时刻（取它的日期与星期）
+    period -- 节次0~8
+    Return arguments:
+    Optional[dict] -- 结构见 get_now_course，没排课则为None
+    """
     week_day = now_time.weekday()
     course = get_selected_course(character_id, week_day, period)
+    # 被玩家点名必修的性技实操课优先于她自己的课表（口径 60「无论原本排了什么都来」，2026-09-12 第五轮）：
+    #    预到岗只把人带到教室门口，一开课上课判定读的是个人课表，不在这里改写的话她会走回原来的课，
+    #    本节没排课的则交回 AI 去娱乐。改在这一处，派课 / 移动 / <课>标识 / 前提就全部跟上
+    temp_class = get_today_temp_class(week_day, period) if now_time.date() == cache.game_time.date() else None
+    if temp_class is not None and character_id in temp_class.get("must_attend", []):
+        temp_classroom = temp_class.get("classroom", "")
+        course = [get_course_type_by_classroom(temp_classroom), temp_classroom]
     if course is None:
         return None
     course_type, target = course[0], course[1]
@@ -374,7 +503,7 @@ def judge_teacher_conflict(teacher_id: int, week_day: int, period: int, classroo
     """
     cell = get_teacher_cell(teacher_id, week_day, period)
     if cell is not None and cell[0] != classroom:
-        return "第{0}节已在{1}".format(period + 1, cell[0])
+        return _("第{0}节已在{1}").format(period + 1, cell[0])
     return ""
 
 
@@ -389,8 +518,6 @@ def get_intern_mentor(character_id: int, work_type_id: int) -> int:
     Return arguments:
     int -- 导师的角色id，无人在岗则为-1
     """
-    from Script.Design import map_handle
-
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     if scene_path_str not in cache.scene_data:
@@ -413,8 +540,6 @@ def get_course_place(now_course: dict) -> List[str]:
     Return arguments:
     List[str] -- 场景路径列表，解析不出则为空列表
     """
-    from Script.Design import map_handle
-
     course_type = now_course["course_type"]
     # 班级式：目标就是教室名
     if course_type in education_constant.CLASSROOM_COURSE_TYPE_SET:

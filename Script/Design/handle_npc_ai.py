@@ -361,6 +361,12 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
         from Script.System.Education_System import class_ai
 
         judge = class_ai.judge_class_state_machine(character_id)
+    # 然后判断教师：有课按课表走班授课，没课回教师办公室待命（Plan 22 第五轮）
+    # 排在工作链之前：151 的工作链只认场景标签 Class_Room，会让教师在任意理论教室原地开讲、在实践教室与大礼堂开不了讲
+    if judge == 0:
+        from Script.System.Education_System import class_ai
+
+        judge = class_ai.judge_teacher_state_machine(character_id)
     # 然后判断见学：幼女本节没排课、且该时段没有明确排别的日程活动时默认见学，萝莉只在日程时段排了「跟随母亲」时见学，
     # 且母亲要有效（Plan 22 二期 §3.24、§9.2.3、§9.2.9）
     # 排在上课之后、娱乐之前：有课就上课，没课才跟母亲；不见学的孩子接着走下面的娱乐链做日程活动

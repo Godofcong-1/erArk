@@ -383,6 +383,8 @@ class StateMachine:
     """ 见学：与母亲同场景，跟着她见学 """
     ENTERTAIN_FREE_PLAY = 719
     """ 娱乐：在育儿室自由玩耍（母亲无效时的见学回落） """
+    EDUCATION_WAIT_NEXT_PERIOD = 720
+    """ 教育：原地等到下一节课开始（最多30分钟）——教师没课时在办公室待命、提前到教室的师生等开课 """
 
     SELF_NIPPLE_CLAMP_SWITCH_CHANEG = 751
     """ 切换自己是否装备道具_乳头夹 """

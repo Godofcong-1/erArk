@@ -359,7 +359,8 @@ def push_official_event(uid: str, character_id: int = 0, partner_id: int = 0, to
     if get_event_data(uid) is None:
         return False
     queue = get_queue()
-    if len(queue) >= get_queue_max():
+    # 插队首的是一辈子只有一次的叙事节点（毕业典礼 / 成年纪念），队列满了也不能丢，不受容量上限约束
+    if not to_front and len(queue) >= get_queue_max():
         return False
     queue_data = {
         "uid": uid,

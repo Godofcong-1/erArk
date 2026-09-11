@@ -439,9 +439,7 @@ def character_move_to_class_room(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    from Script.System.Education_System import education_constant, schedule_handle
-
-    from Script.System.Education_System import class_ai
+    from Script.System.Education_System import class_ai, education_constant, schedule_handle
 
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = character_data.behavior.start_time
@@ -454,15 +452,19 @@ def character_move_to_class_room(character_id: int):
     next_class, next_classroom = class_ai.get_next_sex_class(character_id, now_time)
     if next_class is not None:
         target_room = next_classroom
-    # 教师视角：反查全局课表
+    # 教师视角：反查全局课表；本节没课时看马上要开始的那一节（到岗时间与课间，第五轮）
     teaching = schedule_handle.get_now_teaching(character_id)
+    if teaching is None:
+        teaching = schedule_handle.get_upcoming_teaching(character_id)
     if target_room:
         pass
     elif teaching is not None:
         target_room = teaching["classroom"]
     else:
-        # 学生视角：查个人课表，只有班级式课型才在教室里上
+        # 学生视角：查个人课表，只有班级式课型才在教室里上；到岗时间看马上要开始的那一节（第五轮）
         now_course = schedule_handle.get_now_course(character_id)
+        if now_course is None:
+            now_course = schedule_handle.get_upcoming_course(character_id)
         if now_course is not None and now_course["course_type"] in education_constant.CLASSROOM_COURSE_TYPE_SET:
             target_room = now_course["classroom"]
     to_class_room = []
@@ -2685,29 +2687,39 @@ def character_work_teach(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
+    from Script.System.Education_System import schedule_handle
+
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.TEACH
-    character_data.behavior.duration = 45
+    # 时长截到本节结束：迟到的教师照满45分钟讲，会压进她下一节在别的教室的课（Plan 22 第五轮）
+    character_data.behavior.duration = schedule_handle.get_period_left_minute(character_id)
     character_data.state = constant.CharacterStatus.STATUS_TEACH
-    # 将当前场景里所有工作是上学的角色变为学习状态
-    # 遍历当前场景的其他角色
+    # 把本节来上这间教室的学生变为听课状态
+    # 只拉自己的学生（本节个人课表指向这间教室的人），不再把场景里所有学生岗都拉过来：
+    #    跟着当教师的母亲来见学的幼女、路过的孩子不该被顺手记一节课（Plan 22 第五轮）
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-    # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 跳过自己
-            if chara_id == character_id:
-                continue
-            else:
-                other_character_data: game_type.Character = cache.character_data[chara_id]
-                # 让对方变成听课状态
-                if other_character_data.work.work_type == 152:
-                    other_character_data.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
-                    other_character_data.behavior.duration = 45
-                    other_character_data.state = constant.CharacterStatus.STATUS_ATTENT_CLASS
+    for chara_id in scene_data.character_list:
+        # 跳过自己
+        if chara_id == character_id:
+            continue
+        other_character_data: game_type.Character = cache.character_data[chara_id]
+        # H中、睡觉中、今天翘课的、体力不足正在休息的都不拉（后两者由上课判定的两道闸决定）
+        if other_character_data.sp_flag.is_h or other_character_data.sp_flag.sleep:
+            continue
+        if other_character_data.child_growth is not None and other_character_data.child_growth.skip_class_flag:
+            continue
+        if other_character_data.behavior.behavior_id == constant.Behavior.REST:
+            continue
+        now_course = schedule_handle.get_now_course(chara_id)
+        if now_course is None or now_course["classroom"] != scene_data.scene_name:
+            continue
+        # 让对方变成听课状态，开始时刻与教师对齐，节次判定才对得上
+        other_character_data.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+        other_character_data.behavior.start_time = character_data.behavior.start_time
+        other_character_data.behavior.duration = character_data.behavior.duration
+        other_character_data.state = constant.CharacterStatus.STATUS_ATTENT_CLASS
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_ATTENT_CLASS)
@@ -2717,10 +2729,13 @@ def character_attend_class(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
+    from Script.System.Education_System import schedule_handle
+
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
-    character_data.behavior.duration = 45
+    # 时长截到本节结束，晚到的学生下一节才能按时换教室（Plan 22 第五轮）
+    character_data.behavior.duration = schedule_handle.get_period_left_minute(character_id)
     character_data.state = constant.CharacterStatus.STATUS_ATTENT_CLASS
 
 
@@ -2732,10 +2747,13 @@ def character_education_self_study(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
+    from Script.System.Education_System import schedule_handle
+
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SELF_STUDY
-    character_data.behavior.duration = 45
+    # 节次内截到本节结束；日程活动「上课（无课时自习）」在节次外照旧45分钟（Plan 22 第五轮）
+    character_data.behavior.duration = schedule_handle.get_period_left_minute(character_id)
     character_data.state = constant.CharacterStatus.STATUS_SELF_STUDY
 
 
@@ -2776,6 +2794,9 @@ def character_education_move_to_course_place(character_id: int):
     from Script.System.Education_System import schedule_handle
 
     now_course = schedule_handle.get_now_course(character_id)
+    # 到岗时间：本节还没开始，去马上要上的那一节的地点（第五轮）
+    if now_course is None:
+        now_course = schedule_handle.get_upcoming_course(character_id)
     if now_course is None:
         return
     to_place = schedule_handle.get_course_place(now_course)
@@ -2822,7 +2843,8 @@ def character_education_do_course(character_id: int):
     if not behavior_name or not state_id:
         return
     character_data.behavior.behavior_id = behavior_name
-    character_data.behavior.duration = 45
+    # 截到本节结束（Plan 22 第五轮），最多一节课45分钟
+    character_data.behavior.duration = schedule_handle.get_period_left_minute(character_id)
     character_data.state = state_id
 
 
@@ -2895,6 +2917,34 @@ def character_entertain_free_play(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.FREE_PLAY
     character_data.behavior.duration = 60
     character_data.state = constant.CharacterStatus.STATUS_FREE_PLAY
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.EDUCATION_WAIT_NEXT_PERIOD)
+def character_education_wait_next_period(character_id: int):
+    """
+    等到下一节开始（Plan 22 第五轮）：教师本节没课时在教师办公室待命，提前到了教室的师生原地等开课
+    时长截到下一节开始，最少1分钟、最多30分钟——不截会一分钟一分钟地空转，截太长又会误了下一节
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    import datetime
+
+    from Script.Design import game_time
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    now_time = character_data.behavior.start_time
+    if now_time is None:
+        now_time = cache.game_time
+    duration = 30
+    for hour, minute in game_time.CLASS_PERIOD_START:
+        start_time = now_time.replace(hour=hour, minute=minute, second=0, microsecond=0)
+        if start_time > now_time:
+            duration = int((start_time - now_time) / datetime.timedelta(minutes=1))
+            break
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
+    character_data.behavior.duration = max(1, min(30, duration))
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_LIBRARY_1)

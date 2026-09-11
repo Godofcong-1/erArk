@@ -74,6 +74,23 @@ def get_temp_class(date_ordinal: int, period: int) -> Optional[dict]:
     return cache.rhodes_island.temp_sex_class.get(get_class_key(date_ordinal, period), None)
 
 
+def get_active_temp_class(date_ordinal: int, period: int) -> Optional[dict]:
+    """
+    取某天某节次**还没下课**的临时性技实操课（课表覆盖层与必修判定用）
+    Keyword arguments:
+    date_ordinal -- 日期序数
+    period -- 节次
+    Return arguments:
+    Optional[dict] -- 课程数据，没有或已下课（ended）则为None
+    功能: 预约的那节课下课后条目要留到跨天清理（提醒标记、口上分档都读它），
+          但覆盖层与必修判定不能再认它，否则该节剩余时间里全员对着「授课者=玩家」空等（2026-09-12 第五轮）
+    """
+    temp_class = get_temp_class(date_ordinal, period)
+    if temp_class is None or temp_class.get("ended", False):
+        return None
+    return temp_class
+
+
 def set_temp_class(date_ordinal: int, period: int, classroom: str, ability_id: int, must_attend: Optional[List[int]] = None, running: bool = False, notified: Optional[list] = None) -> dict:
     """
     排一节临时性技实操课（已存在则覆盖）
@@ -175,15 +192,63 @@ def clean_expired_temp_class() -> int:
 # ---------------------------------------------------------------------------
 
 
-def judge_can_join_sex_class(character_id: int) -> bool:
+def judge_has_sex_skill_course(character_id: int) -> bool:
     """
-    判断某角色能不能被拉进课堂H模式（方案 §3.28.7 的旁路守卫第2层）
+    判断某角色的个人课表里有没有排过性技科目的教室课（方案 §3.28.7 旁路守卫第3层「前置修习」，宽松版）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 是否排过
+    功能: 口径 63 要求「学生须已选修对应性技科目的理论课」，让实操课成为理论课的下游而不是替代品。
+          2026-09-12 第五轮按宽松版实装：只要个人课表里有任一班级式课格、在全局课表上排的是性技科目就算，
+             不要求与本节主修科目对上——当场开课时「场景里有没有能来的学生」要在选主修科目之前就判出来。
+          查全局课表时不叠加临时课覆盖层：被临时实操课顶掉的那一格不能反过来证明她修过性技理论
+    """
+    from Script.System.Education_System import schedule_handle
+
+    if character_id not in cache.character_data:
+        return False
+    growth_data = cache.character_data[character_id].child_growth
+    if growth_data is None:
+        return False
+    for week_day, day_data in growth_data.selected_course.items():
+        for period, course in day_data.items():
+            if course[0] not in education_constant.CLASSROOM_COURSE_TYPE_SET:
+                continue
+            cell = schedule_handle.get_class_cell(course[1], week_day, period, include_temp=False)
+            if cell is not None and cell[0] in education_constant.SEX_SKILL_SUBJECT_SET:
+                return True
+    return False
+
+
+def get_must_attend_set() -> set:
+    """
+    取此刻这节实操课的必修名单（正在进行的那节优先，否则取今天当前节次还没下课的临时课）
+    Keyword arguments:
+    无
+    Return arguments:
+    set -- 必修学生的角色id集合，没有则为空集
+    """
+    now_class = get_running_class()
+    if now_class is None:
+        now_class = get_active_temp_class(cache.game_time.date().toordinal(), game_time.get_class_period_by_time(cache.game_time))
+    if now_class is None:
+        return set()
+    return set(now_class.get("must_attend", []))
+
+
+def judge_can_join_sex_class(character_id: int, check_course: bool = True) -> bool:
+    """
+    判断某角色能不能被拉进课堂H模式（方案 §3.28.7 的旁路守卫第2、3层）
 
     孩子（玩家的女儿）零门槛——她是玩家自己养的、课是玩家自己排的，两道决策已经做过了；
     成年干员没有这层前置，仍需满足既有的「H模式」实行值（InstructJudge.csv:10，S 350），
     否则这条无实行值要求的入口就成了绕过全部既有H前提的旁路。
+    第3层「前置修习」对两者都生效：个人课表里要排过性技科目的教室课（judge_has_sex_skill_course）；
+       玩家点名的必修生由调用方传 check_course=False 豁免——点名本身就是玩家的决定
     Keyword arguments:
     character_id -- 角色id
+    check_course -- 是否检查前置修习
     Return arguments:
     bool -- 是否可参加
     """
@@ -202,6 +267,9 @@ def judge_can_join_sex_class(character_id: int) -> bool:
         if not getattr(handle_premise, "handle_normal_%d" % normal_id)(character_id):
             return False
     if character_data.sp_flag.imprisonment:
+        return False
+    # 前置修习（第3层）：没排过性技科目教室课的不能来，必修生豁免
+    if check_course and not judge_has_sex_skill_course(character_id):
         return False
     # 孩子零门槛
     if character_data.relationship.father_id == 0:
@@ -226,7 +294,9 @@ def get_scene_student_list(scene_path: Optional[list] = None) -> List[int]:
     if scene_path_str not in cache.scene_data:
         return []
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-    return [cid for cid in scene_data.character_list if cid and judge_can_join_sex_class(cid)]
+    # 必修名单上的人豁免前置修习：玩家点名要她来，她就算没排过性技理论课也照样上
+    must_attend_set = get_must_attend_set()
+    return [cid for cid in scene_data.character_list if cid and judge_can_join_sex_class(cid, check_course=cid not in must_attend_set)]
 
 
 def get_selected_student_list(classroom: str, week_day: int, period: int) -> List[int]:
@@ -262,21 +332,27 @@ def get_date_ordinal_by_week_day(week_day: int, period: int) -> int:
 
     临时课程是一次性的（键含具体日期序数），而课表面板的格子是按星期排的，
     所以要在这里把"周三第3节"落到某个具体的哪一天。
+    必须按**游戏时钟真正会走到的日子**逐日往后数（2026-09-12 第五轮）：一年只有 3/6/9/12 四个季月，
+       季月最后一天的下一天是下个季月的 1 日（如 9/30 → 12/1），星期也跟着跳。按日历直接加天数
+       会落到 10 月 2 日这种时钟永远不会走到的日子上，那节课永远不会开、提醒也永远不会发
     Keyword arguments:
     week_day -- 星期0~6
     period -- 节次0~8
     Return arguments:
     int -- 日期序数
     """
-    today = cache.game_time.date()
-    delta = (week_day - today.weekday()) % 7
-    target_date = today + datetime.timedelta(days=delta)
-    # 就是今天、但这一节的开始时刻已经过去了，就顺延到下周同一天
-    if delta == 0:
-        start_time = get_period_start_time(target_date.toordinal(), period)
-        if start_time is not None and start_time <= cache.game_time:
-            target_date = target_date + datetime.timedelta(days=7)
-    return target_date.toordinal()
+    # 从今天的 0 点开始逐日步进；get_predict_date 会把落进非季月的日期归到下个季月的 1 日
+    now_date = cache.game_time.replace(hour=0, minute=0, second=0, microsecond=0)
+    # 就是今天、但这一节的开始时刻已经过去了，就从明天开始找
+    start_time = get_period_start_time(now_date.toordinal(), period)
+    if start_time is not None and start_time <= cache.game_time:
+        now_date = game_time.get_predict_date(1, now_date)
+    # 两周内必然能找到对应的星期（跨季月时星期会跳，给足余量）
+    for _index in range(14):
+        if now_date.weekday() == week_day:
+            break
+        now_date = game_time.get_predict_date(1, now_date)
+    return now_date.date().toordinal()
 
 
 def judge_in_sex_class_place(character_id: int) -> bool:
@@ -573,6 +649,8 @@ def start_sex_class(ability_id: int, join_id_list: Optional[List[int]] = None) -
     now_class = get_temp_class(today, period)
     if now_class is not None and now_class.get("classroom", "") == classroom:
         now_class["running"] = True
+        # 同一节里下课后又开一次：清掉已下课标记，覆盖层重新生效
+        now_class["ended"] = False
         # 复用了预约条目 → 这是预约的那节课；开课口上按"预约 / 当场"分档（方案 §3.28.10）
         now_class["reserved"] = True
         if ability_id in education_constant.SEX_CLASS_ABILITY_LIST:
@@ -599,9 +677,17 @@ def end_sex_class() -> None:
     Return arguments:
     无
     """
-    now_class = get_running_class()
-    if now_class is not None:
-        now_class["running"] = False
+    class_key = get_running_class_key()
+    if not class_key:
+        return
+    now_class = cache.rhodes_island.temp_sex_class[class_key]
+    now_class["running"] = False
+    # 下了课这一节就交还给原来的课表（2026-09-12 第五轮）：当场开的课没有任何后续用处，直接删掉；
+    #    预约的课留着条目到跨天清理，只打上已下课标记，覆盖层与必修判定据此不再认它
+    if now_class.get("reserved", False):
+        now_class["ended"] = True
+    else:
+        del cache.rhodes_island.temp_sex_class[class_key]
 
 
 def judge_end_type() -> int:
@@ -636,10 +722,14 @@ def settle_attend(student_id: int) -> None:
     Return arguments:
     无
     """
-    growth_data = growth_handle.get_child_growth(student_id)
-    if growth_data is None:
+    # 只给「女儿 ∪ 学生岗」记：凭 H 模式实行值到场的成年非学生干员不是学生，
+    #    给她们惰性创建养成数据只会让全岛的存档一起变大（与 semester_handle 的约定一致）
+    if student_id not in cache.character_data:
         return
-    growth_data.attend_class_count += 1
+    student_data: game_type.Character = cache.character_data[student_id]
+    if student_data.relationship.father_id != 0 and student_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
+        return
+    growth_handle.get_child_growth(student_id).attend_class_count += 1
 
 
 # ---------------------------------------------------------------------------

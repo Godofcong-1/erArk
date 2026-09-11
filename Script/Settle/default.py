@@ -3113,8 +3113,8 @@ def handle_sex_class_mode_on(
         student_data.sp_flag.see_pl_h = True
         # 到场的口上走二段行为：一段行为得靠NPC AI派发，而H中的NPC完全不进AI链（handle_npc_ai.py:290）
         second_behavior.character_get_second_behavior(student_id, constant.Behavior.JOIN_SEX_CLASS)
-        # 出勤只在开课时记这一次；拖堂占用的后续节次既不记出勤也不记缺课
-        sex_class_handle.settle_attend(student_id)
+        # 出勤不在这里记：开课指令先调 sex_class_handle.start_sex_class() 记过一次了，
+        #    这里再记会让每个到场学生每节实操课 +2（2026-09-12 第五轮修正）
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SEX_CLASS_MODE_OFF)
@@ -7625,16 +7625,23 @@ def handle_teach_add_just(
                 other_character_data: game_type.Character = cache.character_data[chara_id]
                 # 如果对方在听课
                 if other_character_data.behavior.behavior_id == constant.Behavior.ATTENT_CLASS:
+                    # NPC 教师只给自己的学生发（本节个人课表指向这间教室的人）；玩家手动授课照旧发给全场（Plan 22 第五轮）。
+                    #    同一间教室里偶有两位教师时，别的教师的学生不会被重复记一节
+                    if character_id != 0:
+                        student_course = schedule_handle.get_now_course(chara_id)
+                        if student_course is None or student_course["classroom"] != scene_data.scene_name:
+                            continue
 
-                    # 按课表科目结算该学生的习得与科目经验，学习速度由师生等级差决定
-                    growth_handle.settle_student_class_gain(
+                    # 按课表科目结算该学生的习得与科目经验，学习速度由师生等级差决定；同一节只结算一次
+                    if not growth_handle.settle_student_class_gain(
                         chara_id,
                         character_id,
                         ability_id,
                         course_type,
                         add_time,
                         change_data_to_target_change=change_data,
-                    )
+                    ):
+                        continue
 
                     # 如果老师是玩家
                     if character_id == 0:
@@ -7673,8 +7680,46 @@ def handle_self_study_add_just(
     if now_course is not None and now_course["ability_id"] > 0:
         ability_id = now_course["ability_id"]
     # 教师id传-1即走自习分支：基础值降档、速度系数恒取1.0
+    # 只有课表排了课（教师缺席降级）的自习才计出勤；日程活动「上课（无课时自习）」照常给收益但不算上过课（Plan 22 第五轮）
     growth_handle.settle_student_class_gain(
-        character_id, -1, ability_id, education_constant.COURSE_TYPE_THEORY, add_time, change_data=change_data
+        character_id, -1, ability_id, education_constant.COURSE_TYPE_THEORY, add_time, change_data=change_data,
+        count_attend=now_course is not None,
+    )
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ATTENT_CLASS_ADD_ADJUST)
+def handle_attent_class_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （听课用）学生晚于教师到场时，从学生这一侧结算本节课的收益与出勤（Plan 22 第五轮）
+    NPC 的行为结算发生在行为**开始**时：教师开讲那一刻的广播（512）只发得到已经坐下听课的人，
+       走班晚到几分钟的学生就会整节白上。这里在学生开始听课时补一次：本节的授课教师就在同一间教室、且正在授课，
+       就按与广播完全相同的口径结算；先到的学生已被广播结算过，settle_student_class_gain 按节次去重，不会重复
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    from Script.System.Education_System import growth_handle, schedule_handle
+
+    now_course = schedule_handle.get_now_course(character_id)
+    if now_course is None or now_course["teacher_id"] not in cache.character_data or now_course["ability_id"] <= 0:
+        return
+    teacher_id = now_course["teacher_id"]
+    teacher_data: game_type.Character = cache.character_data[teacher_id]
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 教师得人在这间教室、而且正在讲课；玩家的临时实操课不走这里（那是课堂H，不是授课）
+    if teacher_data.position != character_data.position or teacher_data.behavior.behavior_id != constant.Behavior.TEACH:
+        return
+    growth_handle.settle_student_class_gain(
+        character_id, teacher_id, now_course["ability_id"], now_course["course_type"], add_time, change_data=change_data
     )
 
 

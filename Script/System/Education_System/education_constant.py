@@ -95,6 +95,9 @@ FEMALE_SUBJECT_LIST: List[int] = [ability_id for ability_id in SUBJECT_ABILITY_L
     而自动排课在自己那边又算了一遍同样的东西 """
 SEX_CLASS_ABILITY_LIST = [ability_id for ability_id in FEMALE_SUBJECT_LIST if game_config.config_ability[ability_id].ability_type == ABILITY_TYPE_SEX_SKILL]
 """ 实操课可选的主修性技科目：指技70/舌技71/足技72/胸技73/膣技74/肛技75/榨精77 """
+SEX_SKILL_SUBJECT_SET = {ability_id for ability_id in SUBJECT_ABILITY_LIST if game_config.config_ability[ability_id].ability_type == ABILITY_TYPE_SEX_SKILL}
+""" 全部性技科目（70~77，含男性专属的76腰技）。
+    实操课「前置修习」守卫（口径 63 宽松版）按它判：个人课表里排过其中任一门的教室课即可来上实操课 """
 PRACTICE_SUBJECT_SET = {42, 43, 46, 47, 48, 49}
 """ 实践教室的动手类科目：42战斗 / 43料理 / 46医术 / 47农业 / 48制造 / 49绘画。
     这一组推不出来——Ability.csv 没有「是不是动手类」这一维，只能列举。

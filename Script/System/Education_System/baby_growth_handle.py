@@ -13,7 +13,7 @@
    把它做成某一科的先修既不合逻辑，也会逼玩家在孕期就决定孩子将来学什么。
 """
 from types import FunctionType
-from typing import Dict, List
+from typing import Dict
 
 from Script.Core import cache_control, game_type, get_text
 from Script.System.Education_System import education_constant, growth_handle

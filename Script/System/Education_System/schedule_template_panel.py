@@ -15,7 +15,7 @@ from types import FunctionType
 from typing import Dict, List
 
 from Script.Core import cache_control, game_type, get_text, flow_handle
-from Script.Config import game_config, normal_config
+from Script.Config import normal_config
 from Script.Design import attr_calculation
 from Script.System.Education_System import education_constant, schedule_template_handle, growth_handle
 from Script.UI.Moudle import draw, panel

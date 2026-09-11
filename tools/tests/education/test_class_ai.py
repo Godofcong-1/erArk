@@ -35,6 +35,24 @@ teacher.sp_flag.field_commission = False
 teacher.dead = True
 check("死亡不可用", not class_ai.judge_teacher_available(101))
 teacher.dead = False
+# 第五轮补全：这些情况下教师这节确定来不了，学生必须降级自习而不是空等一整节
+teacher.work.work_type = 21
+check("换了岗不可用", not class_ai.judge_teacher_available(101))
+teacher.work.work_type = 151
+teacher.sp_flag.is_follow = 1
+check("跟随玩家中不可用（跟随优先）", not class_ai.judge_teacher_available(101))
+teacher.sp_flag.is_follow = 0
+teacher.sp_flag.sleep = True
+check("睡着不可用", not class_ai.judge_teacher_available(101))
+teacher.sp_flag.sleep = False
+cache.rhodes_island.medical_hospitalized = {101: {}}
+check("住院不可用", not class_ai.judge_teacher_available(101))
+cache.rhodes_island.medical_hospitalized = {}
+cache.npc_id_got.discard(101)
+check("不在岛上（不在 npc_id_got）不可用", not class_ai.judge_teacher_available(101))
+cache.npc_id_got.add(101)
+check("玩家（临时实操课的授课者）可用", class_ai.judge_teacher_available(0))
+check("恢复后正常教师可用", class_ai.judge_teacher_available(101))
 
 section("缺课去重")
 set_time(period_time(0))
@@ -97,6 +115,18 @@ random.random = lambda: 0.0
 check("必修 + 心情糟糕：不翘课", class_ai.judge_class_state_machine(201) != constant.StateMachine.EDUCATION_SKIP_CLASS)
 class_ai.get_skip_class_rate = _orig_rate
 random.random = _orig_random
+# 第五轮：必修生自己这节排的是别的课，也要留在临时课的教室（口径 60）
+schedule_handle.set_selected_course(201, 0, 0, education_constant.COURSE_TYPE_THEORY, ROOM1)
+now_course = schedule_handle.get_now_course(201)
+check("必修覆盖：本节的课改指临时课教室、授课者为玩家", now_course is not None and now_course["classroom"] == ROOM_P and now_course["teacher_id"] == 0
+      and now_course["ability_id"] == 70 and now_course["course_type"] == education_constant.COURSE_TYPE_PRACTICE, now_course)
+move_to(201, classroom_path(ROOM1))
+check("必修覆盖：人在原来的教室 → 移动（去临时课教室）", class_ai.judge_class_state_machine(201) == constant.StateMachine.MOVE_TO_CLASS_ROOM)
+move_to(201, classroom_path(ROOM_P))
+check("必修覆盖：到了临时课教室 → 留下听课", class_ai.judge_class_state_machine(201) == constant.StateMachine.WORK_ATTENT_CLASS)
+schedule_handle.clear_selected_course(201, 0, 0)
+check("必修覆盖：本节自己没排课也照样来", schedule_handle.get_now_course(201) is not None and schedule_handle.get_now_course(201)["classroom"] == ROOM_P)
+check("非必修且没排课的人不受影响", schedule_handle.get_now_course(202) is None)
 cache.rhodes_island.temp_sex_class = {}
 schedule_handle.set_selected_course(201, 0, 0, education_constant.COURSE_TYPE_THEORY, ROOM1)
 
@@ -267,6 +297,69 @@ check("幼女周一上午没课、日程排了自由玩耍 → 去育儿室而�
 schedule_template_handle.apply_template(202, 0)
 child.entertainment.entertainment_type = [0, 0, 0]
 check("幼女时段为自由选择 → 默认见学（移动到母亲身边）", dispatch(202) == constant.StateMachine.EDUCATION_MOVE_TO_MOTHER)
+set_time(period_time(0))
+
+section("教师按课表走班（第五轮）")
+clear_schedules()
+office_path = map_handle.get_map_system_path_for_str(constant.place_data["Teacher_Office"][0])
+set_time(period_time(0))
+move_to(101, classroom_path(ROOM1))
+schedule_handle.set_class_cell(ROOM_P, 0, 0, 43, 101)
+check("本节课排在实践教室、人在理论教室 → 移动（不再原地开讲）", class_ai.judge_teacher_state_machine(101) == constant.StateMachine.MOVE_TO_CLASS_ROOM)
+move_to(101, classroom_path(ROOM_P))
+check("到了实践教室 → 授课", class_ai.judge_teacher_state_machine(101) == constant.StateMachine.WORK_TEACH)
+check("非教师不接管", class_ai.judge_teacher_state_machine(201) == 0 and class_ai.judge_teacher_state_machine(0) == 0)
+today = cache.game_time.date().toordinal()
+sex_class_handle.set_temp_class(today, 0, ROOM_P, 70, must_attend=[])
+check("这一格今天被临时实操课顶掉 → 教师反查查不到", schedule_handle.get_teacher_cell(101, 0, 0) is None)
+check("被顶掉的教师 → 回办公室待命", class_ai.judge_teacher_state_machine(101) == constant.StateMachine.MOVE_TO_TEACHER_OFFICE)
+cache.rhodes_island.temp_sex_class = {}
+schedule_handle.clear_class_cell(ROOM_P, 0, 0)
+check("本节没课、工作时间 → 回教师办公室", class_ai.judge_teacher_state_machine(101) == constant.StateMachine.MOVE_TO_TEACHER_OFFICE)
+move_to(101, office_path)
+check("已在办公室 → 待命", class_ai.judge_teacher_state_machine(101) == constant.StateMachine.EDUCATION_WAIT_NEXT_PERIOD)
+set_time(period_time(0) - datetime.timedelta(minutes=15))
+schedule_handle.set_class_cell(ROOM_P, 0, 0, 43, 101)
+check("到岗时间、第一节在实践教室 → 先去实践教室", class_ai.judge_teacher_state_machine(101) == constant.StateMachine.MOVE_TO_CLASS_ROOM
+      and schedule_handle.get_upcoming_teaching(101)["classroom"] == ROOM_P)
+move_to(101, classroom_path(ROOM_P))
+check("到岗时间已在教室 → 等开课", class_ai.judge_teacher_state_machine(101) == constant.StateMachine.EDUCATION_WAIT_NEXT_PERIOD)
+constant.handle_state_machine_data[constant.StateMachine.EDUCATION_WAIT_NEXT_PERIOD](101)
+check("等开课的时长截到开课那一刻（15 分钟）", teacher.behavior.behavior_id == constant.Behavior.WAIT and teacher.behavior.duration == 15, teacher.behavior.duration)
+sunday = DEFAULT_TIME.date() + datetime.timedelta(days=6)
+set_time(period_time(0, sunday))
+move_to(101, office_path)
+check("周日没课 → 不接管（休息日）", class_ai.judge_teacher_state_machine(101) == 0)
+schedule_handle.set_class_cell(ROOM_P, 6, 0, 43, 101)
+check("周日玩家特意排了课 → 照样去上", class_ai.judge_teacher_state_machine(101) == constant.StateMachine.MOVE_TO_CLASS_ROOM)
+schedule_handle.clear_class_cell(ROOM_P, 6, 0)
+set_time(period_time(0))
+prepare_ai(101)
+move_to(101, classroom_path(ROOM1))
+check("整条 AI 链：人在理论教室、课在实践教室 → 派发移动而不是原地授课", dispatch(101) == constant.StateMachine.MOVE_TO_CLASS_ROOM)
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.clear_class_cell(ROOM_P, 0, 0)
+check("整条 AI 链：课就在所在的理论教室 → 授课", dispatch(101) == constant.StateMachine.WORK_TEACH)
+clear_schedules()
+
+section("学生到岗时间先去第一节课（第五轮）")
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, education_constant.COURSE_TYPE_THEORY, ROOM1)
+move_to(201, SCENE_DORM)
+set_time(period_time(0) - datetime.timedelta(minutes=30))
+check("开课前 30 分钟 → 还不动身", class_ai.judge_class_state_machine(201) == 0)
+set_time(period_time(0) - datetime.timedelta(minutes=15))
+check("开课前 15 分钟、人在宿舍 → 去第一节课的教室", class_ai.judge_class_state_machine(201) == constant.StateMachine.MOVE_TO_CLASS_ROOM
+      and schedule_handle.get_upcoming_course(201)["classroom"] == ROOM1)
+move_to(201, classroom_path(ROOM1))
+check("已在教室 → 原地等开课", class_ai.judge_class_state_machine(201) == constant.StateMachine.EDUCATION_WAIT_NEXT_PERIOD)
+check("节次内不看下一节", (set_time(period_time(0)), schedule_handle.get_upcoming_course(201))[1] is None)
+schedule_handle.set_selected_course(201, 0, 0, education_constant.COURSE_TYPE_PE, _("木桩房"))
+set_time(period_time(0) - datetime.timedelta(minutes=15))
+move_to(201, SCENE_DORM)
+check("第一节是体育课 → 去训练场", class_ai.judge_class_state_machine(201) == constant.StateMachine.EDUCATION_MOVE_TO_COURSE_PLACE)
+clear_schedules()
+schedule_handle.clear_selected_course(201, 0, 0)
 set_time(period_time(0))
 
 section("预到岗")

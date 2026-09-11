@@ -404,6 +404,7 @@ class Class_Schedule_Panel:
                  那里的键是星期，写进去这节课会每周同一时间重演一次
         """
         from Script.System.Education_System import sex_class_handle
+        from Script.System.Pregnancy_System import pregnancy_panel
 
         date_ordinal = sex_class_handle.get_date_ordinal_by_week_day(week_day, period)
         now_class = sex_class_handle.get_temp_class(date_ordinal, period)
@@ -413,7 +414,9 @@ class Class_Schedule_Panel:
 
         while 1:
             draw.TitleLineDraw(_("排一节性技实操课"), self.width).draw()
-            date_text = datetime.date.fromordinal(date_ordinal).strftime("%m月%d日")
+            # 用游戏里的季节月名（「秋月12日」），不用日历月份——游戏时钟没有 10 月、11 月这种说法
+            date_value = datetime.date.fromordinal(date_ordinal)
+            date_text = pregnancy_panel.get_date_text(datetime.datetime(date_value.year, date_value.month, date_value.day))
             info_draw = draw.NormalDraw()
             info_draw.width = self.width
             info_draw.text = _("  教室：{0}\n  日期：{1}（{2}）\n  节次：第{3}节 {4}\n\n").format(
@@ -446,7 +449,9 @@ class Class_Schedule_Panel:
 
             # 这一行是必做项不是装饰：选课逻辑零改动的代价就是可能一个人都不来，
             #    玩家必须在排课当场就看得到会有几个人
-            selected_list = sex_class_handle.get_selected_student_list(classroom, week_day, period)
+            # 前置修习（口径 63 宽松版）：选修生里没排过性技科目教室课的人会到场，但进不了实操课，单独列出来
+            all_selected_list = sex_class_handle.get_selected_student_list(classroom, week_day, period)
+            selected_list = [cid for cid in all_selected_list if sex_class_handle.judge_has_sex_skill_course(cid)]
             name_list = [cache.character_data[cid].name for cid in selected_list if cid in cache.character_data]
             student_draw = draw.NormalDraw()
             student_draw.width = self.width
@@ -456,6 +461,14 @@ class Class_Schedule_Panel:
             else:
                 student_draw.text = _("  本节选修本教室的学生：0 人 —— 没有学生会来，建议指定必修学生\n")
             student_draw.draw()
+            no_course_name_list = [cache.character_data[cid].name for cid in all_selected_list if cid not in selected_list and cid in cache.character_data]
+            if no_course_name_list:
+                no_course_draw = draw.NormalDraw()
+                no_course_draw.width = self.width
+                no_course_draw.style = "deep_gray"
+                no_course_draw.text = _("  另有 {0} 人会到场但没修过性技科目的课，不能参加（点名必修可豁免）：{1}\n").format(
+                    len(no_course_name_list), "、".join(no_course_name_list))
+                no_course_draw.draw()
 
             must_name_list = [cache.character_data[cid].name for cid in must_attend if cid in cache.character_data]
             must_draw = draw.NormalDraw()
@@ -523,7 +536,8 @@ class Class_Schedule_Panel:
             student_width = int(self.width / 6)
             count = 0
             for character_id in growth_handle.get_student_candidate_list():
-                if not sex_class_handle.judge_can_join_sex_class(character_id):
+                # 必修名单豁免前置修习（口径 63 宽松版）：点名本身就是玩家的决定，这里只做状态守卫
+                if not sex_class_handle.judge_can_join_sex_class(character_id, check_course=False):
                     continue
                 character_data: game_type.Character = cache.character_data[character_id]
                 mark = "√" if character_id in must_attend else "  "
@@ -532,7 +546,8 @@ class Class_Schedule_Panel:
                 replace_mark = ""
                 if old_course is not None and old_course[0] in education_constant.CLASSROOM_COURSE_TYPE_SET:
                     replace_mark = "*"
-                    old_cell = schedule_handle.get_class_cell(old_course[1], week_day, period)
+                    # 顶替的是她每周固定的那节课，不叠加临时课覆盖层（否则今天这格读到的就是临时课自己）
+                    old_cell = schedule_handle.get_class_cell(old_course[1], week_day, period, include_temp=False)
                     if old_cell is not None and old_cell[0] in game_config.config_ability:
                         replace_text_list.append(_("{0}→{1}的{2}").format(
                             character_data.name, old_course[1],

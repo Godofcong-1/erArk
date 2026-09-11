@@ -548,6 +548,8 @@ def handle_chat_with_ai():
 @add_instruct(constant.Instruct.TEACH)
 def handle_teach():
     """处理授课指令"""
+    from Script.System.Education_System import education_constant
+
     instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.behavior_id = constant.Behavior.TEACH
@@ -567,7 +569,7 @@ def handle_teach():
             else:
                 other_character_data: game_type.Character = cache.character_data[chara_id]
                 # 让对方变成听课状态
-                if other_character_data.work.work_type == 152:
+                if other_character_data.work.work_type == education_constant.STUDENT_WORK_TYPE:
                     other_character_data.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
                     other_character_data.behavior.duration = 45
                     other_character_data.state = constant.CharacterStatus.STATUS_ATTENT_CLASS

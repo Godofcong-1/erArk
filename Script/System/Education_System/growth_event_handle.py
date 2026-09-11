@@ -27,17 +27,15 @@ _: FunctionType = get_text._
 
 def get_character_stage(character_id: int) -> int:
     """
-    取角色当前的成长阶段素质id
+    取角色当前的成长阶段素质id（统一走 growth_handle 的实现，按素质id升序取，萝莉化设定下结果也确定）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 101婴儿/102幼女/103萝莉/104少女，都不是则0
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    for talent_id in education_constant.CHILD_TALENT_SET:
-        if character_data.talent.get(talent_id, 0):
-            return talent_id
-    return 0
+    from Script.System.Education_System import growth_handle
+
+    return growth_handle.get_character_stage(character_id)
 
 
 def get_growth_event_character_list() -> List[int]:
@@ -46,16 +44,20 @@ def get_growth_event_character_list() -> List[int]:
 
     只看玩家的女儿：普通干员也可能因为选课被建出 child_growth（口径24），
        但养成事件是给孩子的，给成年干员派「第一次上课」只会显得莫名其妙
+    只看婴儿~萝莉（101~103）：已成年的少女没有日常养成事件可派，毕业典礼与成年纪念由成年结算显式推入；
+       算进来会让每个成年女儿永久多占 4 条队列容量，旧档里早就成年的女儿还会被每日派发随机抽中毕业典礼（2026-09-12 第五轮）
     Keyword arguments:
     无
     Return arguments:
-    List[int] -- 角色id列表
+    List[int] -- 角色id列表，按id升序
     """
     from Script.Design import handle_premise
 
     result = []
-    for character_id in cache.npc_id_got:
-        if not get_character_stage(character_id):
+    for character_id in sorted(cache.npc_id_got):
+        if character_id not in cache.character_data:
+            continue
+        if get_character_stage(character_id) not in education_constant.STAGE_ALL_CHILD:
             continue
         if not handle_premise.handle_self_is_player_daughter(character_id):
             continue
@@ -266,7 +268,8 @@ def get_growth_event_title(queue_data: dict) -> str:
         return official_event_handle.get_department_name(education_constant.GROWTH_EVENT_DEPARTMENT)
     character_data: game_type.Character = cache.character_data[character_id]
     stage = get_character_stage(character_id)
-    stage_name = _(education_constant.STAGE_TALENT_NAME.get(stage, "少女"))
+    # STAGE_TALENT_NAME 取自 Talent.csv，载入时已翻译过，不再包 _()
+    stage_name = education_constant.STAGE_TALENT_NAME.get(stage, education_constant.STAGE_TALENT_NAME[104])
     # 成长天数由妊娠系统统一计算（含成长加速药），这里只取用不重算
     grow_day = pregnancy_handle.get_child_grow_day(character_id)
     return _("{0} · {1}期第 {2} 天").format(character_data.name, stage_name, grow_day)

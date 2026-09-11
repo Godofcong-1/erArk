@@ -26,10 +26,10 @@
 给三个孩子都改成玩乐优先，是改一个模板而不是改三份日程。
 """
 from types import FunctionType
-from typing import Dict, List, Optional, Tuple
+from typing import List, Optional, Tuple
 from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config
-from Script.System.Education_System import education_constant, growth_handle, schedule_handle
+from Script.System.Education_System import education_constant, growth_handle
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """

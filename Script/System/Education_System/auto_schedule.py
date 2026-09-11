@@ -114,7 +114,8 @@ def auto_fill_class_schedule() -> Tuple[int, int]:
             continue
         for week_day in range(education_constant.AUTO_SCHEDULE_WEEK_DAY_MAX):
             for period in range(period_count):
-                if schedule_handle.get_class_cell(classroom, week_day, period) is not None:
+                # 看的是每周固定的课表本身，今天的临时实操课不算占格
+                if schedule_handle.get_class_cell(classroom, week_day, period, include_temp=False) is not None:
                     continue
                 # 按「已排次数少→科目id小」的顺序试，第一个能配到教师的科目胜出。
                 # 先定科目再找教师会白白浪费格子——某些科目全岛教师本节都占满了
@@ -166,7 +167,8 @@ def auto_fill_selected_course(character_id: int) -> Tuple[int, int]:
             best_room = ""
             best_level = -1
             for classroom in room_list:
-                cell = schedule_handle.get_class_cell(classroom, week_day, period)
+                # 不叠加临时实操课：个人课表是每周循环的，一次性的临时课不能被当成每周固定的课选进去（第五轮）
+                cell = schedule_handle.get_class_cell(classroom, week_day, period, include_temp=False)
                 if cell is None:
                     continue
                 now_level = int(character_data.ability.get(cell[0], 0))

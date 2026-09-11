@@ -20,6 +20,7 @@ E = education_constant
 section("候选人与阶段")
 check("阶段读取", growth_event_handle.get_character_stage(201) == 103 and growth_event_handle.get_character_stage(301) == 0)
 check("只看玩家的女儿", sorted(growth_event_handle.get_growth_event_character_list()) == [201, 202, 203, 204])
+check("名单按 id 升序", growth_event_handle.get_growth_event_character_list() == sorted(growth_event_handle.get_growth_event_character_list()))
 check("同胞：同父即算（异母也算）", sorted(growth_event_handle.get_sibling_child_list(201)) == [202, 203, 204])
 check("双亲都没登记的孩子不互认", growth_event_handle.get_sibling_child_list(205) == [])
 schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, _("理论教室一"))
@@ -64,7 +65,9 @@ check("掷不中时一条也不派", growth_event_handle.get_today_growth_event_
 random.randint = _orig_randint
 
 section("注册式容量与抬头")
-check("容量 = 4 × 女儿数", growth_event_handle.get_growth_event_queue_capacity() == E.GROWTH_EVENT_QUEUE_PER_CHILD * 4)
+grown = make_character(206, "已成年的女儿", 152, daughter=True, stage=104, mother_id=102, born_days=500)
+check("已成年的少女不进每日派发名单（第五轮）", 206 not in growth_event_handle.get_growth_event_character_list())
+check("容量 = 4 × 未成年女儿数（成年少女不占容量）", growth_event_handle.get_growth_event_queue_capacity() == E.GROWTH_EVENT_QUEUE_PER_CHILD * 4)
 check("容量已注册进公务事件系统", official_event_handle.get_queue_max() >= official_event_handle.OFFICIAL_EVENT_QUEUE_MAX_EXTRA + E.GROWTH_EVENT_QUEUE_PER_CHILD * 4)
 title = growth_event_handle.get_growth_event_title({"chara_id": 201})
 check("抬头：名字 · 萝莉期第 N 天", title.startswith("萝莉 · ") and "期第" in title, title)
@@ -76,6 +79,12 @@ growth_event_handle.push_graduation_event(201)
 queue = official_event_handle.get_queue()
 check("毕业典礼在队首、成年纪念紧随其后", [one["uid"] for one in queue[:2]] == [E.GRADUATION_EVENT_UID, E.ADULT_MEMORIAL_EVENT_UID])
 check("队列项带主体", queue[0]["chara_id"] == 201)
+# 一辈子一次的毕业典礼不受队列容量上限约束（第五轮）：队列满了也不能丢
+cache.rhodes_island.official_event_queue = [{"uid": E.GRADUATION_EVENT_UID, "department": E.GROWTH_EVENT_DEPARTMENT, "chara_id": 999, "partner_id": 0, "add_time": cache.game_time}
+                                            for _index in range(official_event_handle.get_queue_max())]
+growth_event_handle.push_graduation_event(206)
+check("队列已满时毕业典礼照样插到队首", official_event_handle.get_queue()[0]["chara_id"] == 206 and official_event_handle.get_queue()[0]["uid"] == E.GRADUATION_EVENT_UID)
+check("队列已满时普通事件仍被挡", not official_event_handle.push_official_event(E.GRADUATION_EVENT_UID, 201))
 cache.rhodes_island.official_event_queue = []
 check("期末事件入队", growth_event_handle.push_semester_event(201) and len(official_event_handle.get_queue()) == 1)
 check("入队的是期末桶里的事件", official_event_handle.get_queue()[0]["uid"] in semester_bucket)

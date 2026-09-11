@@ -53,6 +53,12 @@ other_day = (cache.game_time.weekday() + 1) % 7
 check("覆盖层不影响别的星期", schedule_handle.get_class_cell(_("实践教室一"), other_day, 2) is None)
 check("玩家的教师反查走覆盖层", schedule_handle.get_teacher_cell(0, cache.game_time.weekday(), 2) == (_("实践教室一"), 70))
 check("玩家周表并入今天的临时课", 2 in schedule_handle.get_teacher_week_schedule(0).get(cache.game_time.weekday(), {}))
+# 第五轮：要写进每周循环的个人课表时不叠加覆盖层
+check("include_temp=False 读的是每周固定的课表本身", schedule_handle.get_class_cell(_("实践教室一"), cache.game_time.weekday(), 2, include_temp=False) is None)
+temp_student = make_character(209, "临时课测试", 152, daughter=True, stage=103)
+auto_schedule.auto_fill_selected_course(209)
+check("一键选课不会把一次性的临时课选进每周课表", schedule_handle.get_selected_course(209, cache.game_time.weekday(), 2) is None)
+remove_character(209)
 cache.rhodes_island.temp_sex_class = {}
 
 section("个人课表与当前课程")

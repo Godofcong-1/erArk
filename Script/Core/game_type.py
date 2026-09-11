@@ -374,8 +374,8 @@ class CHILD_GROWTH:
     def __init__(self):
 
         self.personality_point: dict = {}
-        """ 四对性格倾向的累积值 键int:性格对编号(0勤劳/懒散 1脆弱/坚强 2热情/孤僻 3羞耻/开放)
-            值float:倾向值，正数偏前者、负数偏后者，成年时按符号选边。写入方在三期与四期 """
+        """ 四对性格倾向的累积值 键int:性格对编号(0勤劳/懒散 1坚强/脆弱 2热情/孤僻 3开放/羞耻)
+            值float:倾向值，正数偏前者、负数偏后者，成年时按符号选边（对照表见 education_constant.PERSONALITY_PAIR_TALENT）。写入方在三期与四期 """
         self.prenatal_point: float = 0.0
         """ 妊娠期胎教累积（出生时由母亲侧转写），参与初始资质计算。写入方在四期 """
         self.care_point: float = 0.0
@@ -394,6 +394,9 @@ class CHILD_GROWTH:
         self.last_absent_period: list = []
         """ 上一次已计入缺课的 [日期序数int, 节次int]，防止同一节课被反复计数
             （休息行为只有30分钟，一节课45分钟，不做这层去重会重复累加） """
+        self.last_attend_period: list = []
+        """ 上一次已结算过课堂收益与出勤的 [日期序数int, 节次int]，同一节课只结算一次。
+            教师开讲时的广播（512）与学生晚到时自己这一侧的结算（557）都会走到，靠它去重（Plan 22 第五轮） """
         self.event_history: dict = {}
         """ 已触发的养成事件记录 键str:事件uid 值dict:{"time": datetime, "choice": 玩家选项index int}
             写入方在三期 """

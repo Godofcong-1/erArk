@@ -120,7 +120,16 @@ def gain_ability(character_id: int):
             # 孩子升级时记一笔待炫耀（Plan 22 §3.15 延迟炫耀）
             # 升级发生在玩家睡觉时的睡眠结算里，当场没有观众，所以攒着等下次见到玩家再说
             if character_data.child_growth is not None:
-                character_data.child_growth.show_off_ability[ability_cid] = character_data.ability[ability_cid]
+                from Script.System.Education_System import education_constant, growth_handle
+
+                # 只记课程科目、且只记处于幼女 / 萝莉期的女儿（Plan 22 第五轮）：炫耀口上全部限定这两个条件，
+                #    欲望、感觉之类的升级或成年学生的升级记进来，只会让二段行为静默地发一份好感
+                if (
+                    ability_cid in education_constant.SUBJECT_ABILITY_LIST
+                    and character_data.relationship.father_id == 0
+                    and growth_handle.get_character_stage(character_id) in (102, 103)
+                ):
+                    character_data.child_growth.show_off_ability[ability_cid] = character_data.ability[ability_cid]
     # print(f"debug {character_data.name}的睡觉结算素质结束")
 
 

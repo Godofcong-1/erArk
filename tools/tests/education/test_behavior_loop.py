@@ -44,30 +44,33 @@ teacher_list = schedule_handle.get_teacher_candidate_list()
 if len(teacher_list) < 2:
     for cid in sorted(cache.npc_id_got):
         cd = cache.character_data[cid]
-        if cid in daughter_list or cd.dead or growth_handle.judge_is_child(cid) or cd.work.work_type in (E.TEACHER_WORK_TYPE,):
+        if cid in daughter_list or cd.dead or growth_handle.get_character_stage(cid) or cd.work.work_type in (E.TEACHER_WORK_TYPE,):
             continue
         cd.work.work_type = E.TEACHER_WORK_TYPE
         if len(schedule_handle.get_teacher_candidate_list()) >= 3:
             break
 teacher_list = schedule_handle.get_teacher_candidate_list()
 check("至少 2 名教师", len(teacher_list) >= 2, teacher_list)
-# 把时间拨到本月的一个工作日 09:00（第一节课开始）
+# 把时间拨到本月的一个工作日 08:40（到岗时间，教师会按「马上要上的那一节」先去教室，第五轮）
 now = cache.game_time
-day = now.replace(hour=9, minute=0, second=0, microsecond=0)
+day = now.replace(hour=8, minute=40, second=0, microsecond=0)
 while day.weekday() >= 5:
     day += datetime.timedelta(days=1)
 if day.month != now.month:
-    day = now.replace(day=1, hour=9, minute=0, second=0, microsecond=0)
+    day = now.replace(day=1, hour=8, minute=40, second=0, microsecond=0)
     while day.weekday() >= 5:
         day += datetime.timedelta(days=1)
 set_time(day)
 cache.pre_game_time = day
-for cid in daughter_list:
+# 女儿与教师都从空闲开始：存档里带进来的半截行为（睡觉、吃饭、H）会让开头几十分钟的取样全是噪声
+for cid in daughter_list + teacher_list:
     cd = cache.character_data[cid]
     cd.sp_flag.is_h = False
     cd.sp_flag.imprisonment = False
     cd.hit_point = cd.hit_point_max
     cd.mana_point = cd.mana_point_max
+    cd.sp_flag.sleep = False
+    cd.sp_flag.is_follow = 0
     cd.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     cd.behavior.duration = 0
     cd.state = constant.CharacterStatus.STATUS_ARDER
@@ -124,9 +127,13 @@ def run_one_round(minute: int) -> tuple:
 error_list = []
 round_log = []
 in_class_log = []
-for index in range(6):
+teacher_log = []
+attend_start = sum(growth_handle.get_child_growth(cid).attend_class_count for cid in daughter_list)
+# 第一轮从 08:40 走 40 分钟，之后每轮 45 分钟：检查点落在每节课的中段（09:20 / 10:05 / 10:50 / 11:35 …）。
+#    第五轮起每节课的时长截到本节结束，节次交界处人人都在换教室，在交界处取样看到的全是「移动中」
+for index, minute in enumerate((40, 45, 45, 45, 45, 45)):
     try:
-        pl_round, npc_pass, stuck = run_one_round(45)
+        pl_round, npc_pass, stuck = run_one_round(minute)
     except Exception as error:
         import traceback
 
@@ -141,16 +148,38 @@ for index in range(6):
         if cd.behavior.behavior_id in (constant.Behavior.ATTENT_CLASS, constant.Behavior.SELF_STUDY, constant.Behavior.INTERN_CLASS) or tip is not None:
             in_class += 1
     in_class_log.append(in_class)
+    # 教师侧（第五轮）：本节有课的教师此刻应在课表上那间教室里授课
+    teaching_count = 0
+    right_room_count = 0
+    for cid in teacher_list:
+        teaching = schedule_handle.get_now_teaching(cid)
+        if teaching is None:
+            continue
+        teaching_count += 1
+        cd = cache.character_data[cid]
+        if cd.behavior.behavior_id == constant.Behavior.TEACH and class_ai.judge_in_scene(cid, teaching["classroom"]):
+            right_room_count += 1
+        else:
+            now_scene = map_handle.get_map_system_path_str_for_list(cd.position)
+            print(f"    教师 {cid}{cd.name} 应在{teaching['classroom']}，实际在 {now_scene} 做 {cd.behavior.behavior_id}（{cd.behavior.start_time} +{cd.behavior.duration}）")
+    teacher_log.append((right_room_count, teaching_count))
     stuck_text = ""
     if stuck:
         stuck_text = " 未收敛：" + "、".join(f"{cid}{cache.character_data[cid].name}({cache.character_data[cid].behavior.behavior_id})" for cid in stuck[:6])
-    print(f"  第 {index + 1} 轮 {cache.game_time}: 玩家 {pl_round} 轮 / NPC {npc_pass} 轮 / 未收敛 {len(stuck)} / 女儿在课 {in_class}/{len(daughter_list)}{stuck_text}")
+    print(f"  第 {index + 1} 轮 {cache.game_time}: 玩家 {pl_round} 轮 / NPC {npc_pass} 轮 / 未收敛 {len(stuck)} / 女儿在课 {in_class}/{len(daughter_list)}"
+          f" / 教师在对的教室授课 {right_room_count}/{teaching_count}{stuck_text}")
 check("六轮循环没有抛异常", not error_list, error_list)
 check("每轮都收敛（玩家 ≤ 30 轮、NPC ≤ 60 轮、无卡死角色）", all(r[0] <= 30 and r[1] <= 60 and r[2] == 0 for r in round_log), round_log)
-attend_total = sum(growth_handle.get_child_growth(cid).attend_class_count for cid in daughter_list)
-check("女儿们累计听课节数 > 0", attend_total > 0, attend_total)
-# 前四轮（09:45 ~ 12:00）都在上午的节次里，第五、六轮已是午休，所以只看前四轮
-check("上课节次内绝大多数女儿都在上课 / 自习 / 教室里", all(count >= len(daughter_list) * 0.8 for count in in_class_log[1:4]), in_class_log)
+attend_gain = sum(growth_handle.get_child_growth(cid).attend_class_count for cid in daughter_list) - attend_start
+check("女儿们累计听课节数 > 0", attend_gain > 0, attend_gain)
+# 前四个检查点（09:20 ~ 11:35）都在上午的节次中段，第五、六轮已是午休与下午
+check("上课节次内绝大多数女儿都在上课 / 自习 / 教室里", all(count >= len(daughter_list) * 0.8 for count in in_class_log[0:4]), in_class_log)
+# 第五轮修的主链：教师按课表走班，实践教室与大礼堂里的课同样有人讲（原先只有站在理论教室里的教师会开讲）。
+#    生理需求（吃饭、上厕所）排在上课之前，允许四个检查点里有一人次正好在处理需求
+teacher_right_total = sum(right for right, _total in teacher_log[0:4])
+teacher_need_total = sum(total for _right, total in teacher_log[0:4])
+check("本节有课的教师都在课表上那间教室里授课", teacher_need_total > 0 and teacher_right_total >= teacher_need_total - 1, teacher_log)
+check("上午四节里女儿平均每人记到 ≥ 3 节出勤（收益不再取决于谁先到教室）", attend_gain >= len(daughter_list) * 3, (attend_gain, len(daughter_list)))
 class_ai.get_skip_class_rate = _orig_rate
 
 section("跨天结算")

@@ -383,10 +383,10 @@ class Course_Select_Panel:
         head_draw.text = _("  本节各教室的课（选中即去上这节课）：\n")
         head_draw.draw()
         class_count = 0
-        # 必须逐间走 get_class_cell：它是全局课表的唯一读取入口，
-        #    直接遍历 class_schedule 会漏掉临时性技实操课的覆盖层，也漏掉从没排过课的教室
+        # 逐间走 get_class_cell（全局课表的唯一读取入口），但不叠加临时实操课：这里选的是**每周循环**的个人课表，
+        #    一次性的临时课列出来让人选，下周同一节就变成「已停课」（2026-09-12 第五轮）
         for classroom in schedule_handle.get_classroom_list():
-            cell = schedule_handle.get_class_cell(classroom, week_day, period)
+            cell = schedule_handle.get_class_cell(classroom, week_day, period, include_temp=False)
             if cell is None:
                 now_draw = draw.LeftDraw()
                 now_draw.width = int(self.width / 2)
