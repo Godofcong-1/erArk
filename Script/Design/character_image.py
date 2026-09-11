@@ -6,6 +6,7 @@ from Script.Core import (
     get_text,
     era_image
 )
+from Script.Config import game_config
 from Script.Design import handle_premise
 
 cache: game_type.Cache = cache_control.cache  # 游戏缓存数据
@@ -23,7 +24,7 @@ def find_character_image_name(character_id: int) -> str:
       若无符合项则返回原始立绘。
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    # 底图本身是否已经是幼女立绘（女儿专用图"女儿_N"、母亲萝莉图"{母名}_小"），是则不再叠加"_小"差分，否则会拼出"女儿_1_小_全裸"这种不存在的文件名
+    # 底图本身是否已经是幼女立绘（女儿专用图"女儿_N"、种族女儿图"女儿_{种族}"、母亲萝莉图"{母名}_小"），是则不再叠加"_小"差分，否则会拼出"女儿_1_小_全裸"这种不存在的文件名
     base_is_child_image = False
     # 判断是否为女儿（特殊角色）
     if character_data.relationship.father_id == 0:
@@ -44,6 +45,11 @@ def find_character_image_name(character_id: int) -> str:
             character_image_name = _(mather_image_name, revert_translation=True)
             # 母亲萝莉图的名字里已经带了"_小"
             base_is_child_image = True
+        # 再次选择自己所属种族的女儿图片，都没有时保留默认的女儿图片
+        else:
+            race_image_name = find_daughter_race_image_name(character_data)
+            if race_image_name != "":
+                character_image_name = race_image_name
     # 非女儿的正常干员角色
     else:
         character_image_name = _(character_data.name, revert_translation=True)
@@ -60,7 +66,7 @@ def find_character_image_name(character_id: int) -> str:
     diff_list = [child_diff, naked_diff, chest_diff, big_belly_diff, emotion_diff]
 
     # 图片索引以文件名首段（第一个"_"之前的部分）为键，与角色名不一定相同
-    # 例如女儿的底图是"女儿_1"，索引键为"女儿"，用角色名（女儿的自定义名）去查会永远查不到，导致差分匹配被整段跳过
+    # 例如女儿的底图是"女儿_1"或"女儿_丰蹄"，索引键为"女儿"，用角色名（女儿的自定义名）去查会永远查不到，导致差分匹配被整段跳过
     base_chara_key = base_name.split("_")[0]
     # 如果底图在差分索引中存在，则尝试匹配符合的候选图片
     if base_chara_key in era_image.image_data_index_by_chara:
@@ -107,6 +113,34 @@ def find_character_image_name(character_id: int) -> str:
         return half_body_name
     # 都不存在则返回原始名（可能会导致图片显示失败）
     return base_name
+
+def find_daughter_race_image_name(character_data: game_type.Character) -> str:
+    """
+    查找女儿所属种族的专用立绘名。
+    参数:
+      character_data (game_type.Character): 女儿的角色数据。
+    返回:
+      str: 种族女儿图的底图名（如"女儿_丰蹄"），该种族没有对应图片时返回空字符串。
+    功能描述:
+      按角色种族名在图片索引中查找"女儿_{种族名}"，兼容扁平命名与半身/全身图层命名；
+      种族名含"/"时（如"卡特斯/奇美拉"）再拆开逐个尝试，因为文件名中不能包含"/"。
+    """
+    race_data = game_config.config_race.get(character_data.race)
+    if race_data is None:
+        return ""
+    # 种族名在载入时已被翻译，需还原为中文原文才能对上图片文件名
+    race_name = _(race_data.name, revert_translation=True)
+    # 先尝试完整种族名，再尝试拆分后的各个子种族名
+    race_name_list = [race_name]
+    if "/" in race_name:
+        race_name_list += [name for name in race_name.split("/") if name != ""]
+    for now_race_name in race_name_list:
+        image_name = f"女儿_{now_race_name}"
+        # 扁平命名、半身图层、全身图层任一存在即视为该种族有女儿图
+        for layer_name in (image_name, f"{image_name}_半身", f"{image_name}_全身"):
+            if layer_name in era_image.image_data:
+                return image_name
+    return ""
 
 def child_judge(character_id: int) -> str:
     """
