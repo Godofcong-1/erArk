@@ -8,7 +8,7 @@
 - 状态：**已实施并完成收尾总检查**（2026-09-09 第十轮）；口上：四个按科目目录各 18 文件、性技 8 门已于 2026-09-09 补齐（提交 `f9804edbe` / `b0f0d0a54`），17 个实习岗位的师徒两侧全部覆盖
 - 适用代码快照：`master @ 6aa5090e3`
 - 实施前提：先通读总纲 §2 与方案全文；实施中发现与方案冲突的事实，**先更新方案再动代码**
-- ⚠️ **建议拆成两个提交推进**（总纲 §3）：
+- **建议拆成两个提交推进**（总纲 §3）：
   - **1a 功能闭环**（§2.1~§2.10）—— 用既有占位文本跑通流程，完成即可进入二期
   - **1b 口上填充**（§2.11）—— 129 个文件、约 1950 条，用 AI 批量生成后穿插校对，不阻塞二期
 
@@ -20,10 +20,10 @@
 
 | 文件 | 类型 | 改动 |
 | --- | --- | --- |
-| `tools/map_aa_build_education.py` | 新增 | AA 图生成脚本（⚠️ `Map` 不可手改，留白全为 U+2002） |
+| `tools/map_aa_build_education.py` | 新增 | AA 图生成脚本（`Map` 不可手改，留白全为 U+2002） |
 | `data/map/教/Map` | 改 | 由上述脚本生成；场景从 9 增至 18，全图 105U |
 | `data/map/教/Map.json` | 改 | `PathEdge` 星型结构扩到 18 个节点 |
-| `data/map/教/理论教室{一~六}/Scene.json` | 新增 6 | `SceneTag` 沿用 `Class_Room`（⚠️ 沿用是关键，见总纲 §2.4-A） |
+| `data/map/教/理论教室{一~六}/Scene.json` | 新增 6 | `SceneTag` 沿用 `Class_Room`（沿用是关键，见总纲 §2.4-A） |
 | `data/map/教/实践教室{一~三}/Scene.json` | 新增 3 | `SceneTag` 新增 `Practice_Room` |
 | `data/map/教/大礼堂/Scene.json` | 新增 1 | `SceneTag` 新增 `Auditorium` |
 | `data/map/教/教室/Scene.json` | 删 | 被 6 间理论教室取代 |
@@ -33,7 +33,7 @@
 
 | 文件 | 改动 |
 | --- | --- |
-| `data/csv/WorkType.csv:24~25` | 教师/学生行的 `place` 列「教室」→「教育区教室」（⚠️ 实测为纯显示文案，非功能依赖，见 §6.1 偏离 3） |
+| `data/csv/WorkType.csv:24~25` | 教师/学生行的 `place` 列「教室」→「教育区教室」（实测为纯显示文案，非功能依赖，见 §6.1 偏离 3） |
 | `data/csv/Facility_open.csv` | 为 10 间教室各加一行，`zone_cid` 按方案 §3.11 的解锁阶梯填 |
 | `data/csv/Entertainment.csv` | 加 `class_ok` 列（方案 §4.4），表头 5 行同步；16 项配 1，9 项配 0 |
 | `data/csv/Behavior_Data.csv` | 新增 `self_study` / `skip_class` / `check_report_card` 三个一段行为 + `show_off_study` 一个二段行为 |
@@ -41,7 +41,7 @@
 | `data/csv/Behavior_Introduce.csv` | 新增行为的介绍文本 |
 | `data/csv/InstructConfig.csv` | 「检查成绩单」玩家指令 |
 
-### 1.3 常量（7 个，⚠️ 编号不预分配，实施时现查空闲号）
+### 1.3 常量（7 个，编号不预分配，实施时现查空闲号）
 
 | 文件 | 改动 |
 | --- | --- |
@@ -63,7 +63,7 @@
 | `Script/StateMachine/default.py:441` | 移动到教室：从 `random.choice(place_data["Class_Room"])` 改为按课表取指定教室，查不到则回落原逻辑 |
 | `Script/StateMachine/default.py:2648 character_work_teach` | 教师授课：按课表取本节科目 |
 | `Script/StateMachine/default.py:2680 character_attend_class` | 学生听课：按个人课表判断该去哪 |
-| `Script/System/Instruct_System/handle_instruct.py:553~573` | ⚠️ **与上面两个状态机平行的实现，必须同步改**（方案 §2.2） |
+| `Script/System/Instruct_System/handle_instruct.py:553~573` | **与上面两个状态机平行的实现，必须同步改**（方案 §2.2） |
 | `Script/Design/handle_npc_ai.py` | 孩子的行为选择接入个人课表；体育/兴趣/实习课派往对应地点 |
 | `Script/Design/game_time.py` | 新增节次判定函数（时间 → 节次编号 0~8） |
 | `Script/UI/Panel/character_info_head.py:27` | `<课>` / `<翘>` 状态标识（方案 §3.22） |
@@ -79,10 +79,10 @@
 
 | 文件 | 内容 |
 | --- | --- |
-| `education_constant.py` | ⚠️ 实施时新增（§1.6 原表没有）：子系统常量统一定义文件，照 `Pregnancy_System/pregnancy_constant.py` 的成例。2026-09-08 第七轮把散在 13 个模块里的 114 个常量集中于此，见方案 §9.6 |
+| `education_constant.py` | 实施时新增（§1.6 原表没有）：子系统常量统一定义文件，照 `Pregnancy_System/pregnancy_constant.py` 的成例。2026-09-08 第七轮把散在 13 个模块里的 114 个常量集中于此，见方案 §9.6 |
 | `growth_handle.py` | 能力成长计算（速度曲线、教育区加成、上限判定） |
-| `class_ai.py` | ⚠️ 实施时新增（§1.6 原表没有）：上课时段的行为决策——体力闸、翘课闸、按课型派状态机 |
-| `auto_schedule.py` / `semester_handle.py` | ⚠️ 立项时**本期未建**：自动排课与学期切换推给二期，一期先把手动排课跑通（见偏离 21）。→ 均已于 2026-09-08 补上：`auto_schedule.py` 见第三轮与方案 §9.3，`semester_handle.py` 见第五轮与方案 §9.4 |
+| `class_ai.py` | 实施时新增（§1.6 原表没有）：上课时段的行为决策——体力闸、翘课闸、按课型派状态机 |
+| `auto_schedule.py` / `semester_handle.py` | 立项时**本期未建**：自动排课与学期切换推给二期，一期先把手动排课跑通（见偏离 21）。→ 均已于 2026-09-08 补上：`auto_schedule.py` 见第三轮与方案 §9.3，`semester_handle.py` 见第五轮与方案 §9.4 |
 | `schedule_handle.py` | 课表读写、教师/学生视角反查、节次查询、冲突判定 |
 | `auto_schedule.py` | 自动排课三种模式（补弱项 / 均衡 / 主修优先，口径 28） |
 | `semester_handle.py` | 学期切换、成绩单生成（方案 §3.13） |
@@ -97,7 +97,7 @@
 | --- | --- |
 | `tools/ArkEditor/csv/Premise.csv` | 新增前提同步（`tools/ArkEditor/load_csv.py:5` 读它，不同步则口上作者选不到） |
 | `tools/ArkEditor/csv/Behavior_Data.csv` | 新增行为同步 |
-| `tools/ArkEditor/csv/Effect.csv` | ⚠️ `:230` 的效果 512 描述已过时（写着"增加习得和学识经验"），改语义后同步 |
+| `tools/ArkEditor/csv/Effect.csv` | `:230` 的效果 512 描述已过时（写着"增加习得和学识经验"），改语义后同步 |
 
 ### 1.8 口上（129 个文件，约 1950 条 —— 1b 阶段）
 
@@ -114,29 +114,29 @@
 | `data/talk/daily/check_report_card.csv` | 1 | 30 | 单文件 |
 | `data/talk/work/skip_class.csv` | 1 | 10 | 单文件 |
 
-⚠️ 既有的 `data/talk/work/teach.csv` 与 `attent_class.csv` 各只有 1 条占位文本，随本批覆盖（总纲 §2.1 记录的历史欠账）。
+既有的 `data/talk/work/teach.csv` 与 `attent_class.csv` 各只有 1 条占位文本，随本批覆盖（总纲 §2.1 记录的历史欠账）。
 
 ---
 
 ## 2. 详细改动步骤
 
-> ⚠️ 全部 cid / 效果 id / 前提 id **不在此预分配**，实施时现查空闲号（方案 §7-7，plan_06 的教训）。
+> 全部 cid / 效果 id / 前提 id **不在此预分配**，实施时现查空闲号（方案 §7-7，plan_06 的教训）。
 > 数据结构定义一律**以方案 §4 为准**，本文件不重复。
 
 ### 2.1 教育区改建（第一步，单独成一个提交）
 
 1. 用 skill `draw-aa-map` 按方案 §3.10 的房间清单重排 `data/map/教/Map`
-2. 新建 10 个房间的 `Scene.json`；⚠️ 6 间理论教室的 `SceneTag` **必须沿用 `Class_Room`**，否则 `place_data`、3 条既有前提、既有隐奸口上全部失效（总纲 §2.4-A）
+2. 新建 10 个房间的 `Scene.json`；6 间理论教室的 `SceneTag` **必须沿用 `Class_Room`**，否则 `place_data`、3 条既有前提、既有隐奸口上全部失效（总纲 §2.4-A）
 3. 更新 `Map.json` 的 `PathEdge`
 4. 改 `WorkType.csv:24~25` 的 `place` 列（纯显示，功能由 `place_tag` 承担）
 5. 删除 `data/SceneData` / `data/MapData` / `data/PlaceData` / `data/ScenePath` 后跑 `init_data.py`
-6. 跑 `tools/map_aa_check.py` 验证 AA 图对齐（⚠️ 不要靠数列数判断，字体的实际步进宽度决定版面）
+6. 跑 `tools/map_aa_check.py` 验证 AA 图对齐（不要靠数列数判断，字体的实际步进宽度决定版面）
 7. **本步单独提交**，便于出问题时整体 revert
 
 ### 2.2 数据结构与存档
 
 1. `game_type.py` 加 `CHILD_GROWTH` 类（方案 §4.1 的代码块即最终定义）
-2. `Character.__init__` 加 `self.child_growth: CHILD_GROWTH = None`；⚠️ 只给持有素质 101~104 的角色实例化
+2. `Character.__init__` 加 `self.child_growth: CHILD_GROWTH = None`；只给持有素质 101~104 的角色实例化
 3. `Rhodes_Island` 加 `class_schedule`（方案 §4.2）
 4. `save_handle.py` 两处 `hasattr` 回填，照 `:331~334` 妊娠系列与 `:551` 的 `facility_level`
 
@@ -152,12 +152,12 @@
 ### 2.4 节次与学期判定
 
 1. `game_time.py` 加节次判定函数：时间 → 节次编号 0~8 或"无节次"
-   - 节次表见方案 §3.2；⚠️ 边界值验证见 §4.1
+   - 节次表见方案 §3.2；边界值验证见 §4.1
 2. 学期切换复用 `game_time.py:153 sub_time_now` 的切月判定，不新造时间周期（方案 §3.13）
 
 ### 2.5 新子系统骨架
 
-按 §1.6 建 `Script/System/Education_System/` 八个文件。⚠️ **数据在 Core、逻辑在 System**，`Rhodes_Island` 不得在 Core 顶部 import System，需要时函数内延迟 import（方案 §7-10）。
+按 §1.6 建 `Script/System/Education_System/` 八个文件。**数据在 Core、逻辑在 System**，`Rhodes_Island` 不得在 Core 顶部 import System，需要时函数内延迟 import（方案 §7-10）。
 
 先实现 `schedule_handle.py` 的读写与反查，其余模块依赖它。
 
@@ -170,14 +170,14 @@
 3. 按方案 §3.3 取基础值（理论 20 / 实践 35 / 礼堂 10 / 自习 10）
 4. 乘教育区效率加成 `(1 + Facility_effect 的 effect / 100)`（方案 §3.12 —— 这是把已配置未实装的数值接上）
 5. 能力升级时置 `show_off_ability` flag，不当场出文本（方案 §3.15 的延迟炫耀）
-6. ⚠️ 保持既有干员学生链可用：`work_type == 152` 的成年干员走同一条结算
+6. 保持既有干员学生链可用：`work_type == 152` 的成年干员走同一条结算
 
 ### 2.7 状态机与 AI 接课表
 
 1. `StateMachine/default.py:441`：按课表取指定教室，查不到回落 `random.choice`
 2. `:2648 character_work_teach`：按课表取本节科目
 3. `:2680 character_attend_class`：按个人课表判断去向
-4. `handle_instruct.py:553~573`：⚠️ **与 1~3 同步改**
+4. `handle_instruct.py:553~573`：**与 1~3 同步改**
 5. `handle_npc_ai.py`：孩子的行为选择接入个人课表——教室课走上述链，体育/兴趣/实习课直接派往对应地点执行既有行为（方案 §3.21，零新增行为）
 
 ### 2.8 缺课与翘课
@@ -190,14 +190,14 @@
 ### 2.9 新前提
 
 1. `handle_premise/__init__.py:302` 加 `Course` 分支，照既有 `Gift` 分支（方案 §3.17）
-   - ⚠️ 先确认当前课程科目放在 `behavior` 的哪个字段（总纲 §6-1，参照 `behavior.gift_id`，`game_type.py:1081`）
+   - 先确认当前课程科目放在 `behavior` 的哪个字段（总纲 §6-1，参照 `behavior.gift_id`，`game_type.py:1081`）
 2. `handle_premise_place.py` 加 `Practice_Room` / `Auditorium` 两个场景前提
 3. 同步 `tools/ArkEditor/csv/Premise.csv`
 
 ### 2.10 `<课>` 状态标识与面板
 
 1. `character_info_head.py:27 get_character_status_list` 加一段，照 `:43~50` 的 `<跟>` 写法（方案 §3.22）
-   - ⚠️ 一处改动同时覆盖 Tk 与 Web（`Web_Draw_System/status_panel.py:373` 复用同一函数并透传 tooltip），**不要写第二套**
+   - 一处改动同时覆盖 Tk 与 Web（`Web_Draw_System/status_panel.py:373` 复用同一函数并透传 tooltip），**不要写第二套**
 2. 三个面板按方案 §5.2~§5.4 实现；只用 `Script/UI/Moudle/draw.py` 的抽象绘制类
 3. 面板入口挂教育区办公室场景
 
@@ -205,7 +205,7 @@
 
 1. **先定稿前提写法**（§2.9 完成后）——否则 AI 生成的 premise 列不可用
 2. 各 CSV 表头 5 行照抄同目录既有文件；cid 从 1000 起（`buildconfig.py:189~193` 自动加文件名前缀防跨文件冲突）
-3. ⚠️ 孩子版口上**一律带 `self_is_player_daughter` 前提**——`Script/Design/talk.py:185~188 handle_special_talk_weight` 对女儿有默认 5 倍加权，这是孩子版稳定压过成人版的机制（方案 §3.23）
+3. 孩子版口上**一律带 `self_is_player_daughter` 前提**——`Script/Design/talk.py:185~188 handle_special_talk_weight` 对女儿有默认 5 倍加权，这是孩子版稳定压过成人版的机制（方案 §3.23）
 4. 用 skill `text-generation-for-instruction-code-generation` 按 §1.8 的目录分批生成，一次一个科目/岗位，人工校对
 5. 跑 `buildpo.py` + `buildmo.py`
 
@@ -270,7 +270,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 
 | 单元 | 回滚方式 | 备注 |
 | --- | --- | --- |
-| **地图改建** | revert 该单独提交 + 删场景缓存重跑 `init_data.py` | ⚠️ **唯一不可轻易回滚的部分**：存档中角色的 `position` 可能指向新房间，回滚后需把位于已删房间的角色回落到走廊。这正是要求它单独成一个提交的原因 |
+| **地图改建** | revert 该单独提交 + 删场景缓存重跑 `init_data.py` | **唯一不可轻易回滚的部分**：存档中角色的 `position` 可能指向新房间，回滚后需把位于已删房间的角色回落到走廊。这正是要求它单独成一个提交的原因 |
 | 数据结构与存档 | revert；旧档因 `hasattr` 回填天然兼容 | 新档存过 `child_growth` 后回滚，该字段会被忽略，不影响载入 |
 | 授课结算改造 | revert `Settle/default.py` 的改动 | 回到写死学识的旧行为 |
 | 状态机与 AI | revert；`random.choice` 回落逻辑本就保留 | 低风险 |
@@ -291,7 +291,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 | 文件 | 类型 | 实际改动 |
 | --- | --- | --- |
 | `tools/map_aa_build_education.py` | 新增 | AA 图生成脚本，照 `map_aa_build_training.py` 的 U 单位模型写；全图 105U，上排 8 格 + 走廊 + 下排 8 格，每格 12U |
-| `data/map/教/Map` | 改 | 由上述脚本生成（⚠️ 留白全为 U+2002，**不可手改**） |
+| `data/map/教/Map` | 改 | 由上述脚本生成（留白全为 U+2002，**不可手改**） |
 | `data/map/教/Map.json` | 改 | `PathEdge` 从 9 节点扩到 18 节点，星型结构，16 间房全部直通走廊 |
 | `data/map/教/理论教室{一~六}/Scene.json` | 新增 6 | `SceneTag` 沿用 `Class_Room`，`Scene_Img` 沿用「教室」 |
 | `data/map/教/实践教室{一~三}/Scene.json` | 新增 3 | `SceneTag` 新增 `Practice_Room` |
@@ -337,15 +337,15 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 
 | 文件 | 类型 | 实际改动 |
 | --- | --- | --- |
-| `data/csv/Facility_open.csv` | 改 | 加 7 行教室解锁：理论教室二/三→Lv2(152)、理论教室四+实践教室二→Lv3(153)、理论教室五+实践教室三→Lv4(154)、理论教室六→Lv5(155)。⚠️ 理论教室一 / 实践教室一 / 大礼堂 **不进本表**——不在表里即默认开放，正是 Lv1 就要有的三间 |
+| `data/csv/Facility_open.csv` | 改 | 加 7 行教室解锁：理论教室二/三→Lv2(152)、理论教室四+实践教室二→Lv3(153)、理论教室五+实践教室三→Lv4(154)、理论教室六→Lv5(155)。理论教室一 / 实践教室一 / 大礼堂 **不进本表**——不在表里即默认开放，正是 Lv1 就要有的三间 |
 | `data/csv/Entertainment.csv` | 改 | 新增 `class_ok` 列（表头 5 行同步）。16 项配 1，9 项配 0（8 项消费服务类 + 游泳改归体育课）；品酒不需要配，既有 `T7\|0` 前提已挡住未成年 |
 | `data/csv/Facility_effect.csv:97~101` | 改 | 教育区五级的 `info` 文案随改建更新（原 Lv1 写「开放基础设施:【教室】」，那间教室已不存在） |
 
-⚠️ **编号取值说明**：`Facility_open.csv` 的 06x 本是教育区块，但 069/070 已被疗养庭院的房间占用（既有编号不一致），只剩 063~068 六个空号，第七行取同样空闲的 060。cid 只作字典键，无语义约束，但仍记在此处备查。
+**编号取值说明**：`Facility_open.csv` 的 06x 本是教育区块，但 069/070 已被疗养庭院的房间占用（既有编号不一致），只剩 063~068 六个空号，第七行取同样空闲的 060。cid 只作字典键，无语义约束，但仍记在此处备查。
 
 #### 步骤 §2.3 行为与常量（2026-09-06）
 
-新增 3 个一段行为 + 1 个二段行为。⚠️ 编号均为实施时现查的空号，未预分配：
+新增 3 个一段行为 + 1 个二段行为。编号均为实施时现查的空号，未预分配：
 
 | cid | en_name | 名称 | 时长 | 触发 | tag | 取号理由 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -381,7 +381,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 
 **与方案的偏离**：
 
-0. ⚠️ **【重大】能力成长机制与方案 §3.1 的原假设不符，已推翻重写。** 方案原文写"上课当场调 `base_chara_experience_common_settle` 给对应能力的经验，等级由既有 `get_experience_level_weight` 自动换算"——实测发现：`Character.ability` 存的是**等级**不是经验，全项目没有能力经验字段；`get_experience_level_weight`（`attr_calculation.py:504`）**全仓库零调用方，是死代码**。真实链条是「习得状态 → 睡眠转珠 → 按 `AbilityUp.csv` 的珠+经验需求升级」。已改为完全复用该链，方案 §3.1 与 §3.9 已按实测重写，总纲 §2.3 补为第 11 条硬约束。
+0. **【重大】能力成长机制与方案 §3.1 的原假设不符，已推翻重写。** 方案原文写"上课当场调 `base_chara_experience_common_settle` 给对应能力的经验，等级由既有 `get_experience_level_weight` 自动换算"——实测发现：`Character.ability` 存的是**等级**不是经验，全项目没有能力经验字段；`get_experience_level_weight`（`attr_calculation.py:504`）**全仓库零调用方，是死代码**。真实链条是「习得状态 → 睡眠转珠 → 按 `AbilityUp.csv` 的珠+经验需求升级」。已改为完全复用该链，方案 §3.1 与 §3.9 已按实测重写，总纲 §2.3 补为第 11 条硬约束。
    - 连带影响一：**升级在当晚睡眠结算兑现，不是当场**，与已确认口径 7 的"当场换算等级"有出入（理由见方案 §3.1）。
    - 连带影响二：§3.9 的全部算例作废重算。新结论：学识 0→8 需习得珠 49,470 + 学识经验 1,145，约 659 节课，与"上课期约 720 节"的预算刚好吻合。
    - 意外收获：性技科目的升级需求本就是真实性交经验（膣技要 `E61`），课堂给不了——理论课攒珠、实操课攒经验天然成立，**零特判就落实了已确认口径 5**。
@@ -397,7 +397,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 
 **已知限制**：
 
-- ⚠️ **老存档读出来仍是旧地图**。`save_handle.py:496~516` 只在场景增删或 `scene_tag`/`scene_img`/`room_area` 变化时才刷新存档里的 `map_data`——本次确实是场景增删，理论上会刷新，但**必须用老存档实机验证**（列在 §4.2）。
+- **老存档读出来仍是旧地图**。`save_handle.py:496~516` 只在场景增删或 `scene_tag`/`scene_img`/`room_area` 变化时才刷新存档里的 `map_data`——本次确实是场景增删，理论上会刷新，但**必须用老存档实机验证**（列在 §4.2）。
 - 未解锁教室的门禁（`Facility_open.csv`）尚未配置，属步骤 §2.3，本步未做——当前 10 间教室全部可进入。**（→ 后于步骤 §2.3 配好：`Facility_open.csv:24~30` 七间教室按教育区等级解锁，`schedule_handle.judge_classroom_open` 读取，一期方案 §9.2.3）**
 
 #### 步骤 §2.8 缺课与翘课（2026-09-06）
@@ -415,7 +415,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 | --- | --- | --- |
 | `Script/System/Education_System/class_ai.py` | 新增 | 两道闸 + 派课的决策总入口 `judge_class_state_machine()`，返回状态机id，0 表示不接管 |
 | `Script/Core/constant/StateMachine.py` | 改 | `EDUCATION_SELF_STUDY = 713` / `EDUCATION_SKIP_CLASS = 714`（现查空号，701~712 已占、751 起是道具开关段） |
-| `Script/StateMachine/default.py` | 改 | 两个状态机实现，接在既有上学状态机之后。⚠️ 翘课是**两步**：人还在教室就先溜回宿舍，离开教室之后才开始摸鱼——"该在教室的人不在教室"正是翘课的可见表现 |
+| `Script/StateMachine/default.py` | 改 | 两个状态机实现，接在既有上学状态机之后。翘课是**两步**：人还在教室就先溜回宿舍，离开教室之后才开始摸鱼——"该在教室的人不在教室"正是翘课的可见表现 |
 | `Script/Design/handle_npc_ai.py:351` | 改 | 课表决策接在**工作分支之前**。排在工作前是必须的：孩子的"工作"就是上学，落到工作链只会随机挑一间教室（`StateMachine/default.py:460` 的 `random.choice`），课表就白排了 |
 | `Script/Core/game_type.py` | 改 | `CHILD_GROWTH` 加 `last_absent_period`（方案 §4.1 已同步） |
 | `Script/Settle/past_day_settle.py:62` | 改 | 次日零点无条件清翘课flag，紧邻既有的香薰flag清零 |
@@ -432,7 +432,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 
 #### 实施中发现的偏离（§2.8）
 
-9. **⚠️ 上一步埋的 BUG：`show_off_study` 的结算注册错了命名空间。** 二段行为的效果走 `constant.settle_second_behavior_effect_data`（`settle_behavior.py:504 add_settle_second_behavior_effect`），用的是 `constant_effect.SecondEffect` 这套**独立的编号空间**，函数签名也只有 `(character_id, change_data)` 两个参数。而 §2.3 里我把 `handle_show_off_study_add_just` 写成了一段行为的样子：`add_settle_behavior_effect` + `BehaviorEffect.SHOW_OFF_STUDY_ADD_ADJUST = 551` + 四参数签名，放在 `Script/Settle/default.py` 里。这样注册出来的函数**永远不会被二段结算找到**，运行时会打印"没有找到对应的结算效果"然后跳过。本步已改正：函数移到 `Script/Settle/Second_effect.py`、改用 `add_settle_second_behavior_effect`、编号改为 `SecondEffect.SHOW_OFF_STUDY = 622`（接在既有最大号 621 之后），`Behavior_Effect.csv` 的 1328 行同步改指 622。
+9. **上一步埋的 BUG：`show_off_study` 的结算注册错了命名空间。** 二段行为的效果走 `constant.settle_second_behavior_effect_data`（`settle_behavior.py:504 add_settle_second_behavior_effect`），用的是 `constant_effect.SecondEffect` 这套**独立的编号空间**，函数签名也只有 `(character_id, change_data)` 两个参数。而 §2.3 里我把 `handle_show_off_study_add_just` 写成了一段行为的样子：`add_settle_behavior_effect` + `BehaviorEffect.SHOW_OFF_STUDY_ADD_ADJUST = 551` + 四参数签名，放在 `Script/Settle/default.py` 里。这样注册出来的函数**永远不会被二段结算找到**，运行时会打印"没有找到对应的结算效果"然后跳过。本步已改正：函数移到 `Script/Settle/Second_effect.py`、改用 `add_settle_second_behavior_effect`、编号改为 `SecondEffect.SHOW_OFF_STUDY = 622`（接在既有最大号 621 之后），`Behavior_Effect.csv` 的 1328 行同步改指 622。
    §2.3 的验证之所以没抓到，是因为当时只断言了"效果串是 `[551]`"，没有断言"551 在哪个注册表里"。本步的测试补上了这一条。
 10. **`CHILD_GROWTH` 加了一个方案里没有的字段 `last_absent_period`。** 起因是缺课计数不幂等：休息行为 30 分钟、一节课 45 分钟，同一节课里 AI 会两次走到缺课分支，`absent_count` 会多加一次，成绩单的出勤率直接失真。用 `[日期序数, 节次]` 做去重标记最省事，也天然可存档（都是 int）。**已先改方案 §4.1 再改代码**，符合本文件开头的实施前提。
 11. **`§2.7-5 个人课型（体育/兴趣/实习）的派发暂未接线**（→ 已于偏离 13 接线，本条只作历史记录），`class_ai.judge_class_state_machine()` 对这三种课型返回 0 交回既有 AI。原因是它们的落地方式还有一处需要定夺：体育课复用 `training` / `exercise` / `swimming` 三个既有行为、效果照走既有 `Behavior_Effect` 配置（方案 §3.21 的"零新增结算公式"成立）；但**实习课不成立**——导师是"该岗位当时的在岗干员"，他执行的是自己的工作行为，身上没有任何把经验给学徒的效果，学徒侧必须另有一次结算才能拿到方案 §3.21 承诺的"按师徒等级差学该岗位 `ability_id`"。这与"零新增结算"直接冲突，需要单独处理，不适合顺手带过。
@@ -458,9 +458,9 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 | `data/csv/Behavior_Effect.csv` | 改 | `230,intern_class,1511 - 1512 - 552`，前两个是与听课同档的体力气力消耗 |
 | `data/csv/Behavior_Introduce.csv` | 改 | 1 行介绍 |
 | `Script/Core/constant/{Behavior,BehaviorStr,Behavior_Int,CharacterStatus}.py` | 改 | `INTERN_CLASS` 四处同步 |
-| `Script/Core/constant_effect.py` | 改 | `INTERN_CLASS_ADD_ADJUST = 552`。⚠️ **551 空着不复用**——它刚随 `show_off_study` 迁到 `SecondEffect` 命名空间，留空以免与历史记录混淆 |
+| `Script/Core/constant_effect.py` | 改 | `INTERN_CLASS_ADD_ADJUST = 552`。**551 空着不复用**——它刚随 `show_off_study` 迁到 `SecondEffect` 命名空间，留空以免与历史记录混淆 |
 | `Script/Core/constant/StateMachine.py` | 改 | `EDUCATION_MOVE_TO_COURSE_PLACE = 715` / `EDUCATION_DO_COURSE = 716` |
-| `Script/StateMachine/default.py` | 改 | 两个状态机。⚠️ **时长一律截到 45 分钟**：战斗训练本是 120 分钟、锻炼与游泳 60 分钟，照原时长一节体育课会吃掉整个上午；既有结算按 `add_time` 线性计算，截断天然成立 |
+| `Script/StateMachine/default.py` | 改 | 两个状态机。**时长一律截到 45 分钟**：战斗训练本是 120 分钟、锻炼与游泳 60 分钟，照原时长一节体育课会吃掉整个上午；既有结算按 `add_time` 线性计算，截断天然成立 |
 | `Script/System/Education_System/schedule_handle.py` | 改 | 加 `PE_PLACE_DATA`、`get_course_place()`、`get_intern_mentor()`、`get_behavior_name_by_cid()` |
 | `Script/System/Education_System/growth_handle.py` | 改 | 基础值表加课型 5（习得 40 / 经验 4，介于理论 30 与实践 50 之间）；无教师降级改为**分课型**：教室课掉到自习档，实习课只把本岗位基础值减半 |
 | `Script/System/Education_System/class_ai.py` | 改 | 个人式课型的派发（此前返回 0 的死分支） |
@@ -546,7 +546,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
    指明只有 `context` 列参与翻译。
 2. **cid 从 1000 起**，构建时会自动加 `<父目录名>_<文件名>` 前缀防跨文件冲突
    （`buildconfig.py:190`）——实测 `data/talk/work/teach/teach_knowledge.csv` 的 1000 变成了
-   `teach_teach_knowledge1000`。⚠️ 前缀是**父目录+文件名**，所以 §3.18 的命名会出现
+   `teach_teach_knowledge1000`。前缀是**父目录+文件名**，所以 §3.18 的命名会出现
    `teach_teach_` 这样的重复；`data/talk/daily/gift/` 早就是这样了，本期沿用不另立规矩。
 3. **教师侧不带年龄前提**：方案 §3.18 原写"30 条 = 3 课型 × 2 年龄 × 5"，但 `teach` 的
    `character_id` 是教师，他身上没有学生的年龄可判。改为 3 课型 × N 条，年龄差分只做在
@@ -620,7 +620,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 | 文件 | 类型 | 改动 |
 | --- | --- | --- |
 | `Script/Core/constant_promise.py` | 改 | `HAVE_INTERN_STUDENT` / `NOT_HAVE_INTERN_STUDENT` |
-| `Script/Design/handle_premise/handle_premise_work.py` | 改 | 两条实现；⚠️ 它是 `schedule_handle.get_intern_mentor()` 的**反向查询**，两边读同一份判据（同场景 + 对方行为是 `intern_class` + 对方本节的实习目标正好是我的岗位），不会出现"学徒找得到导师、导师却不知道有学徒"的单向成立 |
+| `Script/Design/handle_premise/handle_premise_work.py` | 改 | 两条实现；它是 `schedule_handle.get_intern_mentor()` 的**反向查询**，两边读同一份判据（同场景 + 对方行为是 `intern_class` + 对方本节的实习目标正好是我的岗位），不会出现"学徒找得到导师、导师却不知道有学徒"的单向成立 |
 | `tools/ArkEditor/csv/Premise.csv` | 改 | 2 行同步 |
 | `data/talk/work/intern_mentor/` | 新增 14 | 42 条，覆盖 12 个能查到工作行为的岗位 |
 
@@ -629,7 +629,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 `behavior_id` 可以挂口上。这四个岗位的**学徒侧**口上照常有（`intern_class` 是学徒自己的行为），
 只是带教侧不出文本。
 
-⚠️ 铁匠与检修工程师同用 `repair_equipment` 行为、药材与花草种植员同用 `plant_manage_crop`，
+铁匠与检修工程师同用 `repair_equipment` 行为、药材与花草种植员同用 `plant_manage_crop`，
 所以这两对各拆成两个文件，靠场景前提分开——与实习课学徒侧按场景分文件的做法一致。
 
 #### 步骤 §2.11 收尾：补齐第五批遗留的四个实习岗位（2026-09-06）
@@ -657,7 +657,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 | 宿舍管理员 031 | 220400 | 327 `dormitory_admin_organize` | `organize_dormitory_opinion` | ✅ 在舍管房 |
 | 图书馆管理员 101 | 220105 | 306 `character_work_library_2` | `read_book` | ✅ 在图书馆 |
 | 住院医生 062 | 220305 | 323 `character_work_ward_round` | `ward_round` | ✅ 在住院部（修正 `place_tag` 之后） |
-| 检修工程师 021 | 220205 | 308 `character_work_maintenance_2` | `maintenance_facilities` | ⚠️ 否，见偏离 29 |
+| 检修工程师 021 | 220205 | 308 `character_work_maintenance_2` | `maintenance_facilities` | 否，见偏离 29 |
 
 至此 17 个可选实习岗位中，**16 个师徒两侧都有口上**，检修工程师只有学徒侧。
 
@@ -666,7 +666,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 22. **缺失 8 门性技科目（70~77 指技/舌技/足技/胸技/膣技/肛技/腰技/榨精）的课堂口上（包括上课、自习、教学、炫耀）。** 受影响的是 `teach/` `attent_class/` `self_study/` `second_show_off_study/` 四个目录里对应这 8 门科目的 **32 个文件、约 530 条**。
     → **2026-09-09 已补齐**：用户删掉旧稿后由主代理手写 276 条（教学 3 课型 × 4、上学 3 课型 × 2 年龄 × 2、自习与炫耀各 2 年龄 × 3，每科 36 条；`teach_semen_squeeze.csv` 沿用用户保留的 11 条），前提结构与其余 10 门完全一致；运行时按 科目 × 课型 × 年龄 逐档验证进池。
     → **2026-09-09 再扩充**：32 个文件各补到 50 条以上（287 → 1655 条），新增维度——教学按教师该科等级三档 × 课型、上午头两节（`time_0_to_9`）/ 下午、一对一 / 多人；上学按学生该科等级三档 × 年龄、出勤率（`CVP_A1_Growth|2`，<60 缺课多 / >95 全勤）、学期进度（`CVP_A1_Growth|9`，<30 初 / 30~70 中 / >70 末）；自习再加时段与有同学在场；炫耀按刚升到的等级（`LE_2 / G_2&LE_5 / G_5`）× 年龄、早晨 / 下午 / 晚上（`time_night`）、学期进度、出勤率。每个文件 20~24 个差分档，同文件内无重复 / 近似句。
-   ⚠️ **机制上不受影响**：性技能力的升级需求本就是真实性交经验（方案 §3.1 的发现），课堂理论只能攒珠不能升级；
+   **机制上不受影响**：性技能力的升级需求本就是真实性交经验（方案 §3.1 的发现），课堂理论只能攒珠不能升级；
    没有专属口上时会回落到 `teach.csv` / `attent_class.csv` 里那条 `high_1` 占位地文，功能链不断。
 23. **`chara_4091_U-Official` 已经有 3 条 `attent_class` 的专属口上**，前提是 `CVP_A3|4091_A|45_LE_3` 一类的学识分档。本期新增的通用口上与它并存、互不覆盖——查总条数时要记得这几条也在里面（试点验证时按总数断言就翻了车，改成按 cid 前缀筛才对）。
 24. **实习课的口上按场景分而不是按岗位分**（见上），所以是 16 个文件而不是 §1.8 写的 18 个。
@@ -674,7 +674,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
     **教训**：判断"某个岗位当班时干什么"，不能只看 `WorkType.csv` 一张表就下结论——`auto_ai_work` 为「无」恰恰说明它走的是目标链，应当接着去 `target.csv` 里按 `work_is_xxx` 前提搜一遍。当时少搜了这一步，就把"我没找到"写成了"不存在"。
 26. **为带教侧新增了一条前提 `have_intern_student`。** 这是本期第二次为口上加前提（第一次是 §2.9 的三个 `Course*` token）。判据必须与学徒侧的 `get_intern_mentor()` 完全对称，否则会出现"学徒拿到了导师加成、导师却不知道有学徒"这种半边成立的状态——测试里专门用"改换实习岗位"的用例钉住了这一点。
 27. **`WorkType.csv` 里两个岗位的 `place_tag` 是错的，实习课踩到了。** 031 宿舍管理员写的是 `Dormitory_Manager`，而真正的场景标签是 `Dormitory_Manager_Room`（`handle_premise_place.py:1591`）——`constant.place_data` 里根本没有前者这个键，于是 `get_course_place()` 对这个岗位**返回空列表**，学徒压根走不到岗位上去，这门实习课等于是废的。062 住院医生写的是 `Clinic`，但 `Clinic` 标签下是急诊室与门诊室，住院医生实际在住院部（`Inpatient_Department`）查房，学徒被送去了一个没有导师的房间。两条都改了。
-    ⚠️ **改这两个字段是安全的**：`work_type.place_tag` 全仓只有 `handle_npc_ai.py:366` 一处读，且被 `work_type_data.auto_ai and ...` 短路保护，而这两个岗位的 `auto_ai` 都是 0，所以基础游戏的行为一点没动，受影响的只有本期新写的 `get_course_place()`。
+    **改这两个字段是安全的**：`work_type.place_tag` 全仓只有 `handle_npc_ai.py:366` 一处读，且被 `work_type_data.auto_ai and ...` 短路保护，而这两个岗位的 `auto_ai` 都是 0，所以基础游戏的行为一点没动，受影响的只有本期新写的 `get_course_place()`。
 28. **`get_course_place()` 原先"同标签的房间等价，取第一间"的假设不成立。** 实测：`Clinic` 含急诊室与门诊室但坐诊医生只在门诊室；`Dormitory_Manager_Room` 有 9 间、各区管理员只守自己那间；`Training_Room` 含射击房与木桩房；`Production_Workshop` 含生产车间 1~5。取第一间的话，学徒有很大概率站在一间没有导师的房里，然后 `get_intern_mentor()` 返回 -1、降级成见习——而且**不会报任何错**，只会表现为"实习课好像总是没人带"。
     改成三级取房：①**该标签下哪间房此刻有这个岗位的在岗干员就去哪间**（口径 53：实习就是跟着此刻在做这份工作的人）→ ②取与岗位 `place` 同名的那间（坐诊医生 → 门诊室）→ ③退回第一间。三级都是纯读取，无副作用，导师换房时学徒下一节次自然跟过去。
 29. **检修工程师仍然只有学徒侧口上，但原因换了。** 不是"没有稳定行为"（那是错的），而是**师徒必然不同场景**：目标链 220200 让他在运维部进入"要检修"状态（行为是 `SHARE_BLANKLY`，1 分钟），随即 517 移动到损坏设施处，220205 才在**那里**执行 `maintenance_facilities`；而学徒是待在岗位地点（运维部）不动的。`mentor_maintenance.csv` 已经从错挂的 `repair_equipment`（那是铁匠的行为，害得它一直在铁匠铺里跟 `mentor_blacksmith.csv` 抢词条）改回正确的 `maintenance_facilities`，条文也重写了；在一期"学徒待在岗位地点"的模型下它基本不会触发，等哪一期做了"学徒跟着导师走"再自然生效。
@@ -701,7 +701,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 
 | 验证项 | 结果 |
 | --- | --- |
-| `tools/map_aa_check.py 教` | ✅ **0px 错位**，10 个字号（12/14/16/18/20/22/24/26/30/40）全部通过。⚠️ 这是目前仓库里唯一在 0 容差下通过的地图（`训练` 需 `--tol 2`，其余地图均 FAIL） |
+| `tools/map_aa_check.py 教` | ✅ **0px 错位**，10 个字号（12/14/16/18/20/22/24/26/30/40）全部通过。这是目前仓库里唯一在 0 容差下通过的地图（`训练` 需 `--tol 2`，其余地图均 FAIL） |
 | 生成期自检 | ✅ 15 行每行 105U；全图无 ASCII 空格；无裸尖括号 |
 | 按钮名 ↔ 目录名 | ✅ 双向零差集（避免 `map_handle.py:363` 的 `RecursionError`） |
 | `Map.json` PathEdge ↔ 目录 | ✅ 双向零差集，18 节点全部双向边 |
@@ -743,11 +743,11 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 | `config_behavior` 含 self_study/skip_class/check_report_card/show_off_study，cid 与时长正确 | ✅ 4/4 |
 | `config_behavior_effect_data` 的效果串：`[1511,1512,548]` / `[549]` / `[550]` / `[551]` | ✅ 4/4 |
 
-⚠️ **本表最后一项后来被推翻**：`show_off_study` 的 `[551]` 是错的 —— 551 注册在**一段**结算表里，二段行为永远取不到它。§2.8 已改为 `[622]`（`SecondEffect` 命名空间），详见 §2.8 的偏离 9。这份断言当时只查了效果串的**值**、没查它注册在**哪张表**，所以放过了这个 BUG。
+**本表最后一项后来被推翻**：`show_off_study` 的 `[551]` 是错的 —— 551 注册在**一段**结算表里，二段行为永远取不到它。§2.8 已改为 `[622]`（`SecondEffect` 命名空间），详见 §2.8 的偏离 9。这份断言当时只查了效果串的**值**、没查它注册在**哪张表**，所以放过了这个 BUG。
 | 全部改动文件通过 `py_compile` | ✅ |
 | 两套既有测试（31 项 + 24 项）全部回归通过 | ✅ |
 
-⚠️ 排查记录：`game_config.config_behavior` 是**按 `en_name` 字符串索引**的，不是按 cid。首次验证时按 cid 取而报 `KeyError: 211`，虚惊一场。
+排查记录：`game_config.config_behavior` 是**按 `en_name` 字符串索引**的，不是按 cid。首次验证时按 cid 取而报 `KeyError: 211`，虚惊一场。
 
 **实际文案样例**：
 - 学生：`理论课·学识技能｜理论教室一｜授课：凯尔希｜第1节`
@@ -826,11 +826,11 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 | 既有五套测试（31 + 24 + 42 + 45 + 33 项）全部回归通过 | —— | ✅ |
 | 全部改动文件 `py_compile`；`buildconfig.py` 退出码 0 | —— | ✅ |
 
-⚠️ 排查记录：`game_config.config_instruct` 按 **cid** 索引，按 `instruct_id` 字符串查要走
+排查记录：`game_config.config_instruct` 按 **cid** 索引，按 `instruct_id` 字符串查要走
 `config_instruct_by_id`；这与 `config_behavior`（按 en_name 字符串索引）**正好相反**。
 两张表的索引口径不一致，查错会拿到 `KeyError`，看上去像配置没生效。
 
-⚠️ 面板的**绘制循环**（`flow_handle.askfor_all` 要等玩家输入）无法在无头环境里跑，
+面板的**绘制循环**（`flow_handle.askfor_all` 要等玩家输入）无法在无头环境里跑，
 上述断言覆盖的是**数据层与注册层**：候选表、格子文本、复制与清空、入口挂载。
 按钮的实际点击流程留给 §6.4 的游戏内清单。
 
@@ -846,7 +846,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 | `buildpo.py` | ❌ 本机没有 GNU gettext 的 `xgettext`，脚本在 `:29` 因找不到 `erArk.pot` 中止 |
 | `buildmo.py` | ❌ 本机 conda 环境没装 `polib` |
 
-⚠️ **`buildpo.py` 在没有 `xgettext` 的机器上会删掉文件**：它 `:10~11` 一进门就无条件
+**`buildpo.py` 在没有 `xgettext` 的机器上会删掉文件**：它 `:10~11` 一进门就无条件
 `os.remove(data/po/zh_CN/LC_MESSAGES/erArk_py.po)`，再靠 `xgettext` 重建（`:24`）。
 `xgettext` 不存在时重建那步静默失败，脚本在 `:29` 复制 `erArk.pot` 时才报 `FileNotFoundError` 中止——
 此时 `erArk_py.po` 已经没了。本轮就踩了这一下，已 `git checkout` 恢复。
@@ -854,7 +854,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 `buildpo.py` 都会丢这个文件。建议把 `:10~11` 的删除挪到 `xgettext` 成功之后，或先判断
 `shutil.which("xgettext")` 再动手。（本计划范围外，只记录不改。）
 
-⚠️ 影响面：`buildconfig.py` 已经把**CSV 来源**的文本刷进了 `data/po/`（git 里那几个 po 的改动就是它生成的），
+影响面：`buildconfig.py` 已经把**CSV 来源**的文本刷进了 `data/po/`（git 里那几个 po 的改动就是它生成的），
 缺的只是从 `.py` 源码里抽 `_()` 字符串这一步——也就是本期三个面板与状态标识里新写的界面文案。
 游戏默认语言是 zh_CN 而这些原文本身就是中文，**不影响显示**，只影响将来做其他语种翻译时的词条完整性。
 需要在装有 `xgettext` 与 `polib` 的环境上补跑这两步。
@@ -882,7 +882,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 | 八套测试（31 + 24 + 42 + 45 + 33 + 30 + 13 + 8）全部回归通过 | ✅ |
 | `buildconfig.py` 退出码 0 | ✅ |
 
-⚠️ 两个验证脚本自身的坑，记下来免得后面重踩：
+两个验证脚本自身的坑，记下来免得后面重踩：
 
 1. **`self_is_player_daughter` 判的是 `relationship.father_id == 0`**（`handle_premise_other.py:1159`），
    **不是**素质 101~104。`RELATIONSHIP.father_id` 的默认值是 **-1**，fixture 里不显式置 0，
@@ -904,7 +904,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 | 文本卫生：321 条全部含 `{Name}`、多行；三个孩子版目录全部带 `self_is_player_daughter` | ✅ |
 | 十套测试全部回归通过 | ✅ |
 
-⚠️ 又一次被自己的旧断言绊到：`test_showoff.py` 里写死了"self_study 7 条 / show_off 5 条"，
+又一次被自己的旧断言绊到：`test_showoff.py` 里写死了"self_study 7 条 / show_off 5 条"，
 那是只有 1 个试点文件时的数字，目录铺开后必然失败。**同一个数字不要在两个脚本里各断言一次**——
 总数交给覆盖面最广的那个脚本（`test_talk40.py`），其余只断言非空。
 
@@ -919,7 +919,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 | 十一套测试全部回归通过 | ✅ |
 | `buildconfig.py` 退出码 0 | ✅ |
 
-⚠️ 校验脚本自己踩的两个坑：
+校验脚本自己踩的两个坑：
 
 1. **扫描范围写成了 `os.path.dirname(单文件)`**，结果把整个 `data/talk/work/` 与 `daily/`
    的既有口上全扫了进来，报出一堆"不合规"——那些是别人的文件，格式本来就不同。
@@ -939,7 +939,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 | 口上总校验：**92 个文件 522 条**（收尾批次后为 96 文件 535 条），行为id / 前提名 / 文本卫生全部合规 | ✅ |
 | 十二套测试全部回归通过 | ✅ |
 
-⚠️ 又一次踩到快照过期：总校验脚本用的是导出到文件的前提名清单，新增前提之后忘了重新导出，
+又一次踩到快照过期：总校验脚本用的是导出到文件的前提名清单，新增前提之后忘了重新导出，
 于是把刚加的 `have_intern_student` 判成了未定义。**从外部文件读的校验基准，每次改动源头都要重导。**
 
 #### 步骤 §2.11 收尾：实习课选房与四个补写岗位（20 项断言全部通过）
@@ -957,13 +957,13 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 | 十三套测试全部回归通过（growth / premise / mentor / talk / talk10 / talk40 / showoff / talkall / personal / classmark / classai / panel / place） | —— | ✅ |
 | `buildconfig.py` 退出码 0 | —— | ✅ |
 
-⚠️ 这批里最值钱的一项是**用状态机实调去校验口上的行为id**。第五批把 `mentor_maintenance.csv`
+这批里最值钱的一项是**用状态机实调去校验口上的行为id**。第五批把 `mentor_maintenance.csv`
 挂在了 `repair_equipment` 上（那是铁匠的行为），当时的测试只查"这个行为id在 `config_behavior` 里存在"，
 所以一路绿灯——存在不等于**是这个岗位的**。改成"把状态机真跑一遍，看它给角色赋了哪个行为，
 再跟口上文件里写的比"之后，这个错当场就露出来了。
 **校验一个 id 时，要校验的是它指向对不对，而不是它存不存在。**
 
-⚠️ 顺带记一条环境坑：`character_work_ward_round` / `character_work_maintenance_2` 会调
+顺带记一条环境坑：`character_work_ward_round` / `character_work_maintenance_2` 会调
 `basement.calc_facility_efficiency()` 折算时长，无头环境下 `cache.rhodes_island.facility_level` 是空的，
 补零也不行（`config_facility_effect_data[name][0]` 取不到）。本测只关心它赋了哪个行为，
 所以直接把 `calc_facility_efficiency` 钉成 `lambda: 1.0` —— 无头测试里，**与被测目标无关的基建依赖直接钉死比喂 fixture 划算**。
@@ -998,7 +998,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
     让容器重新接管输入」——也就是「解锁上面那排页签」。方案 §5.2/§5.3/二期 §5.1 的线框图里画的
     `[返回]` 被实现成了这个东西，容器自己的 `[返回]` 反而要等它之后才画得出来。本轮把三个
     「返回上级」整个删除，线框图同步改为标注「由页签容器统一提供」。
-    ⚠️ 这**打破了宿舍面板确立的既有范式**（`Dormitory_System/宿舍管理系统设计文档.md` 写着
+    这**打破了宿舍面板确立的既有范式**（`Dormitory_System/宿舍管理系统设计文档.md` 写着
     「每页均提供返回上级按钮，保持与现有基建面板一致」）。教育面板不再有它，是因为宿舍面板的
     子页面本就不持有自己的循环，那里的「返回上级」是真的进出子流程；教育面板的则是循环嵌套的副产物。
 
@@ -1071,7 +1071,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 
 38. **方案 §3.3 的「实践课侧重动手类」此前从未落实过。** 那一条一直只是方案里的文字，
     代码对 18 门科目一视同仁，手排时实践教室照样能排话术。本轮的自动排课**第一次把它变成代码**
-    （`PRACTICE_SUBJECT_SET`）。⚠️ 但**手排仍不受限**——`_select_subject` 没改，
+    （`PRACTICE_SUBJECT_SET`）。但**手排仍不受限**——`_select_subject` 没改，
     这是有意的：自动排课给的是合理默认值，不该反过来限制玩家手排。
 
 39. **教育管理系统新增第二个入口，且不需要任何新机制。** 管理罗德岛跳子系统走的是嵌套函数调用
@@ -1079,7 +1079,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
     是无害空操作。全仓库没有「记住来源面板」机制，也不需要。详见方案 §9.3.4。
 
 40. **日程模板的列错位是 `{:<10}` 对中文失效。** `str.__format__` 按 `len()` 补齐、终端按显示列排版。
-    四行的字符数**全都是 57**，显示列宽却是 82/75/71/61。⚠️ 这类错位**用 `len()` 是测不出来的**，
+    四行的字符数**全都是 57**，显示列宽却是 82/75/71/61。这类错位**用 `len()` 是测不出来的**，
     回归断言必须用 `text_handle.get_text_index()` 实算显示宽。
 
 #### 单元测试结果
@@ -1122,7 +1122,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 41. **课型缩写被去掉了，因为教室名已经说明了课型。** 「理论教室一」必然是理论课，
     再标一个「[理]」是重复；`COURSE_TYPE_SHORT` 随之收窄到只剩个人式的三种课型。
     副产物是宽度余量从 2 列涨到 6 列——最坏组合由 23 列降到 19 列，格子宽 25 列。
-    ⚠️ `CenterButton` 超宽时走的截断分支（`draw.py`）**砍 2 个字符补 `~` 且完全不补齐宽度**，
+    `CenterButton` 超宽时走的截断分支（`draw.py`）**砍 2 个字符补 `~` 且完全不补齐宽度**，
     一旦触发，整行网格会左移错位而不是简单地截断。所以回归里穷举了
     **全部 18 科目 × 10 教室 = 180 种组合**逐一算显示宽，而不是只测几个样本。
     今后若新增更长的科目名或教室名，这一格会先坏——测试会先报出来。
@@ -1166,7 +1166,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 43. **`report_card_flag` 此前从无写入方，是一个「先有字段、后无写入」的半截功能。**
     字段在一期就写进了 `CHILD_GROWTH`，「检查成绩单」指令、行为、结算、口上也都齐了，
     唯独没有任何一处把它置 True，养成总览的「本学期成绩单待查看」永远不出现。
-    ⚠️ **这种半截状态不会报任何错**——面板照画、指令照能用，只是内容是错的
+    **这种半截状态不会报任何错**——面板照画、指令照能用，只是内容是错的
     （给的是终身累计而不是本学期）。**教训：字段与它的写入方要在同一轮里落地**，
     否则只能靠人工盘口径才发现。
 
@@ -1180,7 +1180,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
     二期加的 `schedule_template_id` / `schedule_override` / `follow_mother_flag`、
     四期加的字段，在更早的存档里其实都是缺的，只是还没人撞上 `AttributeError`。
     本轮改成**按新结构体的属性表整体回填**，一次补齐历史欠账。
-    ⚠️ 每个角色各 `new` 一个默认体，否则 dict/list 这类可变默认值会被多个角色共享。
+    每个角色各 `new` 一个默认体，否则 dict/list 这类可变默认值会被多个角色共享。
 
 46. **成绩档位的空值必须是 −1 而不是 0。** 0 是「优秀」档，
     没有养成数据的角色若回落成 0，全岛没上过学的人都会通过优秀档的口上前提。
@@ -1193,7 +1193,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 
 48. **学期长度是季月的日历天数（28~31），方案原文的「约 30 天」是错的。**
     非季月被时钟整段跳过，季月本身的每一天都是可游玩日，两者重合，
-    所以直接 `calendar.monthrange` 即可。⚠️ 写死 30 会在 2 月与大月上各错一两天，
+    所以直接 `calendar.monthrange` 即可。写死 30 会在 2 月与大月上各错一两天，
     进度条与「还剩几天」都会偏。已先改方案 §3.13 再改代码。
 
 #### 单元测试结果
@@ -1225,14 +1225,14 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 - **结算两条路径**：把 `base_chara_*_common_settle` 换成空操作以隔离被测分支，
   抓 `NormalDraw.draw` 的文本，断言有快照时发冻结那份并清 flag、无快照时发「截至目前」且 flag 不动。
 
-⚠️ 三个 fixture 陷阱（今后写养成相关的无头测试都会撞上）：
+三个 fixture 陷阱（今后写养成相关的无头测试都会撞上）：
 1. 前提系统的通用闸门会读 `h_state.body_item[14]`，最小角色 fixture 必须
    先 `attr_calculation.get_h_state_reset()`，否则 `KeyError: 14`；
 2. 同一个闸门还会顺带判**交互对象**（默认是玩家 0）的同一个字段，所以玩家也要初始化；
 3. `favorability` 是 `{0: 0}` 起步的（`character_handle.py:70`），空 dict 会让
    `CVP_*_F_*` 前提在 `favorability[0]` 上 `KeyError`。
 
-⚠️ 还有一个测试脚本本身的坑：`os._exit()` **不会 flush 缓冲区**，
+还有一个测试脚本本身的坑：`os._exit()` **不会 flush 缓冲区**，
 输出重定向到文件时会把全部 PASS 行丢光、只留下一个 `EXIT=0`。
 要么在 `os._exit` 前 `sys.stdout.flush()`，要么用 `python -u`。
 
@@ -1274,7 +1274,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 49. **成绩单只存一份是第五轮自己埋的坑。** 「冻结快照」这个决定是对的（避免查看时现算），
     但存成**单份**就把历史一并弄丢了——学期成绩本来就该能纵向比，
     玩家看不出「上学期是不是比这学期好」。改成带上限的列表，并给第五轮那几天的存档做迁移。
-    ⚠️ **必须有上限**：一个孩子养到成年约十几个学期，多孩存档不设上限会让存档持续变大。
+    **必须有上限**：一个孩子养到成年约十几个学期，多孩存档不设上限会让存档持续变大。
 
 50. **翻页下标必须是面板的属性，不能是局部变量。** 容器 `Education_Manage_Panel` 每轮 `while`
     都会重画子页，局部变量每轮都被重置，玩家点一次「上一学期」马上又跳回最新那份。
@@ -1282,14 +1282,14 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
     都得挂在面板实例上**。
 
 51. **§5.4 的「本学期增量」写了五轮才落实。** 不是遗漏，是**依赖没到位**：
-    「本学期」这个概念要等第五轮的学期制上线才存在。⚠️ 这类「方案写了但当期做不了」的条目，
+    「本学期」这个概念要等第五轮的学期制上线才存在。这类「方案写了但当期做不了」的条目，
     应当在方案里当场标出依赖与预计落地期，否则就会像 `semester_handle` 那样悬空好几期。
 
 52. **四期口径 65 此前只落实了一半。** 「体力不足的必修学生到场、不计缺课」那半在
     `class_ai.py:249` 实装了；但四期方案 §682 与 §757-26 明写的另一半——
     「模板编辑面板实时判体力，不可选中并标『体力不足，仅旁观』」——**从未实装**，
     `judge_hp_low_only_watch` 写好了却没有任何调用者，玩家仍能把体力低的学生拖进群交模板。
-    本轮接上。⚠️ **只在 `cache.sex_class_mode` 下生效**：`show_target_chara_list` 是
+    本轮接上。**只在 `cache.sex_class_mode` 下生效**：`show_target_chara_list` 是
     普通群交共用的面板，不加这道闸会改掉既有玩法。
 
 53. **`judge_student_conflict` 是设计冗余，不是漏接。** §3.14 列了三类冲突，
@@ -1318,7 +1318,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 - **宽度**：教师按钮加了「/N节」之后穷举最坏组合，断言不超过 31 列的格位
   （超了会触发 `LeftButton` 的截断分支，整行网格左移）。
 
-⚠️ 本轮的测试脚本自身踩了两个坑，记下来：
+本轮的测试脚本自身踩了两个坑，记下来：
 `Growth_Panel.student_list` 平时由 `draw_page` 每轮重算，直接调 `handle_yrn` 要先手动喂一份，
 否则它在换孩子之前就 `return` 了；群交模板面板的类名是 `Edit_Group_Sex_Temple_Panel`
 而不是想当然的 `Group_Sex_Panel`。
@@ -1358,14 +1358,14 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 55. **散落不是「不整齐」，是让作者只能重复写。** 扫出 2 个同名常量各写两份
     （`ABSENT_HP_RATE`、`CLASSROOM_COURSE_TYPE_SET`）、1 个同物两名
     （`FOLLOW_MOTHER_ENTERTAINMENT_ID` 与 `ENTERTAINMENT_FOLLOW_MOTHER` 都是娱乐 176）。
-    ⚠️ **三份重复里有两份的注释明写了「此处另写一份是为了避免循环导入」**——
+    **三份重复里有两份的注释明写了「此处另写一份是为了避免循环导入」**——
     问题当时就被记下来了，只是**没有解法**：两个模块都要用同一个数，互相 import 会成环。
     常量单独成文件正是那个解法。这类「注释里写着已知缺陷」的地方，
     往后盘查时应当当成待办来读，而不是当成说明。
 
 56. **6 处函数内 import 只为取一个常量。** `semester_handle` 有 4 处、
     `auto_schedule` 与 `growth_panel` 各 1 处，都是 `from ... class_schedule_panel import SUBJECT_ABILITY_LIST`，
-    理由是「面板模块提到文件顶层会循环导入」。⚠️ 这些 import 在函数体里，
+    理由是「面板模块提到文件顶层会循环导入」。这些 import 在函数体里，
     **每次调用都要走一次导入机制**，而 `get_semester_level_change` 是成绩单结算的热路径。
     搬家后 6 处全删，改成模块顶层一次性 import 常量文件。
 
@@ -1382,16 +1382,16 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 59. **三对该相等的常量改为派生，从结构上杜绝漂移。**
     `WEEK_DAY_COUNT = len(WEEK_NAME)`、`CHILD_TALENT_SET = set(STAGE_TALENT_NAME)`、
     `CLASSROOM_COURSE_TYPE_SET` 由三个 `COURSE_TYPE_*` 推出。
-    ⚠️ 派生要节制：只对**注释里已经写明「两者必须一致」**的那几对做，
+    派生要节制：只对**注释里已经写明「两者必须一致」**的那几对做，
     别把普通常量也算成表达式——常量文件的第一价值是「一眼能看见这个数是多少」。
 
 60. **搬家不许顺手改语义。** 两条自设红线：
-    ⚠️ **不给字符串加 `_()`**——`SLOT_NAME`、`COURSE_TYPE_NAME` 等原本没有翻译标记，
+    **不给字符串加 `_()`**——`SLOT_NAME`、`COURSE_TYPE_NAME` 等原本没有翻译标记，
     加上去会改变 PO 词条集合，那是另一件事；
-    ⚠️ **不搬函数内的局部常量表**——它们只服务一处，搬出去反而要跳文件读。
+    **不搬函数内的局部常量表**——它们只服务一处，搬出去反而要跳文件读。
 
 61. **改写必须按 token 走，不能按文本替换。** 用 `tokenize` 逐 NAME 令牌改，
-    天然不碰字符串与注释。⚠️ 唯一踩到的坑是**括号式 from-import**：
+    天然不碰字符串与注释。唯一踩到的坑是**括号式 from-import**：
     `from ... import (\n    WEEK_NAME, get_period_time_text)` 里的 `WEEK_NAME`
     前一个令牌是 `(` 而不是 `import`，被当成裸引用改成了
     `education_constant.WEEK_NAME`，写出一行语法错误。单行的
@@ -1400,7 +1400,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 
 62. **删定义会顺手吃掉 black 要求的两行空行。** 常量块与其后的 `def` 之间原本是两行空行，
     连块带空行一起删之后只剩一行。本机没装 black，改用「与 HEAD 版逐个 `def` 比对空行数、
-    只补回变少的那些」的办法修，15 处。⚠️ 判据要排除**装饰器**（`@register_provider`
+    只补回变少的那些」的办法修，15 处。判据要排除**装饰器**（`@register_provider`
     下面的 `def` 本来就是 0 行空行）与**区块横幅**（`# ---` 三行注释块的中间两行同理），
     否则会误报一大片。
 
@@ -1412,7 +1412,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 本轮断言的核心只有一条，其余都围着它转：
 
 - **114 个常量的取值搬家前后完全一致**——逐个 `git show HEAD:<文件>` 取出原定义的表达式源码，
-  在受限命名空间里求值，与新文件的运行时值逐个比对。⚠️ 这是纯搬家唯一真正要证明的事，
+  在受限命名空间里求值，与新文件的运行时值逐个比对。这是纯搬家唯一真正要证明的事，
   「能 import」「能跑」都证明不了某个数字有没有被抄错。
 - **HEAD 版本确实有 114 个不同名常量、且跨文件同名重复正好是那 2 个**——
   反向锁住基线，免得日后有人加了常量却不更新这条断言还以为它在保护自己。
@@ -1425,7 +1425,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 - 游戏内没有跑过：本轮不改任何行为，风险集中在 import 期，
   而 13 个教育模块 + 子系统外 5 个引用方的导入都已在无头环境里实跑过。
 - `education_constant` 依赖 `official_event_handle`，若日后公务事件系统在**模块顶层**
-  反向 import 教育系统，这个环会立刻炸在 import 期。⚠️ 目前它只在函数内 import
+  反向 import 教育系统，这个环会立刻炸在 import 期。目前它只在函数内 import
   （`official_event_handle.py:128`，带 `noqa: F401` 的注册用副作用导入），
   那条注释里也写明了理由。
 - 本机没有 black，新文件与改动文件的格式只按「与 HEAD 比对空行数」这一条修过，
@@ -1450,10 +1450,10 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 
 63. **按 `ability_type` 筛科目会多筛出一个 90 隐蔽。** 类型5（技术）里除了 70~77 八门性技，
     还有一个隐蔽——它是隐奸系统的熟练度，不是能开课教的科目。
-    ⚠️ 只按类型筛会让课表里冒出一门「隐蔽课」，实操课也会把它列进主修。
+    只按类型筛会让课表里冒出一门「隐蔽课」，实操课也会把它列进主修。
     立 `NOT_SUBJECT_ABILITY_SET = {90}` 显式排除并写明理由，**不用 `cid < 90` 这类边界条件**——
     那种写法挡不住下一次往类型5里加非科目的能力。
-    ⚠️ 这条也说明「改为从配置现算」不是无脑替换：**先要确认那一维在配置里真的存在**。
+    这条也说明「改为从配置现算」不是无脑替换：**先要确认那一维在配置里真的存在**。
 
 64. **`PRACTICE_SUBJECT_SET` 推不出来，只能继续列举。** Ability.csv 没有「是不是动手类」这一维。
     注释里写明它是例外，免得下一个人以为漏改了。同理 `CHILD_TALENT_ID_LIST` 的四个id 也写死：
@@ -1461,7 +1461,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 
 65. **三张科目表其实是一条链，此前各算各的。** 理成
     `SUBJECT_ABILITY_LIST` → `MALE_ONLY_SUBJECT_SET` → `FEMALE_SUBJECT_LIST` → `SEX_CLASS_ABILITY_LIST`。
-    ⚠️ 顺带发现 `auto_schedule.get_auto_subject_list()` 与 `PRENATAL_SUBJECT_LIST`
+    顺带发现 `auto_schedule.get_auto_subject_list()` 与 `PRENATAL_SUBJECT_LIST`
     **算的是同一个东西**（全部科目去掉腰技），只是一个叫「自动排课能排的」、一个叫「胎教覆盖的」。
     改名为 `FEMALE_SUBJECT_LIST`（女儿学得了的科目）后两处共用一张。
 
@@ -1470,23 +1470,23 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 
 67. **给硬编码中文包 `_()`，不如直接读配置。** 素质名走 `config_talent[id].name` 时**自带翻译**——
     `game_config` 载入时对所有 `name` 列跑过 `get_text._()`（`game_config.py:536`），
-    PO 里早有 `婴儿 → Baby`。⚠️ 因此这类现取的名字**绝不能再包一层 `_()`**，包了反而对不上词条。
+    PO 里早有 `婴儿 → Baby`。因此这类现取的名字**绝不能再包一层 `_()`**，包了反而对不上词条。
     这条得写进注释，否则下一个人按「字符串就包 `_()`」的规律一扫就会包上去。
 
 68. **有三处 `_()` 不是体例问题，是活BUG。** `EDUCATION_ZONE_NAME`、`PRESET_TEMPLATE_SLOT_NAME`、
     `PE_PLACE_DATA` 的键都不是拿来显示的，是拿去和**翻译过的**配置/场景数据比对的。
     写死中文在非中文语言下分别导致：教育区成长加成整个失效、四套预设日程模板全部套用失败、
-    体育课永远找不到上课地点。⚠️ **判断一个字符串该不该翻译，看的不是它长什么样，
+    体育课永远找不到上课地点。**判断一个字符串该不该翻译，看的不是它长什么样，
     而是它要和谁比对**——同一个文件里 `Class_Room`（场景标签）、`通用1`（事件uid）、
     `GROWTH_REPORT_PREV`（面板哨兵）就一个都不能包。
 
 69. **场景名走的是 pickle 缓存，翻译只在冷构建那一次生效。** `map_config.init_map_data()`
     有缓存就直接 `pickle.load`，只有冷构建才走 `get_text._(SceneName)`。
-    ⚠️ 于是**场景名跟的是「缓存生成时的语言」而不是当前语言**——我第一次验证时正是撞在
+    于是**场景名跟的是「缓存生成时的语言」而不是当前语言**——我第一次验证时正是撞在
     「缓存中文、会话英文」这个状态里，一度以为自己把体育课改坏了。
     改用「照 `map_config.py:64` 那行的写法直接对 Scene.json 求值」验证，
     冷构建下 `scene_name` 就是 `'Stake Room'`，与 `_("木桩房")` 一致。
-    ⚠️ **验证一个「载入期做的转换」，不能只看缓存里的成品**。
+    **验证一个「载入期做的转换」，不能只看缓存里的成品**。
     这是整个游戏的既有问题（改语言不重建缓存则全岛地名不变），不是本表独有，记在这里备查。
 
 #### 单元测试结果
@@ -1500,7 +1500,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 - **90 隐蔽确实是类型5、且确实被排除**——正反两面都断言，免得哪天有人把排除表删了还以为没事。
 - **`_()` 的正反覆盖**：用 AST 走每个常量的取值表达式，分出「裸字符串」与「`_()` 包着的字符串」，
   11 个必须全包、6 个必须一个都不包（场景标签、事件uid、面板哨兵、排版空白）。
-  ⚠️ 反向那半更要紧：正向漏了只是不翻译，反向误包会直接写坏数据键。
+  反向那半更要紧：正向漏了只是不翻译，反向误包会直接写坏数据键。
 - **现取的名字没有被再包一层 `_()`**。
 
 #### 尚未覆盖的验证
@@ -1532,12 +1532,12 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
     它做了三件事：把新场景加进存档、同步场景标签与图片、删掉存档里已不存在的场景。
     唯独没有第四件——**被删场景里的角色，position 不会跟着改**。
     此后每一次 `cache.scene_data[该路径]` 都是硬崩，全仓库有 226 处这样的直取。
-    ⚠️ 这个函数里其实已经有过一次同类修补：2024年7月把「人气快餐开封菜」改名为
+    这个函数里其实已经有过一次同类修补：2024年7月把「人气快餐开封菜」改名为
     「约翰老妈汉堡店」时，专门写了一段循环去改角色的 `position[-1]`。
     **改名想到了，删除没想到**——而删除比改名更致命，改名只是错位置，删除是崩游戏。
 
 64. **修复必须无条件执行，不能放在 `change_map_flag` 里。**
-    ⚠️ 这是本轮最容易写错的一点：删除循环在 `if change_map_flag:` 内，
+    这是本轮最容易写错的一点：删除循环在 `if change_map_flag:` 内，
     只在「地图有变动」的那一次读取里跑。它删掉死场景之后，存档被重新保存，
     此后每次读取 `change_map_flag` 都是假——**坏位置于是永远留在存档里，再也没有代码会碰它**。
     实测正是如此：15 个存档里，存档 9 和 99 的死场景键已经被删干净了（`scene_data` 里 0 处），
@@ -1587,7 +1587,7 @@ del /S /Q data\SceneData data\MapData data\PlaceData data\ScenePath
 
 #### 实施中发现的偏离（编号接 69 往下）
 
-> ⚠️ 上一节「2026-09-09 第八轮」把编号误从 63 重编了一遍（63~66 与 2026-09-08 第八轮的 63~66 撞号），
+> 上一节「2026-09-09 第八轮」把编号误从 63 重编了一遍（63~66 与 2026-09-08 第八轮的 63~66 撞号），
 > 本节从 70 起，之后不要再回落。
 
 70. **页签固定宽度，不再按人数均分。** 原来 1 个人时页签占满整行、8 个人时各占 1/8，

@@ -15,7 +15,7 @@
     3. **交互对象还原**：判前提与跑结算时会临时把主体的 `target_character_id` 指向互动对象，
        必须放在 `finally` 里还原——那是行为循环在实时读的字段
 
-⚠️ 本模块**不 import 任何部门**：部门在自己的模块里用 `register_provider` 反向注册，
+本模块**不 import 任何部门**：部门在自己的模块里用 `register_provider` 反向注册，
    注册表是唯一的耦合点。未注册提供者的部门走默认提供者，于是新增一个部门的事件只要写 CSV。
 """
 import random
@@ -32,7 +32,7 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 OFFICIAL_EVENT_DAILY_MAX = 8
-""" 全局每日入队硬顶（养成 + 各部门合计）。⚠️ 这是安全阀不是常态：
+""" 全局每日入队硬顶（养成 + 各部门合计）。这是安全阀不是常态：
     常态由各部门提供者自己的节流决定，撞到这个数说明部门开得太多了 """
 
 DEPARTMENT_EVENT_DAILY_MAX = 2
@@ -118,7 +118,7 @@ def init_provider():
     """
     载入各部门的候选提供者
 
-    ⚠️ 在函数内 import：提供者住在 Script/System 的各部门包里，模块级 import 会绕出循环导入。
+    在函数内 import：提供者住在 Script/System 的各部门包里，模块级 import 会绕出循环导入。
        这是本模块与各部门之间**唯一**的接触点，新增部门时在这里加一行即可（不加也能用默认提供者）。
     Keyword arguments:
     无
@@ -181,7 +181,7 @@ def get_queue_max() -> int:
     """
     取当前的队列长度硬上限
 
-    ⚠️ 上限随各部门声明的容量放宽：养三个女儿的玩家本来就该有更长的待办清单，
+    上限随各部门声明的容量放宽：养三个女儿的玩家本来就该有更长的待办清单，
        用一个固定的12会让后面的事件全被丢掉
     Keyword arguments:
     无
@@ -215,7 +215,7 @@ def judge_premise_pass(premise_text: str, character_id: int = 0, partner_id: int
     """
     判定一组前提是否成立，返回总权重
 
-    ⚠️ 判定期间临时把主体的交互对象指向 partner_id：前提里的 A2 与 target_* 系列
+    判定期间临时把主体的交互对象指向 partner_id：前提里的 A2 与 target_* 系列
        于是指向本次事件的互动对象（无互动对象时为博士），判完立刻还原，
        不能留着不还——交互对象是行为循环在用的实时字段
     Keyword arguments:
@@ -275,7 +275,7 @@ def judge_event_done(uid: str, character_id: int) -> bool:
     """
     判定这个主体是否已经经历过这条事件
 
-    ⚠️ **所有**事件都按角色去重（Plan 23 方案 §3.3），不再只查一次性事件：
+    **所有**事件都按角色去重（Plan 23 方案 §3.3），不再只查一次性事件：
        同一个孩子不会再遇到同一件事，但别的孩子仍可各自触发同一条
     Keyword arguments:
     uid -- 事件uid
@@ -380,7 +380,7 @@ def get_default_department_pick_list() -> List[dict]:
     默认提供者：给没有注册专属提供者的部门挑今日候选
 
     以博士（角色0）为判定主体，按前提筛选、按权重加权抽取，最多 DEPARTMENT_EVENT_DAILY_MAX 条。
-    ⚠️ 这条路径是「新增一个部门只写CSV」的兑现处：不写任何代码也能让部门事件跑起来
+    这条路径是「新增一个部门只写CSV」的兑现处：不写任何代码也能让部门事件跑起来
     Keyword arguments:
     无
     Return arguments:
@@ -394,7 +394,7 @@ def get_default_department_pick_list() -> List[dict]:
             if not judge_event_can_enqueue(uid, 0):
                 continue
             event_data = game_config.config_official_event[uid]
-            # ⚠️ 需要角色主体的事件跳过：本路径固定以博士（0号）为主体，
+            # 需要角色主体的事件跳过：本路径固定以博士（0号）为主体，
             #    把一条写给某个干员/孩子的事件派到博士头上，正文里的称呼与结算都会落错人。
             #    这类事件要由该部门自己注册提供者来挑主体（教育区的 get_today_growth_event_pick_list 即是）
             if int(event_data.get("subject", SUBJECT_NONE) or SUBJECT_NONE) == SUBJECT_CHARACTER:
@@ -419,7 +419,7 @@ def check_new_day_official_event():
     每日结算时筛选并入队今日的公务事件
 
     各部门的提供者**自行节流**后给出今日候选，这里只负责汇总、打散与封顶：
-    ⚠️ 打散是必要的——不打散的话撞上全局硬顶时，永远是注册得早的那个部门吃满名额
+    打散是必要的——不打散的话撞上全局硬顶时，永远是注册得早的那个部门吃满名额
     Keyword arguments:
     无
     Return arguments:
@@ -451,7 +451,7 @@ def clean_official_event_queue():
 
     失效的三种：主体角色已不在角色表里（跨版本存档、周目切换）、事件已从配置里删掉、
     互动对象已不存在（后者不丢事件，退回博士即可，否则口上转换与结算会 KeyError 打断公务流程）。
-    ⚠️ 静默处理，不报错也不提示——玩家对一条自己从没见过的事件消失没有感知，
+    静默处理，不报错也不提示——玩家对一条自己从没见过的事件消失没有感知，
        但一个 KeyError 会直接打断公务流程
     Keyword arguments:
     无
@@ -515,7 +515,7 @@ def get_option_list(uid: str, character_id: int = 0, partner_id: int = 0) -> Lis
     """
     取一条事件的选项列表，并判定各选项的前提
 
-    ⚠️ 不满足前提的选项**置灰保留**而不是隐藏：让玩家看见「这里本来有更好的选择，
+    不满足前提的选项**置灰保留**而不是隐藏：让玩家看见「这里本来有更好的选择，
        但我没养到」，隐藏了就等于这条线从没存在过
     Keyword arguments:
     uid -- 事件uid
@@ -552,7 +552,7 @@ def handle_ri_effect(effect_list: List[str]):
     """
     执行一条罗德岛全局数值的结算（CVE_RI_<类型>_<G/L/E>_<值>）
 
-    ⚠️ 不去扩 settle_behavior 的主体判别：那里的属性映射是 getattr(character_data, ...)
+    不去扩 settle_behavior 的主体判别：那里的属性映射是 getattr(character_data, ...)
        硬绑角色对象的，加一个全局主体要同时改主体判别、change_data 记录与Web数值收集三处。
        公务事件的结算串本来就由本模块逐项分发，在这里认前缀成本最低（方案 §3.6）
     Keyword arguments:
@@ -588,8 +588,8 @@ def handle_effect_text(effect_text: str, character_id: int = 0, partner_id: int 
         CVE_A1/A2/A3...  角色数值结算（含养成数值 CVE_A1_Growth|N_G_值），走既有的综合结算
         CVE_RI_...       罗德岛全局数值结算（本系统新增，方案 §3.6）
         纯数字            Behavior_Effect 表里的结算函数id，复杂效果走这条
-    ⚠️ 结算全程把主体的交互对象指向 partner_id，使 A2 指向本次事件的互动对象；结算完立刻还原
-    ⚠️ 结算用的 change_data 是一次性的、不往界面上抛数字：
+    结算全程把主体的交互对象指向 partner_id，使 A2 指向本次事件的互动对象；结算完立刻还原
+    结算用的 change_data 是一次性的、不往界面上抛数字：
        事件的后果提示写方向不写数值，抛出「好感+8」会把决断变成算数题
     Keyword arguments:
     effect_text -- & 连接的结算串
@@ -634,7 +634,7 @@ def settle_official_event_option(uid: str, character_id: int, partner_id: int, o
     """
     结算玩家选定的选项，并把这次决断写进履历
 
-    ⚠️ 无论事件标没标里程碑都写履历：它既是「同一个角色不重复触发」的依据，
+    无论事件标没标里程碑都写履历：它既是「同一个角色不重复触发」的依据，
        也是养成总览里履历栏的内容来源
     Keyword arguments:
     uid -- 事件uid

@@ -2232,7 +2232,7 @@ def handle_sex_class_end_early(character_id: int) -> int:
     """
     性技实操课提前下课
 
-    ⚠️ 口上在效果结算之前就输出了（settle_behavior.py:407 早于 :410 的效果循环），
+    口上在效果结算之前就输出了（settle_behavior.py:407 早于 :410 的效果循环），
        所以这三条前提判定时 running 还没被清，judge_end_type() 拿得到正确的档位。
     Keyword arguments:
     character_id -- 角色id
@@ -2328,7 +2328,7 @@ def handle_sex_class_reserved(character_id: int) -> int:
     """
     正在进行的性技实操课是预约排进课表的那节（Plan 22 四期 §3.28.10 开课口上分档）
 
-    ⚠️ 开课口上在 start_sex_class() 把课标记为 running 之后才输出，所以这里读得到 reserved 标志；
+    开课口上在 start_sex_class() 把课标记为 running 之后才输出，所以这里读得到 reserved 标志；
        旧档里开课前就存在的条目没有这个键，按当场开课处理。
     Keyword arguments:
     character_id -- 角色id

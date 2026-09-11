@@ -26,7 +26,7 @@
 | `Script/Core/constant/Behavior_Int.py` | 改 | `follow_mother` 的 cid |
 | `Script/Core/constant/CharacterStatus.py` | 改 | 跟随母亲状态 cid |
 | `Script/Core/constant_effect.py` | 改 | 见学结算的效果 id |
-| `Script/Settle/past_day_settle.py` | 改 | 娱乐刷新**之后**改写孩子的 `entertainment_type`（⚠️ 时序，方案 §2.1） |
+| `Script/Settle/past_day_settle.py` | 改 | 娱乐刷新**之后**改写孩子的 `entertainment_type`（时序，方案 §2.1） |
 | `Script/Settle/default.py` | 改 | 见学结算实现（按母亲工作的 `ability_id` 加经验） |
 | `Script/Design/handle_npc_ai.py` | 改 | 幼女未排课节次走跟随母亲；母亲无效时的回落链 |
 | `Script/System/Pregnancy_System/pregnancy_handle.py:637` | 改 | `check_grow_to_girl` 内加性格选边与职业倾向提示；`chest_grow` / `body_part_grow` 接入 `care_point` |
@@ -36,17 +36,17 @@
 | `data/talk/daily/follow_mother.csv` | 新增 | 10 条（母亲有工作 / 无工作 2 档 × 5） |
 | `tools/ArkEditor/csv/Behavior_Data.csv` | 改 | 新行为同步 |
 
-⚠️ **不改 `game_type.py` 与 `save_handle.py`**：本期用到的四个字段已在一期建好并回填（一期方案 §4）。若实施时发现字段缺失，说明一期没按方案做全，**先补一期再继续**，不要在本期另建字段。
+**不改 `game_type.py` 与 `save_handle.py`**：本期用到的四个字段已在一期建好并回填（一期方案 §4）。若实施时发现字段缺失，说明一期没按方案做全，**先补一期再继续**，不要在本期另建字段。
 
 ---
 
 ## 2. 详细改动步骤
 
-> ⚠️ 全部 cid / 效果 id 不在此预分配，实施时现查空闲号。
+> 全部 cid / 效果 id 不在此预分配，实施时现查空闲号。
 
 ### 2.1 CSV 与常量
 
-1. `Entertainment.csv` 加「跟随母亲」「自由玩耍」两行；⚠️ `class_ok` 配 0，它们是日程活动不是兴趣课
+1. `Entertainment.csv` 加「跟随母亲」「自由玩耍」两行；`class_ok` 配 0，它们是日程活动不是兴趣课
 2. `Behavior_Data.csv` / `Behavior_Effect.csv` / `Behavior_Introduce.csv` 加 `follow_mother`
 3. 常量五处同步；`tools/ArkEditor/csv/Behavior_Data.csv` 同步
 4. 跑 `buildconfig.py`
@@ -58,7 +58,7 @@
 3. 新建 `schedule_template_panel.py`（方案 §5.1）；「批量套用」走既有的通用 NPC 选择面板
 4. `course_select_panel.py` 加"日程模板：X [改]"一行（方案 §5.2）
 
-### 2.3 日程执行链（⚠️ 时序硬约束）
+### 2.3 日程执行链（时序硬约束）
 
 改 `Script/Settle/past_day_settle.py`：
 
@@ -66,13 +66,13 @@
 2. **在刷新之后**插入孩子的 `entertainment_type` 改写，照 `egg_handle.replace_entertainment_for_eggs` 的挂点（方案 §2.2）
 3. 改写规则：只覆盖该时段内**完全没有课**的情况；有课的时段跳过（方案 §3.6）。**（2026-09-10 已改：不再避让有课的时段，课表在节次级别优先，方案 §9.2.9）**
 
-⚠️ 顺序颠倒是本期最容易犯的错，且症状是"日程时灵时不灵"，很难查。实施后用 §4.1 的第一条断言直接验。
+顺序颠倒是本期最容易犯的错，且症状是"日程时灵时不灵"，很难查。实施后用 §4.1 的第一条断言直接验。
 
 ### 2.4 幼女跟随母亲
 
 1. `handle_npc_ai.py`：幼女（素质 102）+ 当前节次未排课 → 置 `follow_mother_flag`，走 `follow_mother` 行为
 2. **回落链**：按方案 §3.24 的表逐条实现五种母亲无效情形
-   - ⚠️ 母亲在 H / 监禁 / 无意识时**必须**回落育儿室，既有跟随链不判这个
+   - 母亲在 H / 监禁 / 无意识时**必须**回落育儿室，既有跟随链不判这个
 3. `Script/Settle/default.py` 加见学结算：读母亲 `work.work_type` → `WorkType.csv` 的 `ability_id` → 基础值 6 × 速度系数（母亲该能力等级，走一期方案 §3.1 的曲线）
 4. 母亲 `work_type == 0` 时不加见学经验，只加 `care_point` 与好感
 
@@ -81,14 +81,14 @@
 改 `Script/System/Pregnancy_System/pregnancy_handle.py:637 check_grow_to_girl`，在既有的 `chest_grow` / `body_part_grow` 调用附近插入：
 
 1. 四对性格素质按 `personality_point` 符号选边写 `talent[271~278]`
-2. ⚠️ `personality_point` 全为 0 时输出"性格尚未定型"，**不随机选边**
+2. `personality_point` 全为 0 时输出"性格尚未定型"，**不随机选边**
 3. `chest_grow` / `body_part_grow` 接入 `care_point` 作为第二输入
 4. 按能力最高的科目反查 `WorkType.csv` 的 `ability_id` 输出职业倾向提示（只提示，不自动任命）
 5. 文本输出照既有 `check_grow_to_girl` 的 `WaitDraw` 模式
 
 ### 2.6 口上
 
-`data/talk/daily/follow_mother.csv`，10 条（母亲有工作 / 无工作 2 档 × 5）。⚠️ 带 `self_is_player_daughter` 前提以命中 `talk.py:185~188` 的女儿 5 倍加权（一期方案 §3.23）。
+`data/talk/daily/follow_mother.csv`，10 条（母亲有工作 / 无工作 2 档 × 5）。带 `self_is_player_daughter` 前提以命中 `talk.py:185~188` 的女儿 5 倍加权（一期方案 §3.23）。
 
 ---
 
@@ -140,7 +140,7 @@
 | 成年结算 | revert `pregnancy_handle.py` 的改动 | 回到只做发育判定 |
 | 口上 | 删 `follow_mother.csv` 重跑 `buildconfig.py` | |
 
-⚠️ 本期**没有不可回滚的部分**——所有改动都可独立 revert，且不涉及地图与存档结构。
+本期**没有不可回滚的部分**——所有改动都可独立 revert，且不涉及地图与存档结构。
 
 ---
 
@@ -177,10 +177,10 @@
 1. **多加了一行娱乐「自习」（178）。** 方案 §3.6 的「学业优先」模板上午/下午都是自习，但 `Entertainment.csv` 里
    根本没有「自习」这一项——自习一直只是个行为（`self_study` 211），没有对应的娱乐配置，日程模板排不上去。
    于是补了 178 自习：地点 `Class_Room`、移动状态机复用 561 `MOVE_TO_CLASS_ROOM`、娱乐状态机复用一期的
-   713 `EDUCATION_SELF_STUDY`。⚠️ **零新代码**：561 在查不到课表时本就回落"随机去一间理论教室"，
+   713 `EDUCATION_SELF_STUDY`。**零新代码**：561 在查不到课表时本就回落"随机去一间理论教室"，
    713 本就只是"赋予 self_study 行为"，548 结算查不到课表时回落学识——三段现成的回落链正好拼成"课外自习"。
 2. **方案表里的「兴趣活动」落为「下棋」（58）。** `Entertainment.csv` 里没有名为"兴趣活动"的项，它是个类别不是具体活动。
-   预设模板按名字反查 cid（`PRESET_TEMPLATE_SLOT_NAME`），取「下棋」作为兴趣类的代表。⚠️ 预设表写的是**名字不是cid**，
+   预设模板按名字反查 cid（`PRESET_TEMPLATE_SLOT_NAME`），取「下棋」作为兴趣类的代表。预设表写的是**名字不是cid**，
    因为娱乐编号会随内容增删漂移，按名字反查一次比在代码里钉死一串数字安全。
 3. **多加了一个行为 `free_play`（232）而不是只加娱乐行。** 方案 §1 只列了 `follow_mother` 一个新行为，
    但「自由玩耍」作为娱乐必须有 `behavior_id`，且它同时是见学回落链的**唯一出口**——
@@ -206,7 +206,7 @@
 **已知限制**：
 
 - **PO / MO 未重建**：本机没有 `xgettext`，`.conda` 里也没有 `polib`，`buildpo.py` / `buildmo.py` 均无法运行。
-  ⚠️ 更要紧的是 **`buildconfig.py` 会因此把 `data/po/**/*.po` 写空**（实测 `erArk_py.po` 掉 13627 行、
+  更要紧的是 **`buildconfig.py` 会因此把 `data/po/**/*.po` 写空**（实测 `erArk_py.po` 掉 13627 行、
   `erArk_csv.po` 掉 22 万行），且不报错。本轮已 `git checkout -- data/po/` 还原，
   **后续每次跑完 `buildconfig.py` 都要检查 `git diff --stat` 里有没有 `data/po/`**。本地化产物留给 CI。
 - **幼女的 `entertainment_type` 仍被 `get_chara_entertainment` 强制刷成 151 过家家**（`handle_npc_ai.py:797~801`
@@ -220,7 +220,7 @@
 | # | 假设 | 复核结果 |
 | --- | --- | --- |
 | 1 | 一期已建好 `schedule_template_id` / `schedule_override` / `follow_mother_flag` / `child_schedule_template` 四个字段并做了存档回填 | ✅ 前三个在 `game_type.py:403/405/407`，第四个在 `:1267`；回填在 `save_handle.py:344~346`（`child_growth` 惰性创建）与 `:556~557`（`child_schedule_template`）。本期确实一个字段都没新建 |
-| 2 | `handle_npc_ai.py:788~841` 每日随机刷新 `entertainment_type` | ✅ `get_chara_entertainment` 在 `:781`，随机赋值在 `:848`。⚠️ 顺带发现 `:797~801` 有一条**幼女强制 151 过家家并 return** 的既有分支，见"已知限制" |
+| 2 | `handle_npc_ai.py:788~841` 每日随机刷新 `entertainment_type` | ✅ `get_chara_entertainment` 在 `:781`，随机赋值在 `:848`。顺带发现 `:797~801` 有一条**幼女强制 151 过家家并 return** 的既有分支，见"已知限制" |
 | 3 | `egg_handle.replace_entertainment_for_eggs` 的挂点在娱乐刷新之后 | ✅ `past_day_settle.py:73` 刷新、`:75` 卵替换，本期的日程改写接在 `:76`。已用断言钉住（§6.3） |
 | 4 | `character_move.py:172~173` 会清 `sp_flag.is_follow` | ✅ 确认；本期用 `follow_mother_flag`，测试里断言了 `sp_flag.is_follow` 始终为 0 |
 | 5 | `check_grow_to_girl` 的守卫是 `handle_self_is_loli`，天然幂等 | ✅ `pregnancy_handle.py:643`；结算后 `talent[103] = 0`。已用"连调两次只输出一次"的断言验证 |
@@ -309,10 +309,10 @@
 
 10. **`free_play` 零口上是二期自己埋的坑。** 方案 §2.6 只安排了 `follow_mother.csv` 的
     10 条，而 `free_play` 是实施时才加的行为（偏离 3），加完没有回头补口上。
-    ⚠️ **零口上的行为是彻底静默的**：`choice_talk_from_talk_data` 只有当行为在
+    **零口上的行为是彻底静默的**：`choice_talk_from_talk_data` 只有当行为在
     通用地文表里时才有回落，否则一个字都不打印。而它偏偏是**回落链的唯一出口**
     加**两套预设模板的晚上时段**，是二期最常被执行的行为之一。
-    ⚠️ **往后新增行为，「注册了」与「有内容」要分开验**——一期第六轮那套符号级机扫
+    **往后新增行为，「注册了」与「有内容」要分开验**——一期第六轮那套符号级机扫
     只查代码引用，查不出口上是不是空的。
 
 11. **口上的前提列绝不能留空。** 写中立兜底那两条时把 `premise` 留空了，
@@ -326,16 +326,16 @@
     两档从上线起就没分开过：孩子一长成幼女就被赋予 152 学生岗，`have_work` 于是恒为真。
     实测两种母亲下候选池完全相同、都是 10 条。结算侧（`settle_follow_mother_gain`）分得很对，
     只有口上这一层判错了对象。补 `t_have_work` / `t_not_have_work` 两个目标侧前提。
-    ⚠️ **反向前提必须成对补**：口上选取是加权随机不是最具体独占，
+    **反向前提必须成对补**：口上选取是加权随机不是最具体独占，
     只给「有工作」那 6 条加前提、「没工作」那 4 条不加，后者会在两种情形下都出场。
 
 13. **`follow_mother_flag` 是 `CHILD_GROWTH` 19 个字段里唯一只写不读的。**
     状态机里的注释自己写着「供口上前提与面板判定使用」，两个消费者一个都没建。
     与一期 `report_card_flag` 是同一类半截链的**镜像**（那个有读无写）。
-    ⚠️ **置位一处、清位四处**：自由玩耍状态机、见学结算、上课接管、见学判定不成立，
+    **置位一处、清位四处**：自由玩耍状态机、见学结算、上课接管、见学判定不成立，
     外加每日结算兜底。其中**上课接管**那处最容易漏——`judge_class_state_machine`
     排在见学判定**之前**，幼女从见学转去上课时根本走不到 `judge_follow_mother_state_machine`。
-    ⚠️ 一开始连目标侧的 `t_follow_mother` 一起写了，但没有任何口上会用它——
+    一开始连目标侧的 `t_follow_mother` 一起写了，但没有任何口上会用它——
     那正是本轮在清理的同一类债，于是删掉。
 
 14. **`judge_require` 的素质分支一直判错素质，这是缺口 4 的真正根因。**
@@ -349,22 +349,22 @@
     | `T103\|1`（过家家） | 是萝莉 | 素质 1 肛门处女 |
     | `T102\|1`（跟随母亲） | 是幼女 | 素质 1 肛门处女 |
 
-    ⚠️ **总纲口径 52 写的「既有配置已经把品酒挡在孩子之外」实际上是反的**：
+    **总纲口径 52 写的「既有配置已经把品酒挡在孩子之外」实际上是反的**：
     未成年角色只要还是处女就能品酒，成年角色反倒被挡住。
-    ⚠️ **敢改这个共享函数，是因为先量过影响面**：全仓库 CSV 里 `T<id>|<值>`
+    **敢改这个共享函数，是因为先量过影响面**：全仓库 CSV 里 `T<id>|<值>`
     只出现三次，全在 `Entertainment.csv`。这是一处行为回正，不是全局语义变更。
 
 15. **批量套用的名单会列出全岛干员。** `get_child_candidate_list` 用的是只看素质的
     `judge_is_child`，而世界设定「萝莉化」会把全岛干员的年龄素质改写为萝莉 103。
-    ⚠️ 一期 `get_student_candidate_list` 的注释里**逐字写过这个陷阱**，二期这个函数还是掉了进去。
+    一期 `get_student_candidate_list` 的注释里**逐字写过这个陷阱**，二期这个函数还是掉了进去。
     处理方式是**删掉重复实现**而不是给它补条件——同一个语义只留一个口子，
     下次再改血缘或阶段口径时才不会漏改一处。顺带把婴儿也挡掉了。
 
 16. **模板此前不能新建。** §1 写的是「可定义**若干套**」、§4.2 的验证清单写的是「能**新建**」，
     而实装是固定 4 套。补上新建 / 重命名 / 删除。
-    ⚠️ **新编号从既有最大编号往后顺延，不补空缺号**：孩子身上存的是模板编号，
+    **新编号从既有最大编号往后顺延，不补空缺号**：孩子身上存的是模板编号，
     删掉 5 号后把新模板也叫 5 号，原来套 5 号的孩子会凭空换一套日程。
-    ⚠️ **删除前必须解开引用它的孩子**；四套预设不可删（`init_default_template`
+    **删除前必须解开引用它的孩子**；四套预设不可删（`init_default_template`
     只在整张表为空时才补），但可改名、可改内容。
     另外补上「不套用日程（恢复随机）」的出口——`apply_template(id, 0)` 数据层一直支持，
     只是面板没给按钮，少了它孩子一旦套上日程就再也回不去。
@@ -386,11 +386,11 @@
 - **状态标识的两个方向**：置位后 `<学>` 出现、清位后消失；没有 `child_growth`
   的角色（全岛绝大多数干员）读口与前提都安全返回而不是 `AttributeError`。
 - **need 校验的两侧**：幼女那一格照常写成 176、萝莉那一格不再被写——
-  ⚠️ 只断言「萝莉不写」是不够的，把 `judge_require` 判错素质这个更深的问题正是
+  只断言「萝莉不写」是不够的，把 `judge_require` 判错素质这个更深的问题正是
   「幼女应当写得进去」这条反向断言逼出来的。
 - **删除模板的连带效应**：引用它的孩子被解开、删过的编号不被复用、预设删不掉。
 
-⚠️ 本轮测试脚本自身踩的两个坑：
+本轮测试脚本自身踩的两个坑：
 
 1. **`behavior.start_time` 不能设成 `None`**——`get_class_period` 读它时 `None` 会回落
    `cache.game_time` 没问题，但 `get_character_status_list:211` 直接取 `.hour`，`None` 会崩。

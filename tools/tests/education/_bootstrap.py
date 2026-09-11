@@ -6,7 +6,7 @@
     check() / section() / finish() 三个断言工具、make_character() 角色 fixture 工厂、
     set_time() / move_to() / open_all_classroom() / clear_schedules() 等环境工具。
 
-⚠️ 铁律（详见 .claude/skills/headless-game-test/SKILL.md）：
+铁律（详见 .claude/skills/headless-game-test/SKILL.md）：
     1. 必须用 ./.conda/python.exe 跑，裸 python 是商店空壳
     2. 导入链会起非守护线程，脚本末尾必须 finish() → os._exit()
     3. 含中文的脚本一律写成文件跑，不要走 heredoc / stdin（GBK 会把中文喂坏）
@@ -229,7 +229,7 @@ def move_to(character_id: int, path: list):
 def set_time(now_time: datetime.datetime):
     """
     设置游戏时间，并把全部角色的行为起始时间同步过去
-    ⚠️ get_class_period 等函数读的是 behavior.start_time（默认是公元1年），不同步会永远算成不在节次内
+    get_class_period 等函数读的是 behavior.start_time（默认是公元1年），不同步会永远算成不在节次内
     Keyword arguments:
     now_time -- 新的游戏时间
     Return arguments:
@@ -383,7 +383,7 @@ pl = make_character(0, "博士")
 def _exit_on_exception(exc_type, exc_value, exc_traceback):
     """
     未捕获异常时打印回溯并强制退出
-    ⚠️ 导入链起的非守护线程会让崩溃的测试进程挂住，直到 run_all 的超时才被杀掉
+    导入链起的非守护线程会让崩溃的测试进程挂住，直到 run_all 的超时才被杀掉
     """
     import traceback
 
@@ -395,5 +395,5 @@ def _exit_on_exception(exc_type, exc_value, exc_traceback):
 
 sys.excepthook = _exit_on_exception
 
-# ⚠️ `from _bootstrap import *` 默认不导出下划线开头的名字，而翻译函数 `_` 正是测试里最常用的一个
+# `from _bootstrap import *` 默认不导出下划线开头的名字，而翻译函数 `_` 正是测试里最常用的一个
 __all__ = [_name for _name in list(globals()) if not _name.startswith("__")]

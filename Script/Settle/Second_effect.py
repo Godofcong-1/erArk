@@ -2968,9 +2968,12 @@ def handle_add_1_h_experience(
     """
     base_chara_experience_common_settle(character_id, 155, 1, change_data=change_data)
 
-
-
-
+
+
+
+
+
+
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.SHOW_OFF_STUDY)
 def handle_show_off_study(
     character_id: int,
@@ -2978,7 +2981,7 @@ def handle_show_off_study(
 ):
     """
     （炫耀用）女儿向博士炫耀最近升级的能力，加好感与亲密，并清空待炫耀记录
-    ⚠️ 能力升级发生在玩家睡觉时的睡眠结算里，当场没有观众；本二段行为把这份成就感延后到
+       能力升级发生在玩家睡觉时的睡眠结算里，当场没有观众；本二段行为把这份成就感延后到
        孩子下次与玩家同场景时兑现（方案 §3.15 的延迟炫耀）
     Keyword arguments:
     character_id -- 角色id

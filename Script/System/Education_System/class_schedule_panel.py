@@ -1,15 +1,15 @@
 """全局课表面板（Plan 22 一期 §5.2）与教育管理系统的页签容器
 
-⚠️ 课表是「10 教室 × 7 天 × 9 节」的三维数据，一次全画必然超出终端宽度。
+课表是「10 教室 × 7 天 × 9 节」的三维数据，一次全画必然超出终端宽度。
    本面板一次只展示**一间教室**的周表（7 天 × 9 节），教室用上方的横向标签页切换——
    降一个维度之后 Tk 与 Web 都画得下（方案 §5.2）。
 
-⚠️ 只用 Script/UI/Moudle/draw.py 的抽象绘制类，不直接碰 Tk 或 HTML；
+只用 Script/UI/Moudle/draw.py 的抽象绘制类，不直接碰 Tk 或 HTML；
    Web_Draw_System/web_draw_adapter.py 在启动时包装这些抽象类，双模式才能同时成立。
 """
 import datetime
 from types import FunctionType
-from typing import Dict, List
+from typing import Dict, List, Protocol
 
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.Config import game_config, normal_config
@@ -43,6 +43,37 @@ def get_period_time_text(period: int) -> str:
     return "{0:02d}:{1:02d}~{2:02d}:{3:02d}".format(hour, minute, end_hour, end_minute)
 
 
+class SubPanelProtocol(Protocol):
+    """
+    四个页签子面板共同遵守的接口
+    输入类型: 无
+    输出类型: 无
+    功能: 容器 Education_Manage_Panel 只按这两个方法调用子面板，全面板唯一的 askfor_all 在容器里。
+          写成 Protocol 而不是把 panel_map 标成 object，是为了让类型检查器认得这两个调用，
+          又不必在文件顶层 import 三个子面板类——那会造成循环导入，见 Education_Manage_Panel.__init__ 里的说明
+    """
+
+    def draw_page(self, return_list: List[str]) -> None:
+        """
+        绘制本页内容
+        Keyword arguments:
+        return_list -- 容器的共享返回值列表，本页的按钮返回值往里加
+        Return arguments:
+        无
+        """
+        ...
+
+    def handle_yrn(self, yrn: str) -> None:
+        """
+        处理属于本页的那一份返回值
+        Keyword arguments:
+        yrn -- 容器的 askfor_all 拿到的返回值
+        Return arguments:
+        无
+        """
+        ...
+
+
 class Education_Manage_Panel:
     """
     教育管理系统主面板（教师办公室入口，方案 §5.1）
@@ -53,7 +84,7 @@ class Education_Manage_Panel:
 
     def __init__(self, width: int):
         """初始化绘制对象"""
-        # ⚠️ course_select_panel 在自己的模块顶层反向 import 本模块（取 get_period_time_text），
+        # course_select_panel 在自己的模块顶层反向 import 本模块（取 get_period_time_text），
         #    所以只能在函数内 import，提到文件顶层会循环导入。
         #    共用常量已集中到 education_constant，不再是造成这个环的原因
         from Script.System.Education_System import course_select_panel, growth_panel, schedule_template_panel
@@ -62,9 +93,9 @@ class Education_Manage_Panel:
         self.now_panel: str = _("全局课表")
         self.panel_list: List[str] = [_("全局课表"), _("个人课表"), _("日程模板"), _("养成总览")]
         """ 四个页签的显示名，同时也是 panel_map 的键 """
-        # ⚠️ 子面板实例只创建一次并存起来：容器每轮 while 都会重画，
+        # 子面板实例只创建一次并存起来：容器每轮 while 都会重画，
         #    如果每轮 new 一个，子面板里的选中态（当前教室 / 当前孩子）必然被重置
-        self.panel_map: Dict[str, object] = {
+        self.panel_map: Dict[str, SubPanelProtocol] = {
             _("全局课表"): Class_Schedule_Panel(width),
             _("个人课表"): course_select_panel.Course_Select_Panel(width),
             _("日程模板"): schedule_template_panel.Schedule_Template_Panel(width),
@@ -78,7 +109,7 @@ class Education_Manage_Panel:
         输入类型: 无
         输出类型: 无
         功能: 绘制页签并分发到对应子页面。
-              ⚠️ 全面板**只有这一处** askfor_all：子面板只负责往共享的 return_list 里加按钮、
+              全面板**只有这一处** askfor_all：子面板只负责往共享的 return_list 里加按钮、
                  以及事后处理自己那份 yrn。子面板一旦自带 while+askfor_all，
                  页签按钮就会因为不在当前 return_list 里而报「选项无效」
         """
@@ -100,7 +131,7 @@ class Education_Manage_Panel:
                     now_draw.width = panel_width
                     now_draw.draw()
                 else:
-                    # ⚠️ 这里不能用 cmd_func：askfor_all 是先执行 cmd_func 再 return，
+                    # 这里不能用 cmd_func：askfor_all 是先执行 cmd_func 再 return，
                     #    那样返回时 self.now_panel 已经变了，下面就会把本屏的 yrn 派发给新页签的面板
                     now_draw = draw.CenterButton(f"[{now_panel}]", f"\n{now_panel}", panel_width)
                     now_draw.draw()
@@ -182,11 +213,11 @@ class Class_Schedule_Panel:
         输入类型: return_list(List[str])，容器的共享返回值列表，本页的按钮往里加
         输出类型: 无
         功能: 教室页签 + 周表 + 排课入口。
-              ⚠️ 只画不取输入，askfor_all 由容器 Education_Manage_Panel 统一调用
+              只画不取输入，askfor_all 由容器 Education_Manage_Panel 统一调用
         """
         # 每轮重算：教室会在游戏过程中解锁，不能在 __init__ 里快照
         self.room_list = schedule_handle.get_classroom_list()
-        # ⚠️ 先清空派发字典再早退，否则 handle_yrn 会拿上一轮的残留去匹配
+        # 先清空派发字典再早退，否则 handle_yrn 会拿上一轮的残留去匹配
         self.cell_return = {}
         if not self.room_list:
             info_draw = draw.NormalDraw()
@@ -199,7 +230,7 @@ class Class_Schedule_Panel:
             self.now_room = self.room_list[0]
 
         # 教室页签：只列已开放的。
-        # ⚠️ constant.place_data 装的是**全部**教室（配置载入期由 data/map/ 的目录树静态构建），
+        # constant.place_data 装的是**全部**教室（配置载入期由 data/map/ 的目录树静态构建），
         #    开放与否由 schedule_handle.get_classroom_list() 里的 judge_classroom_open 另查 facility_open
         for room in self.room_list:
             room_width = max(1, int(self.width / max(1, len(self.room_list))))
@@ -210,7 +241,7 @@ class Class_Schedule_Panel:
                 now_draw.width = room_width
                 now_draw.draw()
             else:
-                # ⚠️ 加 ROOM_ 前缀：教室名取自场景数据，和容器页签的 return_text 同处一个列表，不加前缀留有撞名的余地
+                # 加 ROOM_ 前缀：教室名取自场景数据，和容器页签的 return_text 同处一个列表，不加前缀留有撞名的余地
                 now_draw = draw.CenterButton(f"[{room}]", f"\nROOM_{room}", room_width)
                 now_draw.draw()
                 return_list.append(now_draw.return_text)
@@ -311,7 +342,7 @@ class Class_Schedule_Panel:
         输入类型: 无
         输出类型: 无
         功能: 只填空格，已有的排课一格不动，所以重复点击是幂等的。
-              ⚠️ 排的是**全部教室**而不是当前这间——口径23立这个功能就是为了省下630格的操作量
+              排的是**全部教室**而不是当前这间——口径23立这个功能就是为了省下630格的操作量
         """
         from Script.System.Education_System import auto_schedule
 
@@ -369,7 +400,7 @@ class Class_Schedule_Panel:
         输入类型: classroom(str), week_day(int), period(int)
         输出类型: 无
         功能: 选主修科目、指定必修学生、显示会来几个人。
-              ⚠️ 临时课程是**一次性**的，键含具体日期序数，不写进 class_schedule——
+              临时课程是**一次性**的，键含具体日期序数，不写进 class_schedule——
                  那里的键是星期，写进去这节课会每周同一时间重演一次
         """
         from Script.System.Education_System import sex_class_handle
@@ -402,7 +433,7 @@ class Class_Schedule_Panel:
                     button_text = _("[{0}]").format(ability_name)
                 else:
                     button_text = _(" {0} ").format(ability_name)
-                # 选中的主修科目用金色高亮。⚠️ 只改 normal_style，on_mouse_style 保持默认，
+                # 选中的主修科目用金色高亮。只改 normal_style，on_mouse_style 保持默认，
                 # 动它会破坏全局的悬停一致性；文本上的 [x] / x 差异也保留——两者宽度刻意相等，不会跳动
                 now_draw = draw.CenterButton(
                     button_text, "SUB_%d" % now_ability_id, int(self.width / 8),
@@ -413,7 +444,7 @@ class Class_Schedule_Panel:
             line_feed.draw()
             line_feed.draw()
 
-            # ⚠️ 这一行是必做项不是装饰：选课逻辑零改动的代价就是可能一个人都不来，
+            # 这一行是必做项不是装饰：选课逻辑零改动的代价就是可能一个人都不来，
             #    玩家必须在排课当场就看得到会有几个人
             selected_list = sex_class_handle.get_selected_student_list(classroom, week_day, period)
             name_list = [cache.character_data[cid].name for cid in selected_list if cid in cache.character_data]
@@ -471,7 +502,7 @@ class Class_Schedule_Panel:
         输入类型: must_attend(List[int]) 当前名单, classroom(str), week_day(int), period(int)
         输出类型: List[int]，新的名单
         功能: 列出可参加的学生，每行6个，点一下切换选中状态。
-              ⚠️ 会顶掉原有课的学生名字后标「*」，具体顶掉哪一节集中列在下方——
+              会顶掉原有课的学生名字后标「*」，具体顶掉哪一节集中列在下方——
                  一个格位只有31列，「（将顶替 X 的 Y）」这种尾注放不下
         """
         from Script.System.Education_System import sex_class_handle, growth_handle
@@ -629,7 +660,7 @@ class Class_Schedule_Panel:
             line_feed.draw()
             draw.LineDraw("-", self.width).draw()
 
-            # ⚠️ ability 的值可能是 float，一律套 int() 再比较与显示
+            # ability 的值可能是 float，一律套 int() 再比较与显示
             teacher_list = sorted(
                 schedule_handle.get_teacher_candidate_list(),
                 key=lambda cid: (int(cache.character_data[cid].ability.get(ability_id, 0)), -cid),
@@ -641,7 +672,7 @@ class Class_Schedule_Panel:
                 teacher_data: game_type.Character = cache.character_data[teacher_id]
                 level = int(teacher_data.ability.get(ability_id, 0))
                 # 本周已排节数：反查全局课表数出来，让玩家一眼看出谁已经被排满了。
-                # ⚠️ 不能只看本节冲不冲——不冲突的老师里也有已经排了三十节的
+                # 不能只看本节冲不冲——不冲突的老师里也有已经排了三十节的
                 week_load = sum(len(one) for one in schedule_handle.get_teacher_week_schedule(teacher_id).values())
                 level_text = "{0}{1}/{2}节".format(attr_calculation.judge_grade(level), level, week_load)
                 conflict = schedule_handle.judge_teacher_conflict(teacher_id, week_day, period, classroom)

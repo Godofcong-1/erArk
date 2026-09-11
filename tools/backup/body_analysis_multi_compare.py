@@ -708,7 +708,7 @@ def main():
                     # 自动检测是否需要sigmoid（首次处理时）
                     if not auto_sigmoid_checked and key == 'A':
                         if raw_avg > 1.0:
-                            print(f"    ⚠ 模型A分数>1.0，确认需要sigmoid归一化")
+                            print(f"    模型A分数>1.0，确认需要sigmoid归一化")
                         else:
                             print(f"    ✓ 模型A分数在0-1范围，移除sigmoid")
                             needs_sigmoid_keys.discard('A')

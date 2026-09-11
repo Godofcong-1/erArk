@@ -14,15 +14,23 @@ E. BodyWithFeet perf   = YOLOX-x + RTMPose-x-halpe26@384x288 (26→17kp)
 F. RTMO-l              = 单阶段姿态估计 (640x640, 原生17kp)
 G. Custom最大精度      = YOLOX-x + RTMW-dw-x-l@384x288 (最强检测器+最强姿态, sigmoid归一化)
 
-输入：image/立绘/干员/ 和 image/立绘/特殊NPC/ 下的角色全身图片
-输出：每个角色文件夹中的 {角色名}_body.json（v2.0格式，model="ensemble"）
+输入：image/立绘/干员/、特殊NPC/、终末地干员/ 下的角色全身图片，或指定目录下的全身立绘
+输出：图片所在文件夹中的 {角色名}_body.json（v2.0格式，model="ensemble"）
+读图：带透明通道的图片先按 alpha 铺到黑底上再识别，去掉透明像素里残留的杂色（见 load_image_bgr）
 
-用法：
+用法（需在仓库根目录运行，YOLO11 权重 yolo11x-pose.pt 按相对路径加载）：
     python body_analysis_ensemble.py
-        默认模式：批量处理 干员/特殊NPC/终末地干员 目录下的所有角色子文件夹
+        默认模式：批量处理 干员/特殊NPC/终末地干员 目录下的所有角色子文件夹（{角色名}/{角色名}_全身.png）
     python body_analysis_ensemble.py <目录路径>
-        目录模式：处理指定目录下所有尚未生成对应JSON的图片文件（不递归子目录）
-        例：python body_analysis_ensemble.py "image/立绘/特殊NPC/小干员"
+        目录模式：识别指定目录下所有尚未生成对应JSON的全身立绘，即文件名以 _全身 结尾的图片；
+        _半身、_头部 图层与差分图不会被识别。结果写到图片同目录的 {文件名去掉_全身}_body.json，
+        例如 女儿_萨卡兹_全身.png -> 女儿_萨卡兹_body.json，与游戏按立绘查找关键点文件的规则一致
+        例：python body_analysis_ensemble.py "image/立绘/女儿"
+    可选参数：
+        -r / --recursive   目录模式下连同子目录一起查找
+        --all-images       目录模式下不限 _全身，识别目录中的所有图片（用于 路人 等文件名不带图层后缀的目录）
+        --force            不跳过已生成JSON的图片，全部重新识别
+        --dry-run          只列出待识别的图片，不加载模型
 """
 
 import os
@@ -50,6 +58,37 @@ COCO_KEYPOINTS = [
     "left_wrist", "right_wrist", "left_hip", "right_hip",
     "left_knee", "right_knee", "left_ankle", "right_ankle"
 ]
+
+
+# 透明区域铺底的颜色（BGR）：立绘 PNG 透明像素里的 RGB 大多是抠图残留的杂色（网纹、光晕、旧背景），
+# 按 IMREAD_COLOR 直接读取会丢掉透明通道、把杂色当背景交给模型，因此先按 alpha 铺到纯色底上
+# 选黑色：45 张样图对比，黑底的模型间一致性与置信度和旧读法相当、结果位移最小，白底、灰底一致性更差；也与游戏黑色背景一致
+ALPHA_BACKGROUND_BGR = (0, 0, 0)
+
+
+def load_image_bgr(image_path):
+    """
+    读取图片为 BGR 图像，带透明通道时按 alpha 铺到纯色底上
+
+    输入：image_path: str - 图片路径（支持中文路径）
+    输出：numpy.ndarray或None - BGR图像（uint8），读取失败返回None
+    功能：去掉透明区域残留杂色对检测与姿态估计的干扰，铺底颜色见 ALPHA_BACKGROUND_BGR
+    """
+    img_array = np.fromfile(image_path, np.uint8)
+    image = cv2.imdecode(img_array, cv2.IMREAD_UNCHANGED)
+    if image is None:
+        return None
+    # 16 位图先转成 8 位
+    if image.dtype == np.uint16:
+        image = (image / 257).astype(np.uint8)
+    if image.ndim == 2:
+        return cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
+    if image.shape[2] == 4:
+        alpha = image[:, :, 3:4].astype(np.float32) / 255.0
+        background = np.array(ALPHA_BACKGROUND_BGR, dtype=np.float32)
+        blended = image[:, :, :3].astype(np.float32) * alpha + background * (1.0 - alpha)
+        return blended.round().astype(np.uint8)
+    return image[:, :, :3]
 
 
 def sigmoid(x):
@@ -320,9 +359,8 @@ def process_character(char_name, full_body_path, json_path, models, needs_sigmoi
         needs_sigmoid_keys: set - 需要sigmoid的模型key集合
     输出：bool - 是否成功处理
     """
-    # 加载图像
-    img_array = np.fromfile(full_body_path, np.uint8)
-    image = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
+    # 加载图像（透明区域铺纯色底，去掉残留杂色）
+    image = load_image_bgr(full_body_path)
     if image is None:
         return False
 
@@ -442,39 +480,63 @@ def collect_characters(base_dirs, skip_existing=True):
 
 # 目录模式下识别的图片扩展名
 IMAGE_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.webp', '.bmp'}
+# 全身立绘的文件名后缀（图层命名：{名}_全身 / {名}_半身 / {名}_头部）
+FULL_BODY_SUFFIX = '_全身'
 
 
-def collect_images_from_dir(target_dir, skip_existing=True):
+def collect_images_from_dir(target_dir, skip_existing=True, recursive=False, all_images=False):
     """
-    目录模式：收集指定目录下所有待处理的图片
+    目录模式：收集指定目录下所有待识别的全身立绘
 
     输入：
         target_dir: str - 目标目录路径
         skip_existing: bool - 是否跳过已生成对应JSON的图片（默认True）
+        recursive: bool - 是否连同子目录一起查找（默认False，只看目录本身）
+        all_images: bool - 是否不限 _全身，收集所有图片（默认False，只收集文件名以 _全身 结尾的全身立绘）
     输出：list[tuple(str, str, str)] - [(角色名, 图片路径, JSON输出路径), ...]
-    功能：遍历目录下的图片文件（不递归子目录），去掉扩展名及末尾的"_全身"后缀作为角色名，
-          JSON输出为同目录下的 {角色名}_body.json，已存在对应JSON的图片会被跳过
+    功能：去掉扩展名及末尾的"_全身"后缀作为角色名，JSON输出为图片同目录下的 {角色名}_body.json，
+          与游戏按立绘查找关键点文件的规则一致（女儿_萨卡兹_全身.png -> 女儿_萨卡兹_body.json）；
+          _半身、_头部 图层与差分图不是全身立绘，默认不收集；已存在对应JSON的图片会被跳过
     """
+    # 待查找的目录：递归时按 os.walk 的顺序，目录与文件名都排序，保证处理顺序稳定
+    if recursive:
+        dir_files = []
+        for dir_path, dir_names, file_names in os.walk(target_dir):
+            dir_names.sort()
+            dir_files.append((dir_path, sorted(file_names)))
+    else:
+        dir_files = [(target_dir, sorted(os.listdir(target_dir)))]
+
     characters = []
     skipped_count = 0
-    for filename in sorted(os.listdir(target_dir)):
-        file_path = os.path.join(target_dir, filename)
-        if not os.path.isfile(file_path):
-            continue
-        stem, ext = os.path.splitext(filename)
-        if ext.lower() not in IMAGE_EXTENSIONS:
-            continue
-        # 去掉"_全身"后缀，与角色子文件夹模式的命名规则保持一致
-        char_name = stem[:-len('_全身')] if stem.endswith('_全身') else stem
-        json_path = os.path.join(target_dir, f"{char_name}_body.json")
-        # 跳过已生成JSON的图片（同时兼容按完整文件名命名的JSON）
-        stem_json_path = os.path.join(target_dir, f"{stem}_body.json")
-        if skip_existing and (os.path.exists(json_path) or os.path.exists(stem_json_path)):
-            skipped_count += 1
-            continue
-        characters.append((char_name, file_path, json_path))
+    not_full_body = []
+    for dir_path, file_names in dir_files:
+        for filename in file_names:
+            file_path = os.path.join(dir_path, filename)
+            if not os.path.isfile(file_path):
+                continue
+            stem, ext = os.path.splitext(filename)
+            if ext.lower() not in IMAGE_EXTENSIONS:
+                continue
+            # 只收集全身立绘：半身/头部图层和差分图做关键点识别没有意义，还会生成抢先匹配的错误JSON
+            is_full_body = stem.endswith(FULL_BODY_SUFFIX)
+            if not is_full_body and not all_images:
+                not_full_body.append(filename)
+                continue
+            # 去掉"_全身"后缀，与角色子文件夹模式的命名规则保持一致
+            char_name = stem[: -len(FULL_BODY_SUFFIX)] if is_full_body else stem
+            json_path = os.path.join(dir_path, f"{char_name}_body.json")
+            # 跳过已生成JSON的图片（同时兼容按完整文件名命名的JSON）
+            stem_json_path = os.path.join(dir_path, f"{stem}_body.json")
+            if skip_existing and (os.path.exists(json_path) or os.path.exists(stem_json_path)):
+                skipped_count += 1
+                continue
+            characters.append((char_name, file_path, json_path))
     if skipped_count > 0:
         print(f"跳过已识别图片: {skipped_count}个")
+    if not_full_body:
+        examples = "、".join(not_full_body[:3]) + ("等" if len(not_full_body) > 3 else "")
+        print(f"不是全身立绘、未收集的图片: {len(not_full_body)}个（{examples}；需要时加 --all-images）")
     return characters
 
 
@@ -484,8 +546,8 @@ def main():
 
     执行流程：
     1. 解析命令行参数（可选指定目录）
-    2. 初始化7个模型
-    3. 默认模式收集干员/特殊NPC目录下所有角色子文件夹；目录模式收集指定目录下所有未处理图片
+    2. 默认模式收集干员/特殊NPC/终末地干员目录下所有角色子文件夹；目录模式收集指定目录下所有未识别的全身立绘
+    3. 初始化7个模型（--dry-run 时只列出待识别图片后退出）
     4. 对每个角色运行集成方案并保存JSON
     5. 输出统计信息
     """
@@ -493,11 +555,23 @@ def main():
     parser = argparse.ArgumentParser(description="集成方案批量身体部位识别工具")
     parser.add_argument(
         'target_dir', nargs='?', default=None,
-        help="可选：指定目录，处理该目录下所有尚未生成对应JSON的图片（不递归子目录）；不指定则批量处理默认角色目录"
+        help="可选：指定目录，识别该目录下所有尚未生成对应JSON的全身立绘（文件名以 _全身 结尾）；不指定则批量处理默认角色目录"
+    )
+    parser.add_argument(
+        '-r', '--recursive', action='store_true',
+        help="目录模式下连同子目录一起查找"
+    )
+    parser.add_argument(
+        '--all-images', action='store_true',
+        help="目录模式下不限 _全身，识别目录中的所有图片（用于 路人 等文件名不带图层后缀的目录）"
     )
     parser.add_argument(
         '--force', action='store_true',
         help="不跳过已生成JSON的图片，全部重新处理"
+    )
+    parser.add_argument(
+        '--dry-run', action='store_true',
+        help="只列出待识别的图片及JSON输出路径，不加载模型"
     )
     args = parser.parse_args()
 
@@ -520,9 +594,9 @@ def main():
 
     # 收集所有角色（目录模式收集指定目录下的图片，默认模式收集角色子文件夹）
     if args.target_dir is not None:
-        print(f"目录模式: {target_dir}")
-        characters = collect_images_from_dir(target_dir, skip_existing=not args.force)
-        print(f"共找到 {len(characters)} 张图片待处理")
+        print(f"目录模式: {target_dir}{'（含子目录）' if args.recursive else ''}")
+        characters = collect_images_from_dir(target_dir, skip_existing=not args.force, recursive=args.recursive, all_images=args.all_images)
+        print(f"共找到 {len(characters)} 张{'图片' if args.all_images else '全身立绘'}待处理")
     else:
         characters = collect_characters(base_dirs, skip_existing=not args.force)
         print(f"共找到 {len(characters)} 个角色待处理")
@@ -533,6 +607,12 @@ def main():
 
     if len(characters) == 0:
         print("没有需要处理的图片，退出")
+        return
+
+    # 预览：只列出待识别图片与JSON输出位置，不加载模型
+    if args.dry_run:
+        for char_name, full_body_path, json_path in characters:
+            print(f"  {char_name}: {os.path.relpath(full_body_path)} -> {os.path.relpath(json_path)}")
         return
 
     # 初始化模型
@@ -574,8 +654,7 @@ def main():
 
         # 首次推理时自动检测A模型是否需要sigmoid
         if not auto_sigmoid_checked and 'A' in models:
-            img_array = np.fromfile(full_body_path, np.uint8)
-            test_img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
+            test_img = load_image_bgr(full_body_path)
             if test_img is not None:
                 test_res = run_model_inference(models['A'], 'A', test_img)
                 if test_res is not None:

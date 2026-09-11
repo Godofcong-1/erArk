@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """模式 B：在真实存档上带护栏地跑行为循环，看孩子按课表上课、循环收敛、跨天结算不炸
 
-⚠️ 只读：读档只用 input_load_save，绝不 establish_save；行为循环是自建的带轮数上限的副本，
+只读：读档只用 input_load_save，绝不 establish_save；行为循环是自建的带轮数上限的副本，
    不 inline 调用 init_character_behavior()（其结尾的成就结算可能写文件）。
 """
 from _bootstrap import *  # noqa: F401,F403
@@ -107,7 +107,7 @@ def run_one_round(minute: int) -> tuple:
     id_list = cache.npc_id_got.copy()
     id_list.discard(0)
     npc_pass = 0
-    # ⚠️ 上限 60 而不是 skill 里的 25：真实存档里总有几个没事可做的干员在「空闲 1 分钟」里一分钟一分钟地挪，
+    # 上限 60 而不是 skill 里的 25：真实存档里总有几个没事可做的干员在「空闲 1 分钟」里一分钟一分钟地挪，
     #    45 分钟的一轮要挪 45 步才追平时钟，那不是卡死（清空课表的基线跑出来一模一样）；卡死是 60 步还追不上
     while len(cache.over_behavior_character) <= len(id_list):
         npc_pass += 1

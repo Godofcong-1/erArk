@@ -5,7 +5,7 @@
     .conda\\python.exe tools/tests/education/run_all.py            # 全部
     .conda\\python.exe tools/tests/education/run_all.py schedule   # 只跑文件名含 schedule 的
 
-⚠️ 每个测试文件各起一个进程：游戏的导入链会起非守护线程且全局 cache 只能初始化一次，
+每个测试文件各起一个进程：游戏的导入链会起非守护线程且全局 cache 只能初始化一次，
    同进程串跑会互相污染。单个文件超时 240 秒即判失败（正常一个文件 5~20 秒）。
 """
 import glob

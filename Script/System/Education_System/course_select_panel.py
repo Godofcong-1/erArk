@@ -4,7 +4,7 @@
 学生 = 职业为学生的全部干员（含成年）∪ 养成中的女儿（一期方案 §9.8.2），
 由「选择学生」按钮走通用 NPC 选择面板挑人（2026-09-09，二期方案 §9.2.5；原来的人名页签栏已删）。
 
-⚠️ 「复制到其他学生」是多人场景下的关键操作（已确认口径 4）：不做这个，
+「复制到其他学生」是多人场景下的关键操作（已确认口径 4）：不做这个，
    操作量会随学生数线性翻倍，三个学生就得把同一张表排三遍。
 """
 from types import FunctionType
@@ -40,7 +40,7 @@ class Course_Select_Panel:
         """初始化绘制对象"""
         self.width: int = width
         self.now_student: int = -1
-        """ 当前展示的学生角色id，-1表示尚未选择。⚠️ 不再回落到名单第一个：进面板先点「选择学生」挑人 """
+        """ 当前展示的学生角色id，-1表示尚未选择。不再回落到名单第一个：进面板先点「选择学生」挑人 """
         self.student_list: List[int] = []
         """ 本轮可排课的学生列表，每轮在 draw_page 里重算 """
         self.cell_return: Dict[str, tuple] = {}
@@ -52,12 +52,12 @@ class Course_Select_Panel:
         输入类型: return_list(List[str])，容器的共享返回值列表，本页的按钮往里加
         输出类型: 无
         功能: 「选择学生」一行 + 周表 + 选课入口。
-              ⚠️ 只画不取输入，askfor_all 由容器 Education_Manage_Panel 统一调用
+              只画不取输入，askfor_all 由容器 Education_Manage_Panel 统一调用
         """
         # 每轮重算：孩子会在游戏过程中出生与长大、干员会换岗，不能在 __init__ 里快照。
-        # ⚠️ 口径是「职业为学生的全部干员 ∪ 养成中的女儿」，与养成总览的「只看女儿」不同（方案 §9.8.2）
+        # 口径是「职业为学生的全部干员 ∪ 养成中的女儿」，与养成总览的「只看女儿」不同（方案 §9.8.2）
         self.student_list = growth_handle.get_course_candidate_list()
-        # ⚠️ 先清空派发字典再早退，否则 handle_yrn 会拿上一轮的残留去匹配
+        # 先清空派发字典再早退，否则 handle_yrn 会拿上一轮的残留去匹配
         self.cell_return = {}
         if not self.student_list:
             info_draw = draw.NormalDraw()
@@ -172,7 +172,7 @@ class Course_Select_Panel:
         功能: 未排课为 --。
               班级式课（理论/实践/公开）的目标是教室名，光看教室不知道这节上什么，
               所以回查全局课表把科目名一并写出来，成"学识技能/理论教室一"。
-              ⚠️ 班级式课**不加课型缩写**：「理论教室一」本身就说明了是理论课。
+              班级式课**不加课型缩写**：「理论教室一」本身就说明了是理论课。
                  个人式的三种课型才需要「[体]」「[兴]」「[实]」——它们的目标名看不出课型
         """
         course = schedule_handle.get_selected_course(character_id, week_day, period)
@@ -180,7 +180,7 @@ class Course_Select_Panel:
             return "--"
         course_type, target = course[0], course[1]
         if course_type in education_constant.CLASSROOM_COURSE_TYPE_SET:
-            # ⚠️ 必须走 get_class_cell：它是全局课表的唯一读取入口，
+            # 必须走 get_class_cell：它是全局课表的唯一读取入口，
             #    直接读 class_schedule 会漏掉临时性技实操课的覆盖层
             cell = schedule_handle.get_class_cell(target, week_day, period)
             if cell is not None and cell[0] in game_config.config_ability:
@@ -200,7 +200,7 @@ class Course_Select_Panel:
         输入类型: character_id(int)
         输出类型: 无
         功能: 有课就上。同一节有多间教室开课时选她该科等级最低的那门。
-              ⚠️ 只填空格，已有的选课一节不动
+              只填空格，已有的选课一节不动
         """
         from Script.System.Education_System import auto_schedule
 
@@ -256,7 +256,7 @@ class Course_Select_Panel:
             line_feed.draw()
             draw.LineDraw("-", self.width).draw()
             # 三个时段，点进去单独覆盖
-            # ⚠️ 单独指定里选「自由选择娱乐活动」等于取消这一格的单独指定、回到模板的安排（覆盖表存不了 0），先把话说在前面
+            # 单独指定里选「自由选择娱乐活动」等于取消这一格的单独指定、回到模板的安排（覆盖表存不了 0），先把话说在前面
             tip_draw = draw.NormalDraw()
             tip_draw.width = self.width
             tip_draw.text = _("  点某个时段可单独指定活动；选「自由选择娱乐活动」即取消单独指定、回到模板的安排；不符合条件的活动会退回自由选择\n")
@@ -301,7 +301,7 @@ class Course_Select_Panel:
         把当前学生的课表整份复制给另一个学生
         输入类型: character_id(int), student_list(List[int])
         输出类型: 无
-        功能: 覆盖式复制；⚠️ 教室课复制过去后可能与对方已有的课冲突，所以先清空再写。
+        功能: 覆盖式复制；教室课复制过去后可能与对方已有的课冲突，所以先清空再写。
               名单每行6个（190/6=31列）：成年学生也进名单之后一行一个会拉得很长
         """
         draw.TitleLineDraw(_("复制课表到"), self.width).draw()
@@ -361,7 +361,7 @@ class Course_Select_Panel:
         选课第一屏：本节可上的教室课 + 三类个人式课型入口
         输入类型: character_id(int), week_day(int), period(int)
         输出类型: (课型int, 目标) 元组；"CLEAR"为清空该格；None为取消
-        功能: ⚠️ 班级式课不再让玩家「先猜课型、再看有没有课」——课型信息本就蕴含在教室名里
+        功能: 班级式课不再让玩家「先猜课型、再看有没有课」——课型信息本就蕴含在教室名里
                  （理论教室→理论课、实践教室→实践课、大礼堂→公开课），
                  所以直接列出本节各教室实际排了什么，玩家选的是「去上哪节课」而不是「什么类型的课」
         """
@@ -383,7 +383,7 @@ class Course_Select_Panel:
         head_draw.text = _("  本节各教室的课（选中即去上这节课）：\n")
         head_draw.draw()
         class_count = 0
-        # ⚠️ 必须逐间走 get_class_cell：它是全局课表的唯一读取入口，
+        # 必须逐间走 get_class_cell：它是全局课表的唯一读取入口，
         #    直接遍历 class_schedule 会漏掉临时性技实操课的覆盖层，也漏掉从没排过课的教室
         for classroom in schedule_handle.get_classroom_list():
             cell = schedule_handle.get_class_cell(classroom, week_day, period)

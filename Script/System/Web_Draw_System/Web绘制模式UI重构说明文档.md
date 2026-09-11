@@ -835,8 +835,9 @@ Web模式下会自动裁切角色立绘四周的透明区域，优化显示效�
 3. 下载全身图命名为 `{角色名}_全身.png`
 
 ### 8.2 部位位置数据生成
-- **生产工具**：`tools/body_analysis_ensemble.py`（7模型集成批量处理）
+- **生产工具**：`Script/System/Web_Draw_System/body_analysis_ensemble.py`（7模型集成批量处理，在仓库根目录运行）
 - **输出格式**：`{角色名}_body.json`（v2.0格式，model="ensemble"）
+- **目录模式**：`body_analysis_ensemble.py "image/立绘/女儿"` 识别指定目录下所有尚未生成JSON的全身立绘（文件名以 `_全身` 结尾，半身/头部图层与差分图不识别），结果写到同目录的 `{文件名去掉_全身}_body.json`；`-r` 连同子目录，`--all-images` 不限 `_全身`（路人等不带图层后缀的目录），`--dry-run` 只列出待识别图片
 - **GPU加速**：支持CUDA加速，RTX 4080下单角色处理约0.26秒
 - **手动修正工具**：`tools/body_part_editor.py`（GUI界面，支持拖动修改错误的关键点位置）
 

@@ -8,7 +8,7 @@
 单孩微调不在本面板，而在个人课表面板的「日程」一行（§5.2），
 因为微调是"看着这个孩子的课表决定她空闲时段干什么"，和课表放一起才顺手。
 
-⚠️ 只用 Script/UI/Moudle/draw.py 的抽象绘制类，不直接碰 Tk 或 HTML；
+只用 Script/UI/Moudle/draw.py 的抽象绘制类，不直接碰 Tk 或 HTML；
    Web_Draw_System/web_draw_adapter.py 在启动时包装这些抽象类，双模式才能同时成立。
 """
 from types import FunctionType
@@ -51,7 +51,7 @@ class Schedule_Template_Panel:
         输入类型: return_list(List[str])，容器的共享返回值列表，本页的按钮往里加
         输出类型: 无
         功能: 画模板表 + 批量套用入口。
-              ⚠️ 只画不取输入，askfor_all 由容器 Education_Manage_Panel 统一调用。
+              只画不取输入，askfor_all 由容器 Education_Manage_Panel 统一调用。
                  本页原本自带的 [返回] 与容器的 [返回] return_text 完全相同（都是「返回」），
                  同屏时 Tk 下会把先画的那个变成不可点的灰字、Web 下会画出两个，所以已删除
         """
@@ -92,7 +92,7 @@ class Schedule_Template_Panel:
         输入类型: 无
         输出类型: 无
         功能: 编号 / 模板名 / 三个时段 / 套用人数。
-              ⚠️ 与 _draw_template_table 引用同一组列宽常量，两边都走 pad_display_width——
+              与 _draw_template_table 引用同一组列宽常量，两边都走 pad_display_width——
                  手写空格的表头对不上按显示宽补齐的数据行
         """
         head_text = education_constant.COLUMN_INDENT
@@ -127,7 +127,7 @@ class Schedule_Template_Panel:
                 schedule_template_handle.get_activity_name(template_data.get("slot", {}).get(slot, 0))
                 for slot in range(education_constant.SLOT_COUNT)]
             use_count = schedule_template_handle.get_template_use_count(template_id)
-            # ⚠️ 不能用 "{:<10}".format()：str 的 <10 按 len()（字符数）补齐，而终端按显示列排版、
+            # 不能用 "{:<10}".format()：str 的 <10 按 len()（字符数）补齐，而终端按显示列排版、
             #    中文占2列。同一个 {:<10} 对「读书」产出12列、对「上课（无课时自习）」产出19列，
             #    四套模板的行字符数全都是57、显示列宽却是82/75/71/61，没有一列对得齐
             row_text = education_constant.COLUMN_INDENT
@@ -173,7 +173,7 @@ class Schedule_Template_Panel:
             rename_draw = draw.CenterButton(_("[重命名]"), _("重命名"), int(self.width / 3))
             rename_draw.draw()
             return_list.append(rename_draw.return_text)
-            # ⚠️ 预设四套不给删按钮，只画同宽灰字占位：直接省略会让右边的[返回]整体左移，
+            # 预设四套不给删按钮，只画同宽灰字占位：直接省略会让右边的[返回]整体左移，
             #    玩家在预设与自建模板之间来回切时按钮会跳位
             if is_preset:
                 null_draw = draw.CenterDraw()
@@ -226,7 +226,7 @@ class Schedule_Template_Panel:
         输入类型: 无
         输出类型: 无
         功能: 兑现方案 §1 的「可定义**若干套**日程模板」。
-              ⚠️ 建完立刻进编辑页：新模板三个时段全空，不进去配一遍等于没建，
+              建完立刻进编辑页：新模板三个时段全空，不进去配一遍等于没建，
                  而空模板套到孩子身上是「三格都不改写」，玩家会以为功能坏了
         """
         new_name = self._ask_template_name(_("给新模板起个名字（直接回车用默认名）"))
@@ -244,9 +244,9 @@ class Schedule_Template_Panel:
               第二行是有年龄需求的活动（过家家 / 跟随母亲 / 自由玩耍），按钮上标注「限幼女/萝莉」——
               套了这种活动的模板给不符合年龄的干员用时，那个时段会退回到自由选择；
               第三行起是其余娱乐。
-              ⚠️ 原实现整个循环里没有任何换行，29个按钮×38列＝1102列画在同一逻辑行上，
+              原实现整个循环里没有任何换行，29个按钮×38列＝1102列画在同一逻辑行上，
                  靠终端软换行硬折，不是网格。
-              ⚠️ 原来的「清空该时段」与「自由选择娱乐活动」是同一个值 0，只保留后者一个出口
+              原来的「清空该时段」与「自由选择娱乐活动」是同一个值 0，只保留后者一个出口
         """
         # 每行6个：190/6=31列，6×31=186≤190
         cell_width = int(self.width / 6)
@@ -307,7 +307,7 @@ class Schedule_Template_Panel:
         template_id = self._select_template()
         if template_id is None:
             return
-        # ⚠️ 必须走一期的 get_student_candidate_list 而不是「有成长素质就算孩子」：
+        # 必须走一期的 get_student_candidate_list 而不是「有成长素质就算孩子」：
         #    世界设定「萝莉化」(cache.world_setting[1]) 会给全岛干员挂上萝莉素质103
         #    (character_handle.py:434)，只按素质筛会把整个罗德岛列进这份名单；
         #    另外婴儿(101)也排不了自习读书，那份名单已经把两件事一并挡掉了
@@ -325,6 +325,9 @@ class Schedule_Template_Panel:
             return_list: List[str] = []
             id_by_return: Dict[str, int] = {}
             template_data = schedule_template_handle.get_template_data(template_id)
+            # 模板取不到（编号非法，或已被删掉）就直接退出，不画一个空面板
+            if template_data is None:
+                return
             draw.TitleLineDraw(_("批量套用：{0}").format(template_data["name"]), self.width).draw()
             # 每行6个：190/6=31列。原来整个循环没有换行，孩子一多就会串行
             index = 0
@@ -374,7 +377,7 @@ class Schedule_Template_Panel:
         输入类型: 无
         输出类型: Optional[int]，模板编号；0为不套用（恢复每日随机娱乐）；None为取消
         功能: 供批量套用与个人课表面板的单孩换模板共用。
-              ⚠️ 两个调用点都必须用 `is None` 判取消而不是判真假——
+              两个调用点都必须用 `is None` 判取消而不是判真假——
                  0 是「不套用」这个有效选项，用真假判会把它当成取消给吞掉
         """
         return_list: List[str] = []
@@ -384,6 +387,9 @@ class Schedule_Template_Panel:
         index = 0
         for template_id in schedule_template_handle.get_all_template_id():
             template_data = schedule_template_handle.get_template_data(template_id)
+            # 编号来自 get_all_template_id，正常取得到；取不到就跳过这一项，不崩在下标上
+            if template_data is None:
+                continue
             now_draw = draw.LeftButton(
                 _("[{0}]").format(template_data["name"]),
                 f"PICK_{template_id}", int(self.width / 6))
@@ -396,7 +402,7 @@ class Schedule_Template_Panel:
         if index % 6:
             line_feed.draw()
         # 「不套用」是模板编号0，apply_template 早就支持，只是此前面板没给出口——
-        # ⚠️ 少了它，孩子一旦套上日程就再也回不到「每日随机娱乐」的状态
+        # 少了它，孩子一旦套上日程就再也回不到「每日随机娱乐」的状态
         none_draw = draw.CenterButton(_("[不套用日程（恢复随机）]"), _("不套用日程"), int(self.width / 2))
         none_draw.draw()
         return_list.append(none_draw.return_text)

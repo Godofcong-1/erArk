@@ -5,7 +5,7 @@
 孩子由「选择学生」按钮走通用 NPC 选择面板挑（2026-09-09，二期方案 §9.2.5；原来的人名页签栏已删）；
 口径仍是养成中的女儿，与个人课表放宽后的「职业为学生的全部干员」不同（一期 §9.8.2）。
 
-⚠️ 距下一阶段的天数必须标明是**日历天**（总纲 §2.3-7）：erArk 的一年只有
+距下一阶段的天数必须标明是**日历天**（总纲 §2.3-7）：erArk 的一年只有
    3/6/9/12 四个月，日历天与实际能玩到的天数约为 3:1，不写清楚玩家会按现实直觉误判；
    所以旁边同时给出时钟真正会走到的预计日期（game_time.get_predict_date）。
 """
@@ -42,12 +42,12 @@ class Growth_Panel:
         """初始化绘制对象"""
         self.width: int = width
         self.now_student: int = -1
-        """ 当前展示的孩子角色id，-1表示尚未选择。⚠️ 不再回落到名单第一个：进面板先点「选择学生」挑人 """
+        """ 当前展示的孩子角色id，-1表示尚未选择。不再回落到名单第一个：进面板先点「选择学生」挑人 """
         self.student_list: List[int] = []
         """ 本轮在养成中的孩子列表，每轮在 draw_page 里重算 """
         self.report_card_index: int = -1
         """ 成绩单历史当前翻到第几份（0起），-1表示尚未翻过、由 _draw_report_card 回落到最新那份。
-            ⚠️ 必须是面板的状态而不是局部变量：容器每轮 while 都重画，局部变量会被冲掉 """
+            必须是面板的状态而不是局部变量：容器每轮 while 都重画，局部变量会被冲掉 """
 
     def draw_page(self, return_list: List[str]):
         """
@@ -55,10 +55,10 @@ class Growth_Panel:
         输入类型: return_list(List[str])，容器的共享返回值列表，本页的按钮往里加
         输出类型: 无
         功能: 「选择学生」一行 + 总览正文。
-              ⚠️ 只画不取输入，askfor_all 由容器 Education_Manage_Panel 统一调用
+              只画不取输入，askfor_all 由容器 Education_Manage_Panel 统一调用
         """
         # 每轮重算：孩子会在游戏过程中出生与长大，不能在 __init__ 里快照。
-        # ⚠️ 直接走数据层的女儿名单，不再绕经 course_select_panel——那边的口径已放宽为「职业为学生」，
+        # 直接走数据层的女儿名单，不再绕经 course_select_panel——那边的口径已放宽为「职业为学生」，
         #    养成总览要看的仍然只是女儿（方案 §9.8.2）
         self.student_list = growth_handle.get_student_candidate_list()
         if not self.student_list:
@@ -105,7 +105,7 @@ class Growth_Panel:
             # 走通用 NPC 选择面板，名单已预筛为养成中的女儿
             student_id = student_select.select_student(
                 self.student_list, _("选择孩子"), _("请选择要查看养成总览的孩子：\n"), self.now_student)
-            # ⚠️ 换孩子必须把成绩单下标清掉：上一个孩子翻到第3份、换过来的孩子只有1份时，
+            # 换孩子必须把成绩单下标清掉：上一个孩子翻到第3份、换过来的孩子只有1份时，
             #    留着旧下标会莫名其妙地跳页（虽然会被夹回去，但表现很怪）
             if student_id != self.now_student:
                 self.report_card_index = -1
@@ -118,7 +118,7 @@ class Growth_Panel:
         输出类型: 无
         功能: 一行「母亲：X｜当前阶段：幼女｜距成长为萝莉还有 N 天（日历天），预计 2026年秋月12日」。
               已成年不写天数；持成长停滞素质时写明阶段不会推进。
-              ⚠️ 天数是**日历天**（get_child_grow_day 用真实 datetime 差值），与可游玩天约为 3:1，
+              天数是**日历天**（get_child_grow_day 用真实 datetime 差值），与可游玩天约为 3:1，
                  所以旁边同时给出时钟真正会走到的预计日期，走 game_time.get_predict_date 归并到季月
         """
         from Script.System.Pregnancy_System import pregnancy_handle, pregnancy_panel
@@ -230,7 +230,7 @@ class Growth_Panel:
         输入类型: character_id(int), return_list(List[str]) 容器的共享返回值列表
         输出类型: 无
         功能: 列出学期切换时冻结的那些快照。还没经历过学期切换就整节不画。
-              ⚠️ 翻页下标存在面板上而不是每次重算：容器每轮 while 都会重画本函数，
+              翻页下标存在面板上而不是每次重算：容器每轮 while 都会重画本函数，
                  算出来的下标会被冲掉，玩家点一次「上一学期」马上又跳回最新那份
         """
         history_list = semester_handle.get_report_card_history(character_id)
@@ -331,7 +331,7 @@ class Growth_Panel:
             return
         draw.LittleTitleLineDraw(_("养成履历"), self.width).draw()
         # 按发生时间正序，最近的排在最后，读起来是一条成长线而不是一堆条目
-        # ⚠️ 缺 time 的旧记录要给一个 datetime 兜底，混着int排序会直接 TypeError
+        # 缺 time 的旧记录要给一个 datetime 兜底，混着int排序会直接 TypeError
         history_list = sorted(
             growth_data.event_history.items(),
             key=lambda one: one[1].get("time") or datetime.datetime(1, 1, 1))
@@ -380,8 +380,8 @@ class Growth_Panel:
         if growth_data.skip_class_flag:
             text_list.append(_("今天正在翘课"))
         # 队列是全岛共用的，这里只数这个孩子的那几条（Plan 23）
-        # ⚠️ 不提示的话玩家不知道要去博士办公室处理公务，事件会一直躺在队列里
-        # ⚠️ 走教育侧的封装而不是直接调公务事件系统：养成事件的口径由 growth_event_handle 负责，
+        # 不提示的话玩家不知道要去博士办公室处理公务，事件会一直躺在队列里
+        # 走教育侧的封装而不是直接调公务事件系统：养成事件的口径由 growth_event_handle 负责，
         #    面板越过它直接问底层，日后那边改了口径这里不会跟着变
         from Script.System.Education_System import growth_event_handle
 

@@ -9,7 +9,7 @@
        （照料值与性格倾向走 CVE_A2_Growth，技能初始经验走 CVE_A2_E），只有「喂奶」多一段
        体质与玩家亲自照料的加成，需要专用结算器，常量放在本模块。
 
-⚠️ 转写是"全科目少量"而不是"单科大量"：胎教发生在孩子还没有"科目"概念的阶段，
+转写是"全科目少量"而不是"单科大量"：胎教发生在孩子还没有"科目"概念的阶段，
    把它做成某一科的先修既不合逻辑，也会逼玩家在孕期就决定孩子将来学什么。
 """
 from types import FunctionType
@@ -104,8 +104,8 @@ def settle_prenatal_to_child(mother_id: int, child_id: int) -> str:
     """
     把母亲累积的胎教值转写给一个新生儿：记到 child_growth.prenatal_point，并按科目发初始经验
 
-    ⚠️ 这里**不清零母亲侧**——多胎要逐个全额转写，清零由生产面板在全部孩子创建完之后统一做。
-    ⚠️ 经验直接写 experience 字典而不走 base_chara_experience_common_settle：那个函数会记进
+    这里**不清零母亲侧**——多胎要逐个全额转写，清零由生产面板在全部孩子创建完之后统一做。
+    经验直接写 experience 字典而不走 base_chara_experience_common_settle：那个函数会记进
        行为的变更记录并触发能力升级判定，出生时既没有行为也不该刷一屏"升级"提示。
     Keyword arguments:
     mother_id -- 母亲的角色id

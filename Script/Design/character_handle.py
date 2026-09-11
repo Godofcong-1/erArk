@@ -1,6 +1,7 @@
 import copy
 import random
 from types import FunctionType
+from typing import Optional
 from Script.Core import (
     cache_control,
     value_handle,
@@ -354,8 +355,8 @@ def add_favorability(
     character_id: int,
     target_id: int,
     now_add_favorability: int,
-    change_data: game_type.CharacterStatusChange,
-    target_change: game_type.TargetChange,
+    change_data: Optional[game_type.CharacterStatusChange],
+    target_change: Optional[game_type.TargetChange],
 ):
     """
     增加目标角色对当前角色的好感
@@ -363,7 +364,11 @@ def add_favorability(
     character_id -- 当前角色id
     target_id -- 目标角色id
     now_add_favorability -- 增加的好感
-    target_change -- 角色状态改变对象
+    change_data -- 当前角色这一侧的状态变更记录对象，不需要记录时传None
+    target_change -- 目标角色这一侧的状态变更记录对象，不需要记录时传None
+    Return arguments:
+    无
+    功能: 两个记录对象在函数体里都判了None，母女见学好感一类不走玩家结算链的调用可以只传其中一个
     """
     target_data: game_type.Character = cache.character_data[target_id]
     target_data.favorability.setdefault(character_id, 0)

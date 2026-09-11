@@ -11,7 +11,7 @@
 | 问题 | 结论 |
 | --- | --- |
 | 怎么把玩家赶出去 | 用户指定：复用既有结算器 `TARGET_MOVE_TO_PRE_SCENE = 762` |
-| 反感量级 | 用户选「中量」。⚠️ 提问时把中量标成 base=50 是错的，项目惯例中量 = base **100**（`Second_effect.py:1351`），少量 = base **5**（`default.py:3699`）。本计划按 **base=100** 实现，想更轻改这一个数即可 |
+| 反感量级 | 用户选「中量」。提问时把中量标成 base=50 是错的，项目惯例中量 = base **100**（`Second_effect.py:1351`），少量 = base **5**（`default.py:3699`）。本计划按 **base=100** 实现，想更轻改这一个数即可 |
 | 睡奸中被吵醒是否也走新流程 | **不走**，只对 `unconscious_h == 0` 的普通睡眠生效 |
 | CD 期间 NPC 做什么 | 不新增 target，靠 AI 现有回落 |
 | 509/650 顺序问题 | 在本计划内一并修复 |
@@ -116,7 +116,7 @@ character_behavior.character_behavior(0, ...)                Script/Design/chara
 5. **762 会解锁旧场景的门**：`Script/Design/map_handle.py:106-107` 对旧场景 `close_flag = 0`。需要在 762 之后补挂 752。
 6. **`sp_flag.sleep` 在入睡瞬间就是 0**（效果 321），醒来时角色不处于「要睡觉」态；CD 应挂在**产生睡觉需求**的入口（110110/110115），不是 120105。挂 120105 会让角色顶着 `sleep_flag=1` 一小时，`normal_1` 恒为 0，期间**洗澡/吃饭/聊天/工作全部做不了**。
 7. **`add_time` 不会是 0**：`Script/Design/settle_behavior.py:35 add_time = int((now_time - start_time).seconds/60)`，`now_time` 是 `Script/Design/character_behavior.py:204` 的 `start_time + duration`；`duration=1` → `add_time=1`，效果链正常执行，链内顺序不影响 `add_time`。但 `.seconds` 对负 timedelta 会返回 86340 这类巨值，**`behavior.start_time` 必须被重置成当前时间**。
-8. **行为 cid 必须三处都空闲**：`data/csv/Behavior_Data.csv`、`Script/Core/constant/Behavior_Int.py`、`tools/ArkEditor/csv/Behavior_Data.csv`（历史不同步）。规划时实测 **810 三处均空闲**；`Script/Core/constant/CharacterStatus.py` 现有最大 946。`Script/Core/constant_effect.py` 的 `BehaviorEffect` **按分类分号段**（属性_状态 41~88、属性_状态特殊补正 110~146、行动 1701~1724 …），新效果必须落在自己分类的号段末尾，不能一律往文件尾部追加；实测 89~109 与 1725/1726 均空闲。⚠️ 实施时必须重新核对。
+8. **行为 cid 必须三处都空闲**：`data/csv/Behavior_Data.csv`、`Script/Core/constant/Behavior_Int.py`、`tools/ArkEditor/csv/Behavior_Data.csv`（历史不同步）。规划时实测 **810 三处均空闲**；`Script/Core/constant/CharacterStatus.py` 现有最大 946。`Script/Core/constant_effect.py` 的 `BehaviorEffect` **按分类分号段**（属性_状态 41~88、属性_状态特殊补正 110~146、行动 1701~1724 …），新效果必须落在自己分类的号段末尾，不能一律往文件尾部追加；实测 89~109 与 1725/1726 均空闲。实施时必须重新核对。
 9. **`Behavior_Effect.csv` 必须有对应行**，否则 `Script/Design/settle_behavior.py:404` 判定不成立，**口上根本不会触发**。
 10. `data/talk/` 是 `os.walk` 递归扫描（`buildconfig.py:509-512`），新增 CSV 无需登记；但 `auto_build_config.py:57-59` 在 `data/Character_Talk.json` 存在时会跳过口上重建，**必须跑全量 `buildconfig.py`**。`Script/Config/config_def.py` 由 buildconfig 从 CSV 表头重新生成，**不可手改**。
 11. 本机 Python 必须用 `.conda\python.exe`（裸 `python` 是 Store 空壳别名，exit 49 无输出）。
@@ -180,7 +180,7 @@ character_behavior.character_behavior(0, ...)                Script/Design/chara
 
 #### 4.1 重排 sleep 效果链（`data/csv/Behavior_Effect.csv:20`）
 
-按 §3.2 的新链改写该行。⚠️ 只调整顺序，不增删任何 effect id。
+按 §3.2 的新链改写该行。只调整顺序，不增删任何 effect id。
 
 #### 4.2 650 排除首饰（`Script/Settle/default_cloth.py:725-733`）
 
@@ -242,7 +242,7 @@ self.sleep_disturbed_end_time: datetime.datetime = datetime.datetime(1, 1, 1)
 #### 4.8 口上（`data/talk/daily/wake_up_by_noise.csv`）
 
 五列 `cid,behavior_id,adv_id,premise,context`，表头 5 行照抄 `data/talk/daily/sleep.csv`。
-⚠️ 由于 762 对玩家**没有任何移动提示**（§2.6-4），文案必须显式交代「被推出房间」，例如
+由于 762 对玩家**没有任何移动提示**（§2.6-4），文案必须显式交代「被推出房间」，例如
 `{Name}猛地睁开眼睛，看清是{PlayerName}后，皱着眉一言不发地把{PlayerName}推出了房间，关上了门。`
 至少给 `high_1` 兜底几条；可另按好感度 / 反发刻印 / `sleep_time` 分档写差异化文本。
 

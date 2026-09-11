@@ -44,7 +44,7 @@ def get_growth_event_character_list() -> List[int]:
     """
     取本次入队要遍历的角色列表
 
-    ⚠️ 只看玩家的女儿：普通干员也可能因为选课被建出 child_growth（口径24），
+    只看玩家的女儿：普通干员也可能因为选课被建出 child_growth（口径24），
        但养成事件是给孩子的，给成年干员派「第一次上课」只会显得莫名其妙
     Keyword arguments:
     无
@@ -67,7 +67,7 @@ def get_sibling_child_list(character_id: int) -> List[int]:
     """
     取同为孩子的兄弟姐妹列表
 
-    ⚠️ 直接读既有的 relationship，不新建亲缘结构：同父同母、同父异母都算兄弟姐妹，
+    直接读既有的 relationship，不新建亲缘结构：同父同母、同父异母都算兄弟姐妹，
        判据是「父亲相同或母亲相同」
     Keyword arguments:
     character_id -- 角色id
@@ -77,7 +77,7 @@ def get_sibling_child_list(character_id: int) -> List[int]:
     character_data: game_type.Character = cache.character_data[character_id]
     father_id = character_data.relationship.father_id
     mother_id = character_data.relationship.mother_id
-    # ⚠️ 双亲未登记时是 -1，两个都没登记的角色会互相认成兄弟姐妹（世界设定的萝莉化会给一大批
+    # 双亲未登记时是 -1，两个都没登记的角色会互相认成兄弟姐妹（世界设定的萝莉化会给一大批
     #    干员挂上萝莉素质，正好撞进这个洞），所以只认有效的双亲id
     result = []
     for other_id in cache.npc_id_got:
@@ -97,7 +97,7 @@ def get_classmate_list(character_id: int) -> List[int]:
     """
     取同班同学列表：个人课表上有重合节次的其他孩子
 
-    ⚠️ 同学关系由课表反查，不落成字段——课表一改，同学关系就跟着变，
+    同学关系由课表反查，不落成字段——课表一改，同学关系就跟着变，
        存成字段反而要多一处同步点
     Keyword arguments:
     character_id -- 角色id
@@ -212,7 +212,7 @@ def get_today_growth_event_pick_list() -> List[dict]:
     """
     每日结算时给出今日的养成事件候选（已按女儿逐个节流）
 
-    ⚠️ 遍历前先 shuffle：撞上公务事件系统的全局硬顶时，不打散的话永远是 id 小的那几个女儿吃满名额
+    遍历前先 shuffle：撞上公务事件系统的全局硬顶时，不打散的话永远是 id 小的那几个女儿吃满名额
     Keyword arguments:
     无
     Return arguments:
@@ -276,10 +276,10 @@ def push_graduation_event(character_id: int):
     """
     成年结算时把毕业典礼与成年纪念插到队首
 
-    ⚠️ **不做成玩家指令**（口径44）：一辈子只触发一次的叙事节点，
+    **不做成玩家指令**（口径44）：一辈子只触发一次的叙事节点，
        做成指令要配行为、时长、口上、前提一整套，事件系统的一次性叙事正是为此而生
-    ⚠️ 插队首而不是追加：成年是叙事上的大节点，让它排在一堆日常事件后面会很怪
-    ⚠️ 幂等由成年结算本身的守卫保证（素质 103→104，一个孩子只会经过一次）
+    插队首而不是追加：成年是叙事上的大节点，让它排在一堆日常事件后面会很怪
+    幂等由成年结算本身的守卫保证（素质 103→104，一个孩子只会经过一次）
     Keyword arguments:
     character_id -- 刚成年的孩子角色id
     Return arguments:
@@ -294,7 +294,7 @@ def push_semester_event(character_id: int) -> bool:
     """
     学期结算时给某个孩子推一条期末事件（Plan 22 一期 §3.13 第2条）
 
-    ⚠️ 事件是**按角色去重**的（official_event_handle.judge_event_done），
+    事件是**按角色去重**的（official_event_handle.judge_event_done），
        同一个孩子不会重复遇到同一条期末事件。幼女到少女约十几个学期，
        所以池子迟早会被抽干——抽干时本函数只是返回 False，不报错也不重复派发
     Keyword arguments:

@@ -4,7 +4,7 @@
 > 风险、范围外）；具体的逐文件改动步骤、构建、验证清单、回滚与实施过程记录见
 > `plan_23_公务事件系统_实施步骤与记录.md`（下文简称"实施文档"）。
 >
-> ⚠️ 本 Plan **接管** Plan 22 三期的养成事件系统：三期建成的
+> 本 Plan **接管** Plan 22 三期的养成事件系统：三期建成的
 > `Script/System/Education_System/growth_event_*` 与 `data/growth_event/` 在本 Plan 中
 > 被泛化为通用的公务事件系统，养成事件成为它的一个部门分类。
 > 三期的方案与实施记录不再更新事件相关内容，只留一行指向本 Plan。
@@ -58,7 +58,7 @@ ArkEditor 能编辑并保存公务事件；单女儿养到成年不出现重复�
 | 运行时表 | `game_config.py:1665-1678 load_growth_event()` → `config_growth_event` / `config_growth_event_by_stage` |
 | 队列 | `game_type.py:1270 Rhodes_Island.growth_event_queue`；旧档回填 `save_handle.py:560-562` |
 | 入队 | `past_day_settle.py:107 check_new_day_growth_event()`（角色刷新之后） |
-| 出队 | `handle_instruct.py:1849-1857 handle_official_work()`（⚠️ 在通用结算**之前**） |
+| 出队 | `handle_instruct.py:1849-1857 handle_official_work()`（在通用结算**之前**） |
 | 逻辑 | `Script/System/Education_System/growth_event_handle.py`（530 行） |
 | 界面 | `Script/System/Education_System/growth_event_panel.py`（182 行） |
 | 履历 | `CHILD_GROWTH.event_history`（`game_type.py:394`），`settle_growth_event_option:529` 写入 |
@@ -101,15 +101,15 @@ ArkEditor 能编辑并保存公务事件；单女儿养到成年不出现重复�
 | 右表单 | `tools/ArkEditor/ui/commission_edit.py:203-251`（`QFormLayout`，12 字段） |
 | 读写 | `tools/ArkEditor/load_csv.py:261 load_commission_csv` / `:292 save_commission_csv` |
 
-⚠️ 该页面的**四个缺陷不能继承**：① 右键增删/拖拽不落盘；② loader 不调 `backup_file()`；
+该页面的**四个缺陷不能继承**：① 右键增删/拖拽不落盘；② loader 不调 `backup_file()`；
 ③ loader 不设 `now_edit_type_flag`，在该页按 Ctrl+S 会覆盖上一个口上/事件文件；
 ④ `save_commission_csv` 表头用 `f.write(text+"\n")`、数据行用 `DictWriter`（CRLF），**产出混合行尾**。
 
-⚠️ 编辑器**没有页面注册表也没有标签页**：所谓页面就是主窗口那一个 `QGridLayout`
+编辑器**没有页面注册表也没有标签页**：所谓页面就是主窗口那一个 `QGridLayout`
 加一组 `add_grid_*_layout()`，靠 `cache_control.now_edit_type_flag` 切换；
 且 `main_layout` 从不 `removeWidget`，切页时旧控件会叠在同一格上。
 
-⚠️ 前提/结算选择器（`premise_menu.py` / `CVP_menu.py` / `CVE_menu.py` / `effect_menu.py` /
+前提/结算选择器（`premise_menu.py` / `CVP_menu.py` / `CVE_menu.py` / `effect_menu.py` /
 `item_premise_list.py` / `item_effect_list.py`）都把结果**直写**进 `now_talk_data` / `now_event_data`
 两个全局之一，靠 `now_edit_type_flag` 二选一；`CVE_menu.ok` 只在 flag==1 时写。
 
@@ -149,7 +149,7 @@ EVENT_PROVIDER: Dict[int, Callable] = {}
 - 未注册的部门走**默认提供者**：以博士（角色 0）为判定主体、按 `premise` 筛选、按 `weight` 加权
 - 于是新增一个部门的事件只要写 CSV
 
-⚠️ 弃选方案：在公务事件系统里写 `if department == 15: ...` 的分支表——那样每加一个部门
+弃选方案：在公务事件系统里写 `if department == 15: ...` 的分支表——那样每加一个部门
 都要改公共模块，且公务事件系统会反向依赖全部门，循环导入风险高。
 
 ### 3.3 同一角色不重复触发同一事件
@@ -159,7 +159,7 @@ EVENT_PROVIDER: Dict[int, Callable] = {}
 
 - 无主体的部门事件没有角色可挂 → `Rhodes_Island` 加 `official_event_history` 作为全局履历
 - `once` 列因此失去入队作用，**保留为作者标注**（标记里程碑，影响权重习惯与统计报告）
-- ⚠️ 连带效果：所有事件都可以按"这辈子只遇到一次"来写，叙事密度反而更高
+- 连带效果：所有事件都可以按"这辈子只遇到一次"来写，叙事密度反而更高
 
 ### 3.4 触发频率随女儿数并发
 
@@ -171,8 +171,8 @@ EVENT_PROVIDER: Dict[int, Callable] = {}
 | `OFFICIAL_EVENT_DAILY_MAX` | 8 | 全局每日硬顶 |
 | `OFFICIAL_EVENT_QUEUE_MAX` | `max(12, 4×女儿数 + 6)` | 队列硬上限随女儿数放宽 |
 
-⚠️ 遍历女儿前 `random.shuffle`，否则撞硬顶时永远是 id 小的女儿吃掉名额。
-⚠️ 本条**推翻总纲口径 32**（"每日最多入队 1~2 条，全局上限"），须回写总纲。
+遍历女儿前 `random.shuffle`，否则撞硬顶时永远是 id 小的女儿吃掉名额。
+本条**推翻总纲口径 32**（"每日最多入队 1~2 条，全局上限"），须回写总纲。
 
 ### 3.5 事件条数由供需倒推（≥20% 盈余）
 
@@ -196,7 +196,7 @@ EVENT_PROVIDER: Dict[int, Callable] = {}
 | `CVE_RI_<类型>_<G/L/E>_<值>` | 罗德岛全局 | **新增**，由公务事件系统自己的 `handle_effect_text` 解析 |
 | 纯数字 | 复杂效果 | 既有 `constant.settle_behavior_effect_data[id]` |
 
-⚠️ 弃选方案：扩 `settle_behavior` 的主体判别。那里的属性映射硬绑 `Character` 对象，
+弃选方案：扩 `settle_behavior` 的主体判别。那里的属性映射硬绑 `Character` 对象，
 加全局主体要同时改主体判别、`change_data` 记录、Web 数值收集三处，且会影响全游戏的结算路径。
 公务事件的 effect 串本就由自己的 `handle_effect_text` 逐项分发，在那里认前缀即可。
 
@@ -211,7 +211,7 @@ EVENT_PROVIDER: Dict[int, Callable] = {}
 
 - **一次读整个 `data/official_event/` 目录**，左列表按部门+文件分组，保存时只重写改过的文件
 - **复用既有前提/结算选择器**，办法是在 `cache_control` 加 `now_premise_target` /
-  `now_effect_target` 两个引用，把选择器的写入点改成写这个引用（§2.4 第三条 ⚠️）
+  `now_effect_target` 两个引用，把选择器的写入点改成写这个引用（§2.4 第三条）
 - CVP/CVE 下拉补上三期欠的 `Growth` 与本轮的 `RI`，并补 `function.py` 的 token 反解链
 - 保存**一律走 `csv.writer`** 写全部行（含 5 行表头），UTF-8 无 BOM、全 CRLF
 - 读表头用**数索引跳过前 4 行**，不能照抄委托页的"找表名行"（多文件、表名各不相同）
@@ -221,7 +221,7 @@ EVENT_PROVIDER: Dict[int, Callable] = {}
 `sub_key = 0` 的事件会派给婴儿、幼女、萝莉三个阶段，可"她做了个东西送给你""她学你说话"这类
 显然不适合婴儿。不为此新增前提，直接用既有的素质判定：**`CVP_A1_T|101_E_0`**（不持有婴儿素质）。
 
-⚠️ 同理，跨阶段事件的正文**不能绑死住处**（婴儿住育儿室、幼女起住宿舍），
+同理，跨阶段事件的正文**不能绑死住处**（婴儿住育儿室、幼女起住宿舍），
 写"她住的地方"或干脆把场景放在食堂、走廊、甲板这些公共区域。
 
 ### 3.9 复杂效果用到的两个结算函数
@@ -231,7 +231,7 @@ EVENT_PROVIDER: Dict[int, Callable] = {}
 | 3002 | `OFFICIAL_EVENT_ACCEPT_RECRUIT` | 接收一名待确认的招募干员（复用 `recruit_panel.recruit_new_chara`） |
 | 3003 | `OFFICIAL_EVENT_TEMP_COMMISSION` | 生成一条突发的临时外勤委托（复用 `create_temp_commission`） |
 
-⚠️ **`create_temp_commission` 会把新委托追加写进 `data/csv/Commission.csv`**（不是只改内存），
+**`create_temp_commission` 会把新委托追加写进 `data/csv/Commission.csv`**（不是只改内存），
 所以它的描述里换行必须写成两个字符的 `
 ` 转义、且不能出现英文逗号，否则写出去的那一行会把 CSV 撑断，
 下次构建直接报错。无头测试里也要把这个函数换成桩，不然跑一次测试就往仓库数据文件里塞一条脏数据。
@@ -260,8 +260,8 @@ EVENT_PROVIDER: Dict[int, Callable] = {}
 | `option_1~4_tip` | str | 后果提示（只写方向不写数值） |
 | `option_1~4_effect` | str | 选项结算，`&` 连接 |
 
-⚠️ 三期的 `stage` 列**改名为 `sub_key`**（语义泛化），取值不变，所以总列数是 28 而不是 29。
-⚠️ 四个养成 CSV 的**文件名保持不变**（`婴儿/幼女/萝莉/通用.csv`）——cid 前缀由文件名生成，
+三期的 `stage` 列**改名为 `sub_key`**（语义泛化），取值不变，所以总列数是 28 而不是 29。
+四个养成 CSV 的**文件名保持不变**（`婴儿/幼女/萝莉/通用.csv`）——cid 前缀由文件名生成，
 改名会让全部 uid 变化，而旧存档的 `event_history` 里存的是旧 uid。
 
 运行时索引（`game_config.py`）：
@@ -269,7 +269,7 @@ EVENT_PROVIDER: Dict[int, Callable] = {}
 ```python
 config_official_event: Dict[str, dict] = {}
 """ 公务事件表 键str:事件uid 值dict:事件原始dict
-    ⚠️ 存原始dict而非config对象：CSV里空着的选项列在构建时已被删掉，必须用 .get() 取 """
+    存原始dict而非config对象：CSV里空着的选项列在构建时已被删掉，必须用 .get() 取 """
 config_official_event_by_department: Dict[int, list] = {}
 """ 部门id -> 事件uid列表 """
 config_official_event_by_sub_key: Dict[tuple, list] = {}
@@ -284,11 +284,11 @@ config_official_event_by_sub_key: Dict[tuple, list] = {}
             元素dict:{"uid": 事件uid str, "department": 部门id int,
                       "chara_id": 主体角色id int（无主体为0）,
                       "partner_id": 互动对象角色id int（无则0）, "add_time": datetime}
-            ⚠️ 由 plan22 三期的 growth_event_queue 改名而来，旧档在 save_handle 里逐项搬运 """
+            由 plan22 三期的 growth_event_queue 改名而来，旧档在 save_handle 里逐项搬运 """
 
         self.official_event_history: dict = {}
         """ 无主体（部门）公务事件的全局履历 键str:事件uid 值dict:{"time": datetime, "choice": int}
-            ⚠️ 有主体的事件记在角色自己的 CHILD_GROWTH.event_history 里，两者语义一致 """
+            有主体的事件记在角色自己的 CHILD_GROWTH.event_history 里，两者语义一致 """
 ```
 
 ### 4.3 `RI` 全局数值编号表（`ri_value.py`）
@@ -303,7 +303,7 @@ config_official_event_by_sub_key: Dict[tuple, list] = {}
 | `Power` | 电力储量 | ✅ | ✅ | `rhodes_island.power_storage` |
 | `People` | 当前干员数 | ✅ | ❌ | `len(cache.npc_id_got)` |
 
-⚠️ 写入一律走 `change_ri_value()`：它负责 clamp、`setdefault` 与只读项的静默忽略，
+写入一律走 `change_ri_value()`：它负责 clamp、`setdefault` 与只读项的静默忽略，
 避免各处直接改 dict 导致资源为负或效率越界。
 
 ### 4.4 新增的养成数值 `Growth|3`
@@ -312,7 +312,7 @@ config_official_event_by_sub_key: Dict[tuple, list] = {}
 复用 `pregnancy_handle.get_child_grow_day()` 与 `get_child_growth_stage_total_day()`；
 阶段阈值是累计值（婴儿 0~90 / 幼女 90~270 / 萝莉 270~450），
 进度 = `(当前天 - 本阶段起点) / (阈值 - 起点) × 100`。
-⚠️ 该分支要放在 `growth_data is None` 的提前返回**之前**（进度不依赖养成数据）。
+该分支要放在 `growth_data is None` 的提前返回**之前**（进度不依赖养成数据）。
 
 ### 4.5 两个新前提
 
@@ -321,7 +321,7 @@ config_official_event_by_sub_key: Dict[tuple, list] = {}
 | `SELF_MOTHER_AVAILABLE` | `self_mother_available` | 母亲仍在队中且可跟随 | `class_ai.judge_mother_available()` |
 | `SELF_HAVE_ANY_COURSE` | `self_have_any_course` | 个人课表非空 | `child_growth.selected_course` |
 
-⚠️ 新前提名不能包含 `self_have_classmate` / `self_have_sibling_child`（§2.5-8 的子串匹配）。
+新前提名不能包含 `self_have_classmate` / `self_have_sibling_child`（§2.5-8 的子串匹配）。
 
 ---
 
@@ -339,7 +339,7 @@ config_official_event_by_sub_key: Dict[tuple, list] = {}
 **数值口径**：未成年阶段好感 +5~+30 / −5~−20、信赖 +2~+6、性格倾向 ±1~±4、照料 +1~+5；
 成年阶段（104）好感 +80~+200、信赖 +10~+20。
 **权重**：阶段日常 9~12、里程碑 15~25、跨阶段通用 3~5（压低是 §3.5 的 25% 前提）。
-⚠️ 口径 33 不变：选错只让性格偏得不如预期、好感小幅下降，不掉能力、不造成不可逆损失。
+口径 33 不变：选错只让性格偏得不如预期、好感小幅下降，不掉能力、不造成不可逆损失。
 
 **设定校正**：婴儿期（101）住育儿室；幼女期起（102/103/104）住自己的宿舍
 （`Script/System/Dormitory_System/common.py:409` 分配）。因此不写"想搬出育儿室自己住"，

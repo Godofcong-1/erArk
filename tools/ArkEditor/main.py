@@ -599,7 +599,7 @@ def load_official_event_data():
     功能:
         选择 data/official_event 目录，一次读入全部部门的事件表，
         左侧按文件分组列出，右侧编辑该条事件的基本字段与四个选项块。
-        ⚠️ 装配前先重建 centralWidget：主布局从不 removeWidget，
+        装配前先重建 centralWidget：主布局从不 removeWidget，
            不重建的话上一个页面的控件会叠在同一格上。
     """
     global last_open_dir
@@ -644,7 +644,7 @@ def load_official_event_data():
         load_csv.save_official_event_csv(dir_path, csv_name, head_data[csv_name], now_list)
 
     official_event_list.event_selected.connect(official_event_edit.set_event)
-    # ⚠️ 右键增删也立刻落盘：外勤委托页要再点一次保存才写文件，很容易丢改动
+    # 右键增删也立刻落盘：外勤委托页要再点一次保存才写文件，很容易丢改动
     official_event_list.event_changed.connect(save_one_file)
 
     def on_event_saved(event):
