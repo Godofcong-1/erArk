@@ -95,11 +95,11 @@ class WaitDraw(NormalDraw):
         if self.width <= 0 or not self.text:
             io_init.era_print(self.text, self.style, tooltip=self.tooltip)
             if int(len(self.text)):
-                # 右键激活跳过标志时忽略等待，否则正常停顿等待玩家操作
-                if not cache.wframe_mouse.w_frame_skip_wait_mouse:
+                # 右键、系统跳过或Ctrl长按生效时忽略被动等待。
+                if not flow_handle.is_wait_skip_active():
                     flow_handle.askfor_wait()
                 else:
-                    time.sleep(0.001)
+                    time.sleep(flow_handle.get_wait_skip_delay())
             return
         text = self.text
         # 当前剩余待输出的文本
@@ -120,11 +120,11 @@ class WaitDraw(NormalDraw):
             text = text[len(now_text):]
         # 输出后等待玩家操作
         if int(len(self.text)):
-            # 右键激活跳过标志时忽略等待，否则正常停顿等待玩家操作
-            if not cache.wframe_mouse.w_frame_skip_wait_mouse:
+            # 右键、系统跳过或Ctrl长按生效时忽略被动等待。
+            if not flow_handle.is_wait_skip_active():
                 flow_handle.askfor_wait()
             else:
-                time.sleep(0.001)
+                time.sleep(flow_handle.get_wait_skip_delay())
 
 class LineFeedWaitDraw(NormalDraw):
     """
@@ -177,10 +177,10 @@ class LineFeedWaitDraw(NormalDraw):
                 if remain:
                     io_init.era_print("\n")
                 # 等待玩家操作
-                if not cache.wframe_mouse.w_frame_skip_wait_mouse:
+                if not flow_handle.is_wait_skip_active():
                     flow_handle.askfor_wait()
                 else:
-                    time.sleep(0.001)
+                    time.sleep(flow_handle.get_wait_skip_delay())
             io_init.era_print("\n")
 
 class ImageDraw:
