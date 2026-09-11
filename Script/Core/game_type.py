@@ -1772,6 +1772,8 @@ class Character:
         """ 角色能力 """
         self.experience: Dict[int, int] = {}
         """ 角色经验 """
+        self.mental_virginity: Dict[int, int] = {}
+        """ 各快感部位的心理处女认知状态，键为快感状态id，值见Sex_System.mental_virginity；空字典表示尚无需要固化的认知记录 """
         self.juel: Dict[int, int] = {}
         """ 角色宝珠 """
         self.profession: int = 0
