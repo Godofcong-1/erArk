@@ -172,6 +172,12 @@ def extra_ability_check(ability_id : int, character_id : int, draw_flag : bool =
                     now_other_ability_level += character_data.ability[tem_ability_cid]
             info_text = _("\n○干员的技巧升级需要额外满足以下条件：\n")
             info_text += _("  全子性技的等级之和，即[指技]、[舌技]、[足技]、[胸技]、[膣技]、[肛技]、[隐蔽]能力等级之和大于等于技巧等级*3\n")
+            # 未成年的干员（素质7）还要至少学会一门子性技（Plan 26 §3.12）：技巧 0→1 级只要习得珠，
+            #    上学 / 见学攒下的珠与出生时的胎教珠会先被它拿走，孩子一门性技都没学就先会了「技巧」
+            if character_data.talent.get(7, 0):
+                info_text += _("  未成年干员至少要有一门子性技达到1级\n")
+                if now_other_ability_level == 0:
+                    judge = 0
             info_text += _("  当前技巧等级为{0}，当前全子性技的等级和为{1}\n").format(now_ability_level, now_other_ability_level)
             if now_other_ability_level < now_ability_level * 3:
                 judge = 0

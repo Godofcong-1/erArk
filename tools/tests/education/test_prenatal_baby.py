@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-"""baby_growth_handle：胎教累积与出生转写；六个照料行为的效果串与 CVE；喂奶 556；胎教 555"""
+"""baby_growth_handle：胎教累积与出生折习得珠（Plan 26）；六个照料行为的效果串与 CVE；喂奶 556；胎教 555"""
 from _bootstrap import *  # noqa: F401,F403
 
 clear_schedules()
@@ -16,25 +16,37 @@ check("两次 1.0", baby_growth_handle.add_prenatal_point(102) == 1.0)
 check("次数折算", baby_growth_handle.get_prenatal_count(102) == 2)
 check("封顶 100", baby_growth_handle.add_prenatal_point(102, 999) == E.PRENATAL_POINT_MAX)
 check("对不存在的角色返回 0", baby_growth_handle.add_prenatal_point(999) == 0.0)
-check("换算：100 点 → 每科 50 经验", baby_growth_handle.get_prenatal_exp_value(100.0) == 50 and baby_growth_handle.get_prenatal_exp_value(1.0) == 0 and baby_growth_handle.get_prenatal_exp_value(-5) == 0)
+check("换算：100 点 → 1000 珠、1 点 → 10 珠、0.5 点 → 5 珠、负数 → 0", baby_growth_handle.get_prenatal_juel_value(100.0) == 1000 and baby_growth_handle.get_prenatal_juel_value(1.0) == 10
+      and baby_growth_handle.get_prenatal_juel_value(0.5) == 5 and baby_growth_handle.get_prenatal_juel_value(-5) == 0)
 
-section("出生转写")
+section("出生转写：折成习得珠、不给任何经验（Plan 26 §3.2）")
+J = E.LEARN_STATE_ID
+subject_exp_set = {growth_handle.get_subject_exp_id(a) for a in E.SUBJECT_ABILITY_LIST} - {0}
 mother.pregnancy.prenatal_point = 40.0
+exp_before_a = dict(baby_a.experience)
 text_a = baby_growth_handle.settle_prenatal_to_child(102, 203)
 text_b = baby_growth_handle.settle_prenatal_to_child(102, 204)
 check("双胎各自全额 40 点", baby_a.child_growth.prenatal_point == 40.0 and baby_b.child_growth.prenatal_point == 40.0)
 check("转写不清零母亲侧", mother.pregnancy.prenatal_point == 40.0)
-exp_id_45 = growth_handle.get_subject_exp_id(45)
-exp_id_76 = growth_handle.get_subject_exp_id(76)
-check("17 门各得 20 经验、腰技不给", baby_a.experience.get(exp_id_45, 0) == 20 and (not exp_id_76 or baby_a.experience.get(exp_id_76, 0) == 0))
-check("说明文本含次数与经验", "80" in text_a and "20" in text_a, text_a)
-check("底子读口", baby_growth_handle.get_prenatal_exp_dict(203) == {a: 20 for a in E.FEMALE_SUBJECT_LIST} and baby_growth_handle.get_prenatal_exp_dict(102) == {})
+check("双胎各得 400 个习得珠", baby_a.juel.get(J, 0) == 400 and baby_b.juel.get(J, 0) == 400, (baby_a.juel.get(J, 0), baby_b.juel.get(J, 0)))
+check("经验一项都没动（18 门科目的升级经验，含 7 种性交类，全是 0）", dict(baby_a.experience) == exp_before_a and all(baby_a.experience.get(e, 0) == 0 for e in subject_exp_set))
+juel_name = baby_growth_handle.get_learn_juel_name()
+check("说明文本含次数、珠数与珠名", "80" in text_a and "400" in text_a and bool(juel_name) and juel_name in text_a, text_a)
+check("读口：孩子出生时折得的珠与胎教次数", baby_growth_handle.get_child_prenatal_juel(203) == 400 and baby_growth_handle.get_child_prenatal_count(203) == 80
+      and baby_growth_handle.get_child_prenatal_juel(102) == 0 and baby_growth_handle.get_child_prenatal_count(999) == 0)
 baby_growth_handle.clear_prenatal_point(102)
 check("清零", baby_growth_handle.get_prenatal_point(102) == 0.0)
 check("无胎教不出文本、不建养成数据", baby_growth_handle.settle_prenatal_to_child(102, 105) == "" and nurse.child_growth is None)
 mother.pregnancy.prenatal_point = 1.0
+juel_before = baby_b.juel.get(J, 0)
 text = baby_growth_handle.settle_prenatal_to_child(102, 204)
-check("1 点：记录了但经验为 0，仍有一句文本", baby_b.child_growth.prenatal_point == 1.0 and text != "" and "20" not in text)
+check("1 点：折 10 个珠，也有一句文本", baby_b.child_growth.prenatal_point == 1.0 and baby_b.juel.get(J, 0) - juel_before == 10 and "10" in text, text)
+_orig_juel_rate = E.PRENATAL_JUEL_PER_POINT
+E.PRENATAL_JUEL_PER_POINT = 0
+juel_before = baby_b.juel.get(J, 0)
+text = baby_growth_handle.settle_prenatal_to_child(102, 204)
+E.PRENATAL_JUEL_PER_POINT = _orig_juel_rate
+check("比例调到 0 时折不出珠：不加珠、给「还不足以留下什么」那句", baby_b.juel.get(J, 0) == juel_before and "还不足以留下什么" in text, text)
 mother.pregnancy.prenatal_point = 0.0
 
 section("胎教结算 555")

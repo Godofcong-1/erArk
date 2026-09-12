@@ -14,7 +14,7 @@
     1. 习得珠是**通用**的、科目经验是**分科**的 —— 专精一门能把它推到高级，
        广泛选课则珠够而各科经验摊薄，总成长量由珠池封顶。
     2. 性技科目（70~77）的升级需求是**真实性交经验**（如膣技要 E61 阴道性交经验），
-       所以性技理论课只能攒珠，经验要靠实操课（四期）来补 —— 理论与实操天然两条腿。
+       课堂与自习对它们只给习得与对应的理论经验（Plan 26，get_class_exp_id），真实经验要靠实操课来补 —— 理论与实操两条腿。
 """
 from types import FunctionType
 from typing import List, Optional
@@ -61,7 +61,7 @@ def get_character_stage(character_id: int) -> int:
 
 def get_student_candidate_list() -> List[int]:
     """
-    取养成中的女儿列表（养成总览、指定必修学生、日程批量套用、学期结算共用）
+    取养成中的女儿列表（养成总览、日程批量套用、学期结算共用）
     Keyword arguments:
     无
     Return arguments:
@@ -72,8 +72,8 @@ def get_student_candidate_list() -> List[int]:
           血缘条件不能省：只看年龄素质的话，世界设定「萝莉化」
              (character_handle.handle_character_setting) 会给全岛干员挂上萝莉素质103，
              只按素质筛会把全岛的人都塞进课表页签栏
-          按 id 升序而不是遍历 npc_id_got(set)：两个面板都用 [0] 做默认选中回落，
-             set 的迭代顺序不定会让页签顺序飘
+          按 id 升序而不是遍历 npc_id_got(set)：名单要交给「选择学生」面板与学期结算逐个处理，
+             set 的迭代顺序不定会让每次列出的顺序都不一样
     """
     from Script.Design import handle_premise
 
@@ -101,7 +101,7 @@ def get_course_candidate_list() -> List[int]:
              存档里她残留的个人课表不迁移、不清理，没有行会命中，改回学生岗后照常生效。
              女儿长到幼女时会被自动置为学生岗，默认都在名单里。
           成年学生只排课、只上课，不出成绩单、不进养成事件——那些地方仍只遍历女儿。
-          与 get_student_candidate_list 一样按 id 升序：面板用 [0] 做默认选中回落，set 的迭代顺序会飘
+          与 get_student_candidate_list 一样按 id 升序：「选择学生」面板与必修名单逐个列人，set 的迭代顺序会飘
     """
     result = []
     for character_id in sorted(cache.npc_id_got):
@@ -129,6 +129,22 @@ def get_subject_exp_id(ability_id: int) -> int:
                 if exp_part.isdigit():
                     return int(exp_part)
     return 0
+
+
+def get_class_exp_id(ability_id: int) -> int:
+    """
+    取教室课与自习给某个科目发的经验id（Plan 26 §3.1）
+    Keyword arguments:
+    ability_id -- 科目能力id
+    Return arguments:
+    int -- 经验id；性技科目取对应的理论经验，没有对应理论经验（76腰技）时为0，只给习得
+    功能: 性技科目在 AbilityUp.csv 里解出的是真实性交经验（指技→手交、舌技→口交……），
+          课堂上发它会让孩子带着性交经验，舌技课还会经 common_default 的钩子补记一条口交初体验；
+          所以性技科目改发 Experience.csv 类型 12 的理论经验，其余科目照旧取升级需求里的经验
+    """
+    if ability_id in education_constant.SEX_SKILL_SUBJECT_SET:
+        return education_constant.SEX_SKILL_THEORY_EXP_ID.get(ability_id, 0)
+    return get_subject_exp_id(ability_id)
 
 
 def get_learn_speed(teacher_level: int, student_level: int) -> float:
@@ -282,8 +298,8 @@ def settle_student_class_gain(
         change_data_to_target_change=change_data_to_target_change,
     )
 
-    # 科目经验：决定单科能升到多高
-    exp_id = get_subject_exp_id(ability_id)
+    # 科目经验：决定单科能升到多高；性技科目给的是理论经验、腰技只给习得（Plan 26 §3.1）
+    exp_id = get_class_exp_id(ability_id)
     if exp_id:
         final_exp = max(1, int(exp_base * adjust))
         common_default.base_chara_experience_common_settle(
@@ -332,7 +348,8 @@ def settle_teacher_class_gain(
         ability_level=int(teacher_data.ability.get(ability_id, 0)),
         change_data=change_data,
     )
-    exp_id = get_subject_exp_id(ability_id)
+    # 教学相长同一口径：性技科目教师也只拿理论经验（Plan 26 §3.1）
+    exp_id = get_class_exp_id(ability_id)
     if exp_id:
         common_default.base_chara_experience_common_settle(teacher_id, exp_id, change_data=change_data)
 

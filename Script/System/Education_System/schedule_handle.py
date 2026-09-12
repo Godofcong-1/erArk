@@ -21,23 +21,34 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 
+def judge_scene_open(scene_name: str) -> bool:
+    """
+    校验一个场景当前是否已开放（Plan 26 §3.8：由 judge_classroom_open 泛化而来，个人式课的上课地点也要查）
+    Keyword arguments:
+    scene_name -- 场景名
+    Return arguments:
+    bool -- 是否已开放
+    功能: constant.place_data 装的是**全部**场景——它在配置载入期由 data/map/ 的目录树
+             静态构建（map_config.load_dir_now），与存档、facility_level、facility_open 全都无关。
+             所以开放与否必须另查 Rhodes_Island.facility_open，与寻路的 wait_open 判定（map_handle.judge_scene_accessible）同口径。
+             理论教室一 / 实践教室一 / 大礼堂等 Lv1 基础设施压根不在 Facility_open.csv 里，
+             不给它们兜底会被误判成未开放，面板直接空掉（宿舍区同样处理，见 Dormitory_System/common.py）
+    """
+    if scene_name not in game_config.config_facility_open_name_set:
+        return True
+    open_cid = game_config.config_facility_open_name_to_cid[scene_name]
+    return bool(cache.rhodes_island.facility_open.get(open_cid, False))
+
+
 def judge_classroom_open(classroom: str) -> bool:
     """
-    校验一间教室当前是否已开放
+    校验一间教室当前是否已开放（judge_scene_open 的别名，教室列表沿用这个名字）
     Keyword arguments:
     classroom -- 教室场景名
     Return arguments:
     bool -- 是否已开放
-    功能: constant.place_data 装的是**全部**教室——它在配置载入期由 data/map/ 的目录树
-             静态构建（map_config.load_dir_now），与存档、facility_level、facility_open 全都无关。
-             所以开放与否必须另查 Rhodes_Island.facility_open。
-             理论教室一 / 实践教室一 / 大礼堂 是 Lv1 基础设施，压根不在 Facility_open.csv 里，
-             不给它们兜底会被误判成未开放，面板直接空掉（宿舍区同样处理，见 Dormitory_System/common.py）
     """
-    if classroom not in game_config.config_facility_open_name_set:
-        return True
-    open_cid = game_config.config_facility_open_name_to_cid[classroom]
-    return bool(cache.rhodes_island.facility_open.get(open_cid, False))
+    return judge_scene_open(classroom)
 
 
 def get_classroom_sort_key(classroom: str) -> int:
@@ -185,18 +196,20 @@ def clear_class_cell(classroom: str, week_day: int, period: int) -> None:
         schedule[classroom][week_day].pop(period, None)
 
 
-def get_teacher_cell(teacher_id: int, week_day: int, period: int) -> Optional[Tuple[str, int]]:
+def get_teacher_cell(teacher_id: int, week_day: int, period: int, include_temp: bool = True) -> Optional[Tuple[str, int]]:
     """
     反查某位教师在某节次要去哪间教室教什么（教师个人课表由全局课表反查，不另存字段）
     Keyword arguments:
     teacher_id -- 教师的角色id
     week_day -- 星期，0周一~6周日
     period -- 节次，0~8
+    include_temp -- 是否叠加今天的临时性技实操课。排课的撞课判定（judge_teacher_conflict）必须传 False：
+                    每周课表是每周循环的，被今天的临时课顶掉的那一格下周照样要上（Plan 26 §3.6）
     Return arguments:
     Optional[Tuple[str, int]] -- (教室场景名, 科目能力id)，该节次没课则为None
     """
     # 临时性技实操课的覆盖层（Plan 22 四期），与 get_class_cell 同口径：只在查询的星期正好是今天时覆盖
-    temp_class = get_today_temp_class(week_day, period)
+    temp_class = get_today_temp_class(week_day, period) if include_temp else None
     # 授课者恒为玩家，所以查玩家时直接命中。这里不能只靠下面那个循环：临时课的教室未必在 class_schedule 里有键，
     #    玩家也从不出现在全局课表的教师位上，漏了这一层就会像 4-C 的主修口上那样"玩家永远查不到自己"
     if teacher_id == 0 and temp_class is not None:
@@ -376,26 +389,25 @@ def get_now_course(character_id: int) -> Optional[dict]:
     return get_course_at(character_id, now_time, period)
 
 
-def get_upcoming_course(character_id: int, minute_limit: int = education_constant.UPCOMING_MINUTE, now_time=None) -> Optional[dict]:
+def get_upcoming_course(character_id: int, minute_limit: int = education_constant.UPCOMING_MINUTE) -> Optional[dict]:
     """
     取学生接下来 minute_limit 分钟内要开始的那一节课（到岗时间与课间用）
     Keyword arguments:
     character_id -- 角色id
     minute_limit -- 往后看多少分钟
-    now_time -- 参照时刻，None 时取角色的行为开始时刻（学生的打断规则传当前游戏时间）
     Return arguments:
     Optional[dict] -- 与 get_now_course 同结构，窗口内没有节次开始、或那一节没排课则为None
     功能: 2026-09-12 第五轮为到岗时间（8:40~9:00、13:40~14:00）而加：学生岗不走工作链，没人再把她们送去第一节课的教室。
           Plan 25 起节次内也看下一节，与教师的 get_upcoming_teaching 同口径：没课的节次里在娱乐的学生，下一节开课前也要先去上课地点。
-          调用方都只在本节没课（get_now_course 为 None）时才问它，不会用下一节顶掉本节的课
+          调用方都只在本节没课（get_now_course 为 None）时才问它，不会用下一节顶掉本节的课。
+          参照时刻一律取角色的行为开始时刻（Plan 25 初稿为打断规则留的 now_time 参数从未被用上，Plan 26 删去）
     """
     import datetime
 
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = character_data.behavior.start_time
     if now_time is None:
-        character_data: game_type.Character = cache.character_data[character_id]
-        now_time = character_data.behavior.start_time
-        if now_time is None:
-            now_time = cache.game_time
+        now_time = cache.game_time
     for period, (hour, minute) in enumerate(game_time.CLASS_PERIOD_START):
         start_time = now_time.replace(hour=hour, minute=minute, second=0, microsecond=0)
         if start_time <= now_time:
@@ -467,6 +479,12 @@ def get_now_teaching(character_id: int) -> Optional[dict]:
     if cell is None:
         return None
     classroom, ability_id = cell
+    # 玩家的授课只来自当天的临时实操课（他从不出现在全局课表的教师位上）：人不在那间教室时，
+    #    此刻的手动授课与那节课无关，不能把那门性技当成本节科目（Plan 26 §3.7）
+    if character_id == 0:
+        now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+        if now_scene_str not in cache.scene_data or cache.scene_data[now_scene_str].scene_name != classroom:
+            return None
     return {
         "course_type": get_course_type_by_classroom(classroom),
         "classroom": classroom,
@@ -501,8 +519,10 @@ def judge_teacher_conflict(teacher_id: int, week_day: int, period: int, classroo
     classroom -- 想排入的教室场景名
     Return arguments:
     str -- 空字符串表示不冲突，否则为冲突原因文本
+    功能: 照每周课表判，不叠加今天的临时实操课（Plan 26 §3.6）：被临时课顶掉的教师今天不用来，
+          但每周课表里她这一节仍排在那间教室，别处再排她就是撞课
     """
-    cell = get_teacher_cell(teacher_id, week_day, period)
+    cell = get_teacher_cell(teacher_id, week_day, period, include_temp=False)
     if cell is not None and cell[0] != classroom:
         return _("第{0}节已在{1}").format(period + 1, cell[0])
     return ""
@@ -539,7 +559,7 @@ def get_course_place(now_course: dict) -> List[str]:
     Keyword arguments:
     now_course -- get_now_course() 的返回值
     Return arguments:
-    List[str] -- 场景路径列表，解析不出则为空列表
+    List[str] -- 场景路径列表，解析不出（含场所未开放，Plan 26 §3.8）则为空列表
     """
     course_type = now_course["course_type"]
     # 班级式：目标就是教室名
@@ -562,17 +582,20 @@ def get_course_place(now_course: dict) -> List[str]:
     scene_list = constant.place_data.get(place_tag, [])
     if not scene_list:
         return []
-    # 体育课要精确到具体那间房（木桩房与射击房同属 Training_Room）
+    # 体育课要精确到具体那间房（木桩房与射击房同属 Training_Room）；那间房还没开放就解析不出（Plan 26 §3.8）
     if course_type == education_constant.COURSE_TYPE_PE:
         for scene_path_str in scene_list:
-            if cache.scene_data[scene_path_str].scene_name == now_course["target"]:
+            scene_name = cache.scene_data[scene_path_str].scene_name
+            if scene_name == now_course["target"]:
+                if not judge_scene_open(scene_name):
+                    return []
                 return map_handle.get_map_system_path_for_str(scene_path_str)
         return []
     # 实习课：同一标签下的房间并不等价，取第一间会让学徒扑空——
     #    急诊室与门诊室同属 Clinic 但坐诊医生只在门诊室；舍管房有9间各区管理员只守自己那间；
     #    射击房与木桩房、生产车间1~5 同理。
-    #    所以按"谁在岗就去谁那间"优先（口径53：实习就是跟着此刻在做这份工作的人），
-    #    其次取与岗位 place 同名的那间，都取不到才退回第一间
+    #    所以按"谁在岗就去谁那间"优先（口径53：实习就是跟着此刻在做这份工作的人，有人在岗的房间自然已开放），
+    #    其次取与岗位 place 同名且已开放的那间，都取不到才退回第一间已开放的
     if course_type == education_constant.COURSE_TYPE_INTERN:
         work_type_id = now_course["target"]
         for scene_path_str in scene_list:
@@ -581,9 +604,32 @@ def get_course_place(now_course: dict) -> List[str]:
                     return map_handle.get_map_system_path_for_str(scene_path_str)
         work_place = game_config.config_work_type[work_type_id].place
         for scene_path_str in scene_list:
-            if cache.scene_data[scene_path_str].scene_name == work_place:
+            if cache.scene_data[scene_path_str].scene_name == work_place and judge_scene_open(work_place):
                 return map_handle.get_map_system_path_for_str(scene_path_str)
-    return map_handle.get_map_system_path_for_str(scene_list[0])
+    # 兴趣课与实习课的回落：取第一间已开放的。整组都没开放（咖啡馆、温室之类还没建）就解析不出，
+    #    交回既有 AI（Plan 24 §3.7），不再派人走到门口、因寻路 wait_open 一分钟一分钟地空转（Plan 26 §3.8）
+    for scene_path_str in scene_list:
+        if judge_scene_open(cache.scene_data[scene_path_str].scene_name):
+            return map_handle.get_map_system_path_for_str(scene_path_str)
+    return []
+
+
+def judge_course_need_pass(character_id: int, course: dict) -> bool:
+    """
+    校验这名学生满不满足一节课的活动条件（Plan 26 §3.8）
+    Keyword arguments:
+    character_id -- 角色id
+    course -- get_now_course() / get_course_at() 的返回值
+    Return arguments:
+    bool -- 是否满足；只有兴趣课有条件（娱乐的 need 列），其余课型恒为 True
+    功能: 兴趣课的目标是一项娱乐，娱乐自带 need（如过家家限幼女 / 萝莉）。个人课表面板不让选条件不符的，
+          但课表写好之后孩子会长大、会换岗，残留的格子要在上课判定里再挡一次，否则 716 照常执行
+    """
+    if course["course_type"] != education_constant.COURSE_TYPE_INTEREST:
+        return True
+    from Script.System.Education_System import schedule_template_handle
+
+    return schedule_template_handle.judge_activity_need_pass(character_id, course["target"])
 
 
 _BEHAVIOR_NAME_BY_CID: Dict[int, str] = {}

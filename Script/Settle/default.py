@@ -7807,7 +7807,7 @@ def handle_follow_mother_add_just(
     from Script.System.Education_System import growth_handle, class_ai
 
     # 结算时再判一次母亲是否有效：从决策到结算之间母亲可能已经离场（进H、被调走）
-    mother_id = class_ai.judge_mother_available(character_id)
+    mother_id = class_ai.judge_mother_followable(character_id)
     if mother_id == -1:
         return
     growth_handle.settle_follow_mother_gain(character_id, mother_id, add_time, change_data=change_data)

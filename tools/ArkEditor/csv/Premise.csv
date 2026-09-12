@@ -1187,6 +1187,7 @@ lactation_1,LACTATION_1,素质_妊娠,自己泌乳==1
 t_lactation_0,T_LACTATION_0,素质_妊娠,交互对象泌乳==0
 t_lactation_1,T_LACTATION_1,素质_妊娠,交互对象泌乳==1
 t_baby_1,T_BABY_1,素质_妊娠,交互对象婴儿==1
+t_baby_0,T_BABY_0,素质_妊娠,交互对象婴儿==0
 semen_thick_1,SELF_SEMEN_THICK_1,素质_妊娠,自己浓厚精液==1
 
 breast_0,SELF_CHEST_IS_CLIFF,素质_部位,自己胸部大小是绝壁

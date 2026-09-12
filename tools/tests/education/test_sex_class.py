@@ -192,4 +192,58 @@ adult_student = make_character(303, "成年学生", 152)
 sex_class_handle.settle_attend(303)
 check("成年学生：记一节", adult_student.child_growth is not None and adult_student.child_growth.attend_class_count == 1)
 
+section("Plan 26 §3.5：提前几分钟开讲预约的课，开的就是预约那节")
+cache.rhodes_island.temp_sex_class = {}
+cache.sex_class_mode = False
+cache.group_sex_mode = False
+newbie = make_character(204, "没修过性技课的必修生", 152, daughter=True, stage=103, mother_id=102)
+move_to(0, classroom_path(ROOM_P))
+move_to(204, classroom_path(ROOM_P))
+reserved = sex_class_handle.set_temp_class(today, 6, ROOM_P, 72, must_attend=[204])
+early = period_time(6) - datetime.timedelta(minutes=5)
+set_time(early)
+key_6 = sex_class_handle.get_class_key(today, 6)
+check("找得到这间教室半小时内开讲的预约", sex_class_handle.find_reserved_class(ROOM_P, early) == (key_6, reserved))
+check("别的教室、开课前 45 分钟都找不到", sex_class_handle.find_reserved_class(_("大礼堂"), early) == ("", None)
+      and sex_class_handle.find_reserved_class(ROOM_P, period_time(6) - datetime.timedelta(minutes=45)) == ("", None))
+check("必修名单：不给教室按当前节次取（取不到），给了教室按这间教室的预约取", sex_class_handle.get_must_attend_set() == set() and sex_class_handle.get_must_attend_set(ROOM_P) == {204})
+check("开课前的场景学生名单含没修过性技课的必修生", 204 in sex_class_handle.get_scene_student_list(), sex_class_handle.get_scene_student_list())
+check("开课指令预读得到预约（不再重问主修）", sex_class_handle.find_class_to_start(ROOM_P, early)[1] is reserved)
+now_class = sex_class_handle.start_sex_class(72)
+check("复用预约条目：运行中、标记预约、键还是第 6 节", now_class is reserved and reserved["running"] and reserved["reserved"] and sex_class_handle.get_running_class_key() == key_6)
+check("没有另开一节当场课", list(cache.rhodes_island.temp_sex_class.keys()) == [key_6], list(cache.rhodes_island.temp_sex_class.keys()))
+set_time(period_time(6) + datetime.timedelta(minutes=45))
+check("按预约的节次判档：到点下课是「按时」", sex_class_handle.judge_end_type() == 1)
+sex_class_handle.end_sex_class()
+check("下课后预约那条打上 ended、不再覆盖", reserved.get("ended") is True and sex_class_handle.get_active_temp_class(today, 6) is None)
+set_time(period_time(6) + datetime.timedelta(minutes=20))
+check("已下课的预约不再被当成等着开讲的", sex_class_handle.find_reserved_class(ROOM_P, cache.game_time) == ("", None))
+check("同一节下课后在同一间教室重开：沿用那条", sex_class_handle.find_class_to_start(ROOM_P, cache.game_time)[1] is reserved)
+reopen = sex_class_handle.start_sex_class(72, [])
+check("重开：清掉已下课标记、仍是预约", reopen is reserved and reserved["ended"] is False and reserved["running"])
+sex_class_handle.end_sex_class()
+
+section("Plan 26 L4：别的教室当场开课，把占着键的预约挪过来而不是覆盖")
+moved = sex_class_handle.set_temp_class(today, 7, ROOM_P, 73, must_attend=[204])
+set_time(period_time(7) + datetime.timedelta(minutes=5))
+move_to(0, classroom_path(_("大礼堂")))
+started = sex_class_handle.start_sex_class(71, [])
+check("挪用：还是那一条，教室改成大礼堂，必修名单保留、算预约", started is moved and moved["classroom"] == _("大礼堂") and moved["must_attend"] == [204] and moved["reserved"], moved)
+sex_class_handle.end_sex_class()
+move_to(0, classroom_path(ROOM_P))
+
+section("Plan 26 §3.10：课堂 H 只收学生岗")
+student_b.work.work_type = 51
+check("改了岗的女儿：点名必修也不能参加", not sex_class_handle.judge_can_join_sex_class(202, check_course=False))
+check("改了岗的女儿不进场景学生名单", 202 not in sex_class_handle.get_scene_student_list())
+student_b.work.work_type = 152
+check("改回学生岗恢复", sex_class_handle.judge_can_join_sex_class(202))
+
+section("Plan 26 L8：开课前半小时的提醒写实")
+cache.rhodes_island.temp_sex_class = {}
+sex_class_handle.set_temp_class(today, 8, ROOM_P, 70)
+text_list = sex_class_handle.check_and_send_notify(period_time(8) - datetime.timedelta(minutes=40), period_time(8) - datetime.timedelta(minutes=25))
+check("提醒写的是开课前 10 分钟动身，不再说「已经在往教室走了」", len(text_list) == 1 and "10" in text_list[0] and "已经在往教室走了" not in text_list[0], text_list)
+cache.rhodes_island.temp_sex_class = {}
+
 finish()

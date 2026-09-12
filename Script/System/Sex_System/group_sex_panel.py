@@ -717,6 +717,7 @@ class Edit_Group_Sex_Temple_Panel:
         """绘制可邀请的NPC列表"""
         from Script.Design import instuct_judege
         from Script.UI.Panel import common_select_NPC
+        from Script.System.Education_System import sex_class_handle
         now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 50, 5, window_width, True, False, 0)
         # 当前地点的角色列表
         scene_path_str = map_handle.get_map_system_path_str_for_list(self.pl_character_data.position)
@@ -726,6 +727,8 @@ class Edit_Group_Sex_Temple_Panel:
 
         while 1:
             npc_id_got_list = sorted(cache.npc_id_got)
+            # 课堂模式下的必修名单：点名必修的人豁免前置修习
+            must_attend_set = sex_class_handle.get_must_attend_set() if cache.sex_class_mode else set()
             # 已选择的角色id列表
             selected_id_list = []
             final_list = []
@@ -736,12 +739,14 @@ class Edit_Group_Sex_Temple_Panel:
                 # 如果角色已在场景中，则跳过
                 if chara_id in now_scene_character_list:
                     continue
-                # 判断实行值是否足够，不够的也跳过
-                # 性技实操课不判实行值（Plan 22 四期 口径58）：孩子是玩家自己养的、课是玩家自己排的，
-                #    两道决策已经做过；成年干员的门槛在 sex_class_handle.judge_can_join_sex_class 里另判
-                if not cache.sex_class_mode:
-                    if instuct_judege.calculation_instuct_judege(0, chara_id, _("群交"), not_draw_flag = True)[0] == False:
+                # 性技实操课按实操课的参加门槛筛（Plan 26 §3.3）：学生岗、状态正常、女儿零门槛、成年学生看 H 模式实行值、
+                #    没修过性技课的要被点名必修；受邀者到场后由状态机 722 走课堂的入课流程并记出勤（target 515）
+                if cache.sex_class_mode:
+                    if not sex_class_handle.judge_can_join_sex_class(chara_id, check_course=chara_id not in must_attend_set):
                         continue
+                # 普通群交：判断群交实行值是否足够，不够的跳过
+                elif instuct_judege.calculation_instuct_judege(0, chara_id, _("群交"), not_draw_flag = True)[0] == False:
+                    continue
                 # 力竭/疲劳/重度困倦者不再提供邀请
                 if handle_premise.handle_self_exhausted(chara_id):
                     continue

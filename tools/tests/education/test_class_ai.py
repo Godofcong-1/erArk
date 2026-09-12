@@ -923,4 +923,101 @@ check("成年必修生：本节的课被覆盖成临时课的教室", _course is
 remove_character(301)
 clear_schedules()
 
+section("Plan 26 §3.8：未开放的场所、条件不符的兴趣课交回既有 AI")
+set_time(period_time(0))
+pool = _("游泳池")
+pool_open_cid = game_config.config_facility_open_name_to_cid[pool]
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_PE, pool)
+student.entertainment.entertainment_type = [E.ENTERTAINMENT_FREE_PLAY] * 3
+move_to(201, SCENE_DORM)
+cache.rhodes_island.facility_open[pool_open_cid] = False
+check("体育课排在未解锁的游泳池：在 / 不在上课地点同为 0", handle_premise.handle_premise("self_in_course_place", 201) == 0
+      and handle_premise.handle_premise("self_not_in_course_place", 201) == 0)
+check("整条链：没有上课行命中，交回娱乐链（去育儿室），不再走到门口空转", dispatch(201) == SM.MOVE_TO_NURSERY)
+cache.rhodes_island.facility_open[pool_open_cid] = True
+move_to(201, SCENE_DORM)
+check("解锁后恢复：715 去游泳池", dispatch(201) == SM.EDUCATION_MOVE_TO_COURSE_PLACE)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_INTEREST, E.ENTERTAINMENT_PLAY_HOUSE)
+student.talent[103] = 0
+student.talent[104] = 1
+set_time(period_time(0))
+check("少女排着过家家兴趣课（need 限幼女 / 萝莉）：上课地点解析不出", class_ai.get_course_place_now_or_upcoming(201) == [])
+move_to(201, SCENE_DORM)
+check("整条链：不派 715 / 716", dispatch(201) not in (SM.EDUCATION_MOVE_TO_COURSE_PLACE, SM.EDUCATION_DO_COURSE))
+student.talent[104] = 0
+student.talent[103] = 1
+set_time(period_time(0))
+check("回到萝莉：照常解析", bool(class_ai.get_course_place_now_or_upcoming(201)))
+schedule_handle.clear_selected_course(201, 0, 0)
+clear_schedules()
+
+section("Plan 26 §3.5：待赴的那节被玩家提前开讲、人已在教室 → 直接 JOIN（722）")
+today = DEFAULT_TIME.date().toordinal()
+sex_class_handle.set_temp_class(today, 1, ROOM_P, 70, must_attend=[201])
+_early = period_time(1) - datetime.timedelta(minutes=5)
+move_to(0, classroom_path(ROOM_P))
+move_to(201, classroom_path(ROOM_P))
+set_time(_early)
+check("开讲前：SEX_PENDING 原地等", class_ai.get_course_stage(201) == E.COURSE_STAGE_SEX_PENDING)
+sex_class_handle.start_sex_class(70, [])
+cache.sex_class_mode = True
+cache.group_sex_mode = True
+pl.sp_flag.is_h = True
+set_time(_early)
+check("玩家提前开讲了那节：人已在教室 → JOIN", class_ai.get_course_stage(201) == E.COURSE_STAGE_JOIN_SEX_CLASS)
+_attend = growth_handle.get_child_growth(201).attend_class_count
+sm = dispatch(201, _early)
+check("整条链：派 722 入课并补记出勤", sm == SM.EDUCATION_JOIN_SEX_CLASS and student.sp_flag.is_h and growth_handle.get_child_growth(201).attend_class_count == _attend + 1, sm)
+student.sp_flag.is_h = False
+student.sp_flag.see_pl_h = False
+move_to(201, SCENE_DORM)
+set_time(_early)
+check("人还没到教室：仍是 SEX_PENDING，先过去", class_ai.get_course_stage(201) == E.COURSE_STAGE_SEX_PENDING)
+
+section("Plan 26 §3.3：课堂模式下受邀到场走 515 → 722，普通群交走 505 → 96")
+_T505, _T515 = "default505", "default515"
+""" 构建时 target 的 cid 会带上所在文件夹名（buildconfig：path_list[-2] + cid），target.csv 在 data/target/default 下 """
+check("505 挂 sex_class_mode_off、515 挂 sex_class_mode_on 且指向 722", "sex_class_mode_off" in game_config.config_target_premise_data.get(_T505, set())
+      and "sex_class_mode_on" in game_config.config_target_premise_data.get(_T515, set()) and game_config.config_target[_T515].state_machine_id == SM.EDUCATION_JOIN_SEX_CLASS)
+move_to(201, classroom_path(ROOM_P))
+student.sp_flag.go_to_join_group_sex = True
+sm = dispatch(201, _early)
+check("受邀的学生走到玩家身边 → 722 入课、清掉前往标记", sm == SM.EDUCATION_JOIN_SEX_CLASS and student.sp_flag.is_h and not student.sp_flag.go_to_join_group_sex, sm)
+student.sp_flag.is_h = False
+student.sp_flag.see_pl_h = False
+move_to(102, classroom_path(ROOM_P))
+prepare_ai(102)
+mother.sp_flag.go_to_join_group_sex = True
+sm = dispatch(102, _early)
+check("受邀的非学生干员到场 → 722 判不过门槛，原地收场、不进 H", sm == SM.EDUCATION_JOIN_SEX_CLASS and not mother.sp_flag.is_h and not mother.sp_flag.go_to_join_group_sex, sm)
+pl.sp_flag.is_h = False
+sex_class_handle.end_sex_class()
+cache.sex_class_mode = False
+mother.sp_flag.go_to_join_group_sex = True
+sm = dispatch(102, _early)
+check("普通群交（不是课堂）→ 505 → 96 加入群交", sm == 96, sm)
+mother.sp_flag.go_to_join_group_sex = False
+mother.sp_flag.is_h = False
+cache.group_sex_mode = False
+move_to(0, SCENE_DORM)
+move_to(102, SCENE_EDU_ENTRY)
+move_to(201, SCENE_DORM)
+clear_schedules()
+
+section("Plan 26 L7：母亲睡着时幼女的见学回落自由玩耍，公务事件的「母亲可见学」不受影响")
+set_time(period_time(0))
+child.entertainment.entertainment_type = [0, 0, 0]
+move_to(202, SCENE_DORM)
+check("母亲醒着：去找母亲", class_ai.judge_follow_mother_state_machine(202) == SM.EDUCATION_MOVE_TO_MOTHER)
+mother.sp_flag.sleep = True
+check("母亲要睡觉：回落育儿室自由玩耍", class_ai.judge_follow_mother_state_machine(202) == SM.ENTERTAIN_FREE_PLAY and class_ai.judge_mother_followable(202) == -1)
+check("公务事件前提 self_mother_available 照旧成立（事件在跨天时派发，那时母亲多半睡着）", class_ai.judge_mother_available(202) == 102
+      and handle_premise.handle_premise("self_mother_available", 202) == 1)
+mother.sp_flag.sleep = False
+mother.behavior.behavior_id = constant.Behavior.SLEEP
+check("没挂要睡觉标记、但行为是睡觉（吃药 / 爆睡）也算", class_ai.judge_mother_followable(202) == -1)
+mother.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+check("醒来后恢复", class_ai.judge_mother_followable(202) == 102)
+class_ai.clear_follow_mother_flag(202)
+
 finish()

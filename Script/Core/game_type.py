@@ -377,7 +377,7 @@ class CHILD_GROWTH:
         """ 四对性格倾向的累积值 键int:性格对编号(0勤劳/懒散 1坚强/脆弱 2热情/孤僻 3开放/羞耻)
             值float:倾向值，正数偏前者、负数偏后者，成年时按符号选边（对照表见 education_constant.PERSONALITY_PAIR_TALENT）。写入方在三期与四期 """
         self.prenatal_point: float = 0.0
-        """ 妊娠期胎教累积（出生时由母亲侧转写），参与初始资质计算。写入方在四期 """
+        """ 出生时由母亲侧转写来的胎教值（写入方在四期）；出生当时已按它折成习得珠（Plan 26），之后只作记录与养成数值 21 的读数 """
         self.care_point: float = 0.0
         """ 婴儿期早教与幼女期跟随的照料累积，影响性格倾向与身体发育判定。写入方在二期与四期 """
         self.selected_course: dict = {}

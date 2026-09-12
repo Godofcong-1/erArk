@@ -21,7 +21,7 @@ section("候选人与阶段")
 check("阶段读取", growth_event_handle.get_character_stage(201) == 103 and growth_event_handle.get_character_stage(301) == 0)
 check("只看玩家的女儿", sorted(growth_event_handle.get_growth_event_character_list()) == [201, 202, 203, 204])
 check("名单按 id 升序", growth_event_handle.get_growth_event_character_list() == sorted(growth_event_handle.get_growth_event_character_list()))
-check("同胞：同父即算（异母也算）", sorted(growth_event_handle.get_sibling_child_list(201)) == [202, 203, 204])
+check("同胞：同父即算（异母也算），婴儿不算（Plan 26）", sorted(growth_event_handle.get_sibling_child_list(201)) == [202, 203])
 check("双亲都没登记的孩子不互认", growth_event_handle.get_sibling_child_list(205) == [])
 schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, _("理论教室一"))
 schedule_handle.set_selected_course(203, 0, 0, E.COURSE_TYPE_THEORY, _("理论教室一"))
@@ -67,6 +67,7 @@ random.randint = _orig_randint
 section("注册式容量与抬头")
 grown = make_character(206, "已成年的女儿", 152, daughter=True, stage=104, mother_id=102, born_days=500)
 check("已成年的少女不进每日派发名单（第五轮）", 206 not in growth_event_handle.get_growth_event_character_list())
+check("已成年的少女、婴儿都不是同胞互动对象（Plan 26）", 206 not in growth_event_handle.get_sibling_child_list(201) and 204 not in growth_event_handle.get_sibling_child_list(201))
 check("容量 = 4 × 未成年女儿数（成年少女不占容量）", growth_event_handle.get_growth_event_queue_capacity() == E.GROWTH_EVENT_QUEUE_PER_CHILD * 4)
 check("容量已注册进公务事件系统", official_event_handle.get_queue_max() >= official_event_handle.OFFICIAL_EVENT_QUEUE_MAX_EXTRA + E.GROWTH_EVENT_QUEUE_PER_CHILD * 4)
 title = growth_event_handle.get_growth_event_title({"chara_id": 201})
@@ -94,5 +95,14 @@ for uid in semester_bucket:
     growth_handle.get_child_growth(202).event_history[uid] = {"time": cache.game_time, "choice": 0}
 check("池子抽干时返回 False 且不入队", not growth_event_handle.push_semester_event(202) and official_event_handle.get_queue() == [])
 check("批量：只给能入队的计数", growth_event_handle.push_semester_event_for_list([201, 202]) == 1)
+
+section("Plan 26：婴儿不抽写会走会说的孩子的通用事件；期末事件只推幼女 / 萝莉；期末 13 要有课可评")
+baby_excluded = {"通用%d" % cid for cid in (3, 4, 5, 9, 23, 25, 29, 39, 42, 43, 44, 45, 49, 50, 51, 52, 53)}
+check("这 17 条都带排除婴儿的前提", all("CVP_A1_T|101_E_0" in game_config.config_official_event[uid].get("premise", "") for uid in baby_excluded))
+baby_candidate = {one[0] for one in growth_event_handle.get_candidate_event_list(204)}
+check("婴儿的候选里没有这 17 条", baby_candidate and not (baby_candidate & baby_excluded), sorted(baby_candidate & baby_excluded))
+cache.rhodes_island.official_event_queue = []
+check("成年女儿不入队期末事件", growth_event_handle.push_semester_event_for_list([206]) == 0 and official_event_handle.get_queue() == [])
+check("期末 13 的前提：上一份成绩单不是「无课可评」", game_config.config_official_event["期末13"].get("premise", "") == "CVP_A1_Growth|7_NE_3")
 
 finish()

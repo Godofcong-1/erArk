@@ -182,4 +182,45 @@ check("萝莉女儿：升了级的科目记进待炫耀", len(student_show) > 0,
 check("萝莉女儿：只记课程科目（欲望、感觉之类的升级不记）", set(student_show) <= set(education_constant.SUBJECT_ABILITY_LIST), sorted(student_show))
 check("成年学生：升级不记待炫耀（口上只写给女儿）", growth_handle.get_child_growth(301).show_off_ability == {}, growth_handle.get_child_growth(301).show_off_ability)
 
+section("Plan 26 §3.1：性技科目的课堂只发理论经验")
+E6 = education_constant
+check("女学生可学的 7 门性技都映射到类型 12 的理论经验", all(game_config.config_experience[growth_handle.get_class_exp_id(a)].type == 12 for a in E6.SEX_CLASS_ABILITY_LIST))
+check("映射表的键都是性技科目、覆盖女学生可学的 7 门", set(E6.SEX_SKILL_THEORY_EXP_ID) <= E6.SEX_SKILL_SUBJECT_SET and set(E6.SEX_CLASS_ABILITY_LIST) <= set(E6.SEX_SKILL_THEORY_EXP_ID))
+check("7 种理论经验互不相同", len(set(E6.SEX_SKILL_THEORY_EXP_ID.values())) == len(E6.SEX_SKILL_THEORY_EXP_ID))
+check("腰技没有理论经验 → 0（只给习得）", growth_handle.get_class_exp_id(76) == 0)
+check("技能科目照旧取升级需求里的经验", all(growth_handle.get_class_exp_id(a) == growth_handle.get_subject_exp_id(a) for a in E6.SUBJECT_ABILITY_LIST if a not in E6.SEX_SKILL_SUBJECT_SET))
+theory_student = make_character(205, "上舌技课的萝莉", 152, daughter=True, stage=103, mother_id=102)
+set_time(period_time(3))
+real_sex_exp = {growth_handle.get_subject_exp_id(a) for a in E6.SEX_SKILL_SUBJECT_SET} - {0}
+growth_handle.settle_student_class_gain(205, 101, 71, E6.COURSE_TYPE_THEORY, 45)
+check("学生上舌技课：口交理论经验增加，任何真实性交经验都是 0，没有口交初体验", theory_student.experience.get(171, 0) > 0 and all(theory_student.experience.get(e, 0) == 0 for e in real_sex_exp)
+      and 2 not in theory_student.first_record.first_part_sex_dict)
+teacher_sex_before = {e: teacher.experience.get(e, 0) for e in real_sex_exp}
+teacher_theory_before = teacher.experience.get(171, 0)
+growth_handle.settle_teacher_class_gain(101, 71, 45)
+check("教师教舌技：理论经验增加、真实性交经验不变", teacher.experience.get(171, 0) > teacher_theory_before and all(teacher.experience.get(e, 0) == teacher_sex_before[e] for e in real_sex_exp))
+theory_student.child_growth.last_attend_period = []
+learn_before = theory_student.status_data.get(E6.LEARN_STATE_ID, 0)
+exp_snapshot = dict(theory_student.experience)
+growth_handle.settle_student_class_gain(205, 101, 76, E6.COURSE_TYPE_THEORY, 45)
+check("腰技课只给习得、不给任何经验", theory_student.status_data.get(E6.LEARN_STATE_ID, 0) > learn_before and dict(theory_student.experience) == exp_snapshot)
+remove_character(205)
+
+section("Plan 26 §3.12：未成年且一门性技都没学会时不升技巧")
+minor = make_character(206, "攒了珠的萝莉", 152, daughter=True, stage=103, mother_id=102)
+minor.juel[E6.LEARN_STATE_ID] = 150
+handle_ability.gain_ability(206)
+check("萝莉 150 珠、没学过性技：技巧仍 0、珠一个不少", minor.ability[30] == 0 and minor.juel[E6.LEARN_STATE_ID] == 150, (minor.ability[30], minor.juel[E6.LEARN_STATE_ID]))
+drawn_text.clear()
+check("能力面板的说明写明未成年的额外条件", handle_ability.extra_ability_check(30, 206, draw_flag=True) == 0 and any("未成年干员至少要有一门子性技达到1级" in t for t in drawn_text))
+minor.ability[70] = 1
+handle_ability.gain_ability(206)
+check("学会一门性技（指技 1 级）后：技巧照原规则升 1 级", minor.ability[30] == 1 and minor.juel[E6.LEARN_STATE_ID] == 50, (minor.ability[30], minor.juel[E6.LEARN_STATE_ID]))
+grown_npc = make_character(207, "成年干员", 21)
+grown_npc.juel[E6.LEARN_STATE_ID] = 150
+handle_ability.gain_ability(207)
+check("成年干员不受影响：150 珠照旧升技巧 1 级", grown_npc.ability[30] == 1)
+remove_character(206)
+remove_character(207)
+
 finish()

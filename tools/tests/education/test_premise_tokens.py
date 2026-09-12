@@ -193,4 +193,17 @@ check("她在睡觉 → 不成立", HP("student_not_study_in_classroom", 0) == 0
 student.sp_flag.sleep = False
 move_to(0, SCENE_DORM)
 
+section("Plan 26 L6：t_baby_0 与检查成绩单挡婴儿")
+check("前提 t_baby_0 已注册", "t_baby_0" in constant.handle_premise_data and P.T_BABY_0 == "t_baby_0")
+baby = make_character(204, "婴儿", 0, daughter=True, stage=101, mother_id=102)
+pl.target_character_id = 204
+check("交互对象是婴儿：t_baby_0 = 0、t_baby_1 = 1", HP("t_baby_0", 0) == 0 and HP("t_baby_1", 0) == 1)
+report_config = game_config.config_instruct[game_config.config_instruct_by_id["check_report_card"]]
+report_tokens = [getattr(P, name) for name in report_config.premise_set.split("|")]
+check("检查成绩单的前提对婴儿不成立", "T_BABY_0" in report_config.premise_set and not all(HP(token, 0) for token in report_tokens), report_config.premise_set)
+pl.target_character_id = 201
+check("对萝莉女儿成立", all(HP(token, 0) for token in report_tokens))
+pl.target_character_id = 0
+remove_character(204)
+
 finish()

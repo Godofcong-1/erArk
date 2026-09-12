@@ -153,16 +153,16 @@ class Growth_Panel:
         info_draw.width = self.width
         info_draw.text = text
         info_draw.draw()
-        # 胎教带来的初始经验是这孩子上学前就有的「底子」，只有出生时提示过一次，
-        # 之后玩家再也看不到，放在阶段行下面正好（四期方案 §3.19）
+        # 胎教折的习得珠是这孩子上学前就有的「底子」，只有出生时提示过一次，
+        # 之后玩家再也看不到，放在阶段行下面正好（四期方案 §3.19；Plan 26 起由初始经验改为习得珠）
         from Script.System.Education_System import baby_growth_handle
 
-        prenatal_exp_dict = baby_growth_handle.get_prenatal_exp_dict(character_id)
-        if prenatal_exp_dict:
+        prenatal_juel = baby_growth_handle.get_child_prenatal_juel(character_id)
+        if prenatal_juel:
             prenatal_draw = draw.NormalDraw()
             prenatal_draw.width = self.width
-            prenatal_draw.text = _("  胎教底子：出生时{0}门科目各获得了 {1} 点初始经验\n").format(
-                len(prenatal_exp_dict), list(prenatal_exp_dict.values())[0])
+            prenatal_draw.text = _("  胎教底子：孕期听过{0}次胎教，出生时带来 {1} 个{2}\n").format(
+                baby_growth_handle.get_child_prenatal_count(character_id), prenatal_juel, baby_growth_handle.get_learn_juel_name())
             prenatal_draw.style = "deep_gray"
             prenatal_draw.draw()
 

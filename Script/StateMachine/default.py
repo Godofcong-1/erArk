@@ -2852,7 +2852,7 @@ def character_education_move_to_mother(character_id: int):
     """
     from Script.System.Education_System import class_ai
 
-    mother_id = class_ai.judge_mother_available(character_id)
+    mother_id = class_ai.judge_mother_followable(character_id)
     # 走到半路母亲失效了（下班进了H、被叫去外勤），本函数直接返回，
     # 下一轮 AI 会重新判定并改走育儿室分支
     if mother_id == -1:
@@ -2871,7 +2871,7 @@ def character_education_follow_mother(character_id: int):
     from Script.System.Education_System import class_ai
 
     character_data: game_type.Character = cache.character_data[character_id]
-    mother_id = class_ai.judge_mother_available(character_id)
+    mother_id = class_ai.judge_mother_followable(character_id)
     if mother_id == -1:
         return
     character_data.target_character_id = mother_id
@@ -2958,16 +2958,28 @@ def character_education_absent_rest(character_id: int):
 @handle_state_machine.add_state_machine(constant.StateMachine.EDUCATION_JOIN_SEX_CLASS)
 def character_education_join_sex_class(character_id: int):
     """
-    上课：实操课开课后才走进教室，直接加入课堂 H 并记一节出勤（Plan 25 §3.2）
+    上课：走进正在上性技实操课的教室，直接加入课堂 H 并记一节出勤（Plan 25 §3.2，Plan 26 §3.3 泛化）
+    两个调用方：
+        target 220835 —— 本节（或提前开讲的下一节）的课所在教室正在上实操课、自己可以参加
+        target 515    —— 课堂模式下受玩家「邀请」、已经走到玩家身边的人
     与开课时拉人（效果 10014）走同一个 pull_student_into_class：进 H、看见玩家的 H、到场二段口上。
-       开课时拉进来的人出勤已由 start_sex_class 记过，晚到的人由这里补记；进了 H 之后她不再进 AI 链，不会重复记
+       开课时拉进来的人出勤已由 start_sex_class 记过，晚到的人由这里补记；进了 H 之后她不再进 AI 链，不会重复记。
+    到场那一刻再判一次参加门槛：受邀的人走在路上时课可能已经下了、她可能换了岗，不满足就照状态机 97 的写法收场
     Keyword arguments:
     character_id -- 角色id
     """
     from Script.System.Education_System import sex_class_handle
 
     character_data: game_type.Character = cache.character_data[character_id]
+    # 受邀前往的标记在这里一并清掉：不管进不进课堂，这趟邀请都已经走完了
+    character_data.sp_flag.go_to_join_group_sex = False
     character_data.target_character_id = character_id
+    must_attend = character_id in sex_class_handle.get_must_attend_set()
+    if not cache.sex_class_mode or not sex_class_handle.judge_can_join_sex_class(character_id, check_course=not must_attend):
+        character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+        character_data.behavior.duration = 1
+        character_data.state = constant.CharacterStatus.STATUS_WAIT
+        return
     sex_class_handle.pull_student_into_class(character_id)
     sex_class_handle.settle_attend(character_id)
 

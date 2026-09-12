@@ -17,7 +17,7 @@
 import datetime
 import random
 from types import FunctionType
-from typing import Optional, List
+from typing import Optional, List, Tuple
 
 from Script.Core import cache_control, game_type, get_text
 from Script.Design import game_time, map_handle
@@ -163,6 +163,82 @@ def get_running_class_key() -> str:
     return ""
 
 
+def get_scene_name(scene_path: list) -> str:
+    """
+    取场景路径对应的场景名（教室名）
+    Keyword arguments:
+    scene_path -- 场景路径
+    Return arguments:
+    str -- 场景名，路径不是真实场景时为空串
+    """
+    scene_path_str = map_handle.get_map_system_path_str_for_list(scene_path)
+    if scene_path_str not in cache.scene_data:
+        return ""
+    return cache.scene_data[scene_path_str].scene_name
+
+
+def find_reserved_class(classroom: str, now_time: datetime.datetime) -> Tuple[str, Optional[dict]]:
+    """
+    在今天的临时课里找这间教室等着开讲的那节预约（Plan 26 §3.5）
+    Keyword arguments:
+    classroom -- 教室场景名
+    now_time -- 参照时刻
+    Return arguments:
+    Tuple[str, Optional[dict]] -- (字典键, 课程数据)，没有则为 ("", None)
+    功能: 只认这间教室、还没开讲（不在 running）、没下过课（不带 ended）的条目，
+             且要么就是当前节次，要么开始时刻在 NOTIFY_BEFORE_MINUTE 分钟之内；当前节次优先，其次取开始最早的一节。
+          学生按设计在开课前 PRE_ARRIVE_MINUTE 分钟就到场，玩家这时开课正落在上一节（或午休、早上的 -1），
+             只按「当前节次」找会取不到预约：另开一节当场课、重问主修、必修生被晾在一边、按时下课被判拖堂
+    """
+    if not classroom:
+        return "", None
+    today = now_time.date().toordinal()
+    now_period = game_time.get_class_period_by_time(now_time)
+    best_key = ""
+    best_class = None
+    best_start = None
+    for class_key, class_data in cache.rhodes_island.temp_sex_class.items():
+        date_ordinal, period = parse_class_key(class_key)
+        if date_ordinal != today or class_data.get("classroom", "") != classroom:
+            continue
+        if class_data.get("running", False) or class_data.get("ended", False):
+            continue
+        # 就是当前这一节：直接取
+        if period != -1 and period == now_period:
+            return class_key, class_data
+        # 还没到点、但半小时内就开始的那节
+        start_time = get_period_start_time(date_ordinal, period)
+        if start_time is None or start_time <= now_time:
+            continue
+        if start_time - now_time > datetime.timedelta(minutes=education_constant.NOTIFY_BEFORE_MINUTE):
+            continue
+        if best_start is None or start_time < best_start:
+            best_key, best_class, best_start = class_key, class_data, start_time
+    return best_key, best_class
+
+
+def find_class_to_start(classroom: str, now_time: datetime.datetime) -> Tuple[str, Optional[dict]]:
+    """
+    取玩家此刻在这间教室开课时要沿用的临时课条目（开课结算与开课指令预读主修共用）
+    Keyword arguments:
+    classroom -- 教室场景名
+    now_time -- 参照时刻
+    Return arguments:
+    Tuple[str, Optional[dict]] -- (字典键, 课程数据)，都没有时为 ("", None)，由调用方新建当场课
+    功能: 先找等着开讲的预约（find_reserved_class，含提前几分钟开讲的）；
+          找不到时，当前节次这间教室若已有条目（同一节里下课后又开一次），沿用它，开课时清掉已下课标记
+    """
+    class_key, class_data = find_reserved_class(classroom, now_time)
+    if class_data is not None:
+        return class_key, class_data
+    today = now_time.date().toordinal()
+    period = game_time.get_class_period_by_time(now_time)
+    class_data = get_temp_class(today, period)
+    if class_data is not None and classroom and class_data.get("classroom", "") == classroom:
+        return get_class_key(today, period), class_data
+    return "", None
+
+
 def clean_expired_temp_class() -> int:
     """
     清理过期的临时课程条目（跨天结算时调用）
@@ -221,17 +297,23 @@ def judge_has_sex_skill_course(character_id: int) -> bool:
     return False
 
 
-def get_must_attend_set() -> set:
+def get_must_attend_set(classroom: str = "") -> set:
     """
-    取此刻这节实操课的必修名单（正在进行的那节优先，否则取今天当前节次还没下课的临时课）
+    取此刻这节实操课的必修名单
     Keyword arguments:
-    无
+    classroom -- 教室场景名。给了就取这间教室等着开讲的那节预约（find_reserved_class，Plan 26 §3.5）；
+                 不给时取今天当前节次还没下课的临时课
     Return arguments:
     set -- 必修学生的角色id集合，没有则为空集
+    功能: 正在进行的那节优先。开课前取场景学生名单时要传教室名：学生开课前 10 分钟就到场了，
+          此时按「当前节次」取到的是上一节，必修生会被当成没修过性技课漏掉
     """
     now_class = get_running_class()
     if now_class is None:
-        now_class = get_active_temp_class(cache.game_time.date().toordinal(), game_time.get_class_period_by_time(cache.game_time))
+        if classroom:
+            now_class = find_reserved_class(classroom, cache.game_time)[1]
+        else:
+            now_class = get_active_temp_class(cache.game_time.date().toordinal(), game_time.get_class_period_by_time(cache.game_time))
     if now_class is None:
         return set()
     return set(now_class.get("must_attend", []))
@@ -241,7 +323,7 @@ def judge_can_join_sex_class(character_id: int, check_course: bool = True) -> bo
     """
     判断某角色能不能被拉进课堂H模式（方案 §3.28.7 的旁路守卫第2、3层）
 
-    孩子（玩家的女儿）零门槛——她是玩家自己养的、课是玩家自己排的，两道决策已经做过了；
+    只收学生岗（Plan 26 §3.10）；学生岗的孩子（玩家的女儿）零门槛——她是玩家自己养的、课是玩家自己排的，两道决策已经做过了；
     成年干员没有这层前置，仍需满足既有的「H模式」实行值（InstructJudge.csv:10，S 350），
     否则这条无实行值要求的入口就成了绕过全部既有H前提的旁路。
     第3层「前置修习」对两者都生效：个人课表里要排过性技科目的教室课（judge_has_sex_skill_course）；
@@ -259,6 +341,10 @@ def judge_can_join_sex_class(character_id: int, check_course: bool = True) -> bo
         return False
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
+        return False
+    # 课堂 H 只收学生岗（Plan 26 §3.10，Plan 24 口径 1「课表只对学生岗生效」的延伸）：改了岗的女儿人在教室也不拉进来。
+    #    开课拉人、旁观名单、开课后到场的 JOIN、课堂模式下的邀请都经这里，一并收紧；必修名单本来就只列学生岗
+    if character_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
         return False
     # 状态异常的不拉进来：2临盆/产后/监禁、5意识模糊、6意识不清、7离线（外勤/婴儿/外交访问/逃跑）
     # 刻意**不查 4（服装异常）**：课上到一半学生本来就被脱光了，把它算进来会让这份名单
@@ -294,8 +380,9 @@ def get_scene_student_list(scene_path: Optional[list] = None) -> List[int]:
     if scene_path_str not in cache.scene_data:
         return []
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-    # 必修名单上的人豁免前置修习：玩家点名要她来，她就算没排过性技理论课也照样上
-    must_attend_set = get_must_attend_set()
+    # 必修名单上的人豁免前置修习：玩家点名要她来，她就算没排过性技理论课也照样上。
+    #    传这间教室的名字：开课前取的是这间教室等着开讲的那节预约（Plan 26 §3.5）
+    must_attend_set = get_must_attend_set(scene_data.scene_name)
     return [cid for cid in scene_data.character_list if cid and judge_can_join_sex_class(cid, check_course=cid not in must_attend_set)]
 
 
@@ -558,8 +645,8 @@ def check_and_send_notify(last_time: datetime.datetime, now_time: datetime.datet
                 if judge_time_crossed(notify_time, last_time, now_time):
                     notified[1] = True
                     result.append(
-                        _("\n【课程提醒】还有半小时，你安排在{0}的性技实操课就要开始了，选修的学生们已经在往教室走了。\n").format(
-                            class_data.get("classroom", "")
+                        _("\n【课程提醒】还有半小时，你安排在{0}的性技实操课就要开始了，选修与点名必修的学生会在开课前 {1} 分钟动身赶来。\n").format(
+                            class_data.get("classroom", ""), education_constant.PRE_ARRIVE_MINUTE
                         )
                     )
         # 第三次：预定的下课时刻，只在课上着的时候才发
@@ -639,15 +726,19 @@ def start_sex_class(ability_id: int, join_id_list: Optional[List[int]] = None) -
     dict -- 本节课的数据
     """
     pl_character_data: game_type.Character = cache.character_data[0]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(pl_character_data.position)
-    classroom = ""
-    if scene_path_str in cache.scene_data:
-        classroom = cache.scene_data[scene_path_str].scene_name
+    classroom = get_scene_name(pl_character_data.position)
     today = cache.game_time.date().toordinal()
     period = game_time.get_class_period_by_time(cache.game_time)
-    # 预约的那节课：已有条目且教室对得上则复用，保留玩家排课时定的主修科目与必修名单
-    now_class = get_temp_class(today, period)
-    if now_class is not None and now_class.get("classroom", "") == classroom:
+    # 预约的那节课（含提前几分钟开讲的，Plan 26 §3.5）与同一节里下课后重开的：复用已有条目，保留玩家排课时定的主修科目与必修名单
+    now_class = find_class_to_start(classroom, cache.game_time)[1]
+    if now_class is None:
+        # 当前节次的键被别的教室还没开讲的预约占着：临时课的键不含教室，另开当场课会静默覆盖那条预约。
+        #    玩家在这里开课就是决定在这里上，把那条挪过来（Plan 26 §3.5，L4）
+        other_class = get_temp_class(today, period)
+        if other_class is not None and not other_class.get("running", False) and not other_class.get("ended", False):
+            other_class["classroom"] = classroom
+            now_class = other_class
+    if now_class is not None:
         now_class["running"] = True
         # 同一节里下课后又开一次：清掉已下课标记，覆盖层重新生效
         now_class["ended"] = False

@@ -261,6 +261,97 @@ check("点[返回]原样返回当前选中者", student_select.select_student([2
 check("名单里不存在的角色被跳过、不报错", student_select.select_student([201, 999], "t", "", -1) in (-1, 201))
 flow_handle.askfor_all = fake_askfor
 
+section("Plan 26 §3.6：被今天的临时实操课顶替的格子")
+clear_schedules()
+set_time(period_time(0))
+_weekday = cache.game_time.weekday()
+schedule_handle.set_class_cell(ROOM_P, _weekday, 4, 43, 101)
+sex_class_handle.set_temp_class(cache.game_time.date().toordinal(), 4, ROOM_P, 70)
+panel = class_schedule_panel.Class_Schedule_Panel(W)
+panel.now_room = ROOM_P
+drawn_text.clear()
+panel.draw_page([])
+check("周表上覆盖格带「[临]」", any(t.startswith("[临]") for t in drawn_text), [t for t in drawn_text if "临" in t][:3])
+flow_handle.askfor_all = scripted_askfor
+answers[:] = [lambda o: o == _("清空本格")]
+drawn_text.clear()
+panel._edit_cell(ROOM_P, _weekday, 4)
+check("选科目页写明今天由临时课顶替、每周课表这一格是什么", any("临时实操课" in t and "每周课表这一格" in t for t in drawn_text))
+check("清空按钮写成「清空每周课表这一格」", any("清空每周课表这一格" in t for t in drawn_text))
+check("清掉的是每周课表那一格，临时课还在", schedule_handle.get_class_cell(ROOM_P, _weekday, 4, include_temp=False) is None
+      and schedule_handle.get_class_cell(ROOM_P, _weekday, 4) == [70, 0])
+answers[:] = [lambda o: o == _("取消")]
+drawn_text.clear()
+panel._edit_cell(ROOM_P, _weekday, 5)
+check("没被覆盖的格子仍是「清空本格」、没有说明行", any(t == _("[清空本格]") for t in drawn_text) and not any("临时实操课" in t for t in drawn_text))
+
+section("Plan 26 L4：排实操课页提示该节已在别的教室排了")
+_date = sex_class_handle.get_date_ordinal_by_week_day(2, 6)
+sex_class_handle.set_temp_class(_date, 6, _("大礼堂"), 71, must_attend=[201])
+answers[:] = [lambda o: o == "BACK"]
+drawn_text.clear()
+panel._edit_sex_class(ROOM_P, 2, 6)
+check("提示「该节已在大礼堂排了实操课，确定后改到本教室」", any("该节已在" in t and _("大礼堂") in t for t in drawn_text))
+answers[:] = [lambda o: o == "OK"]
+panel._edit_sex_class(ROOM_P, 2, 6)
+check("确定后那一节改到本教室、必修名单沿用", sex_class_handle.get_temp_class(_date, 6)["classroom"] == ROOM_P and sex_class_handle.get_temp_class(_date, 6)["must_attend"] == [201])
+flow_handle.askfor_all = fake_askfor
+clear_schedules()
+
+section("Plan 26 §3.8：个人课表选目标时，未开放与条件不符的置灰")
+cs = course_select_panel.Course_Select_Panel(W)
+play_house_name = game_config.config_entertainment[E.ENTERTAINMENT_PLAY_HOUSE].name
+drawn_text.clear()
+cs._select_target(301, 0, 0, E.COURSE_TYPE_INTEREST)
+check("成年学生看过家家：标「（条件不符）」、不是按钮", any(t == _(" {0}（条件不符）").format(play_house_name) for t in drawn_text)
+      and not any(t == _("[{0}]").format(play_house_name) for t in drawn_text))
+drawn_text.clear()
+cs._select_target(201, 0, 0, E.COURSE_TYPE_INTEREST)
+check("萝莉看过家家：可选", any(t == _("[{0}]").format(play_house_name) for t in drawn_text))
+pool = _("游泳池")
+cache.rhodes_island.facility_open[game_config.config_facility_open_name_to_cid[pool]] = False
+drawn_text.clear()
+cs._select_target(201, 0, 0, E.COURSE_TYPE_PE)
+check("未解锁的游泳池：体育课标「（未开放）」（此前永远不会出现）", any(t == _(" {0}（未开放）").format(pool) for t in drawn_text))
+open_all_classroom()
+
+section("Plan 26 §3.3：课堂模式下的邀请名单按实操课门槛筛")
+from Script.System.Sex_System import group_sex_panel  # noqa: E402
+from Script.UI.Panel import common_select_NPC  # noqa: E402
+
+_invite_captured = {}
+_orig_select_func = common_select_NPC.common_select_npc_button_list_func
+
+
+def capture_invite(now_panel, *a, **k):
+    """
+    记下邀请名单并直接返回，让面板的 while 循环在 fake_askfor 返回「返回」后退出
+    Keyword arguments:
+    now_panel -- 面板的名单控制对象
+    Return arguments:
+    tuple -- (return_list, other_return_list, select_state)
+    """
+    _invite_captured["list"] = [one[0] for one in now_panel.text_list]
+    return [_("返回")], [], {}
+
+
+common_select_NPC.common_select_npc_button_list_func = capture_invite
+flow_handle.askfor_all = fake_askfor
+cache.sex_class_mode = True
+cache.group_sex_mode = True
+schedule_handle.set_class_cell(ROOM_P, 3, 8, 74, -1)
+schedule_handle.set_selected_course(202, 3, 8, E.COURSE_TYPE_PRACTICE, ROOM_P)
+move_to(0, classroom_path(ROOM_P))
+group_sex_panel.Edit_Group_Sex_Temple_Panel(W).show_invite_npc_panel()
+invite_list = _invite_captured.get("list", [])
+check("课堂模式：修过性技课的学生岗女儿在名单里，教师与非学生的母亲不在", 202 in invite_list and 101 not in invite_list and 102 not in invite_list, invite_list)
+check("没修过性技课、也没被点名的学生不在", 203 not in invite_list, invite_list)
+cache.sex_class_mode = False
+cache.group_sex_mode = False
+common_select_NPC.common_select_npc_button_list_func = _orig_select_func
+move_to(0, SCENE_DORM)
+clear_schedules()
+
 section("Web 适配器冒烟")
 from Script.System.Web_Draw_System import web_draw_adapter
 

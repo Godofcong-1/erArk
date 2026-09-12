@@ -67,6 +67,8 @@
 ### 3.1 能力即时成长，不做成年一次性结算
 
 > 2026-09-09：成长停滞（素质 28）期间全部学习收益减半（总纲口径 27），落点见 §9.9。
+>
+> 2026-09-12：性技科目的课堂此前实际发的是 `AbilityUp.csv` 里的真实性交经验（本节「上课 → 科目经验」对性技科目不成立，一期实施记录的「零特判落实」也因此不成立），Plan 26 起改发类型 12 的理论经验（`education_constant.SEX_SKILL_THEORY_EXP_ID`），腰技只给习得，见 `plan_26_生长养成系统第七轮复查_方案.md` §3.1。
 
 **本节在实施中被修正过一次**（2026-09-06，v4）。原文写的是"上课当场调 `base_chara_experience_common_settle` 给对应能力的经验，等级由既有 `get_experience_level_weight` 自动换算"——**这个机制在游戏里并不存在**：`get_experience_level_weight`（`attr_calculation.py:504`）全仓库零调用方，是一段死代码；`Character.ability` 存的直接是**等级**而非经验，没有 `ability_exp` 之类的字段。
 

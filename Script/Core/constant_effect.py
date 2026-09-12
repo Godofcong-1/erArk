@@ -529,7 +529,7 @@ class BehaviorEffect:
     FREE_PLAY_ADD_ADJUST = 554
     """ 结算自由玩耍的收益（心情回复，无学习收益） """
     PRENATAL_ADD_ADJUST = 555
-    """ 指令_专用结算 （胎教用）交互对象的妊娠期胎教累积值+0.5，生产时转写为新生儿的全科目少量初始经验（Plan 22 四期） """
+    """ 指令_专用结算 （胎教用）交互对象的妊娠期胎教累积值+0.5，生产时折成新生儿的习得珠（Plan 22 四期；Plan 26 起不再给经验） """
     NUIRSE_CHILD_ADD_ADJUST = 556
     """ 指令_专用结算 （喂奶用）婴儿体力气力上限微增；发起者是玩家时额外加婴儿的好感与好意（Plan 22 四期） """
     ATTENT_CLASS_ADD_ADJUST = 557

@@ -57,7 +57,7 @@ int,str,str,str,str,int,int,str,str,int,str,str,str,str
 1033,see_collection,查看收藏品,DAILY,0,1,1,IN_COLLECTION_ROOM,,2,COLLECTION,hand,hand_scene,
 1034,see_achievement,查看蚀刻章,DAILY,0,1,1,IN_COLLECTION_ROOM,,2,SEE_ACHIEVEMENT,hand,hand_scene,
 1035,see_fridge,查看冰箱,DAILY,0,1,1,IN_KITCHEN,,2,FRIDGE,hand,hand_scene,
-1036,check_report_card,检查成绩单,DAILY,0,1,1,TARGET_IS_PLAYER_DAUGHTER,CHECK_REPORT_CARD,1,,hand,hand_daily,
+1036,check_report_card,检查成绩单,DAILY,0,1,1,TARGET_IS_PLAYER_DAUGHTER|T_BABY_0,CHECK_REPORT_CARD,1,,hand,hand_daily,
 2001,official_work,处理公务,WORK,0,1,2,IN_DR_OFFICE|NO_TARGET_OR_TARGET_CAN_COOPERATE|HAVE_OFFICE_WORK_NEED_TO_DO,OFFICIAL_WORK,1,,hand,hand_work,
 2002,battle_command,指挥作战（未实装）,WORK,0,1,2,IN_COMMAND_ROOM|TO_DO,,1,,hand,hand_work,
 2003,field_commission,外勤委托,WORK,0,1,1,IN_FIELD_ASSEMBLY_POINT,,2,FIELD_COMMISSION,hand,hand_work,

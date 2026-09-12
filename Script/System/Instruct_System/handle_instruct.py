@@ -1655,10 +1655,9 @@ def handle_start_sex_class():
         now_draw.text = _("\n这里没有可以上课的学生。\n")
         now_draw.draw()
         return
-    # 选主修科目：预约的那节课已经定好了，当场开课则现选一门
-    today = cache.game_time.date().toordinal()
-    period = game_time.get_class_period_by_time(cache.game_time)
-    temp_class = sex_class_handle.get_temp_class(today, period)
+    # 选主修科目：预约的那节课已经定好了（提前几分钟开讲的也算，Plan 26 §3.5），当场开课则现选一门
+    classroom = sex_class_handle.get_scene_name(character_data.position)
+    temp_class = sex_class_handle.find_class_to_start(classroom, cache.game_time)[1]
     ability_id = -1
     if temp_class is not None:
         ability_id = temp_class.get("ability_id", -1)

@@ -12,8 +12,9 @@ ai的目标,,,,
 300,71,normal_1267|sleep_h_awake_1|shower_flag_0|not_ask_not_take_bath|not_is_assistant_live_together,0,1267正常（可能AI跟随、服装异常或意识模糊），自身睡奸中醒来状态，今天没洗过澡，自己没有被要求禁止一切洗澡，自己不是同居中的助理，则进入要脱衣服（洗澡）状态
 400,50,urinate_ge_125|not_in_toilet,0,尿意值到极限（现调整为150%），不在洗手间里，当场直接排尿
 500,40,normal_2_5_6|place_door_open|not_witness_pl_h_with_others|scene_someone_h_but_not_hidden_sex|not_in_dor|self_not_go_to_join_group_sex,0,自己256正常，当前地点的门开着，自己没有目击本次H，该地点有其他角色在和玩家进行非隐奸的H，且不在自己宿舍里，自己没有前往加入群交，则触发目击H面板
-505,96,self_now_go_to_join_group_sex|place_0|group_sex_mode_on,0,自己正在前往加入群交，自己在玩家位置，群交模式开启中，则加入群交
+505,96,self_now_go_to_join_group_sex|place_0|group_sex_mode_on|sex_class_mode_off,0,自己正在前往加入群交，自己在玩家位置，群交模式开启中且不是性技实操课，则加入群交
 510,97,self_now_go_to_join_group_sex|place_0|group_sex_mode_off,0,自己正在前往加入群交，自己在玩家位置，群交模式未开启，则停止加入群交
+515,722,self_now_go_to_join_group_sex|place_0|sex_class_mode_on,0,自己正在前往加入群交，自己在玩家位置，性技实操课进行中，则加入课堂
 600,71,normal_1267|sleep_h_awake_1|shower_flag_0|is_assistant|assistant_live_together_on|not_ask_not_take_bath,0,1267正常（可能AI跟随、服装异常或意识模糊），自身睡奸中醒来状态，今天没洗过澡，自己是同居中的助理，没有被要求禁止一切洗澡，则进入要脱衣服（洗澡）状态
 
 10100,0,high_1,1,原地待机5分钟

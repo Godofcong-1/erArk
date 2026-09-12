@@ -85,14 +85,14 @@ SUBJECT_ABILITY_LIST = [
 ]
 """ 可排课的18门科目（一期方案 §3.4）：Ability.csv 里类型为技能(4)与技术(5)的能力。
     从配置现算而不是写死 40~49 + 70~77：往后 Ability.csv 增删科目，课表、选课面板、
-       成绩单、胎教转写会一起跟上，不必回头改这里 """
+       成绩单会一起跟上，不必回头改这里 """
 MALE_ONLY_SUBJECT_SET = {ability_id for ability_id in SUBJECT_ABILITY_LIST if game_config.config_ability[ability_id].sex_need == 0}
 """ 男性专属的科目（Ability.csv 的 sex_need 为0），目前只有76腰技。
     女学生排了它全场吃不到加成且不会报错（四期方案 §7-21），所以下面两张给女儿用的表都排掉它 """
 FEMALE_SUBJECT_LIST: List[int] = [ability_id for ability_id in SUBJECT_ABILITY_LIST if ability_id not in MALE_ONLY_SUBJECT_SET]
 """ 女儿学得了的科目（17门 = 10门技能 + 7门性技）：全部科目去掉男性专属的那些。
-    胎教转写与自动排课取的都是这一张——原先它叫 PRENATAL_SUBJECT_LIST，只写了胎教一个用途，
-    而自动排课在自己那边又算了一遍同样的东西 """
+    自动排课取的是这一张，下面实操课的主修表也从它筛。它原先叫 PRENATAL_SUBJECT_LIST、只写了胎教转写一个用途；
+    Plan 26 起胎教出生时改折习得珠，不再按科目转写 """
 SEX_CLASS_ABILITY_LIST = [ability_id for ability_id in FEMALE_SUBJECT_LIST if game_config.config_ability[ability_id].ability_type == ABILITY_TYPE_SEX_SKILL]
 """ 实操课可选的主修性技科目：指技70/舌技71/足技72/胸技73/膣技74/肛技75/榨精77 """
 SEX_SKILL_SUBJECT_SET = {ability_id for ability_id in SUBJECT_ABILITY_LIST if game_config.config_ability[ability_id].ability_type == ABILITY_TYPE_SEX_SKILL}
@@ -267,6 +267,10 @@ GROWTH_STOP_LEARN_RATE = 0.5
 """ 成长停滞期间学习收益的倍率（口径 27「经验减半」）。
     乘在学生侧的每一条收益上：教室课 / 自习 / 实习课（get_class_adjust）、见学（settle_follow_mother_gain）、
     实操课主修加成（sex_class_handle.get_subject_bonus）；教师侧的教学相长不受影响——停滞的是学生 """
+SEX_SKILL_THEORY_EXP_ID = {70: 170, 71: 171, 72: 172, 73: 173, 74: 174, 75: 175, 77: 176}
+""" 性技科目 → 理论经验id（Experience.csv 类型 12）。教室课与自习对性技科目发这里的理论经验，
+    不发 AbilityUp 里的真实性交经验（Plan 26 §3.1，用户拍板）；76 腰技没有对应的理论经验，只给习得。
+    推不出来：阴道性交 → 性交理论等三对名字对不上，只能列举，由测试守住类型与覆盖面 """
 
 # ==== 7. 上课AI：缺课与翘课 ====
 ABSENT_HP_RATE = 0.3
@@ -348,10 +352,10 @@ PRENATAL_POINT_PER_TIME = 0.5
 """ 每次胎教给母亲累积的胎教值（一期方案 §3.9 的数值表） """
 PRENATAL_POINT_MAX = 100.0
 """ 胎教值上限。妊娠期约 60 个可游玩日，每天两三次也到不了顶，上限只是防止极端刷值 """
-PRENATAL_EXP_PER_POINT = 0.5
-""" 每 1 点胎教值转写为每门科目多少初始经验。
-    满值 100 点 → 每科 50 经验，对照 AbilityUp.csv 的累计需求（10/35/75/145...）落在 2 级附近，
-    是「这孩子底子好」的量级，不喧宾夺主 """
+PRENATAL_JUEL_PER_POINT = 10
+""" 每 1 点胎教值在出生时折成多少习得珠（Plan 26 §3.2，取代按科目发初始经验的 PRENATAL_EXP_PER_POINT）。
+    每次胎教 0.5 点 → 5 珠，满值 100 点 → 1000 珠：比一天 6 节课（实测一节学识理论课约 131 珠）多一些，
+    够 10 门技能各从 0 升 1 级的珠（9 × 70 + 话术 100 = 730），但每门仍要自己攒经验——胎教给的是学得快，不是已经会 """
 NUIRSE_CHILD_HP_MAX_ADD = 2
 """ 喂奶一次给婴儿增加的体力上限（体质相关初始值） """
 NUIRSE_CHILD_MP_MAX_ADD = 2
@@ -478,6 +482,9 @@ SEMESTER_EVENT_SUB_KEY = 200
        用一个日常池永远不会翻的键，期末事件就只能由学期结算显式推入。
     于是期末事件的**阶段区分只能写进 premise**（CVP_A1_T|102_E_1 等），
        不能像日常养成事件那样靠 sub_key 分桶 """
+SIBLING_PLAY_STAGE_SET = {102, 103}
+""" 养成事件里同胞互动的对象只取这两个阶段（Plan 26 §3.9）：互动事件写的都是能一起玩、一起闯祸的孩子，
+    婴儿与已成年的少女都不合适；婴儿期自己的两条同胞事件（婴儿 37 / 38）主体是婴儿、对手是哥哥姐姐，照样成立 """
 
 # ==== 15. 面板显示与排版 ====
 HISTORY_SHOW_MAX = 8

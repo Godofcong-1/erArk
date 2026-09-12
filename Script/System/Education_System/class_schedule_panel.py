@@ -329,6 +329,10 @@ class Class_Schedule_Panel:
                         cell_text = "{0}/{1}".format(ability_name, cache.character_data[cell[1]].name)
                     else:
                         cell_text = "{0}/{1}".format(ability_name, _("待定"))
+                    # 今天被临时实操课顶替的格子加「[临]」：格子上显示的是临时课，底下的每周课表还在（Plan 26 §3.6）
+                    temp_class = schedule_handle.get_today_temp_class(week_day, period)
+                    if temp_class is not None and temp_class.get("classroom", "") == classroom:
+                        cell_text = _("[临]") + cell_text
                 now_draw = draw.CenterButton(
                     cell_text, "\nCELL_{0}_{1}".format(week_day, period), cell_width)
                 now_draw.draw()
@@ -408,6 +412,11 @@ class Class_Schedule_Panel:
 
         date_ordinal = sex_class_handle.get_date_ordinal_by_week_day(week_day, period)
         now_class = sex_class_handle.get_temp_class(date_ordinal, period)
+        # 临时课的键不含教室：这一节若已在别的教室排了实操课，读到的就是那一条（Plan 26 §3.6，L4），
+        #    确定后会改到本教室，要在页面上说清楚
+        other_classroom = ""
+        if now_class is not None and now_class.get("classroom", "") != classroom:
+            other_classroom = now_class.get("classroom", "")
         # 新排的默认取第一门（指技），已排过的沿用原来的
         ability_id = now_class.get("ability_id", education_constant.SEX_CLASS_ABILITY_LIST[0]) if now_class else education_constant.SEX_CLASS_ABILITY_LIST[0]
         must_attend = list(now_class.get("must_attend", [])) if now_class else []
@@ -422,6 +431,12 @@ class Class_Schedule_Panel:
             info_draw.text = _("  教室：{0}\n  日期：{1}（{2}）\n  节次：第{3}节 {4}\n\n").format(
                 classroom, date_text, education_constant.WEEK_NAME[week_day], period + 1, get_period_time_text(period))
             info_draw.draw()
+            if other_classroom:
+                move_draw = draw.NormalDraw()
+                move_draw.width = self.width
+                move_draw.style = "gold_enrod"
+                move_draw.text = _("  该节已在{0}排了实操课，确定后改到本教室\n\n").format(other_classroom)
+                move_draw.draw()
 
             # 主修科目：只列女学生学得了的七门，76腰技是男性专属，列出来只会让人白选
             subject_draw = draw.NormalDraw()
@@ -607,6 +622,25 @@ class Class_Schedule_Panel:
         info_draw.text = _("  {0}｜{1} 第{2}节 {3}\n").format(
             classroom, education_constant.WEEK_NAME[week_day], period + 1, get_period_time_text(period))
         info_draw.draw()
+        # 今天这一格被临时实操课顶替（Plan 26 §3.6）：格子上看到的是临时课，这一页改的、清的却是底下每周循环的那节，要写清楚
+        temp_class = schedule_handle.get_today_temp_class(week_day, period)
+        overlay_flag = temp_class is not None and temp_class.get("classroom", "") == classroom
+        if overlay_flag:
+            from Script.System.Education_System import sex_class_handle
+
+            week_cell = schedule_handle.get_class_cell(classroom, week_day, period, include_temp=False)
+            if week_cell is None:
+                week_text = _("未排课")
+            elif week_cell[1] in cache.character_data:
+                week_text = "{0}/{1}".format(game_config.config_ability[week_cell[0]].name, cache.character_data[week_cell[1]].name)
+            else:
+                week_text = "{0}/{1}".format(game_config.config_ability[week_cell[0]].name, _("待定"))
+            overlay_draw = draw.NormalDraw()
+            overlay_draw.width = self.width
+            overlay_draw.style = "gold_enrod"
+            overlay_draw.text = _("  今天这一节由临时实操课（主修{0}）顶替；每周课表这一格：{1}\n  下面选科目、清空改的都是每周课表这一格；临时课请从「排一节性技实操课」进去修改或删除\n").format(
+                sex_class_handle.get_ability_name(temp_class.get("ability_id", -1)), week_text)
+            overlay_draw.draw()
         line_feed.draw()
 
         return_list: List[str] = []
@@ -634,7 +668,9 @@ class Class_Schedule_Panel:
         back_draw = draw.CenterButton(_("[取消]"), _("取消"), int(self.width / 2))
         back_draw.draw()
         return_list.append(back_draw.return_text)
-        clear_draw = draw.CenterButton(_("[清空本格]"), _("清空本格"), int(self.width / 2))
+        # 被临时课顶替的格子，按钮文字写明清的是每周课表那一格；返回值哨兵不变
+        clear_text = _("[清空每周课表这一格]") if overlay_flag else _("[清空本格]")
+        clear_draw = draw.CenterButton(clear_text, _("清空本格"), int(self.width / 2))
         clear_draw.draw()
         return_list.append(clear_draw.return_text)
         line_feed.draw()

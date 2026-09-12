@@ -3484,6 +3484,23 @@ def handle_t_baby_1(character_id: int) -> int:
         return 1
     return 0
 
+
+@add_premise(constant_promise.Premise.T_BABY_0)
+def handle_t_baby_0(character_id: int) -> int:
+    """
+    校验交互对象是否婴儿==0（Plan 26：检查成绩单这类只对上了学的孩子有意义的指令用）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[101] == 0:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.SELF_SEMEN_THICK_1)
 def handle_self_semen_thick_1(character_id: int) -> int:
     """

@@ -117,4 +117,62 @@ section("行为cid反查")
 check("213 → teach", schedule_handle.get_behavior_name_by_cid(213) == "teach")
 check("查不到为空串", schedule_handle.get_behavior_name_by_cid(-99) == "")
 
+section("Plan 26 §3.6 / §3.7：撞课照每周课表判；玩家授课只在临时课的教室里读临时课")
+clear_schedules()
+set_time(period_time(0))
+today = cache.game_time.date().toordinal()
+weekday = cache.game_time.weekday()
+ROOM_P = _("实践教室一")
+schedule_handle.set_class_cell(ROOM_P, weekday, 2, 43, 101)
+sex_class_handle.set_temp_class(today, 2, ROOM_P, 70)
+check("被今天的临时课顶掉：工作链的反查查不到她", schedule_handle.get_teacher_cell(101, weekday, 2) is None)
+check("include_temp=False 照每周课表查得到", schedule_handle.get_teacher_cell(101, weekday, 2, include_temp=False) == (ROOM_P, 43))
+check("撞课判定照每周课表：同一节再排进别的教室判撞课", schedule_handle.judge_teacher_conflict(101, weekday, 2, ROOM1) != "")
+check("玩家在 include_temp=False 时查不到临时课", schedule_handle.get_teacher_cell(0, weekday, 2, include_temp=False) is None)
+set_time(period_time(2))
+move_to(0, room_path)
+check("玩家人在理论教室一：get_now_teaching(0) 不返回别处的临时课", schedule_handle.get_now_teaching(0) is None)
+move_to(0, schedule_handle.get_classroom_position(ROOM_P))
+now_teaching = schedule_handle.get_now_teaching(0)
+check("玩家就在临时课的教室里：返回那节课", now_teaching is not None and now_teaching["classroom"] == ROOM_P and now_teaching["ability_id"] == 70, now_teaching)
+move_to(0, SCENE_DORM)
+clear_schedules()
+
+section("Plan 26 §3.8：个人式课的场所开放与活动条件")
+pool = _("游泳池")
+pool_open_cid = game_config.config_facility_open_name_to_cid[pool]
+pe_pool = {"course_type": education_constant.COURSE_TYPE_PE, "target": pool}
+cache.rhodes_island.facility_open[pool_open_cid] = False
+check("场景开放判定：未解锁的游泳池为否，不在 Facility_open 表里的基础教室恒为是", not schedule_handle.judge_scene_open(pool) and schedule_handle.judge_scene_open(ROOM1)
+      and schedule_handle.judge_classroom_open(ROOM1))
+check("体育课排在未解锁的游泳池：解析不出", schedule_handle.get_course_place(pe_pool) == [])
+cache.rhodes_island.facility_open[pool_open_cid] = True
+check("解锁后恢复", bool(schedule_handle.get_course_place(pe_pool)))
+lockable = None
+for _cid in game_config.config_entertainment:
+    _cfg = game_config.config_entertainment[_cid]
+    _names = [cache.scene_data[s].scene_name for s in constant.place_data.get(_cfg.place_tag, [])] if _cfg.class_ok else []
+    if _names and all(n in game_config.config_facility_open_name_set for n in _names):
+        lockable = (_cid, _names)
+        break
+check("有地点全靠解锁的兴趣课", lockable is not None)
+if lockable is not None:
+    _cid, _names = lockable
+    interest_course = {"course_type": education_constant.COURSE_TYPE_INTEREST, "target": _cid}
+    for _name in _names:
+        cache.rhodes_island.facility_open[game_config.config_facility_open_name_to_cid[_name]] = False
+    check("兴趣课的场所全未开放：解析不出（此前取第一间，派人去门口空转）", schedule_handle.get_course_place(interest_course) == [], _names)
+    cache.rhodes_island.facility_open[game_config.config_facility_open_name_to_cid[_names[-1]]] = True
+    _place = schedule_handle.get_course_place(interest_course)
+    check("开放其中一间：解析到已开放的那间", bool(_place) and cache.scene_data[scene_str(_place)].scene_name == _names[-1], _place)
+    open_all_classroom()
+teen = make_character(210, "少女", 152, daughter=True, stage=104)
+play_house = {"course_type": education_constant.COURSE_TYPE_INTEREST, "target": education_constant.ENTERTAINMENT_PLAY_HOUSE}
+check("活动条件：过家家对少女不成立、对萝莉成立，其余课型恒成立", not schedule_handle.judge_course_need_pass(210, play_house) and schedule_handle.judge_course_need_pass(201, play_house)
+      and schedule_handle.judge_course_need_pass(210, pe_pool))
+remove_character(210)
+import inspect  # noqa: E402
+
+check("get_upcoming_course 删掉了无人传入的 now_time 参数（L8）", "now_time" not in inspect.signature(schedule_handle.get_upcoming_course).parameters)
+
 finish()

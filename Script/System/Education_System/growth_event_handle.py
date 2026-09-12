@@ -67,7 +67,7 @@ def get_growth_event_character_list() -> List[int]:
 
 def get_sibling_child_list(character_id: int) -> List[int]:
     """
-    取同为孩子的兄弟姐妹列表
+    取能一起玩的兄弟姐妹列表（只取幼女 / 萝莉，Plan 26 §3.9）
 
     直接读既有的 relationship，不新建亲缘结构：同父同母、同父异母都算兄弟姐妹，
        判据是「父亲相同或母亲相同」
@@ -85,7 +85,8 @@ def get_sibling_child_list(character_id: int) -> List[int]:
     for other_id in cache.npc_id_got:
         if other_id == character_id:
             continue
-        if not get_character_stage(other_id):
+        # 互动事件写的都是能一起玩、一起闯祸的孩子，婴儿和已成年的少女都不合适
+        if get_character_stage(other_id) not in education_constant.SIBLING_PLAY_STAGE_SET:
             continue
         other_data: game_type.Character = cache.character_data[other_id]
         if father_id >= 0 and other_data.relationship.father_id == father_id:
@@ -324,7 +325,7 @@ def push_semester_event(character_id: int) -> bool:
 
 def push_semester_event_for_list(character_list: List[int]) -> int:
     """
-    给一批刚出了成绩单的孩子各推一条期末事件
+    给一批刚出了成绩单的孩子各推一条期末事件（只推幼女 / 萝莉）
     Keyword arguments:
     character_list -- 孩子角色id列表
     Return arguments:
@@ -332,6 +333,10 @@ def push_semester_event_for_list(character_list: List[int]) -> int:
     """
     push_count = 0
     for character_id in character_list:
+        # 期末事件写的都是在上学的孩子（成绩单、教室、课表），只推给幼女 / 萝莉（Plan 26 §3.4）；
+        #    已成年的女儿照旧出成绩单（Plan 24 §3.10），只是不推事件
+        if get_character_stage(character_id) not in (102, 103):
+            continue
         if push_semester_event(character_id):
             push_count += 1
     return push_count

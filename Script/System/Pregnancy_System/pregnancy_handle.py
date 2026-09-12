@@ -652,6 +652,9 @@ def check_grow_to_girl(character_id: int):
             character_data.talent[7] = 0
             # 成长为少女后成长停滞素质已无意义，顺手清除
             character_data.talent[28] = 0
+            # 萝莉期记下的待炫耀也清掉（Plan 26 L5）：炫耀口上只写幼女 / 萝莉，成年后见面再派只会静默地加一份好感
+            if character_data.child_growth is not None:
+                character_data.child_growth.show_off_ability = {}
             chest_grow_text = chest_grow(character_id)
             body_part_grow_text = body_part_grow(character_id)
             # 成年结算（Plan 22 二期 §3.8）：能力已在一期做成即时成长，成年时只结算性格与职业倾向

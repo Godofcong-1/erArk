@@ -247,4 +247,54 @@ check("有运行中的课", sex_class_handle.get_running_class() is not None)
 EFFECT[10015](0, 5, change, cache.game_time)
 check("下课：关闭模式、清 running", not cache.sex_class_mode and sex_class_handle.get_running_class() is None)
 
+section("Plan 26 §3.1：性技科目的教室课与自习只发理论经验、不补记初体验")
+cache.rhodes_island.temp_sex_class = {}
+set_time(period_time(6))
+move_to(101, classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+move_to(202, SCENE_DORM)
+schedule_handle.set_class_cell(ROOM1, 0, 6, 71, 101)
+schedule_handle.set_selected_course(201, 0, 6, E.COURSE_TYPE_THEORY, ROOM1)
+teacher.behavior.behavior_id = constant.Behavior.TEACH
+student_a.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+reset_mark(201)
+oral_before = (student_a.experience.get(42, 0), teacher.experience.get(42, 0))
+theory_before = (student_a.experience.get(171, 0), teacher.experience.get(171, 0))
+EFFECT[512](101, 45, change, cache.game_time)
+check("512 舌技理论课：师生都拿口交理论经验（171）", student_a.experience.get(171, 0) > theory_before[0] and teacher.experience.get(171, 0) > theory_before[1],
+      (student_a.experience.get(171, 0), teacher.experience.get(171, 0)))
+check("512 舌技理论课：师生的口交经验（42）不变、都没有口交初体验履历", (student_a.experience.get(42, 0), teacher.experience.get(42, 0)) == oral_before
+      and 2 not in student_a.first_record.first_part_sex_dict and 2 not in teacher.first_record.first_part_sex_dict)
+schedule_handle.set_class_cell(ROOM1, 0, 7, 74, -1)
+schedule_handle.set_selected_course(201, 0, 7, E.COURSE_TYPE_THEORY, ROOM1)
+set_time(period_time(7))
+student_a.behavior.behavior_id = constant.Behavior.SELF_STUDY
+vaginal_before = (student_a.experience.get(61, 0), student_a.experience.get(174, 0))
+EFFECT[548](201, 45, change, cache.game_time)
+check("548 膣技自习：性交理论经验（174）增加、阴道性交经验（61）不变", student_a.experience.get(174, 0) > vaginal_before[1] and student_a.experience.get(61, 0) == vaginal_before[0])
+
+section("Plan 26 §3.7：玩家在别的教室手动授课，不读当天临时实操课的科目")
+set_time(period_time(8))
+sex_class_handle.set_temp_class(cache.game_time.date().toordinal(), 8, ROOM_P, 70)
+move_to(0, classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+student_a.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+reset_mark(201)
+_orig_favor_settle = settle_default.base_chara_favorability_and_trust_common_settle
+settle_default.base_chara_favorability_and_trust_common_settle = lambda *a, **k: None
+finger_before = (student_a.experience.get(exp_45, 0), student_a.experience.get(170, 0), student_a.experience.get(41, 0))
+EFFECT[512](0, 45, change, cache.game_time)
+check("玩家在理论教室授课：回落学识，不拿指技的任何经验", student_a.experience.get(exp_45, 0) > finger_before[0] and student_a.experience.get(170, 0) == finger_before[1]
+      and student_a.experience.get(41, 0) == finger_before[2])
+move_to(0, classroom_path(ROOM_P))
+move_to(201, classroom_path(ROOM_P))
+student_a.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+reset_mark(201)
+finger_before = (student_a.experience.get(170, 0), student_a.experience.get(41, 0))
+EFFECT[512](0, 45, change, cache.game_time)
+settle_default.base_chara_favorability_and_trust_common_settle = _orig_favor_settle
+check("玩家就在临时课的教室里授课：按那门性技讲，只发指技理论经验（170）", student_a.experience.get(170, 0) > finger_before[0] and student_a.experience.get(41, 0) == finger_before[1])
+cache.rhodes_island.temp_sex_class = {}
+move_to(0, SCENE_DORM)
+
 finish()

@@ -499,18 +499,32 @@ class Course_Select_Panel:
                 if index % 6 == 0:
                     line_feed.draw()
 
-        # 兴趣课：class_ok == 1 的娱乐项
+        # 兴趣课：class_ok == 1 的娱乐项；地点没开放、或这名学生不满足活动条件（need）的置灰（Plan 26 §3.8）
         elif course_type == education_constant.COURSE_TYPE_INTEREST:
+            from Script.System.Education_System import schedule_template_handle
+
             for cid in game_config.config_entertainment:
                 if not game_config.config_entertainment[cid].class_ok:
                     continue
-                empty_flag = False
-                now_draw = draw.LeftButton(
-                    _("[{0}]").format(game_config.config_entertainment[cid].name),
-                    f"TG_{cid}", cell_width)
-                now_draw.draw()
-                return_list.append(now_draw.return_text)
-                target_by_return[now_draw.return_text] = cid
+                entertainment_name = game_config.config_entertainment[cid].name
+                gray_text = ""
+                if not schedule_handle.get_course_place({"course_type": course_type, "target": cid}):
+                    gray_text = _(" {0}（未开放）").format(entertainment_name)
+                elif not schedule_template_handle.judge_activity_need_pass(character_id, cid):
+                    gray_text = _(" {0}（条件不符）").format(entertainment_name)
+                if gray_text:
+                    now_draw = draw.LeftDraw()
+                    now_draw.width = cell_width
+                    now_draw.style = "deep_gray"
+                    now_draw.text = gray_text
+                    now_draw.draw()
+                else:
+                    empty_flag = False
+                    now_draw = draw.LeftButton(
+                        _("[{0}]").format(entertainment_name), f"TG_{cid}", cell_width)
+                    now_draw.draw()
+                    return_list.append(now_draw.return_text)
+                    target_by_return[now_draw.return_text] = cid
                 index += 1
                 if index % 6 == 0:
                     line_feed.draw()
@@ -528,12 +542,20 @@ class Course_Select_Panel:
                     work_data = game_config.config_work_type[cid]
                     if work_data.tag or cid in education_constant.EXCLUDE_INTERN_WORK_TYPE or not work_data.ability_id:
                         continue
-                    empty_flag = False
-                    now_draw = draw.LeftButton(
-                        _("[{0}]").format(work_data.name), f"TG_{cid}", cell_width)
-                    now_draw.draw()
-                    return_list.append(now_draw.return_text)
-                    target_by_return[now_draw.return_text] = cid
+                    # 岗位的整组房间都还没开放：解析不出上课地点，置灰（Plan 26 §3.8）
+                    if not schedule_handle.get_course_place({"course_type": course_type, "target": cid}):
+                        now_draw = draw.LeftDraw()
+                        now_draw.width = cell_width
+                        now_draw.style = "deep_gray"
+                        now_draw.text = _(" {0}（未开放）").format(work_data.name)
+                        now_draw.draw()
+                    else:
+                        empty_flag = False
+                        now_draw = draw.LeftButton(
+                            _("[{0}]").format(work_data.name), f"TG_{cid}", cell_width)
+                        now_draw.draw()
+                        return_list.append(now_draw.return_text)
+                        target_by_return[now_draw.return_text] = cid
                     index += 1
                     if index % 6 == 0:
                         line_feed.draw()

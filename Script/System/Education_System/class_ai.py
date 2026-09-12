@@ -298,7 +298,11 @@ def get_course_stage(character_id: int) -> int:
     if now_time is None:
         now_time = cache.game_time
     # 预到岗优先于本节的一切（原 find_character_target 里排在上课判定之前）
-    if get_next_sex_class(character_id, now_time)[0] is not None:
+    pending_class, pending_classroom = get_next_sex_class(character_id, now_time)
+    if pending_class is not None:
+        # 玩家提前几分钟就在那间教室开讲了（Plan 26 §3.5）：人已经到了、能参加的，不再原地等到开课那一刻才入课
+        if judge_pending_class_joinable(character_id, pending_class, pending_classroom):
+            return education_constant.COURSE_STAGE_JOIN_SEX_CLASS
         return education_constant.COURSE_STAGE_SEX_PENDING
     now_course = schedule_handle.get_now_course(character_id)
     if now_course is None:
@@ -353,6 +357,30 @@ def get_attend_or_join_stage(character_id: int, now_course: dict) -> int:
     return education_constant.COURSE_STAGE_JOIN_SEX_CLASS
 
 
+def judge_pending_class_joinable(character_id: int, pending_class: dict, pending_classroom: str) -> bool:
+    """
+    判断待赴的那节实操课是否已被玩家提前开讲、且这名学生已在那间教室可以直接加入（Plan 26 §3.5）
+    Keyword arguments:
+    character_id -- 角色id
+    pending_class -- get_next_sex_class() 取到的临时课程
+    pending_classroom -- 那节课的教室场景名
+    Return arguments:
+    bool -- 是否直接加入
+    功能: 学生开课前 10 分钟到场后在原地等（720）；玩家若提前几分钟开讲，那节课此刻已是 running，
+          还按 SEX_PENDING 等到开课那一刻才判 JOIN 的话，她会在课堂 H 旁边干站着。
+          与 get_attend_or_join_stage 同口径：模式已开、人在那间教室、还没进 H、能参加（必修生豁免前置修习）
+    """
+    from Script.System.Education_System import sex_class_handle
+
+    if not cache.sex_class_mode or not pending_class.get("running", False):
+        return False
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.is_h or not judge_in_scene(character_id, pending_classroom):
+        return False
+    must_attend = character_id in pending_class.get("must_attend", [])
+    return sex_class_handle.judge_can_join_sex_class(character_id, check_course=not must_attend)
+
+
 def get_course_place_now_or_upcoming(character_id: int) -> List[str]:
     """
     取本节课（不在节次内时为马上开始的那一节）的上课地点，与 715 移动状态机的取法一致
@@ -360,13 +388,16 @@ def get_course_place_now_or_upcoming(character_id: int) -> List[str]:
     character_id -- 角色id
     Return arguments:
     List[str] -- 场景路径，没课或解析不出为空列表
-    功能: 解析不出（娱乐没配地点标签、岗位场景未解锁、体育课地点写错、教室已不存在）时，
-          在 / 不在上课地点两个前提都不成立，没有行命中，交回既有 AI，不留死分支（Plan 24 §3.7）
+    功能: 解析不出（娱乐没配地点标签、场所未开放、体育课地点写错、教室已不存在）或兴趣课的活动条件不符时，
+          在 / 不在上课地点两个前提都不成立，没有行命中，交回既有 AI，不留死分支（Plan 24 §3.7、Plan 26 §3.8）
     """
     course = schedule_handle.get_now_course(character_id)
     if course is None:
         course = schedule_handle.get_upcoming_course(character_id)
     if course is None:
+        return []
+    # 兴趣课的活动条件不符（孩子长大了、换了岗留下的格子）按解析不出处理
+    if not schedule_handle.judge_course_need_pass(character_id, course):
         return []
     return schedule_handle.get_course_place(course)
 
@@ -514,7 +545,8 @@ def get_student_leave_time(character_id: int):
             to_place = schedule_handle.get_classroom_position(temp_class.get("classroom", ""))
         elif not skip_flag:
             course = schedule_handle.get_course_at(character_id, class_start, period)
-            if course is not None:
+            # 兴趣课的活动条件不符：到了也上不成，不截（Plan 26 §3.8）；场所未开放时 get_course_place 解析为空，下面跳过
+            if course is not None and schedule_handle.judge_course_need_pass(character_id, course):
                 leave_time = class_start - upcoming
                 leave_period = game_time.get_class_period_by_time(leave_time)
                 # 离开的那一刻本节还有课：那节课由截到节末的时长自然结束，不必截
@@ -571,6 +603,27 @@ def judge_mother_available(character_id: int) -> int:
     # 母亲所在场景不可达（未解锁 / 已拆除）
     mother_scene_str = map_handle.get_map_system_path_str_for_list(mother_data.position)
     if mother_scene_str not in cache.scene_data:
+        return -1
+    return mother_id
+
+
+def judge_mother_followable(character_id: int) -> int:
+    """
+    判断幼女此刻能不能真的跟着母亲见学：judge_mother_available 之外，母亲还不能在睡觉（Plan 26 L7）
+    Keyword arguments:
+    character_id -- 幼女的角色id
+    Return arguments:
+    int -- 有效的母亲角色id，无效则为-1
+    功能: 见学的决策、移动、跟随、结算四处都走这里。
+          睡觉不写进 judge_mother_available：那个函数还是公务事件前提 self_mother_available 的判据，
+             而每日的养成事件在跨天结算时派发，那时母亲多半睡着，写进去会让带母亲的事件几乎抽不到
+    """
+    mother_id = judge_mother_available(character_id)
+    if mother_id == -1:
+        return -1
+    mother_data: game_type.Character = cache.character_data[mother_id]
+    # 要睡觉状态或正睡着（吃药、爆睡未必挂那个标记）：跟到宿舍里看着一个睡着的人学不到手艺，回落育儿室自由玩耍
+    if mother_data.sp_flag.sleep or mother_data.behavior.behavior_id == constant.Behavior.SLEEP:
         return -1
     return mother_id
 
@@ -635,7 +688,7 @@ def judge_follow_mother_state_machine(character_id: int) -> int:
         #    见学判定排在工作链之前，孩子从见学转去上课时一定先经过这里（Plan 24 起上课接管处不再另清）
         clear_follow_mother_flag(character_id)
         return 0
-    mother_id = judge_mother_available(character_id)
+    mother_id = judge_mother_followable(character_id)
     if mother_id == -1:
         return constant.StateMachine.ENTERTAIN_FREE_PLAY
     character_data: game_type.Character = cache.character_data[character_id]

@@ -326,7 +326,10 @@ def judge_child_growth_second_behavior(character_id: int):
     if growth_data.skip_class_flag:
         character_get_second_behavior(character_id, "caught_skip_class")
         return
-    if growth_data.show_off_ability:
+    # 炫耀只派给幼女 / 萝莉期（Plan 26 L5）：炫耀口上全部限定这两个阶段；成年时留下的待炫耀已在成年结算里清空
+    from Script.System.Education_System import growth_handle
+
+    if growth_data.show_off_ability and growth_handle.get_character_stage(character_id) in (102, 103):
         character_get_second_behavior(character_id, "show_off_study")
 
 
