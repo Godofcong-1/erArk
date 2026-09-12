@@ -78,9 +78,12 @@ check("学生没排课的节次为 None", (set_time(period_time(1)), schedule_ha
 set_time(DEFAULT_TIME.replace(hour=13, minute=0))
 check("不在节次内为 None", schedule_handle.get_now_course(201) is None and schedule_handle.get_now_teaching(101) is None)
 set_time(period_time(0))
-schedule_handle.clear_class_cell(ROOM1, 0, 0)
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, -1)
 now_course = schedule_handle.get_now_course(201)
-check("教室课被清掉后：科目/教师为 -1", now_course is not None and now_course["ability_id"] == -1 and now_course["teacher_id"] == -1)
+check("格子在、没排教师：仍是一节课，教师为 -1（到了教室降级自习）", now_course is not None and now_course["ability_id"] == 45 and now_course["teacher_id"] == -1, now_course)
+schedule_handle.clear_class_cell(ROOM1, 0, 0)
+check("全局课表那一格被清掉（个人课表显示「已停课」）：视为这节没课（Plan 27 §3.3，此前科目 / 教师为 -1、照样去自习记出勤）",
+      schedule_handle.get_now_course(201) is None and schedule_handle.get_course_at(201, period_time(0), 0) is None)
 schedule_handle.clear_selected_course(201, 0, 0)
 check("清空个人课表格子", schedule_handle.get_selected_course(201, 0, 0) is None)
 schedule_handle.set_selected_course(201, 0, 0, education_constant.COURSE_TYPE_THEORY, ROOM1)
@@ -111,6 +114,8 @@ check("导师离场则无人在岗", schedule_handle.get_intern_mentor(201, inte
 schedule_handle.set_selected_course(201, 0, 0, education_constant.COURSE_TYPE_INTEREST, 99999)
 check("目标非法：解析为空列表而不是报错", schedule_handle.get_course_place(schedule_handle.get_now_course(201)) == [])
 schedule_handle.set_selected_course(201, 0, 0, education_constant.COURSE_TYPE_THEORY, ROOM1)
+# 教室课要在全局课表上有这一格，空格子按「已停课」算没课（Plan 27 §3.3）
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
 check("教室课地点 = 教室场景路径", schedule_handle.get_course_place(schedule_handle.get_now_course(201)) == room_path)
 
 section("行为cid反查")
@@ -174,5 +179,22 @@ remove_character(210)
 import inspect  # noqa: E402
 
 check("get_upcoming_course 删掉了无人传入的 now_time 参数（L8）", "now_time" not in inspect.signature(schedule_handle.get_upcoming_course).parameters)
+
+section("Plan 27 §3.3：已停课视为没课，临时课覆盖层给出的格子照算")
+clear_schedules()
+set_time(period_time(0))
+_today_weekday = cache.game_time.weekday()
+_today_ordinal = cache.game_time.date().toordinal()
+schedule_handle.set_selected_course(201, _today_weekday, 0, education_constant.COURSE_TYPE_PRACTICE, ROOM_P)
+check("选了实践教室一、每周课表那一格空着：没课", schedule_handle.get_now_course(201) is None)
+sex_class_handle.set_temp_class(_today_ordinal, 0, ROOM_P, 70)
+_course = schedule_handle.get_now_course(201)
+check("今天在这间教室预约了实操课：覆盖层给出格子，选修生照样有课（授课者为玩家）", _course is not None and _course["classroom"] == ROOM_P and _course["teacher_id"] == 0
+      and _course["ability_id"] == 70, _course)
+schedule_handle.clear_selected_course(201, _today_weekday, 0)
+sex_class_handle.set_temp_class(_today_ordinal, 0, ROOM_P, 70, must_attend=[201])
+_course = schedule_handle.get_now_course(201)
+check("点名必修、自己这节没排课：覆盖到临时课的教室，照样有课", _course is not None and _course["classroom"] == ROOM_P, _course)
+clear_schedules()
 
 finish()

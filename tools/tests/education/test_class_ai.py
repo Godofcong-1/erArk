@@ -443,9 +443,12 @@ check("时段为自由选择 → 默认见学", class_ai.judge_should_follow_mot
 schedule_template_handle.apply_template(202, 0)
 child.entertainment.entertainment_type = [0, 0, 0]
 check("萝莉不见学", not class_ai.judge_should_follow_mother(201))
+# 个人课表指向的格子要在全局课表上有课：空格子按「已停课」算没课（Plan 27 §3.3）
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
 schedule_handle.set_selected_course(202, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
 check("幼女本节有课 → 不见学", not class_ai.judge_should_follow_mother(202))
 schedule_handle.clear_selected_course(202, 0, 0)
+schedule_handle.clear_class_cell(ROOM1, 0, 0)
 set_time(DEFAULT_TIME.replace(hour=19, minute=30))
 cache.character_data[202].entertainment.entertainment_type = [0, 0, E.ENTERTAINMENT_FOLLOW_MOTHER]
 check("晚上日程排了跟随母亲 → 见学", class_ai.judge_should_follow_mother(202))
@@ -460,9 +463,11 @@ check("萝莉晚上日程没排 → 不见学", not class_ai.judge_should_follow
 set_time(period_time(0))
 student.entertainment.entertainment_type = [E.ENTERTAINMENT_FOLLOW_MOTHER, 0, 0]
 check("萝莉节次内没课、上午日程排了跟随母亲 → 见学", class_ai.judge_should_follow_mother(201))
+schedule_handle.set_class_cell(ROOM1, cache.game_time.weekday(), 0, 45, 101)
 schedule_handle.set_selected_course(201, cache.game_time.weekday(), 0, E.COURSE_TYPE_THEORY, ROOM1)
 check("萝莉本节有课 → 有课优先，不见学", not class_ai.judge_should_follow_mother(201))
 schedule_handle.clear_selected_course(201, cache.game_time.weekday(), 0)
+schedule_handle.clear_class_cell(ROOM1, cache.game_time.weekday(), 0)
 student.entertainment.entertainment_type = [0, 0, 0]
 check("萝莉节次内没课但日程没排 → 自由行动（口径 10 的默认不变）", not class_ai.judge_should_follow_mother(201))
 girl = make_character(203, "女儿C", 152, daughter=True, stage=104, mother_id=102, born_days=500)
@@ -1019,5 +1024,76 @@ check("没挂要睡觉标记、但行为是睡觉（吃药 / 爆睡）也算", c
 mother.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
 check("醒来后恢复", class_ai.judge_mother_followable(202) == 102)
 class_ai.clear_follow_mother_flag(202)
+
+section("Plan 27 §3.3：个人课表指向的教室这一节已停课，视为没课")
+clear_schedules()
+set_time(period_time(0))
+prepare_ai(201)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+student.entertainment.entertainment_type = [E.ENTERTAINMENT_FREE_PLAY] * 3
+move_to(201, classroom_path(ROOM1))
+check("全局课表那一格空着：当前课程为 None、上课状态 NONE", schedule_handle.get_now_course(201) is None and class_ai.get_course_stage(201) == E.COURSE_STAGE_NONE)
+_attend = growth_handle.get_child_growth(201).attend_class_count
+sm = dispatch(201)
+check("整条链：不派 713 自习，交回娱乐链（日程排了自由玩耍 → 去育儿室），也不记出勤", sm == SM.MOVE_TO_NURSERY and growth_handle.get_child_growth(201).attend_class_count == _attend, sm)
+set_time(period_time(0) - datetime.timedelta(minutes=15))
+check("不会为一节已停的课提前动身（到岗时间不算 UPCOMING）", class_ai.get_course_stage(201) == E.COURSE_STAGE_NONE)
+set_time(period_time(0))
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, -1)
+check("格子在、只是没排教师：仍是一节课 → ATTEND（到了教室降级自习并计出勤）", class_ai.get_course_stage(201) == E.COURSE_STAGE_ATTEND)
+schedule_handle.clear_class_cell(ROOM1, 0, 0)
+sex_class_handle.set_temp_class(DEFAULT_TIME.date().toordinal(), 0, ROOM_P, 70, must_attend=[201])
+check("被点名必修到每周课表空着的实践教室：覆盖层给出格子，照样 ATTEND 并指向那间教室", class_ai.get_course_stage(201) == E.COURSE_STAGE_ATTEND
+      and schedule_handle.get_now_course(201)["classroom"] == ROOM_P)
+cache.rhodes_island.temp_sex_class = {}
+schedule_handle.set_selected_course(201, 0, 1, E.COURSE_TYPE_PRACTICE, ROOM_P)
+sex_class_handle.set_temp_class(DEFAULT_TIME.date().toordinal(), 1, ROOM_P, 70, must_attend=[])
+set_time(period_time(1) - datetime.timedelta(minutes=8))
+check("预约在每周课表空着的实践教室、这一节选修了它：照样 SEX_PENDING（选修读的是个人课表本身）", class_ai.get_course_stage(201) == E.COURSE_STAGE_SEX_PENDING)
+set_time(period_time(1))
+check("开课那一刻：覆盖层给出格子，照样 ATTEND", class_ai.get_course_stage(201) == E.COURSE_STAGE_ATTEND)
+schedule_handle.clear_selected_course(201, 0, 0)
+schedule_handle.clear_selected_course(201, 0, 1)
+clear_schedules()
+
+section("Plan 27 §3.2：自习的去处只挑已开放的理论教室")
+LOCKED_THEORY = [_("理论教室二"), _("理论教室三"), _("理论教室四"), _("理论教室五"), _("理论教室六")]
+for _room in LOCKED_THEORY:
+    cache.rhodes_island.facility_open[game_config.config_facility_open_name_to_cid[_room]] = False
+set_time(period_time(1) + datetime.timedelta(minutes=15))
+move_to(201, SCENE_DORM)
+_moves = []
+sm_default.general_movement_module = lambda cid, target: _moves.append(list(target))
+for _seed in range(12):
+    random.seed(_seed)
+    constant.handle_state_machine_data[SM.MOVE_TO_CLASS_ROOM](201)
+check("只开了理论教室一：12 个种子下没课学生的 561 回落都去理论教室一（此前在全部 6 间里随机，会走向锁着的教室）",
+      len(_moves) == 12 and all(one == classroom_path(ROOM1) for one in _moves), [scene_str(one) for one in _moves])
+open_all_classroom()
+_moves.clear()
+for _seed in range(12):
+    random.seed(_seed)
+    constant.handle_state_machine_data[SM.MOVE_TO_CLASS_ROOM](201)
+sm_default.general_movement_module = _orig_move
+random.seed()
+check("全开时回落在已开放的 6 间里随机", len({scene_str(one) for one in _moves}) > 1
+      and all(cache.scene_data[scene_str(one)].scene_name in schedule_handle.get_classroom_list(E.COURSE_TYPE_THEORY) for one in _moves),
+      [scene_str(one) for one in _moves])
+
+section("Plan 27 §3.7：当场爆睡（行为是睡觉、没挂要睡觉标记）的学生不被拉去听课")
+set_time(period_time(0))
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+move_to(101, classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+student.sp_flag.sleep = False
+student.behavior.behavior_id = constant.Behavior.SLEEP
+student.behavior.duration = 120
+check("行为是睡觉：判为不可拉", not class_ai.judge_student_pullable(201))
+constant.handle_state_machine_data[SM.WORK_TEACH](101)
+check("教师开讲（303）：她继续睡，不被改成听课", student.behavior.behavior_id == constant.Behavior.SLEEP, student.behavior.behavior_id)
+check("醒着的照旧被拉进听课", teach_pull(201))
+schedule_handle.clear_selected_course(201, 0, 0)
+clear_schedules()
 
 finish()

@@ -265,7 +265,7 @@ cid,effect_name,effect_type,effect
 547,IDENTIFY_HELD_EGGS_SETTLE,指令_专用结算,（鉴定持有的卵用）鉴定玩家临时持有的全部卵并经索引回写原角色卵数据，无精删卵、受精进入孵化
 548,SELF_STUDY_ADD_ADJUST,指令_专用结算,（自习用）本节无教师时的降级行为，按自习基础值增加习得与所选科目的经验，不受师生等级差影响
 549,SKIP_CLASS_ADD_ADJUST,指令_专用结算,（翘课用）置翘课flag，小幅回复心情，本节不获得任何学习收益
-550,CHECK_REPORT_CARD_ADD_ADJUST,指令_专用结算,（检查成绩单用）输出该女儿本学期的各科成长与出勤，按成绩档位加好感与亲密，并清除成绩单flag
+550,CHECK_REPORT_CARD_ADD_ADJUST,指令_专用结算,（检查成绩单用）有未查看的新成绩单时输出那一份并清除成绩单flag，否则输出该女儿本学期截至目前的各科成长与出勤；按成绩档位加好感与亲密
 552,INTERN_CLASS_ADD_ADJUST,指令_专用结算,（实习课用）找同场景中该岗位的在岗干员当导师，按师徒等级差学该岗位的能力，无人在岗则降级见习
 553,FOLLOW_MOTHER_ADD_ADJUST,指令_专用结算,结算跟随母亲见学的收益
 554,FREE_PLAY_ADD_ADJUST,指令_专用结算,结算自由玩耍的收益（心情回复，无学习收益）

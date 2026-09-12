@@ -146,10 +146,47 @@ from Script.Design import handle_npc_ai
 cache.rhodes_island.party_day_of_week = {day: 0 for day in range(7)}
 random.seed(20260910)
 _pool = set()
-for _ in range(100):
+for _i in range(100):
     handle_npc_ai.get_chara_entertainment(202)
     _pool.update(child.entertainment.entertainment_type)
 check("幼女没排日程时每个时段在过家家 / 自由玩耍之间随机", _pool == {PLAY_HOUSE, FREE_PLAY}, _pool)
 random.seed()
+
+section("Plan 27 §3.1：地点还没开放的活动退回自由选择，幼女的默认池滤掉")
+GAME_ROOM_OPEN_CID = game_config.config_facility_open_name_to_cid[_("黄澄澄游戏室")]
+cache.rhodes_island.facility_open[GAME_ROOM_OPEN_CID] = False
+check("地点开放判定：游戏室没解锁时过家家为否；育儿室的自由玩耍、地点为「无」的跟随母亲、恒开放的理论教室一（自习）为是；不存在的娱乐为否",
+      not schedule_template_handle.judge_activity_place_open(PLAY_HOUSE) and schedule_template_handle.judge_activity_place_open(FREE_PLAY)
+      and schedule_template_handle.judge_activity_place_open(FOLLOW) and schedule_template_handle.judge_activity_place_open(SELF_STUDY)
+      and not schedule_template_handle.judge_activity_place_open(99999))
+schedule_template_handle.apply_template(202, T.TEMPLATE_PLAYFUL)
+schedule_template_handle.apply_template(203, T.TEMPLATE_PLAYFUL)
+child.entertainment.entertainment_type = [11, 12, 13]
+schedule_template_handle.apply_schedule_for_child(202)
+check("幼女套玩乐优先、游戏室没解锁：上午的过家家退回随机值，下棋与自由玩耍照写（此前照写过家家，走到门口一分钟一分钟地空转）",
+      child.entertainment.entertainment_type == [11, CHESS, FREE_PLAY], child.entertainment.entertainment_type)
+check("日程文本：幼女的上午标「未开放→自由选择」；少女两样都不满足时先说条件不符",
+      schedule_template_handle.get_child_slot_activity_text(202, 0) == _("{0}（未开放→自由选择）").format(_("过家家"))
+      and schedule_template_handle.get_child_slot_activity_text(203, 0) == _("{0}（条件不符→自由选择）").format(_("过家家")),
+      (schedule_template_handle.get_child_slot_activity_text(202, 0), schedule_template_handle.get_child_slot_activity_text(203, 0)))
+random.seed(20260913)
+_pool = set()
+for _i in range(60):
+    handle_npc_ai.get_chara_entertainment(202)
+    _pool.update(child.entertainment.entertainment_type)
+check("游戏室没解锁：幼女的默认池只剩自由玩耍", _pool == {FREE_PLAY}, _pool)
+cache.rhodes_island.facility_open[GAME_ROOM_OPEN_CID] = True
+_pool = set()
+for _i in range(60):
+    handle_npc_ai.get_chara_entertainment(202)
+    _pool.update(child.entertainment.entertainment_type)
+check("解锁之后恢复过家家 / 自由玩耍二选一", _pool == {PLAY_HOUSE, FREE_PLAY}, _pool)
+random.seed()
+child.entertainment.entertainment_type = [11, 12, 13]
+schedule_template_handle.apply_schedule_for_child(202)
+check("解锁之后玩乐优先的上午照写过家家（模板长期有效，不必重排）", child.entertainment.entertainment_type[0] == PLAY_HOUSE
+      and schedule_template_handle.get_child_slot_activity_text(202, 0) == _("过家家"))
+schedule_template_handle.apply_template(202, 0)
+schedule_template_handle.apply_template(203, 0)
 
 finish()

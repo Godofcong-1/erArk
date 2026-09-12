@@ -631,6 +631,9 @@ def get_growth_value(character_id: int, value_id: int) -> float:
         return float(growth_data.prenatal_point)
     if value_id == education_constant.GROWTH_VALUE_EVENT_COUNT:
         return float(len(growth_data.event_history))
+    # 成绩单待查看（Plan 27 §3.6）：没有养成数据的走上面的提前返回，同样是 0
+    if value_id == education_constant.GROWTH_VALUE_REPORT_PENDING:
+        return 1.0 if growth_data.report_card_flag else 0.0
     return 0.0
 
 

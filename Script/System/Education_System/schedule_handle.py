@@ -374,7 +374,7 @@ def get_now_course(character_id: int) -> Optional[dict]:
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
-    Optional[dict] -- 不在节次内或没排课时为None，否则为：
+    Optional[dict] -- 不在节次内、没排课、或班级式课那一格已停课（全局课表空着，Plan 27）时为None，否则为：
         {"course_type": 课型int, "target": 目标, "period": 节次int, "week_day": 星期int,
          "classroom": 教室场景名str（仅班级式课）, "ability_id": 科目能力id int（仅班级式课，-1为未知）,
          "teacher_id": 授课教师id int（仅班级式课，-1为无教师即自习）}
@@ -426,7 +426,7 @@ def get_course_at(character_id: int, now_time, period: int) -> Optional[dict]:
     now_time -- 那一节所在的时刻（取它的日期与星期）
     period -- 节次0~8
     Return arguments:
-    Optional[dict] -- 结构见 get_now_course，没排课则为None
+    Optional[dict] -- 结构见 get_now_course，没排课、或班级式课的全局课表那一格已停课则为None
     """
     week_day = now_time.weekday()
     course = get_selected_course(character_id, week_day, period)
@@ -451,11 +451,16 @@ def get_course_at(character_id: int, now_time, period: int) -> Optional[dict]:
     }
     # 班级式课：科目与教师要到全局课表里查，学生只记了"这节去哪间教室"
     if course_type in education_constant.CLASSROOM_COURSE_TYPE_SET:
-        result["classroom"] = target
         cell = get_class_cell(target, week_day, period)
-        if cell is not None:
-            result["ability_id"] = cell[0]
-            result["teacher_id"] = cell[1]
+        # 全局课表那一格（含当天临时课的覆盖层）空着，就是这一节停课了，视为没课（Plan 27 §3.3，用户拍板）：
+        #    个人课表面板上这种格子写的是「已停课」，此前却照样判成有课——学生去空教室自习，还按「有课」记一节出勤。
+        #    必修生覆盖与预约在每周课表空格上的实操课不受影响：覆盖层给出的格子非空；
+        #    教师来不了（格子在、教师为 -1 或缺席）也不受影响，仍是一节课，降级自习并计出勤
+        if cell is None:
+            return None
+        result["classroom"] = target
+        result["ability_id"] = cell[0]
+        result["teacher_id"] = cell[1]
     return result
 
 

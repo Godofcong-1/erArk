@@ -537,6 +537,8 @@ class Course_Select_Panel:
                 now_draw.style = "deep_gray"
                 now_draw.text = _("\n  周日全岛无人上班，实习课找不到带教干员，本日不可排\n")
                 now_draw.draw()
+                # 已经说明了为什么不可排，不再接着画「本节次没有可选的内容」（Plan 27 L5，此前两句重复）
+                empty_flag = False
             else:
                 for cid in game_config.config_work_type:
                     work_data = game_config.config_work_type[cid]

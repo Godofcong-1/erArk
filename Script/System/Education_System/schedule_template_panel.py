@@ -244,6 +244,7 @@ class Schedule_Template_Panel:
               第二行是有年龄需求的活动（过家家 / 跟随母亲 / 自由玩耍），按钮上标注「限幼女/萝莉」——
               套了这种活动的模板给不符合年龄的干员用时，那个时段会退回到自由选择；
               第三行起是其余娱乐。
+              地点还没开放的活动在同一对括号里再标「未开放」，仍可选（Plan 27 §3.1）。
               原实现整个循环里没有任何换行，29个按钮×38列＝1102列画在同一逻辑行上，
                  靠终端软换行硬折，不是网格。
               原来的「清空该时段」与「自由选择娱乐活动」是同一个值 0，只保留后者一个出口
@@ -258,11 +259,18 @@ class Schedule_Template_Panel:
             first_row, age_row, other_list = schedule_template_handle.get_schedule_activity_rows()
 
             def draw_activity(entertainment_id):
-                """画一个活动按钮并登记返回值；有年龄限制的把限制写在名字后面"""
+                """画一个活动按钮并登记返回值；年龄限制与「未开放」写在名字后面的同一对括号里"""
                 name = schedule_template_handle.get_activity_name(entertainment_id)
                 limit_text = schedule_template_handle.get_activity_age_limit_text(entertainment_id)
-                if limit_text:
+                # 地点还没开放的仍可选（Plan 27 §3.1）：模板长期有效，场所解锁之后自动生效，没开放的这段时间里那个时段退回自由选择。
+                #    最长的「[过家家（限幼女/萝莉，未开放）]」正好 31 列，等于每格宽度
+                place_closed = bool(entertainment_id) and not schedule_template_handle.judge_activity_place_open(entertainment_id)
+                if limit_text and place_closed:
+                    name = _("{0}（{1}，未开放）").format(name, limit_text)
+                elif limit_text:
                     name = _("{0}（{1}）").format(name, limit_text)
+                elif place_closed:
+                    name = _("{0}（未开放）").format(name)
                 now_draw = draw.LeftButton(_("[{0}]").format(name), f"ACT_{entertainment_id}", cell_width)
                 now_draw.draw()
                 return_list.append(now_draw.return_text)

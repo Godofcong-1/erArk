@@ -438,14 +438,16 @@ def judge_student_pullable(student_id: int) -> bool:
     student_id -- 角色id
     Return arguments:
     bool -- 是否可拉
-    功能: 学生岗（口径 1）、活着、不在 H、不在睡觉、没挂今日翘课 flag、此刻不在休息（体力缺课走的就是休息）
+    功能: 学生岗（口径 1）、活着、不在 H、不在睡觉、没挂今日翘课 flag、此刻不在休息（体力缺课走的就是休息）。
+          睡觉看两样（Plan 27 §3.7，写法同 judge_mother_followable）：要睡觉标记，或行为就是睡觉——
+             当场爆睡（疲劳满、安眠药、烂醉 → 状态机 44）只改行为、不置标记，只判标记会把她拉起来听课
     """
     if student_id not in cache.character_data:
         return False
     character_data: game_type.Character = cache.character_data[student_id]
     if character_data.work.work_type != education_constant.STUDENT_WORK_TYPE or character_data.dead:
         return False
-    if character_data.sp_flag.is_h or character_data.sp_flag.sleep:
+    if character_data.sp_flag.is_h or character_data.sp_flag.sleep or character_data.behavior.behavior_id == constant.Behavior.SLEEP:
         return False
     if character_data.child_growth is not None and character_data.child_growth.skip_class_flag:
         return False

@@ -78,6 +78,8 @@ check("玩家授课：每个学生各走一次好感与一次信赖结算", len(
 move_to(0, SCENE_DORM)
 
 section("512 玩家手动授课：只有课表排在这间教室的节次才计出勤（Plan 25 §3.4）")
+# 个人课表指向的格子要在全局课表上有课：上一段把它清掉了，空格子按「已停课」算没课（Plan 27 §3.3）
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, -1)
 move_to(0, classroom_path(ROOM1))
 settle_default.base_chara_favorability_and_trust_common_settle = lambda *a, **k: None
 set_time(DEFAULT_TIME.replace(hour=12, minute=30))
@@ -295,6 +297,56 @@ EFFECT[512](0, 45, change, cache.game_time)
 settle_default.base_chara_favorability_and_trust_common_settle = _orig_favor_settle
 check("玩家就在临时课的教室里授课：按那门性技讲，只发指技理论经验（170）", student_a.experience.get(170, 0) > finger_before[0] and student_a.experience.get(41, 0) == finger_before[1])
 cache.rhodes_island.temp_sex_class = {}
+move_to(0, SCENE_DORM)
+
+section("Plan 27 §3.6：检查成绩单看过之后给本学期截至目前，养成数值 23 读待查看")
+pl.target_character_id = 201
+growth_a = growth_handle.get_child_growth(201)
+growth_a.report_card_flag = False
+drawn_text.clear()
+EFFECT[550](0, 15, change, cache.game_time)
+check("上一份已看过、学期中途再查：给「尚未结束」的截至目前版，不再重发上一份（此前有过成绩单就永远只给上一份）",
+      any("尚未结束" in t for t in drawn_text) and not growth_a.report_card_flag)
+check("截至目前版的翻看提示：历史里的 2 份都算更早的学期", any("更早的 2 个学期" in t for t in drawn_text), [t[-40:] for t in drawn_text])
+check("养成数值 23：没有待查看为 0", growth_handle.get_growth_value(201, E.GROWTH_VALUE_REPORT_PENDING) == 0.0)
+growth_a.report_card_flag = True
+check("有待查看为 1", growth_handle.get_growth_value(201, E.GROWTH_VALUE_REPORT_PENDING) == 1.0)
+drawn_text.clear()
+EFFECT[550](0, 15, change, cache.game_time)
+_report_text = "".join(drawn_text)
+check("有未查看的新成绩单：发冻结的那份并清待查看", "的成绩单" in _report_text and "尚未结束" not in _report_text and not growth_a.report_card_flag
+      and growth_handle.get_growth_value(201, E.GROWTH_VALUE_REPORT_PENDING) == 0.0, _report_text[:120])
+check("发冻结那份时它自己就是最新一份：提示更早的 1 个学期", "更早的 1 个学期" in _report_text, _report_text[-60:])
+check("没有养成数据的角色：养成数值 23 为 0", mother.child_growth is None and growth_handle.get_growth_value(102, E.GROWTH_VALUE_REPORT_PENDING) == 0.0)
+pl.target_character_id = 0
+
+section("Plan 27 §3.5 / §3.7：玩家手动授课拉来的学生截到本节下课，爆睡的学生不拉")
+from Script.System.Instruct_System import handle_instruct  # noqa: E402
+
+_orig_flow = handle_instruct.update.game_update_flow
+handle_instruct.update.game_update_flow = lambda add_time: None
+clear_schedules()
+move_to(0, classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+move_to(202, classroom_path(ROOM1))
+set_time(period_time(0) + datetime.timedelta(minutes=30))
+student_a.sp_flag.is_h = False
+student_b.sp_flag.is_h = False
+student_a.behavior.behavior_id = constant.Behavior.SELF_STUDY
+student_b.behavior.behavior_id = constant.Behavior.SLEEP
+student_b.sp_flag.sleep = False
+handle_instruct.handle_teach()
+check("9:30 开讲：学生听到 9:45 本节下课（15 分钟，此前固定 45 分钟、压进下一节），玩家自己仍是 45 分钟",
+      student_a.behavior.behavior_id == constant.Behavior.ATTENT_CLASS and student_a.behavior.duration == 15 and pl.behavior.duration == 45,
+      (student_a.behavior.behavior_id, student_a.behavior.duration, pl.behavior.duration))
+check("行为是睡觉、没挂要睡觉标记的学生（当场爆睡）没被拉起来", student_b.behavior.behavior_id == constant.Behavior.SLEEP, student_b.behavior.behavior_id)
+set_time(DEFAULT_TIME.replace(hour=12, minute=30))
+student_a.behavior.behavior_id = constant.Behavior.SELF_STUDY
+handle_instruct.handle_teach()
+check("午休 12:30（节次外）开讲：学生仍听 45 分钟", student_a.behavior.behavior_id == constant.Behavior.ATTENT_CLASS and student_a.behavior.duration == 45,
+      student_a.behavior.duration)
+handle_instruct.update.game_update_flow = _orig_flow
+student_b.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
 move_to(0, SCENE_DORM)
 
 finish()

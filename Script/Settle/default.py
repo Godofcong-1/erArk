@@ -7849,7 +7849,7 @@ def handle_check_report_card_add_just(
         now_time: datetime.datetime,
 ):
     """
-    （检查成绩单用）输出该女儿本学期的各科成长与出勤，按成绩档位加好感与亲密，并清除成绩单flag
+    （检查成绩单用）有未查看的新成绩单时输出那一份并清除成绩单flag，否则输出该女儿本学期截至目前的各科成长与出勤；按成绩档位加好感与亲密
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -7867,20 +7867,24 @@ def handle_check_report_card_add_just(
     target_data: game_type.Character = cache.character_data[target_id]
     growth_data = growth_handle.get_child_growth(target_id)
 
-    # 两条路径：学期已经结束就发学期结算时**冻结**的那一份；还没结束就现算一份「截至目前」的
+    # 两条路径：有还没看过的新成绩单（学期结算时**冻结**的那一份，report_card_flag 置着）就发那份；
+    #    否则现算一份本学期「截至目前」的（Plan 27 §3.6，用户拍板）。此前以「有没有历史」判：有过一份成绩单之后，
+    #    学期中途再查永远只给上一份，看不到本学期的情况，分档口上夸的也是上学期。
     # 不能因为还没有成绩单就什么都不显示：指令本身没有「有成绩单」这条前提，
     #    玩家学期中途照样能用，那时也该给他看到东西
     report_data = semester_handle.get_last_report_card(target_id)
-    finished = bool(report_data)
+    finished = growth_data.report_card_flag and bool(report_data)
     if not finished:
         report_data = semester_handle.build_report_card(target_id)
     now_draw = draw.NormalDraw()
     now_draw.width = normal_config.config_normal.text_width
     now_draw.text = semester_handle.get_report_card_text(target_id, report_data, finished)
-    # 更早的学期不在这里翻——指令是一段式的打印，翻页要有面板才做得了
+    # 更早的学期不在这里翻——指令是一段式的打印，翻页要有面板才做得了。
+    #    发的是冻结那一份时它自己就是历史里最新的一份；给的是本学期截至目前时，历史里的每一份都更早（Plan 27 §3.6）
     history_count = len(semester_handle.get_report_card_history(target_id))
-    if history_count > 1:
-        now_draw.text += _("（更早的 {0} 个学期可以在教育管理系统的养成总览里翻看）\n").format(history_count - 1)
+    earlier_count = history_count - 1 if finished else history_count
+    if earlier_count > 0:
+        now_draw.text += _("（更早的 {0} 个学期可以在教育管理系统的养成总览里翻看）\n").format(earlier_count)
     now_draw.draw()
 
     # 成绩档位越高，检查成绩单时的反馈越正面
@@ -7891,7 +7895,8 @@ def handle_check_report_card_add_just(
     if report_data.get("grade", education_constant.REPORT_GRADE_POOR) in {
             education_constant.REPORT_GRADE_EXCELLENT, education_constant.REPORT_GRADE_GOOD}:
         base_chara_state_common_settle(target_id, add_time, 13, change_data_to_target_change=change_data)
-    # 只有发的是冻结那一份才算「看过了」；学期中途看的是进行时数据，flag 不动
+    # 只有发的是冻结那一份才算「看过了」；学期中途看的是进行时数据，flag 不动。
+    #    口上在效果之前输出，按档位分的口上判「有待查看的成绩单」（养成数值 23）时 flag 还在（Plan 27 §3.6）
     if finished:
         growth_data.report_card_flag = False
 

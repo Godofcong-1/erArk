@@ -30,7 +30,7 @@ from types import FunctionType
 from typing import List, Optional, Tuple
 from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config
-from Script.System.Education_System import education_constant, growth_handle
+from Script.System.Education_System import education_constant, growth_handle, schedule_handle
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -311,6 +311,23 @@ def judge_activity_need_pass(character_id: int, entertainment_id: int) -> bool:
     return bool(judge)
 
 
+def judge_activity_place_open(entertainment_id: int) -> bool:
+    """
+    校验一项娱乐的地点此刻是否已开放（Plan 27 §3.1）
+    Keyword arguments:
+    entertainment_id -- 娱乐配置cid
+    Return arguments:
+    bool -- 是否已开放；地点为「无」或不在 Facility_open 表里的恒为True，配置里没有的娱乐为False
+    功能: 与寻路的 wait_open、成年干员随机娱乐的场所判定同口径（schedule_handle.judge_scene_open）。
+          幼女的默认娱乐池与日程改写都是把活动直接写进 entertainment_type 的路径，不查这一道就会把孩子派到还没解锁的场所
+             （如教育区 2 级才开的黄澄澄游戏室）：寻路在门口返回 wait_open、移动时长为 0，通用移动模块退成等待 1 分钟，
+             下一次决策又派同一个移动，整个时段在门口一分钟一分钟地空转
+    """
+    if entertainment_id not in game_config.config_entertainment:
+        return False
+    return schedule_handle.judge_scene_open(game_config.config_entertainment[entertainment_id].place)
+
+
 def apply_schedule_for_child(character_id: int) -> None:
     """
     按日程把一个孩子今天的 entertainment_type 三个槽位改写掉（每日一次）
@@ -319,6 +336,7 @@ def apply_schedule_for_child(character_id: int) -> None:
     时段里有课的节次不用避让：上课（工作链里学生岗的目标行，Plan 24）在**节次**级别排在娱乐链之前，
        有课的节次照常上课，同一时段里没课的节次才按这里写进去的活动走（2026-09-10 二期方案 §9.2.9；
        此前要求整段没课才改写，结果上午只要有一节课，整个上午的日程都不生效）。
+    不满足 need 的、地点还没开放的（Plan 27 §3.1）时段都跳过不改写，保留当天的随机娱乐，即退回自由选择。
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -340,6 +358,9 @@ def apply_schedule_for_child(character_id: int) -> None:
         # 不满足该娱乐 need 条件的孩子跳过这一格，留着当天的随机娱乐比空转强
         if not judge_activity_need_pass(character_id, entertainment_id):
             continue
+        # 地点还没开放的同样跳过（Plan 27 §3.1）：写进去孩子会走到门口，一分钟一分钟地空转一整个时段
+        if not judge_activity_place_open(entertainment_id):
+            continue
         character_data.entertainment.entertainment_type[slot] = entertainment_id
 
 
@@ -350,7 +371,8 @@ def get_child_schedule_text(character_id: int) -> str:
     character_id -- 角色id
     Return arguments:
     str -- 形如「均衡（上课（无课时自习） / 下棋 / 自由玩耍）」，未套用模板则为「未设置」；
-           时段值为 0 显示「自由选择娱乐活动」，这个孩子不满足条件的活动带「（条件不符→自由选择）」标注
+           时段值为 0 显示「自由选择娱乐活动」，这个孩子不满足条件的活动带「（条件不符→自由选择）」标注，
+           地点还没开放的带「（未开放→自由选择）」（Plan 27）
     """
     character_data: game_type.Character = cache.character_data[character_id]
     growth_data = character_data.child_growth
@@ -476,12 +498,16 @@ def get_child_slot_activity_text(character_id: int, slot: int) -> str:
     character_id -- 角色id
     slot -- 时段0~2
     Return arguments:
-    str -- 活动名；0 为「自由选择娱乐活动」；活动存在但这个孩子不满足其 need 条件时为「X（条件不符→自由选择）」
+    str -- 活动名；0 为「自由选择娱乐活动」；活动存在但这个孩子不满足其 need 条件时为「X（条件不符→自由选择）」，
+           满足条件但地点还没开放时为「X（未开放→自由选择）」（Plan 27 §3.1）
     功能: 供个人课表的日程行与日程微调页共用。
-          只做显示：真正的「退回」发生在 apply_schedule_for_child 的 need 校验里，这里只是把它说给玩家听
+          只做显示：真正的「退回」发生在 apply_schedule_for_child 的 need 与地点校验里，这里只是把它说给玩家听
     """
     entertainment_id = get_child_slot_activity(character_id, slot)
     name = get_activity_name(entertainment_id)
-    if entertainment_id and entertainment_id in game_config.config_entertainment and not judge_activity_need_pass(character_id, entertainment_id):
-        return _("{0}（条件不符→自由选择）").format(name)
+    if entertainment_id and entertainment_id in game_config.config_entertainment:
+        if not judge_activity_need_pass(character_id, entertainment_id):
+            return _("{0}（条件不符→自由选择）").format(name)
+        if not judge_activity_place_open(entertainment_id):
+            return _("{0}（未开放→自由选择）").format(name)
     return name

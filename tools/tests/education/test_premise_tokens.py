@@ -106,6 +106,11 @@ check("Growth|2 出勤率 80", HP("CVP_A1_Growth|2_E_80", 201) == 1)
 check("Growth|7 没成绩单时为 -1", HP("CVP_A1_Growth|7_E_-1", 201) == 1 and HP("CVP_A1_Growth|7_E_0", 201) == 0)
 check("没养成数据的干员：出勤率按 100", HP("CVP_A1_Growth|2_E_100", 301) == 1)
 check("Growth 不会被当成攻略程度", HP("CVP_A1_Growth|0_GE_8", 201) == 1 and HP("CVP_A1_G_GE_8", 201) == 0)
+g.report_card_flag = True
+check("Growth|23 成绩单待查看：有待查看为 1（Plan 27）", HP("CVP_A1_Growth|23_E_1", 201) == 1)
+g.report_card_flag = False
+check("Growth|23：看过之后为 0，没有养成数据的干员也是 0", HP("CVP_A1_Growth|23_E_0", 201) == 1 and HP("CVP_A1_Growth|23_E_1", 201) == 0
+      and HP("CVP_A1_Growth|23_E_0", 301) == 1)
 pl.target_character_id = 201
 change = game_type.CharacterStatusChange()
 settle_behavior.handle_comprehensive_value_effect(0, ["A2", "Growth|10", "G", "0.5"], change)
@@ -191,6 +196,9 @@ student.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
 student.sp_flag.sleep = True
 check("她在睡觉 → 不成立", HP("student_not_study_in_classroom", 0) == 0)
 student.sp_flag.sleep = False
+student.behavior.behavior_id = constant.Behavior.SLEEP
+check("她当场爆睡（行为是睡觉、没挂要睡觉标记）→ 不成立（Plan 27 §3.7）", HP("student_not_study_in_classroom", 0) == 0)
+student.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
 move_to(0, SCENE_DORM)
 
 section("Plan 26 L6：t_baby_0 与检查成绩单挡婴儿")

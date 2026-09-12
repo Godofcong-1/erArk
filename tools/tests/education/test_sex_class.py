@@ -246,4 +246,25 @@ text_list = sex_class_handle.check_and_send_notify(period_time(8) - datetime.tim
 check("提醒写的是开课前 10 分钟动身，不再说「已经在往教室走了」", len(text_list) == 1 and "10" in text_list[0] and "已经在往教室走了" not in text_list[0], text_list)
 cache.rhodes_island.temp_sex_class = {}
 
+section("Plan 27 L2（按设计保留）：同一节里下课后再开一次实操课，到场学生再记一节出勤")
+cache.sex_class_mode = False
+cache.group_sex_mode = False
+move_to(0, classroom_path(ROOM_P))
+move_to(201, classroom_path(ROOM_P))
+student_a.sp_flag.is_h = False
+set_time(period_time(1) + datetime.timedelta(minutes=5))
+_attend = growth_handle.get_child_growth(201).attend_class_count
+sex_class_handle.start_sex_class(70)
+sex_class_handle.end_sex_class()
+_first = growth_handle.get_child_growth(201).attend_class_count
+student_a.sp_flag.is_h = False
+set_time(period_time(1) + datetime.timedelta(minutes=15))
+sex_class_handle.start_sex_class(70)
+sex_class_handle.end_sex_class()
+check("每次开课单独记一次（用户拍板，复查时别当成重复计数去重）：开课 +1，同一节下课后再开又 +1",
+      _first == _attend + 1 and growth_handle.get_child_growth(201).attend_class_count == _attend + 2,
+      (_attend, _first, growth_handle.get_child_growth(201).attend_class_count))
+student_a.sp_flag.is_h = False
+cache.rhodes_island.temp_sex_class = {}
+
 finish()

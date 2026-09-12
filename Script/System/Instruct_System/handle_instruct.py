@@ -548,7 +548,7 @@ def handle_chat_with_ai():
 @add_instruct(constant.Instruct.TEACH)
 def handle_teach():
     """处理授课指令"""
-    from Script.System.Education_System import class_ai
+    from Script.System.Education_System import class_ai, schedule_handle
 
     instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
@@ -573,7 +573,10 @@ def handle_teach():
                 if class_ai.judge_student_pullable(chara_id) and other_character_data.behavior.behavior_id != constant.Behavior.ATTENT_CLASS:
                     other_character_data.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
                     other_character_data.behavior.start_time = character_data.behavior.start_time
-                    other_character_data.behavior.duration = 45
+                    # 学生听到本节下课为止（Plan 27 §3.5），与 NPC 教师的 303 / 304 同口径：节次首尾相接，照满 45 分钟会压进下一节，
+                    #    下一节在别处有课的学生迟到半节；节次外（午休等）仍是 45 分钟。剩余分钟按行为开始时刻算，必须在对齐开始时刻之后取。
+                    #    玩家自己的授课仍是 45 分钟：收益在开讲这一刻已按全场结算，学生先走不影响收益与出勤
+                    other_character_data.behavior.duration = schedule_handle.get_period_left_minute(chara_id)
                     other_character_data.state = constant.CharacterStatus.STATUS_ATTENT_CLASS
     update.game_update_flow(45)
 

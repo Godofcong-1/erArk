@@ -809,15 +809,20 @@ def get_chara_entertainment(character_id: int):
         # 否则随机当天的娱乐活动
         else:
             # 教育系统的常量从配置现算，必须在函数内延迟 import（与本文件里 class_ai 的延迟 import 同款）
-            from Script.System.Education_System import education_constant
+            from Script.System.Education_System import education_constant, schedule_template_handle
             from Script.System.Pregnancy_System import pregnancy_constant
 
             # 幼女没排日程时的默认池：每个时段在过家家 / 自由玩耍之间随机（Plan 22 二期 §9.2.9，此前固定写过家家）。
             # 白天在课表节次内没课的时段，幼女默认仍是见学（class_ai.judge_should_follow_mother），
             #    这里的值只在晚上等不在节次内的时间生效；日程明确排了活动的时段会在 apply_schedule_for_child 里被改写
             if handle_premise.handle_self_is_child(character_id):
+                # 地点还没开放的不进池（Plan 27 §3.1），与下面成年干员的随机池同口径：黄澄澄游戏室要教育区 2 级才解锁，
+                #    开局抽到过家家的幼女会在门口一分钟一分钟地空转一整晚。育儿室恒开放，池子不会滤空；滤空了也只剩自由玩耍
+                child_pool = [cid for cid in education_constant.CHILD_DEFAULT_ENTERTAINMENT_LIST if schedule_template_handle.judge_activity_place_open(cid)]
+                if not child_pool:
+                    child_pool = [education_constant.ENTERTAINMENT_FREE_PLAY]
                 for i in range(3):
-                    character_data.entertainment.entertainment_type[i] = random.choice(education_constant.CHILD_DEFAULT_ENTERTAINMENT_LIST)
+                    character_data.entertainment.entertainment_type[i] = random.choice(child_pool)
                 return
             entertainment_list = [i for i in game_config.config_entertainment]
             entertainment_list.remove(0)

@@ -437,7 +437,8 @@ def character_move_to_class_room(character_id: int):
     Plan 22 改造：目标教室改为由课表决定。现在的调用方有三个（Plan 24 并入工作链后）：
        教师的 210700 / 210705（去本节或马上那一节授课的教室）、学生的 210800（待赴实操课的教室）、
        娱乐 155「上课（无课时自习）」的自动 AI（学生没课时去自习，走下面的学生分支，多半落到随机回落）。
-       课表查不到（没排课、非师生、旧存档）时回落既有的"在全部理论教室里随机选一间"，不留死分支
+       课表查不到（没排课、非师生、旧存档）时回落"在已开放的理论教室里随机选一间"，不留死分支
+       （Plan 27 §3.2：此前在全部 6 间里随机，开局只开理论教室一，挑中锁着的会走到门口一分钟一分钟地空转）
     Keyword arguments:
     character_id -- 角色id
     """
@@ -468,7 +469,14 @@ def character_move_to_class_room(character_id: int):
     to_class_room = []
     if target_room:
         to_class_room = schedule_handle.get_classroom_position(target_room)
-    # 回落：课表没排或教室已不存在时，仍按既有逻辑随机去一间理论教室
+    # 回落：课表没排或教室已不存在时（多是排了「上课（无课时自习）」的学生去自习），随机去一间**已开放**的理论教室（Plan 27 §3.2）。
+    #    Class_Room 标签装的是全部 6 间，理论教室二~六要教育区 2~5 级才解锁；挑中锁着的，寻路在门口返回 wait_open，
+    #    等 1 分钟后下一次决策又重新随机，在几间锁着的教室门口之间来回走
+    if not to_class_room:
+        open_room_list = schedule_handle.get_classroom_list(education_constant.COURSE_TYPE_THEORY)
+        if open_room_list:
+            to_class_room = schedule_handle.get_classroom_position(random.choice(open_room_list))
+    # 一间都没开时（理论教室一不在解锁表里、恒开放，实际不会发生）才退回在全部理论教室里随机
     if not to_class_room:
         to_class_room = map_handle.get_map_system_path_for_str(
             random.choice(constant.place_data["Class_Room"])

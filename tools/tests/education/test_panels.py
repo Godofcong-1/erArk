@@ -352,6 +352,29 @@ common_select_NPC.common_select_npc_button_list_func = _orig_select_func
 move_to(0, SCENE_DORM)
 clear_schedules()
 
+section("Plan 27 §3.1 / L5：选择活动面板的「未开放」标注、周日实习课只画一句提示")
+from Script.Core import text_handle  # noqa: E402
+
+flow_handle.askfor_all = scripted_askfor
+answers[:] = []
+_game_room_cid = game_config.config_facility_open_name_to_cid[_("黄澄澄游戏室")]
+cache.rhodes_island.facility_open[_game_room_cid] = False
+drawn_text.clear()
+check("选择活动：点[取消]返回 None", schedule_template_panel.Schedule_Template_Panel(W)._select_activity() is None)
+_play_house_button = _("[{0}]").format(_("{0}（{1}，未开放）").format(play_house_name, schedule_template_handle.get_activity_age_limit_text(E.ENTERTAINMENT_PLAY_HOUSE)))
+check("游戏室没解锁：过家家的按钮标「限幼女/萝莉，未开放」，仍是按钮（可选）", _play_house_button in drawn_text, [t for t in drawn_text if play_house_name in t])
+check("按钮宽度不超过每格 31 列", text_handle.get_text_index(_play_house_button) <= int(W / 6), text_handle.get_text_index(_play_house_button))
+check("地点开放的活动不带「未开放」", _("[{0}]").format(_("下棋")) in drawn_text and not any("未开放" in t and _("下棋") in t for t in drawn_text))
+cache.rhodes_island.facility_open[_game_room_cid] = True
+drawn_text.clear()
+schedule_template_panel.Schedule_Template_Panel(W)._select_activity()
+check("解锁之后不再标注", not any("未开放" in t for t in drawn_text))
+drawn_text.clear()
+course_select_panel.Course_Select_Panel(W)._select_target(201, 6, 0, E.COURSE_TYPE_INTERN)
+check("周日排实习课：只画「周日全岛无人上班」一句，不再接着画「本节次没有可选的内容」（L5）", any("周日全岛无人上班" in t for t in drawn_text)
+      and not any("本节次没有可选的内容" in t for t in drawn_text))
+flow_handle.askfor_all = fake_askfor
+
 section("Web 适配器冒烟")
 from Script.System.Web_Draw_System import web_draw_adapter
 
