@@ -108,12 +108,28 @@ panel.handle_yrn(cell_key)
 check("选教师时取消不写入", schedule_handle.get_class_cell(ROOM_P, 2, 3) is None)
 flow_handle.askfor_all = fake_askfor
 
+section("必修名单含成年学生岗（Plan 25 §3.7）")
+from Script.Design import instuct_judege  # noqa: E402
+
+_orig_judge = instuct_judege.calculation_instuct_judege
+flow_handle.askfor_all = scripted_askfor
+answers[:] = [lambda o: o == "DONE"]
+panel._select_must_attend([], ROOM_P, 2, 3)
+check("成年学生不满足 H 模式实行值 → 不列出，女儿照常列出", "MUST_301" not in captured["rl"] and "MUST_201" in captured["rl"], captured["rl"])
+instuct_judege.calculation_instuct_judege = lambda *a, **k: (1, 0, "")
+answers[:] = [lambda o: o == "DONE"]
+panel._select_must_attend([], ROOM_P, 2, 3)
+check("满足实行值的成年学生岗列入必修名单", "MUST_301" in captured["rl"], captured["rl"])
+check("非学生岗（教师）不在必修名单", not any(r in captured["rl"] for r in ("MUST_101", "MUST_103", "MUST_104", "MUST_105", "MUST_102")))
+instuct_judege.calculation_instuct_judege = _orig_judge
+flow_handle.askfor_all = fake_askfor
+
 section("个人课表面板与选人")
 cs = course_select_panel.Course_Select_Panel(W)
 rl = []
 drawn_text.clear()
 cs.draw_page(rl)
-check("名单 = 学生岗 ∪ 女儿，12 人", cs.student_list == [201 + i for i in range(11)] + [301])
+check("名单 = 全部学生岗（含成年学生），12 人", cs.student_list == [201 + i for i in range(11)] + [301])
 check("首屏只有顶在行首的[选择学生]（不写「尚未选择」），没有人名页签与格子，也不画周表", E.SELECT_STUDENT_RETURN in rl and not any(r.startswith("\nSTU_") or r.startswith("\nMYCELL_") for r in rl)
       and cs.now_student == -1 and "EDIT_SCHEDULE" not in rl and not any("尚未选择学生" in t for t in drawn_text) and any(t == "[选择学生]" for t in drawn_text))
 answers[:] = [lambda o: o == "女儿03"]

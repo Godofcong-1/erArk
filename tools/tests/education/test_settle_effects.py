@@ -77,6 +77,32 @@ settle_default.base_chara_favorability_and_trust_common_settle = _orig_favor
 check("玩家授课：每个学生各走一次好感与一次信赖结算", len(favor_calls) == 4 and {call[6] for call in favor_calls} == {201, 202}, favor_calls)
 move_to(0, SCENE_DORM)
 
+section("512 玩家手动授课：只有课表排在这间教室的节次才计出勤（Plan 25 §3.4）")
+move_to(0, classroom_path(ROOM1))
+settle_default.base_chara_favorability_and_trust_common_settle = lambda *a, **k: None
+set_time(DEFAULT_TIME.replace(hour=12, minute=30))
+student_a.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+reset_mark(201)
+attend_before = student_a.child_growth.attend_class_count
+exp_before = student_a.experience.get(exp_45, 0)
+EFFECT[512](0, 45, change, cache.game_time)
+check("午休手动授课：给收益、不计出勤", student_a.experience.get(exp_45, 0) > exp_before and student_a.child_growth.attend_class_count == attend_before,
+      (student_a.experience.get(exp_45, 0) - exp_before, student_a.child_growth.attend_class_count - attend_before))
+set_time(period_time(0))
+student_a.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+reset_mark(201)
+EFFECT[512](0, 45, change, cache.game_time)
+check("本节课表就排在这间教室：计一节出勤", student_a.child_growth.attend_class_count == attend_before + 1)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, _("理论教室二"))
+student_a.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+reset_mark(201)
+EFFECT[512](0, 45, change, cache.game_time)
+check("本节课表排在别的教室：只给收益、不计出勤", student_a.child_growth.attend_class_count == attend_before + 1)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+settle_default.base_chara_favorability_and_trust_common_settle = _orig_favor
+reset_mark(201, 202)
+move_to(0, SCENE_DORM)
+
 section("557 学生晚到的补结算（第五轮）")
 schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
 reset_mark(201, 202)

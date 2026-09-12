@@ -674,6 +674,16 @@ def judge_interrupt_character_behavior(character_id: int) -> int:
     if game_time.judge_date_big_or_small(cache.game_time, character_data.behavior.start_time) != 1:
         return 0
 
+    # 学生岗赶去上课（Plan 25 §3.1）：待赴实操课提前退场（口径 62），没课的节次到了下一节开课前收手。
+    #    做法是把当前行为截到应离开的那一刻，而不是「现在就结束」：NPC 按自己的行为时刻推进，
+    #    这里的 cache.game_time 是玩家这一步的结束时刻，一步跨过开课时刻时拿它判会整个错过。判据见 class_ai.get_student_leave_time
+    from Script.System.Education_System import class_ai
+
+    leave_time = class_ai.get_student_leave_time(character_id)
+    if leave_time is not None:
+        character_data.behavior.duration = max(1, int((leave_time - character_data.behavior.start_time).total_seconds() // 60))
+        return 1
+
     # 休息中的相关判断
     if handle_premise.handle_action_rest(character_id):
         # 疲劳归零，且HP、MP满值时，则立刻结束休息

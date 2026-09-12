@@ -310,7 +310,7 @@ class Class_Schedule_Panel:
         for name in education_constant.WEEK_NAME:
             now_draw = draw.CenterDraw()
             now_draw.width = cell_width
-            now_draw.text = _(name)
+            now_draw.text = name
             now_draw.draw()
         line_feed.draw()
 
@@ -420,7 +420,7 @@ class Class_Schedule_Panel:
             info_draw = draw.NormalDraw()
             info_draw.width = self.width
             info_draw.text = _("  教室：{0}\n  日期：{1}（{2}）\n  节次：第{3}节 {4}\n\n").format(
-                classroom, date_text, _(education_constant.WEEK_NAME[week_day]), period + 1, get_period_time_text(period))
+                classroom, date_text, education_constant.WEEK_NAME[week_day], period + 1, get_period_time_text(period))
             info_draw.draw()
 
             # 主修科目：只列女学生学得了的七门，76腰技是男性专属，列出来只会让人白选
@@ -531,15 +531,14 @@ class Class_Schedule_Panel:
             return_list: List[str] = []
             id_by_return: Dict[str, int] = {}
             replace_text_list = []
-            # 人口来源：玩家的女儿且处于幼女/萝莉/少女阶段，再过滤为学生岗——
+            # 人口来源：职业为学生的全部干员，含成年学生（Plan 25 §3.7），与个人课表名单同口径——
             #    课表只对学生岗生效（Plan 24 口径 1），改了岗的女儿点了名也不会来上课。
-            # judge_can_join_sex_class 保留作状态守卫（死亡/临盆/意识模糊/监禁等）
+            # judge_can_join_sex_class 保留作状态守卫（死亡/临盆/意识模糊/监禁等）；成年学生仍须满足 H 模式实行值（口径 63 第二层），
+            #    否则必修名单就成了绕开全部 H 前提的旁路
             student_width = int(self.width / 6)
             count = 0
-            for character_id in growth_handle.get_student_candidate_list():
+            for character_id in growth_handle.get_course_candidate_list():
                 character_data: game_type.Character = cache.character_data[character_id]
-                if character_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
-                    continue
                 # 必修名单豁免前置修习（口径 63 宽松版）：点名本身就是玩家的决定，这里只做状态守卫
                 if not sex_class_handle.judge_can_join_sex_class(character_id, check_course=False):
                     continue
@@ -606,7 +605,7 @@ class Class_Schedule_Panel:
         info_draw = draw.NormalDraw()
         info_draw.width = self.width
         info_draw.text = _("  {0}｜{1} 第{2}节 {3}\n").format(
-            classroom, _(education_constant.WEEK_NAME[week_day]), period + 1, get_period_time_text(period))
+            classroom, education_constant.WEEK_NAME[week_day], period + 1, get_period_time_text(period))
         info_draw.draw()
         line_feed.draw()
 

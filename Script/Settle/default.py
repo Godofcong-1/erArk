@@ -3106,13 +3106,8 @@ def handle_sex_class_mode_on(
     # 把在场可参加的学生一并拉进H状态——效果串里的462/464只管玩家自己与当前交互对象，
     # 其余到场学生要在这里补上，否则她们会被NPC AI派去做别的事
     for student_id in sex_class_handle.get_scene_student_list():
-        student_data: game_type.Character = cache.character_data[student_id]
-        if not student_data.sp_flag.is_h:
-            character_move.cancel_movement_plan(student_id)
-        student_data.sp_flag.is_h = True
-        student_data.sp_flag.see_pl_h = True
-        # 到场的口上走二段行为：一段行为得靠NPC AI派发，而H中的NPC完全不进AI链（handle_npc_ai.py:290）
-        second_behavior.character_get_second_behavior(student_id, constant.Behavior.JOIN_SEX_CLASS)
+        # 与开课后才到场的学生（状态机 722）走同一个函数（Plan 25 §3.2）
+        sex_class_handle.pull_student_into_class(student_id)
         # 出勤不在这里记：开课指令先调 sex_class_handle.start_sex_class() 记过一次了，
         #    这里再记会让每个到场学生每节实操课 +2（2026-09-12 第五轮修正）
 
@@ -7627,12 +7622,13 @@ def handle_teach_add_just(
                 if other_character_data.behavior.behavior_id == constant.Behavior.ATTENT_CLASS:
                     # NPC 教师只给自己的学生发（本节个人课表指向这间教室的人）；玩家手动授课照旧发给全场（Plan 22 第五轮）。
                     #    同一间教室里偶有两位教师时，别的教师的学生不会被重复记一节
-                    if character_id != 0:
-                        student_course = schedule_handle.get_now_course(chara_id)
-                        if student_course is None or student_course["classroom"] != scene_data.scene_name:
-                            continue
+                    student_course = schedule_handle.get_now_course(chara_id)
+                    scheduled_here = student_course is not None and student_course["classroom"] == scene_data.scene_name
+                    if character_id != 0 and not scheduled_here:
+                        continue
 
-                    # 按课表科目结算该学生的习得与科目经验，学习速度由师生等级差决定；同一节只结算一次
+                    # 按课表科目结算该学生的习得与科目经验，学习速度由师生等级差决定；同一节只结算一次。
+                    #    玩家手动授课只在该生本节课表就排在这间教室时才计出勤，节次外 / 别处的课只给收益（Plan 25 §3.4）
                     if not growth_handle.settle_student_class_gain(
                         chara_id,
                         character_id,
@@ -7640,6 +7636,7 @@ def handle_teach_add_just(
                         course_type,
                         add_time,
                         change_data_to_target_change=change_data,
+                        count_attend=scheduled_here,
                     ):
                         continue
 

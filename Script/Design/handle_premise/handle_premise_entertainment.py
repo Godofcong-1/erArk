@@ -402,7 +402,9 @@ def handle_entertainment_is_play_house(character_id: int) -> int:
     else:
         return 0
 
-    return character_data.entertainment.entertainment_type[i] == 151
+    from Script.System.Education_System import education_constant
+
+    return character_data.entertainment.entertainment_type[i] == education_constant.ENTERTAINMENT_PLAY_HOUSE
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_STYLE_HAIR)

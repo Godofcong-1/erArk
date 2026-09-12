@@ -434,23 +434,21 @@ def character_move_to_library(character_id: int):
 def character_move_to_class_room(character_id: int):
     """
     移动到教室
-    Plan 22 改造：目标教室改为由课表决定——教师去自己本节要授课的教室，学生去自己本节选的教室；
+    Plan 22 改造：目标教室改为由课表决定。现在的调用方有三个（Plan 24 并入工作链后）：
+       教师的 210700 / 210705（去本节或马上那一节授课的教室）、学生的 210800（待赴实操课的教室）、
+       娱乐 155「上课（无课时自习）」的自动 AI（学生没课时去自习，走下面的学生分支，多半落到随机回落）。
        课表查不到（没排课、非师生、旧存档）时回落既有的"在全部理论教室里随机选一间"，不留死分支
     Keyword arguments:
     character_id -- 角色id
     """
     from Script.System.Education_System import class_ai, education_constant, schedule_handle
 
-    character_data: game_type.Character = cache.character_data[character_id]
-    now_time = character_data.behavior.start_time
-    if now_time is None:
-        now_time = cache.game_time
-
     target_room = ""
     # 预到岗：下一节是自己要上的性技实操课时，目标教室要查**下一节**而不是当前节次，
-    # 否则学生会走去上一节课的教室（Plan 22 四期 §3.28.5）
-    next_class, next_classroom = class_ai.get_next_sex_class(character_id, now_time)
-    if next_class is not None:
+    # 否则学生会走去上一节课的教室（Plan 22 四期 §3.28.5）。
+    #    只认学生岗（Plan 25 §3.6）：被任命为教师、课表还有残留的成年女儿不能被带去实操教室，和她自己的授课行来回拉扯
+    next_classroom = class_ai.get_pending_sex_classroom(character_id)
+    if next_classroom:
         target_room = next_classroom
     # 教师视角：反查全局课表；本节没课时看马上要开始的那一节（到岗时间与课间，第五轮）
     teaching = schedule_handle.get_now_teaching(character_id)
@@ -2697,24 +2695,20 @@ def character_work_teach(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_TEACH
     # 把本节来上这间教室的学生变为听课状态
     # 只拉自己的学生（本节个人课表指向这间教室的人），不再把场景里所有学生岗都拉过来：
-    #    跟着当教师的母亲来见学的幼女、路过的孩子不该被顺手记一节课（Plan 22 第五轮）
+    #    跟着当教师的母亲来见学的幼女、路过的孩子不该被顺手记一节课（Plan 22 第五轮）。
+    #    判据与学生自己决策时同口径：只认学生岗，过体力闸与心情闸（必修生豁免）——开课前已在教室里等候的学生，
+    #    本节该体力缺课或掷中翘课的，不能因为教师先被处理就被拉进来（Plan 25 §3.5）
+    from Script.System.Education_System import class_ai
+
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
     for chara_id in scene_data.character_list:
         # 跳过自己
         if chara_id == character_id:
             continue
+        if not class_ai.judge_student_join_class(chara_id, scene_data.scene_name, character_data.behavior.start_time):
+            continue
         other_character_data: game_type.Character = cache.character_data[chara_id]
-        # H中、睡觉中、今天翘课的、体力不足正在休息的都不拉（后两者由上课判定的两道闸决定）
-        if other_character_data.sp_flag.is_h or other_character_data.sp_flag.sleep:
-            continue
-        if other_character_data.child_growth is not None and other_character_data.child_growth.skip_class_flag:
-            continue
-        if other_character_data.behavior.behavior_id == constant.Behavior.REST:
-            continue
-        now_course = schedule_handle.get_now_course(chara_id)
-        if now_course is None or now_course["classroom"] != scene_data.scene_name:
-            continue
         # 让对方变成听课状态，开始时刻与教师对齐，节次判定才对得上
         other_character_data.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
         other_character_data.behavior.start_time = character_data.behavior.start_time
@@ -2959,6 +2953,23 @@ def character_education_absent_rest(character_id: int):
 
     class_ai.settle_absent(character_id)
     character_rest(character_id)
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.EDUCATION_JOIN_SEX_CLASS)
+def character_education_join_sex_class(character_id: int):
+    """
+    上课：实操课开课后才走进教室，直接加入课堂 H 并记一节出勤（Plan 25 §3.2）
+    与开课时拉人（效果 10014）走同一个 pull_student_into_class：进 H、看见玩家的 H、到场二段口上。
+       开课时拉进来的人出勤已由 start_sex_class 记过，晚到的人由这里补记；进了 H 之后她不再进 AI 链，不会重复记
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    from Script.System.Education_System import sex_class_handle
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    sex_class_handle.pull_student_into_class(character_id)
+    sex_class_handle.settle_attend(character_id)
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_LIBRARY_1)

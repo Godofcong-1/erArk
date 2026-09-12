@@ -40,7 +40,7 @@ def get_semester_name(year: int, month: int) -> str:
     Return arguments:
     str -- 如 "2026年 秋季学期"
     """
-    return _("{0}年 {1}").format(year, _(education_constant.SEMESTER_NAME.get(month, "学期")))
+    return _("{0}年 {1}").format(year, education_constant.SEMESTER_NAME.get(month, _("学期")))
 
 
 def get_semester_day_total(year: int, month: int) -> int:
@@ -399,6 +399,6 @@ def get_report_card_text(character_id: int, report_data: dict, finished: bool) -
                 game_config.config_ability[ability_id].name, attr_calculation.judge_grade(now_level)))
     info_text += _("\n各科水平：{0}\n").format("、".join(ability_text_list) if ability_text_list else _("尚无成绩"))
     info_text += _("\n评定：{0}\n").format(
-        _(education_constant.REPORT_GRADE_NAME.get(report_data.get("grade", education_constant.REPORT_GRADE_NO_CLASS), "无课可评")))
+        education_constant.REPORT_GRADE_NAME.get(report_data.get("grade", education_constant.REPORT_GRADE_NO_CLASS), _("无课可评")))
     info_text += _("\n※※※※※※※※※\n")
     return info_text

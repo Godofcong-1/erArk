@@ -169,4 +169,28 @@ check("有学徒在跟岗：have_intern_student", HP("have_intern_student", 103)
 move_to(201, SCENE_DORM)
 check("学徒走了：not_have_intern_student", HP("have_intern_student", 103) == 0 and HP("not_have_intern_student", 103) == 1)
 
+section("Plan 25：新前提、授课指令的前提只看所在场景、三类教室都算")
+for name in ("self_course_join_sex_class", "in_education_classroom", "student_not_study_in_classroom"):
+    check(f"前提 {name} 已注册", name in constant.handle_premise_data)
+check("死前提 teacher_teaching_in_classroom 已删除", "teacher_teaching_in_classroom" not in constant.handle_premise_data)
+move_to(0, SCENE_DORM)
+check("在宿舍：不在教育区教室", HP("in_education_classroom", 0) == 0)
+for room in (ROOM1, ROOM_P, schedule_handle.get_classroom_list(E.COURSE_TYPE_PUBLIC)[0]):
+    move_to(0, classroom_path(room))
+    check(f"在{room}：在教育区教室", HP("in_education_classroom", 0) == 1)
+move_to(0, SCENE_EDU_ENTRY)
+move_to(201, classroom_path(ROOM1))
+move_to(202, SCENE_DORM)
+student.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+check("玩家不在那间教室：别处有闲着的学生也不成立（原先扫全岛）", HP("student_not_study_in_classroom", 0) == 0)
+move_to(0, classroom_path(ROOM1))
+check("玩家所在的教室里有闲着的学生 → 成立", HP("student_not_study_in_classroom", 0) == 1)
+student.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+check("她已经在听课 → 不成立", HP("student_not_study_in_classroom", 0) == 0)
+student.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+student.sp_flag.sleep = True
+check("她在睡觉 → 不成立", HP("student_not_study_in_classroom", 0) == 0)
+student.sp_flag.sleep = False
+move_to(0, SCENE_DORM)
+
 finish()

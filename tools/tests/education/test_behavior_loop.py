@@ -184,6 +184,38 @@ teacher_right_total = sum(right for right, _total in teacher_log[0:4])
 teacher_need_total = sum(total for _right, total in teacher_log[0:4])
 check("本节有课的教师都在课表上那间教室里授课", teacher_need_total > 0 and teacher_right_total >= teacher_need_total - 1, teacher_log)
 check("上午四节里女儿平均每人记到 ≥ 3 节出勤（收益不再取决于谁先到教室）", attend_gain >= len(daughter_list) * 3, (attend_gain, len(daughter_list)))
+
+section("实操课预到岗：上一节在上课的必修生，开课时已在实操教室（Plan 25 §3.1）")
+# 第 5 节（14:00）在别的教室上课、第 6 节（14:45）被点名必修的女儿：改前她们在第 5 节听课到 14:45 才动身，开课那一刻一个都不在；
+#    改后 14:35 被打断提前退场，到了实操教室原地等开课。需求（吃饭、上厕所）不打断，所以只要求至少一半到场
+sex_room = (schedule_handle.get_classroom_list(E.COURSE_TYPE_PRACTICE) + schedule_handle.get_classroom_list(E.COURSE_TYPE_PUBLIC))[0]
+must_list = []
+old_room = {}
+for cid in daughter_list:
+    course = schedule_handle.get_selected_course(cid, cache.game_time.weekday(), 4)
+    if course is not None and course[0] in E.CLASSROOM_COURSE_TYPE_SET and course[1] != sex_room:
+        must_list.append(cid)
+        old_room[cid] = course[1]
+    if len(must_list) >= 4:
+        break
+check("挑到了第 5 节在别的教室上课的女儿", len(must_list) > 0, must_list)
+sex_class_handle.set_temp_class(cache.game_time.date().toordinal(), 5, sex_room, 70, must_attend=must_list)
+pre_round_log = []
+for minute in (14 * 60 - (cache.game_time.hour * 60 + cache.game_time.minute), 45):
+    pre_round_log.append(run_one_round(minute))
+arrived = [cid for cid in must_list if class_ai.judge_in_scene(cid, sex_room)]
+print(f"  {cache.game_time}: 必修生在{sex_room} {len(arrived)}/{len(must_list)}，两轮 {[(r[0], r[1], len(r[2])) for r in pre_round_log]}")
+for cid in must_list:
+    cd = cache.character_data[cid]
+    print(f"    {cid}{cd.name} 在 {map_handle.get_map_system_path_str_for_list(cd.position)} 做 {cd.behavior.behavior_id}（{cd.behavior.start_time} +{cd.behavior.duration}）"
+          f" 目标 {cd.behavior.move_final_target} 最近 {cd.last_behavior_id_list[-5:]}")
+check("两轮都收敛（打断规则没有让 NPC 来回抖动）", all(r[0] <= 30 and r[1] <= 60 and not r[2] for r in pre_round_log), [(r[0], r[1], len(r[2])) for r in pre_round_log])
+# 改前她们在第 5 节听课到 14:45 才动身，开课那一刻全都还在原来的教室；改后 14:35 提前退场。
+#    路上撞上需求（累了去休息、饿了去吃饭）时需求优先、不截，所以不要求全员到场，只要求没人还坐在上一节的教室里
+check("实操课开始那一刻，没有必修生还坐在上一节的教室里（14:35 已提前退场）", not any(class_ai.judge_in_scene(cid, old_room[cid]) for cid in must_list),
+      [(cid, old_room[cid]) for cid in must_list if class_ai.judge_in_scene(cid, old_room[cid])])
+check("实操课开始那一刻，已有必修生在实操教室里等开课", len(arrived) >= 1, (arrived, must_list))
+cache.rhodes_island.temp_sex_class = {}
 class_ai.get_skip_class_rate = _orig_rate
 
 section("跨天结算")

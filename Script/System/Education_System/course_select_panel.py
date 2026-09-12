@@ -1,7 +1,7 @@
 """个人课表面板（Plan 22 一期 §5.3）
 
 一次展示一个学生的周表（7 天 × 9 节），点格子先选课型、再选具体目标。
-学生 = 职业为学生的全部干员（含成年）∪ 养成中的女儿（一期方案 §9.8.2），
+学生 = 职业为学生的全部干员，含成年（一期方案 §9.8.2；Plan 24 口径 1 起不再并入改了岗的女儿），
 由「选择学生」按钮走通用 NPC 选择面板挑人（2026-09-09，二期方案 §9.2.5；原来的人名页签栏已删）。
 
 「复制到其他学生」是多人场景下的关键操作（已确认口径 4）：不做这个，
@@ -105,7 +105,7 @@ class Course_Select_Panel:
         """
         if not self.student_list:
             return
-        # 选学生与当前选中者无关，先判掉：走通用 NPC 选择面板，名单已按「学生岗 ∪ 女儿」预筛
+        # 选学生与当前选中者无关，先判掉：走通用 NPC 选择面板，名单已按「学生岗」预筛
         if yrn == education_constant.SELECT_STUDENT_RETURN:
             self.now_student = student_select.select_student(
                 self.student_list, _("选择学生"), _("请选择要查看或编辑个人课表的学生：\n"), self.now_student)
@@ -146,7 +146,7 @@ class Course_Select_Panel:
         for name in education_constant.WEEK_NAME:
             now_draw = draw.CenterDraw()
             now_draw.width = cell_width
-            now_draw.text = _(name)
+            now_draw.text = name
             now_draw.draw()
         line_feed.draw()
 
@@ -369,7 +369,7 @@ class Course_Select_Panel:
         info_draw = draw.NormalDraw()
         info_draw.width = self.width
         info_draw.text = _("  {0}｜{1} 第{2}节 {3}\n\n").format(
-            cache.character_data[character_id].name, _(education_constant.WEEK_NAME[week_day]),
+            cache.character_data[character_id].name, education_constant.WEEK_NAME[week_day],
             period + 1, get_period_time_text(period))
         info_draw.draw()
 

@@ -246,8 +246,8 @@ class Growth_Panel:
         info_draw.width = self.width
         info_draw.text = _("  {0}　评定：{1}　出勤 {2} 节／缺课 {3} 节（出勤率 {4}%）\n").format(
             semester_handle.get_semester_name(report_data.get("year", 0), report_data.get("month", 0)),
-            _(education_constant.REPORT_GRADE_NAME.get(
-                report_data.get("grade", education_constant.REPORT_GRADE_NO_CLASS), "无课可评")),
+            education_constant.REPORT_GRADE_NAME.get(
+                report_data.get("grade", education_constant.REPORT_GRADE_NO_CLASS), _("无课可评")),
             report_data.get("attend", 0), report_data.get("absent", 0), report_data.get("rate", 100))
         info_draw.draw()
         level_text = semester_handle.get_level_change_text(report_data.get("level_change", {}))

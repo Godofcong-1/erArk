@@ -548,14 +548,14 @@ def handle_chat_with_ai():
 @add_instruct(constant.Instruct.TEACH)
 def handle_teach():
     """处理授课指令"""
-    from Script.System.Education_System import education_constant
+    from Script.System.Education_System import class_ai
 
     instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.behavior_id = constant.Behavior.TEACH
     character_data.behavior.duration = 45
     character_data.state = constant.CharacterStatus.STATUS_TEACH
-    # 将当前场景里所有工作是上学的角色变为学习状态
+    # 将当前场景里的学生变为听课状态
     # 遍历当前场景的其他角色
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -568,9 +568,11 @@ def handle_teach():
                 continue
             else:
                 other_character_data: game_type.Character = cache.character_data[chara_id]
-                # 让对方变成听课状态
-                if other_character_data.work.work_type == education_constant.STUDENT_WORK_TYPE:
+                # 只拉学生岗、不在 H / 睡觉 / 翘课 / 休息中的人，已经在听别的教师讲课的不抢（Plan 25 §3.4）。
+                #    开始时刻对齐到玩家，节次判定与课后结算才对得上
+                if class_ai.judge_student_pullable(chara_id) and other_character_data.behavior.behavior_id != constant.Behavior.ATTENT_CLASS:
                     other_character_data.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+                    other_character_data.behavior.start_time = character_data.behavior.start_time
                     other_character_data.behavior.duration = 45
                     other_character_data.state = constant.CharacterStatus.STATUS_ATTENT_CLASS
     update.game_update_flow(45)

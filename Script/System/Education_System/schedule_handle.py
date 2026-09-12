@@ -213,7 +213,7 @@ def get_teacher_cell(teacher_id: int, week_day: int, period: int) -> Optional[Tu
     return None
 
 
-def get_upcoming_teaching(character_id: int, minute_limit: int = 20) -> Optional[dict]:
+def get_upcoming_teaching(character_id: int, minute_limit: int = education_constant.UPCOMING_MINUTE) -> Optional[dict]:
     """
     取教师接下来 minute_limit 分钟内要开始的那一节课（到岗时间与课间用，2026-09-12 第五轮）
     Keyword arguments:
@@ -376,25 +376,26 @@ def get_now_course(character_id: int) -> Optional[dict]:
     return get_course_at(character_id, now_time, period)
 
 
-def get_upcoming_course(character_id: int, minute_limit: int = 20) -> Optional[dict]:
+def get_upcoming_course(character_id: int, minute_limit: int = education_constant.UPCOMING_MINUTE, now_time=None) -> Optional[dict]:
     """
-    取学生接下来 minute_limit 分钟内要开始的那一节课（到岗时间用，2026-09-12 第五轮）
+    取学生接下来 minute_limit 分钟内要开始的那一节课（到岗时间与课间用）
     Keyword arguments:
     character_id -- 角色id
     minute_limit -- 往后看多少分钟
+    now_time -- 参照时刻，None 时取角色的行为开始时刻（学生的打断规则传当前游戏时间）
     Return arguments:
-    Optional[dict] -- 与 get_now_course 同结构，不在节次前夕或那一节没排课则为None
-    功能: 09-10 起学生岗不走工作链，8:40~9:00、13:40~14:00 的到岗时间就没人再把她们送去第一节课的教室，
-          离得远的人要到开课后才动身、一迟到就是二十分钟；与教师的 get_upcoming_teaching 同口径提前动身
+    Optional[dict] -- 与 get_now_course 同结构，窗口内没有节次开始、或那一节没排课则为None
+    功能: 2026-09-12 第五轮为到岗时间（8:40~9:00、13:40~14:00）而加：学生岗不走工作链，没人再把她们送去第一节课的教室。
+          Plan 25 起节次内也看下一节，与教师的 get_upcoming_teaching 同口径：没课的节次里在娱乐的学生，下一节开课前也要先去上课地点。
+          调用方都只在本节没课（get_now_course 为 None）时才问它，不会用下一节顶掉本节的课
     """
     import datetime
 
-    if game_time.get_class_period(character_id) != -1:
-        return None
-    character_data: game_type.Character = cache.character_data[character_id]
-    now_time = character_data.behavior.start_time
     if now_time is None:
-        now_time = cache.game_time
+        character_data: game_type.Character = cache.character_data[character_id]
+        now_time = character_data.behavior.start_time
+        if now_time is None:
+            now_time = cache.game_time
     for period, (hour, minute) in enumerate(game_time.CLASS_PERIOD_START):
         start_time = now_time.replace(hour=hour, minute=minute, second=0, microsecond=0)
         if start_time <= now_time:

@@ -283,8 +283,10 @@ def handle_work_is_teacher(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    from Script.System.Education_System import education_constant
+
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.work.work_type == 151
+    return character_data.work.work_type == education_constant.TEACHER_WORK_TYPE
 
 
 @add_premise(constant_promise.Premise.TARGET_WORK_IS_TEACHER)
@@ -309,8 +311,10 @@ def handle_work_is_student(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    from Script.System.Education_System import education_constant
+
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.work.work_type == 152
+    return character_data.work.work_type == education_constant.STUDENT_WORK_TYPE
 
 
 @add_premise(constant_promise.Premise.TARGET_WORK_IS_STUDENT)
@@ -660,6 +664,20 @@ def handle_self_course_teacher_unavailable(character_id: int) -> int:
     if now_course is None or now_course["course_type"] not in education_constant.CLASSROOM_COURSE_TYPE_SET:
         return 0
     return int(not class_ai.judge_teacher_available(now_course["teacher_id"]))
+
+
+@add_premise(constant_promise.Premise.SELF_COURSE_JOIN_SEX_CLASS)
+def handle_self_course_join_sex_class(character_id: int) -> int:
+    """
+    自己是学生，本节的课所在教室正在上性技实操课、人已在教室、可以参加但还没进 H（Plan 25 §3.2）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import class_ai, education_constant
+
+    return int(class_ai.get_course_stage(character_id) == education_constant.COURSE_STAGE_JOIN_SEX_CLASS)
 
 
 @add_premise(constant_promise.Premise.NURSERY_HAVE_WORK_TO_DO)

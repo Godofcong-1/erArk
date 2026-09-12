@@ -387,6 +387,8 @@ class StateMachine:
     """ 教育：原地等到下一节课开始（最多30分钟）——教师没课时在办公室待命、提前到教室的师生等开课 """
     EDUCATION_ABSENT_REST = 721
     """ 上课：体力不足缺课，记一节缺课后休息 """
+    EDUCATION_JOIN_SEX_CLASS = 722
+    """ 上课：走进正在上性技实操课的教室，加入课堂 H 并记出勤 """
 
     SELF_NIPPLE_CLAMP_SWITCH_CHANEG = 751
     """ 切换自己是否装备道具_乳头夹 """

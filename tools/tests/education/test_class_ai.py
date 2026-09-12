@@ -582,7 +582,7 @@ check("开课前 15 分钟、人在宿舍 → 715 去第一节课的教室", dis
       and class_ai.get_course_place_now_or_upcoming(201) == classroom_path(ROOM1))
 move_to(201, classroom_path(ROOM1))
 check("已在教室 → 720 原地等开课", dispatch(201, _arrive_time) == SM.EDUCATION_WAIT_NEXT_PERIOD)
-check("节次内不看下一节", (set_time(period_time(0)), schedule_handle.get_upcoming_course(201))[1] is None)
+check("节次开始时离下一节还有 45 分钟 → 不在「马上开课」窗口里", (set_time(period_time(0)), schedule_handle.get_upcoming_course(201))[1] is None)
 schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_PE, _("木桩房"))
 move_to(201, SCENE_DORM)
 check("第一节是体育课 → 715 去训练场", dispatch(201, _arrive_time) == SM.EDUCATION_MOVE_TO_COURSE_PLACE
@@ -688,6 +688,239 @@ check("改岗后不在个人课表名单", 201 not in growth_handle.get_course_c
 student.work.work_type = 152
 move_to(201, classroom_path(ROOM1))
 check("改回学生岗：课表恢复生效、回到名单", dispatch(201) == SM.WORK_ATTENT_CLASS and 201 in growth_handle.get_course_candidate_list())
+clear_schedules()
+
+section("Plan 25 §3.3：教师可用性对齐授课行（醉酒 / 催眠）")
+set_time(period_time(0))
+teacher.drunk_point = 99999
+check("醉到烂醉的教师不可用（授课行的 normal 前提不成立）", not teacher_available())
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+move_to(101, classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+_student_sm = dispatch(201)
+_teacher_sm = dispatch(101)
+check("醉酒教师：学生在教室派 713 自习、教师自己不授课（原先学生对着她空坐一整节）", _student_sm == SM.EDUCATION_SELF_STUDY and _teacher_sm != SM.WORK_TEACH,
+      (_student_sm, _teacher_sm))
+teacher.drunk_point = 0
+# 醉酒时派发的是睡觉：先把她叫起来，下面只验催眠与恢复
+teacher.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+teacher.sp_flag.sleep = False
+teacher.sp_flag.unconscious_h = 5
+check("空气催眠中的教师仍可用（授课行挂的是 normal_all_except_special_hypnosis）", teacher_available())
+teacher.sp_flag.unconscious_h = 0
+check("恢复后可用", teacher_available(), (teacher.sp_flag.sleep, teacher.sp_flag.is_h, teacher.behavior.behavior_id, teacher.drunk_point,
+                                     [handle_premise.handle_premise(f"normal_{n}", 101) for n in range(1, 8)]))
+schedule_handle.clear_selected_course(201, 0, 0)
+clear_schedules()
+
+
+def begin(cid: int, behavior_id: str, start: datetime.datetime, now: datetime.datetime, duration: int = 60) -> None:
+    """
+    让角色从 start 起在做某个行为，再把游戏时间拨到 now（打断判定读的是「现在」，不是行为的开始时刻）
+    Keyword arguments:
+    cid -- 角色id
+    behavior_id -- 行为id
+    start -- 行为开始时刻
+    now -- 当前游戏时间
+    duration -- 行为时长
+    Return arguments:
+    无
+    """
+    set_time(start)
+    cd = cache.character_data[cid]
+    cd.behavior.behavior_id = behavior_id
+    cd.behavior.duration = duration
+    cd.behavior.move_target = []
+    cd.behavior.move_final_target = []
+    cd.action_info.wake_time = start
+    cache.game_time = now
+    handle_premise.refresh_unnormal_flag(cid)
+
+
+section("Plan 25 §3.1：学生赶去上课——把当前行为截到应离开的时刻（A 待赴实操课 / B 马上开课）")
+move_to(0, SCENE_DORM)
+# 玩家这一步走到了开课之后：「现在」已越过开课时刻，规则按 NPC 自己的行为时间轴截短，不看「现在」
+_round_end = period_time(1) + datetime.timedelta(minutes=5)
+_leave_a = period_time(1) - datetime.timedelta(minutes=E.PRE_ARRIVE_MINUTE)
+_leave_b = period_time(1) - datetime.timedelta(minutes=E.UPCOMING_MINUTE)
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+sex_class_handle.set_temp_class(DEFAULT_TIME.date().toordinal(), 1, ROOM_P, 70, must_attend=[201])
+move_to(201, classroom_path(ROOM1))
+begin(201, constant.Behavior.ATTENT_CLASS, period_time(0), _round_end, 45)
+_absent = growth_handle.get_child_growth(201).absent_count
+check("A 听课中、下一节是必修实操课 → 截到开课前 10 分钟（口径 62 提前退场；玩家一步跨过开课时刻也照截）",
+      handle_npc_ai.judge_interrupt_character_behavior(201) == 1 and student.behavior.behavior_id == constant.Behavior.ATTENT_CLASS and student.behavior.duration == 35,
+      student.behavior.duration)
+check("A 提前退场不记缺课（口径 66）", growth_handle.get_child_growth(201).absent_count == _absent)
+check("A 在离开的那一刻重新决策 → 派 561 去实操教室", dispatch(201, _leave_a) == SM.MOVE_TO_CLASS_ROOM)
+move_to(201, classroom_path(ROOM1))
+begin(201, constant.Behavior.ATTENT_CLASS, period_time(0), _round_end, 35)
+check("A 已截过的行为不再截（离开时刻恰是行为结束）", handle_npc_ai.judge_interrupt_character_behavior(201) == 0 and student.behavior.duration == 35)
+cache.rhodes_island.temp_sex_class = {}
+sex_class_handle.set_temp_class(DEFAULT_TIME.date().toordinal(), 2, ROOM_P, 70, must_attend=[201])
+begin(201, constant.Behavior.ATTENT_CLASS, period_time(0), _round_end, 45)
+check("A 实操课在再后面一节 → 离开时刻不在本行为之内，不截", handle_npc_ai.judge_interrupt_character_behavior(201) == 0 and student.behavior.duration == 45)
+cache.rhodes_island.temp_sex_class = {}
+sex_class_handle.set_temp_class(DEFAULT_TIME.date().toordinal(), 1, ROOM_P, 70, must_attend=[201])
+move_to(201, SCENE_DORM)
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), _round_end)
+check("A 娱乐中 → 同样截到开课前 10 分钟", handle_npc_ai.judge_interrupt_character_behavior(201) == 1 and student.behavior.duration == 35, student.behavior.duration)
+move_to(201, classroom_path(ROOM_P))
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), _round_end)
+check("A 人已在实操教室 → 不截", handle_npc_ai.judge_interrupt_character_behavior(201) == 0)
+move_to(201, SCENE_DORM)
+begin(201, constant.Behavior.WAIT, period_time(0), _round_end)
+check("A 在做日常类行为（等待）→ 不截：只截工作 / 娱乐类", handle_npc_ai.judge_interrupt_character_behavior(201) == 0)
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), _round_end)
+student.sp_flag.is_follow = 1
+handle_premise.refresh_unnormal_flag(201)
+check("A 跟随玩家中（normal_all 不成立）→ 不截，截了 AI 也派不出上课行", handle_npc_ai.judge_interrupt_character_behavior(201) == 0)
+student.sp_flag.is_follow = 0
+handle_premise.refresh_unnormal_flag(201)
+begin(101, constant.Behavior.FREE_PLAY, period_time(0), _round_end)
+check("非学生岗不截", handle_npc_ai.judge_interrupt_character_behavior(101) == 0)
+begin(201, constant.Behavior.FREE_PLAY, _round_end, _round_end)
+check("本轮刚开始的行为不截（既有守卫）", handle_npc_ai.judge_interrupt_character_behavior(201) == 0)
+clear_schedules()
+schedule_handle.clear_selected_course(201, 0, 0)
+schedule_handle.set_class_cell(ROOM1, 0, 1, 45, 101)
+schedule_handle.set_selected_course(201, 0, 1, E.COURSE_TYPE_THEORY, ROOM1)
+set_time(period_time(1) - datetime.timedelta(minutes=15))
+check("B 节次内也看下一节：本节没课、15 分钟后有课 → UPCOMING（与教师同口径）", class_ai.get_course_stage(201) == E.COURSE_STAGE_UPCOMING)
+move_to(201, SCENE_DORM)
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), _round_end)
+check("B 没课的节次在娱乐、下一节有课 → 截到开课前 20 分钟", handle_npc_ai.judge_interrupt_character_behavior(201) == 1 and student.behavior.duration == 25,
+      student.behavior.duration)
+check("B 在离开的那一刻重新决策 → 715 去上课地点", dispatch(201, _leave_b) == SM.EDUCATION_MOVE_TO_COURSE_PLACE)
+move_to(201, classroom_path(ROOM1))
+check("B 到了教室 → 720 原地等开课", dispatch(201, _leave_b) == SM.EDUCATION_WAIT_NEXT_PERIOD)
+move_to(201, SCENE_DORM)
+begin(201, constant.Behavior.FREE_PLAY, period_time(1) - datetime.timedelta(minutes=10), _round_end)
+check("B 行为开始时已进窗口 → 至少别拖过开课：截到开课那一刻", handle_npc_ai.judge_interrupt_character_behavior(201) == 1 and student.behavior.duration == 10,
+      student.behavior.duration)
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), _round_end, 10)
+check("B 行为在离开时刻之前就结束 → 不截", handle_npc_ai.judge_interrupt_character_behavior(201) == 0 and student.behavior.duration == 10)
+growth_handle.get_child_growth(201).skip_class_flag = True
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), _round_end)
+check("B 今天已翘课 → 不截", handle_npc_ai.judge_interrupt_character_behavior(201) == 0)
+growth_handle.get_child_growth(201).skip_class_flag = False
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_INTEREST, _interest_list[0])
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), _round_end)
+check("B 离开的那一刻本节还有课（个人式课）→ 不截，本节的课由节末自然结束", handle_npc_ai.judge_interrupt_character_behavior(201) == 0)
+schedule_handle.clear_selected_course(201, 0, 0)
+schedule_handle.clear_selected_course(201, 0, 1)
+clear_schedules()
+
+section("Plan 25 §3.2：开课后才到场的学生直接加入课堂")
+set_time(period_time(5))
+move_to(0, classroom_path(ROOM_P))
+schedule_handle.set_class_cell(ROOM_P, 0, 5, 74, -1)
+schedule_handle.set_selected_course(202, 0, 5, E.COURSE_TYPE_PRACTICE, ROOM_P)
+sex_class_handle.start_sex_class(70, [])
+cache.sex_class_mode = True
+cache.group_sex_mode = True
+pl.sp_flag.is_h = True
+_late = period_time(5) + datetime.timedelta(minutes=10)
+move_to(202, SCENE_DORM)
+check("还没到教室 → 715 先过去（仍是 ATTEND）", dispatch(202, _late) == SM.EDUCATION_MOVE_TO_COURSE_PLACE)
+move_to(202, classroom_path(ROOM_P))
+_attend = growth_handle.get_child_growth(202).attend_class_count
+check("走进正在上实操课的教室 → JOIN_SEX_CLASS", (set_time(_late), class_ai.get_course_stage(202))[1] == E.COURSE_STAGE_JOIN_SEX_CLASS)
+sm = dispatch(202, _late)
+check("派 722：进 H、看见玩家的 H、到场二段口上（原先 713 在一边自习）", sm == SM.EDUCATION_JOIN_SEX_CLASS and child.sp_flag.is_h and child.sp_flag.see_pl_h
+      and child.second_behavior.get(constant.Behavior.JOIN_SEX_CLASS, 0) > 0, sm)
+check("晚到的人补记一节出勤", growth_handle.get_child_growth(202).attend_class_count == _attend + 1)
+child.sp_flag.is_h = False
+child.sp_flag.see_pl_h = False
+make_character(301, "成年学生", 152)
+prepare_ai(301)
+schedule_handle.set_selected_course(301, 0, 5, E.COURSE_TYPE_PRACTICE, ROOM_P)
+move_to(301, classroom_path(ROOM_P))
+set_time(_late)
+check("不满足 H 模式实行值的成年学生 → 仍是 ATTEND，进不了课堂（口径 63 第二层）", class_ai.get_course_stage(301) == E.COURSE_STAGE_ATTEND)
+remove_character(301)
+pl.sp_flag.is_h = False
+sex_class_handle.end_sex_class()
+cache.sex_class_mode = False
+set_time(_late)
+check("下课后不再 JOIN", class_ai.get_course_stage(202) != E.COURSE_STAGE_JOIN_SEX_CLASS)
+schedule_handle.clear_selected_course(202, 0, 5)
+clear_schedules()
+move_to(0, SCENE_DORM)
+move_to(202, SCENE_DORM)
+
+section("Plan 25 §3.5：教师开讲时拉人过两道闸")
+set_time(period_time(0))
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+move_to(101, classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+
+
+def teach_pull(cid: int) -> bool:
+    """
+    教师在节次开始时开讲（直接跑 303），看 cid 有没有被拉成听课
+    Keyword arguments:
+    cid -- 角色id
+    Return arguments:
+    bool -- 是否被拉成听课
+    """
+    set_time(period_time(0))
+    cache.character_data[cid].behavior.behavior_id = constant.Behavior.WAIT
+    constant.handle_state_machine_data[SM.WORK_TEACH](101)
+    return cache.character_data[cid].behavior.behavior_id == constant.Behavior.ATTENT_CLASS
+
+
+check("正常学生被拉进听课", teach_pull(201))
+student.hit_point = 10
+check("体力 < 30% 的学生不拉（她自己决策时走 721 缺课）", not teach_pull(201))
+student.hit_point = 100
+class_ai.roll_skip_class = lambda cid, now_time=None: True
+check("本节掷中翘课的学生不拉", not teach_pull(201))
+class_ai.roll_skip_class = _orig_roll
+student.work.work_type = 21
+check("课表有残留、已改岗的人不拉（口径 1）", not teach_pull(201))
+student.work.work_type = 152
+sex_class_handle.set_temp_class(period_time(0).date().toordinal(), 0, ROOM1, 70, must_attend=[201])
+student.hit_point = 10
+check("必修生体力不足也该来（豁免两道闸）", class_ai.judge_student_join_class(201, ROOM1, period_time(0)))
+student.hit_point = 100
+check("这一节课表指向别的教室的不算", not class_ai.judge_student_join_class(201, _("理论教室二"), period_time(0)))
+schedule_handle.clear_selected_course(201, 0, 0)
+clear_schedules()
+
+section("Plan 25 §3.6：561 预到岗只认学生岗")
+from Script.StateMachine import default as sm_default  # noqa: E402
+
+_pending_time = period_time(1) - datetime.timedelta(minutes=8)
+schedule_handle.set_class_cell(ROOM1, 0, 1, 45, 101)
+schedule_handle.set_selected_course(101, 0, 1, E.COURSE_TYPE_PRACTICE, ROOM_P)
+sex_class_handle.set_temp_class(_pending_time.date().toordinal(), 1, ROOM_P, 70, must_attend=[])
+move_to(101, SCENE_DORM)
+set_time(_pending_time)
+_moves = []
+_orig_move = sm_default.general_movement_module
+sm_default.general_movement_module = lambda cid, target: _moves.append(list(target))
+constant.handle_state_machine_data[SM.MOVE_TO_CLASS_ROOM](101)
+sm_default.general_movement_module = _orig_move
+check("课表有残留的教师：去自己下一节授课的教室，不被带去实操教室", _moves == [classroom_path(ROOM1)], _moves)
+schedule_handle.clear_selected_course(101, 0, 1)
+clear_schedules()
+
+section("Plan 25 §3.7：点名必修的成年学生岗")
+make_character(301, "成年学生", 152)
+prepare_ai(301)
+schedule_handle.set_class_cell(ROOM1, 0, 1, 45, 101)
+schedule_handle.set_selected_course(301, 0, 1, E.COURSE_TYPE_THEORY, ROOM1)
+sex_class_handle.set_temp_class(_pending_time.date().toordinal(), 1, ROOM_P, 70, must_attend=[301])
+move_to(301, SCENE_DORM)
+check("成年必修生：开课前 8 分钟动身去实操教室", class_ai.get_next_sex_class(301, _pending_time)[0] is not None and dispatch(301, _pending_time) == SM.MOVE_TO_CLASS_ROOM)
+set_time(period_time(1))
+_course = schedule_handle.get_now_course(301)
+check("成年必修生：本节的课被覆盖成临时课的教室", _course is not None and _course["classroom"] == ROOM_P and _course["teacher_id"] == 0, _course)
+remove_character(301)
 clear_schedules()
 
 finish()

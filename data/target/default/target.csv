@@ -139,6 +139,7 @@ ai的目标,,,,
 220820,713,normal_all_except_special_hypnosis|work_is_student|self_course_attend|self_course_is_classroom|self_in_course_place|self_course_teacher_unavailable,22,正常状态下或被空气或体控催眠中，工作为学生，本节照常上教室课，当前在该教室，本节教师来不了，则自习
 220825,716,normal_all_except_special_hypnosis|work_is_student|self_course_attend|self_course_is_personal|self_in_course_place,22,正常状态下或被空气或体控催眠中，工作为学生，本节照常上个人式课，当前在上课地点，则执行该课对应的行为
 220830,720,normal_all|work_is_student|self_course_upcoming|self_in_course_place,22,正常状态下，工作为学生，不在节次内且20分钟内那一节有课，当前已在上课地点，则原地等开课
+220835,722,normal_all_except_special_hypnosis|work_is_student|self_course_join_sex_class,22,正常状态下或被空气或体控催眠中，工作为学生，本节的课所在教室正在上性技实操课且自己可以参加，则加入课堂
 
 310100,82,normal_all|all_entertainment_time|entertainment_is_swimming|swim_flag_0,31,正常状态下，全娱乐时间，娱乐是游泳，今天当前不是游完泳状态，则进入要换泳衣状态
 310105,612,swim_flag_1|all_entertainment_time|not_in_training_locker_room,31,要换泳衣状态下，当前不在训练场的更衣室，则去训练场的更衣室

@@ -306,6 +306,12 @@ TEACHER_DUTY_NOW = 1
 """ 教师本节有课要教 """
 TEACHER_DUTY_UPCOMING = 2
 """ 教师本节没课，但 20 分钟内（get_upcoming_teaching 的默认 minute_limit）开始的下一节有课 """
+COURSE_STAGE_JOIN_SEX_CLASS = 6
+""" 本节的课所在教室正在上性技实操课、人已在教室、可以参加但还没进 H：走进来就加入课堂（Plan 25 §3.2）。
+    判在本该返回 ATTEND 的地方，所以两道闸（必修生豁免）照常先过 """
+UPCOMING_MINUTE = 20
+""" 「马上开课」的提前量（分钟）：教师与学生都在下一节开始前这么多分钟内先去上课地点。
+    get_upcoming_teaching / get_upcoming_course 的默认窗口与学生的打断规则共用它（Plan 25 §3.1） """
 
 # ==== 8. 见学（跟随母亲） ====
 FOLLOW_MOTHER_LEARN_BASE = 6

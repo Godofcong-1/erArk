@@ -714,6 +714,28 @@ def judge_end_type() -> int:
     return 2
 
 
+def pull_student_into_class(student_id: int) -> None:
+    """
+    把一名学生拉进正在进行的实操课（课堂 H）
+    Keyword arguments:
+    student_id -- 学生的角色id
+    Return arguments:
+    无
+    功能: 开课时（效果 10014）与开课后才到场（状态机 722，Plan 25 §3.2）共用：取消移动计划、进 H、看见玩家的 H、派发到场二段口上。
+          不记出勤：开课时拉进来的人出勤已由 start_sex_class 记过，晚到的人由 722 自己补记
+    """
+    from Script.Core import constant
+    from Script.Design import character_move, second_behavior
+
+    student_data: game_type.Character = cache.character_data[student_id]
+    if not student_data.sp_flag.is_h:
+        character_move.cancel_movement_plan(student_id)
+    student_data.sp_flag.is_h = True
+    student_data.sp_flag.see_pl_h = True
+    # 到场的口上走二段行为：一段行为得靠NPC AI派发，而H中的NPC完全不进AI链（handle_npc_ai.find_character_target 开头）
+    second_behavior.character_get_second_behavior(student_id, constant.Behavior.JOIN_SEX_CLASS)
+
+
 def settle_attend(student_id: int) -> None:
     """
     给一名到场学生记一次出勤

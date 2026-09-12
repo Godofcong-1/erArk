@@ -488,8 +488,11 @@ def get_career_suggestion_text(character_id: int) -> str:
     character_data: game_type.Character = cache.character_data[character_id]
     best_ability_id = 0
     best_level = 0
-    # 只看课程科目：基础能力(40~49) 与性技(70~77) 之外的能力不由课堂决定，拿来推岗位没有意义
-    for ability_id in range(40, 50):
+    # 只看技能类科目（Ability.csv 类型 4，即 40~49）：性技与其它能力不对应岗位，拿来推岗位没有意义；
+    #    科目表从配置现算，不写死编号
+    for ability_id in education_constant.SUBJECT_ABILITY_LIST:
+        if game_config.config_ability[ability_id].ability_type != education_constant.ABILITY_TYPE_SUBJECT:
+            continue
         level = int(character_data.ability.get(ability_id, 0))
         if level > best_level:
             best_level = level

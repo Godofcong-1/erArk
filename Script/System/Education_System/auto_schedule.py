@@ -49,7 +49,7 @@ def judge_subject_fit_classroom(ability_id: int, course_type: int) -> bool:
     if course_type != education_constant.COURSE_TYPE_PRACTICE:
         return True
     # 性技科目（70~77）属于「性技理论」，与动手类一并算进实践课
-    return ability_id in education_constant.PRACTICE_SUBJECT_SET or ability_id >= 70
+    return ability_id in education_constant.PRACTICE_SUBJECT_SET or ability_id in education_constant.SEX_SKILL_SUBJECT_SET
 
 
 def pick_best_teacher(ability_id: int, week_day: int, period: int, classroom: str, teacher_list: List[int]) -> int:

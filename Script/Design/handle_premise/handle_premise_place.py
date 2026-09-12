@@ -803,50 +803,28 @@ def handle_scene_have_multi_masturebate_to_pl_chara(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.TEACHER_TEACHING_IN_CLASSROOM)
-def handle_teacher_teaching_in_classroom(character_id: int) -> int:
-    """
-    当前有教师在教室里讲课
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    for character_id in cache.npc_id_got:
-        character_data: game_type.Character = cache.character_data[character_id]
-        # 首先需要是老师，然后正在授课
-        if (
-            character_data.work.work_type == 151
-            and character_data.behavior.behavior_id == constant.Behavior.TEACH
-        ):
-            # 接着需要地点在教室里
-            now_position = character_data.position
-            now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-            now_scene_data = cache.scene_data[now_scene_str]
-            if "Class_Room" in now_scene_data.scene_tag:
-                return 1
-    return 0
-
-
 @add_premise(constant_promise.Premise.STUDENT_NOT_STUDY_IN_CLASSROOM)
 def handle_student_not_study_in_classroom(character_id: int) -> int:
     """
-    教室里有没在上课的学生
+    自己所在的场景里有可以听课、但还没在听课的学生（玩家「授课」指令 2010 的前提）
+    Plan 25 §3.4：原先遍历全岛，只要任一理论教室里有闲着的学生岗就成立，玩家所在的教室空着也能「授课」；
+       改为只看所在场景，可拉的口径与 handle_teach 相同（class_ai.judge_student_pullable），已在听别的教师讲课的不算
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    for character_id in cache.npc_id_got:
-        character_data: game_type.Character = cache.character_data[character_id]
-        # 首先需要是学生，而且没有在上课
-        if character_data.work.work_type == 152 and character_data.behavior.behavior_id != constant.Behavior.ATTENT_CLASS:
-            # 接着需要地点在教室里
-            now_position = character_data.position
-            now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-            now_scene_data = cache.scene_data[now_scene_str]
-            if "Class_Room" in now_scene_data.scene_tag:
-                return 1
+    from Script.System.Education_System import class_ai
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    if now_scene_str not in cache.scene_data:
+        return 0
+    for other_id in cache.scene_data[now_scene_str].character_list:
+        if other_id == character_id:
+            continue
+        if class_ai.judge_student_pullable(other_id) and cache.character_data[other_id].behavior.behavior_id != constant.Behavior.ATTENT_CLASS:
+            return 1
     return 0
 
 
@@ -3748,6 +3726,28 @@ def handle_not_in_auditorium(character_id: int) -> int:
     if handle_in_auditorium(character_id):
         return 0
     return 1
+
+
+@add_premise(constant_promise.Premise.IN_EDUCATION_CLASSROOM)
+def handle_in_education_classroom(character_id: int) -> int:
+    """
+    校验角色是否在教育区的任一教室（理论教室 / 实践教室 / 大礼堂，Plan 25 §3.4 玩家「授课」指令用）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import education_constant
+
+    character_data = cache.character_data[character_id]
+    now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    if now_scene_str not in cache.scene_data:
+        return 0
+    now_scene_tag = cache.scene_data[now_scene_str].scene_tag
+    for tag in education_constant.CLASSROOM_TAG_BY_COURSE_TYPE.values():
+        if tag in now_scene_tag:
+            return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.IN_HERB_GARDEN)

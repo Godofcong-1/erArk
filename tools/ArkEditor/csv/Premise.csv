@@ -145,8 +145,7 @@ scene_have_multi_masturebate_to_pl_chara,SCENE_HAVE_MULTI_MASTUREBATE_TO_PL_CHAR
 scene_someone_wear_pan,SCENE_SOMEONE_WEAR_PAN,场景_角色,该地点有其他角色穿着内裤
 scene_someone_wear_socks,SCENE_SOMEONE_WEAR_SOCKS,场景_角色,该地点有其他角色穿着袜子
 
-teacher_teaching_in_classroom,TEACHER_TEACHING_IN_CLASSROOM,地点_工作,当前有教师在教室里讲课
-student_not_study_in_classroom,STUDENT_NOT_STUDY_IN_CLASSROOM,地点_工作,教室里有没在上课的学生
+student_not_study_in_classroom,STUDENT_NOT_STUDY_IN_CLASSROOM,地点_工作,自己所在的场景里有可以听课、但还没在听课的学生
 place_someone_not_massage_therapist,SCENE_SOMEONE_NOT_MASSAGE_THERAPIST,地点_工作,该地点有非按摩师的其他角色
 
 place_exposed,PLACE_EXPOSED,地点_属性,当前地点暴露
@@ -345,6 +344,7 @@ in_practice_room,IN_PRACTICE_ROOM,地点_定位,在实践教室
 not_in_practice_room,NOT_IN_PRACTICE_ROOM,地点_定位,不在实践教室
 in_auditorium,IN_AUDITORIUM,地点_定位,在大礼堂
 not_in_auditorium,NOT_IN_AUDITORIUM,地点_定位,不在大礼堂
+in_education_classroom,IN_EDUCATION_CLASSROOM,地点_定位,在教育区的任一教室（理论教室 / 实践教室 / 大礼堂）
 in_teacher_office,IN_TEACHER_OFFICE,地点_定位,在教师办公室
 not_in_teacher_office,NOT_IN_TEACHER_OFFICE,地点_定位,不在教师办公室
 in_herb_garden,IN_HERB_GARDEN,地点_定位,在药田
@@ -1899,6 +1899,7 @@ self_in_course_place,SELF_IN_COURSE_PLACE,工作_条件,自己是学生，人在
 self_not_in_course_place,SELF_NOT_IN_COURSE_PLACE,工作_条件,自己是学生，上课地点可解析但人不在那里
 self_course_teacher_available,SELF_COURSE_TEACHER_AVAILABLE,工作_条件,自己是学生，本节是教室课且授课教师能到岗
 self_course_teacher_unavailable,SELF_COURSE_TEACHER_UNAVAILABLE,工作_条件,自己是学生，本节是教室课但授课教师来不了（或课表没排教师）
+self_course_join_sex_class,SELF_COURSE_JOIN_SEX_CLASS,工作_条件,自己是学生，本节的课所在教室正在上性技实操课、人已在教室、可以参加但还没进H
 work_is_combat_training,WORK_IS_COMBAT_TRAINING,工作_角色,自己的工作为训练学员
 t_work_is_combat_training,TARGET_WORK_IS_COMBAT_TRAINING,工作_角色,交互对象的工作为训练学员
 work_is_fitness_trainer,WORK_IS_FITNESS_TRAINER,工作_角色,自己的工作为健身锻炼员
