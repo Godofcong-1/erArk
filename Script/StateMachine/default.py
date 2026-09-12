@@ -2947,6 +2947,20 @@ def character_education_wait_next_period(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.EDUCATION_ABSENT_REST)
+def character_education_absent_rest(character_id: int):
+    """
+    上课：体力不足缺这一节课，记一节缺课后原地休息（Plan 24）
+    记缺课原先写在 AI 判定里，前提不能有副作用，所以挪进状态机；settle_absent 自带同一节只记一次的去重
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    from Script.System.Education_System import class_ai
+
+    class_ai.settle_absent(character_id)
+    character_rest(character_id)
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_LIBRARY_1)
 def character_work_library_1(character_id: int):
     """

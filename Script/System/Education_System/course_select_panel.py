@@ -55,7 +55,7 @@ class Course_Select_Panel:
               只画不取输入，askfor_all 由容器 Education_Manage_Panel 统一调用
         """
         # 每轮重算：孩子会在游戏过程中出生与长大、干员会换岗，不能在 __init__ 里快照。
-        # 口径是「职业为学生的全部干员 ∪ 养成中的女儿」，与养成总览的「只看女儿」不同（方案 §9.8.2）
+        # 口径是「职业为学生的全部干员」（Plan 24 口径 1：课表只对学生岗生效），与养成总览的「只看女儿」不同
         self.student_list = growth_handle.get_course_candidate_list()
         # 先清空派发字典再早退，否则 handle_yrn 会拿上一轮的残留去匹配
         self.cell_return = {}

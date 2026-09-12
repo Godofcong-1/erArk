@@ -531,15 +531,18 @@ class Class_Schedule_Panel:
             return_list: List[str] = []
             id_by_return: Dict[str, int] = {}
             replace_text_list = []
-            # 人口来源与个人课表、养成总览共用一份口径：玩家的女儿且处于幼女/萝莉/少女阶段。
+            # 人口来源：玩家的女儿且处于幼女/萝莉/少女阶段，再过滤为学生岗——
+            #    课表只对学生岗生效（Plan 24 口径 1），改了岗的女儿点了名也不会来上课。
             # judge_can_join_sex_class 保留作状态守卫（死亡/临盆/意识模糊/监禁等）
             student_width = int(self.width / 6)
             count = 0
             for character_id in growth_handle.get_student_candidate_list():
+                character_data: game_type.Character = cache.character_data[character_id]
+                if character_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
+                    continue
                 # 必修名单豁免前置修习（口径 63 宽松版）：点名本身就是玩家的决定，这里只做状态守卫
                 if not sex_class_handle.judge_can_join_sex_class(character_id, check_course=False):
                     continue
-                character_data: game_type.Character = cache.character_data[character_id]
                 mark = "√" if character_id in must_attend else "  "
                 # 会顶掉她原本的哪一节——按钮里只放一个「*」，明细汇总到下方
                 old_course = schedule_handle.get_selected_course(character_id, week_day, period)

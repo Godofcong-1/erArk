@@ -12,10 +12,11 @@
 否则当天写进去的值立刻被随机值冲掉，症状是"日程时灵时不灵"，极难查。挂点照抄
 `egg_handle.replace_entertainment_for_eggs`。
 
-**优先级是节次级别的**（2026-09-10，二期方案 §9.2.9）：有课的节次由 class_ai 的上课判定先接管，没课的节次才轮到
-槽位里的活动，所以改写时不避让有课的时段。幼女在节次内没课、且该时段是「自由选择」时默认见学
-（class_ai.judge_should_follow_mother），明确排了活动就去做活动；学生岗不走工作链、白天也算娱乐时间
-（handle_npc_ai.find_character_target / handle_premise_time），否则周一~周六的白天根本走不到娱乐链。
+**优先级是节次级别的**（2026-09-10，二期方案 §9.2.9）：有课的节次由工作链里学生岗的上课目标行先接管
+（target.csv 组 08，Plan 24 起；此前是 class_ai 的上课判定），没课的节次工作链没有行命中，才轮到槽位里的活动，
+所以改写时不避让有课的时段。幼女在节次内没课、且该时段是「自由选择」时默认见学
+（class_ai.judge_should_follow_mother），明确排了活动就去做活动；学生岗白天也算娱乐时间
+（handle_premise_time._judge_free_daytime），否则周一~周六的白天根本走不到娱乐链。
 
 数据分两层存（口径 4「操作量不随孩子数翻倍」的落点）：
 
@@ -315,7 +316,7 @@ def apply_schedule_for_child(character_id: int) -> None:
     按日程把一个孩子今天的 entertainment_type 三个槽位改写掉（每日一次）
 
     本函数必须在 `handle_npc_ai.get_chara_entertainment` **之后**调用，见模块头注释。
-    时段里有课的节次不用避让：上课判定（class_ai.judge_class_state_machine）在**节次**级别排在娱乐链之前，
+    时段里有课的节次不用避让：上课（工作链里学生岗的目标行，Plan 24）在**节次**级别排在娱乐链之前，
        有课的节次照常上课，同一时段里没课的节次才按这里写进去的活动走（2026-09-10 二期方案 §9.2.9；
        此前要求整段没课才改写，结果上午只要有一节课，整个上午的日程都不生效）。
     Keyword arguments:

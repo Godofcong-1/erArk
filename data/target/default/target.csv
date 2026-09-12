@@ -109,6 +109,12 @@ ai的目标,,,,
 210605,502,normal_all|work_is_sex_trainee|ask_one_exercises|work_time|self_not_fall_obey|not_in_dor,21,正常状态下，工作是性爱练习生，自己被要求进行了至少一项练习，在工作时间，自己没有隶属系陷落素质，如果不在自己宿舍，则去自己宿舍
 210610,651,normal_all|work_is_sex_trainee|ask_one_exercises|to_work_time|self_fall_obey|not_in_humiliation_room,21,正常状态下，工作是性爱练习生，自己被要求进行了至少一项练习，在到岗时间，自己有隶属系陷落素质，如果不在调教室，则去调教室
 210615,651,normal_all|work_is_sex_trainee|ask_one_exercises|work_time|self_fall_obey|not_in_humiliation_room,21,正常状态下，工作是性爱练习生，自己被要求进行了至少一项练习，在工作时间，自己有隶属系陷落素质，如果不在调教室，则去调教室
+210700,561,normal_all|work_is_teacher|teacher_have_class_now|teacher_not_in_duty_classroom,21,正常状态下，工作为教师，本节有课，当前不在本节授课的教室，则去该教室
+210705,561,normal_all|work_is_teacher|teacher_have_upcoming_class|teacher_not_in_duty_classroom,21,正常状态下，工作为教师，本节没课但20分钟内有下一节，当前不在下一节授课的教室，则提前去该教室
+210710,562,normal_all|work_is_teacher|to_work_time_or_work_time|teacher_no_class_duty|not_in_teacher_office,21,正常状态下，工作为教师，在到岗或工作时间，本节与20分钟内都没课，当前不在教师办公室，则回教师办公室
+210800,561,normal_all|work_is_student|self_sex_class_pending|self_not_in_pending_sex_class_room,21,正常状态下，工作为学生，下一节是自己要上的性技实操课且10分钟内开始，当前不在那间教室，则提前去该教室
+210805,715,normal_all|work_is_student|self_course_attend|self_not_in_course_place,21,正常状态下，工作为学生，本节有课且照常上课，当前不在上课地点，则去上课地点
+210810,715,normal_all|work_is_student|self_course_upcoming|self_not_in_course_place,21,正常状态下，工作为学生，不在节次内且20分钟内那一节有课，当前不在上课地点，则提前去上课地点
 
 220100,305,normal_all|work_is_library_manager|work_time|in_library_office,22,正常状态下，工作为图书馆管理员，在工作时间，如果在图书馆办公室，则有30%几率去图书馆，70%在原地等待30分钟
 220105,306,normal_all_except_special_hypnosis|work_is_library_manager|work_time|in_library,22,正常状态下或被空气或体控催眠中，工作为图书馆管理员，在工作时间，如果在图书馆，则有30%几率去图书馆办公室，70%看书
@@ -123,6 +129,16 @@ ai的目标,,,,
 220510,1,self_waiting_for_health_check|in_physical_examination,22,自己正在等待体检，自己在体检科，则原地待机10分钟
 220600,317,normal_all_except_special_hypnosis|work_is_sex_trainee|ask_one_exercises|work_time|self_not_fall_obey|in_dor,22,正常状态下或被空气或体控催眠中，自己被要求进行了至少一项练习，工作是性爱练习生，在工作时间，自己没有隶属系陷落素质，如果在自己宿舍，则开始性爱练习
 220605,317,normal_all_except_special_hypnosis|work_is_sex_trainee|ask_one_exercises|work_time|self_fall_obey|in_humiliation_room,22,正常状态下或被空气或体控催眠中，自己被要求进行了至少一项练习，工作是性爱练习生，在工作时间，自己有隶属系陷落素质，如果在调教室，则开始性爱练习
+220700,303,normal_all_except_special_hypnosis|work_is_teacher|teacher_have_class_now|teacher_in_duty_classroom,22,正常状态下或被空气或体控催眠中，工作为教师，本节有课，当前在本节授课的教室，则授课
+220705,720,normal_all|work_is_teacher|teacher_have_upcoming_class|teacher_in_duty_classroom,22,正常状态下，工作为教师，本节没课但20分钟内有下一节，当前已在下一节授课的教室，则原地等开课
+220710,720,normal_all|work_is_teacher|to_work_time_or_work_time|teacher_no_class_duty|in_teacher_office,22,正常状态下，工作为教师，在到岗或工作时间，本节与20分钟内都没课，当前在教师办公室，则待命到下一节开始
+220800,720,normal_all|work_is_student|self_sex_class_pending|self_in_pending_sex_class_room,22,正常状态下，工作为学生，下一节是自己要上的性技实操课且10分钟内开始，当前已在那间教室，则原地等开课
+220805,721,normal_all|work_is_student|self_course_absent_by_hp,22,正常状态下，工作为学生，本节有课但体力低于30%且不是必修实操课，则记一节缺课并休息
+220810,714,normal_all|work_is_student|self_course_skip,22,正常状态下，工作为学生，本节有课且不是必修实操课，今日已翘课或本节掷中翘课，则翘课
+220815,304,normal_all_except_special_hypnosis|work_is_student|self_course_attend|self_course_is_classroom|self_in_course_place|self_course_teacher_available,22,正常状态下或被空气或体控催眠中，工作为学生，本节照常上教室课，当前在该教室，本节教师能到岗，则听课
+220820,713,normal_all_except_special_hypnosis|work_is_student|self_course_attend|self_course_is_classroom|self_in_course_place|self_course_teacher_unavailable,22,正常状态下或被空气或体控催眠中，工作为学生，本节照常上教室课，当前在该教室，本节教师来不了，则自习
+220825,716,normal_all_except_special_hypnosis|work_is_student|self_course_attend|self_course_is_personal|self_in_course_place,22,正常状态下或被空气或体控催眠中，工作为学生，本节照常上个人式课，当前在上课地点，则执行该课对应的行为
+220830,720,normal_all|work_is_student|self_course_upcoming|self_in_course_place,22,正常状态下，工作为学生，不在节次内且20分钟内那一节有课，当前已在上课地点，则原地等开课
 
 310100,82,normal_all|all_entertainment_time|entertainment_is_swimming|swim_flag_0,31,正常状态下，全娱乐时间，娱乐是游泳，今天当前不是游完泳状态，则进入要换泳衣状态
 310105,612,swim_flag_1|all_entertainment_time|not_in_training_locker_room,31,要换泳衣状态下，当前不在训练场的更衣室，则去训练场的更衣室

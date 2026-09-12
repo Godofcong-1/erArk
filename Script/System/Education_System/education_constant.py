@@ -286,6 +286,26 @@ SKIP_CLASS_RATE_TABLE = [
     超过最后一档取 SKIP_CLASS_RATE_MAX。四项各0~8级，理论最大和32 """
 SKIP_CLASS_RATE_MAX = 0.70
 """ 四项等级和达16以上（濒临崩溃）时的每节翘课概率 """
+# 上课状态（Plan 24）：class_ai.get_course_stage / get_teacher_duty 的返回值，工作链的教师 / 学生前提都从这里取值，
+#    同一时刻只会处于其中一个状态，保证 target.csv 组 07 / 08 的行两两互斥
+COURSE_STAGE_NONE = 0
+""" 学生此刻与课表无关：本节没课、20 分钟内也没有，或不是学生岗 """
+COURSE_STAGE_SEX_PENDING = 1
+""" 下一节是自己要上的性技实操课（必修或选修）且 PRE_ARRIVE_MINUTE 分钟内开始，优先于本节的一切 """
+COURSE_STAGE_ABSENT_HP = 2
+""" 本节有课、体力低于 ABSENT_HP_RATE、不是必修实操课：本节缺课去休息 """
+COURSE_STAGE_SKIP = 3
+""" 本节有课、不是必修实操课，今日已翘课或本节掷中翘课 """
+COURSE_STAGE_ATTEND = 4
+""" 本节有课且照常上课（必修实操课在体力不足、心情糟糕时也归入这里） """
+COURSE_STAGE_UPCOMING = 5
+""" 不在节次内，20 分钟内（schedule_handle.get_upcoming_course 的默认 minute_limit）开始的那一节排了课 """
+TEACHER_DUTY_NONE = 0
+""" 教师本节与 20 分钟内都没课，或不是教师岗 """
+TEACHER_DUTY_NOW = 1
+""" 教师本节有课要教 """
+TEACHER_DUTY_UPCOMING = 2
+""" 教师本节没课，但 20 分钟内（get_upcoming_teaching 的默认 minute_limit）开始的下一节有课 """
 
 # ==== 8. 见学（跟随母亲） ====
 FOLLOW_MOTHER_LEARN_BASE = 6

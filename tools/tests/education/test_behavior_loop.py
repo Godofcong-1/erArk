@@ -31,20 +31,24 @@ check("找到了存档", best_id != "", best_id)
 if best_count <= 0:
     print("  没有任何存档里有在学的女儿，用最近的存档 + 自建女儿继续")
 save_handle.input_load_save(best_id)
-daughter_list = growth_handle.get_student_candidate_list()
+# 课表只对学生岗生效（Plan 24 口径 1）：存档里改了岗的女儿按新岗位上班、不去上课，上课检查只看学生岗的女儿。
+#    全部女儿的名单另留一份，只用来避免把女儿拉去当教师
+all_daughter_list = growth_handle.get_student_candidate_list()
+daughter_list = [cid for cid in all_daughter_list if cache.character_data[cid].work.work_type == E.STUDENT_WORK_TYPE]
 if not daughter_list:
     mother_id = next(cid for cid in sorted(cache.npc_id_got) if cid in cache.character_data)
     for index in range(3):
         make_character(9001 + index, f"测试女儿{index + 1}", 152, daughter=True, stage=103, mother_id=mother_id, born_days=300, position=SCENE_EDU_ENTRY)
-    daughter_list = growth_handle.get_student_candidate_list()
-check("有在学的女儿", len(daughter_list) > 0, daughter_list)
+    all_daughter_list = growth_handle.get_student_candidate_list()
+    daughter_list = [cid for cid in all_daughter_list if cache.character_data[cid].work.work_type == E.STUDENT_WORK_TYPE]
+check("有在学的学生岗女儿", len(daughter_list) > 0, (len(daughter_list), len(all_daughter_list)))
 
 section("环境：教师、教室、课表")
 teacher_list = schedule_handle.get_teacher_candidate_list()
 if len(teacher_list) < 2:
     for cid in sorted(cache.npc_id_got):
         cd = cache.character_data[cid]
-        if cid in daughter_list or cd.dead or growth_handle.get_character_stage(cid) or cd.work.work_type in (E.TEACHER_WORK_TYPE,):
+        if cid in all_daughter_list or cd.dead or growth_handle.get_character_stage(cid) or cd.work.work_type in (E.TEACHER_WORK_TYPE,):
             continue
         cd.work.work_type = E.TEACHER_WORK_TYPE
         if len(schedule_handle.get_teacher_candidate_list()) >= 3:

@@ -1,8 +1,17 @@
-"""上课时段的行为决策（Plan 22 一期 §2.8）
+"""上课状态判定——供工作链的教师 / 学生前提读取（Plan 22 一期 §2.8，Plan 24 并入工作链）
 
-每到一个上课节次，孩子（或选了课的干员）要先过两道闸，再决定这一节实际去做什么：
+教师与学生的「上班」都是 target.csv 工作链里的目标行（type 21/22 的组 07 教师、组 08 学生），
+本模块不直接派发状态机，只把课表换算成互斥的状态，由 handle_premise_work 里的薄前提读取：
 
-    1. 体力闸（方案 §3.14）：体力低于30%就上不动课了，转为休息并累计一节缺课。
+    get_teacher_duty  —— 教师此刻的课表职责：本节有课 / 20 分钟内有下一节 / 都没有
+    get_course_stage  —— 学生此刻的上课状态：待赴实操课 / 体力缺课 / 翘课 / 照常上课 / 马上开课 / 与课表无关
+
+同一个前提在一次决策里按名缓存、被多行共享，所以这里的判定都必须是纯函数：不写数据、不惰性创建养成数据，
+翘课的掷骰以「角色 + 日期 + 节次」定种子（roll_skip_class），同一节无论判定多少次结果都相同。
+
+学生每节课要先过两道闸，再决定这一节实际去做什么：
+
+    1. 体力闸（方案 §3.14）：体力低于30%就上不动课了，转为休息并累计一节缺课（记缺课在 721 状态机里做）。
        这是**被动**缺课，不置翘课flag、不触发「翘课被抓」事件。
     2. 心情闸（方案 §3.19）：苦痛(17)+恐怖(18)+抑郁(19)+反感(20)四个负面状态的**等级**和
        越高，越可能主动翘课。判定写法照 `Script/Design/instuct_judege.py:103~104` 的实行值修正。
@@ -10,11 +19,12 @@
 两道闸的顺序不能反：体力不足是"去不了"，心情糟糕是"不想去"，一个孩子累到爬不起来时
 不该再被算一次"叛逆"。
 
-过闸之后按课型派发。班级式的教室课走既有的 移动→听课 链，本节没有可用教师时降级为自习。
+过闸之后按课型分行。班级式的教室课走 移动→听课，本节没有可用教师时降级为自习。
 个人式的体育/兴趣/实习课则是"人到地点，执行该地点既有的行为"：体育课去木桩房打木桩、
 兴趣课去棋牌室下棋、实习课去厨房跟着厨师。
 """
 import random
+from typing import List, Tuple
 from Script.Core import cache_control, game_type, constant
 from Script.Design import attr_calculation, game_time, map_handle
 from Script.System.Education_System import education_constant, schedule_handle, growth_handle, schedule_template_handle
@@ -45,6 +55,7 @@ def get_skip_class_rate(character_id: int) -> float:
     character_id -- 角色id
     Return arguments:
     float -- 0.0~0.7 的概率
+    功能: 只查表不掷骰；本节到底翘不翘由 roll_skip_class 每节掷一次（Plan 24 §3.5）
     """
     level_sum = get_negative_status_level_sum(character_id)
     for max_sum, rate in education_constant.SKIP_CLASS_RATE_TABLE:
@@ -61,7 +72,8 @@ def judge_teacher_available(teacher_id: int) -> bool:
     Return arguments:
     bool -- 是否可授课
     功能: 判不过就让学生降级自习；判过了学生就坐下来等教师讲课。
-          所以凡是「教师这节确定来不了」的情况都必须在这里挡掉，漏一种学生就空等一整节、零收益（2026-09-12 第五轮补全）
+          所以凡是「教师这节确定来不了」的情况都必须在这里挡掉，漏一种学生就空等一整节、零收益（2026-09-12 第五轮补全）。
+          凡是教师目标行（target.csv 组 07）的 normal 前提会挡掉、且一节之内不会自行解除的状态，都要在这里同步（Plan 24 §3.4）
     """
     from Script.Design import handle_premise
 
@@ -76,13 +88,17 @@ def judge_teacher_available(teacher_id: int) -> bool:
     # 玩家（临时实操课的授课者）只看上面两条：他来不来由玩家自己决定
     if teacher_id == 0:
         return True
+    # 教师的授课行挂着 normal 前提：临盆 / 产后 / 监禁（normal_2）、助理 / 跟随 / 体检中（normal_3）时她不会去授课。
+    #    不挂 normal_1（需求）、normal_4（服装）：上个厕所、吃个饭回来照样开讲，学生不该因此整节自习
+    if not handle_premise.handle_normal_2(teacher_id) or not handle_premise.handle_normal_3(teacher_id):
+        return False
     if teacher_data.sp_flag.field_commission or teacher_data.sp_flag.in_diplomatic_visit:
         return False
     # 已经不在岛上 / 换了岗：课表里还挂着她，但她的 AI 不会再来上课
     if teacher_id not in cache.npc_id_got or teacher_data.work.work_type != education_constant.TEACHER_WORK_TYPE:
         return False
-    # 跟随玩家时跟随优先（总纲 §4.1-9），睡着的、住院的、离线的都来不了
-    if teacher_data.sp_flag.is_follow or teacher_data.sp_flag.sleep:
+    # 睡着的、住院的、离线的都来不了
+    if teacher_data.sp_flag.sleep:
         return False
     if teacher_id in getattr(cache.rhodes_island, "medical_hospitalized", {}):
         return False
@@ -91,68 +107,26 @@ def judge_teacher_available(teacher_id: int) -> bool:
     return True
 
 
-def judge_pre_arrive_course(character_id: int) -> int:
+def get_teacher_duty(character_id: int) -> Tuple[int, str]:
     """
-    学生的到岗判定：马上要开始的那一节排了课，就先去上课的地方等着（2026-09-12 第五轮）
+    教师此刻的课表职责（Plan 24，供工作链的教师前提读取）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
-    int -- 状态机id，不在开课前夕或那一节没排课则为0
-    功能: 09-10 起学生岗不走工作链，8:40~9:00、13:40~14:00 的到岗时间就没人再把学生送去第一节课的教室，
-          离得远的人要开课后才动身，一迟到就是二十多分钟。两道闸（体力、心情）照旧在开课那一刻才判
+    Tuple[int, str] -- (TEACHER_DUTY_* 状态, 该职责对应的教室场景名；无职责时为空字符串)
+    功能: 本节有课（任何星期都算，周日是玩家特意排的）优先；本节没课再看 20 分钟内开始的下一节（到岗时间 / 课间）。
+          课表查的是全局课表反查，含当天临时实操课的覆盖层：被临时课顶掉的那一格查不到，教师就回办公室待命
     """
-    upcoming = schedule_handle.get_upcoming_course(character_id)
-    if upcoming is None:
-        return 0
-    to_place = schedule_handle.get_course_place(upcoming)
-    if not to_place:
-        return 0
     character_data: game_type.Character = cache.character_data[character_id]
-    if map_handle.get_map_system_path_str_for_list(character_data.position) != map_handle.get_map_system_path_str_for_list(to_place):
-        if upcoming["course_type"] in education_constant.CLASSROOM_COURSE_TYPE_SET:
-            return constant.StateMachine.MOVE_TO_CLASS_ROOM
-        return constant.StateMachine.EDUCATION_MOVE_TO_COURSE_PLACE
-    return constant.StateMachine.EDUCATION_WAIT_NEXT_PERIOD
-
-
-def judge_teacher_state_machine(character_id: int) -> int:
-    """
-    教师的行为决策：有课按课表走班授课，没课回教师办公室待命（2026-09-12 第五轮）
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 状态机id，0表示本函数不接管、交回既有AI链
-    功能: 原来教师走的是 WorkType 151 的工作链，而那条链只认场景标签 Class_Room：
-             人在任意一间理论教室就原地开讲（不管课表排的是哪间），课表排在实践教室 / 大礼堂的课则永远开不了讲
-             （到了那里走「工作准备」→ 移动到当前房间 → 一分钟一分钟地空等）。
-          现在教师的「工作」只有课表 + 待命，排在工作链之前接管，工作时间内 151 的工作链不会再被走到：
-             1. 本节有课（任何星期都算，周日是玩家特意排的）：不在该教室先移动，到了就授课
-             2. 本节没课但 20 分钟内有下一节（到岗时间 / 课间）：先去下一节的教室
-             3. 都没有且在工作时间：回教师办公室待命，不讲课也不给任何学生发收益
-    """
-    from Script.Design import handle_premise
-
-    if character_id == 0:
-        return 0
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.work.work_type != education_constant.TEACHER_WORK_TYPE:
-        return 0
+    if character_id == 0 or character_data.work.work_type != education_constant.TEACHER_WORK_TYPE:
+        return education_constant.TEACHER_DUTY_NONE, ""
     teaching = schedule_handle.get_now_teaching(character_id)
     if teaching is not None:
-        if not judge_in_scene(character_id, teaching["classroom"]):
-            return constant.StateMachine.MOVE_TO_CLASS_ROOM
-        return constant.StateMachine.WORK_TEACH
+        return education_constant.TEACHER_DUTY_NOW, teaching["classroom"]
     upcoming = schedule_handle.get_upcoming_teaching(character_id)
     if upcoming is not None:
-        if not judge_in_scene(character_id, upcoming["classroom"]):
-            return constant.StateMachine.MOVE_TO_CLASS_ROOM
-        return constant.StateMachine.EDUCATION_WAIT_NEXT_PERIOD
-    if not handle_premise.handle_to_work_time_or_work_time(character_id):
-        return 0
-    now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    if now_scene_str not in cache.scene_data or "Teacher_Office" not in cache.scene_data[now_scene_str].scene_tag:
-        return constant.StateMachine.MOVE_TO_TEACHER_OFFICE
-    return constant.StateMachine.EDUCATION_WAIT_NEXT_PERIOD
+        return education_constant.TEACHER_DUTY_UPCOMING, upcoming["classroom"]
+    return education_constant.TEACHER_DUTY_NONE, ""
 
 
 def judge_in_scene(character_id: int, scene_name: str) -> bool:
@@ -218,33 +192,6 @@ def judge_must_attend_sex_class(character_id: int) -> bool:
     return character_id in temp_class.get("must_attend", [])
 
 
-def judge_pre_arrive_sex_class(character_id: int) -> int:
-    """
-    预到岗判定：下一节是自己要上的性技实操课时，提前若干分钟就动身去教室
-
-    既有节次表首尾相接、没有课间（game_time.py:519 CLASS_PERIOD_START），9个节次里有7个的
-       "提前10分钟"落在上一节课的最后10分钟内。命中时学生会**中止当前节次的课**转为移动
-       （口径62 提前退场）——这是有意为之，玩家踩着点到教室时人应该已经在了。
-    提前退场的那一节**不算缺课**：这里绝不能调 settle_absent()。那个函数用 last_absent_period
-       对「日期序数+节次」做去重，被提前退场占掉标记后，当天真正的缺课就再也记不上了（口径66）。
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 状态机id，不该预到岗则为0
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    now_time = character_data.behavior.start_time
-    if now_time is None:
-        now_time = cache.game_time
-    temp_class, classroom = get_next_sex_class(character_id, now_time)
-    if temp_class is None:
-        return 0
-    # 人已经在目标教室了就不用走了
-    if judge_in_scene(character_id, classroom):
-        return 0
-    return constant.StateMachine.MOVE_TO_CLASS_ROOM
-
-
 def get_next_sex_class(character_id: int, now_time) -> tuple:
     """
     取该角色下一节要上的性技实操课（仅在距开始 PRE_ARRIVE_MINUTE 分钟内时返回）
@@ -285,64 +232,104 @@ def get_next_sex_class(character_id: int, now_time) -> tuple:
     return None, ""
 
 
-def judge_class_state_machine(character_id: int) -> int:
+def get_pending_sex_classroom(character_id: int) -> str:
     """
-    上课时段的行为决策总入口，返回本节该执行的状态机id
+    学生此刻待赴的性技实操课教室（Plan 24，供预到岗的两个前提判断人在不在那间教室）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
-    int -- 状态机id，0表示本函数不接管、交回既有AI链
+    str -- 教室场景名，不是学生岗或没有待赴的实操课时为空字符串
     """
-    now_course = schedule_handle.get_now_course(character_id)
-    # 不在节次内、或本节没排课 —— 自由行动；只有到岗时间（开课前 20 分钟内）要先去第一节课的地方（第五轮）
-    if now_course is None:
-        return judge_pre_arrive_course(character_id)
     character_data: game_type.Character = cache.character_data[character_id]
-    # 上课接管即离开见学状态。这里不能省：本函数排在见学判定之前，
-    #    幼女从见学转去上课时走不到 judge_follow_mother_state_machine，标记会一直挂着
-    clear_follow_mother_flag(character_id)
+    if character_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
+        return ""
+    now_time = character_data.behavior.start_time
+    if now_time is None:
+        now_time = cache.game_time
+    return get_next_sex_class(character_id, now_time)[1]
 
-    # 本节是不是玩家指定的必修性技实操课——两道闸对必修生的处理都不一样（Plan 22 四期 口径65）
-    must_attend_flag = judge_must_attend_sex_class(character_id)
 
-    # 第一道闸：体力。上不动课就去休息，并记一节缺课
+def get_course_stage(character_id: int) -> int:
+    """
+    学生此刻的上课状态（Plan 24）：把原先 预到岗 → 到岗时间 → 体力闸 → 心情闸 → 派课 的闸门顺序直译为互斥状态，
+    工作链的学生前提都从这里取值，保证 target.csv 组 08 的学生行两两互斥
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- COURSE_STAGE_* 之一
+    功能: 待赴实操课（SEX_PENDING）优先于本节的一切：既有节次表首尾相接、没有课间（game_time.py:519 CLASS_PERIOD_START），
+             9个节次里有7个的"提前10分钟"落在上一节课的最后10分钟内，命中时学生会**中止当前节次的课**转为移动
+             （口径62 提前退场）——这是有意为之，玩家踩着点到教室时人应该已经在了。
+          提前退场的那一节**不算缺课**：绝不能在这条路上调 settle_absent()。那个函数用 last_absent_period
+             对「日期序数+节次」做去重，被提前退场占掉标记后，当天真正的缺课就再也记不上了（口径66）
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
+        return education_constant.COURSE_STAGE_NONE
+    now_time = character_data.behavior.start_time
+    if now_time is None:
+        now_time = cache.game_time
+    # 预到岗优先于本节的一切（原 find_character_target 里排在上课判定之前）
+    if get_next_sex_class(character_id, now_time)[0] is not None:
+        return education_constant.COURSE_STAGE_SEX_PENDING
+    now_course = schedule_handle.get_now_course(character_id)
+    if now_course is None:
+        # 不在节次内、或本节没排课：只有到岗时间（开课前 20 分钟内）要先去第一节课的地方（第五轮）
+        if schedule_handle.get_upcoming_course(character_id) is not None:
+            return education_constant.COURSE_STAGE_UPCOMING
+        return education_constant.COURSE_STAGE_NONE
+    # 必修实操课两道闸都跳过（口径 60 / 65）：体力不足也照常到场、不记缺课，只是到了教室不进H模板、在一边旁观；
+    #    玩家点了名就不许翘
+    if judge_must_attend_sex_class(character_id):
+        return education_constant.COURSE_STAGE_ATTEND
+    # 第一道闸：体力
     if character_data.hit_point_max and character_data.hit_point / character_data.hit_point_max < education_constant.ABSENT_HP_RATE:
-        # 必修的实操课例外：人照常到场、不计缺课，只是到了教室也不进H模板，站在一边旁观（口径65）。
-        # 体力不足是"做不动"而不是"不想来"，缺席的板子不该打在被玩家点名的学生头上
-        if not must_attend_flag:
-            settle_absent(character_id)
-            return constant.StateMachine.REST
+        return education_constant.COURSE_STAGE_ABSENT_HP
+    # 第二道闸：心情。今日已经翘了就翘到底，否则本节掷一次。
+    #    前提求值不能写数据，所以直接读 child_growth，不走会惰性创建养成数据的 get_child_growth
+    growth_data = character_data.child_growth
+    if (growth_data is not None and growth_data.skip_class_flag) or roll_skip_class(character_id):
+        return education_constant.COURSE_STAGE_SKIP
+    return education_constant.COURSE_STAGE_ATTEND
 
-    # 第二道闸：心情。今日已经翘了就翘到底，否则按四个负面状态的等级和掷一次
-    # 必修的实操课整道闸都跳过——玩家点了名就不许翘（口径60）
-    growth_data = growth_handle.get_child_growth(character_id)
-    if not must_attend_flag:
-        if growth_data.skip_class_flag:
-            return constant.StateMachine.EDUCATION_SKIP_CLASS
-        skip_rate = get_skip_class_rate(character_id)
-        if skip_rate and random.random() < skip_rate:
-            return constant.StateMachine.EDUCATION_SKIP_CLASS
 
-    # 派课：班级式的教室课
-    if now_course["course_type"] in education_constant.CLASSROOM_COURSE_TYPE_SET:
-        classroom = now_course["classroom"]
-        # 人还没到教室，先走既有的移动状态机（它会按课表挑对教室，见 StateMachine/default.py:434）
-        if not judge_in_scene(character_id, classroom):
-            return constant.StateMachine.MOVE_TO_CLASS_ROOM
-        # 到了教室，看本节有没有能讲课的老师；没有则降级自习
-        if judge_teacher_available(now_course["teacher_id"]):
-            return constant.StateMachine.WORK_ATTENT_CLASS
-        return constant.StateMachine.EDUCATION_SELF_STUDY
+def get_course_place_now_or_upcoming(character_id: int) -> List[str]:
+    """
+    取本节课（不在节次内时为马上开始的那一节）的上课地点，与 715 移动状态机的取法一致
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    List[str] -- 场景路径，没课或解析不出为空列表
+    功能: 解析不出（娱乐没配地点标签、岗位场景未解锁、体育课地点写错、教室已不存在）时，
+          在 / 不在上课地点两个前提都不成立，没有行命中，交回既有 AI，不留死分支（Plan 24 §3.7）
+    """
+    course = schedule_handle.get_now_course(character_id)
+    if course is None:
+        course = schedule_handle.get_upcoming_course(character_id)
+    if course is None:
+        return []
+    return schedule_handle.get_course_place(course)
 
-    # 派课：个人式的体育/兴趣/实习课——人到地点，然后执行该课对应的既有行为
-    to_place = schedule_handle.get_course_place(now_course)
-    # 地点解析不出来（娱乐没配地点标签、岗位场景未解锁、体育课地点写错）就交回既有AI，不留死分支
-    if not to_place:
-        return 0
-    now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    if now_scene_str != map_handle.get_map_system_path_str_for_list(to_place):
-        return constant.StateMachine.EDUCATION_MOVE_TO_COURSE_PLACE
-    return constant.StateMachine.EDUCATION_DO_COURSE
+
+def roll_skip_class(character_id: int) -> bool:
+    """
+    本节是否掷中翘课：以「角色 + 日期 + 节次」定种子，同一节无论判定多少次结果都相同（Plan 24 §3.5）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 是否掷中
+    功能: 前提在一次决策里被「翘课」「照常上课」多行读取，每次调用都重掷的话两行可能同时不成立（上课时间去闲逛）
+          或同时成立（随机二选一）；定了种子也让每节的翘课概率严格等于表值
+    """
+    rate = get_skip_class_rate(character_id)
+    if rate <= 0:
+        return False
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = character_data.behavior.start_time
+    if now_time is None:
+        now_time = cache.game_time
+    period = game_time.get_class_period_by_time(now_time)
+    return random.Random(f"{character_id}|{now_time.toordinal()}|{period}").random() < rate
 
 
 # ---------------------------------------------------------------------------
@@ -397,7 +384,7 @@ def judge_should_follow_mother(character_id: int) -> bool:
         2. 日程模板把当前娱乐时段排成了「跟随母亲」—— 晚上或没课的时段也能跟；
            **萝莉只有这一个入口**（2026-09-09 二期方案 §9.2.3 放宽：口径 10 的「萝莉自由时段自由行动」
            仍是默认，玩家明确在日程里排了「跟随母亲」时才去见学）
-    有课永远优先：在节次内且本节排了课时，两种入口都不成立
+    有课永远优先：学生此刻与课表有关（本节有课、马上开课、待赴实操课）时，两种入口都不成立
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -407,10 +394,12 @@ def judge_should_follow_mother(character_id: int) -> bool:
     stage = growth_handle.get_character_stage(character_id)
     if stage not in (102, 103):
         return False
+    # 上课是工作链里学生岗的目标行（target.csv 组 08），而见学排在工作链之前，这里不让路就会把上课截走（Plan 24 §3.9）。
+    #    看的是 get_course_stage 而不是个人课表：改了岗的女儿课表还在，但她不会去上课（口径 1），不该因此不见学
+    if get_course_stage(character_id) != education_constant.COURSE_STAGE_NONE:
+        return False
     # get_now_course 已经把"不在节次内"和"没排课"都归为None，所以这里要自己再判一次是不是真的在节次内
     in_period = game_time.get_class_period(character_id) != -1
-    if in_period and schedule_handle.get_now_course(character_id) is not None:
-        return False
     # 当前娱乐时段的槽位值；不在任何娱乐时段（如 8:40~9:00 的到岗时间、17:45~18:00）时为 -1
     enter_time = game_time.judge_entertainment_time(character_id)
     slot = enter_time - 1 if enter_time else -1
@@ -440,7 +429,8 @@ def judge_follow_mother_state_machine(character_id: int) -> int:
     int -- 状态机id，0表示本函数不接管
     """
     if not judge_should_follow_mother(character_id):
-        # 本时刻不该见学了（上了年纪、排上课、日程换成别的），顺手把标记清掉
+        # 本时刻不该见学了（上了年纪、排上课、日程换成别的），顺手把标记清掉。
+        #    见学判定排在工作链之前，孩子从见学转去上课时一定先经过这里（Plan 24 起上课接管处不再另清）
         clear_follow_mother_flag(character_id)
         return 0
     mother_id = judge_mother_available(character_id)
@@ -477,8 +467,9 @@ def clear_follow_mother_flag(character_id: int) -> None:
     """
     清掉见学标记（Plan 22 二期）
 
-    置位只有见学状态机一处，清位却有四处——自由玩耍、见学结算、上课接管、见学判定不成立。
-       少一处，「见学中」这个状态标识就会粘在孩子身上摘不掉
+    置位只有见学状态机一处，清位却有四处——自由玩耍、见学结算、见学判定不成立、跨天兜底。
+       少一处，「见学中」这个状态标识就会粘在孩子身上摘不掉。
+       原先的「上课接管」随 Plan 24 并入工作链后不再需要：见学判定排在工作链之前，不成立时自己会清
     Keyword arguments:
     character_id -- 角色id
     Return arguments:

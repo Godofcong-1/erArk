@@ -115,7 +115,8 @@ check("教育区设施效果 Lv1~Lv5 有配置", len(game_config.config_facility
 check("10 间教室都在场景数据里", len(schedule_handle.get_classroom_list()) == 10)
 check("四处体育课地点都存在", all(schedule_handle.get_course_place({"course_type": E.COURSE_TYPE_PE, "target": name}) for name in E.PE_PLACE_DATA))
 check("ArkEditor 前提表已同步实操课与养成前提", all(name in open(os.path.join("tools", "ArkEditor", "csv", "Premise.csv"), encoding="utf-8").read()
-                                                  for name in ("sex_class_mode_on", "self_in_sex_class", "self_follow_mother", "self_have_classmate", "work_is_student")))
+                                                  for name in ("sex_class_mode_on", "self_in_sex_class", "self_follow_mother", "self_have_classmate", "work_is_student",
+                                                               "teacher_have_class_now", "self_course_attend")))
 check("ArkEditor 效果表已同步 552~556", all(f"\n{eid}," in open(os.path.join("tools", "ArkEditor", "csv", "Effect.csv"), encoding="utf-8").read() for eid in (552, 553, 554, 555, 556)))
 
 finish()

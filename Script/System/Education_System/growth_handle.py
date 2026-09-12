@@ -96,20 +96,19 @@ def get_course_candidate_list() -> List[int]:
     无
     Return arguments:
     List[int] -- 角色id列表，按id升序
-    功能: 职业为学生（WorkType 152）的全部干员，再并上养成中的女儿（一期方案 §9.8.2）。
-          取并集而不是只看职业：女儿长到幼女时会被自动置为学生岗，理论上已经包含在前者里，
-             但并上 get_student_candidate_list() 可以保证旧口径下能排课的女儿一个不少，不引入回归。
+    功能: 职业为学生（WorkType 152）的全部干员（Plan 24 口径 1：课表只对学生岗生效）。
+          上课是工作链里学生岗的目标行（target.csv 组 08），改了岗的女儿不会再去上课，所以也不再列出；
+             存档里她残留的个人课表不迁移、不清理，没有行会命中，改回学生岗后照常生效。
+             女儿长到幼女时会被自动置为学生岗，默认都在名单里。
           成年学生只排课、只上课，不出成绩单、不进养成事件——那些地方仍只遍历女儿。
-             上课 AI 对成年学生早已支持（handle_npc_ai 的上课判定排在工作之前，且不看年龄）。
           与 get_student_candidate_list 一样按 id 升序：面板用 [0] 做默认选中回落，set 的迭代顺序会飘
     """
-    daughter_set = set(get_student_candidate_list())
     result = []
     for character_id in sorted(cache.npc_id_got):
         if character_id not in cache.character_data:
             continue
         character_data: game_type.Character = cache.character_data[character_id]
-        if character_data.work.work_type == education_constant.STUDENT_WORK_TYPE or character_id in daughter_set:
+        if character_data.work.work_type == education_constant.STUDENT_WORK_TYPE:
             result.append(character_id)
     return result
 

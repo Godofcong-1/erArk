@@ -348,40 +348,17 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
             target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
             premise_data = new_premise_data
-    # 先判断性技实操课的预到岗：下一节是自己要上的实操课时，提前动身去教室（Plan 22 四期 §3.28.5）
-    # 必须排在上课判定之前：节次首尾相接没有课间，预到岗要能中止当前节次的课把人放走
-    if judge == 0:
-        from Script.System.Education_System import class_ai
-
-        judge = class_ai.judge_pre_arrive_sex_class(character_id)
-    # 然后判断上课，需要本节次在个人课表上排了课（Plan 22 §2.8）
-    # 排在工作之前：孩子的"工作"就是上学，走到下面的工作链只会随机挑一间教室；
-    #    成年干员自选了课时，本节同样以课优先
-    if judge == 0:
-        from Script.System.Education_System import class_ai
-
-        judge = class_ai.judge_class_state_machine(character_id)
-    # 然后判断教师：有课按课表走班授课，没课回教师办公室待命（Plan 22 第五轮）
-    # 排在工作链之前：151 的工作链只认场景标签 Class_Room，会让教师在任意理论教室原地开讲、在实践教室与大礼堂开不了讲
-    if judge == 0:
-        from Script.System.Education_System import class_ai
-
-        judge = class_ai.judge_teacher_state_machine(character_id)
-    # 然后判断见学：幼女本节没排课、且该时段没有明确排别的日程活动时默认见学，萝莉只在日程时段排了「跟随母亲」时见学，
-    # 且母亲要有效（Plan 22 二期 §3.24、§9.2.3、§9.2.9）
-    # 排在上课之后、娱乐之前：有课就上课，没课才跟母亲；不见学的孩子接着走下面的娱乐链做日程活动
+    # 然后判断见学：孩子的日程行为，不是工作，排在工作链之前（Plan 22 二期 §3.24、§9.2.3、§9.2.9）
+    #    幼女本节没排课、且该时段没有明确排别的日程活动时默认见学，萝莉只在日程时段排了「跟随母亲」时见学，且母亲要有效；
+    #    学生此刻与课表有关（本节有课、马上开课、待赴实操课）时见学判定不成立，让给下面工作链里的上课行（Plan 24 §3.9）
     if judge == 0:
         from Script.System.Education_System import class_ai
 
         judge = class_ai.judge_follow_mother_state_machine(character_id)
-    # 然后判断工作，需要有工作，且在工作时间或到岗时间
-    # 学生岗不走工作链（Plan 22 二期 §9.2.9）：学生的"工作"只有课表，有课的节次已被上面的上课判定接管，
-    #    没课的节次交给下面的娱乐链按日程 / 当天的随机娱乐自由行动。原来会被 WorkType 152 的自动 AI 送进随机一间
-    #    理论教室"上学"，没有教师在教就是零收益（上学的学习收益只由教师授课的结算发放）
-    from Script.System.Education_System import education_constant
-
-    student_flag = character_data.work.work_type == education_constant.STUDENT_WORK_TYPE
-    if judge == 0 and not student_flag and handle_premise.handle_have_work(character_id) and handle_premise.handle_to_work_time_or_work_time(character_id):
+    # 然后判断工作：只要有工作就进工作链，时间窗由各目标行自己的时间前提决定（Plan 24 §3.1）
+    #    既有的 21/22 行都带 to_work_time / work_time，自动 AI 路径自带 work_time；
+    #    教师 / 学生的课表行（target.csv 组 07 / 08）不看星期，周日排的课照常上；学生没课时没有行命中，照旧落到下面的娱乐链
+    if judge == 0 and handle_premise.handle_have_work(character_id):
         # 当前工作数据
         work_type_id = character_data.work.work_type
         work_type_data = game_config.config_work_type[work_type_id]

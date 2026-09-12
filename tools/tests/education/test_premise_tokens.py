@@ -22,7 +22,13 @@ for name in ("work_is_teacher", "t_work_is_teacher", "work_is_student", "t_work_
              "sex_class_mode_on", "sex_class_mode_off", "sex_class_end_early", "sex_class_end_on_time", "sex_class_end_late",
              "in_sex_class_place", "scene_have_sex_class_student", "self_in_sex_class", "sex_class_reserved", "sex_class_impromptu",
              "self_sex_class_must_attend", "self_sex_class_elective", "in_practice_room", "in_auditorium", "in_class_room",
-             "growth_stop_1", "growth_stop_0"):
+             "growth_stop_1", "growth_stop_0",
+             # Plan 24：教师 / 学生并入工作链的 18 个前提
+             "teacher_have_class_now", "teacher_have_upcoming_class", "teacher_no_class_duty", "teacher_in_duty_classroom", "teacher_not_in_duty_classroom",
+             "self_sex_class_pending", "self_in_pending_sex_class_room", "self_not_in_pending_sex_class_room",
+             "self_course_absent_by_hp", "self_course_skip", "self_course_attend", "self_course_upcoming",
+             "self_course_is_classroom", "self_course_is_personal", "self_in_course_place", "self_not_in_course_place",
+             "self_course_teacher_available", "self_course_teacher_unavailable"):
     check(f"前提 {name} 已注册", name in constant.handle_premise_data)
 
 section("岗位与女儿前提")
@@ -43,6 +49,21 @@ growth_handle.get_child_growth(202).follow_mother_flag = False
 student.talent[28] = 1
 check("成长停滞前提", HP("growth_stop_1", 201) == 1 and HP("growth_stop_0", 201) == 0)
 student.talent[28] = 0
+
+section("师生工作链前提只认本岗（Plan 24）")
+set_time(period_time(0))
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+check("教师前提：本节有课、人在教室", HP("teacher_have_class_now", 101) == 1 and HP("teacher_in_duty_classroom", 101) == 1
+      and HP("teacher_not_in_duty_classroom", 101) == 0 and HP("teacher_no_class_duty", 101) == 0)
+check("教师前提对学生岗与普通岗为 0", HP("teacher_have_class_now", 201) == 0 and HP("teacher_in_duty_classroom", 201) == 0
+      and HP("teacher_no_class_duty", 201) == 0 and HP("teacher_no_class_duty", 301) == 0)
+check("学生前提：本节照常上教室课、人在教室、教师可用", HP("self_course_attend", 201) == 1 and HP("self_course_is_classroom", 201) == 1
+      and HP("self_in_course_place", 201) == 1 and HP("self_course_teacher_available", 201) == 1 and HP("self_course_teacher_unavailable", 201) == 0)
+check("学生前提对教师岗与普通岗为 0", HP("self_course_attend", 101) == 0 and HP("self_not_in_course_place", 101) == 0
+      and HP("self_course_upcoming", 301) == 0 and HP("self_course_teacher_unavailable", 301) == 0)
+# 201 的这节理论课留着：下面的 Course 系列 CVP 沿用它（与上面「同学前提」一段留下的是同一格）
+schedule_handle.clear_class_cell(ROOM1, 0, 0)
 
 section("Course 系列 CVP")
 set_time(period_time(0))
