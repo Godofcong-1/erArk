@@ -457,6 +457,26 @@ flow_handle.askfor_all = fake_askfor
 _tend_name = game_config.config_entertainment[pregnancy_constant.TEND_EGGS_ENTERTAINMENT_ID].name
 check("选择活动里没有照料卵（Plan 28 §3.3）", drawn_text and not any(_tend_name in t for t in drawn_text), [t for t in drawn_text if _tend_name in t])
 
+section("Plan 30 §3.7：必修名单的顶替标记不随书库此刻借没借空而变")
+clear_schedules()
+_read_cid = next(cid for cid in game_config.config_entertainment if game_config.config_entertainment[cid].class_ok
+                 and schedule_handle.judge_interest_course_is_read_book({"course_type": E.COURSE_TYPE_INTEREST, "target": cid}))
+schedule_handle.clear_selected_course(204, 2, 3)
+schedule_handle.set_selected_course(204, 2, 3, E.COURSE_TYPE_INTEREST, _read_cid)
+_saved_borrow = dict(cache.rhodes_island.book_borrow_dict)
+for _book_id in cache.rhodes_island.book_borrow_dict:
+    cache.rhodes_island.book_borrow_dict[_book_id] = 999
+flow_handle.askfor_all = scripted_askfor
+answers[:] = [lambda o: o == "DONE"]
+drawn_text.clear()
+class_schedule_panel.Class_Schedule_Panel(W)._select_must_attend([], ROOM_P, 2, 3)
+flow_handle.askfor_all = fake_askfor
+cache.rhodes_island.book_borrow_dict.update(_saved_borrow)
+_replace_line = next((t for t in drawn_text if "会顶替原本的课" in t), "")
+check("书库此刻借空：排着读书兴趣课的学生照标「*」、明细照写（此前借空就不标）", "[  女儿04*]" in drawn_text and "女儿04→" in _replace_line,
+      (_replace_line, [t for t in drawn_text if "女儿04" in t]))
+schedule_handle.clear_selected_course(204, 2, 3)
+
 section("Web 适配器冒烟")
 from Script.System.Web_Draw_System import web_draw_adapter
 

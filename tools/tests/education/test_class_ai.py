@@ -273,6 +273,8 @@ dispatch(201)
 check("同一节再派发一次不重复记", growth_handle.get_child_growth(201).absent_count == _absent + 1)
 check("体力缺课不置翘课 flag", not growth_handle.get_child_growth(201).skip_class_flag)
 student.hit_point = 100
+# 这一节已记了缺课的不再计出勤（Plan 30 §3.4）；后面各段仍在同一天的第 1 节里验出勤，清掉缺课标记
+growth_handle.get_child_growth(201).last_absent_period = []
 growth_handle.get_child_growth(201).skip_class_flag = True
 move_to(201, classroom_path(ROOM1))
 check("翘课 flag 挂着 → 714 翘课", dispatch(201) == SM.EDUCATION_SKIP_CLASS)
@@ -1243,6 +1245,89 @@ cache.rhodes_island.book_borrow_dict[0] = -1
 remove_character(402)
 move_to(201, SCENE_DORM)
 schedule_handle.clear_selected_course(201, 0, 0)
+clear_schedules()
+
+section("Plan 30 §3.1 / §3.4 / §3.5：翘课记缺课、同一节只落一种记录、被抓当天剩余节次不再翘")
+from Script.Settle import Second_effect  # noqa: E402,F401  注册二段结算 623
+
+_rate_before = class_ai.get_skip_class_rate
+set_time(period_time(0))
+prepare_ai(201)
+student.hit_point_max = 100
+student.hit_point = 100
+_g = growth_handle.get_child_growth(201)
+_g.selected_course = {}
+for _p in range(8):
+    schedule_handle.set_selected_course(201, 0, _p, E.COURSE_TYPE_PE, _("木桩房"))
+schedule_handle.set_class_cell(ROOM1, 0, 8, 45, 101)
+schedule_handle.set_selected_course(201, 0, 8, E.COURSE_TYPE_THEORY, ROOM1)
+_pe_place = schedule_handle.get_course_place(schedule_handle.get_now_course(201))
+_g.skip_class_flag = False
+_g.skip_caught_day = 0
+_g.last_absent_period = []
+_g.last_attend_period = []
+_absent, _skip = _g.absent_count, _g.skip_count
+class_ai.get_skip_class_rate = lambda cid: 1.0
+move_to(201, classroom_path(ROOM1))
+sm = dispatch(201)
+check("心情闸必中、人还在教室：714 先离开教室，这一步不记缺课", sm == SM.EDUCATION_SKIP_CLASS and _g.absent_count == _absent and _g.skip_count == _skip,
+      (sm, _g.absent_count - _absent))
+move_to(201, SCENE_DORM)
+sm = dispatch(201)
+check("人已不在教室：714 开始摸鱼，记一节缺课、累计翘课 +1（此前翘课不计缺课，常翘课的孩子出勤率照样 100%）",
+      sm == SM.EDUCATION_SKIP_CLASS and student.behavior.behavior_id == constant.Behavior.SKIP_CLASS and _g.absent_count == _absent + 1 and _g.skip_count == _skip + 1,
+      (sm, _g.absent_count - _absent, _g.skip_count - _skip))
+move_to(201, SCENE_DORM)
+dispatch(201)
+check("同一节再派 714 不重复记", _g.absent_count == _absent + 1 and _g.skip_count == _skip + 1)
+class_ai.get_skip_class_rate = lambda cid: 0.0
+_g.skip_class_flag = True
+for _p in (1, 2):
+    move_to(201, SCENE_DORM)
+    dispatch(201, period_time(_p))
+check("翘课 flag 挂着：之后的第 2、3 节各记一节", _g.absent_count == _absent + 3 and _g.skip_count == _skip + 3, (_g.absent_count - _absent, _g.skip_count - _skip))
+_g.skip_class_flag = False
+student.hit_point = 10
+move_to(201, _pe_place)
+sm = dispatch(201, period_time(3))
+check("第 4 节体力不足 → 721 记缺课（体力缺课不加翘课数）", sm == SM.EDUCATION_ABSENT_REST and _g.absent_count == _absent + 4 and _g.skip_count == _skip + 3)
+student.hit_point = 100
+class_ai.get_skip_class_rate = lambda cid: 1.0
+move_to(201, SCENE_DORM)
+sm = dispatch(201, period_time(3) + datetime.timedelta(minutes=30))
+check("同一节休完又掷中翘课：派 714，缺课不再加、累计翘课也不加（与体力缺课共用这一节的标记）",
+      sm == SM.EDUCATION_SKIP_CLASS and _g.absent_count == _absent + 4 and _g.skip_count == _skip + 3, (sm, _g.absent_count - _absent, _g.skip_count - _skip))
+class_ai.get_skip_class_rate = lambda cid: 0.0
+student.hit_point = 10
+move_to(201, _pe_place)
+dispatch(201, period_time(4))
+_attend = _g.attend_class_count
+student.hit_point = 100
+move_to(201, _pe_place)
+sm = dispatch(201, period_time(4) + datetime.timedelta(minutes=30))
+check("721 缺课后同一节休完回来上体育课：716 照派，出勤不记（此前一节算一次缺课、一次出勤）",
+      sm == SM.EDUCATION_DO_COURSE and _g.attend_class_count == _attend and _g.absent_count == _absent + 5, (sm, _g.attend_class_count - _attend))
+move_to(201, _pe_place)
+sm = dispatch(201, period_time(5))
+check("下一节照常记出勤", sm == SM.EDUCATION_DO_COURSE and _g.attend_class_count == _attend + 1)
+class_ai.get_skip_class_rate = lambda cid: 1.0
+set_time(period_time(6))
+_g.skip_class_flag = True
+constant.settle_second_behavior_effect_data[constant_effect.SecondEffect.CAUGHT_SKIP_CLASS](201, game_type.CharacterStatusChange())
+check("623 被抓：清 flag、记下当天的日期序数", not _g.skip_class_flag and _g.skip_caught_day == cache.game_time.toordinal())
+set_time(period_time(7))
+check("被抓当天：概率必中也掷不中，上课状态是 ATTEND 而不是 SKIP（此前之后每节照常掷，同一天里还会再翘）",
+      not class_ai.roll_skip_class(201) and class_ai.get_course_stage(201) == E.COURSE_STAGE_ATTEND, class_ai.get_course_stage(201))
+student.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+check("被抓当天教师开讲拉人（303）同样不再判她翘课", class_ai.judge_student_join_class(201, ROOM1, period_time(8)))
+_tomorrow = DEFAULT_TIME.date() + datetime.timedelta(days=1)
+schedule_handle.set_selected_course(201, 1, 0, E.COURSE_TYPE_PE, _("木桩房"))
+set_time(period_time(0, _tomorrow))
+check("次日自然失效：照常掷（必中 → SKIP）", class_ai.roll_skip_class(201) and class_ai.get_course_stage(201) == E.COURSE_STAGE_SKIP)
+class_ai.get_skip_class_rate = _rate_before
+_g.selected_course = {}
+_g.skip_caught_day = 0
+move_to(201, SCENE_DORM)
 clear_schedules()
 
 finish()

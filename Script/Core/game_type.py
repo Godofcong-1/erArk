@@ -390,13 +390,18 @@ class CHILD_GROWTH:
         self.attend_class_count: int = 0
         """ 累计听课节数，用于面板显示与养成事件前提 """
         self.absent_count: int = 0
-        """ 累计缺课节数（体力不足被动缺课），计入学期成绩单 """
+        """ 累计缺课节数（体力不足的被动缺课与翘课，Plan 30 起翘课也记），计入学期成绩单 """
         self.last_absent_period: list = []
         """ 上一次已计入缺课的 [日期序数int, 节次int]，防止同一节课被反复计数
-            （休息行为只有30分钟，一节课45分钟，不做这层去重会重复累加） """
+            （休息行为只有30分钟，一节课45分钟，不做这层去重会重复累加）。
+            体力缺课与翘课共用这一个标记，同一节只落一次缺课；三个出勤写入点也读它，这一节已缺课的不再记出勤（Plan 30） """
         self.last_attend_period: list = []
         """ 上一次已结算过课堂收益与出勤的 [日期序数int, 节次int]，同一节课只结算一次。
             教师开讲时的广播（512）与学生晚到时自己这一侧的结算（557）都会走到，靠它去重（Plan 22 第五轮） """
+        self.skip_count: int = 0
+        """ 累计翘课节数（终身累计，只增不减，Plan 30）。翘掉的那一节同时记一节缺课（absent_count），同一节只记一次，与体力缺课共用 last_absent_period """
+        self.skip_caught_day: int = 0
+        """ 最近一次翘课被博士撞见那天的日期序数（date.toordinal()），0 为没有（Plan 30）。当天剩余节次不再掷翘课，次日自然失效 """
         self.event_history: dict = {}
         """ 已触发的养成事件记录 键str:事件uid 值dict:{"time": datetime, "choice": 玩家选项index int}
             写入方在三期 """
@@ -423,6 +428,8 @@ class CHILD_GROWTH:
         """ 本学期开始时的累计缺课节数 """
         self.semester_base_ability: dict = {}
         """ 本学期开始时的18门科目等级 键int:能力id 值int:等级，用来算本学期的等级增量 """
+        self.semester_base_work_type: int = -1
+        """ 本学期开始时的岗位（WorkType cid），-1 为未知：旧档、或还没在新学期立过基线（Plan 30）。成绩单按它与结算时的岗位写不全的理由 """
         self.report_card_history: list = []
         """ 历年成绩单的**冻结快照**列表，学期切换时追加，最新的一份在末尾。
             单份结构见 semester_handle.build_report_card，条数上限见 REPORT_CARD_HISTORY_MAX。

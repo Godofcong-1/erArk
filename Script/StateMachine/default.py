@@ -2758,10 +2758,13 @@ def character_education_skip_class(character_id: int):
     上课：翘课（Plan 22 §3.19）
     还在教室里就先溜回自己宿舍，人已经不在教室了才开始摸鱼——
     翘课的可见表现就是"该在教室的人不在教室"，这一步不能省
+    开始摸鱼时记一节缺课（Plan 30）：翘掉的课原先不进出勤率，常翘课的孩子照评良好。
+       与 721 同理，前提不能有副作用，所以记在状态机里；settle_absent 与体力缺课共用同一节的去重标记，
+       翘课 flag 挂着时之后每一节派到这里各记一节。先离开教室的那一步不记，到了外面开始摸鱼时才记
     Keyword arguments:
     character_id -- 角色id
     """
-    from Script.System.Education_System import education_constant
+    from Script.System.Education_System import class_ai, education_constant
 
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
@@ -2774,6 +2777,7 @@ def character_education_skip_class(character_id: int):
         to_dormitory = map_handle.get_map_system_path_for_str(character_data.dormitory)
         general_movement_module(character_id, to_dormitory)
         return
+    class_ai.settle_absent(character_id, by_skip=True)
     character_data.behavior.behavior_id = constant.Behavior.SKIP_CLASS
     character_data.behavior.duration = 45
     character_data.state = constant.CharacterStatus.STATUS_SKIP_CLASS

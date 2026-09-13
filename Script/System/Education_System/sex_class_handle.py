@@ -757,7 +757,7 @@ def start_sex_class(ability_id: int, join_id_list: Optional[List[int]] = None) -
         join_id_list = get_scene_student_list(pl_character_data.position)
     # 出勤只在开课时记这一次：拖堂占用的后续节次既不记出勤也不记缺课（方案 §3.28.9）
     for student_id in join_id_list:
-        settle_attend(student_id)
+        settle_attend(student_id, cache.game_time)
     return now_class
 
 
@@ -831,13 +831,15 @@ def pull_student_into_class(student_id: int) -> None:
     second_behavior.character_get_second_behavior(student_id, constant.Behavior.JOIN_SEX_CLASS)
 
 
-def settle_attend(student_id: int) -> None:
+def settle_attend(student_id: int, now_time=None) -> None:
     """
     给一名到场学生记一次出勤
     Keyword arguments:
     student_id -- 学生的角色id
+    now_time -- 参照时刻，None 时取学生的行为开始时刻（722 晚到的人用）；开课时传 cache.game_time
     Return arguments:
     无
+    功能: 这一节已记了缺课（开课时体力不足、休完才到场）的不记（Plan 30，同一节只落一种记录）
     """
     # 只给「女儿 ∪ 学生岗」记：凭 H 模式实行值到场的成年非学生干员不是学生，
     #    给她们惰性创建养成数据只会让全岛的存档一起变大（与 semester_handle 的约定一致）
@@ -845,6 +847,10 @@ def settle_attend(student_id: int) -> None:
         return
     student_data: game_type.Character = cache.character_data[student_id]
     if student_data.relationship.father_id != 0 and student_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
+        return
+    if now_time is None:
+        now_time = student_data.behavior.start_time or cache.game_time
+    if growth_handle.judge_absent_this_period(student_id, now_time):
         return
     growth_handle.get_child_growth(student_id).attend_class_count += 1
 

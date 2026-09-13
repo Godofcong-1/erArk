@@ -242,4 +242,61 @@ check("阶段进度改用 get_stage_day 后数值不变：幼女 120 天约 16.7
       and growth_handle.get_stage_progress(208) == 100.0)
 remove_character(208)
 
+section("Plan 30：养成数值 24、judge_absent_this_period、judge_selected_cell_real")
+no_growth = make_character(209, "没有养成数据的干员", 21)
+g.skip_count = 3
+check("养成数值 24 读累计翘课数；没有养成数据为 0", growth_handle.get_growth_value(201, V.GROWTH_VALUE_SKIP) == 3.0
+      and growth_handle.get_growth_value(209, V.GROWTH_VALUE_SKIP) == 0.0 and no_growth.child_growth is None)
+g.skip_count = 0
+set_time(period_time(2))
+g.last_absent_period = []
+check("这一节没记缺课：False", not growth_handle.judge_absent_this_period(201, cache.game_time))
+g.last_absent_period = [cache.game_time.toordinal(), 2]
+_next_day = DEFAULT_TIME.date() + datetime.timedelta(days=1)
+check("这一节记了缺课：同一节里任一时刻为 True；下一节、节次外、别的日期为 False",
+      growth_handle.judge_absent_this_period(201, period_time(2) + datetime.timedelta(minutes=30)) and not growth_handle.judge_absent_this_period(201, period_time(3))
+      and not growth_handle.judge_absent_this_period(201, DEFAULT_TIME.replace(hour=13)) and not growth_handle.judge_absent_this_period(201, period_time(2, _next_day)))
+check("没有养成数据、角色不存在：False，且不惰性创建", not growth_handle.judge_absent_this_period(209, period_time(2))
+      and not growth_handle.judge_absent_this_period(999, period_time(2)) and no_growth.child_growth is None)
+g.last_absent_period = []
+student.work.work_type = 152
+clear_schedules()
+schedule_handle.set_selected_course(201, 2, 3, E6.COURSE_TYPE_THEORY, ROOM1)
+check("教室课：每周课表那一格空着（已停课）不算", not growth_handle.judge_selected_cell_real(201, 2, 3))
+schedule_handle.set_class_cell(ROOM1, 2, 3, 45, 101)
+check("每周课表排了课：算", growth_handle.judge_selected_cell_real(201, 2, 3))
+schedule_handle.set_class_cell(ROOM1, 2, 3, 45, -1)
+check("格子在、没排教师（降级自习）仍是一节课：算", growth_handle.judge_selected_cell_real(201, 2, 3))
+student.work.work_type = 21
+check("改了岗：课表残留也不算", not growth_handle.judge_selected_cell_real(201, 2, 3))
+student.work.work_type = 152
+check("没选课的格子、角色不存在：不算", not growth_handle.judge_selected_cell_real(201, 2, 4) and not growth_handle.judge_selected_cell_real(999, 2, 3))
+_lockable_pe = next(p for p in E6.PE_PLACE_DATA if p in game_config.config_facility_open_name_to_cid)
+_lockable_cid = game_config.config_facility_open_name_to_cid[_lockable_pe]
+schedule_handle.set_selected_course(201, 2, 4, E6.COURSE_TYPE_PE, _lockable_pe)
+check("体育课：场地开放时算", growth_handle.judge_selected_cell_real(201, 2, 4), _lockable_pe)
+cache.rhodes_island.facility_open[_lockable_cid] = False
+check("场地未开放：不算", not growth_handle.judge_selected_cell_real(201, 2, 4))
+cache.rhodes_island.facility_open[_lockable_cid] = True
+schedule_handle.set_selected_course(201, 2, 5, E6.COURSE_TYPE_INTEREST, E6.ENTERTAINMENT_PLAY_HOUSE)
+check("兴趣课过家家：萝莉算", growth_handle.judge_selected_cell_real(201, 2, 5))
+student.talent[103] = 0
+student.talent[104] = 1
+check("长成少女后活动条件不符：不算", not growth_handle.judge_selected_cell_real(201, 2, 5))
+student.talent[104] = 0
+student.talent[103] = 1
+_read_cid = next(cid for cid in game_config.config_entertainment if game_config.config_entertainment[cid].class_ok
+                 and schedule_handle.judge_interest_course_is_read_book({"course_type": E6.COURSE_TYPE_INTEREST, "target": cid}))
+schedule_handle.set_selected_course(201, 2, 6, E6.COURSE_TYPE_INTEREST, _read_cid)
+_saved_borrow = dict(cache.rhodes_island.book_borrow_dict)
+for _book_id in cache.rhodes_island.book_borrow_dict:
+    cache.rhodes_island.book_borrow_dict[_book_id] = 999
+check("读书兴趣课：书库此刻借空仍算（是一时的状态；上课判定 judge_personal_course_valid 则判没课）",
+      growth_handle.judge_selected_cell_real(201, 2, 6) and not schedule_handle.judge_personal_course_valid(201, {"course_type": E6.COURSE_TYPE_INTEREST, "target": _read_cid}))
+cache.rhodes_island.book_borrow_dict.update(_saved_borrow)
+for _p in (3, 4, 5, 6):
+    schedule_handle.clear_selected_course(201, 2, _p)
+clear_schedules()
+remove_character(209)
+
 finish()

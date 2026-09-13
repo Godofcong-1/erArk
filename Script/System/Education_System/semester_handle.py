@@ -217,25 +217,78 @@ def get_report_grade(attend_count: int, absent_count: int, level_up_count: int) 
 
 def get_report_incomplete_reason(character_id: int) -> str:
     """
-    取成绩单不全的理由（Plan 29 §3.4，用户拍板）
-    改了岗的女儿照常出成绩单，出勤、缺课与进步都只计她改岗前上过的课（改岗后既不记出勤也不记缺课，Plan 24 §3.10）；
+    取成绩单不全的理由（Plan 29 §3.4 用户拍板；Plan 30 §3.3 按学期初的岗位分情形）
+    改了岗的女儿照常出成绩单，出勤、缺课与进步都只计她在学生岗上时上过的课（不在学生岗时既不记出勤也不记缺课，Plan 24 §3.10）；
        这份成绩单是不全的，要在正文里写明为什么，玩家才不会把「出勤 3 节」误读成她这学期只上了 3 节就没再去。
-       只看结算这一刻的岗位：改岗的时刻不入档，学期中途改回学生岗的就当没改过
+       只看学期初（semester_base_work_type）与结算时两个时刻，改岗的时刻不入档：
+          结算时不在学生岗：学期初是学生岗、或本学期有出勤 / 缺课记录 →「本学期改任了…」；否则 →「本学期担任…，没有上课」
+             （学期初未知的旧档只能按有无记录推断；「中途进过学生岗又改出去」也靠记录认出来）
+          结算时在学生岗：学期初不在学生岗（且已知）→「本学期中途回到了学生岗…」；否则成绩单是完整的
+       学期中途改出去又改回来的，两个时刻都是学生岗，看不出来，不写理由
     Keyword arguments:
     character_id -- 孩子的角色id
     Return arguments:
-    str -- 理由文本；仍是学生岗（或角色不存在）时为空串
+    str -- 理由文本；成绩单完整（或角色不存在）时为空串
     """
     if character_id not in cache.character_data:
         return ""
     character_data: game_type.Character = cache.character_data[character_id]
     work_type = character_data.work.work_type
+    growth_data = character_data.child_growth
+    base_work_type = growth_data.semester_base_work_type if growth_data is not None else -1
     if work_type == education_constant.STUDENT_WORK_TYPE:
+        if base_work_type not in (-1, education_constant.STUDENT_WORK_TYPE):
+            return _("{0}本学期中途回到了学生岗，成绩单只计回来之后上过的课").format(character_data.name)
         return ""
+    work_name = ""
     if work_type and work_type in game_config.config_work_type:
-        return _("{0}本学期改任了{1}，改岗后不再上课，成绩单只计改岗前上过的课").format(
-            character_data.name, game_config.config_work_type[work_type].name)
-    return _("{0}本学期不再担任学生，之后没有再上课，成绩单只计那之前上过的课").format(character_data.name)
+        work_name = game_config.config_work_type[work_type].name
+    attend_count, absent_count = get_semester_attend(character_id)
+    if base_work_type == education_constant.STUDENT_WORK_TYPE or attend_count + absent_count:
+        if work_name:
+            return _("{0}本学期改任了{1}，改岗后不再上课，成绩单只计改岗前上过的课").format(character_data.name, work_name)
+        return _("{0}本学期不再担任学生，之后没有再上课，成绩单只计那之前上过的课").format(character_data.name)
+    if work_name:
+        return _("{0}本学期担任{1}，没有上课").format(character_data.name, work_name)
+    return _("{0}本学期不是学生，没有上课").format(character_data.name)
+
+
+def judge_adult_out_of_school(character_id: int) -> bool:
+    """
+    校验角色是不是已成年（少女期）且此刻不在学生岗（Plan 30 §3.3 Q1，用户拍板）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 是否成年且不在学生岗；角色不存在为False
+    功能: 学期结算（整学期都不在学生岗的不再出空成绩单）与「检查成绩单」的前提共用。
+          幼女 / 萝莉不在学生岗的不算：照 Plan 29 的用户口径照出成绩单并写明理由
+    """
+    if character_id not in cache.character_data:
+        return False
+    # 104 少女即成年后的阶段素质，成长链走完后一直挂着
+    if growth_handle.get_character_stage(character_id) != 104:
+        return False
+    return cache.character_data[character_id].work.work_type != education_constant.STUDENT_WORK_TYPE
+
+
+def judge_report_card_checkable(character_id: int) -> bool:
+    """
+    校验能不能对这个角色用「检查成绩单」（Plan 30 §3.3 Q1，用户拍板）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 能否检查；成年后不在学生岗、又没有待查看成绩单的为False，角色不存在为False
+    功能: 成年后不在学生岗的女儿不再每学期收到空成绩单，指令也就不再对她可用；以前的成绩单照旧在养成总览里翻。
+          例外是她还有一份没看过的成绩单（学期中途才离开学生岗，那一学期照出了）：养成总览写着「用「检查成绩单」指令」，
+             这时也挡掉的话待查看永远消不掉；看完 flag 清掉，指令随之不可用。
+          只管这一条：是不是女儿、是不是婴儿由指令前提串里的 target_is_player_daughter / t_baby_0 判。只读不写
+    """
+    if character_id not in cache.character_data:
+        return False
+    if not judge_adult_out_of_school(character_id):
+        return True
+    growth_data = cache.character_data[character_id].child_growth
+    return growth_data is not None and growth_data.report_card_flag
 
 
 def build_report_card(character_id: int) -> dict:
@@ -334,6 +387,8 @@ def reset_semester_baseline(character_id: int, semester_id: List[int]) -> None:
     growth_data.semester_base_absent = growth_data.absent_count
     growth_data.semester_base_ability = {
         ability_id: int(character_data.ability.get(ability_id, 0)) for ability_id in education_constant.SUBJECT_ABILITY_LIST}
+    # 学期初的岗位（Plan 30）：成绩单按它与结算时的岗位写不全的理由，学期结算据它认出整学期都不在学生岗的成年女儿
+    growth_data.semester_base_work_type = character_data.work.work_type
 
 
 def settle_semester_change() -> List[int]:
@@ -359,6 +414,13 @@ def settle_semester_change() -> List[int]:
             reset_semester_baseline(character_id, now_semester)
             continue
         if growth_data.semester_id == now_semester:
+            continue
+        # 成年后整学期都不在学生岗（学期初也不是、本学期没有出勤与缺课记录）：只重置基线，不出空成绩单、不置待查看、
+        #    不进学期结束提示（Plan 30 §3.3 Q1，用户拍板）。学期初未知（-1）的旧档同样按「没有记录」认；
+        #    学期中途才离开学生岗的有记录，照出最后一份。这份名单养成总览也在用，所以收窄只能加在这里
+        if (judge_adult_out_of_school(character_id) and growth_data.semester_base_work_type != education_constant.STUDENT_WORK_TYPE
+                and get_semester_attend(character_id) == (0, 0)):
+            reset_semester_baseline(character_id, now_semester)
             continue
         push_report_card(character_id, build_report_card(character_id))
         growth_data.report_card_flag = True

@@ -87,6 +87,27 @@ growth_uid_list = [uid for uid, data in game_config.config_official_event.items(
 check("养成事件 ≥ 250 条", len(growth_uid_list) >= 250, len(growth_uid_list))
 check("毕业典礼与成年纪念存在", E.GRADUATION_EVENT_UID in game_config.config_official_event and E.ADULT_MEMORIAL_EVENT_UID in game_config.config_official_event)
 check("期末桶 16 条且 sub_key 为保留键", len(game_config.config_official_event_by_sub_key.get((E.GROWTH_EVENT_DEPARTMENT, E.SEMESTER_EVENT_SUB_KEY), ())) >= 16)
+# Plan 30 §3.2：期末事件在学期基线重置之后推送，前提不许读本学期的养成数值 4 / 5 / 6
+import csv  # noqa: E402
+
+sys.path.insert(0, os.path.join(ROOT, "tools"))
+import official_event_check  # noqa: E402
+
+with open(os.path.join("data", "official_event", "期末.csv"), encoding="utf-8", newline="") as _event_file:
+    _event_rows = list(csv.reader(_event_file))
+_row_9 = dict(zip(_event_rows[0], next(r for r in _event_rows[5:] if r and r[0] == "9")))
+check("期末 9 / 10 的前提不再读本学期出勤率（此前带 6_L_70，推送时永远判不过）",
+      all("Growth|6_" not in game_config.config_official_event[uid]["premise"] for uid in ("期末9", "期末10")) and "Growth|6_" not in _row_9["premise"])
+_checker = official_event_check.Checker()
+_checker.check_row("期末.csv", 14, dict(_row_9), set(), set())
+check("校验工具：现在的期末 9 不报错", _checker.error_list == [], _checker.error_list)
+_bad_row = dict(_row_9)
+_bad_row["premise"] += "&CVP_A1_Growth|6_L_70"
+_bad_row["option_2_premise"] = "CVP_A1_Growth|4_GE_1"
+_bad_row["option_2_reason"] = "测试用"
+_checker = official_event_check.Checker()
+_checker.check_row("期末.csv", 14, _bad_row, set(), set())
+check("校验工具新规则：期末事件的主前提、选项前提读养成数值 4 / 5 / 6 各报一条", sum("期末事件在学期基线重置之后推送" in one for one in _checker.error_list) == 2, _checker.error_list)
 
 section("配置一致性")
 check("Entertainment.csv 带 class_ok 列且 16 项可排兴趣课", sum(1 for cid in game_config.config_entertainment if getattr(game_config.config_entertainment[cid], "class_ok", 0)) == 16)
@@ -116,7 +137,7 @@ check("10 间教室都在场景数据里", len(schedule_handle.get_classroom_lis
 check("四处体育课地点都存在", all(schedule_handle.get_course_place({"course_type": E.COURSE_TYPE_PE, "target": name}) for name in E.PE_PLACE_DATA))
 check("ArkEditor 前提表已同步实操课与养成前提", all(name in open(os.path.join("tools", "ArkEditor", "csv", "Premise.csv"), encoding="utf-8").read()
                                                   for name in ("sex_class_mode_on", "self_in_sex_class", "self_follow_mother", "self_have_classmate", "work_is_student",
-                                                               "teacher_have_class_now", "self_course_attend")))
+                                                               "teacher_have_class_now", "self_course_attend", "target_report_card_checkable")))
 check("ArkEditor 效果表已同步 552~556", all(f"\n{eid}," in open(os.path.join("tools", "ArkEditor", "csv", "Effect.csv"), encoding="utf-8").read() for eid in (552, 553, 554, 555, 556)))
 
 finish()

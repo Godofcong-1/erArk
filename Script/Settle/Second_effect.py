@@ -3006,7 +3006,7 @@ def handle_caught_skip_class(
     change_data: game_type.CharacterStatusChange,
 ):
     """
-    （翘课被抓用）翘课中的孩子与玩家同场景时被撞见，当场清掉翘课flag（本日剩余节次回去上课），
+    （翘课被抓用）翘课中的孩子与玩家同场景时被撞见，当场清掉翘课flag、记下被抓的日期（本日剩余节次回去上课、不再掷翘课，Plan 30），
     并按被抓的心虚加抑郁与恐怖
     Keyword arguments:
     character_id -- 角色id
@@ -3016,8 +3016,10 @@ def handle_caught_skip_class(
     growth_data = character_data.child_growth
     if growth_data is None or not growth_data.skip_class_flag:
         return
-    # 被抓个正着：翘课到此为止，本日剩余节次重新按课表走
+    # 被抓个正着：翘课到此为止，本日剩余节次重新按课表走。
+    #    只清 flag 的话之后每节照旧按概率掷，同一天里还会再翘；记下日期，class_ai.roll_skip_class 当天不再掷，次日自然失效
     growth_data.skip_class_flag = False
+    growth_data.skip_caught_day = cache.game_time.toordinal()
     # 心虚与害怕，数值取一节课的量级（45分钟），与翘课本身给的抑郁回落大致相抵
     base_chara_state_common_settle(character_id, 45, 19, change_data=change_data)
     base_chara_state_common_settle(character_id, 45, 18, change_data=change_data)

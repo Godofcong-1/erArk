@@ -1237,18 +1237,23 @@ def handle_self_follow_mother(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SELF_HAVE_ANY_COURSE)
 def handle_self_have_any_course(character_id: int) -> int:
     """
-    校验自己的个人课表非空（Plan 23，上课相关的公务事件用）
+    校验自己有课可上：学生岗，且个人课表上至少有一格是每周确有的课（Plan 23，上课相关的公务事件用；Plan 30 §3.6 收窄）
+    改了岗的女儿课表残留（改回学生岗即恢复）、每周课表清空后全是「已停课」的格子、上不成的个人式课，都不算有课，
+       不再抽到写「在上课」的养成事件
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
+    from Script.System.Education_System import growth_handle
+
     growth_data = cache.character_data[character_id].child_growth
     if growth_data is None or not growth_data.selected_course:
         return 0
-    for day_data in growth_data.selected_course.values():
-        if day_data:
-            return 1
+    for week_day, day_data in growth_data.selected_course.items():
+        for period in day_data:
+            if growth_handle.judge_selected_cell_real(character_id, week_day, period):
+                return 1
     return 0
 
 
@@ -1276,6 +1281,22 @@ def handle_target_not_player_daughter(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     return not handle_self_is_player_daughter(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_REPORT_CARD_CHECKABLE)
+def handle_target_report_card_checkable(character_id: int) -> int:
+    """
+    校验交互对象可以检查成绩单：不是成年后离开学生岗的女儿，她有待查看的成绩单时除外（Plan 30 §3.3 Q1，用户拍板）
+    是不是女儿、是不是婴儿不在这里判，指令 1036 的前提串里另有 target_is_player_daughter 与 t_baby_0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import semester_handle
+
+    character_data = cache.character_data[character_id]
+    return 1 if semester_handle.judge_report_card_checkable(character_data.target_character_id) else 0
 
 
 @add_premise(constant_promise.Premise.SELF_BIRTH_TYPE_EGG)

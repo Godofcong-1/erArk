@@ -129,8 +129,105 @@ report_list = semester_handle.settle_semester_change()
 check("学期切换：改岗萝莉照出成绩单，理由随快照冻结", report_list == [201] and semester_handle.get_last_report_card(201)["reason"]
       and semester_handle.get_last_report_card(201)["grade"] == E.REPORT_GRADE_GOOD, semester_handle.get_last_report_card(201))
 student.work.work_type = 152
+check("Plan 30：学期初在岗位 21、此刻回到学生岗 → 理由写「中途回到了学生岗」（此前改回学生岗就当没改过，不写理由）",
+      "中途回到了学生岗" in semester_handle.build_report_card(201)["reason"], semester_handle.build_report_card(201)["reason"])
+semester_handle.reset_semester_baseline(201, [2027, 3])
 text = semester_handle.get_report_card_text(201, semester_handle.build_report_card(201), False)
-check("学生岗：理由为空、正文没有那一行；旧档没有 reason 键的快照照常出正文",
+check("学生岗（学期初也是学生岗）：理由为空、正文没有那一行；旧档没有 reason 键的快照照常出正文",
       semester_handle.build_report_card(201)["reason"] == "" and "※ " not in text and "※ " not in semester_handle.get_report_card_text(201, {"year": 2026, "month": 9}, True))
+
+section("Plan 30 §3.1：成绩单的缺课含翘课")
+_day = datetime.date(2027, 3, 8)
+set_time(period_time(0, _day))
+semester_handle.reset_semester_baseline(201, [2027, 3])
+check("学期基线记下学期初的岗位", g.semester_base_work_type == 152)
+g.last_absent_period = []
+g.last_attend_period = []
+_skip_before = g.skip_count
+growth_handle.settle_course_attend(201)
+for _p in (1, 2, 3):
+    set_time(period_time(_p, _day))
+    class_ai.settle_absent(201, by_skip=True)
+card = semester_handle.build_report_card(201)
+check("上 1 节、翘 3 节：出勤 1 / 缺课 3、25%、待努力（此前翘课不计缺课，出勤率 100%、良好）",
+      card["attend"] == 1 and card["absent"] == 3 and card["rate"] == 25 and card["grade"] == E.REPORT_GRADE_POOR and g.skip_count == _skip_before + 3, card)
+check("节次外不记缺课", (set_time(DEFAULT_TIME.replace(hour=13)), class_ai.settle_absent(201, by_skip=True))[1] is False and g.skip_count == _skip_before + 3)
+
+section("Plan 30 §3.3：改岗理由按学期初的岗位分情形")
+_w21 = game_config.config_work_type[21].name
+
+
+def reason_of(base_work_type: int, now_work_type: int, have_record: bool) -> str:
+    """
+    按「学期初岗位 / 结算时岗位 / 本学期有无出勤记录」取理由
+    Keyword arguments:
+    base_work_type -- 学期初的岗位，-1 为未知
+    now_work_type -- 结算时的岗位
+    have_record -- 本学期是否有一节出勤
+    Return arguments:
+    str -- 理由文本
+    """
+    g.semester_base_work_type = base_work_type
+    student.work.work_type = now_work_type
+    g.semester_base_attend = g.attend_class_count - (1 if have_record else 0)
+    g.semester_base_absent = g.absent_count
+    return semester_handle.get_report_incomplete_reason(201)
+
+
+check("学期初学生岗 → 结算时岗位 21：「本学期改任了」（有无记录都是）", reason_of(152, 21, True).startswith(_("{0}本学期改任了{1}").format(student.name, _w21))
+      and "本学期改任了" in reason_of(152, 21, False))
+check("学期初学生岗 → 结算时岗位为无：「不再担任学生」", "不再担任学生" in reason_of(152, 0, False))
+check("整学期在岗位 21、本学期没有记录：「本学期担任…，没有上课」（此前写「本学期改任了」）", reason_of(21, 21, False) == _("{0}本学期担任{1}，没有上课").format(student.name, _w21),
+      reason_of(21, 21, False))
+check("整学期岗位为无：「本学期不是学生，没有上课」", reason_of(0, 0, False) == _("{0}本学期不是学生，没有上课").format(student.name))
+check("学期初岗位 21、结算时岗位 21 但本学期有记录（中途进过学生岗又出去）：按「改任了」写", "本学期改任了" in reason_of(21, 21, True))
+check("学期初岗位 21 → 结算时学生岗：「中途回到了学生岗」", "中途回到了学生岗" in reason_of(21, 152, True))
+check("学期初与结算时都是学生岗：没有理由", reason_of(152, 152, True) == "")
+check("旧档学期初未知（-1）→ 结算时岗位 21：有记录写「改任了」、没有记录写「担任…，没有上课」",
+      "本学期改任了" in reason_of(-1, 21, True) and "没有上课" in reason_of(-1, 21, False))
+check("旧档学期初未知 → 结算时学生岗：没有理由", reason_of(-1, 152, False) == "")
+
+section("Plan 30 §3.3 Q1（用户拍板）：成年后整学期不在学生岗的女儿不再出成绩单，检查成绩单只对有待查看的开放")
+grown_away = make_character(207, "离开学生岗的成年女儿", 21, daughter=True, stage=104, mother_id=102, born_days=500)
+grown_student = make_character(208, "仍在学生岗的成年女儿", 152, daughter=True, stage=104, mother_id=102, born_days=500)
+set_time(datetime.datetime(2027, 6, 1, 9, 0))
+student.work.work_type = 21
+semester_handle.reset_semester_baseline(201, [2027, 6])
+g.report_card_flag = False
+check("第一次记账：成年女儿照立基线、记下学期初岗位", semester_handle.settle_semester_change() == []
+      and growth_handle.get_child_growth(207).semester_id == [2027, 6] and growth_handle.get_child_growth(207).semester_base_work_type == 21)
+check("judge_adult_out_of_school：成年且不在学生岗才成立（萝莉改岗不算）", semester_handle.judge_adult_out_of_school(207)
+      and not semester_handle.judge_adult_out_of_school(208) and not semester_handle.judge_adult_out_of_school(201) and not semester_handle.judge_adult_out_of_school(999))
+set_time(datetime.datetime(2027, 9, 1, 9, 0))
+report_list = semester_handle.settle_semester_change()
+_g207 = growth_handle.get_child_growth(207)
+check("成年且整学期不在学生岗：不出成绩单、不置待查看、不进学期结束名单，只把基线挪到新学期（此前每学期一份 0/0「本学期改任了」）",
+      207 not in report_list and _g207.report_card_history == [] and not _g207.report_card_flag and _g207.semester_id == [2027, 9], report_list)
+check("成年仍在学生岗的女儿：照出", 208 in report_list and len(growth_handle.get_child_growth(208).report_card_history) == 1)
+check("萝莉整学期不在学生岗：照出（Plan 29 口径），理由「本学期担任…，没有上课」",
+      201 in report_list and semester_handle.get_last_report_card(201)["reason"] == _("{0}本学期担任{1}，没有上课").format(student.name, _w21),
+      semester_handle.get_last_report_card(201).get("reason"))
+growth_handle.get_child_growth(208).report_card_flag = False
+growth_handle.get_child_growth(208).attend_class_count += 2
+grown_student.work.work_type = 21
+set_time(datetime.datetime(2027, 12, 1, 9, 0))
+report_list = semester_handle.settle_semester_change()
+_last_208 = semester_handle.get_last_report_card(208)
+check("成年女儿学期中途才离开学生岗（本学期有出勤）：照出最后一份，理由「本学期改任了」，待查看置位",
+      208 in report_list and _last_208.get("attend") == 2 and "本学期改任了" in _last_208.get("reason", "") and growth_handle.get_child_growth(208).report_card_flag, _last_208)
+check("检查成绩单：有待查看时仍可用，看完就不可用；萝莉改了岗照旧可用",
+      semester_handle.judge_report_card_checkable(208) and not semester_handle.judge_report_card_checkable(207) and semester_handle.judge_report_card_checkable(201)
+      and not semester_handle.judge_report_card_checkable(999))
+growth_handle.get_child_growth(208).report_card_flag = False
+check("看完之后（flag 清掉）：不可用", not semester_handle.judge_report_card_checkable(208))
+_g207.semester_base_work_type = -1
+set_time(datetime.datetime(2028, 3, 1, 9, 0))
+report_list = semester_handle.settle_semester_change()
+check("旧档学期初岗位未知（-1）、本学期 0/0 的成年女儿同样不出；以前的成绩单照旧留着",
+      207 not in report_list and _g207.report_card_history == [] and 208 not in report_list and len(growth_handle.get_child_growth(208).report_card_history) == 2,
+      report_list)
+student.work.work_type = 152
+remove_character(207)
+remove_character(208)
 
 finish()

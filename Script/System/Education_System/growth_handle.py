@@ -248,13 +248,15 @@ def settle_student_class_gain(
     change_data -- 结算信息记录对象
     change_data_to_target_change -- 交互对象的结算信息记录对象
     count_attend -- 是否计一节出勤。只有课表排了课的节次才计（2026-09-12 第五轮）：
-                    日程活动「上课（无课时自习）」的自习照常给收益，但不算上过一节课
+                    日程活动「上课（无课时自习）」的自习照常给收益，但不算上过一节课；
+                    这一节已记了缺课的也不计（Plan 30）
     Return arguments:
     bool -- 是否真的结算了（同一节已结算过则为False）
     功能: 节次内按 last_attend_period 去重，同一节课只结算一次（2026-09-12 第五轮）。
              NPC 的行为结算发生在行为**开始**时：教师开讲那一刻的广播（512）只发得到已经坐下听课的人，
              晚到的学生要靠自己开始听课时的那一侧结算（557）；两条路都会走到这里，不去重就会发两份。
-          节次外（玩家在午休或晚上手动授课）不去重
+          节次外（玩家在午休或晚上手动授课）不去重。
+          同一节只落一种记录（Plan 30）：开课时体力不足记了缺课、休完才回来上课的，收益照给，出勤不再记
     """
     if not add_time:
         return False
@@ -263,10 +265,10 @@ def settle_student_class_gain(
     from Script.Design import game_time
 
     growth_data = get_child_growth(student_id)
+    now_time = cache.character_data[student_id].behavior.start_time or cache.game_time
     period = game_time.get_class_period(student_id)
     now_mark = []
     if period != -1:
-        now_time = cache.character_data[student_id].behavior.start_time or cache.game_time
         now_mark = [now_time.toordinal(), period]
         if growth_data.last_attend_period == now_mark:
             return False
@@ -310,12 +312,67 @@ def settle_student_class_gain(
             change_data_to_target_change=change_data_to_target_change,
         )
 
-    # 记下这一节已结算过，并按需记一节出勤
+    # 记下这一节已结算过，并按需记一节出勤；这一节已记了缺课的不再记出勤（Plan 30）
     if now_mark:
         growth_data.last_attend_period = now_mark
-    if count_attend:
+    if count_attend and not (now_mark and judge_absent_this_period(student_id, now_time)):
         growth_data.attend_class_count += 1
     return True
+
+
+def judge_absent_this_period(character_id: int, now_time) -> bool:
+    """
+    校验这一节是不是已经记过缺课（Plan 30 §3.4：同一节只落一种记录）
+    Keyword arguments:
+    character_id -- 角色id
+    now_time -- 参照时刻，取它的日期与节次
+    Return arguments:
+    bool -- 这一节已记了缺课（体力缺课或翘课）为True；角色不存在、没有养成数据、不在节次内为False
+    功能: 体力闸在开课那一刻判，原地休息 30 分钟后体力可能回到 30% 以上，这一节剩下的时间里再回去上课。
+          三个出勤写入点（settle_student_class_gain / settle_course_attend / sex_class_handle.settle_attend）都先问它：
+             收益照给、出勤不记，免得同一节在成绩单上既算一次缺课又算一次出勤。
+          只读不写，不惰性创建养成数据
+    """
+    from Script.Design import game_time
+
+    if character_id not in cache.character_data:
+        return False
+    growth_data = cache.character_data[character_id].child_growth
+    if growth_data is None:
+        return False
+    period = game_time.get_class_period_by_time(now_time)
+    if period == -1:
+        return False
+    return growth_data.last_absent_period == [now_time.toordinal(), period]
+
+
+def judge_selected_cell_real(character_id: int, week_day: int, period: int) -> bool:
+    """
+    校验个人课表上的一格是不是每周确有的一节课（Plan 30 §3.6：「有课」「同班同学」的判据）
+    Keyword arguments:
+    character_id -- 角色id
+    week_day -- 星期0~6
+    period -- 节次0~8
+    Return arguments:
+    bool -- 学生岗、这一格选了课、且那节课每周确实有为True
+    功能: 改了岗的女儿课表残留（Plan 24 §3.10，改回学生岗即恢复），她不会去上课，不算有课；
+          班级式课看每周课表那一格排没排课（不叠加当天的临时课覆盖层，已停课的不算）；
+          个人式课看活动条件与上课地点（schedule_handle.judge_personal_course_real），不看此刻借不借得到书——那是一时的状态。
+          只读不写，前提路径上可以调用
+    """
+    from Script.System.Education_System import schedule_handle
+
+    if character_id not in cache.character_data:
+        return False
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
+        return False
+    course = schedule_handle.get_selected_course(character_id, week_day, period)
+    if course is None:
+        return False
+    if course[0] in education_constant.CLASSROOM_COURSE_TYPE_SET:
+        return schedule_handle.get_class_cell(course[1], week_day, period, include_temp=False) is not None
+    return schedule_handle.judge_personal_course_real(character_id, {"course_type": course[0], "target": course[1]})
 
 
 def settle_course_attend(character_id: int) -> bool:
@@ -327,9 +384,10 @@ def settle_course_attend(character_id: int) -> bool:
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
-    bool -- 是否真的记上了（不是女儿也不是学生岗、不在节次内、同一节已记过则为False）
+    bool -- 是否真的记上了（不是女儿也不是学生岗、不在节次内、同一节已记过、这一节已记了缺课则为False）
     功能: 守卫与 sex_class_handle.settle_attend 相同，只给女儿或学生岗记；
-          节次内按 last_attend_period 去重，同一节被打断后再回去上只记一次；与教室课共用这个标记也不会互相挤占——一格只有一门课
+          节次内按 last_attend_period 去重，同一节被打断后再回去上只记一次；与教室课共用这个标记也不会互相挤占——一格只有一门课。
+          这一节已记了缺课（开课时体力不足、休完回来）的不记，也不写标记，行为照常派出（Plan 30，同一节只落一种记录）
     """
     from Script.Design import game_time
 
@@ -342,6 +400,8 @@ def settle_course_attend(character_id: int) -> bool:
     if period == -1:
         return False
     now_time = character_data.behavior.start_time or cache.game_time
+    if judge_absent_this_period(character_id, now_time):
+        return False
     now_mark = [now_time.toordinal(), period]
     growth_data = get_child_growth(character_id)
     if growth_data.last_attend_period == now_mark:
@@ -700,6 +760,9 @@ def get_growth_value(character_id: int, value_id: int) -> float:
     # 成绩单待查看（Plan 27 §3.6）：没有养成数据的走上面的提前返回，同样是 0
     if value_id == education_constant.GROWTH_VALUE_REPORT_PENDING:
         return 1.0 if growth_data.report_card_flag else 0.0
+    # 累计翘课节数（Plan 30）：翘掉的课也记在编号 1 的累计缺课里，要单看翘课读这一项
+    if value_id == education_constant.GROWTH_VALUE_SKIP:
+        return float(growth_data.skip_count)
     return 0.0
 
 

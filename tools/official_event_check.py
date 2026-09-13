@@ -3,7 +3,7 @@
 
 事件表有一堆**静默失败**的坑：`department` 写成非数字会让事件永远抽不中且不报错、
 空着的选项列在构建时会被删掉、正文里的裸 `{}` 会在绘制时抛异常、
-所有选项都带前提的事件会反复弹出……手写两百多条时这些错误几乎必然发生，
+所有选项都带前提的事件会反复弹出、期末事件读本学期的养成数值会永远判不过……手写两百多条时这些错误几乎必然发生，
 所以每写完一批就跑一次本工具。
 
 用法（仓库根目录）：
@@ -45,6 +45,17 @@ GROWTH_DEPARTMENT = 15
 
 CHILD_SUB_KEY = {0, 101, 102, 103}
 """ 未成年阶段的子桶键：这些事件不允许改能力与素质（选错不该掉能力） """
+
+SEMESTER_SUB_KEY = 200
+""" 期末桶的子桶键（与 education_constant.SEMESTER_EVENT_SUB_KEY 一致） """
+
+SEMESTER_VALUE_ID = {4, 5, 6}
+""" 期末事件的前提不许读的养成数值：本学期听课 / 缺课 / 出勤率（Plan 30）。
+    期末事件在跨天结算里、学期基线重置之后才推送，这几项读的已是新学期（0/0，出勤率按 100）；
+    刚结束的学期只能从成绩单读（编号 7 档位、8 升级门数） """
+
+GROWTH_VALUE_RE = re.compile(r"CVP_A[12]_Growth\|(\d+)_")
+""" 从前提串里取养成数值编号 """
 
 DORM_SUB_KEY = {102, 103, 104}
 """ 幼女期起孩子住自己的宿舍，正文不该再出现育儿室 """
@@ -362,6 +373,8 @@ class Checker:
         if department == GROWTH_DEPARTMENT and sub_key in DORM_SUB_KEY and "育儿室" in text and cid not in DORM_TEXT_ALLOW.get(file_name, set()):
             self.error(path, line, "幼女期起孩子住自己的宿舍，正文不该再出现育儿室（确实在写搬离育儿室的话，把 cid 加进 DORM_TEXT_ALLOW）")
         self.check_premise_text(path, line, "事件前提", row.get("premise", "").strip())
+        if department == GROWTH_DEPARTMENT and sub_key == SEMESTER_SUB_KEY:
+            self.check_semester_premise(path, line, row)
         have_free_option = False
         option_count = 0
         for index in range(1, 5):
@@ -373,6 +386,21 @@ class Checker:
             self.error(path, line, f"只有 {option_count} 个选项，至少要有2个")
         if not have_free_option:
             self.error(path, line, "所有选项都带前提，全被挡住时事件会跳过且不写履历，于是第二天再被抽中反复弹出")
+
+    def check_semester_premise(self, path: str, line: int, row: dict):
+        """
+        期末事件的主前提与四个选项前提不许读本学期的养成数值（Plan 30）
+        Keyword arguments:
+        path -- 文件路径
+        line -- 行号
+        row -- 该行的字段dict
+        Return arguments:
+        无
+        """
+        for field in ["premise"] + [f"option_{index}_premise" for index in range(1, 5)]:
+            for value_id in GROWTH_VALUE_RE.findall(row.get(field, "")):
+                if int(value_id) in SEMESTER_VALUE_ID:
+                    self.error(path, line, f"{field} 读了养成数值 {value_id}：期末事件在学期基线重置之后推送，养成数值 4 / 5 / 6 读的是新学期；看刚结束的学期用编号 7 / 8")
 
     def check_dir(self):
         """

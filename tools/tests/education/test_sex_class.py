@@ -270,4 +270,24 @@ check("每次开课单独记一次（用户拍板，复查时别当成重复计�
 student_a.sp_flag.is_h = False
 cache.rhodes_island.temp_sex_class = {}
 
+section("Plan 30 §3.4：这一节已记缺课的学生，开课与 722 晚到都不记出勤")
+cache.sex_class_mode = False
+cache.group_sex_mode = False
+move_to(0, classroom_path(ROOM_P))
+move_to(201, classroom_path(ROOM_P))
+set_time(period_time(2) + datetime.timedelta(minutes=5))
+growth_handle.get_child_growth(201).last_absent_period = [cache.game_time.toordinal(), 2]
+_attend = growth_handle.get_child_growth(201).attend_class_count
+sex_class_handle.start_sex_class(70, [201])
+check("开课时到场的学生这一节已缺课：不记出勤（开课传 cache.game_time）", growth_handle.get_child_growth(201).attend_class_count == _attend)
+sex_class_handle.end_sex_class()
+student_a.sp_flag.is_h = False
+sex_class_handle.settle_attend(201)
+check("722 晚到（取学生的行为开始时刻）：同一节同样不记", growth_handle.get_child_growth(201).attend_class_count == _attend)
+set_time(period_time(3) + datetime.timedelta(minutes=5))
+sex_class_handle.settle_attend(201)
+check("下一节没缺课：照常记", growth_handle.get_child_growth(201).attend_class_count == _attend + 1)
+growth_handle.get_child_growth(201).last_absent_period = []
+cache.rhodes_island.temp_sex_class = {}
+
 finish()

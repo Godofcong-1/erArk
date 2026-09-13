@@ -19,6 +19,8 @@ judge_student_pullable（玩家授课与教师 303 共用）/ judge_student_join
        这是**被动**缺课，不置翘课flag、不触发「翘课被抓」事件。
     2. 心情闸（方案 §3.19）：苦痛(17)+恐怖(18)+抑郁(19)+反感(20)四个负面状态的**等级**和
        越高，越可能主动翘课。判定写法照 `Script/Design/instuct_judege.py:103~104` 的实行值修正。
+       翘掉的每一节也记一节缺课（Plan 30，记在 714 状态机里，与体力缺课同一节只记一次）；
+       被博士撞见的当天，剩余节次不再翘（roll_skip_class 看 skip_caught_day）。
 
 两道闸的顺序不能反：体力不足是"去不了"，心情糟糕是"不想去"，一个孩子累到爬不起来时
 不该再被算一次"叛逆"。
@@ -156,25 +158,35 @@ def judge_in_scene(character_id: int, scene_name: str) -> bool:
     return cache.scene_data[now_scene_str].scene_name == scene_name
 
 
-def settle_absent(character_id: int) -> None:
+def settle_absent(character_id: int, by_skip: bool = False) -> bool:
     """
     记一节缺课。同一节课只记一次——休息行为30分钟、一节课45分钟，
     不做去重会在同一节课里被反复累加，成绩单的出勤率就废了
+    体力缺课（721）与翘课（714，Plan 30）共用 last_absent_period 这一个标记：一节只落一次缺课，
+       同一节先体力缺课、休完又掷中翘课的，累计翘课数也不再加
     Keyword arguments:
     character_id -- 角色id
+    by_skip -- 是否为翘课，记上时另给累计翘课数（skip_count）+1
     Return arguments:
-    无
+    bool -- 是否真的记上了；同一节已记过、不在节次内为 False
     """
     growth_data = growth_handle.get_child_growth(character_id)
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = character_data.behavior.start_time
     if now_time is None:
         now_time = cache.game_time
-    now_mark = [now_time.toordinal(), game_time.get_class_period(character_id)]
+    period = game_time.get_class_period(character_id)
+    # 两个调用方都只在节次内派发，这里兜一道：节次外记下的标记会占掉当天真正的缺课
+    if period == -1:
+        return False
+    now_mark = [now_time.toordinal(), period]
     if growth_data.last_absent_period == now_mark:
-        return
+        return False
     growth_data.last_absent_period = now_mark
     growth_data.absent_count += 1
+    if by_skip:
+        growth_data.skip_count += 1
+    return True
 
 
 def judge_must_attend_sex_class(character_id: int, now_time=None) -> bool:
@@ -411,16 +423,21 @@ def roll_skip_class(character_id: int, now_time=None) -> bool:
     bool -- 是否掷中
     功能: 前提在一次决策里被「翘课」「照常上课」多行读取，每次调用都重掷的话两行可能同时不成立（上课时间去闲逛）
           或同时成立（随机二选一）；定了种子也让每节的翘课概率严格等于表值。
-          教师替学生判时种子相同，所以两边判出来的结果一定一致
+          教师替学生判时种子相同，所以两边判出来的结果一定一致。
+          当天翘课已被博士撞见（623 写 skip_caught_day）的，剩余节次一律不掷（Plan 30，一期方案 §3.19「当日剩余节次回去上课」），次日自然失效
     """
     rate = get_skip_class_rate(character_id)
     if rate <= 0:
         return False
+    character_data: game_type.Character = cache.character_data[character_id]
     if now_time is None:
-        character_data: game_type.Character = cache.character_data[character_id]
         now_time = character_data.behavior.start_time
         if now_time is None:
             now_time = cache.game_time
+    # 前提路径上只读 child_growth，不走会惰性创建养成数据的 get_child_growth
+    growth_data = character_data.child_growth
+    if growth_data is not None and growth_data.skip_caught_day == now_time.toordinal():
+        return False
     period = game_time.get_class_period_by_time(now_time)
     return random.Random(f"{character_id}|{now_time.toordinal()}|{period}").random() < rate
 

@@ -562,7 +562,8 @@ class Class_Schedule_Panel:
                 mark = "√" if character_id in must_attend else "  "
                 # 会顶掉她原本的哪一节——按钮里只放一个「*」，明细汇总到下方。
                 #    只标确有的课（Plan 28 §3.5）：必修覆盖顶掉的是这一节的任何课，体育 / 兴趣 / 实习课也一样；
-                #    每周课表上已停课的教室课、上不成的个人式课本来就算没课，不标
+                #    每周课表上已停课的教室课、上不成的个人式课本来就算没课，不标。
+                #    个人式课不看书库此刻借没借空（Plan 30 §3.7）：顶掉的是排在某一天的那节课，那天借不借得到书排课时不知道
                 old_course = schedule_handle.get_selected_course(character_id, week_day, period)
                 replace_text = ""
                 if old_course is not None and old_course[0] in education_constant.CLASSROOM_COURSE_TYPE_SET:
@@ -574,7 +575,7 @@ class Class_Schedule_Panel:
                         replace_text = _("{0}→{1}").format(character_data.name, old_course[1])
                 elif old_course is not None:
                     old_course_data = {"course_type": old_course[0], "target": old_course[1]}
-                    if schedule_handle.judge_personal_course_valid(character_id, old_course_data):
+                    if schedule_handle.judge_personal_course_real(character_id, old_course_data):
                         replace_text = _("{0}→{1}").format(character_data.name, character_info_head.get_course_text(old_course_data))
                 replace_mark = "*" if replace_text else ""
                 if replace_text:

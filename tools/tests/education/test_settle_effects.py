@@ -375,4 +375,42 @@ check("对照：萝莉的同一格是一节课，这次自习计出勤", student
 schedule_handle.clear_selected_course(201, cache.game_time.weekday(), 0)
 reset_mark(201)
 
+section("Plan 30 §3.4 / §3.5：这一节已记缺课的回来上课照给收益、不计出勤；623 记下被抓的日期")
+set_time(period_time(0))
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_class_cell(ROOM1, 0, 1, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+schedule_handle.set_selected_course(201, 0, 1, E.COURSE_TYPE_THEORY, ROOM1)
+move_to(101, classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+reset_mark(201)
+student_a.child_growth.last_absent_period = []
+class_ai.settle_absent(201)
+student_a.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+_exp_before = student_a.experience.get(exp_45, 0)
+_attend_before = student_a.child_growth.attend_class_count
+EFFECT[512](101, 45, change, cache.game_time)
+check("本节开课时体力缺课、休完回来：512 广播照给收益、不计出勤", student_a.experience.get(exp_45, 0) > _exp_before and student_a.child_growth.attend_class_count == _attend_before,
+      (student_a.experience.get(exp_45, 0) - _exp_before, student_a.child_growth.attend_class_count - _attend_before))
+reset_mark(201)
+teacher.behavior.behavior_id = constant.Behavior.TEACH
+_exp_before = student_a.experience.get(exp_45, 0)
+EFFECT[557](201, 45, change, cache.game_time)
+check("557 晚到补结算同样照给收益、不计出勤", student_a.experience.get(exp_45, 0) > _exp_before and student_a.child_growth.attend_class_count == _attend_before)
+set_time(period_time(1))
+reset_mark(201)
+EFFECT[557](201, 45, change, cache.game_time)
+check("下一节没缺课：照常计出勤", student_a.child_growth.attend_class_count == _attend_before + 1)
+teacher.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+student_a.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+student_a.child_growth.skip_class_flag = True
+SECOND[SE.CAUGHT_SKIP_CLASS](201, change)
+check("623 被抓：记下当天的日期序数（当天剩余节次不再掷翘课）", student_a.child_growth.skip_caught_day == cache.game_time.toordinal() and not student_a.child_growth.skip_class_flag)
+student_a.child_growth.skip_caught_day = 0
+student_a.child_growth.last_absent_period = []
+schedule_handle.clear_selected_course(201, 0, 0)
+schedule_handle.clear_selected_course(201, 0, 1)
+clear_schedules()
+reset_mark(201)
+
 finish()

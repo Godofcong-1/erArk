@@ -643,6 +643,20 @@ def judge_course_need_pass(character_id: int, course: dict) -> bool:
     return schedule_template_handle.judge_activity_need_pass(character_id, course["target"])
 
 
+def judge_personal_course_real(character_id: int, course: dict) -> bool:
+    """
+    校验一节个人式课（体育/兴趣/实习）是不是确有的课：兴趣课的活动条件相符、上课地点解析得出（Plan 30 §3.6）
+    Keyword arguments:
+    character_id -- 角色id
+    course -- 课程dict，至少含 course_type 与 target
+    Return arguments:
+    bool -- 是否确有
+    功能: 与 judge_personal_course_valid 的区别只在不看读书课此刻借不借得到书——那是一时的状态，
+          必修名单的「*会顶替」与「有课」「同班同学」前提看的是排在课表上的那节课本身，不该随书库借没借空忽隐忽现。只读不写
+    """
+    return judge_course_need_pass(character_id, course) and bool(get_course_place(course))
+
+
 def judge_personal_course_valid(character_id: int, course: dict) -> bool:
     """
     校验一节个人式课（体育/兴趣/实习）这名学生上不上得成（Plan 28 §3.2）
@@ -651,12 +665,13 @@ def judge_personal_course_valid(character_id: int, course: dict) -> bool:
     course -- 课程dict，至少含 course_type 与 target，结构见 get_now_course
     Return arguments:
     bool -- 兴趣课的活动条件相符、上课地点解析得出（含场所已开放）、兴趣课读书借得到书为True
-    功能: get_course_at 判不过就视为没课；必修名单的「*会顶替」也用它判那一节是不是确有的课。
+    功能: get_course_at 判不过就视为没课。
           只读不写，前提路径上可以调用。实习课本节无人在岗时地点仍解析得出（回落到已开放的那间），照旧算一节课。
           兴趣课的行为是读书时再要求借得到书（手上有借着的书，或书库里有没被借走、读得了、没读完的书，Plan 29 §3.2）：
-             借不到书的这一节视为没课，与 Plan 28 的口径相同；真正借书在状态机 716 里做，这里一行都不写
+             借不到书的这一节视为没课，与 Plan 28 的口径相同；真正借书在状态机 716 里做，这里一行都不写。
+          必修名单的「*会顶替」、「有课」「同班同学」看的是排在课表上的那节课本身，改用不看借书的 judge_personal_course_real（Plan 30）
     """
-    if not (judge_course_need_pass(character_id, course) and bool(get_course_place(course))):
+    if not judge_personal_course_real(character_id, course):
         return False
     if judge_interest_course_is_read_book(course):
         # UI 层模块，顶层 import 会成环，照现有写法延迟

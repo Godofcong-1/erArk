@@ -38,6 +38,8 @@ check("t_work_is_student / t_work_is_teacher", HP("t_work_is_student", 0) == 1 a
 check("女儿前提", HP("self_is_player_daughter", 201) == 1 and HP("self_is_player_daughter", 301) == 0 and HP("self_not_player_daughter", 301) == 1
       and HP("target_is_player_daughter", 0) == 1 and HP("target_not_player_daughter", 0) == 0)
 check("同胞前提", HP(P.SELF_HAVE_SIBLING_CHILD, 201) == 1 and HP(P.SELF_HAVE_SIBLING_CHILD, 301) == 0)
+# 同学只算每周课表上确有的课（Plan 30 §3.6），这一格要在全局课表上排上；下一段会重排这一格
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
 schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
 schedule_handle.set_selected_course(202, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
 check("同学前提", HP(P.SELF_HAVE_CLASSMATE, 201) == 1)
@@ -239,5 +241,44 @@ set_time(period_time(0))
 student.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
 check("听课而此刻没课（玩家在节次外授课拉来的）仍写「上课中」", character_info_head.get_now_class_tip(201) == (False, _("上课中")), character_info_head.get_now_class_tip(201))
 student.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+
+section("Plan 30：self_have_any_course 只看学生岗的真课、CVP Growth|24、检查成绩单的对象（Q1）")
+clear_schedules()
+set_time(period_time(0))
+student.work.work_type = 152
+growth_handle.get_child_growth(201).selected_course = {}
+schedule_handle.set_selected_course(201, 1, 2, E.COURSE_TYPE_THEORY, ROOM1)
+check("个人课表只有一格已停课的教室课：self_have_any_course 不成立（此前课表非空即成立）", HP(P.SELF_HAVE_ANY_COURSE, 201) == 0)
+schedule_handle.set_class_cell(ROOM1, 1, 2, 45, 101)
+check("每周课表排上：成立", HP(P.SELF_HAVE_ANY_COURSE, 201) == 1)
+student.work.work_type = 21
+check("改了岗：课表还在也不成立", HP(P.SELF_HAVE_ANY_COURSE, 201) == 0)
+student.work.work_type = 152
+schedule_handle.clear_selected_course(201, 1, 2)
+clear_schedules()
+growth_handle.get_child_growth(201).skip_count = 3
+check("CVP Growth|24 累计翘课数", HP("CVP_A1_Growth|24_GE_3", 201) == 1 and HP("CVP_A1_Growth|24_G_3", 201) == 0 and HP("CVP_A1_Growth|24_E_0", 301) == 1)
+growth_handle.get_child_growth(201).skip_count = 0
+check("前提 target_report_card_checkable 已注册、挂在 1036 的前提串末尾", "target_report_card_checkable" in constant.handle_premise_data
+      and P.TARGET_REPORT_CARD_CHECKABLE == "target_report_card_checkable" and report_config.premise_set.split("|")[-1] == "TARGET_REPORT_CARD_CHECKABLE", report_config.premise_set)
+report_tokens = [getattr(P, name) for name in report_config.premise_set.split("|")]
+grown = make_character(206, "成年女儿", 21, daughter=True, stage=104, mother_id=102, born_days=500)
+pl.target_character_id = 206
+check("成年后不在学生岗的女儿：检查成绩单不成立（用户拍板）", not all(HP(token, 0) for token in report_tokens) and HP(P.TARGET_REPORT_CARD_CHECKABLE, 0) == 0)
+growth_handle.get_child_growth(206).report_card_flag = True
+check("她还有一份没看过的成绩单：成立（否则养成总览的待查看永远消不掉）", all(HP(token, 0) for token in report_tokens))
+growth_handle.get_child_growth(206).report_card_flag = False
+grown.work.work_type = 152
+check("成年后仍在学生岗的女儿：成立", all(HP(token, 0) for token in report_tokens))
+student.work.work_type = 21
+pl.target_character_id = 201
+check("改了岗的萝莉女儿：照旧成立（照出成绩单，Plan 29）", all(HP(token, 0) for token in report_tokens))
+student.work.work_type = 152
+other_student = make_character(302, "不是女儿的成年学生", 152)
+pl.target_character_id = 302
+check("不是女儿的学生岗角色：不成立（target_is_player_daughter 挡住，用户拍板维持）", not all(HP(token, 0) for token in report_tokens) and HP("target_is_player_daughter", 0) == 0)
+pl.target_character_id = 0
+remove_character(206)
+remove_character(302)
 
 finish()

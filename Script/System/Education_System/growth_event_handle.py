@@ -110,19 +110,26 @@ def get_classmate_list(character_id: int) -> List[int]:
 
     同学关系由课表反查，不落成字段——课表一改，同学关系就跟着变，
        存成字段反而要多一处同步点
+    只认双方都在学生岗、且那一格是每周确有的课（Plan 30 §3.6，growth_handle.judge_selected_cell_real）：
+       改了岗的女儿课表残留、已停课的格子、上不成的个人式课都还躺在课表上，那都不是在一起上课
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     List[int] -- 同学的角色id列表
     """
+    from Script.System.Education_System import growth_handle
+
     growth_data = cache.character_data[character_id].child_growth
     if growth_data is None or not growth_data.selected_course:
         return []
-    # 把自己的课表压成 (星期, 节次, 课型, 目标) 的集合，再看别人有没有踩在同一个格子上
+    # 把自己确有的课压成 (星期, 节次, 课型, 目标) 的集合，再看别人有没有在同一个格子上确有这节课
     self_slot = set()
     for week_day, day_data in growth_data.selected_course.items():
         for period, course in day_data.items():
-            self_slot.add((week_day, period, course[0], str(course[1])))
+            if growth_handle.judge_selected_cell_real(character_id, week_day, period):
+                self_slot.add((week_day, period, course[0], str(course[1])))
+    if not self_slot:
+        return []
     result = []
     for other_id in cache.npc_id_got:
         if other_id == character_id:
@@ -135,7 +142,7 @@ def get_classmate_list(character_id: int) -> List[int]:
         for week_day, day_data in other_growth.selected_course.items():
             hit = False
             for period, course in day_data.items():
-                if (week_day, period, course[0], str(course[1])) in self_slot:
+                if (week_day, period, course[0], str(course[1])) in self_slot and growth_handle.judge_selected_cell_real(other_id, week_day, period):
                     result.append(other_id)
                     hit = True
                     break

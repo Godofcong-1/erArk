@@ -23,6 +23,9 @@ check("只看玩家的女儿", sorted(growth_event_handle.get_growth_event_chara
 check("名单按 id 升序", growth_event_handle.get_growth_event_character_list() == sorted(growth_event_handle.get_growth_event_character_list()))
 check("同胞：同父即算（异母也算），婴儿不算（Plan 26）", sorted(growth_event_handle.get_sibling_child_list(201)) == [202, 203])
 check("双亲都没登记的孩子不互认", growth_event_handle.get_sibling_child_list(205) == [])
+# 同学只算每周课表上确有的课（Plan 30 §3.6），两间教室的这一格都要在全局课表上排上
+schedule_handle.set_class_cell(_("理论教室一"), 0, 0, 45, -1)
+schedule_handle.set_class_cell(_("理论教室二"), 0, 0, 45, -1)
 schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, _("理论教室一"))
 schedule_handle.set_selected_course(203, 0, 0, E.COURSE_TYPE_THEORY, _("理论教室一"))
 schedule_handle.set_selected_course(202, 0, 0, E.COURSE_TYPE_THEORY, _("理论教室二"))
@@ -159,5 +162,41 @@ check("改了岗（岗位 21）的萝莉：学期结束照推期末事件", grow
       and official_event_handle.get_queue()[0]["chara_id"] == 201)
 loli.work.work_type = 152
 cache.rhodes_island.official_event_queue = []
+
+section("Plan 30 §3.6：同学与「有课」只算学生岗的真课；§3.2：期末 9 / 10 进得了待努力的候选；§3.1：萝莉 2 按翘课数")
+HP = handle_premise.handle_premise
+check("对照：两人同在理论教室一，互为同学", 203 in growth_event_handle.get_classmate_list(201) and 201 in growth_event_handle.get_classmate_list(203))
+half_sib.work.work_type = 21
+check("她改了岗（课表残留）：不再是同学，自己也没有同学，self_have_any_course 不成立（此前三者都成立）",
+      203 not in growth_event_handle.get_classmate_list(201) and growth_event_handle.get_classmate_list(203) == [] and HP("self_have_any_course", 203) == 0)
+_class_uid = [one[0] for one in growth_event_handle.get_candidate_event_list(203)
+              if any(k in game_config.config_official_event[one[0]].get("premise", "") for k in ("self_have_any_course", "self_have_classmate"))]
+check("改了岗的萝莉抽不到写上课 / 同学的事件（此前 24 条）", not _class_uid, _class_uid[:5])
+half_sib.work.work_type = 152
+check("改回学生岗恢复", 203 in growth_event_handle.get_classmate_list(201) and HP("self_have_any_course", 203) == 1)
+schedule_handle.clear_class_cell(_("理论教室一"), 0, 0)
+check("每周课表那一格停了课：不再是同学，self_have_any_course 也不成立", growth_event_handle.get_classmate_list(201) == [] and HP("self_have_any_course", 201) == 0)
+schedule_handle.set_class_cell(_("理论教室一"), 0, 0, 45, -1)
+_g201 = growth_handle.get_child_growth(201)
+_g201.report_card_history = []
+semester_handle.push_report_card(201, {"year": 2026, "month": 6, "attend": 4, "absent": 6, "rate": 40, "level_change": {}, "grade": E.REPORT_GRADE_POOR, "reason": ""})
+# 推送时本学期已重置：本学期 0/0，出勤率按 100
+_g201.semester_base_attend = _g201.attend_class_count
+_g201.semester_base_absent = _g201.absent_count
+_sem = sorted(uid for uid in semester_bucket if official_event_handle.judge_event_can_enqueue(uid, 201)
+              and official_event_handle.judge_premise_pass(game_config.config_official_event[uid].get("premise", ""), 201, growth_event_handle.get_event_partner(uid, 201)))
+check("待努力的萝莉：期末 9 / 10 都在候选里（此前前提带「本学期出勤率 < 70」，推送时本学期已重置，永远判不过）", "期末9" in _sem and "期末10" in _sem, _sem)
+growth_handle.get_child_growth(202).report_card_history = [{"year": 2026, "month": 6, "grade": E.REPORT_GRADE_POOR}]
+check("待努力的幼女：期末 9 的前提成立、期末 10（限萝莉）不成立",
+      official_event_handle.judge_premise_pass(game_config.config_official_event["期末9"]["premise"], 202, 0)
+      and not official_event_handle.judge_premise_pass(game_config.config_official_event["期末10"]["premise"], 202, 0))
+check("萝莉 2（翘课被报上来）的前提读累计翘课数", game_config.config_official_event["萝莉2"].get("premise") == "CVP_A1_Growth|24_GE_3")
+_g201.absent_count, _g201.skip_count = 5, 0
+check("只因体力缺课缺了 5 节：萝莉 2 判不过（此前缺够 3 节就判得过）", not official_event_handle.judge_premise_pass(game_config.config_official_event["萝莉2"]["premise"], 201, 0))
+_g201.skip_count = 3
+check("翘过 3 节：判得过（此前翘课从不计数，永远判不过）", official_event_handle.judge_premise_pass(game_config.config_official_event["萝莉2"]["premise"], 201, 0))
+_g201.absent_count, _g201.skip_count = 0, 0
+_g201.report_card_history = []
+growth_handle.get_child_growth(202).report_card_history = []
 
 finish()
