@@ -349,4 +349,26 @@ handle_instruct.update.game_update_flow = _orig_flow
 student_b.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
 move_to(0, SCENE_DORM)
 
+section("Plan 28 §3.2：548 自习时本节是上不成的个人式课，不计出勤")
+set_time(period_time(0))
+reset_mark(201)
+student_a.talent[103] = 0
+student_a.talent[104] = 1
+schedule_handle.set_selected_course(201, cache.game_time.weekday(), 0, E.COURSE_TYPE_INTEREST, E.ENTERTAINMENT_PLAY_HOUSE)
+change = game_type.CharacterStatusChange()
+_exp_45 = growth_handle.get_subject_exp_id(45)
+_exp_before = student_a.experience.get(_exp_45, 0)
+_attend_before = student_a.child_growth.attend_class_count
+EFFECT[548](201, 45, change, cache.game_time)
+check("少女排着过家家兴趣课、日程去自习：照给收益（回落学识），不计出勤（此前按「查得到课」多记一节）",
+      student_a.experience.get(_exp_45, 0) > _exp_before and student_a.child_growth.attend_class_count == _attend_before,
+      (student_a.experience.get(_exp_45, 0) - _exp_before, student_a.child_growth.attend_class_count - _attend_before))
+student_a.talent[104] = 0
+student_a.talent[103] = 1
+reset_mark(201)
+EFFECT[548](201, 45, change, cache.game_time)
+check("对照：萝莉的同一格是一节课，这次自习计出勤", student_a.child_growth.attend_class_count == _attend_before + 1)
+schedule_handle.clear_selected_course(201, cache.game_time.weekday(), 0)
+reset_mark(201)
+
 finish()

@@ -64,6 +64,10 @@ def get_now_class_tip(character_id: int):
     if behavior_id in {constant.Behavior.ATTENT_CLASS, constant.Behavior.SELF_STUDY}:
         now_course = schedule_handle.get_now_course(character_id)
         if now_course is None:
+            # 此刻没课的自习是日程活动「上课（无课时自习）」：第五轮起不计出勤，本来就不算一节课（Plan 28 §3.7）。
+            #    节次外也会有（节次外照旧自习 45 分钟）。听课而此刻没课的，是玩家在节次外手动授课拉来的，仍算上课中
+            if behavior_id == constant.Behavior.SELF_STUDY:
+                return False, _("自习中（日程安排，此刻没课）")
             return False, _("上课中")
         text = get_course_text(now_course)
         # 只有班级式的教室课才有"教师缺席降级自习"的说法；

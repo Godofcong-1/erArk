@@ -81,6 +81,9 @@ check("场景学生名单", sex_class_handle.get_scene_student_list() == [201, 2
 check("指定场景为空场景", sex_class_handle.get_scene_student_list(SCENE_EDU_ENTRY) == [])
 schedule_handle.set_selected_course(201, weekday, 2, education_constant.COURSE_TYPE_PRACTICE, ROOM_P)
 check("选修名单：这一节选了这间教室的人", sex_class_handle.get_selected_student_list(ROOM_P, weekday, 2) == [201])
+student_a.work.work_type = 21
+check("选修名单只收学生岗：改了岗的女儿课表里还留着这一格，也不算「会来」（Plan 28 §3.4）", sex_class_handle.get_selected_student_list(ROOM_P, weekday, 2) == [])
+student_a.work.work_type = 152
 check("在实践教室 → 可开课场所", sex_class_handle.judge_in_sex_class_place(0))
 move_to(0, SCENE_DORM)
 check("在宿舍 → 不是", not sex_class_handle.judge_in_sex_class_place(0))

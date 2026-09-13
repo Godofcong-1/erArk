@@ -163,7 +163,7 @@ check("女儿名单 = 三阶段女儿", growth_handle.get_student_candidate_list
 check("个人课表名单 = 学生岗（Plan 24 口径 1）", growth_handle.get_course_candidate_list() == [201, 202, 301])
 baby = make_character(203, "婴儿", 152, daughter=True, stage=101, mother_id=102, born_days=10)
 check("婴儿不进女儿名单", 203 not in growth_handle.get_student_candidate_list())
-check("婴儿是学生岗时进个人课表名单", 203 in growth_handle.get_course_candidate_list())
+check("婴儿不在 npc_id_got（夹具与真实婴儿对齐，Plan 28 §3.9），学生岗也不进个人课表名单", 203 not in cache.npc_id_got and 203 not in growth_handle.get_course_candidate_list())
 student.work.work_type = 0
 check("女儿换岗后不在个人课表名单（只认学生岗）", 201 not in growth_handle.get_course_candidate_list())
 

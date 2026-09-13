@@ -555,6 +555,8 @@ def _settle_baby_grow_up(character_id: int, child_id: int):
     character_id -- 母亲角色id
     child_id -- 成长的婴儿角色id
     """
+    from Script.System.Education_System import education_constant
+
     character_data: game_type.Character = cache.character_data[character_id]
     child_character_data: game_type.Character = cache.character_data[child_id]
     character_handle.get_new_character(child_id)
@@ -562,7 +564,8 @@ def _settle_baby_grow_up(character_id: int, child_id: int):
     child_character_data.talent[102] = 1
     # 结算婴儿到幼女的特殊状态flag
     handle_premise.settle_chara_unnormal_flag(child_id, 7)
-    child_character_data.work.work_type = 152
+    # 长成幼女即转为学生岗（取教育系统的常量，不写死 152，Plan 28 §3.8）
+    child_character_data.work.work_type = education_constant.STUDENT_WORK_TYPE
     # 母亲名下是否还有其他婴儿需要照顾（有则保留育儿与泌乳状态）
     rearing_complete_flag = len(get_baby_id_list(character_id)) == 0
     if rearing_complete_flag:

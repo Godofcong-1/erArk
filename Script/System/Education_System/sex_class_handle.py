@@ -394,6 +394,8 @@ def get_selected_student_list(classroom: str, week_day: int, period: int) -> Lis
        选课逻辑零改动的代价就是可能一个人都不来——学生的个人课表存的是"这一节去哪间教室"，
        教室里的内容换成性技实操课后她照旧走进来，但没人选这间教室时排了也是空教室。
        玩家必须在排课当场就看得到这个数。
+    只收学生岗（Plan 28 §3.4）：课表只对学生岗生效（Plan 24 口径 1），改了岗的女儿课表里还留着这一格，
+       但她上课状态恒为 NONE、也进不了课堂（judge_can_join_sex_class 同口径），算进来「会来」的人数就虚高了
     Keyword arguments:
     classroom -- 教室场景名
     week_day -- 星期0~6
@@ -405,6 +407,8 @@ def get_selected_student_list(classroom: str, week_day: int, period: int) -> Lis
 
     result = []
     for character_id in sorted(cache.npc_id_got):
+        if cache.character_data[character_id].work.work_type != education_constant.STUDENT_WORK_TYPE:
+            continue
         course = schedule_handle.get_selected_course(character_id, week_day, period)
         if course is None:
             continue

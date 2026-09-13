@@ -1293,7 +1293,9 @@ class Rhodes_Island:
             {"classroom": 教室场景名str, "ability_id": 性技科目能力id int(只填70~75、77，76腰技男性专属),
              "must_attend": 必修学生角色id列表 list,
              "notified": [起床提醒已发bool, 半小时提醒已发bool, 下课时刻提醒已发bool],
-             "running": 本节课是否正在进行中 bool}
+             "running": 本节课是否正在进行中 bool,
+             "reserved": 开课时是否复用了预约条目 bool（开课口上按「预约 / 当场」分档用）,
+             "ended": 预约的课下课后打的标记 bool（2026-09-12 第五轮：条目留到跨天清理，覆盖层与必修判定不再认它）}
             一次性课程，键含具体日期序数——不能并进 class_schedule（那里键是星期0~6，会每周重复上演）
             过期条目在跨天结算时清理，但 running 为真的那条要跳过（拖堂可跨天） """
         self.child_schedule_template: Dict[int, dict] = {}

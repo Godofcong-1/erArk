@@ -328,6 +328,23 @@ def judge_activity_place_open(entertainment_id: int) -> bool:
     return schedule_handle.judge_scene_open(game_config.config_entertainment[entertainment_id].place)
 
 
+def judge_activity_schedulable(entertainment_id: int) -> bool:
+    """
+    校验一项娱乐能不能排进孩子的日程（Plan 28 §3.3）
+    Keyword arguments:
+    entertainment_id -- 娱乐配置cid
+    Return arguments:
+    bool -- 能排为True；照料卵（pregnancy_constant.TEND_EGGS_ENTERTAINMENT_ID）为False
+    功能: 照料卵是妊娠系统给持卵者的专用娱乐：随机池专门排除它，只由每日的持卵钩子（egg_handle.replace_entertainment_for_eggs）换上；
+          它的 need 列却是「无」，不在这里挡的话「选择活动」里就有它。排给孩子后她每晚去育儿室，
+          状态机 427 找不到可鉴定的卵就「孵化卵」一小时，还拿医疗经验。
+          候选表、每日改写、日程行三处共用本函数
+    """
+    from Script.System.Pregnancy_System import pregnancy_constant
+
+    return entertainment_id != pregnancy_constant.TEND_EGGS_ENTERTAINMENT_ID
+
+
 def apply_schedule_for_child(character_id: int) -> None:
     """
     按日程把一个孩子今天的 entertainment_type 三个槽位改写掉（每日一次）
@@ -336,7 +353,10 @@ def apply_schedule_for_child(character_id: int) -> None:
     时段里有课的节次不用避让：上课（工作链里学生岗的目标行，Plan 24）在**节次**级别排在娱乐链之前，
        有课的节次照常上课，同一时段里没课的节次才按这里写进去的活动走（2026-09-10 二期方案 §9.2.9；
        此前要求整段没课才改写，结果上午只要有一节课，整个上午的日程都不生效）。
-    不满足 need 的、地点还没开放的（Plan 27 §3.1）时段都跳过不改写，保留当天的随机娱乐，即退回自由选择。
+    不满足 need 的、地点还没开放的（Plan 27 §3.1）、不可排进日程的（旧档里排上的照料卵，Plan 28 §3.3）时段都跳过不改写，
+       保留当天的随机娱乐，即退回自由选择。
+    当天已被持卵钩子换成照料卵的时段也不覆盖（Plan 28 §3.3）：跨天结算里钩子先于本函数（past_day_settle），
+       改回模板的活动的话，持卵者那个时段就不去照料卵了
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -354,6 +374,12 @@ def apply_schedule_for_child(character_id: int) -> None:
         if not entertainment_id:
             continue
         if entertainment_id not in game_config.config_entertainment:
+            continue
+        # 持卵钩子今天换上的照料卵不覆盖：照料卵只有钩子会写（随机池与日程候选都排除它），槽位里是它就是今天换上的
+        if not judge_activity_schedulable(character_data.entertainment.entertainment_type[slot]):
+            continue
+        # 不可排进日程的（旧档里已排上的照料卵）跳过，退回自由选择
+        if not judge_activity_schedulable(entertainment_id):
             continue
         # 不满足该娱乐 need 条件的孩子跳过这一格，留着当天的随机娱乐比空转强
         if not judge_activity_need_pass(character_id, entertainment_id):
@@ -404,13 +430,13 @@ def get_template_use_count(template_id: int) -> int:
 
 def get_schedule_activity_candidate() -> List[int]:
     """
-    取可排进日程的娱乐候选表：全部娱乐（含教育区 15x 段的日程专用活动），去掉0号模板行
+    取可排进日程的娱乐候选表：全部娱乐（含教育区 15x 段的日程专用活动），去掉0号模板行与不可排的照料卵（Plan 28 §3.3）
     Keyword arguments:
     无
     Return arguments:
     List[int] -- 娱乐cid列表，按cid升序
     """
-    return sorted(cid for cid in game_config.config_entertainment if cid)
+    return sorted(cid for cid in game_config.config_entertainment if cid and judge_activity_schedulable(cid))
 
 
 def get_activity_name(entertainment_id: int) -> str:
@@ -498,15 +524,16 @@ def get_child_slot_activity_text(character_id: int, slot: int) -> str:
     character_id -- 角色id
     slot -- 时段0~2
     Return arguments:
-    str -- 活动名；0 为「自由选择娱乐活动」；活动存在但这个孩子不满足其 need 条件时为「X（条件不符→自由选择）」，
-           满足条件但地点还没开放时为「X（未开放→自由选择）」（Plan 27 §3.1）
+    str -- 活动名；0 为「自由选择娱乐活动」；活动存在但这个孩子不满足其 need 条件、或是不可排进日程的照料卵（Plan 28 §3.3）时为
+           「X（条件不符→自由选择）」，满足条件但地点还没开放时为「X（未开放→自由选择）」（Plan 27 §3.1）
     功能: 供个人课表的日程行与日程微调页共用。
-          只做显示：真正的「退回」发生在 apply_schedule_for_child 的 need 与地点校验里，这里只是把它说给玩家听
+          只做显示：真正的「退回」发生在 apply_schedule_for_child 的可排、need 与地点校验里，这里只是把它说给玩家听
     """
     entertainment_id = get_child_slot_activity(character_id, slot)
     name = get_activity_name(entertainment_id)
     if entertainment_id and entertainment_id in game_config.config_entertainment:
-        if not judge_activity_need_pass(character_id, entertainment_id):
+        # 旧档里已排上的照料卵：改写时直接跳过，排在 need 判定之前
+        if not judge_activity_schedulable(entertainment_id) or not judge_activity_need_pass(character_id, entertainment_id):
             return _("{0}（条件不符→自由选择）").format(name)
         if not judge_activity_place_open(entertainment_id):
             return _("{0}（未开放→自由选择）").format(name)

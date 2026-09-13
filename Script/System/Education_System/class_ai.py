@@ -388,16 +388,15 @@ def get_course_place_now_or_upcoming(character_id: int) -> List[str]:
     character_id -- 角色id
     Return arguments:
     List[str] -- 场景路径，没课或解析不出为空列表
-    功能: 解析不出（娱乐没配地点标签、场所未开放、体育课地点写错、教室已不存在）或兴趣课的活动条件不符时，
-          在 / 不在上课地点两个前提都不成立，没有行命中，交回既有 AI，不留死分支（Plan 24 §3.7、Plan 26 §3.8）
+    功能: 个人式课这一节上不成（场所未开放、兴趣课的活动条件不符）的，取数口 get_course_at 起就视为没课（Plan 28 §3.2），
+             这里不再重复判定（Plan 26 §3.8 当初把 need 判定加在这里）。
+          仍可能解析不出的只有班级式课（教室已不存在等），此时在 / 不在上课地点两个前提都不成立，
+             没有行命中，交回既有 AI，不留死分支（Plan 24 §3.7）
     """
     course = schedule_handle.get_now_course(character_id)
     if course is None:
         course = schedule_handle.get_upcoming_course(character_id)
     if course is None:
-        return []
-    # 兴趣课的活动条件不符（孩子长大了、换了岗留下的格子）按解析不出处理
-    if not schedule_handle.judge_course_need_pass(character_id, course):
         return []
     return schedule_handle.get_course_place(course)
 
@@ -492,7 +491,7 @@ def get_student_leave_time(character_id: int):
     功能: NPC 只在发呆时做决策，听课截到节末、娱乐 10~120 分钟，都不会自己停下来，所以要从外面把行为截短：
             A 待赴实操课：之后开始的某一节是自己要上的实操课（必修或选修）、人不在那间教室
                → 截到开课前 PRE_ARRIVE_MINUTE（口径 62 提前退场，上课中也截）
-            B 马上开课：之后开始的某一节排了课、开课前 UPCOMING_MINUTE 那一刻本节没课、人不在上课地点、今天没翘课
+            B 马上开课：之后开始的某一节有课（已停课、上不成的个人式课都算没课，Plan 27 / 28）、开课前 UPCOMING_MINUTE 那一刻本节没课、人不在上课地点、今天没翘课
                → 截到开课前 UPCOMING_MINUTE（与教师「20 分钟内有下一节先去教室」同口径）
           截短时长而不是「现在就结束」：行为循环里 NPC 按各自的行为时刻推进，cache.game_time 是玩家这一步的结束时刻，
              玩家一步走 45 分钟时，「现在」早已越过开课时刻，拿它判会整个错过；截到应离开的那一刻，NPC 就在那一刻重新决策。
@@ -547,8 +546,8 @@ def get_student_leave_time(character_id: int):
             to_place = schedule_handle.get_classroom_position(temp_class.get("classroom", ""))
         elif not skip_flag:
             course = schedule_handle.get_course_at(character_id, class_start, period)
-            # 兴趣课的活动条件不符：到了也上不成，不截（Plan 26 §3.8）；场所未开放时 get_course_place 解析为空，下面跳过
-            if course is not None and schedule_handle.judge_course_need_pass(character_id, course):
+            # 个人式课这一节上不成（兴趣课条件不符、场所未开放）的，get_course_at 起就视为没课、不截（Plan 28 §3.2）
+            if course is not None:
                 leave_time = class_start - upcoming
                 leave_period = game_time.get_class_period_by_time(leave_time)
                 # 离开的那一刻本节还有课：那节课由截到节末的时长自然结束，不必截

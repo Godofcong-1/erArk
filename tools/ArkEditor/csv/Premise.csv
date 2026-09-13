@@ -1893,7 +1893,7 @@ self_not_in_pending_sex_class_room,SELF_NOT_IN_PENDING_SEX_CLASS_ROOM,工作_条
 self_course_absent_by_hp,SELF_COURSE_ABSENT_BY_HP,工作_条件,自己是学生，本节有课但体力低于30%且不是必修实操课（本节缺课）
 self_course_skip,SELF_COURSE_SKIP,工作_条件,自己是学生，本节有课且不是必修实操课，今日已翘课或本节掷中翘课
 self_course_attend,SELF_COURSE_ATTEND,工作_条件,自己是学生，本节有课且照常上课
-self_course_upcoming,SELF_COURSE_UPCOMING,工作_条件,自己是学生，不在节次内且20分钟内开始的那一节有课
+self_course_upcoming,SELF_COURSE_UPCOMING,工作_条件,自己是学生，本节没课（含不在节次内）且20分钟内开始的那一节有课
 self_course_is_classroom,SELF_COURSE_IS_CLASSROOM,工作_条件,自己是学生，本节的课是班级式教室课（理论/实践/公开）
 self_course_is_personal,SELF_COURSE_IS_PERSONAL,工作_条件,自己是学生，本节的课是个人式课（体育/兴趣/实习）
 self_in_course_place,SELF_IN_COURSE_PLACE,工作_条件,自己是学生，人在本节（节次外为马上开始的那一节）的上课地点

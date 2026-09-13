@@ -71,7 +71,7 @@ def get_student_candidate_list() -> List[int]:
              get_course_candidate_list()（一期方案 §9.8.2）。养成总览等只关心女儿的地方仍用本函数
           血缘条件不能省：只看年龄素质的话，世界设定「萝莉化」
              (character_handle.handle_character_setting) 会给全岛干员挂上萝莉素质103，
-             只按素质筛会把全岛的人都塞进课表页签栏
+             只按素质筛会把全岛的人都塞进选择学生的名单
           按 id 升序而不是遍历 npc_id_got(set)：名单要交给「选择学生」面板与学期结算逐个处理，
              set 的迭代顺序不定会让每次列出的顺序都不一样
     """

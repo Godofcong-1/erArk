@@ -374,7 +374,7 @@ def get_now_course(character_id: int) -> Optional[dict]:
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
-    Optional[dict] -- 不在节次内、没排课、或班级式课那一格已停课（全局课表空着，Plan 27）时为None，否则为：
+    Optional[dict] -- 不在节次内、没排课、班级式课那一格已停课（全局课表空着，Plan 27）、或个人式课这一节上不成（场所未开放、兴趣课条件不符，Plan 28）时为None，否则为：
         {"course_type": 课型int, "target": 目标, "period": 节次int, "week_day": 星期int,
          "classroom": 教室场景名str（仅班级式课）, "ability_id": 科目能力id int（仅班级式课，-1为未知）,
          "teacher_id": 授课教师id int（仅班级式课，-1为无教师即自习）}
@@ -426,7 +426,7 @@ def get_course_at(character_id: int, now_time, period: int) -> Optional[dict]:
     now_time -- 那一节所在的时刻（取它的日期与星期）
     period -- 节次0~8
     Return arguments:
-    Optional[dict] -- 结构见 get_now_course，没排课、或班级式课的全局课表那一格已停课则为None
+    Optional[dict] -- 结构见 get_now_course，没排课、班级式课的全局课表那一格已停课、或个人式课这一节上不成（Plan 28）则为None
     """
     week_day = now_time.weekday()
     course = get_selected_course(character_id, week_day, period)
@@ -461,6 +461,12 @@ def get_course_at(character_id: int, now_time, period: int) -> Optional[dict]:
         result["classroom"] = target
         result["ability_id"] = cell[0]
         result["teacher_id"] = cell[1]
+    # 个人式课（体育/兴趣/实习）这一节上不成——场所未开放、或兴趣课的活动条件不符（孩子长大了、复制来的课表）——
+    #    同样视为没课（Plan 28 §3.2，与上面的已停课同一口径）。此前只有「在 / 不在上课地点」两行交回既有 AI，
+    #    体力闸与心情闸照样按有课判：记一节缺课、翘课，日程自习还多记一节出勤，幼女这一节也不见学。
+    #    必修覆盖不受影响（覆盖后是教室课）；实习课本节无人在岗时地点仍解析得出，照旧是一节课、降级见习
+    elif not judge_personal_course_valid(character_id, result):
+        return None
     return result
 
 
@@ -635,6 +641,20 @@ def judge_course_need_pass(character_id: int, course: dict) -> bool:
     from Script.System.Education_System import schedule_template_handle
 
     return schedule_template_handle.judge_activity_need_pass(character_id, course["target"])
+
+
+def judge_personal_course_valid(character_id: int, course: dict) -> bool:
+    """
+    校验一节个人式课（体育/兴趣/实习）这名学生上不上得成（Plan 28 §3.2）
+    Keyword arguments:
+    character_id -- 角色id
+    course -- 课程dict，至少含 course_type 与 target，结构见 get_now_course
+    Return arguments:
+    bool -- 兴趣课的活动条件相符、且上课地点解析得出（含场所已开放）为True
+    功能: get_course_at 判不过就视为没课；必修名单的「*会顶替」也用它判那一节是不是确有的课。
+          只读不写，前提路径上可以调用。实习课本节无人在岗时地点仍解析得出（回落到已开放的那间），照旧算一节课
+    """
+    return judge_course_need_pass(character_id, course) and bool(get_course_place(course))
 
 
 _BEHAVIOR_NAME_BY_CID: Dict[int, str] = {}

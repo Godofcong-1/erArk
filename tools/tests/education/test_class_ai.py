@@ -1096,4 +1096,57 @@ check("醒着的照旧被拉进听课", teach_pull(201))
 schedule_handle.clear_selected_course(201, 0, 0)
 clear_schedules()
 
+section("Plan 28 §3.2：个人式课这一节上不成视为没课（两道闸不判、不为它提前动身，幼女照常见学）")
+set_time(period_time(0))
+prepare_ai(201)
+prepare_ai(202)
+student.talent[103] = 0
+student.talent[104] = 1
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_INTEREST, E.ENTERTAINMENT_PLAY_HOUSE)
+student.entertainment.entertainment_type = [E.ENTERTAINMENT_FREE_PLAY] * 3
+growth_handle.get_child_growth(201).skip_class_flag = False
+check("少女排着过家家兴趣课：当前课程为 None、上课状态 NONE（此前是 ATTEND，两道闸照样按有课判）",
+      schedule_handle.get_now_course(201) is None and class_ai.get_course_stage(201) == E.COURSE_STAGE_NONE)
+student.hit_point = 10
+_absent = growth_handle.get_child_growth(201).absent_count
+move_to(201, SCENE_DORM)
+sm = dispatch(201)
+check("体力低：不派 721、不记缺课，交回娱乐链（此前记一节缺课去休息）", sm not in CLASS_SM_SET and growth_handle.get_child_growth(201).absent_count == _absent, sm)
+student.hit_point = 100
+class_ai.get_skip_class_rate = lambda cid: 1.0
+move_to(201, SCENE_DORM)
+sm = dispatch(201)
+check("心情闸必中：不派 714、不挂翘课 flag（此前翘课，还可能被抓）", sm not in CLASS_SM_SET and not growth_handle.get_child_growth(201).skip_class_flag, sm)
+class_ai.get_skip_class_rate = _orig_rate
+set_time(period_time(0) - datetime.timedelta(minutes=15))
+check("也不为它提前动身（到岗时间不算 UPCOMING）", class_ai.get_course_stage(201) == E.COURSE_STAGE_NONE)
+student.talent[104] = 0
+student.talent[103] = 1
+set_time(period_time(0))
+check("回到萝莉（条件恢复）：照常 ATTEND", class_ai.get_course_stage(201) == E.COURSE_STAGE_ATTEND)
+move_to(201, SCENE_DORM)
+check("整条链：715 去上课地点", dispatch(201) == SM.EDUCATION_MOVE_TO_COURSE_PLACE)
+schedule_handle.clear_selected_course(201, 0, 0)
+student.talent[103] = 0
+student.talent[104] = 1
+schedule_handle.set_selected_course(201, 0, 1, E.COURSE_TYPE_INTEREST, E.ENTERTAINMENT_PLAY_HOUSE)
+move_to(201, SCENE_DORM)
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), period_time(1) + datetime.timedelta(minutes=5))
+check("截短规则 B：下一节是上不成的兴趣课 → 不截（取数口已视为没课，class_ai 里删掉的重复判定不影响）", handle_npc_ai.judge_interrupt_character_behavior(201) == 0)
+student.talent[104] = 0
+student.talent[103] = 1
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), period_time(1) + datetime.timedelta(minutes=5))
+check("对照：萝莉的同一节照截到开课前 20 分钟", handle_npc_ai.judge_interrupt_character_behavior(201) == 1 and student.behavior.duration == 25, student.behavior.duration)
+schedule_handle.clear_selected_course(201, 0, 1)
+child.entertainment.entertainment_type = [0, 0, 0]
+schedule_handle.set_selected_course(202, 0, 0, E.COURSE_TYPE_PE, pool)
+cache.rhodes_island.facility_open[pool_open_cid] = False
+set_time(period_time(0))
+check("幼女的体育课排在未解锁的游泳池：上课状态 NONE，照常默认见学（此前这一节不见学）",
+      class_ai.get_course_stage(202) == E.COURSE_STAGE_NONE and class_ai.judge_should_follow_mother(202) and class_ai.judge_mother_followable(202) == 102)
+cache.rhodes_island.facility_open[pool_open_cid] = True
+check("游泳池解锁后照常上课、不见学", class_ai.get_course_stage(202) == E.COURSE_STAGE_ATTEND and not class_ai.judge_should_follow_mother(202))
+schedule_handle.clear_selected_course(202, 0, 0)
+clear_schedules()
+
 finish()

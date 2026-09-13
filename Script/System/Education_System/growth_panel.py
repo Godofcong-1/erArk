@@ -373,7 +373,13 @@ class Growth_Panel:
             return
         text_list = []
         if growth_data.report_card_flag:
-            text_list.append(_("本学期成绩单待查看（用「检查成绩单」指令）"))
+            # 这个 flag 在学期切换时置位，待查看的是刚结束的那一学期，不是「本学期」（Plan 28 §3.6）
+            report_data = semester_handle.get_last_report_card(character_id)
+            if report_data.get("year") and report_data.get("month"):
+                semester_text = semester_handle.get_semester_name(report_data["year"], report_data["month"])
+                text_list.append(_("{0}的成绩单待查看（用「检查成绩单」指令）").format(semester_text))
+            else:
+                text_list.append(_("新的成绩单待查看（用「检查成绩单」指令）"))
         if growth_data.show_off_ability:
             name_list = [game_config.config_ability[ability_id].name
                          for ability_id in growth_data.show_off_ability

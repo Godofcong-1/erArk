@@ -249,7 +249,7 @@ def make_character(cid: int, name: str, work_type: int = 0, daughter: bool = Fal
     name -- 角色名
     work_type -- 岗位id（151 教师 / 152 学生 / 153 保育员）
     daughter -- 是否为玩家的女儿（father_id = 0）
-    stage -- 成长阶段素质id（101 婴儿 / 102 幼女 / 103 萝莉 / 104 少女），0 为成年干员
+    stage -- 成长阶段素质id（101 婴儿 / 102 幼女 / 103 萝莉 / 104 少女），0 为成年干员；婴儿不进 npc_id_got（Plan 28）
     mother_id -- 母亲的角色id
     position -- 初始场景路径，默认宿舍
     born_days -- 出生距今的日历天数（成长天数用）
@@ -300,7 +300,9 @@ def make_character(cid: int, name: str, work_type: int = 0, daughter: bool = Fal
                 mother_data.relationship.child_id_list.append(cid)
     cd.position = list(position if position is not None else SCENE_DORM)
     cache.character_data[cid] = cd
-    if cid:
+    # 婴儿不进 npc_id_got，与真实婴儿一致（Plan 28 §3.9）：character_handle.born_new_character 不加，
+    #    要到长成幼女、get_new_character 上线时才加。此前夹具把婴儿也放进去，婴儿期事件派不出来的 BUG 一直测不出
+    if cid and stage != 101:
         cache.npc_id_got.add(cid)
     _scene_list_add(scene_str(cd.position), cid)
     return cd

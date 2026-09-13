@@ -536,7 +536,7 @@ def handle_self_course_attend(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SELF_COURSE_UPCOMING)
 def handle_self_course_upcoming(character_id: int) -> int:
     """
-    自己是学生，不在节次内且20分钟内开始的那一节有课
+    自己是学生，本节没课（含不在节次内）且20分钟内开始的那一节有课
     Keyword arguments:
     character_id -- 角色id
     Return arguments:

@@ -303,7 +303,7 @@ COURSE_STAGE_SKIP = 3
 COURSE_STAGE_ATTEND = 4
 """ 本节有课且照常上课（必修实操课在体力不足、心情糟糕时也归入这里） """
 COURSE_STAGE_UPCOMING = 5
-""" 不在节次内，20 分钟内（schedule_handle.get_upcoming_course 的默认 minute_limit）开始的那一节排了课 """
+""" 本节没课（含不在节次内），20 分钟内（schedule_handle.get_upcoming_course 的默认 minute_limit）开始的那一节有课（Plan 25 起节次内也看下一节） """
 TEACHER_DUTY_NONE = 0
 """ 教师本节与 20 分钟内都没课，或不是教师岗 """
 TEACHER_DUTY_NOW = 1

@@ -105,4 +105,41 @@ cache.rhodes_island.official_event_queue = []
 check("成年女儿不入队期末事件", growth_event_handle.push_semester_event_for_list([206]) == 0 and official_event_handle.get_queue() == [])
 check("期末 13 的前提：上一份成绩单不是「无课可评」", game_config.config_official_event["期末13"].get("premise", "") == "CVP_A1_Growth|7_NE_3")
 
+section("Plan 28 §3.1：婴儿不在 npc_id_got 也照常派养成事件")
+check("夹具与真实婴儿对齐：婴儿不在 npc_id_got（Plan 28 §3.9）", 204 not in cache.npc_id_got)
+check("婴儿照样进每日派发名单（此前只遍历 npc_id_got，婴儿桶的事件一条都派不出来）", 204 in growth_event_handle.get_growth_event_character_list())
+random.randint = lambda a, b: a
+_picked = {one["chara_id"] for one in growth_event_handle.get_today_growth_event_pick_list()}
+random.randint = _orig_randint
+check("必派时派得到婴儿", 204 in _picked, _picked)
+cache.npc_id_got.discard(202)
+check("离线的幼女不进名单、不占容量（幼女 / 萝莉仍要求在 npc_id_got 里）", 202 not in growth_event_handle.get_growth_event_character_list()
+      and growth_event_handle.get_growth_event_queue_capacity() == E.GROWTH_EVENT_QUEUE_PER_CHILD * 3, growth_event_handle.get_growth_event_character_list())
+cache.npc_id_got.add(202)
+check("婴儿占 4 条容量，成年少女照旧不进", growth_event_handle.get_growth_event_queue_capacity() == E.GROWTH_EVENT_QUEUE_PER_CHILD * 4
+      and 206 not in growth_event_handle.get_growth_event_character_list())
+_title = growth_event_handle.get_growth_event_title({"chara_id": 204})
+check("婴儿的抬头：名字 · 婴儿期第 N 天", _title.startswith("婴儿 · ") and "{0}期第".format(E.STAGE_TALENT_NAME[101]) in _title, _title)
+
+section("Plan 28 §3.1：走真实出生路径的婴儿（character_handle.born_new_character）")
+real_baby_id = character_handle.born_new_character(102, "新生儿")
+# 生产面板随后会写出生时刻（born_event_panel），这里照做
+cache.character_data[real_baby_id].pregnancy.born_time = cache.game_time - datetime.timedelta(days=20)
+check("真实出生的婴儿不在 npc_id_got（到长成幼女才上线），是玩家的女儿、阶段 101", real_baby_id not in cache.npc_id_got
+      and handle_premise.handle_self_is_player_daughter(real_baby_id) and growth_event_handle.get_character_stage(real_baby_id) == 101)
+check("她进每日派发名单", real_baby_id in growth_event_handle.get_growth_event_character_list())
+_baby_uid_list = sorted(set(game_config.config_official_event_by_sub_key.get((E.GROWTH_EVENT_DEPARTMENT, 101), ()))
+                        | {one[0] for one in growth_event_handle.get_candidate_event_list(real_baby_id)})
+_error_list = []
+_option_count = 0
+for _uid in _baby_uid_list:
+    for _option in official_event_handle.get_option_list(_uid, real_baby_id, 0):
+        _option_count += 1
+        try:
+            official_event_handle.settle_official_event_option(_uid, real_baby_id, 0, _option["index"])
+        except Exception as now_error:
+            _error_list.append((_uid, _option["index"], repr(now_error)))
+check("婴儿桶与她可抽的通用事件逐条逐选项结算，都不报错（修好之后这些事件真的会派到婴儿身上）", bool(_baby_uid_list) and _option_count > 0 and not _error_list,
+      (len(_baby_uid_list), _option_count, _error_list[:5]))
+
 finish()

@@ -3742,7 +3742,7 @@
     SELF_COURSE_ATTEND = "self_course_attend"
     """ 工作_条件 自己是学生，本节有课且照常上课 """
     SELF_COURSE_UPCOMING = "self_course_upcoming"
-    """ 工作_条件 自己是学生，不在节次内且20分钟内开始的那一节有课 """
+    """ 工作_条件 自己是学生，本节没课（含不在节次内）且20分钟内开始的那一节有课 """
     SELF_COURSE_IS_CLASSROOM = "self_course_is_classroom"
     """ 工作_条件 自己是学生，本节的课是班级式教室课（理论/实践/公开） """
     SELF_COURSE_IS_PERSONAL = "self_course_is_personal"

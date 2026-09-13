@@ -174,6 +174,7 @@ class Course_Select_Panel:
               所以回查全局课表把科目名一并写出来，成"学识技能/理论教室一"。
               班级式课**不加课型缩写**：「理论教室一」本身就说明了是理论课。
                  个人式的三种课型才需要「[体]」「[兴]」「[实]」——它们的目标名看不出课型
+              上不成的格子照实标出：教室课「/已停课」（Plan 27），个人式课「/未开放」「/条件不符」（Plan 28）
         """
         course = schedule_handle.get_selected_course(character_id, week_day, period)
         if course is None:
@@ -188,11 +189,21 @@ class Course_Select_Panel:
             # 选了这间教室，但那节课后来被清掉了——照实显示，别让玩家以为还有课
             return _("{0}/已停课").format(target)
         short = education_constant.COURSE_TYPE_SHORT.get(course_type, "?")
+        target_name = target
         if course_type == education_constant.COURSE_TYPE_INTEREST:
-            target = game_config.config_entertainment[target].name
+            target_name = game_config.config_entertainment[target].name
         elif course_type == education_constant.COURSE_TYPE_INTERN:
-            target = game_config.config_work_type[target].name
-        return "[{0}]{1}".format(short, target)
+            target_name = game_config.config_work_type[target].name
+        text = "[{0}]{1}".format(short, target_name)
+        # 个人式课这一节上不成的照实标出，与教室课的「已停课」同一写法（Plan 28 §3.2）：上课判定起按没课处理，
+        #    不标的话玩家看着课表以为这节有课。地点先判、活动条件后判，与选课页 _select_target 的顺序一致；
+        #    最宽的「[兴]演奏传统乐器/条件不符」也恰好放得进一格（25列）
+        course_data = {"course_type": course_type, "target": target}
+        if not schedule_handle.get_course_place(course_data):
+            return _("{0}/未开放").format(text)
+        if not schedule_handle.judge_course_need_pass(character_id, course_data):
+            return _("{0}/条件不符").format(text)
+        return text
 
     def _auto_fill_course(self, character_id: int):
         """

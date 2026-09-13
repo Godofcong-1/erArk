@@ -46,6 +46,10 @@ def get_growth_event_character_list() -> List[int]:
        但养成事件是给孩子的，给成年干员派「第一次上课」只会显得莫名其妙
     只看婴儿~萝莉（101~103）：已成年的少女没有日常养成事件可派，毕业典礼与成年纪念由成年结算显式推入；
        算进来会让每个成年女儿永久多占 4 条队列容量，旧档里早就成年的女儿还会被每日派发随机抽中毕业典礼（2026-09-12 第五轮）
+    遍历全部角色，婴儿不看 npc_id_got（Plan 28 §3.1）：婴儿从出生到长成幼女都不上线——
+       character_handle.born_new_character 不把她加进 npc_id_got，长成幼女时 get_new_character 才加。
+       此前只遍历 npc_id_got，婴儿桶的事件一条都派不出来，队列容量里也没有婴儿的份。
+       幼女 / 萝莉仍要求在 npc_id_got 里：离线的不派
     Keyword arguments:
     无
     Return arguments:
@@ -54,10 +58,14 @@ def get_growth_event_character_list() -> List[int]:
     from Script.Design import handle_premise
 
     result = []
-    for character_id in sorted(cache.npc_id_got):
-        if character_id not in cache.character_data:
+    for character_id in sorted(cache.character_data):
+        # 玩家自己不参与
+        if character_id == 0:
             continue
-        if get_character_stage(character_id) not in education_constant.STAGE_ALL_CHILD:
+        stage = get_character_stage(character_id)
+        if stage not in education_constant.STAGE_ALL_CHILD:
+            continue
+        if stage != 101 and character_id not in cache.npc_id_got:
             continue
         if not handle_premise.handle_self_is_player_daughter(character_id):
             continue

@@ -189,4 +189,40 @@ check("解锁之后玩乐优先的上午照写过家家（模板长期有效，�
 schedule_template_handle.apply_template(202, 0)
 schedule_template_handle.apply_template(203, 0)
 
+section("Plan 28 §3.3：照料卵不能排进日程，持卵者当天的照料卵时段不被改写冲掉")
+from Script.System.Pregnancy_System import egg_handle, pregnancy_constant  # noqa: E402
+
+TEND = pregnancy_constant.TEND_EGGS_ENTERTAINMENT_ID
+check("judge_activity_schedulable：照料卵为否，下棋与上课（无课时自习）为是", not schedule_template_handle.judge_activity_schedulable(TEND)
+      and schedule_template_handle.judge_activity_schedulable(CHESS) and schedule_template_handle.judge_activity_schedulable(SELF_STUDY))
+check("选择活动的候选与三组里都没有照料卵（此前 need 为「无」、候选是全部娱乐）", TEND not in schedule_template_handle.get_schedule_activity_candidate()
+      and TEND not in sum(schedule_template_handle.get_schedule_activity_rows(), []))
+tend_tid = schedule_template_handle.create_template("旧档里排了照料卵")
+schedule_template_handle.set_template_slot(tend_tid, 2, TEND)
+schedule_template_handle.apply_template(202, tend_tid)
+child.entertainment.entertainment_type = [11, 12, 13]
+schedule_template_handle.apply_schedule_for_child(202)
+check("旧档里残留的照料卵：改写时跳过，晚上留着当天的随机值（此前写成照料卵，孩子每晚去育儿室「孵化卵」）", child.entertainment.entertainment_type[2] == 13,
+      child.entertainment.entertainment_type)
+check("日程行写「照料卵（条件不符→自由选择）」", schedule_template_handle.get_child_slot_activity_text(202, 2) == _("{0}（条件不符→自由选择）").format(
+    game_config.config_entertainment[TEND].name), schedule_template_handle.get_child_slot_activity_text(202, 2))
+schedule_template_handle.apply_template(202, 0)
+full_tid = schedule_template_handle.create_template("三段都下棋")
+for _slot in range(3):
+    schedule_template_handle.set_template_slot(full_tid, _slot, CHESS)
+schedule_template_handle.apply_template(301, full_tid)
+_orig_layer, _orig_need = egg_handle.is_egg_layer, egg_handle.have_need_tend_eggs
+egg_handle.is_egg_layer = lambda cid: True
+egg_handle.have_need_tend_eggs = lambda cid: True
+adult_student.entertainment.entertainment_type = [11, 12, 13]
+egg_handle.replace_entertainment_for_eggs(301)
+_tend_slot = adult_student.entertainment.entertainment_type.index(TEND) if TEND in adult_student.entertainment.entertainment_type else -1
+schedule_template_handle.apply_schedule_for_child(301)
+egg_handle.is_egg_layer, egg_handle.have_need_tend_eggs = _orig_layer, _orig_need
+check("持卵钩子换上的照料卵时段在日程改写后仍是照料卵，其余时段照常改写（跨天结算里钩子先于改写，此前被改回模板的活动）",
+      _tend_slot != -1 and adult_student.entertainment.entertainment_type[_tend_slot] == TEND
+      and all(value == CHESS for index, value in enumerate(adult_student.entertainment.entertainment_type) if index != _tend_slot),
+      (_tend_slot, adult_student.entertainment.entertainment_type))
+schedule_template_handle.apply_template(301, 0)
+
 finish()

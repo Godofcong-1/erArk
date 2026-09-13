@@ -214,4 +214,30 @@ check("对萝莉女儿成立", all(HP(token, 0) for token in report_tokens))
 pl.target_character_id = 0
 remove_character(204)
 
+section("Plan 28 §3.2 / §3.7：上不成的个人式课视为没课；日程自习的 <课> 悬停")
+from Script.UI.Panel import character_info_head  # noqa: E402
+
+set_time(period_time(0))
+student.talent[103] = 0
+student.talent[104] = 1
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_INTEREST, E.ENTERTAINMENT_PLAY_HOUSE)
+_ct_interest = "CVP_A1_CourseType|{0}_E_1".format(E.COURSE_TYPE_INTEREST)
+student.hit_point = 10
+check("少女排着过家家兴趣课：CVP CourseType 不成立，照常上课 / 体力缺课两个学生前提都为 0（此前都按有课判）", HP(_ct_interest, 201) == 0
+      and HP("self_course_attend", 201) == 0 and HP("self_course_absent_by_hp", 201) == 0)
+student.hit_point = 100
+student.talent[104] = 0
+student.talent[103] = 1
+check("回到萝莉：CourseType 成立", HP(_ct_interest, 201) == 1)
+schedule_handle.clear_selected_course(201, 0, 0)
+student.behavior.behavior_id = constant.Behavior.SELF_STUDY
+_self_study_tip = (False, _("自习中（日程安排，此刻没课）"))
+check("本节没课的日程自习：<课> 悬停写「自习中」（此前写「上课中」）", character_info_head.get_now_class_tip(201) == _self_study_tip, character_info_head.get_now_class_tip(201))
+set_time(DEFAULT_TIME.replace(hour=20))
+check("节次外的日程自习（照旧 45 分钟）同样写「自习中」", character_info_head.get_now_class_tip(201) == _self_study_tip, character_info_head.get_now_class_tip(201))
+set_time(period_time(0))
+student.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+check("听课而此刻没课（玩家在节次外授课拉来的）仍写「上课中」", character_info_head.get_now_class_tip(201) == (False, _("上课中")), character_info_head.get_now_class_tip(201))
+student.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+
 finish()

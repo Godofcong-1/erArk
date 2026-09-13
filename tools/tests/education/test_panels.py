@@ -375,6 +375,88 @@ check("周日排实习课：只画「周日全岛无人上班」一句，不再�
       and not any("本节次没有可选的内容" in t for t in drawn_text))
 flow_handle.askfor_all = fake_askfor
 
+section("Plan 28：个人课表格子的「/条件不符」「/未开放」、必修名单的顶替标记、待处理写学期名、选择活动没有照料卵")
+from Script.UI.Panel import character_info_head  # noqa: E402
+from Script.System.Pregnancy_System import pregnancy_constant  # noqa: E402
+
+clear_schedules()
+_pool_cid = game_config.config_facility_open_name_to_cid[pool]
+_cell_width = max(8, int((W - 14) / len(E.WEEK_NAME)))
+cs = course_select_panel.Course_Select_Panel(W)
+schedule_handle.set_selected_course(301, 0, 0, E.COURSE_TYPE_INTEREST, E.ENTERTAINMENT_PLAY_HOUSE)
+_text_need = cs._get_cell_text(301, 0, 0)
+check("成年学生排着过家家兴趣课：格子写「[兴]过家家/条件不符」（此前照常写，上课判定却已不认这节课）",
+      _text_need == _("{0}/条件不符").format("[{0}]{1}".format(E.COURSE_TYPE_SHORT[E.COURSE_TYPE_INTEREST], play_house_name)), _text_need)
+cache.rhodes_island.facility_open[_pool_cid] = False
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_PE, pool)
+_text_open = cs._get_cell_text(201, 0, 0)
+check("体育课排在未解锁的游泳池：格子写「[体]游泳池/未开放」", _text_open == _("{0}/未开放").format("[{0}]{1}".format(E.COURSE_TYPE_SHORT[E.COURSE_TYPE_PE], pool)), _text_open)
+cache.rhodes_island.facility_open[_pool_cid] = True
+check("解锁后不再标注", cs._get_cell_text(201, 0, 0) == "[{0}]{1}".format(E.COURSE_TYPE_SHORT[E.COURSE_TYPE_PE], pool), cs._get_cell_text(201, 0, 0))
+_too_wide = []
+for _cid in game_config.config_entertainment:
+    if game_config.config_entertainment[_cid].class_ok:
+        _one = _("{0}/条件不符").format("[{0}]{1}".format(E.COURSE_TYPE_SHORT[E.COURSE_TYPE_INTEREST], game_config.config_entertainment[_cid].name))
+        if text_handle.get_text_index(_one) > _cell_width:
+            _too_wide.append(_one)
+for _place in E.PE_PLACE_DATA:
+    _one = _("{0}/未开放").format("[{0}]{1}".format(E.COURSE_TYPE_SHORT[E.COURSE_TYPE_PE], _place))
+    if text_handle.get_text_index(_one) > _cell_width:
+        _too_wide.append(_one)
+check("全部兴趣课的「/条件不符」、全部体育场地的「/未开放」都放得进一格（{0} 列）".format(_cell_width), not _too_wide, _too_wide)
+schedule_handle.clear_selected_course(301, 0, 0)
+schedule_handle.clear_selected_course(201, 0, 0)
+
+ROOM2 = _("理论教室二")
+for _cid in (201, 202, 203, 204, 205):
+    schedule_handle.clear_selected_course(_cid, 2, 3)
+schedule_handle.set_selected_course(201, 2, 3, E.COURSE_TYPE_PE, _("木桩房"))
+schedule_handle.set_selected_course(202, 2, 3, E.COURSE_TYPE_THEORY, ROOM1)
+schedule_handle.set_class_cell(ROOM2, 2, 3, 45, 101)
+schedule_handle.set_selected_course(203, 2, 3, E.COURSE_TYPE_THEORY, ROOM2)
+schedule_handle.set_selected_course(205, 2, 3, E.COURSE_TYPE_PE, pool)
+cache.rhodes_island.facility_open[_pool_cid] = False
+flow_handle.askfor_all = scripted_askfor
+answers[:] = [lambda o: o == "DONE"]
+drawn_text.clear()
+class_schedule_panel.Class_Schedule_Panel(W)._select_must_attend([], ROOM_P, 2, 3)
+flow_handle.askfor_all = fake_askfor
+cache.rhodes_island.facility_open[_pool_cid] = True
+_replace_line = next((t for t in drawn_text if "会顶替原本的课" in t), "")
+_pe_text = character_info_head.get_course_text({"course_type": E.COURSE_TYPE_PE, "target": _("木桩房")})
+check("必修名单：排了体育课的学生标「*」，明细写「女儿01→体育课·木桩房」（此前只看教室课，不标）",
+      "[  女儿01*]" in drawn_text and "女儿01→{0}".format(_pe_text) in _replace_line, (_replace_line, [t for t in drawn_text if "女儿01" in t]))
+check("每周课表上已停课的教室课不标、不进明细（此前标「*」）", "[  女儿02]" in drawn_text and "女儿02" not in _replace_line, _replace_line)
+check("确有的教室课照标，明细写教室与科目", "[  女儿03*]" in drawn_text and "女儿03→{0}的{1}".format(ROOM2, game_config.config_ability[45].name) in _replace_line, _replace_line)
+check("上不成的个人式课（未解锁的游泳池）不标；没排课的不标", "[  女儿05]" in drawn_text and "女儿05" not in _replace_line and "[  女儿04]" in drawn_text, _replace_line)
+clear_schedules()
+for _cid in (201, 202, 203, 205):
+    schedule_handle.clear_selected_course(_cid, 2, 3)
+
+_g201 = growth_handle.get_child_growth(201)
+_g201.report_card_flag = True
+drawn_text.clear()
+growth_panel.Growth_Panel(W)._draw_flag(201)
+_last = semester_handle.get_last_report_card(201)
+_want = _("{0}的成绩单待查看（用「检查成绩单」指令）").format(semester_handle.get_semester_name(_last["year"], _last["month"]))
+check("养成总览的待处理写明是哪个学期的成绩单（此前写「本学期」，待查看的其实是刚结束那一学期的）", any(_want in t for t in drawn_text)
+      and not any("本学期成绩单" in t for t in drawn_text), [t for t in drawn_text if "成绩单" in t])
+_g201.report_card_flag = False
+_g210 = growth_handle.get_child_growth(210)
+_g210.report_card_flag = True
+drawn_text.clear()
+growth_panel.Growth_Panel(W)._draw_flag(210)
+check("一份成绩单都还没有时写「新的成绩单待查看」", any(_("新的成绩单待查看（用「检查成绩单」指令）") in t for t in drawn_text), [t for t in drawn_text if "成绩单" in t])
+_g210.report_card_flag = False
+
+flow_handle.askfor_all = scripted_askfor
+answers[:] = []
+drawn_text.clear()
+schedule_template_panel.Schedule_Template_Panel(W)._select_activity()
+flow_handle.askfor_all = fake_askfor
+_tend_name = game_config.config_entertainment[pregnancy_constant.TEND_EGGS_ENTERTAINMENT_ID].name
+check("选择活动里没有照料卵（Plan 28 §3.3）", drawn_text and not any(_tend_name in t for t in drawn_text), [t for t in drawn_text if _tend_name in t])
+
 section("Web 适配器冒烟")
 from Script.System.Web_Draw_System import web_draw_adapter
 

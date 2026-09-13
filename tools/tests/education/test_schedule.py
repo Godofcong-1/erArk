@@ -112,7 +112,8 @@ check("实习导师 = 同场景同岗位的干员", schedule_handle.get_intern_m
 move_to(103, SCENE_DORM)
 check("导师离场则无人在岗", schedule_handle.get_intern_mentor(201, intern_work) == -1)
 schedule_handle.set_selected_course(201, 0, 0, education_constant.COURSE_TYPE_INTEREST, 99999)
-check("目标非法：解析为空列表而不是报错", schedule_handle.get_course_place(schedule_handle.get_now_course(201)) == [])
+check("目标非法：解析为空列表而不是报错；这一节视为没课（Plan 28 §3.2，此前照样返回课）",
+      schedule_handle.get_course_place({"course_type": education_constant.COURSE_TYPE_INTEREST, "target": 99999}) == [] and schedule_handle.get_now_course(201) is None)
 schedule_handle.set_selected_course(201, 0, 0, education_constant.COURSE_TYPE_THEORY, ROOM1)
 # 教室课要在全局课表上有这一格，空格子按「已停课」算没课（Plan 27 §3.3）
 schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
@@ -195,6 +196,32 @@ schedule_handle.clear_selected_course(201, _today_weekday, 0)
 sex_class_handle.set_temp_class(_today_ordinal, 0, ROOM_P, 70, must_attend=[201])
 _course = schedule_handle.get_now_course(201)
 check("点名必修、自己这节没排课：覆盖到临时课的教室，照样有课", _course is not None and _course["classroom"] == ROOM_P, _course)
+clear_schedules()
+
+section("Plan 28 §3.2：个人式课这一节上不成视为没课")
+set_time(period_time(0))
+_wd = cache.game_time.weekday()
+teen_b = make_character(211, "少女B", 152, daughter=True, stage=104)
+schedule_handle.set_selected_course(211, _wd, 0, education_constant.COURSE_TYPE_INTEREST, education_constant.ENTERTAINMENT_PLAY_HOUSE)
+check("judge_personal_course_valid：少女的过家家不成立、萝莉的成立", not schedule_handle.judge_personal_course_valid(211, play_house)
+      and schedule_handle.judge_personal_course_valid(201, play_house))
+check("少女的过家家：get_now_course / get_course_at 为 None（此前照样返回，两道闸与出勤都按有课判）", schedule_handle.get_now_course(211) is None
+      and schedule_handle.get_course_at(211, period_time(0), 0) is None)
+schedule_handle.set_selected_course(201, _wd, 0, education_constant.COURSE_TYPE_INTEREST, education_constant.ENTERTAINMENT_PLAY_HOUSE)
+check("同一格对萝莉照常是一节课", schedule_handle.get_now_course(201) is not None)
+cache.rhodes_island.facility_open[pool_open_cid] = False
+schedule_handle.set_selected_course(201, _wd, 0, education_constant.COURSE_TYPE_PE, pool)
+check("体育课排在未解锁的游泳池：不成立，视为没课", not schedule_handle.judge_personal_course_valid(201, pe_pool) and schedule_handle.get_now_course(201) is None)
+cache.rhodes_island.facility_open[pool_open_cid] = True
+check("解锁后照常是一节课", schedule_handle.get_now_course(201) is not None and schedule_handle.get_now_course(201)["target"] == pool)
+schedule_handle.set_selected_course(201, _wd, 0, education_constant.COURSE_TYPE_INTERN, intern_work)
+check("实习课本节无人在岗：地点仍解析得出（回落到已开放的那间），照旧是一节课（降级见习）", schedule_handle.get_intern_mentor(201, intern_work) == -1
+      and schedule_handle.get_now_course(201) is not None)
+sex_class_handle.set_temp_class(cache.game_time.date().toordinal(), 0, ROOM_P, 70, must_attend=[211])
+_course = schedule_handle.get_now_course(211)
+check("必修覆盖不受影响：少女这节上不成的兴趣课被点名必修，照样指向临时课的教室", _course is not None and _course["classroom"] == ROOM_P, _course)
+remove_character(211)
+schedule_handle.clear_selected_course(201, _wd, 0)
 clear_schedules()
 
 finish()

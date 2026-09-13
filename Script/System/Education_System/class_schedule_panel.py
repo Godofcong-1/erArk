@@ -530,10 +530,12 @@ class Class_Schedule_Panel:
         输入类型: must_attend(List[int]) 当前名单, classroom(str), week_day(int), period(int)
         输出类型: List[int]，新的名单
         功能: 列出可参加的学生，每行6个，点一下切换选中状态。
-              会顶掉原有课的学生名字后标「*」，具体顶掉哪一节集中列在下方——
-                 一个格位只有31列，「（将顶替 X 的 Y）」这种尾注放不下
+              会顶掉一节确有的课的学生名字后标「*」，具体顶掉哪一节集中列在下方——
+                 一个格位只有31列，「（将顶替 X 的 Y）」这种尾注放不下。
+              确有的课不分课型（Plan 28 §3.5）：体育 / 兴趣 / 实习课一样会被顶掉；已停课的教室课、上不成的个人式课不算
         """
         from Script.System.Education_System import sex_class_handle, growth_handle
+        from Script.UI.Panel import character_info_head
 
         must_attend = list(must_attend)
         while 1:
@@ -558,19 +560,25 @@ class Class_Schedule_Panel:
                 if not sex_class_handle.judge_can_join_sex_class(character_id, check_course=False):
                     continue
                 mark = "√" if character_id in must_attend else "  "
-                # 会顶掉她原本的哪一节——按钮里只放一个「*」，明细汇总到下方
+                # 会顶掉她原本的哪一节——按钮里只放一个「*」，明细汇总到下方。
+                #    只标确有的课（Plan 28 §3.5）：必修覆盖顶掉的是这一节的任何课，体育 / 兴趣 / 实习课也一样；
+                #    每周课表上已停课的教室课、上不成的个人式课本来就算没课，不标
                 old_course = schedule_handle.get_selected_course(character_id, week_day, period)
-                replace_mark = ""
+                replace_text = ""
                 if old_course is not None and old_course[0] in education_constant.CLASSROOM_COURSE_TYPE_SET:
-                    replace_mark = "*"
                     # 顶替的是她每周固定的那节课，不叠加临时课覆盖层（否则今天这格读到的就是临时课自己）
                     old_cell = schedule_handle.get_class_cell(old_course[1], week_day, period, include_temp=False)
                     if old_cell is not None and old_cell[0] in game_config.config_ability:
-                        replace_text_list.append(_("{0}→{1}的{2}").format(
-                            character_data.name, old_course[1],
-                            game_config.config_ability[old_cell[0]].name))
-                    else:
-                        replace_text_list.append(_("{0}→{1}").format(character_data.name, old_course[1]))
+                        replace_text = _("{0}→{1}的{2}").format(character_data.name, old_course[1], game_config.config_ability[old_cell[0]].name)
+                    elif old_cell is not None:
+                        replace_text = _("{0}→{1}").format(character_data.name, old_course[1])
+                elif old_course is not None:
+                    old_course_data = {"course_type": old_course[0], "target": old_course[1]}
+                    if schedule_handle.judge_personal_course_valid(character_id, old_course_data):
+                        replace_text = _("{0}→{1}").format(character_data.name, character_info_head.get_course_text(old_course_data))
+                replace_mark = "*" if replace_text else ""
+                if replace_text:
+                    replace_text_list.append(replace_text)
                 now_draw = draw.LeftButton(
                     _("[{0}{1}{2}]").format(mark, character_data.name, replace_mark),
                     "MUST_%d" % character_id, student_width)
