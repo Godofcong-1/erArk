@@ -239,7 +239,7 @@ set_time(DEFAULT_TIME.replace(hour=20))
 check("节次外的日程自习（照旧 45 分钟）同样写「自习中」", character_info_head.get_now_class_tip(201) == _self_study_tip, character_info_head.get_now_class_tip(201))
 set_time(period_time(0))
 student.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
-check("听课而此刻没课（玩家在节次外授课拉来的）仍写「上课中」", character_info_head.get_now_class_tip(201) == (False, _("上课中")), character_info_head.get_now_class_tip(201))
+check("听课而此刻没课、也不是在听玩家的手动授课：仍写「上课中」", character_info_head.get_now_class_tip(201) == (False, _("上课中")), character_info_head.get_now_class_tip(201))
 student.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
 
 section("Plan 30：self_have_any_course 只看学生岗的真课、CVP Growth|24、检查成绩单的对象（Q1）")
@@ -452,5 +452,149 @@ pl.behavior.behavior_id = _pl_behavior
 move_to(0, SCENE_DORM)
 check("L18 同学前提的 docstring 写上新口径（双方都在学生岗、确有的课、对方是幼女或萝莉）",
       all(k in (handle_premise.handle_self_have_classmate.__doc__ or "") for k in ("学生岗", "确有", "萝莉")))
+
+section("Plan 32 §3.14（L26）：公开课前提 self_have_public_course 按整张个人课表查每周确有的公开课")
+check("L26 前提 self_have_public_course 已注册", P.SELF_HAVE_PUBLIC_COURSE == "self_have_public_course" and P.SELF_HAVE_PUBLIC_COURSE in constant.handle_premise_data)
+clear_schedules()
+set_time(period_time(0))
+growth_handle.get_child_growth(201).selected_course = {}
+_hall = schedule_handle.get_classroom_list(E.COURSE_TYPE_PUBLIC)[0]
+schedule_handle.set_class_cell(ROOM1, 1, 2, 45, 101)
+schedule_handle.set_selected_course(201, 1, 2, E.COURSE_TYPE_THEORY, ROOM1)
+check("L26 只排理论课：不成立（此前萝莉 51 / 幼女 24「大礼堂的公开课」挂的是任意课，照样抽得到）", HP(P.SELF_HAVE_PUBLIC_COURSE, 201) == 0)
+schedule_handle.set_selected_course(201, 1, 3, E.COURSE_TYPE_PUBLIC, _hall)
+check("L26 选了大礼堂、每周课表那一格空着（已停课）：不成立", HP(P.SELF_HAVE_PUBLIC_COURSE, 201) == 0)
+schedule_handle.set_class_cell(_hall, 1, 3, 45, -1)
+check("L26 每周课表排上公开课（没排教师也算）：成立", HP(P.SELF_HAVE_PUBLIC_COURSE, 201) == 1)
+student.work.work_type = 21
+check("L26 改了岗：课表还在也不成立", HP(P.SELF_HAVE_PUBLIC_COURSE, 201) == 0)
+student.work.work_type = 152
+_adult_growth = adult.child_growth
+check("L26 没有养成数据的干员：不成立，也不被惰性创建养成数据", HP(P.SELF_HAVE_PUBLIC_COURSE, 301) == 0 and adult.child_growth is _adult_growth)
+growth_handle.get_child_growth(201).selected_course = {}
+clear_schedules()
+
+section("Plan 32 §3.10（L13）：被玩家「授课」拉来听课的学生，CVP 课型按教室判、科目回落学识（与 512 同口径）")
+clear_schedules()
+_fallback = E.FALLBACK_SUBJECT_ABILITY
+_pl_behavior = pl.behavior.behavior_id
+set_time(DEFAULT_TIME.replace(hour=20))
+pl.behavior.behavior_id = constant.Behavior.TEACH
+move_to(0, classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+student.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+check("L13 节次外、在理论教室一被拉来听课：CourseType 为理论课、Course|学识 成立（此前两项都是 -1，529 条听课口上一句不出）",
+      HP("CVP_A1_CourseType|0_E_1", 201) == 1 and HP("CVP_A1_Course|{0}_G_0".format(_fallback), 201) == 1)
+move_to(0, classroom_path(ROOM_P))
+move_to(201, classroom_path(ROOM_P))
+check("L13 在实践教室一：课型为实践课", HP("CVP_A1_CourseType|1_E_1", 201) == 1 and HP("CVP_A1_CourseType|0_E_1", 201) == 0)
+set_time(period_time(0))
+schedule_handle.set_class_cell(ROOM1, 0, 0, 43, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+move_to(0, classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+check("L13 节次内、她的课表上是教师甲的料理：按玩家的授课读学识，料理不成立（此前口上写课表上的料理，实际发的是学识）",
+      HP("CVP_A1_Course|{0}_G_0".format(_fallback), 201) == 1 and HP("CVP_A1_Course|43_G_0", 201) == 0)
+student.behavior.start_time = period_time(0) + datetime.timedelta(minutes=5)
+check("L13 对照：开始时刻与玩家没对齐（她自己坐下听课，不是被拉来的）→ 按课表读料理", HP("CVP_A1_Course|43_G_0", 201) == 1
+      and HP("CVP_A1_Course|{0}_G_0".format(_fallback), 201) == 0)
+set_time(period_time(0))
+pl.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+check("L13 对照：玩家没在授课 → 按课表读料理", HP("CVP_A1_Course|43_G_0", 201) == 1)
+pl.behavior.behavior_id = _pl_behavior
+student.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+move_to(0, SCENE_DORM)
+move_to(201, SCENE_DORM)
+schedule_handle.clear_selected_course(201, 0, 0)
+clear_schedules()
+
+section("Plan 32 §3.10（L2）：今天翘过课的学生在 H 中、在实操课上、正要去上实操课时不判「翘课被抓」")
+from Script.Design import second_behavior  # noqa: E402
+
+clear_schedules()
+set_time(period_time(0))
+_g201 = growth_handle.get_child_growth(201)
+_g201.selected_course = {}
+_g201.skip_class_flag = True
+_g201.skip_class_day = cache.game_time.toordinal()
+_g201.show_off_ability = {45: 2}
+student.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+student.sp_flag.is_h = False
+_pl_behavior = pl.behavior.behavior_id
+pl.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+move_to(0, SCENE_DORM)
+move_to(201, SCENE_DORM)
+
+
+def caught_dispatch() -> tuple:
+    """
+    清掉两个养成二段行为后，跑一次孩子与玩家同场景时的养成二段判定
+    Keyword arguments:
+    无
+    Return arguments:
+    tuple -- (是否派出翘课被抓, 是否派出炫耀)
+    """
+    student.second_behavior["caught_skip_class"] = 0
+    student.second_behavior["show_off_study"] = 0
+    second_behavior.judge_child_growth_second_behavior(201)
+    return bool(student.second_behavior.get("caught_skip_class", 0)), bool(student.second_behavior.get("show_off_study", 0))
+
+
+_r = caught_dispatch()
+check("L2 对照：在宿舍撞见玩家：派出翘课被抓、不炫耀（翘课被抓优先于炫耀）", _r == (True, False), _r)
+student.sp_flag.is_h = True
+_r = caught_dispatch()
+check("L2 她在 H 中（课堂 H、被玩家带进 H）：不派翘课被抓，也不炫耀（此前照派）", _r == (False, False), _r)
+student.sp_flag.is_h = False
+set_time(period_time(5))
+move_to(0, classroom_path(ROOM_P))
+move_to(201, classroom_path(ROOM_P))
+sex_class_handle.set_temp_class(cache.game_time.date().toordinal(), 5, ROOM_P, 74, running=True)
+_r = caught_dispatch()
+check("L2 她在正在进行的实操课的教室里（还没进 H）：不派翘课被抓（此前照派，16 条被抓口上里 11 条写回教室 / 去上课）", _r == (False, False), _r)
+cache.rhodes_island.temp_sex_class = {}
+set_time(period_time(3) - datetime.timedelta(minutes=5))
+_l2_wd = cache.game_time.weekday()
+sex_class_handle.set_temp_class(cache.game_time.date().toordinal(), 3, ROOM_P, 74)
+schedule_handle.set_class_cell(ROOM_P, _l2_wd, 3, 43, -1)
+schedule_handle.set_selected_course(201, _l2_wd, 3, E.COURSE_TYPE_PRACTICE, ROOM_P)
+check("L2 前提对照：第 4 节开课前 5 分钟，她的上课状态是待赴实操课（SEX_PENDING）", class_ai.get_course_stage(201) == E.COURSE_STAGE_SEX_PENDING, class_ai.get_course_stage(201))
+_r = caught_dispatch()
+check("L2 在实操教室等开课、博士也在：不派翘课被抓（此前照派）", _r == (False, False), _r)
+cache.rhodes_island.temp_sex_class = {}
+move_to(0, SCENE_DORM)
+move_to(201, SCENE_DORM)
+_r = caught_dispatch()
+check("L2 对照：同一天回到宿舍撞见：照派翘课被抓", _r == (True, False), _r)
+_g201.skip_class_flag = False
+_g201.skip_class_day = 0
+_g201.show_off_ability = {}
+_g201.selected_course = {}
+student.second_behavior["caught_skip_class"] = 0
+student.second_behavior["show_off_study"] = 0
+pl.behavior.behavior_id = _pl_behavior
+clear_schedules()
+set_time(period_time(0))
+
+section("Plan 32 §3.10（L20）：待炫耀只记学生岗（跑真实的 gain_ability）")
+from Script.Design import handle_ability  # noqa: E402
+
+_l20_student = make_character(207, "学生岗萝莉", 152, daughter=True, stage=103, mother_id=102, born_days=300)
+_l20_worker = make_character(208, "改了岗的萝莉", 21, daughter=True, stage=103, mother_id=102, born_days=300)
+for _one in (_l20_student, _l20_worker):
+    growth_handle.get_child_growth(_one.cid).show_off_ability = {}
+    for _juel_id in list(_one.juel):
+        _one.juel[_juel_id] = 10 ** 7
+    for _exp_id in list(_one.experience):
+        _one.experience[_exp_id] = 10 ** 7
+    handle_ability.gain_ability(_one.cid)
+check("L20 对照：学生岗的萝莉女儿，升了级的科目记进待炫耀", len(_l20_student.child_growth.show_off_ability) > 0, _l20_student.child_growth.show_off_ability)
+check("L20 改了岗的萝莉女儿：科目照样升级，但不记待炫耀（此前照记，下次见面炫耀课堂与老师）",
+      _l20_worker.child_growth.show_off_ability == {} and any(_l20_worker.ability.get(_aid, 0) > 0 for _aid in E.SUBJECT_ABILITY_LIST),
+      _l20_worker.child_growth.show_off_ability)
+for _cid in (207, 208):
+    remove_character(_cid)
+    if _cid in mother.relationship.child_id_list:
+        mother.relationship.child_id_list.remove(_cid)
 
 finish()

@@ -225,4 +225,84 @@ check("持卵钩子换上的照料卵时段在日程改写后仍是照料卵，�
       (_tend_slot, adult_student.entertainment.entertainment_type))
 schedule_template_handle.apply_template(301, 0)
 
+section("Plan 32 §3.12（L17）：删模板遍历全部角色，离线的女儿一并解开；「套用中」也数离线的人")
+away = make_character(204, "外勤中的女儿", 152, daughter=True, stage=103, mother_id=102, born_days=300)
+cache.npc_id_got.discard(204)  # 外勤 / 外交 / 离线时移出 npc_id_got
+_l17_id = schedule_template_handle.create_template("外勤前套的")
+check("L17 对照：新模板是现存最大编号（删掉后会被下一套新模板复用）", _l17_id == max(schedule_template_handle.get_all_template_id()), _l17_id)
+schedule_template_handle.apply_template(204, _l17_id)
+schedule_template_handle.set_child_override(204, 0, CHESS)
+check("L17 离线的女儿也算进「套用中」（此前只数在岛的人）", schedule_template_handle.get_template_use_count(_l17_id) == 1,
+      schedule_template_handle.get_template_use_count(_l17_id))
+check("L17 删掉这套模板", schedule_template_handle.delete_template(_l17_id))
+check("L17 离线的女儿一并解开：编号归 0、单项覆盖清空（此前仍指着被删的编号）", away.child_growth.schedule_template_id == 0 and away.child_growth.schedule_override == {},
+      (away.child_growth.schedule_template_id, away.child_growth.schedule_override))
+_l17_reused = schedule_template_handle.create_template("复用这个编号的新模板")
+cache.npc_id_got.add(204)  # 回岛
+check("L17 新模板复用了这个编号，她回岛后仍是「未设置」，不会静默套上新模板", _l17_reused == _l17_id and schedule_template_handle.get_child_schedule_text(204) == _("未设置"),
+      (_l17_reused, schedule_template_handle.get_child_schedule_text(204)))
+schedule_template_handle.delete_template(_l17_reused)
+remove_character(204)
+if 204 in mother.relationship.child_id_list:
+    mother.relationship.child_id_list.remove(204)
+
+section("Plan 32 §3.12（L18）：成年非女儿干员离开学生岗后，当学生时套的日程不再改写")
+_l18_id = schedule_template_handle.create_template("三段下棋（L18）")
+for _slot in range(3):
+    schedule_template_handle.set_template_slot(_l18_id, _slot, CHESS)
+schedule_template_handle.apply_template(301, _l18_id)
+adult_student.entertainment.entertainment_type = [11, 12, 13]
+schedule_template_handle.apply_schedule_for_child(301)
+check("L18 对照：成年学生在学生岗时照模板改写", adult_student.entertainment.entertainment_type == [CHESS] * 3, adult_student.entertainment.entertainment_type)
+adult_student.work.work_type = 21
+adult_student.entertainment.entertainment_type = [11, 12, 13]
+schedule_template_handle.apply_schedule_for_child(301)
+check("L18 改岗后（不是女儿）：不再改写，保留当天的随机娱乐（此前每天照当学生时套的模板写，要解除只能先改回学生岗）",
+      adult_student.entertainment.entertainment_type == [11, 12, 13], adult_student.entertainment.entertainment_type)
+check("L18 模板本身保留：她仍指着这套模板", adult_student.child_growth.schedule_template_id == _l18_id)
+adult_student.work.work_type = 152
+schedule_template_handle.apply_schedule_for_child(301)
+check("L18 改回学生岗：照旧生效", adult_student.entertainment.entertainment_type == [CHESS] * 3, adult_student.entertainment.entertainment_type)
+loli.work.work_type = 21
+schedule_template_handle.apply_template(201, _l18_id)
+loli.entertainment.entertainment_type = [11, 12, 13]
+schedule_template_handle.apply_schedule_for_child(201)
+check("L18 改了岗的女儿不受影响：照模板改写（女儿不看岗位，工作时间的见学让路另有判定）", loli.entertainment.entertainment_type == [CHESS] * 3,
+      loli.entertainment.entertainment_type)
+loli.work.work_type = 152
+schedule_template_handle.apply_template(201, 0)
+schedule_template_handle.apply_template(301, 0)
+schedule_template_handle.delete_template(_l18_id)
+
+section("Plan 32 L28：模板键与 need 分隔符集中在 education_constant，模块与面板不写字面量")
+import ast  # noqa: E402
+import inspect  # noqa: E402
+from Script.System.Education_System import schedule_template_panel  # noqa: E402
+
+check("L28 schedule_template_handle 的五个模块级常量已删", not any(hasattr(schedule_template_handle, name) for name in ("_KEY_NAME", "_KEY_SLOT", "_NEED_NONE", "_NEED_SPLIT", "_NEED_OR_SPLIT")))
+check("L28 education_constant 的五个常量取值照搬原定义", (T.TEMPLATE_KEY_NAME, T.TEMPLATE_KEY_SLOT, T.TEMPLATE_NEED_NONE, T.TEMPLATE_NEED_SPLIT, T.TEMPLATE_NEED_OR_SPLIT)
+      == ("name", "slot", "无", "&", "/"))
+check("L28 预设与自建模板的数据都只有这两个键", all(set(data) == {T.TEMPLATE_KEY_NAME, T.TEMPLATE_KEY_SLOT} for data in cache.rhodes_island.child_schedule_template.values()),
+      [sorted(data) for data in cache.rhodes_island.child_schedule_template.values()])
+
+
+def literal_hit_list(module, word_set: set) -> list:
+    """
+    找出模块源码里取值落在 word_set 里的字符串常量（跳过 docstring 与属性说明这类单独成句的字符串）
+    Keyword arguments:
+    module -- 模块对象
+    word_set -- 要找的字面量集合
+    Return arguments:
+    list -- (行号, 字面量) 列表，没有则为空表
+    """
+    tree = ast.parse(inspect.getsource(module))
+    skip_id_set = {id(node.value) for node in ast.walk(tree) if isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant)}
+    return [(node.lineno, node.value) for node in ast.walk(tree)
+            if isinstance(node, ast.Constant) and isinstance(node.value, str) and node.value in word_set and id(node) not in skip_id_set]
+
+
+# 「/」不查：get_activity_age_limit_text 用它拼「限幼女/萝莉」的显示文本，不是 need 的分隔符
+_l28_hits = literal_hit_list(schedule_template_handle, {"name", "slot", "无", "&"}) + literal_hit_list(schedule_template_panel, {"name", "slot"})
+check("L28 两个模块的代码里不再写模板键与 need 分隔符的字面量（docstring 除外）", not _l28_hits, _l28_hits)
+
 finish()

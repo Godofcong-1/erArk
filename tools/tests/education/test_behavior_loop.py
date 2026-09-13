@@ -6,7 +6,7 @@
 """
 from _bootstrap import *  # noqa: F401,F403
 from Script.Design import character_behavior, instuct_judege, handle_npc_ai
-from Script.Settle import past_day_settle
+from Script.Settle import past_day_settle, realtime_settle
 from Script.UI.Panel import character_info_head
 
 E = education_constant
@@ -218,8 +218,161 @@ check("实操课开始那一刻，已有必修生在实操教室里等开课", l
 cache.rhodes_island.temp_sex_class = {}
 class_ai.get_skip_class_rate = _orig_rate
 
+section("Plan 32 §3.7（L4）：学生截短排在实时结算之前，截掉的那一段只算一遍（真实存档、真实行为循环）")
+# 读档会重建全部角色对象（save_handle.input_load_save），_bootstrap 里的 pl 已不是存档里的玩家 cache.character_data[0]，
+#    它的开始时刻不能当这一步的起点：这一段不经 run_one_round，自己把起点显式传给 NPC 阶段；
+#    NPC 阶段只让挑出的那名女儿参加（别的角色与本题无关），翘课概率钉成 0（她翘了课，跨天那一段的 flag 断言就随机了）
+class_ai.get_skip_class_rate = lambda cid: 0.0
+L4_RT_LOG = []
+""" 挑出的那名女儿的实时结算记录：(行为id, 行为开始时刻, 行为时长, 这次结算的分钟数) """
+_orig_true_add = realtime_settle.get_true_add_time
+
+
+def l4_clear_need(cid: int) -> None:
+    """
+    夹具控制：清掉生理需求（饥饿 / 尿意 / 疲劳 / 困意与对应标记），体力气力回满，只看课表链（照 test_class_ai.clear_need）
+    Keyword arguments:
+    cid -- 角色id
+    Return arguments:
+    无
+    功能: 改了需求标记要同步异常位掩码，否则 normal_1 按旧掩码判
+    """
+    cd = cache.character_data[cid]
+    for name in ("hunger_point", "urinate_point", "tired_point", "sleep_point"):
+        if hasattr(cd, name):
+            setattr(cd, name, 0)
+    for name in ("eat_food", "rest", "pee"):
+        if hasattr(cd.sp_flag, name):
+            setattr(cd.sp_flag, name, 0)
+    cd.sp_flag.sleep = False
+    cd.sp_flag.tired = False
+    cd.hit_point = cd.hit_point_max
+    cd.mana_point = cd.mana_point_max
+    handle_premise.refresh_unnormal_flag(cid)
+
+
+l4_id = -1
+""" 挑出的学生岗女儿：不是助理、清掉需求后 normal_all 成立（截短规则要求上课行的门槛成立） """
+for cid in daughter_list:
+    if cid == cache.character_data[0].assistant_character_id:
+        continue
+    cache.character_data[cid].sp_flag.is_follow = 0
+    l4_clear_need(cid)
+    if handle_premise.handle_normal_all(cid):
+        l4_id = cid
+        break
+check("L4 前提：挑到一名能跑工作链的学生岗女儿（不是助理、清掉需求后 normal_all 成立）", l4_id != -1, daughter_list)
+
+
+def l4_true_add_spy(character_id: int, now_time: datetime.datetime, pl_start_time: datetime.datetime) -> int:
+    """
+    实时结算取「这次结算多少分钟」的记录包装（realtime_settle.character_aotu_change_value 经模块全局名调用它），只记挑出的那名女儿
+    Keyword arguments:
+    character_id -- 角色id
+    now_time -- 当前时刻
+    pl_start_time -- 玩家这一步的开始时刻
+    Return arguments:
+    int -- 原函数的返回值：这次结算的分钟数
+    """
+    result = _orig_true_add(character_id, now_time, pl_start_time)
+    if character_id == l4_id:
+        cd = cache.character_data[character_id]
+        L4_RT_LOG.append((cd.behavior.behavior_id, cd.behavior.start_time, cd.behavior.duration, result))
+    return result
+
+
+def run_l4_step(minute: int, class_period: int) -> tuple:
+    """
+    让挑出的女儿从此刻起在宿舍自由玩耍 minute 分钟，跑一步「玩家走 minute 分钟」的真实行为循环，记下她的实时结算
+    Keyword arguments:
+    minute -- 玩家这一步的分钟数，也是她这段自由玩耍的时长
+    class_period -- 今天给她排一节理论课的节次（那一格在全局课表上排成没有教师、到了教室自习），-1 为一节课都不排
+    Return arguments:
+    tuple -- (NPC 阶段遍数, 是否收敛, 她的实时结算记录)
+    功能: 照 init_character_behavior 的顺序先玩家、后 NPC；玩家置为空闲，只推进时钟，这一步的起点显式传进去。
+          交互对象设回自己，否则 judge_character_status_time_over 按「交互对象不在场」把行为的结束改写为这一步的结束；
+          护栏 120 遍：没事可做时会一分钟一分钟地挪（README 夹具陷阱），60 分钟一步最多 60 遍
+    """
+    cd = cache.character_data[l4_id]
+    growth_data = growth_handle.get_child_growth(l4_id)
+    growth_data.selected_course = {}
+    growth_data.skip_class_flag = False
+    if class_period >= 0:
+        schedule_handle.set_class_cell(l4_room, l4_week_day, class_period, 45, -1)
+        schedule_handle.set_selected_course(l4_id, l4_week_day, class_period, E.COURSE_TYPE_THEORY, l4_room)
+    step_start = cache.game_time
+    move_to(l4_id, l4_home)
+    cd.sp_flag.is_h = False
+    cd.sp_flag.is_follow = 0
+    cd.behavior.behavior_id = constant.Behavior.FREE_PLAY
+    cd.behavior.start_time = step_start
+    cd.behavior.duration = minute
+    cd.behavior.move_target = []
+    cd.behavior.move_final_target = []
+    cd.state = constant.CharacterStatus.STATUS_ARDER
+    cd.target_character_id = l4_id
+    cd.action_info.wake_time = step_start
+    l4_clear_need(l4_id)
+    pl_data = cache.character_data[0]
+    pl_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+    pl_data.behavior.start_time = step_start
+    game_time.sub_time_now(minute)
+    cache.over_behavior_character = set()
+    L4_RT_LOG.clear()
+    npc_pass = 0
+    realtime_settle.get_true_add_time = l4_true_add_spy
+    try:
+        character_behavior.character_behavior(0, cache.game_time, step_start)
+        while l4_id not in cache.over_behavior_character:
+            npc_pass += 1
+            if npc_pass > 120:
+                break
+            l4_clear_need(l4_id)
+            character_behavior.character_behavior(l4_id, cache.game_time, step_start)
+    finally:
+        realtime_settle.get_true_add_time = _orig_true_add
+    return npc_pass, l4_id in cache.over_behavior_character, list(L4_RT_LOG)
+
+
+def l4_log_text(log: list) -> list:
+    """
+    把实时结算记录换成便于失败时阅读的简写
+    Keyword arguments:
+    log -- run_l4_step 返回的实时结算记录
+    Return arguments:
+    list -- (行为id, 开始 时:分, 时长, 结算分钟数) 的列表
+    """
+    return [(one[0], one[1].strftime("%H:%M"), one[2], one[3]) for one in log]
+
+
+l4_room = ""
+""" 给她排课用的理论教室：已开放、解析得出场景路径的第一间 """
+if l4_id != -1:
+    l4_room = next((room for room in schedule_handle.get_classroom_list(E.COURSE_TYPE_THEORY) if schedule_handle.get_classroom_position(room)), "")
+check("L4 前提：有一间已开放的理论教室可排课", l4_room != "", l4_room)
+if l4_id != -1 and l4_room:
+    l4_week_day = cache.game_time.weekday()
+    l4_dorm = cache.character_data[l4_id].dormitory
+    l4_home = map_handle.get_map_system_path_for_str(l4_dorm) if l4_dorm in cache.scene_data else list(SCENE_EDU_ENTRY)
+    # 14:45 起连跑两步：第一步没课作对照；第二步 16:15 有课，开课前 20 分钟（15:55）落在没课的第 7 节里，截短规则 B 截得到
+    set_time(cache.game_time.replace(hour=14, minute=45, second=0, microsecond=0))
+    pass0, over0, log0 = run_l4_step(60, -1)
+    check("L4 对照：这一步没课、14:45 起自由玩耍 60 分钟、玩家一步 60 分钟 → 不截，实时结算合计 60 分钟",
+          over0 and bool(log0) and log0[0][2] == 60 and sum(one[3] for one in log0) == 60, (pass0, l4_log_text(log0)))
+    pass1, over1, log1 = run_l4_step(60, 7)
+    check("L4 16:15 有课、15:45 起自由玩耍：在实时结算之前就截到 15:55（开课前 20 分钟），这一段只结算 10 分钟（此前先按 60 分钟结算、再截短）",
+          bool(log1) and log1[0][0] == constant.Behavior.FREE_PLAY and log1[0][2] == 10 and log1[0][3] == 10, l4_log_text(log1))
+    check("L4 这一步收敛，她的实时结算合计 60 分钟、与玩家这一步等长（此前 110：15:55~16:45 那一段饥饿、尿意、疲劳算了两遍）",
+          over1 and sum(one[3] for one in log1) == 60, (pass1, l4_log_text(log1)))
+class_ai.get_skip_class_rate = _orig_rate
+
 section("跨天结算")
 set_time(cache.game_time.replace(hour=0, minute=1))
+# 跨天只清前一天及更早挂上的翘课 flag（Plan 32 §3.7 L5：一步跨过午夜时，新一天刚挂上的 flag 不能被清掉）。
+#    存档当天可能真有女儿翘过课，她的 flag 认的就是今天：统一改成前一天挂上的，下面的断言才不随存档而变
+for cid in daughter_list:
+    if growth_handle.get_child_growth(cid).skip_class_flag:
+        growth_handle.get_child_growth(cid).skip_class_day = cache.game_time.toordinal() - 1
 try:
     past_day_settle.update_new_day()
     check("update_new_day 不抛异常", True)
@@ -228,7 +381,7 @@ except Exception as error:
 
     traceback.print_exc()
     check("update_new_day 不抛异常", False, repr(error))
-check("跨天后翘课与见学 flag 都清了", all(not growth_handle.get_child_growth(cid).skip_class_flag and not growth_handle.get_child_growth(cid).follow_mother_flag for cid in daughter_list))
+check("跨天后翘课（前一天挂上的）与见学 flag 都清了", all(not growth_handle.get_child_growth(cid).skip_class_flag and not growth_handle.get_child_growth(cid).follow_mother_flag for cid in daughter_list))
 check("跨天后学期结算幂等", semester_handle.settle_semester_change() == [])
 
 finish()

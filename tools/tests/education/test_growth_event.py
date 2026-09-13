@@ -145,14 +145,16 @@ for _uid in _baby_uid_list:
 check("婴儿桶与她可抽的通用事件逐条逐选项结算，都不报错（修好之后这些事件真的会派到婴儿身上）", bool(_baby_uid_list) and _option_count > 0 and not _error_list,
       (len(_baby_uid_list), _option_count, _error_list[:5]))
 
-section("Plan 29 §3.3 / L2：抬头写本阶段第几天；改了岗的萝莉照推期末事件（用户拍板：成绩单照出并写明理由，推送不收窄）")
-loli.pregnancy.born_time = cache.game_time - datetime.timedelta(days=300)
-child.pregnancy.born_time = cache.game_time - datetime.timedelta(days=120)
-baby.pregnancy.born_time = cache.game_time - datetime.timedelta(days=5)
-check("萝莉出生 300 天：「萝莉期第 31 天」（此前写第 300 天，而萝莉期一共才 180 天）",
+section("Plan 29 §3.3 / L2：抬头写本阶段第几天（Plan 32 M1 起按可游玩天）；改了岗的萝莉照推期末事件（用户拍板：成绩单照出并写明理由，推送不收窄）")
+# 出生日要落在季月（Plan 32 §2.5-4）。今天 2026-09-07 09:00：萝莉与幼女的本阶段都从 2026-06-07 09:00 起，中间跳过 7、8 两个非季月
+set_time(DEFAULT_TIME)
+loli.pregnancy.born_time = datetime.datetime(2025, 9, 10, 9, 0)
+child.pregnancy.born_time = datetime.datetime(2026, 3, 9, 9, 0)
+baby.pregnancy.born_time = datetime.datetime(2026, 9, 2, 9, 0)
+check("M1 萝莉 2025-09-10 出生：「萝莉期第 31 天」（6/7 起 30 个可游玩天；按日历天会写第 93 天，按出生以来会写第 362 天）",
       growth_event_handle.get_growth_event_title({"chara_id": 201}) == "{0} · {1}期第 31 天".format(loli.name, E.STAGE_TALENT_NAME[103]),
       growth_event_handle.get_growth_event_title({"chara_id": 201}))
-check("幼女出生 120 天：第 31 天；婴儿出生 5 天：第 6 天（出生当天为第 1 天）",
+check("M1 幼女 2026-03-09 出生：同样是第 31 天；婴儿 9/2 出生：第 6 天（出生当天为第 1 天）",
       growth_event_handle.get_growth_event_title({"chara_id": 202}).endswith(_("期第 {0} 天").format(31))
       and growth_event_handle.get_growth_event_title({"chara_id": 204}).endswith(_("期第 {0} 天").format(6)),
       (growth_event_handle.get_growth_event_title({"chara_id": 202}), growth_event_handle.get_growth_event_title({"chara_id": 204})))
@@ -311,17 +313,19 @@ section("Plan 31 §3.14（Q4 / L10）：写成绩单的事件要有待查看的�
 _growth_211 = growth_handle.get_child_growth(211)
 _growth_211.attend_class_count = 20
 _growth_211.report_card_flag = False
-_report_uid = {"萝莉1", "萝莉20", "萝莉26"}
+# Plan 32 L22：写成绩单的萝莉 1 / 20 / 26 挪进了期末桶（期末 17 / 18 / 19），学期切换时与其它期末事件同池抽，日常派发任何状态下都抽不到。
+#    期末侧的覆盖（良好档萝莉成立、档位 3 与幼女不成立）在 test_talk_data
+_report_uid = {"萝莉1", "萝莉20", "萝莉26", "期末17", "期末18", "期末19"}
+check("Plan 32 L22 原萝莉 1 / 20 / 26 已从事件表删去", not any(uid in game_config.config_official_event for uid in ("萝莉1", "萝莉20", "萝莉26")))
 _now = candidate_uid_set(211)
-check("L10 听过 20 节课、有课、有同胞，但没有待查看的新成绩单：萝莉 1 / 20 / 26 都不在候选里（此前学期中途也抽得到「拿着这学期的成绩单」）",
+check("L10 / Plan 32 L22 听过 20 节课、有课、有同胞，没有待查看的新成绩单：原萝莉 1 / 20 / 26 与期末 17 / 18 / 19 都不在日常候选里",
       not (_report_uid & _now), sorted(_report_uid & _now))
 _growth_211.report_card_flag = True
 _now = candidate_uid_set(211)
-check("L10 有待查看的新成绩单：三条都进候选", _report_uid <= _now, sorted(_report_uid - _now))
-# 待查看的是一份档位 3（这学期没有上课）的成绩单：三条正文写的是各科成绩，对不上（Plan 31 实施复审补）
+check("Plan 32 L22 有待查看的新成绩单：它们也都不在日常候选里（挪进期末桶，只在学期切换时推）", not (_report_uid & _now), sorted(_report_uid & _now))
 _growth_211.report_card_history = [{"grade": E.REPORT_GRADE_NO_CLASS}]
 _now = candidate_uid_set(211)
-check("L10 待查看的新成绩单是档位 3（这学期没有上课）：三条都不进候选", not (_report_uid & _now), sorted(_report_uid & _now))
+check("Plan 32 L22 待查看的新成绩单是档位 3：同样都不在日常候选里", not (_report_uid & _now), sorted(_report_uid & _now))
 _growth_211.report_card_history = []
 _growth_211.report_card_flag = False
 _growth_211.attend_class_count, _growth_211.absent_count = 50, 5
@@ -338,22 +342,140 @@ check("L13 今天是她的生日：通用 3 进候选", "通用3" in candidate_u
 mate.pregnancy.born_time = mate.pregnancy.born_time - datetime.timedelta(days=1)
 check("L13 生日是昨天：通用 3 不在候选里（此前任意一天都抽得到）", "通用3" not in candidate_uid_set(211))
 mate.pregnancy.born_time = _saved_born_211
-check("L13 学期第 7 天（进度约 21%）：通用 15「季月交替的这几天」不在候选里", "通用15" not in candidate_uid_set(211), semester_handle.get_semester_progress())
+# 通用 15 的正文是「被人抱着从一个部门送到另一个部门」，Plan 32 L23 起不派萝莉：正反两向改用幼女 212，另验萝莉判不过
+check("L13 学期第 7 天（进度约 21%）：通用 15「季月交替的这几天」不在幼女的候选里", "通用15" not in candidate_uid_set(212), semester_handle.get_semester_progress())
 set_time(datetime.datetime(2026, 9, 29, 0, 5))
-check("L13 季月最后几天（进度 ≥ 90）：通用 15 进候选", "通用15" in candidate_uid_set(211), semester_handle.get_semester_progress())
+check("L13 季月最后几天（进度 ≥ 90）：通用 15 进幼女的候选", "通用15" in candidate_uid_set(212), semester_handle.get_semester_progress())
+check("Plan 32 L23 季月最后几天：萝莉判不过通用 15（此前照派）", "通用15" not in candidate_uid_set(211), semester_handle.get_semester_progress())
 set_time(period_time(0))
 baby_e = make_character(213, "婴儿E", 0, daughter=True, stage=101, mother_id=103, born_days=5)
 check("L13 出生 5 天的婴儿：婴儿 4「断奶的日子到了」、婴儿 50「断奶之后」都不在候选里（此前出生当天就有）",
       not ({"婴儿4", "婴儿50"} & candidate_uid_set(213)), sorted({"婴儿4", "婴儿50"} & candidate_uid_set(213)))
-baby_e.pregnancy.born_time = cache.game_time - datetime.timedelta(days=50)
+# 出生日落在季月（Plan 32 §2.5-4）：9/1 06:00 出生，婴儿期 9/1 ~ 11/30 跳过 10、11 月共 29 个可游玩天；每天 00:05（跨天派发的时刻）取样
+baby_e.pregnancy.born_time = datetime.datetime(2026, 9, 1, 6, 0)
+set_time(datetime.datetime(2026, 9, 16, 0, 5))
+check("L13 / M1 第 14 / 29 个可游玩天（进度约 48.3%）：婴儿 4、婴儿 50 都还不在", not ({"婴儿4", "婴儿50"} & candidate_uid_set(213)), growth_handle.get_stage_progress(213))
+set_time(datetime.datetime(2026, 9, 17, 0, 5))
 _now = candidate_uid_set(213)
-check("L13 阶段进度过半（第 50 / 90 天）：婴儿 4 进候选，婴儿 50 仍不在（要 ≥ 60，排在断奶之后）", "婴儿4" in _now and "婴儿50" not in _now,
+check("L13 / M1 第 15 / 29 个可游玩天（进度约 51.7%）：婴儿 4 进候选，婴儿 50 仍不在（要 ≥ 60，排在断奶之后）", "婴儿4" in _now and "婴儿50" not in _now,
       growth_handle.get_stage_progress(213))
-baby_e.pregnancy.born_time = cache.game_time - datetime.timedelta(days=60)
-check("L13 进度 ≥ 60、母亲可跟随：婴儿 50 进候选", "婴儿50" in candidate_uid_set(213) and class_ai.judge_mother_available(213) == 103, growth_handle.get_stage_progress(213))
+set_time(datetime.datetime(2026, 9, 19, 0, 5))
+check("L13 / M1 第 17 / 29 个可游玩天（进度约 58.6%）：婴儿 50 仍不在", "婴儿50" not in candidate_uid_set(213), growth_handle.get_stage_progress(213))
+set_time(datetime.datetime(2026, 9, 20, 0, 5))
+check("L13 / M1 第 18 / 29 个可游玩天（进度约 62.1%）、母亲可跟随：婴儿 50 进候选，与婴儿 4 首次成立相隔 3 个可游玩日（此前按日历天多数出生日期是同一天）",
+      "婴儿50" in candidate_uid_set(213) and class_ai.judge_mother_available(213) == 103, growth_handle.get_stage_progress(213))
+set_time(period_time(0))
 check("L18 期末推送处的注释改成 Plan 30 Q1 的口径，不再写「已成年的女儿照旧出成绩单」",
       "照旧出成绩单" not in inspect.getsource(growth_event_handle.push_semester_event_for_list)
       and "Plan 30 Q1" in inspect.getsource(growth_event_handle.push_semester_event_for_list))
+clear_schedules()
+
+# ---------------------------------------------------------------------------
+# Plan 32（第十三轮复查）
+# ---------------------------------------------------------------------------
+from Script.Design import talk  # noqa: E402
+from Script.Settle import past_day_settle  # noqa: E402
+
+
+def queue_pair_list() -> list:
+    """
+    取公务队列里每一项的 (uid, 主体角色id)
+    Keyword arguments:
+    无
+    Return arguments:
+    list -- [(uid str, 角色id int), ...]，按队列顺序
+    """
+    return [(one["uid"], one["chara_id"]) for one in official_event_handle.get_queue()]
+
+
+section("Plan 32 M2：生日当天，跨天结算直接把生日事件（通用 3）插到队首")
+clear_schedules()
+set_time(datetime.datetime(2026, 9, 7, 0, 5))
+mate.pregnancy.born_time = datetime.datetime(2025, 9, 7, 6, 0)
+big_sister.pregnancy.born_time = datetime.datetime(2024, 9, 7, 6, 0)
+check("M2 前提：萝莉 C 与成年姐姐今天都过生日",
+      HP(constant_promise.Premise.SELF_BIRTHDAY_TODAY, 211) and HP(constant_promise.Premise.SELF_BIRTHDAY_TODAY, 214))
+official_event_handle.push_official_event(loli_bucket[0], 201)
+_pushed = growth_event_handle.push_birthday_event()
+check("M2 今天过生日的萝莉：通用 3 插在队首、主体是她；成年姐姐不在日常派发名单里、不推（此前只能靠每晚 70% 再按权重抽中，约 1.6%）",
+      _pushed == [211] and queue_pair_list() == [(E.BIRTHDAY_EVENT_UID, 211), (loli_bucket[0], 201)], (_pushed, queue_pair_list()))
+check("M2 推入之后日常派发不会再抽到它（已在队列里）", E.BIRTHDAY_EVENT_UID not in candidate_uid_set(211))
+check("M2 再调一次不重复推", growth_event_handle.push_birthday_event() == [] and queue_pair_list().count((E.BIRTHDAY_EVENT_UID, 211)) == 1)
+cache.rhodes_island.official_event_queue = [{"uid": loli_bucket[0], "department": E.GROWTH_EVENT_DEPARTMENT, "chara_id": 999, "partner_id": 0, "add_time": cache.game_time}
+                                            for _index in range(official_event_handle.get_queue_max())]
+check("M2 队列已满：照样插到队首（与毕业典礼一样不受容量上限约束）",
+      growth_event_handle.push_birthday_event() == [211] and queue_pair_list()[0] == (E.BIRTHDAY_EVENT_UID, 211))
+cache.rhodes_island.official_event_queue = []
+growth_handle.get_child_growth(211).event_history[E.BIRTHDAY_EVENT_UID] = {"time": cache.game_time, "choice": 1}
+check("M2 已经历过的不再推", growth_event_handle.push_birthday_event() == [] and official_event_handle.get_queue() == [])
+growth_handle.get_child_growth(211).event_history.pop(E.BIRTHDAY_EVENT_UID, None)
+set_time(datetime.datetime(2026, 9, 8, 0, 5))
+check("M2 第二天（不是生日）不推", growth_event_handle.push_birthday_event() == [] and official_event_handle.get_queue() == [])
+_new_day_src = inspect.getsource(past_day_settle.update_new_day)
+check("M2 跨天结算在日常派发（check_new_day_official_event）之前推生日事件",
+      0 <= _new_day_src.find("growth_event_handle.push_birthday_event(") < _new_day_src.find("official_event_handle.check_new_day_official_event("))
+set_time(period_time(0))
+
+section("Plan 32 L16：孩子长大时清掉队列里对不上阶段的日常养成事件（drop_stale_stage_event）")
+clear_schedules()
+set_time(period_time(0))
+child_bucket = list(by_key.get((E.GROWTH_EVENT_DEPARTMENT, 102), ()))
+growing = make_character(215, "长大中的孩子", 152, daughter=True, stage=101, mother_id=103, born_days=5)
+for _uid in ("婴儿5", "通用27", semester_bucket[0]):
+    official_event_handle.push_official_event(_uid, 215)
+official_event_handle.push_official_event("婴儿5", 204)
+official_event_handle.push_official_event(loli_bucket[0], 201)
+growing.talent[101], growing.talent[102] = 0, 1
+_dropped = growth_event_handle.drop_stale_stage_event(215)
+_left = queue_pair_list()
+check("L16 婴儿→幼女：她的婴儿 5 清掉（1 条），通用 27（通用桶）与期末事件照留，别的孩子的不动",
+      _dropped == 1 and _left == [("通用27", 215), (semester_bucket[0], 215), ("婴儿5", 204), (loli_bucket[0], 201)], (_dropped, _left))
+check("L16 再调一次没有可清的：返回 0、队列不变", growth_event_handle.drop_stale_stage_event(215) == 0 and queue_pair_list() == _left)
+official_event_handle.push_official_event(child_bucket[0], 215)
+growing.talent[102], growing.talent[103] = 0, 1
+_dropped = growth_event_handle.drop_stale_stage_event(215)
+check("L16 幼女→萝莉：幼女桶的清掉（1 条），通用桶照留", _dropped == 1 and queue_pair_list() == _left, (_dropped, queue_pair_list()))
+official_event_handle.push_official_event(loli_bucket[0], 215)
+official_event_handle.push_official_event(E.GRADUATION_EVENT_UID, 215)
+growing.talent[103], growing.talent[104] = 0, 1
+_dropped = growth_event_handle.drop_stale_stage_event(215)
+_left_215 = [one[0] for one in queue_pair_list() if one[1] == 215]
+check("L16 萝莉→少女：萝莉桶与通用桶都清掉（2 条），期末桶（200）与成年桶（104）不动",
+      _dropped == 2 and _left_215 == [semester_bucket[0], E.GRADUATION_EVENT_UID], (_dropped, _left_215))
+remove_character(215)
+
+section("Plan 32 L16：真实的成长结算在换完素质后清残留；成年时毕业典礼照在队首")
+_orig_must_show = talk.must_show_talk_check
+# 必显二段的口上显示与本条无关，打桩成空函数（跑完即还原）
+talk.must_show_talk_check = lambda character_id: None
+clear_schedules()
+set_time(period_time(0))
+to_loli = make_character(216, "要长成萝莉的幼女", 152, daughter=True, stage=102, mother_id=103)
+to_loli.pregnancy.born_time = datetime.datetime(2025, 12, 1, 9, 0)  # 出生 280 个日历天，满 270 长成萝莉
+official_event_handle.push_official_event(child_bucket[0], 216)
+official_event_handle.push_official_event("通用27", 216)
+pregnancy_handle.check_grow_to_loli(216)
+check("L16 幼女长成萝莉（pregnancy_handle.check_grow_to_loli）：素质已换成萝莉，幼女桶的事件清掉、通用桶照留",
+      to_loli.talent[103] == 1 and to_loli.talent[102] == 0 and queue_pair_list() == [("通用27", 216)], queue_pair_list())
+to_girl = make_character(217, "要成年的萝莉", 152, daughter=True, stage=103, mother_id=103)
+to_girl.pregnancy.born_time = datetime.datetime(2025, 6, 1, 9, 0)  # 出生 463 个日历天，满 450 成年
+for _uid in (loli_bucket[0], "通用27", semester_bucket[0]):
+    official_event_handle.push_official_event(_uid, 217)
+pregnancy_handle.check_grow_to_girl(217)
+talk.must_show_talk_check = _orig_must_show
+_left_217 = [one[0] for one in queue_pair_list() if one[1] == 217]
+check("L16 萝莉成年（pregnancy_handle.check_grow_to_girl）：残留的萝莉桶、通用桶事件清掉，期末事件照留；毕业典礼在队首、成年纪念紧随，通用 59 / 60 在队尾",
+      to_girl.talent[104] == 1 and queue_pair_list()[0] == (E.GRADUATION_EVENT_UID, 217)
+      and _left_217 == [E.GRADUATION_EVENT_UID, E.ADULT_MEMORIAL_EVENT_UID, semester_bucket[0]] + list(E.ADULT_EXTRA_EVENT_UID_LIST), (_left_217, queue_pair_list()))
+_src_baby = inspect.getsource(pregnancy_handle._settle_baby_grow_up)
+_src_loli = inspect.getsource(pregnancy_handle.check_grow_to_loli)
+_src_girl = inspect.getsource(pregnancy_handle.check_grow_to_girl)
+check("L16 三处阶段转换都在换完素质之后清残留，成年结算排在推毕业典礼之前",
+      0 <= _src_baby.find("talent[102] = 1") < _src_baby.find("drop_stale_stage_event(")
+      and 0 <= _src_loli.find("talent[103] = 1") < _src_loli.find("drop_stale_stage_event(")
+      and 0 <= _src_girl.find("talent[104] = 1") < _src_girl.find("drop_stale_stage_event(") < _src_girl.find("push_graduation_event("))
+remove_character(216)
+remove_character(217)
 clear_schedules()
 
 finish()

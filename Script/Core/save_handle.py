@@ -160,6 +160,40 @@ def _migrate_child_schedule_template(rhodes_island_data) -> int:
     return count
 
 
+_OFFICIAL_EVENT_UID_MIGRATE = {"萝莉1": "期末17", "萝莉20": "期末18", "萝莉26": "期末19"}
+""" 挪了桶的养成事件（Plan 32 L22）：旧uid → 新uid。
+    写成绩单的萝莉 1 / 20 / 26 挪进期末桶后换了uid，而事件按uid逐角色去重（official_event_handle.judge_event_done）：
+    旧档履历里记的是旧uid，不改名的话，经历过它们的孩子会在学期切换时再遇到一次同文同选项的期末 17 / 18 / 19，
+    养成总览的履历也会因查不到配置而漏掉这几条 """
+
+
+def _migrate_official_event_history(history_data: dict) -> int:
+    """
+    把事件履历里挪了桶的事件的旧uid改成新uid
+    Keyword arguments:
+    history_data -- 事件履历：CHILD_GROWTH.event_history 以uid为键，罗德岛的 official_event_history 以「uid@角色id」为键（无主体时就是uid）
+    Return arguments:
+    int -- 改了名的条数
+    功能: 只在旧uid已不在配置里、且新键还没有记录时才改（与 _migrate_entertainment_cid 同样的保护），重复读档是幂等的；
+          新键已有记录时旧键原样留着，履历面板查不到配置会跳过它
+    """
+    from Script.Config import game_config
+
+    count = 0
+    for key in list(history_data):
+        if not isinstance(key, str):
+            continue
+        uid, sep, suffix = key.partition("@")
+        if uid not in _OFFICIAL_EVENT_UID_MIGRATE or uid in game_config.config_official_event:
+            continue
+        new_key = _OFFICIAL_EVENT_UID_MIGRATE[uid] + sep + suffix
+        if new_key in history_data:
+            continue
+        history_data[new_key] = history_data.pop(key)
+        count += 1
+    return count
+
+
 def _normalize_save_path(path_text):
     """
     将存档中的路径文本转换为当前系统的路径格式
@@ -408,6 +442,8 @@ def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
                 # 教育区娱乐改编号（2026-09-09）：单孩日程覆盖里存的旧编号换成新编号
                 for slot in list(character.child_growth.schedule_override):
                     character.child_growth.schedule_override[slot] = _migrate_entertainment_cid(character.child_growth.schedule_override[slot])
+                # 挪了桶的养成事件（Plan 32 L22）：履历里的旧uid改成新uid，按uid去重与养成总览的履历才对得上
+                _migrate_official_event_history(character.child_growth.event_history)
             # 教育区娱乐改编号（2026-09-09）：当天三个娱乐槽位里的旧编号也换掉，
             # 免得读档当天照料卵 / 见学 / 自习的判定对不上号
             entertainment_data = getattr(character, "entertainment", None)
@@ -647,6 +683,8 @@ def input_load_save(save_id: str):
     if not hasattr(loaded_dict["rhodes_island"], "official_event_history"):
         loaded_dict["rhodes_island"].official_event_history = {}
         update_count += 1
+    # 挪了桶的养成事件（Plan 32 L22）：没有养成数据的主体记在罗德岛的全局履历里（键为「uid@角色id」），旧uid同样改成新uid
+    update_count += _migrate_official_event_history(loaded_dict["rhodes_island"].official_event_history)
     # 更新罗德岛的设施等级
     for all_cid in game_config.config_facility:
         # 没有记录的设施改为初始等级0

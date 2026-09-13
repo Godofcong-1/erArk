@@ -56,7 +56,7 @@ str,str,int,str,str
 1050,join_sex_class,0,CVP_A1_T|103_E_1&time_0_to_9,{Name}顶着晨光进了教室，头发还没完全梳好。她把散下来的一缕别到耳后，站好了。
 1051,join_sex_class,0,CVP_A1_T|102_E_1&time_aftermoon,下午的课，{Name}是被叫醒后跑来的，脸上还有午睡压出的印子。
 1052,join_sex_class,0,CVP_A1_T|102_E_1&time_aftermoon,{Name}啃着半块下午茶的饼干进来，被{PlayerName}看了一眼，赶紧咽下去。
-1053,join_sex_class,0,CVP_A1_T|103_E_1&CVP_A1_Growth|25_GE_5,{Name}熟门熟路地走到自己常站的位置，连打招呼都省了。这不是她第一次上实操课。
-1054,join_sex_class,0,CVP_A1_T|103_E_1&CVP_A1_Growth|25_GE_5,老学生{Name}进门时朝新来的几个点了点头，像是在说“别怕”。
-1055,join_sex_class,0,CVP_A1_T|102_E_1&CVP_A1_Growth|25_LE_1,{Name}是第一次来上这种课。她站在门口不敢进，直到{PlayerName}朝她招手。
-1056,join_sex_class,0,CVP_A1_T|102_E_1&CVP_A1_Growth|25_LE_1,新来的{Name}不知道该站哪，在教室里转了一圈，最后站在了离门最近的地方。
+1053,join_sex_class,0,CVP_A1_T|103_E_1&CVP_A1_Growth|25_GE_5&self_is_player_daughter,{Name}熟门熟路地走到自己常站的位置，连打招呼都省了。这不是她第一次上实操课。
+1054,join_sex_class,0,CVP_A1_T|103_E_1&CVP_A1_Growth|25_GE_5&self_is_player_daughter,老学生{Name}进门时朝新来的几个点了点头，像是在说“别怕”。
+1055,join_sex_class,0,CVP_A1_T|102_E_1&CVP_A1_Growth|25_LE_1&self_is_player_daughter,{Name}是第一次来上这种课。她站在门口不敢进，直到{PlayerName}朝她招手。
+1056,join_sex_class,0,CVP_A1_T|102_E_1&CVP_A1_Growth|25_LE_1&self_is_player_daughter,新来的{Name}不知道该站哪，在教室里转了一圈，最后站在了离门最近的地方。

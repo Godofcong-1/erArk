@@ -115,7 +115,7 @@ ai的目标,,,,
 210710,562,normal_all|work_is_teacher|to_work_time_or_work_time|teacher_no_class_duty|not_in_teacher_office,21,正常状态下，工作为教师，在到岗或工作时间，本节与20分钟内都没课，当前不在教师办公室，则回教师办公室
 210800,561,normal_all|work_is_student|self_sex_class_pending|self_not_in_pending_sex_class_room,21,正常状态下，工作为学生，下一节是自己要上的性技实操课且10分钟内开始，当前不在那间教室，则提前去该教室
 210805,715,normal_all|work_is_student|self_course_attend|self_not_in_course_place,21,正常状态下，工作为学生，本节有课且照常上课，当前不在上课地点，则去上课地点
-210810,715,normal_all|work_is_student|self_course_upcoming|self_not_in_course_place,21,正常状态下，工作为学生，本节没课（含不在节次内）且20分钟内开始的那一节有课，当前不在上课地点，则提前去上课地点
+210810,715,normal_all|work_is_student|self_course_upcoming|self_not_in_course_place,21,正常状态下，工作为学生，本节没课（含不在节次内）且20分钟内开始的那一节有课（今天已翘课的不算），当前不在上课地点，则提前去上课地点
 
 220100,305,normal_all|work_is_library_manager|work_time|in_library_office,22,正常状态下，工作为图书馆管理员，在工作时间，如果在图书馆办公室，则有30%几率去图书馆，70%在原地等待30分钟
 220105,306,normal_all_except_special_hypnosis|work_is_library_manager|work_time|in_library,22,正常状态下或被空气或体控催眠中，工作为图书馆管理员，在工作时间，如果在图书馆，则有30%几率去图书馆办公室，70%看书
@@ -139,7 +139,7 @@ ai的目标,,,,
 220815,304,normal_all_except_special_hypnosis|work_is_student|self_course_attend|self_course_is_classroom|self_in_course_place|self_course_teacher_available,22,正常状态下或被空气或体控催眠中，工作为学生，本节照常上教室课，当前在该教室，本节教师能到岗，则听课
 220820,713,normal_all_except_special_hypnosis|work_is_student|self_course_attend|self_course_is_classroom|self_in_course_place|self_course_teacher_unavailable,22,正常状态下或被空气或体控催眠中，工作为学生，本节照常上教室课，当前在该教室，本节教师来不了，则自习
 220825,716,normal_all_except_special_hypnosis|work_is_student|self_course_attend|self_course_is_personal|self_in_course_place,22,正常状态下或被空气或体控催眠中，工作为学生，本节照常上个人式课，当前在上课地点，则执行该课对应的行为
-220830,720,normal_all|work_is_student|self_course_upcoming|self_in_course_place,22,正常状态下，工作为学生，本节没课（含不在节次内）且20分钟内开始的那一节有课，当前已在上课地点，则原地等开课
+220830,720,normal_all|work_is_student|self_course_upcoming|self_in_course_place,22,正常状态下，工作为学生，本节没课（含不在节次内）且20分钟内开始的那一节有课（今天已翘课的不算），当前已在上课地点，则原地等开课
 220835,722,normal_all_except_special_hypnosis|work_is_student|self_course_join_sex_class,22,正常状态下或被空气或体控催眠中，工作为学生，本节的课所在教室正在上性技实操课且自己可以参加，则加入课堂
 
 310100,82,normal_all|all_entertainment_time|entertainment_is_swimming|swim_flag_0,31,正常状态下，全娱乐时间，娱乐是游泳，今天当前不是游完泳状态，则进入要换泳衣状态

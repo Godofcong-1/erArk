@@ -15,7 +15,6 @@ from types import FunctionType
 from typing import Dict, List
 
 from Script.Core import cache_control, game_type, get_text, flow_handle
-from Script.Config import normal_config
 from Script.Design import attr_calculation
 from Script.System.Education_System import education_constant, schedule_template_handle, growth_handle
 from Script.UI.Moudle import draw, panel
@@ -27,8 +26,6 @@ _: FunctionType = get_text._
 line_feed = draw.NormalDraw()
 line_feed.text = "\n"
 line_feed.width = 1
-window_width: int = normal_config.config_normal.text_width
-""" 窗体宽度 """
 
 
 class Schedule_Template_Panel:
@@ -124,7 +121,7 @@ class Schedule_Template_Panel:
                 continue
             # 0 显示为「自由选择娱乐活动」而不是「--」：空着的时段并不是没安排，而是保留当天的随机娱乐
             slot_text_list = [
-                schedule_template_handle.get_activity_name(template_data.get("slot", {}).get(slot, 0))
+                schedule_template_handle.get_activity_name(template_data.get(education_constant.TEMPLATE_KEY_SLOT, {}).get(slot, 0))
                 for slot in range(education_constant.SLOT_COUNT)]
             use_count = schedule_template_handle.get_template_use_count(template_id)
             # 不能用 "{:<10}".format()：str 的 <10 按 len()（字符数）补齐，而终端按显示列排版、
@@ -133,7 +130,7 @@ class Schedule_Template_Panel:
             row_text = education_constant.COLUMN_INDENT
             for column_text, column_width in (
                     (str(template_id), education_constant.COLUMN_WIDTH_ID),
-                    (template_data["name"], education_constant.COLUMN_WIDTH_NAME),
+                    (template_data[education_constant.TEMPLATE_KEY_NAME], education_constant.COLUMN_WIDTH_NAME),
                     (slot_text_list[0], education_constant.COLUMN_WIDTH_SLOT),
                     (slot_text_list[1], education_constant.COLUMN_WIDTH_SLOT),
                     (slot_text_list[2], education_constant.COLUMN_WIDTH_SLOT)):
@@ -158,9 +155,9 @@ class Schedule_Template_Panel:
         while 1:
             return_list: List[str] = []
             slot_by_return: Dict[str, int] = {}
-            draw.TitleLineDraw(_("编辑模板：{0}").format(template_data["name"]), self.width).draw()
+            draw.TitleLineDraw(_("编辑模板：{0}").format(template_data[education_constant.TEMPLATE_KEY_NAME]), self.width).draw()
             for slot in range(education_constant.SLOT_COUNT):
-                now_name = schedule_template_handle.get_activity_name(template_data.get("slot", {}).get(slot, 0))
+                now_name = schedule_template_handle.get_activity_name(template_data.get(education_constant.TEMPLATE_KEY_SLOT, {}).get(slot, 0))
                 now_draw = draw.LeftButton(
                     _("[{0}：{1}]").format(education_constant.SLOT_NAME[slot], now_name),
                     f"SLOT_{slot}", int(self.width / 2))
@@ -336,7 +333,7 @@ class Schedule_Template_Panel:
             # 模板取不到（编号非法，或已被删掉）就直接退出，不画一个空面板
             if template_data is None:
                 return
-            draw.TitleLineDraw(_("批量套用：{0}").format(template_data["name"]), self.width).draw()
+            draw.TitleLineDraw(_("批量套用：{0}").format(template_data[education_constant.TEMPLATE_KEY_NAME]), self.width).draw()
             # 每行6个：190/6=31列。原来整个循环没有换行，孩子一多就会串行
             index = 0
             for child_id in child_list:
@@ -368,7 +365,7 @@ class Schedule_Template_Panel:
                 count = schedule_template_handle.batch_apply_template(sorted(selected_set), template_id)
                 info_draw = draw.NormalDraw()
                 info_draw.width = self.width
-                info_draw.text = _("\n已把[{0}]套用到 {1} 名孩子\n").format(template_data["name"], count)
+                info_draw.text = _("\n已把[{0}]套用到 {1} 名孩子\n").format(template_data[education_constant.TEMPLATE_KEY_NAME], count)
                 info_draw.style = "gold_enrod"
                 info_draw.draw()
                 return
@@ -399,7 +396,7 @@ class Schedule_Template_Panel:
             if template_data is None:
                 continue
             now_draw = draw.LeftButton(
-                _("[{0}]").format(template_data["name"]),
+                _("[{0}]").format(template_data[education_constant.TEMPLATE_KEY_NAME]),
                 f"PICK_{template_id}", int(self.width / 6))
             now_draw.draw()
             return_list.append(now_draw.return_text)

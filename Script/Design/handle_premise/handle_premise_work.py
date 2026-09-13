@@ -537,6 +537,8 @@ def handle_self_course_attend(character_id: int) -> int:
 def handle_self_course_upcoming(character_id: int) -> int:
     """
     自己是学生，本节没课（含不在节次内）且20分钟内开始的那一节有课
+    今天已翘课的不算（class_ai.judge_skip_class_today，Plan 31 §3.5）：她开课那一刻照样判翘课，
+       去上课地点门口等一趟再掉头走是白跑，这时判的是 COURSE_STAGE_NONE，工作 / 娱乐由截短规则截到开课那一刻
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -629,8 +631,10 @@ def handle_self_not_in_course_place(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SELF_COURSE_TEACHER_AVAILABLE)
 def handle_self_course_teacher_available(character_id: int) -> int:
     """
-    自己是学生，本节是教室课且授课教师能到岗
-    传本节的教室（Plan 31 §3.4）：空气催眠的教师只在人已在这间教室时算能到岗，不传教室时一律判来不了
+    自己是学生，本节是教室课且授课者能来给她上课
+    判据是 class_ai.judge_course_teacher_available（Plan 32 §3.8 L10）：NPC 教师传本节的教室判能不能到岗
+       （Plan 31 §3.4：空气催眠的教师只在人已在这间教室时算能到岗）；授课者是玩家（临时实操课）时另要她进得了课堂，
+       不够格的选修生无论玩家开没开课都判来不了、降级自习
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -644,14 +648,15 @@ def handle_self_course_teacher_available(character_id: int) -> int:
     now_course = schedule_handle.get_now_course(character_id)
     if now_course is None or now_course["course_type"] not in education_constant.CLASSROOM_COURSE_TYPE_SET:
         return 0
-    return int(class_ai.judge_teacher_available(now_course["teacher_id"], now_course["classroom"]))
+    return int(class_ai.judge_course_teacher_available(character_id, now_course))
 
 
 @add_premise(constant_promise.Premise.SELF_COURSE_TEACHER_UNAVAILABLE)
 def handle_self_course_teacher_unavailable(character_id: int) -> int:
     """
-    自己是学生，本节是教室课但授课教师来不了（或课表没排教师）
-    与 self_course_teacher_available 互补，同样传本节的教室（Plan 31 §3.4）：人不在这间教室的空气催眠教师、木头人都算来不了
+    自己是学生，本节是教室课但授课者来不了（或课表没排教师）
+    与 self_course_teacher_available 互补，同样走 class_ai.judge_course_teacher_available（Plan 32 §3.8 L10）：
+       人不在这间教室的空气催眠教师、木头人都算来不了（Plan 31 §3.4）；临时实操课上进不了课堂的选修生也算来不了
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -665,7 +670,7 @@ def handle_self_course_teacher_unavailable(character_id: int) -> int:
     now_course = schedule_handle.get_now_course(character_id)
     if now_course is None or now_course["course_type"] not in education_constant.CLASSROOM_COURSE_TYPE_SET:
         return 0
-    return int(not class_ai.judge_teacher_available(now_course["teacher_id"], now_course["classroom"]))
+    return int(not class_ai.judge_course_teacher_available(character_id, now_course))
 
 
 @add_premise(constant_promise.Premise.SELF_COURSE_JOIN_SEX_CLASS)

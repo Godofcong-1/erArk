@@ -306,9 +306,11 @@ def judge_child_growth_second_behavior(character_id: int):
     判断孩子与玩家同场景时的养成二段行为（Plan 22）
     两件事都是"攒着等见面再兑现"：
         炫耀     —— 能力升级发生在玩家睡觉时的睡眠结算里，当场没有观众（方案 §3.15）
-        翘课被抓 —— 翘课的孩子撞见了玩家（方案 §3.19）
+        翘课被抓 —— 翘课的孩子撞见了玩家（方案 §3.19）；她在 H 中、在实操课上或正要去上实操课时不算（Plan 32 §3.10 L2）
     Keyword arguments:
     character_id -- 角色id
+    Return arguments:
+    无
     """
     character_data: game_type.Character = cache.character_data[character_id]
     growth_data = character_data.child_growth
@@ -322,12 +324,21 @@ def judge_child_growth_second_behavior(character_id: int):
         return
     if handle_premise.handle_hidden_sex_mode_3_or_4(0):
         return
-    from Script.System.Education_System import class_ai, growth_handle
+    from Script.System.Education_System import class_ai, education_constant, growth_handle, sex_class_handle
 
     # 翘课被抓优先于炫耀：正翘着课的孩子不会先炫耀成绩。
     #    翘课 flag 认日期（Plan 31 §3.6）：前一天挂上、跨天没清掉的（一步跨过午夜、翘课当天离线）不算今天翘课，不再触发被抓
     if class_ai.judge_skip_class_today(character_id):
-        character_get_second_behavior(character_id, "caught_skip_class")
+        # 她此刻正按设计去上 / 在上实操课时不算被抓（Plan 32 §3.10 L2）：在 H 中（课堂 H、被玩家带进 H）、身处正在进行的实操课、
+        #    或上课状态是待赴 / 加入实操课（SEX_PENDING / JOIN）。被抓口上多写「回教室 / 去上课」，她人就在课上或正往课上去。
+        #    这几种情形照旧不炫耀：翘课 flag 留着，下次在别处撞见照常算被抓
+        on_sex_class = (
+            character_data.sp_flag.is_h
+            or sex_class_handle.judge_in_running_class(character_id)
+            or class_ai.get_course_stage(character_id) in (education_constant.COURSE_STAGE_SEX_PENDING, education_constant.COURSE_STAGE_JOIN_SEX_CLASS)
+        )
+        if not on_sex_class:
+            character_get_second_behavior(character_id, "caught_skip_class")
         return
     # 炫耀只派给幼女 / 萝莉期（Plan 26 L5）：炫耀口上全部限定这两个阶段；成年时留下的待炫耀已在成年结算里清空
     if growth_data.show_off_ability and growth_handle.get_character_stage(character_id) in (102, 103):

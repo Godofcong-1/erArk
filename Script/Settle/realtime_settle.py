@@ -84,6 +84,12 @@ def judge_pl_real_time_data():
     from Script.System.Pregnancy_System import soft_egg_handle
     soft_egg_handle.check_soft_eggs_fertilization()
 
+    # 课堂 H 以别的方式结束时一并下课（Plan 32 §3.1）：结束群交、玩家体力归零、学生全部力竭、群交中被撞见、转单人 H 后再结束 H，
+    #    效果串都只关群交、清全场 H 状态（407 / 404），课堂模式留着；玩家这一步的收尾检查里按「玩家已不在 H」下课。
+    #    函数内导入：Script/System/* 在本模块顶层导入会循环导入
+    from Script.System.Education_System import sex_class_handle
+    sex_class_handle.settle_orphan_class()
+
 
 def character_aotu_change_value(character_id: int, now_time: datetime.datetime, pl_start_time: datetime.datetime):
     """
@@ -206,7 +212,8 @@ def settle_sex_class_notify(pl_character_data: game_type.Character, now_behavior
         3. 预定的下课时刻 —— "可以就此结束，也可以继续下去"，只在课上着的时候才发
 
     第三次的措辞必须写明不强制，否则玩家会以为系统在催他下课——
-       下课时间一律由玩家手动决定（口径68），系统永不自动下课。
+       玩家还在课堂 H 里时，下课时间由玩家手动决定（口径68），系统不自动下课；
+       课堂 H 以别的方式结束（玩家已不在 H）时，由 settle_orphan_class 一并下课（Plan 32 §3.1）。
     Keyword arguments:
     pl_character_data -- 玩家角色数据
     now_behavior_id -- 玩家当前的行为id

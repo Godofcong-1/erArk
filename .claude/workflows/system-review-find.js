@@ -18,7 +18,7 @@ const DEFAULT_DIMENSIONS = [
   },
   {
     key: '行为循环结构',
-    focus: '沿 character_behavior 的行为循环推演：NPC 只在发呆时做决策、进行中的行为只有 judge_interrupt_character_behavior 能插手、结算发生在行为开始时、玩家一步可能跨过整个时间窗、寻路 wait_open 时一分钟一分钟地空转。找「按单个函数看都对、放进循环里就断」的地方。先例：Plan 25 §2.3、总纲 §10.1 #2。',
+    focus: '沿 character_behavior 的行为循环推演：NPC 只在发呆时做决策、进行中的行为只有 judge_interrupt_character_behavior（休息 / 睡醒 / 工作娱乐中到了淋浴时间）与 judge_student_leave_truncate（学生截短，排在实时结算之前）能插手、结算发生在行为开始时、玩家一步可能跨过整个时间窗、寻路 wait_open 时一分钟一分钟地空转。找「按单个函数看都对、放进循环里就断」的地方。先例：Plan 25 §2.3、总纲 §10.1 #2。',
   },
   {
     key: '判定口径一致',

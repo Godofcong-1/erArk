@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-"""结算器：512 授课 / 557 学生晚到补结算 / 548 自习 / 549 翘课 / 550 检查成绩单 / 552 实习 / 553 见学 / 554 自由玩耍 / 622 炫耀 / 623 翘课被抓 / 10014 10015 课堂H模式"""
+"""结算器：512 授课 / 557 学生坐下听课时教师判能到岗即结算 / 548 自习 / 549 翘课 / 550 检查成绩单 / 552 实习 / 553 见学 / 554 自由玩耍 / 622 炫耀 / 623 翘课被抓 / 10014 10015 课堂H模式"""
 from _bootstrap import *  # noqa: F401,F403
 from Script.Settle import default as settle_default
 from Script.Settle import Second_effect  # noqa: F401  注册二段结算
@@ -482,6 +482,56 @@ check("L2 对照：今天挂上的 flag 照常触发翘课被抓", student_a.sec
 second_behavior.character_get_second_behavior(201, "caught_skip_class", reset=True)
 growth_a.skip_class_flag = False
 growth_a.skip_class_day = 0
+move_to(0, SCENE_DORM)
+
+section("Plan 32 L6：512 广播只发给听课节次与教师开讲节次相同的学生（她下一节是玩家的临时实操课、已坐在这间教室等，上一节的教师晚到开讲）")
+clear_schedules()
+_l6_week = period_time(0).weekday()
+_l6_today = period_time(0).toordinal()
+move_to(101, classroom_path(ROOM_P))
+move_to(201, classroom_path(ROOM_P))
+move_to(202, classroom_path(ROOM_P))
+# 第 0 节：教师甲在实践教室一上课，两名学生都选了这一格；第 1 节：玩家在同一间教室预约了临时实操课，女儿A 选修
+schedule_handle.set_class_cell(ROOM_P, _l6_week, 0, 45, 101)
+schedule_handle.set_selected_course(201, _l6_week, 0, E.COURSE_TYPE_PRACTICE, ROOM_P)
+schedule_handle.set_selected_course(202, _l6_week, 0, E.COURSE_TYPE_PRACTICE, ROOM_P)
+schedule_handle.set_selected_course(201, _l6_week, 1, E.COURSE_TYPE_PRACTICE, ROOM_P)
+set_time(period_time(1) + datetime.timedelta(minutes=2))
+sex_class_handle.set_temp_class(_l6_today, 1, ROOM_P, 70)
+# 各人按自己的时间线推进：教师换教室晚到，第 0 节末尾才开讲；女儿A 已走到第 1 节、坐在这间教室等玩家的课；女儿B 还在第 0 节听课
+teacher.behavior.behavior_id = constant.Behavior.TEACH
+teacher.behavior.start_time = period_time(0) + datetime.timedelta(minutes=40)
+student_a.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+student_a.behavior.start_time = period_time(1) + datetime.timedelta(minutes=2)
+student_b.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+student_b.behavior.start_time = period_time(0) + datetime.timedelta(minutes=40)
+reset_mark(201, 202)
+student_a.child_growth.last_absent_period = []
+student_b.child_growth.last_absent_period = []
+_l6_course = schedule_handle.get_now_course(201)
+check("L6 前置：教师开讲在第 0 节；女儿A 的听课在第 1 节，那一格是玩家的临时实操课（教师为 0：557 不结算、也不写去重标记）",
+      game_time.get_class_period(101) == 0 and _l6_course is not None and _l6_course["period"] == 1 and _l6_course["teacher_id"] == 0
+      and _l6_course["classroom"] == ROOM_P, _l6_course)
+_l6_attend_a = student_a.child_growth.attend_class_count
+_l6_attend_b = student_b.child_growth.attend_class_count
+_l6_exp_a = student_a.experience.get(exp_45, 0)
+EFFECT[512](101, 45, change, cache.game_time)
+check("L6 教师晚到开讲：听课节次不同的女儿A 不拿收益、不记出勤、不写去重标记（此前按她下一节的节次多记一节出勤、发上一节的科目收益）",
+      student_a.child_growth.attend_class_count == _l6_attend_a and student_a.experience.get(exp_45, 0) == _l6_exp_a
+      and student_a.child_growth.last_attend_period == [],
+      (student_a.child_growth.attend_class_count - _l6_attend_a, student_a.experience.get(exp_45, 0) - _l6_exp_a, student_a.child_growth.last_attend_period))
+check("L6 对照：同在第 0 节听课的女儿B 照常结算这一节", student_b.child_growth.attend_class_count == _l6_attend_b + 1
+      and student_b.child_growth.last_attend_period == [_l6_today, 0], (student_b.child_growth.attend_class_count - _l6_attend_b, student_b.child_growth.last_attend_period))
+move_to(0, classroom_path(ROOM_P))
+sex_class_handle.start_sex_class(70, [201])
+check("L6 玩家随后开课：女儿A 这一节只记开课时的一次出勤（此前 512 与开课各记一次）", student_a.child_growth.attend_class_count == _l6_attend_a + 1,
+      student_a.child_growth.attend_class_count - _l6_attend_a)
+sex_class_handle.end_sex_class()
+teacher.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+student_a.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+student_b.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+clear_schedules()
+reset_mark(201, 202)
 move_to(0, SCENE_DORM)
 
 finish()

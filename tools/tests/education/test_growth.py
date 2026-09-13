@@ -58,7 +58,7 @@ student.child_growth.last_attend_period = []
 student.talent[28] = 1
 exp_before = student.experience.get(exp_id, 0)
 growth_handle.settle_student_class_gain(201, 101, 45, education_constant.COURSE_TYPE_THEORY, 45)
-check("停滞后经验减半", student.experience.get(exp_id, 0) - exp_before == int(education_constant.COURSE_EXP_BASE[0] * 1.0))
+check("停滞后经验减半", student.experience.get(exp_id, 0) - exp_before == int(education_constant.COURSE_EXP_BASE[education_constant.COURSE_TYPE_THEORY] * 1.0))
 student.talent[28] = 0
 student.child_growth.last_attend_period = []
 exp_before = student.experience.get(exp_id, 0)
@@ -134,9 +134,13 @@ check("发育偏移封顶", growth_handle.get_care_point_grow_bonus(201) == educ
 check("没有养成数据时偏移为 0", growth_handle.get_care_point_grow_bonus(301) == 0)
 
 section("阶段与进度")
+# 夹具的出生日要落在季月（Plan 32 §2.5-4）：游戏时钟只有 3 / 6 / 9 / 12 四个季月，born_days=120 这种写法出生在 5 月，真实时钟下不会出现。
+#    今天 2026-09-07 09:00：萝莉 2025-09-10 出生（362 个日历天）、幼女 2026-03-09 出生（182 个日历天），两人的本阶段都从 2026-06-07 09:00 起
+student.pregnancy.born_time = datetime.datetime(2025, 9, 10, 9, 0)
+child.pregnancy.born_time = datetime.datetime(2026, 3, 9, 9, 0)
 check("阶段读取", growth_handle.get_character_stage(201) == 103 and growth_handle.get_character_stage(202) == 102 and growth_handle.get_character_stage(301) == 0)
 progress = growth_handle.get_stage_progress(202)
-check("幼女出生 120 天：阶段进度约 16.7%", abs(progress - (120 - 90) * 100.0 / 180) < 0.01, progress)
+check("M1 幼女：幼女期 6/7 ~ 12/4 跳过 7、8、10、11 月共 57 个可游玩天，已过 30 个，进度约 52.6%（按日历天是 51.1%）", abs(progress - 30 * 100.0 / 57) < 0.01, progress)
 check("成年干员进度 100", growth_handle.get_stage_progress(301) == 100.0)
 
 section("养成数值读写口")
@@ -166,6 +170,8 @@ check("婴儿不进女儿名单", 203 not in growth_handle.get_student_candidate
 check("婴儿不在 npc_id_got（夹具与真实婴儿对齐，Plan 28 §3.9），学生岗也不进个人课表名单", 203 not in cache.npc_id_got and 203 not in growth_handle.get_course_candidate_list())
 student.work.work_type = 0
 check("女儿换岗后不在个人课表名单（只认学生岗）", 201 not in growth_handle.get_course_candidate_list())
+# 换回学生岗：待炫耀只记学生岗（Plan 32 L20），下一段拿她验炫耀
+student.work.work_type = education_constant.STUDENT_WORK_TYPE
 
 section("待炫耀只记课程科目、只记幼女/萝莉期的女儿（第五轮）")
 from Script.Design import handle_ability
@@ -178,7 +184,7 @@ for one in (student, adult):
         one.experience[exp_id_one] = 10 ** 7
     handle_ability.gain_ability(one.cid)
 student_show = growth_handle.get_child_growth(201).show_off_ability
-check("萝莉女儿：升了级的科目记进待炫耀", len(student_show) > 0, student_show)
+check("学生岗的萝莉女儿：升了级的科目记进待炫耀", len(student_show) > 0, student_show)
 check("萝莉女儿：只记课程科目（欲望、感觉之类的升级不记）", set(student_show) <= set(education_constant.SUBJECT_ABILITY_LIST), sorted(student_show))
 check("成年学生：升级不记待炫耀（口上只写给女儿）", growth_handle.get_child_growth(301).show_off_ability == {}, growth_handle.get_child_growth(301).show_off_ability)
 
@@ -223,23 +229,31 @@ check("成年干员不受影响：150 珠照旧升技巧 1 级", grown_npc.abili
 remove_character(206)
 remove_character(207)
 
-section("Plan 29 §3.3：本阶段第几天（get_stage_day）")
-student.pregnancy.born_time = cache.game_time - datetime.timedelta(days=300)
-child.pregnancy.born_time = cache.game_time - datetime.timedelta(days=120)
-baby.pregnancy.born_time = cache.game_time - datetime.timedelta(days=10)
-teen = make_character(208, "少女", 152, daughter=True, stage=104, mother_id=102, born_days=500)
+section("Plan 29 §3.3（Plan 32 M1 起按可游玩天）：本阶段第几天（get_stage_day）")
+# 出生日都落在季月（Plan 32 §2.5-4）。今天 2026-09-07 09:00；幼女、萝莉、少女的本阶段都从 2026-06-07 09:00 起，中间跳过 7、8 两个非季月
+set_time(period_time(0))
+student.pregnancy.born_time = datetime.datetime(2025, 9, 10, 9, 0)  # 萝莉：出生 362 个日历天，第 270 天是 2026-06-07
+child.pregnancy.born_time = datetime.datetime(2026, 3, 9, 9, 0)  # 幼女：出生 182 个日历天，第 90 天是 2026-06-07
+baby.pregnancy.born_time = datetime.datetime(2026, 6, 27, 9, 0)  # 婴儿：出生 72 个日历天
+teen = make_character(208, "少女", 152, daughter=True, stage=104, mother_id=102)
+teen.pregnancy.born_time = datetime.datetime(2025, 3, 14, 9, 0)  # 少女：出生 542 个日历天，第 450 天是 2026-06-07
 check("各阶段起点：婴儿 0 / 幼女 90 / 萝莉 270 / 少女 450，成年干员 0",
       [growth_handle.get_stage_start_day(cid) for cid in (203, 202, 201, 208, 301)] == [0, 90, 270, 450, 0])
-check("萝莉出生 300 天：本阶段第 30 天", growth_handle.get_stage_day(201) == 30, growth_handle.get_stage_day(201))
-check("幼女出生 120 天：第 30 天；婴儿出生 10 天：第 10 天；少女出生 500 天：第 50 天",
-      growth_handle.get_stage_day(202) == 30 and growth_handle.get_stage_day(203) == 10 and growth_handle.get_stage_day(208) == 50)
+check("M1 萝莉期从 6/7 起：6/7 ~ 6/30 与 9/1 ~ 9/7 共 30 个可游玩天（按日历天会是 92）", growth_handle.get_stage_day(201) == 30, growth_handle.get_stage_day(201))
+check("M1 幼女、少女同样从 6/7 起：30；婴儿 6/27 出生：6/27 ~ 6/30 与 9/1 ~ 9/7 共 10 个可游玩天（按日历天会是 72）",
+      growth_handle.get_stage_day(202) == 30 and growth_handle.get_stage_day(208) == 30 and growth_handle.get_stage_day(203) == 10,
+      [growth_handle.get_stage_day(cid) for cid in (202, 208, 203)])
 check("成年干员与不存在的角色：0", growth_handle.get_stage_day(301) == 0 and growth_handle.get_stage_day(999) == 0)
-student.pregnancy.born_time = cache.game_time - datetime.timedelta(days=200)
+student.pregnancy.born_time = datetime.datetime(2026, 3, 1, 9, 0)
 check("有效天数低于本阶段起点（成长停滞解除前的近似）：夹到 0", growth_handle.get_stage_day(201) == 0)
-student.pregnancy.born_time = cache.game_time - datetime.timedelta(days=300)
-check("阶段进度改用 get_stage_day 后数值不变：幼女 120 天约 16.7%、萝莉 300 天约 16.7%、少女 100",
-      abs(growth_handle.get_stage_progress(202) - 30 * 100.0 / 180) < 0.01 and abs(growth_handle.get_stage_progress(201) - 30 * 100.0 / 180) < 0.01
+student.pregnancy.born_time = datetime.datetime(2025, 9, 10, 9, 0)
+check("M1 阶段进度 = 本阶段已过可游玩天 ÷ 本阶段总可游玩天：幼女、萝莉都是 30 / 57（6/7 ~ 12/4），少女 100",
+      abs(growth_handle.get_stage_progress(202) - 30 * 100.0 / 57) < 0.01 and abs(growth_handle.get_stage_progress(201) - 30 * 100.0 / 57) < 0.01
       and growth_handle.get_stage_progress(208) == 100.0)
+lolified = make_character(219, "萝莉化的干员", 21, stage=103)
+check("M1 没有可认出生日的萝莉（不是女儿、born_time 为缺省的公元 1 年）：本阶段天数 0、进度按走完 100",
+      lolified.pregnancy.born_time.year == 1 and growth_handle.get_stage_day(219) == 0 and growth_handle.get_stage_progress(219) == 100.0)
+remove_character(219)
 remove_character(208)
 
 section("Plan 30：养成数值 24、judge_absent_this_period、judge_selected_cell_real")
@@ -320,5 +334,112 @@ for _p in (0, 1):
     schedule_handle.clear_selected_course(201, 3, _p)
 clear_schedules()
 remove_character(209)
+
+# ---------------------------------------------------------------------------
+# Plan 32（第十三轮复查）
+# ---------------------------------------------------------------------------
+import calendar  # noqa: E402
+import inspect  # noqa: E402
+
+from Script.System.Official_Event_System import official_event_handle  # noqa: E402
+from Script.System.Pregnancy_System import pregnancy_constant, pregnancy_handle  # noqa: E402
+
+DT = datetime.datetime
+
+section("Plan 32 M1：game_time.count_play_day（两个时刻之间的可游玩天数）")
+check("M1 同一季月内：与日历天数相同", game_time.count_play_day(DT(2026, 9, 7, 6, 0), DT(2026, 9, 17, 6, 0)) == 10)
+check("M1 跨过 10、11 月：9/7 06:00 → 12/1 00:05 是 23 天（9 月余下的 23 天多、12 月的 5 分钟；日历天 84）",
+      game_time.count_play_day(DT(2026, 9, 7, 6, 0), DT(2026, 12, 1, 0, 5)) == 23 and game_time.count_day_for_datetime(DT(2026, 9, 7, 6, 0), DT(2026, 12, 1, 0, 5)) == 84)
+check("M1 跨年跳过 1、2 月：12/31 12:00 → 次年 3/1 12:00 是 1 天（日历天 60）", game_time.count_play_day(DT(2026, 12, 31, 12, 0), DT(2027, 3, 1, 12, 0)) == 1)
+check("M1 终点落在被跳过的月份：只数到季月末（9/7 06:00 → 10/15 是 23 天）", game_time.count_play_day(DT(2026, 9, 7, 6, 0), DT(2026, 10, 15)) == 23)
+check("M1 整整一年：四个季月 31 + 30 + 30 + 31 = 122 天", game_time.count_play_day(DT(2026, 3, 1), DT(2027, 3, 1)) == 122)
+check("M1 终点早于起点：0", game_time.count_play_day(DT(2026, 9, 17), DT(2026, 9, 7)) == 0)
+
+section("Plan 32 M1：阶段进度按可游玩天（全年 122 个季月出生日期，用真实时钟 sub_time_now 逐日推进）")
+_saved_time = cache.game_time
+_saved_born = baby.pregnancy.born_time
+_new_count = {}
+_old_count = {}
+for _month in (3, 6, 9, 12):
+    for _day in range(1, calendar.monthrange(2026, _month)[1] + 1):
+        # 孩子只在季月出生；06:00 出生，此后每天 00:05（跨天结算派养成事件的时刻）取样，直到有效成长天数满 90（长成幼女）
+        baby.pregnancy.born_time = DT(2026, _month, _day, 6, 0)
+        cache.game_time = DT(2026, _month, _day, 0, 5)
+        _new_count[(_month, _day)] = 0
+        _old_count[(_month, _day)] = 0
+        for _step in range(200):
+            game_time.sub_time_now(day=1)
+            _grow_day = pregnancy_handle.get_child_grow_day(203)
+            if _grow_day >= pregnancy_constant.REARING_COMPLETE_DAY:
+                break
+            if 30 <= growth_handle.get_stage_progress(203) < 75:
+                _new_count[(_month, _day)] += 1
+            # 对照：按日历天的旧口径（有效成长天数 ÷ 90）
+            if 30 <= _grow_day * 100.0 / pregnancy_constant.REARING_COMPLETE_DAY < 75:
+                _old_count[(_month, _day)] += 1
+check("M1 枚举了全年 122 个季月出生日期", len(_new_count) == 122, len(_new_count))
+check("M1 每个出生日期的婴儿中期窗口 [30%, 75%) 都有 12~14 个可游玩日（婴儿期共 28~31 个可游玩天）",
+      min(_new_count.values()) >= 12 and max(_new_count.values()) <= 14, sorted(set(_new_count.values())))
+check("M1 对照：按日历天的旧口径，83 / 122 个出生日期的婴儿中期一天都开不出来（季月交替那一夜进度跳约 68 个百分点）",
+      sum(1 for one in _old_count.values() if one == 0) == 83, sum(1 for one in _old_count.values() if one == 0))
+
+section("Plan 32 M1：9/7 出生的婴儿跨过季月交替，本阶段天数与进度只走一天")
+baby.pregnancy.born_time = DT(2026, 9, 7, 6, 0)
+cache.game_time = DT(2026, 9, 30, 0, 5)
+_day_before = growth_handle.get_stage_day(203)
+_progress_before = growth_handle.get_stage_progress(203)
+_grow_before = pregnancy_handle.get_child_grow_day(203)
+game_time.sub_time_now(day=1)
+check("M1 真实时钟：9/30 的下一个可游玩日是 12/1", cache.game_time == DT(2026, 12, 1, 0, 5), cache.game_time)
+check("M1 对照：成长天数（日历天）一夜 +62", pregnancy_handle.get_child_grow_day(203) - _grow_before == 62, pregnancy_handle.get_child_grow_day(203) - _grow_before)
+check("M1 婴儿期 9/7 ~ 12/6 共 29 个可游玩天：本阶段第 22 → 23 天、进度 22/29 → 23/29（按日历天是 24.4% → 93.3%）",
+      _day_before == 22 and growth_handle.get_stage_day(203) == 23
+      and abs(_progress_before - 2200.0 / 29) < 0.01 and abs(growth_handle.get_stage_progress(203) - 2300.0 / 29) < 0.01,
+      (_day_before, growth_handle.get_stage_day(203), _progress_before, growth_handle.get_stage_progress(203)))
+baby.pregnancy.born_time = _saved_born
+set_time(_saved_time)
+
+section("Plan 32 M3：成年后改写性格倾向即重选这一对素质")
+grown = make_character(210, "成年女儿", 21, daughter=True, stage=104, mother_id=102)
+grown.pregnancy.born_time = DT(2025, 3, 14, 9, 0)
+_g_grown = growth_handle.get_child_growth(210)
+_g_grown.personality_point = {1: -1.0}
+growth_handle.settle_personality_talent(210)
+check("M3 前提：成年结算按倾向 -1 给了脆弱（273）、没有坚强（274）", grown.talent[273] == 1 and grown.talent[274] == 0)
+official_event_handle.settle_official_event_option(E6.GRADUATION_EVENT_UID, 210, 0, 2)
+check("M3 毕业典礼选「坐在台下，看着她自己走完全程」（提示「倾向：坚强」，+4）：倾向 -1 → 3，坚强落上、脆弱清掉（此前只加倾向值，素质仍是脆弱）",
+      _g_grown.personality_point.get(1) == 3.0 and grown.talent[274] == 1 and grown.talent[273] == 0,
+      (_g_grown.personality_point, grown.talent[274], grown.talent[273]))
+growth_handle.change_growth_value(210, V.GROWTH_VALUE_PERSONALITY_BASE + 1, -3.0)
+check("M3 倾向改回 0：两侧都不动（坚强仍在）", _g_grown.personality_point.get(1) == 0.0 and grown.talent[274] == 1 and grown.talent[273] == 0)
+growth_handle.set_growth_value(210, V.GROWTH_VALUE_PERSONALITY_BASE + 1, -2.0)
+check("M3 CVE 的 E 运算（set_growth_value）设成 -2：翻到脆弱、清掉坚强", grown.talent[273] == 1 and grown.talent[274] == 0)
+official_event_handle.settle_official_event_option("萝莉38", 210, 0, 1)
+check("M3 成年前入队、成年后才处理的萝莉 38（旧档队列里的残留）选「不问，让她自己去买」（倾向：坚强 +3）：倾向 -2 → 1，坚强落上",
+      _g_grown.personality_point.get(1) == 1.0 and grown.talent[274] == 1 and grown.talent[273] == 0, (_g_grown.personality_point, grown.talent[274], grown.talent[273]))
+check("M3 只重选改写的那一对：其余三对素质都没动", all(grown.talent[talent_id] == 0 for talent_id in (271, 272, 275, 276, 277, 278)))
+_minor_before = (student.talent[274], student.talent[273])
+growth_handle.change_growth_value(201, V.GROWTH_VALUE_PERSONALITY_BASE + 1, 10.0)
+check("M3 未成年（萝莉）的女儿改倾向：只改倾向值、不选边（留到成年结算）",
+      g.personality_point.get(1, 0.0) > 0 and (student.talent[274], student.talent[273]) == _minor_before, (g.personality_point.get(1), _minor_before))
+growth_handle.change_growth_value(301, V.GROWTH_VALUE_PERSONALITY_BASE + 1, 5.0)
+check("M3 成年学生（不是女儿）改倾向：不选边", adult.talent[274] == 0 and adult.talent[273] == 0)
+no_growth_m3 = make_character(211, "没有养成数据的干员", 21)
+check("M3 settle_personality_pair：返回写上的素质 id；性格对不存在、没有养成数据、角色不存在都返回 0，且不惰性创建养成数据",
+      growth_handle.settle_personality_pair(210, 1) == 274 and growth_handle.settle_personality_pair(210, 9) == 0
+      and growth_handle.settle_personality_pair(211, 0) == 0 and growth_handle.settle_personality_pair(999, 0) == 0 and no_growth_m3.child_growth is None)
+check("M3 settle_adult_personality_pair：只对已成年的女儿生效（未成年女儿、成年学生返回 0）",
+      growth_handle.settle_adult_personality_pair(210, 1) == 274 and growth_handle.settle_adult_personality_pair(201, 1) == 0
+      and growth_handle.settle_adult_personality_pair(301, 1) == 0)
+remove_character(210)
+remove_character(211)
+
+section("Plan 32 L28 / L27：基础值回落按课型常量取；557 的说明")
+_class_gain_src = inspect.getsource(growth_handle.settle_student_class_gain)
+check("L28 表里没有的课型回落到理论课的基础值，按课型常量取、不再写死 [0]",
+      "COURSE_LEARN_BASE[0]" not in _class_gain_src and "COURSE_EXP_BASE[0]" not in _class_gain_src
+      and "COURSE_LEARN_BASE[education_constant.COURSE_TYPE_THEORY]" in _class_gain_src and "COURSE_EXP_BASE[education_constant.COURSE_TYPE_THEORY]" in _class_gain_src)
+check("L27 557 的说明改为「学生坐下听课时，本节教师判能到岗即结算」，不再写「晚到的学生」",
+      "晚到的学生" not in growth_handle.settle_student_class_gain.__doc__ and "本节教师判能到岗" in growth_handle.settle_student_class_gain.__doc__)
 
 finish()

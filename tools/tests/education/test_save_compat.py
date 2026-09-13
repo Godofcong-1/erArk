@@ -41,6 +41,26 @@ save_handle._normalize_loaded_save_paths(cache)
 check("角色侧：单孩覆盖与当天娱乐槽位换成新编号", ga.schedule_override == {1: 153, 2: 152} and student_a.entertainment.entertainment_type == [152, 58, 155], (ga.schedule_override, student_a.entertainment.entertainment_type))
 cache.rhodes_island.child_schedule_template = {}
 
+section("Plan 32 L22：挪了桶的养成事件，履历里的旧 uid 读档时改成新 uid（萝莉 1 / 20 / 26 → 期末 17 / 18 / 19）")
+from Script.System.Official_Event_System import official_event_handle  # noqa: E402
+
+_record = {"time": cache.game_time, "choice": 2}
+ga.event_history = {"萝莉1": dict(_record), "萝莉20": dict(_record), "萝莉2": dict(_record)}
+save_handle._normalize_loaded_save_paths(cache)
+_expect_history = {"期末17": _record, "期末18": _record, "萝莉2": _record}
+check("孩子的履历：萝莉 1 / 20 改成期末 17 / 18、记录原样保留，其余 uid 不动", ga.event_history == _expect_history, ga.event_history)
+check("改名后按新 uid 去重：经历过萝莉 1 的孩子不会在学期切换时再遇到同文的期末 17；没经历过萝莉 26 的照常能遇到期末 19",
+      official_event_handle.judge_event_done("期末17", 201) and not official_event_handle.judge_event_done("期末19", 201))
+save_handle._normalize_loaded_save_paths(cache)
+check("再读一次档是幂等的", ga.event_history == _expect_history, ga.event_history)
+_global_history = {"萝莉26@305": dict(_record), "萝莉1": dict(_record), "通用3@305": dict(_record)}
+check("罗德岛的全局履历（没有养成数据的主体，键为「uid@角色id」）同样改名，计数 2",
+      save_handle._migrate_official_event_history(_global_history) == 2 and set(_global_history) == {"期末19@305", "期末17", "通用3@305"}, _global_history)
+_both_history = {"萝莉1": {"choice": 1}, "期末17": {"choice": 3}}
+check("新 uid 已有记录时不覆盖（旧键留着，养成总览查不到配置会跳过它）",
+      save_handle._migrate_official_event_history(_both_history) == 0 and _both_history == {"萝莉1": {"choice": 1}, "期末17": {"choice": 3}}, _both_history)
+ga.event_history = {}
+
 section("真实存档只读载入")
 candidate_list = [name for name in sorted(os.listdir(os.path.join(ROOT, "save"))) if name.isdigit()]
 check("有可用的存档目录", bool(candidate_list), candidate_list)

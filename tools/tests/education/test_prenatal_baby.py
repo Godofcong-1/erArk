@@ -105,4 +105,70 @@ hp_max = baby_a.hit_point_max
 constant.settle_behavior_effect_data[constant_effect.BehaviorEffect.NUIRSE_CHILD_ADD_ADJUST](0, 0, change, cache.game_time)
 check("add_time=0 不生效", baby_a.hit_point_max == hp_max)
 
+# ---------------------------------------------------------------------------
+# Plan 32（第十三轮复查）
+# ---------------------------------------------------------------------------
+from Script.Design import basement, talk  # noqa: E402
+from Script.Settle import past_day_settle  # noqa: E402
+from Script.System.Official_Event_System import official_event_handle  # noqa: E402
+from Script.System.Pregnancy_System import pregnancy_handle  # noqa: E402
+
+section("Plan 32 L19 / L16：婴儿长成幼女（真实的 pregnancy_handle._settle_baby_grow_up）")
+# 上线时刷娱乐走成年随机池，要读场所开放表与派对日表；长大提示要读教师岗名单——夹具里这三样默认都是空的
+open_all_classroom()
+cache.rhodes_island.party_day_of_week = {day: 0 for day in range(7)}
+cache.rhodes_island.all_work_npc_set.setdefault(E.TEACHER_WORK_TYPE, set())
+clear_schedules()
+official_event_handle.push_official_event("婴儿5", 203)
+official_event_handle.push_official_event("通用27", 203)
+_orig_must_show = talk.must_show_talk_check
+# 母亲一侧必显二段的口上显示与本条无关，打桩成空函数（跑完即还原）
+talk.must_show_talk_check = lambda character_id: None
+pregnancy_handle._settle_baby_grow_up(102, 203)
+talk.must_show_talk_check = _orig_must_show
+check("L19 前提：长成幼女（素质 101 → 102）、已上线（进了 npc_id_got）", baby_a.talent[102] == 1 and baby_a.talent[101] == 0 and 203 in cache.npc_id_got)
+_slot_list = [baby_a.entertainment.entertainment_type[slot] for slot in range(3)]
+check("L19 当天娱乐三个时段都在幼女默认池（过家家 / 自由玩耍）里（此前上线时她还算婴儿，刷的是成年随机池，玩家午夜后入睡时要用一整天）",
+      all(one in E.CHILD_DEFAULT_ENTERTAINMENT_LIST for one in _slot_list), _slot_list)
+_left_203 = [one["uid"] for one in official_event_handle.get_queue() if one["chara_id"] == 203]
+check("L16 婴儿期入队、还没处理的婴儿 5 清掉，通用 27（通用桶）照留", _left_203 == ["通用27"], _left_203)
+
+section("Plan 32 L5 / M2：真实的跨天结算只清过期的翘课 flag；今天过生日的女儿队首是生日事件")
+_new_day = datetime.datetime(2026, 9, 8, 0, 5)  # 周二：避开周日的外交结算与周一的助理轮换
+set_time(_new_day)
+skip_new = make_character(206, "新一天翘了课的萝莉", 152, daughter=True, stage=103, mother_id=102)
+skip_old = make_character(207, "昨天翘了课的萝莉", 152, daughter=True, stage=103, mother_id=102)
+birthday_girl = make_character(208, "今天过生日的萝莉", 152, daughter=True, stage=103, mother_id=102)
+skip_new.pregnancy.born_time = datetime.datetime(2025, 9, 20, 9, 0)
+skip_old.pregnancy.born_time = datetime.datetime(2025, 9, 20, 9, 0)
+birthday_girl.pregnancy.born_time = datetime.datetime(2025, 9, 8, 6, 0)
+_g_new = growth_handle.get_child_growth(206)
+_g_old = growth_handle.get_child_growth(207)
+# 玩家一步跨过午夜：NPC 阶段先跑完新一天的早上，549 挂上新一天的 flag（flag 与日期一起写，README 夹具陷阱）；另一个是前一天的残留
+_g_new.skip_class_flag, _g_new.skip_class_day, _g_new.follow_mother_flag = True, _new_day.toordinal(), True
+_g_old.skip_class_flag, _g_old.skip_class_day, _g_old.follow_mother_flag = True, _new_day.toordinal() - 1, True
+clear_schedules()
+_orig_base_newday = basement.update_base_resouce_newday
+# 基建日结在夹具里缺 materials_resouce（README 夹具陷阱），排在角色刷新段之后，换成空函数
+basement.update_base_resouce_newday = lambda: None
+_new_day_error = ""
+try:
+    past_day_settle.update_new_day()
+except Exception as now_error:
+    import traceback  # noqa: E402
+
+    traceback.print_exc()
+    _new_day_error = repr(now_error)
+finally:
+    basement.update_base_resouce_newday = _orig_base_newday
+check("跨天结算在夹具里跑通", not _new_day_error, _new_day_error)
+check("L5 新一天挂上的翘课 flag 跨天后仍在，今天仍算已翘课（此前被无条件清掉，当天余下节次重新掷翘课）",
+      _g_new.skip_class_flag and class_ai.judge_skip_class_today(206, _new_day))
+check("L5 对照：前一天的残留照清", not _g_old.skip_class_flag and not class_ai.judge_skip_class_today(207, _new_day))
+check("L5 见学 flag 照旧无条件清", not _g_new.follow_mother_flag and not _g_old.follow_mother_flag)
+_queue = official_event_handle.get_queue()
+check("M2 今天过生日的萝莉：跨天结算后队首是她的生日事件，且只有一条（在日常派发之前推入，日常派发不会再抽到它）",
+      bool(_queue) and _queue[0]["uid"] == E.BIRTHDAY_EVENT_UID and _queue[0]["chara_id"] == 208
+      and sum(1 for one in _queue if one["uid"] == E.BIRTHDAY_EVENT_UID) == 1, [(one["uid"], one["chara_id"]) for one in _queue])
+
 finish()

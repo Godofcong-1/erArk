@@ -551,11 +551,15 @@ def check_rearing(character_id: int):
 def _settle_baby_grow_up(character_id: int, child_id: int):
     """
     结算一名婴儿成长为幼女：孩子上线、素质101→102、进入教育区上课；母亲名下再无婴儿时同时结束育儿
+    换完素质后清掉队列里婴儿期残留的养成事件，并按幼女重刷当天娱乐（Plan 32 §3.11）
     Keyword arguments:
     character_id -- 母亲角色id
     child_id -- 成长的婴儿角色id
+    Return arguments:
+    无
     """
-    from Script.System.Education_System import education_constant
+    from Script.Design import handle_npc_ai
+    from Script.System.Education_System import education_constant, growth_event_handle, schedule_template_handle
 
     character_data: game_type.Character = cache.character_data[character_id]
     child_character_data: game_type.Character = cache.character_data[child_id]
@@ -566,6 +570,12 @@ def _settle_baby_grow_up(character_id: int, child_id: int):
     handle_premise.settle_chara_unnormal_flag(child_id, 7)
     # 长成幼女即转为学生岗（取教育系统的常量，不写死 152，Plan 28 §3.8）
     child_character_data.work.work_type = education_constant.STUDENT_WORK_TYPE
+    # 婴儿期入队、还没处理的婴儿桶事件清掉（Plan 32 §3.11），否则会顶着「幼女期」的抬头弹出
+    growth_event_handle.drop_stale_stage_event(child_id)
+    # 换完素质、置了学生岗之后重刷当天娱乐（Plan 32 §3.11 L19）：上面 get_new_character 上线时她还算婴儿，刷的是成年随机池，
+    #    玩家午夜之后入睡时这份娱乐要用一整天；按幼女默认池重刷，再按日程模板改写（顺序与跨天结算相同）
+    handle_npc_ai.get_chara_entertainment(child_id)
+    schedule_template_handle.apply_schedule_for_child(child_id)
     # 母亲名下是否还有其他婴儿需要照顾（有则保留育儿与泌乳状态）
     rearing_complete_flag = len(get_baby_id_list(character_id)) == 0
     if rearing_complete_flag:
@@ -623,6 +633,10 @@ def check_grow_to_loli(character_id: int):
             character_data.talent[102] = 0
             character_data.talent[103] = 1
             character_data.talent[6] = 0
+            # 幼女期入队、还没处理的幼女桶事件清掉（Plan 32 §3.11），否则会顶着「萝莉期」的抬头弹出
+            from Script.System.Education_System import growth_event_handle
+
+            growth_event_handle.drop_stale_stage_event(character_id)
             chest_grow_text = chest_grow(character_id)
             draw_text = "\n※※※※※※※※※\n"
             draw_text += _("\n{0}的身体渐渐成长，开始进入青春期，在第二性征发育的同时，也迎来了第一次的初潮\n").format(character_data.name)
@@ -658,17 +672,18 @@ def check_grow_to_girl(character_id: int):
             # 萝莉期记下的待炫耀也清掉（Plan 26 L5）：炫耀口上只写幼女 / 萝莉，成年后见面再派只会静默地加一份好感
             if character_data.child_growth is not None:
                 character_data.child_growth.show_off_ability = {}
+            from Script.System.Education_System import growth_event_handle, growth_handle
+
+            # 成年前入队、还没处理的日常养成事件（萝莉桶与通用桶）清掉（Plan 32 §3.11）：
+            #    必须排在下面推毕业典礼之前；成年桶的毕业典礼、成年纪念与通用 59 / 60 本就不在清理范围里
+            growth_event_handle.drop_stale_stage_event(character_id)
             chest_grow_text = chest_grow(character_id)
             body_part_grow_text = body_part_grow(character_id)
             # 成年结算（Plan 22 二期 §3.8）：能力已在一期做成即时成长，成年时只结算性格与职业倾向
             # 守卫是 handle_self_is_loli，上面已把 talent[103] 清零，天然幂等，不需要额外防重复
-            from Script.System.Education_System import growth_handle
-
             personality_text = growth_handle.settle_personality_talent(character_id)
             career_text = growth_handle.get_career_suggestion_text(character_id)
             # 毕业典礼与成年纪念插到养成事件队首，玩家下次处理公务时举行（Plan 22 三期 §3.26）
-            from Script.System.Education_System import growth_event_handle
-
             growth_event_handle.push_graduation_event(character_id)
             ceremony_text = _("\n大礼堂已为{0}备好了毕业典礼，等你下次处理公务时定夺\n").format(character_data.name)
             draw_text = "\n※※※※※※※※※\n"

@@ -336,6 +336,18 @@ def wrap_int(cid):
     return r
 handle_npc_ai.judge_interrupt_character_behavior = wrap_int
 character_behavior.handle_npc_ai.judge_interrupt_character_behavior = wrap_int
+
+# 学生赶去上课的截短（Plan 32 起）不在 judge_interrupt_character_behavior 里：
+#    character_behavior 的 NPC 分支在实时结算之前调 judge_student_leave_truncate，要记截短就一并包它
+orig_trunc = handle_npc_ai.judge_student_leave_truncate
+def wrap_trunc(cid):
+    pre = cache.character_data[cid].behavior.duration
+    r = orig_trunc(cid)
+    if cid in WATCH and r:
+        print(f"    [学生截短] cid={cid} 时长 {pre} → {cache.character_data[cid].behavior.duration}")
+    return r
+handle_npc_ai.judge_student_leave_truncate = wrap_trunc
+character_behavior.handle_npc_ai.judge_student_leave_truncate = wrap_trunc
 ```
 
 同法可包装 `judge_character_status`、`realtime_settle.character_aotu_change_value` 等任意环节。
@@ -381,14 +393,14 @@ character_behavior.handle_npc_ai.judge_interrupt_character_behavior = patched
 2. **无效时长类**：状态机算出 duration ≤ 0（如"睡到玩家醒来时间"的减法）且 `add_time=0` 的结算会跳过全部 flag 效果（`if not add_time: return` 模式），前提永不失效。
 3. **start_time 回拨类**：B 路径或某处把 start_time 设回过去，且每轮被重新回拨。
 
-对应的结构性护栏（已在代码中，排查时先确认它们还在）：`judge_interrupt_character_behavior` 开头的"本轮刚赋予的行为不打断"；`find_character_target` 状态机执行后的 duration≥1 钳制；`judge_character_status_time_over` 的 `add_time <= 0` 拦截。
+对应的结构性护栏（已在代码中，排查时先确认它们还在）：`judge_interrupt_character_behavior` 开头的"本轮刚赋予的行为不打断"（学生截短 `judge_student_leave_truncate` 开头是同一道守卫，Plan 32）；`find_character_target` 状态机执行后的 duration≥1 钳制；`judge_character_status_time_over` 的 `add_time <= 0` 拦截。
 
 ## 快速查表
 
 | 要找什么 | 位置 |
 | --- | --- |
 | 主循环/时间结算 | `Script/Design/character_behavior.py`（`init_character_behavior`、`judge_character_status_time_over`） |
-| NPC AI 选择/打断 | `Script/Design/handle_npc_ai.py`（`find_character_target`、`judge_interrupt_character_behavior`） |
+| NPC AI 选择/打断 | `Script/Design/handle_npc_ai.py`（`find_character_target`、`judge_interrupt_character_behavior`、学生截短 `judge_student_leave_truncate`（Plan 32，排在实时结算之前）） |
 | 实时数值/睡眠/吵醒 | `Script/Settle/realtime_settle.py`（`settle_sleep`、`settle_sleep_h`） |
 | AI 目标配置 | `data/target/default/target.csv`（格式：id,状态机id,前提管道,类型,注释） |
 | 状态机 id ↔ 名称 | `Script/Core/constant/StateMachine.py`；实现在 `Script/StateMachine/default.py` |

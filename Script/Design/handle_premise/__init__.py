@@ -321,6 +321,34 @@ def get_player_manual_teach_course(character_id: int) -> Optional[tuple]:
     return schedule_handle.get_course_type_by_position(character_data.position), education_constant.FALLBACK_SUBJECT_ABILITY
 
 
+def get_listen_manual_teach_course(character_id: int) -> Optional[tuple]:
+    """
+    取正在听玩家手动授课的学生这一节的课型与科目（Plan 32 §3.9 / §3.10 L13：学生侧与 512 同口径）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    Optional[tuple] -- (课型编号int, 科目能力id int)；她此刻不是在听玩家的手动授课时为None
+    功能: 玩家「授课」把在场的学生拉成听课、开始时刻对齐到玩家（handle_instruct.handle_teach），512 按学识与所在教室给她们结算；
+             此前学生侧的 CVP 与 <课> 仍按她自己的课表取，节次外一句听课口上都不出，节次内写的是课表上的另一门课。
+          判据：不是玩家、行为是听课、与玩家同场景、玩家此刻在授课且不是课表上的课（get_now_teaching(0) 取不到）、两人的行为开始时刻对齐。只读
+    """
+    from Script.System.Education_System import schedule_handle
+
+    if character_id == 0 or character_id not in cache.character_data:
+        return None
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.behavior.behavior_id != constant.Behavior.ATTENT_CLASS:
+        return None
+    pl_character_data: game_type.Character = cache.character_data[0]
+    if pl_character_data.behavior.behavior_id != constant.Behavior.TEACH:
+        return None
+    if character_data.position != pl_character_data.position or character_data.behavior.start_time != pl_character_data.behavior.start_time:
+        return None
+    if schedule_handle.get_now_teaching(0) is not None:
+        return None
+    return get_player_manual_teach_course(0)
+
+
 def get_now_course_type(character_id: int) -> int:
     """
     取角色当前这一节在上（或在教）的课型，供 CourseType 型 CVP token 使用
@@ -328,7 +356,8 @@ def get_now_course_type(character_id: int) -> int:
     character_id -- 角色id
     Return arguments:
     int -- 课型编号0~5，不在上课则为-1
-    功能: 教师反查优先，其次是玩家手动授课的回落（按所在教室判，Plan 31 §3.13），最后查学生自己的课表
+    功能: 教师反查优先，其次是玩家手动授课的回落（按所在教室判，Plan 31 §3.13），
+          再是被玩家「授课」拉来听课的学生（同样按所在教室判，Plan 32 §3.10 L13），最后查学生自己的课表
     """
     from Script.System.Education_System import schedule_handle
 
@@ -340,6 +369,11 @@ def get_now_course_type(character_id: int) -> int:
     manual_course = get_player_manual_teach_course(character_id)
     if manual_course is not None:
         return manual_course[0]
+    # 在听玩家手动授课的学生：课型同样按教室判，与 512 给她的结算同口径（Plan 32 §3.10 L13）。
+    #    此前读她自己的课表：节次外恒为 -1，听课口上一句不出；节次内读的是课表上的另一门课
+    listen_course = get_listen_manual_teach_course(character_id)
+    if listen_course is not None:
+        return listen_course[0]
     now_course = schedule_handle.get_now_course(character_id)
     if now_course is not None:
         return now_course["course_type"]
@@ -354,7 +388,8 @@ def get_now_course_ability(character_id: int) -> int:
     正在进行的性技实操课优先于课表（Plan 22 四期）：当场开课与拖堂都可能发生在节次之外，
        此时下面那两条课表链一律取不到东西，所以先问 judge_in_running_class()。
        （教师反查 get_teacher_cell() 自 2026-09-09 起也并入了临时课覆盖层，节次内查玩家同样取得到）
-    玩家手动授课不在课表上，教师反查取不到时科目回落学识（Plan 31 §3.13，与 512 同口径，见 get_player_manual_teach_course）
+    玩家手动授课不在课表上，教师反查取不到时科目回落学识（Plan 31 §3.13，与 512 同口径，见 get_player_manual_teach_course）；
+       被玩家「授课」拉来听课的学生同样回落学识，先于她自己的课表（Plan 32 §3.10 L13，见 get_listen_manual_teach_course）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -373,6 +408,10 @@ def get_now_course_ability(character_id: int) -> int:
     manual_course = get_player_manual_teach_course(character_id)
     if manual_course is not None:
         return manual_course[1]
+    # 在听玩家手动授课的学生：512 给她发的是学识，口上也按学识取（Plan 32 §3.10 L13），不读课表上的那门课
+    listen_course = get_listen_manual_teach_course(character_id)
+    if listen_course is not None:
+        return listen_course[1]
     now_course = schedule_handle.get_now_course(character_id)
     if now_course is None:
         return -1

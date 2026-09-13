@@ -21,7 +21,7 @@
 | --- | --- | --- | --- |
 | 1 | 存档兼容 | `Script/Core/save_handle.py:266 _normalize_loaded_save_paths` 内逐角色 `hasattr` 回填段（:299~358），设置类走 `:704 update_settings`；`:601 update_dict_with_default` 只能补顶层默认值 | 新字段挂在旧对象上，旧档载入后 `AttributeError`；dict 型字段补空 dict 后 `[key]` 仍 KeyError |
 | 2 | Tk/Web 双模式 | `Script/System/Web_Draw_System/web_draw_adapter.py:605 apply_web_adapters` 只包装 `Script/UI/Moudle/draw.py` 的抽象绘制类 | 面板直接拼 Tk 控件或 HTML，另一模式下不显示 |
-| 3 | NPC AI 目标链 | `Script/Design/handle_npc_ai.py:277 find_character_target`；前置检查 `:182 judge_assistant_character` / `:205 judge_character_follow` / `:239 judge_character_cant_move` / `:652 judge_interrupt_character_behavior` | 新前提让某状态下 NPC 没有任何可选 target → 卡在 SHARE_BLANKLY |
+| 3 | NPC AI 目标链 | `Script/Design/handle_npc_ai.py` 的 `find_character_target`；前置检查 `judge_assistant_character` / `judge_character_follow` / `judge_character_cant_move` / `judge_interrupt_character_behavior`（学生岗赶去上课的截短另在 `judge_student_leave_truncate`，排在实时结算之前） | 新前提让某状态下 NPC 没有任何可选 target → 卡在 SHARE_BLANKLY |
 | 4 | 行为循环收敛 | `Script/Design/character_behavior.py:38 init_character_behavior`，`:50/:69` 用 `cache.over_behavior_character` 计数收敛，`:272 judge_character_status_time_over` 决定何时加入 | 行为 `duration` 永远不结束或 `start_time` 被重置成过去 → 死循环（plan_13 §2.6-7：`.seconds` 对负 timedelta 返回 86340） |
 | 5 | 时停 | `character_behavior.py:59 if cache.time_stop_mode`（玩家行动后时间回滚，NPC 不行动）；前提 `constant_promise.py:2633 PRIMARY_TIME_STOP` | 时停中触发的实时结算/二段行为被回滚吞掉，或反而重复累加 |
 | 6 | 催眠 / 无意识 | `game_type.py:793 sp_flag.unconscious_h`（1 睡眠…7 心控）；前提 `constant_promise.py:1610 UNCONSCIOUS_FLAG_1`、`:1608 UNCONSCIOUS_HYPNOSIS_FLAG` | plan_13 §2.6-1：`unconscious_flag_ge_1` 是真值判定，`else` 分支会吃进催眠态；反感结算对意识模糊者静默 return（`common_default.py:214/217`） |

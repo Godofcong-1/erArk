@@ -37,18 +37,8 @@ cache: game_type.Cache = cache_control.cache
 _: FunctionType = get_text._
 """ 翻译api """
 
-_KEY_NAME = "name"
-""" 模板数据里「模板名」的键 """
-_KEY_SLOT = "slot"
-""" 模板数据里「三个时段」的键 """
-
-_NEED_NONE = "无"
-""" Entertainment.csv 的 need 列里表示「无条件」的占位值 """
-_NEED_SPLIT = "&"
-""" need 列里多个条件之间的分隔符（「且」），与 handle_npc_ai 的随机抽取分支保持一致 """
-_NEED_OR_SPLIT = "/"
-""" need 列同一项内多个候选条件之间的分隔符（「或」），如 T102|1/T103|1；判定由 attr_calculation.judge_require 负责，
-    这里只在解析年龄限制标注时用它拆项 """
+# 模板数据的两个键（TEMPLATE_KEY_NAME / TEMPLATE_KEY_SLOT）与 need 列的分隔符（TEMPLATE_NEED_*）集中在 education_constant（Plan 32 L28），
+#    本模块与日程模板面板一律用常量，不写字面量
 
 
 def get_entertainment_cid_by_name(name: str) -> int:
@@ -83,7 +73,7 @@ def init_default_template() -> None:
         slot_data = {}
         for slot, entertainment_name in enumerate(education_constant.PRESET_TEMPLATE_SLOT_NAME[template_id]):
             slot_data[slot] = get_entertainment_cid_by_name(entertainment_name)
-        cache.rhodes_island.child_schedule_template[template_id] = {"name": name, "slot": slot_data}
+        cache.rhodes_island.child_schedule_template[template_id] = {education_constant.TEMPLATE_KEY_NAME: name, education_constant.TEMPLATE_KEY_SLOT: slot_data}
 
 
 def get_template_data(template_id: int) -> Optional[dict]:
@@ -92,7 +82,7 @@ def get_template_data(template_id: int) -> Optional[dict]:
     Keyword arguments:
     template_id -- 模板编号
     Return arguments:
-    Optional[dict] -- {"name": 模板名str, "slot": {时段int: 娱乐cid int}}，不存在则为None
+    Optional[dict] -- {TEMPLATE_KEY_NAME: 模板名str, TEMPLATE_KEY_SLOT: {时段int: 娱乐cid int}}（键见 education_constant），不存在则为None
     """
     init_default_template()
     return cache.rhodes_island.child_schedule_template.get(template_id, None)
@@ -123,7 +113,7 @@ def set_template_slot(template_id: int, slot: int, entertainment_id: int) -> Non
     template_data = get_template_data(template_id)
     if template_data is None:
         return
-    template_data.setdefault("slot", {})[slot] = entertainment_id
+    template_data.setdefault(education_constant.TEMPLATE_KEY_SLOT, {})[slot] = entertainment_id
 
 
 def judge_template_is_preset(template_id: int) -> bool:
@@ -144,7 +134,8 @@ def create_template(name: str) -> int:
     方案 §1 要的是「可定义**若干套**日常日程模板」，四套预设只是起点。
     编号取「现存最大编号 + 1」，不补中间的空缺号；但被删的**最大**编号会被下一套新模板复用
        （收尾轮测试发现，与原注释「删过的编号不复用」不符）。这不会串日程：delete_template 删之前
-       已把引用它的孩子解开（schedule_template_id 归 0、覆盖清空），不存在"孩子还指着旧编号"的情形。
+       已把引用它的孩子解开（schedule_template_id 归 0、覆盖清空；Plan 32 起连不在岛上的人一起解开），
+       不存在"孩子还指着旧编号"的情形。
     Keyword arguments:
     name -- 模板名，留空则自动命名
     Return arguments:
@@ -156,7 +147,7 @@ def create_template(name: str) -> int:
     name = name.strip() if name else ""
     if not name:
         name = _("模板{0}").format(new_id)
-    template_dict[new_id] = {_KEY_NAME: name, _KEY_SLOT: {}}
+    template_dict[new_id] = {education_constant.TEMPLATE_KEY_NAME: name, education_constant.TEMPLATE_KEY_SLOT: {}}
     return new_id
 
 
@@ -175,7 +166,7 @@ def rename_template(template_id: int, name: str) -> bool:
     name = name.strip() if name else ""
     if not name:
         return False
-    template_data[_KEY_NAME] = name
+    template_data[education_constant.TEMPLATE_KEY_NAME] = name
     return True
 
 
@@ -187,6 +178,7 @@ def delete_template(template_id: int) -> bool:
        删掉一套预设不会被补回来，而 PRESET_TEMPLATE_NAME 的编号在代码里被引用着。
     删之前必须把引用它的孩子解开，否则那些孩子的 schedule_template_id
        指向一个不存在的编号，get_child_slot_activity 每天都拿到 None。
+       解开的范围是全部角色，含外勤 / 外交等不在岛上的人（Plan 32 §3.12 L17）：被删的最大编号会被下一套新模板复用
     Keyword arguments:
     template_id -- 模板编号
     Return arguments:
@@ -197,10 +189,10 @@ def delete_template(template_id: int) -> bool:
         return False
     if template_id not in cache.rhodes_island.child_schedule_template:
         return False
-    for character_id in list(cache.npc_id_got):
-        if character_id not in cache.character_data:
-            continue
-        growth_data = cache.character_data[character_id].child_growth
+    # 遍历全部角色，不只是在岛的人（Plan 32 §3.12 L17）：外勤 / 外交 / 离线中的女儿不在 npc_id_got，
+    #    此前她仍指着被删的编号，新模板复用这个编号时，她回岛后静默套上新模板
+    for character_data in cache.character_data.values():
+        growth_data = character_data.child_growth
         if growth_data is None or growth_data.schedule_template_id != template_id:
             continue
         growth_data.schedule_template_id = 0
@@ -279,7 +271,7 @@ def get_child_slot_activity(character_id: int, slot: int) -> int:
     template_data = get_template_data(growth_data.schedule_template_id)
     if template_data is None:
         return 0
-    return template_data.get("slot", {}).get(slot, 0)
+    return template_data.get(education_constant.TEMPLATE_KEY_SLOT, {}).get(slot, 0)
 
 
 def judge_activity_need_pass(character_id: int, entertainment_id: int) -> bool:
@@ -304,9 +296,9 @@ def judge_activity_need_pass(character_id: int, entertainment_id: int) -> bool:
     if entertainment_id not in game_config.config_entertainment:
         return False
     need_text = game_config.config_entertainment[entertainment_id].need
-    if not need_text or need_text == _NEED_NONE:
+    if not need_text or need_text == education_constant.TEMPLATE_NEED_NONE:
         return True
-    need_list = need_text.split(_NEED_SPLIT) if _NEED_SPLIT in need_text else [need_text]
+    need_list = need_text.split(education_constant.TEMPLATE_NEED_SPLIT) if education_constant.TEMPLATE_NEED_SPLIT in need_text else [need_text]
     judge, _reason = attr_calculation.judge_require(need_list, character_id)
     return bool(judge)
 
@@ -356,7 +348,8 @@ def apply_schedule_for_child(character_id: int) -> None:
     不满足 need 的、地点还没开放的（Plan 27 §3.1）、不可排进日程的（旧档里排上的照料卵，Plan 28 §3.3）时段都跳过不改写，
        保留当天的随机娱乐，即退回自由选择。
     当天已被持卵钩子换成照料卵的时段也不覆盖（Plan 28 §3.3）：跨天结算里钩子先于本函数（past_day_settle），
-       改回模板的活动的话，持卵者那个时段就不去照料卵了
+       改回模板的活动的话，持卵者那个时段就不去照料卵了。
+    不是女儿、又不在学生岗的整个跳过（Plan 32 §3.12 L18）：成年干员当学生时套的模板，改岗后不再改写她的娱乐
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -368,6 +361,11 @@ def apply_schedule_for_child(character_id: int) -> None:
     if growth_data is None:
         return
     if not growth_data.schedule_template_id and not growth_data.schedule_override:
+        return
+    # 不是女儿、又不在学生岗的不改写（Plan 32 §3.12 L18）：成年干员离开学生岗后，她既不在个人课表名单、也不在批量套用名单，
+    #    此前当学生时套的模板每天照写、面板上又解除不了，只能先改回学生岗。模板与覆盖都留着，改回学生岗照旧生效。
+    #    女儿不看岗位：改了岗的萝莉晚上照旧按日程走，工作时间里的「跟随母亲」由见学判定另外让路（Plan 32 §3.6）
+    if character_data.relationship.father_id != 0 and character_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
         return
     for slot in range(education_constant.SLOT_COUNT):
         entertainment_id = get_child_slot_activity(character_id, slot)
@@ -405,7 +403,7 @@ def get_child_schedule_text(character_id: int) -> str:
     if growth_data is None or (not growth_data.schedule_template_id and not growth_data.schedule_override):
         return _("未设置")
     template_data = get_template_data(growth_data.schedule_template_id)
-    template_name = template_data["name"] if template_data is not None else _("自定义")
+    template_name = template_data[education_constant.TEMPLATE_KEY_NAME] if template_data is not None else _("自定义")
     slot_text_list = [get_child_slot_activity_text(character_id, slot) for slot in range(education_constant.SLOT_COUNT)]
     return "{0}（{1}）".format(template_name, " / ".join(slot_text_list))
 
@@ -417,10 +415,11 @@ def get_template_use_count(template_id: int) -> int:
     template_id -- 模板编号
     Return arguments:
     int -- 人数
+    功能: 遍历全部角色（Plan 32 §3.12 L17）：外勤 / 外交 / 离线中的女儿不在 npc_id_got，回岛后照样套着这套模板，
+          此前漏数；与 delete_template 解开引用的范围一致
     """
     count = 0
-    for character_id in cache.npc_id_got:
-        character_data: game_type.Character = cache.character_data[character_id]
+    for character_data in cache.character_data.values():
         if character_data.child_growth is None:
             continue
         if character_data.child_growth.schedule_template_id == template_id:
@@ -468,11 +467,11 @@ def get_activity_age_limit_talent_list(entertainment_id: int) -> List[int]:
     if entertainment_id not in game_config.config_entertainment:
         return []
     need_text = game_config.config_entertainment[entertainment_id].need
-    if not need_text or need_text == _NEED_NONE:
+    if not need_text or need_text == education_constant.TEMPLATE_NEED_NONE:
         return []
     result = []
-    for and_text in need_text.split(_NEED_SPLIT):
-        for one_text in and_text.split(_NEED_OR_SPLIT):
+    for and_text in need_text.split(education_constant.TEMPLATE_NEED_SPLIT):
+        for one_text in and_text.split(education_constant.TEMPLATE_NEED_OR_SPLIT):
             one_text = one_text.strip()
             if not one_text.startswith("T") or "|" not in one_text:
                 continue

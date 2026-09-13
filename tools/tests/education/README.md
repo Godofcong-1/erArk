@@ -47,14 +47,14 @@
 - 真实存档里总有几个没事可做的干员在「空闲 1 分钟」里一分钟一分钟地挪，45 分钟一轮要挪 45 步，护栏上限要 ≥ 60 才不会把它误判成卡死。
 - 二段效果注册表是 `constant.settle_second_behavior_effect_data[效果id](角色id, change_data)`，与一段的四参数签名不同。
 - 要直接跑 `handle_npc_ai.find_character_target`（`test_class_ai.py` 的 `dispatch`）：合成角色得先把 `action_info.wake_time` 设成当天（否则被「起床」目标 205 接管）、`clothing.get_npc_cloth` 穿上衣服（全裸时 `normal_all` 不成立，工作 / 娱乐的自动 AI 根本不跑）、`handle_premise.refresh_unnormal_flag`；每次派发前清掉 `behavior.move_target / move_final_target` 并把行为置回 `SHARE_BLANKLY`，否则被「继续移动」目标接管。育儿室的场景路径是 `["教", "育儿"]`（`SCENE_NURSERY`）。
-- 用 Claude Code 的 Bash 工具往测试或代码里写含反斜杠转义（如 `"
-"`）的字符串时，heredoc 里的 `\n` 会被外层的 `eval` 包装压成真换行，写出来就是语法错误；含反斜杠的行改用 `chr(92)` 拼、或用 Write / Edit 工具写（Plan 29 踩过）。
+- 用 Claude Code 的 Bash 工具往测试或代码里写含反斜杠转义（如双引号里的「反斜杠 + n」）的字符串时，heredoc 里的「反斜杠 + n」会被外层的 `eval` 包装压成真换行，写出来就是语法错误；含反斜杠的行改用 `chr(92)` 拼、或用 Write / Edit 工具写（Plan 29 踩过；本条原先的示例就被这个坑写坏了，Plan 32 改用文字描述）。
 - 循环变量别用 `_`：它是 `_bootstrap` 导出的翻译函数，`for _ in range(...)` 之后同一文件里再调 `_()` 会报 `'int' object is not callable`（Plan 27 踩过）。
 - 个人课表指向的教室课要在全局课表上排格子（`set_class_cell`）：空格子按「已停课」算没课，只排个人课表的夹具测不到上课（Plan 27）。同学关系与 `self_have_any_course` 也一样（Plan 30），只排个人课表的两个孩子不再互为同学。
 - 这一节记了缺课就不再计出勤（Plan 30）：同一天同一节里先验了 721 / `settle_absent`、后面还要验出勤的，先清 `child_growth.last_absent_period`（`test_class_ai.py` 两道闸那一段的写法）。
 - 按 cid 查 `game_config.config_target` / `config_target_premise_data` 时，键是「所在文件夹名 + cid」：`data/target/default/target.csv` 的 505 是 `"default505"`（`buildconfig.py` 的 `path_list[-2] + row[k]`），直接用 `"505"` 查会静默落空；列举一组行用 `config_target_type_index`。
 - 婴儿不在 `npc_id_got`：`make_character(stage=101)` 与真实婴儿一致，不进这个集合（Plan 28；真实婴儿要到长成幼女才上线），要遍历孩子时别只看它。此前夹具把婴儿也放进去，婴儿期事件派不出来的问题一直没测出来。要造真实的婴儿用 `character_handle.born_new_character(母亲id, 名字)`，随后自己补 `pregnancy.born_time`（`test_growth_event.py` 的写法）。
 - 跑整条 AI 派发前先看夹具穿没穿上衣服：`clothing.get_npc_cloth` 按 cid 查角色模板，部分 cid（Plan 31 复现踩到的 111、211、221、1101 等）一件都穿不上，`normal_4` 不成立，工作链与娱乐链的目标行全不跑，NPC 只会原地待机 5 / 10 分钟。用 101 / 201 这类有模板的 cid，或把它们的 `cloth` 深拷过去再 `refresh_unnormal_flag`（Plan 31）。
-- 跑行为循环（`test_behavior_loop.run_one_round` 那种）时把夹具的体力 / 气力设成 2000：上限 100 时上一节课就跌到 1，下一节挂上疲劳去睡觉（状态机 78），`sp_flag.sleep` 还会让 303 拉不动；长循环里清了需求要 `refresh_unnormal_flag`，否则 `normal_1` 按旧掩码判不成立。真实的 `update_new_day` 在夹具里会卡在基建日结（缺 `materials_resouce`），要跑跨天时把 `basement.update_base_resouce_newday` 临时换成空函数（它排在角色刷新段之后，Plan 31）。
+- 跑行为循环（`test_behavior_loop.run_one_round` 那种）时把夹具的体力 / 气力设成 2000：上限 100 时上一节课就跌到 1，下一节挂上疲劳去睡觉（状态机 78），`sp_flag.sleep` 还会让 303 拉不动；长循环里清了需求要 `refresh_unnormal_flag`，否则 `normal_1` 按旧掩码判不成立。真实的 `update_new_day` 在夹具里会卡在基建日结（缺 `materials_resouce`），要跑跨天时把 `basement.update_base_resouce_newday` 临时换成空函数（它排在角色刷新段之后，Plan 31）；另外夹具的 `cache.rhodes_island.party_day_of_week` 是空字典，`get_chara_entertainment` 按星期取派对日会 KeyError，先补成 `{0~6: 0}`（Plan 32 复现踩到）。
+- 夹具的出生日要落在季月（3 / 6 / 9 / 12）：游戏时钟跳过非季月，阶段进度与「本阶段第几天」按可游玩天算（Plan 32），`born_time = now − N 天` 落在非季月时算出来远小于 N（7/19 出生到 9/7 只有 6 个可游玩天）。要造「阶段进度 X%」的孩子，从一个季月里的出生日起按真实时钟推算。
 - 造「今天已翘课」的夹具要同时写 `skip_class_flag = True` 与 `skip_class_day = 当天的 toordinal()`（549 现在两样一起写）：只挂 flag 读作前一天的残留、不算今天翘课，翘课日的新路径一条都走不到（Plan 31 两份复现脚本改后核对时踩到）。
 - 按 cid 查 `game_config.config_talk` / `config_talk_premise_data` 时，口上的 cid 是「上级目录名_文件名 + cid」：`data/talk/daily/check_report_card.csv` 的 1014 是 `"daily_check_report_card1014"`（`buildconfig.build_csv_config`），只写文件名会静默落空。也别按前提串去找口上：前提一改就一条都找不到，`all([])` 恒真（Plan 31）。

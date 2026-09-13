@@ -243,24 +243,31 @@ def clean_expired_temp_class() -> int:
     """
     清理过期的临时课程条目（跨天结算时调用）
 
-    必须跳过 running 为真的那条：口径68允许无限拖堂，一节课可以从昨天一直上到今天，
+    running 为真的那条只在课还真在上（课堂模式开着、玩家在 H 中）时跳过：口径68允许无限拖堂，一节课可以从昨天一直上到今天，
        跨天时若把正在上的这节删掉，下课时就找不到课程数据了。
+    课已经没在上了的不再跳过（Plan 32 §3.1）：课堂模式开着而玩家已不在 H 的（旧档里留下的幽灵课堂），先按下课收尾（settle_orphan_class）；
+       课堂模式没开、条目却还挂着 running 的，与其它条目一样按日期清过期的。
     Keyword arguments:
     无
     Return arguments:
-    int -- 清理掉的条目数
+    int -- 清理掉的条目数（含幽灵课堂收尾时删掉的当场课）
     """
+    before_count = len(cache.rhodes_island.temp_sex_class)
+    # 幽灵课堂先按下课收尾：关课堂模式，预约的打 ended（随后按日期清），当场开的直接删掉
+    settle_orphan_class()
+    # 收尾之后课堂模式还开着，说明玩家仍在 H 中、这节课还在上（拖堂跨天），它的条目要留着
+    class_alive = cache.sex_class_mode
     today = cache.game_time.date().toordinal()
     del_key_list = []
     for now_key, now_data in cache.rhodes_island.temp_sex_class.items():
-        if now_data.get("running", False):
+        if now_data.get("running", False) and class_alive:
             continue
         date_ordinal, _period = parse_class_key(now_key)
         if date_ordinal != -1 and date_ordinal < today:
             del_key_list.append(now_key)
     for now_key in del_key_list:
         del cache.rhodes_island.temp_sex_class[now_key]
-    return len(del_key_list)
+    return before_count - len(cache.rhodes_island.temp_sex_class)
 
 
 # ---------------------------------------------------------------------------
@@ -301,17 +308,21 @@ def get_must_attend_set(classroom: str = "") -> set:
     """
     取此刻这节实操课的必修名单
     Keyword arguments:
-    classroom -- 教室场景名。给了就取这间教室等着开讲的那节预约（find_reserved_class，Plan 26 §3.5）；
+    classroom -- 教室场景名。给了就取玩家此刻在这间教室开课时要沿用的那条（find_class_to_start：等着开讲的预约，
+                 含提前几分钟开讲的，Plan 26 §3.5；其次是当前节次这间教室下课后重开的那条）；
                  不给时取今天当前节次还没下课的临时课
     Return arguments:
     set -- 必修学生的角色id集合，没有则为空集
     功能: 正在进行的那节优先。开课前取场景学生名单时要传教室名：学生开课前 10 分钟就到场了，
-          此时按「当前节次」取到的是上一节，必修生会被当成没修过性技课漏掉
+             此时按「当前节次」取到的是上一节，必修生会被当成没修过性技课漏掉。
+          给了教室时与开课取条目同源（start_sex_class 也走 find_class_to_start，Plan 32 §3.8 L8）：同一节下课后在同一间教室重开，
+             沿用的是那条已下课的预约，此前这里走 find_reserved_class（跳过已下课的）取到空集，没修过性技理论的必修生开课前被排除、
+             开课后又被 10014 按必修名单拉进课，这次既不记出勤也不加实操课次数
     """
     now_class = get_running_class()
     if now_class is None:
         if classroom:
-            now_class = find_reserved_class(classroom, cache.game_time)[1]
+            now_class = find_class_to_start(classroom, cache.game_time)[1]
         else:
             now_class = get_active_temp_class(cache.game_time.date().toordinal(), game_time.get_class_period_by_time(cache.game_time))
     if now_class is None:
@@ -338,7 +349,6 @@ def judge_can_join_sex_class(character_id: int, check_course: bool = True) -> bo
     bool -- 是否可参加
     """
     from Script.Design import instuct_judege
-    from Script.Design import handle_premise
 
     if character_id == 0 or character_id not in cache.character_data:
         return False
@@ -349,13 +359,8 @@ def judge_can_join_sex_class(character_id: int, check_course: bool = True) -> bo
     #    开课拉人、旁观名单、开课后到场的 JOIN、课堂模式下的邀请都经这里，一并收紧；必修名单本来就只列学生岗
     if character_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
         return False
-    # 状态异常的不拉进来：2临盆/产后/监禁、5意识模糊、6意识不清、7离线（外勤/婴儿/外交访问/逃跑）
-    # 刻意**不查 4（服装异常）**：课上到一半学生本来就被脱光了，把它算进来会让这份名单
-    #    在开课瞬间清空，旁观名单跟着变空，观摩收益整个失效
-    for normal_id in (2, 5, 6, 7):
-        if not getattr(handle_premise, "handle_normal_%d" % normal_id)(character_id):
-            return False
-    if character_data.sp_flag.imprisonment:
+    # 状态异常的不拉进来（第2层，见 judge_sex_class_state_ok；刻意不查服装异常）
+    if not judge_sex_class_state_ok(character_id):
         return False
     # 前置修习（第3层）：没排过性技科目教室课的不能来，必修生豁免
     if check_course and not judge_has_sex_skill_course(character_id):
@@ -365,6 +370,27 @@ def judge_can_join_sex_class(character_id: int, check_course: bool = True) -> bo
         return True
     # 成年干员仍走既有的H模式实行值，只判不扣（Plan 31 §3.3，见上方说明）
     return bool(instuct_judege.calculation_instuct_judege(0, character_id, _("H模式"), not_draw_flag=True, settle_hypnosis=False)[0])
+
+
+def judge_sex_class_state_ok(character_id: int) -> bool:
+    """
+    判断某角色此刻的状态能不能待在课堂里（入课门槛的第2层：只看状态，不看实行值与前置修习）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 状态正常为True：2临盆/产后/监禁、5意识模糊、6意识不清（含时停中）、7离线（外勤/婴儿/外交访问/逃跑）都不成立，也没被监禁
+    功能: 刻意**不查 4（服装异常）**：课上到一半学生本来就被脱光了，把它算进来会让这份名单在开课瞬间清空，
+             旁观名单跟着变空，观摩收益整个失效。
+          入课时由 judge_can_join_sex_class 判；入课之后旁观名单（get_watcher_list）仍每次判这一层（实施复审补）：
+             Plan 32 L9 让课堂成员按身份认、不再重算实行值，但时停中被冻结、醉酒或半梦半醒的学生不该每个 H 动作都拿观摩收益与旁观口上。
+          只读不写，前提路径上可以调用
+    """
+    from Script.Design import handle_premise
+
+    for normal_id in (2, 5, 6, 7):
+        if not getattr(handle_premise, "handle_normal_%d" % normal_id)(character_id):
+            return False
+    return not cache.character_data[character_id].sp_flag.imprisonment
 
 
 def get_scene_student_list(scene_path: Optional[list] = None) -> List[int]:
@@ -387,6 +413,39 @@ def get_scene_student_list(scene_path: Optional[list] = None) -> List[int]:
     #    传这间教室的名字：开课前取的是这间教室等着开讲的那节预约（Plan 26 §3.5）
     must_attend_set = get_must_attend_set(scene_data.scene_name)
     return [cid for cid in scene_data.character_list if cid and judge_can_join_sex_class(cid, check_course=cid not in must_attend_set)]
+
+
+def get_class_member_list() -> List[int]:
+    """
+    取已被拉进这节实操课（课堂 H）的人（Plan 32 §3.8 L9）
+    Keyword arguments:
+    无
+    Return arguments:
+    List[int] -- 课堂模式下与玩家同场景、已在 H 中、且是学生岗或玩家女儿的角色id（不含玩家）；不在课堂模式时为空列表
+    功能: 「已被拉进这节课」按身份认，不再重算入课门槛：门槛（judge_can_join_sex_class）只在入课那一刻判——
+             开课拉人（10014）、开课后到场（722）、受邀到场都过它。成年学生的实行值随苦痛、露出、玩家理智在课中变化，
+             一跌破门槛，她人还在课堂 H 里，却拿不到旁观收益、在课的口上前提也判不过。
+          旁观名单（get_watcher_list）、在课前提（self_in_sex_class）与课堂模式下群交模板的选人（group_sex_panel）都读这份名单。
+          只读不写，前提路径上可以调用
+    """
+    if not cache.sex_class_mode:
+        return []
+    pl_character_data: game_type.Character = cache.character_data[0]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(pl_character_data.position)
+    if scene_path_str not in cache.scene_data:
+        return []
+    result = []
+    for character_id in cache.scene_data[scene_path_str].character_list:
+        if not character_id or character_id not in cache.character_data:
+            continue
+        character_data: game_type.Character = cache.character_data[character_id]
+        if not character_data.sp_flag.is_h:
+            continue
+        # 身份：学生岗，或玩家的女儿
+        if character_data.work.work_type != education_constant.STUDENT_WORK_TYPE and character_data.relationship.father_id != 0:
+            continue
+        result.append(character_id)
+    return result
 
 
 def get_selected_student_list(classroom: str, week_day: int, period: int) -> List[int]:
@@ -768,8 +827,9 @@ def end_sex_class() -> None:
     """
     结束当前的性技实操课
 
-    只由玩家手动触发（口径68），系统永不自动下课。唯二的例外是既有的体力归零兜底
-       （group_sex_npc_hp_0_end / group_sex_pl_hp_0_end），那两条本就在群交链上。
+    玩家点下课（6021 → 效果 10015），或课堂 H 以别的方式结束、玩家已不在 H 时一并下课（settle_orphan_class，Plan 32 §3.1）。
+       玩家还在课堂 H 里时系统永不自动下课（口径68 允许无限拖堂）。
+    没有 running 的课时直接返回，两处各调一次也无妨。
     Keyword arguments:
     无
     Return arguments:
@@ -786,6 +846,34 @@ def end_sex_class() -> None:
         now_class["ended"] = True
     else:
         del cache.rhodes_island.temp_sex_class[class_key]
+
+
+def settle_orphan_class() -> bool:
+    """
+    课堂 H 以别的方式结束时一并下课（Plan 32 §3.1）
+    Keyword arguments:
+    无
+    Return arguments:
+    bool -- 是否收了尾：课堂模式开着、而玩家已不在 H 时为 True，其余情况什么都不做、为 False
+    功能: 开课同时置群交模式与课堂模式，而「结束性技实操课」（效果 10015）以外的收尾——结束群交、玩家体力归零、学生全部力竭、
+             群交中被撞见、转单人 H 后再结束 H——效果串都只关群交（10011）、清全场 H 状态（407 / 404），课堂模式留着：
+             那节课永远 running，学生此后被拉进没有博士的「幽灵课堂」，主修加成对全岛生效，也再开不了课。
+          以「玩家已不在 H」作为课堂的收尾判据，不再逐条补效果串：玩家每一步的实时数据结算（realtime_settle.judge_pl_real_time_data）
+             与跨天清理（clean_expired_temp_class）都调这里，旧档里已经留下的幽灵课堂也一并收掉。
+          只剩一名学生、转为单人 H（375）时玩家仍在 H，课照上（主修加成照算），直到这场 H 结束。
+          按下课处理：关课堂模式、end_sex_class（预约的打 ended、当场开的删掉）。群交模式与各人的 H 状态不在这里清：
+             常规收尾由效果串清（10011 关群交、407 / 404 清 H 状态）。例外有二（实施复审补）：
+             意外中断 H（constant.special_end_H_list）之后的二次确认只清玩家与交互对象（handle_npc_ai_in_h 调 handle_both_h_state_reset），
+                中断行为的效果串不清全场 H 状态时，群交模式与其余学生的 H 状态会留着——与普通群交相同，属群交系统（方案 §7）；
+             转隐奸 1 / 2（男不隐）会清玩家的 H 而这场 H 仍在继续，课也随之收掉（hidden_sex_panel）
+    """
+    if not cache.sex_class_mode:
+        return False
+    if 0 not in cache.character_data or cache.character_data[0].sp_flag.is_h:
+        return False
+    cache.sex_class_mode = False
+    end_sex_class()
+    return True
 
 
 def judge_end_type() -> int:
@@ -869,7 +957,10 @@ def settle_attend(student_id: int, now_time=None) -> None:
           「这一节」按正在进行的那节实操课判（get_attend_judge_time，Plan 31 §3.7）：玩家提前几分钟开讲预约的课时，
              参照时刻还在上一节，上一节缺过课的学生出勤会记不上，而她进了 H 不再进 AI，这一节也不会再记缺课。
           记出勤的同时累计实操课次数 sex_class_count（养成数值 25，Plan 31 §3.14 L12）：口上里「第一次来 / 老学生」读它，
-             不读含全部课型的累计听课节数；这一节已缺课、不记出勤的也不记它
+             不读含全部课型的累计听课节数；这一节已缺课、不记出勤的也不记它。
+          记出勤时一并写「这一节已结算」标记 last_attend_period（按上面那一节，节次外的当场课不写，Plan 32 §3.8 L7）：
+             实操课本节内提前下课、或玩家课中与学生做 H 后放回，体力落在 1~30% 的学生本节内再派 721，缺课判定看到这一节已出勤就不再记；
+             同一节里 557 / 512 也不再给她结算这一节的常规课。这里不读它去重：同一节下课后重开，每次开课单独记一次（Plan 27 L2，按设计保留）
     """
     # 只给「女儿 ∪ 学生岗」记：凭 H 模式实行值到场的成年非学生干员不是学生，
     #    给她们惰性创建养成数据只会让全岛的存档一起变大（与 semester_handle 的约定一致）
@@ -880,11 +971,16 @@ def settle_attend(student_id: int, now_time=None) -> None:
         return
     if now_time is None:
         now_time = student_data.behavior.start_time or cache.game_time
-    if growth_handle.judge_absent_this_period(student_id, get_attend_judge_time(now_time)):
+    judge_time = get_attend_judge_time(now_time)
+    if growth_handle.judge_absent_this_period(student_id, judge_time):
         return
     growth_data = growth_handle.get_child_growth(student_id)
     growth_data.attend_class_count += 1
     growth_data.sex_class_count += 1
+    # 记下这一节已记过出勤（同一节只落一种记录的另一个方向），节次外的当场课没有节次可记
+    period = game_time.get_class_period_by_time(judge_time)
+    if period != -1:
+        growth_data.last_attend_period = [judge_time.toordinal(), period]
 
 
 # ---------------------------------------------------------------------------
@@ -894,7 +990,7 @@ def settle_attend(student_id: int, now_time=None) -> None:
 
 def get_watcher_list() -> List[int]:
     """
-    取本节课的旁观学生——人在场、已加入课堂H，但没有占用群交模板任何部位的那些
+    取本节课的旁观学生——已在这节课里（get_class_member_list：与玩家同场景、已进课堂H、学生岗或女儿），但没有占用群交模板任何部位的那些
 
     群交模板一次最多占4~5个部位，一节课若来了8个学生，其余的只能旁观。
     既有H结算只给被操作者加经验，不补这一块的话玩家很快会学会"只排4个学生就够了"，
@@ -902,6 +998,9 @@ def get_watcher_list() -> List[int]:
 
     开头的 sex_class_mode 判定是硬要求不是优化：课堂模式会同时置 group_sex_mode，
        若这里改判群交标志，任何一场普通群交都会给全场围观干员发经验与状态。
+    「已在这节课里」按身份认、不再重算入课门槛（Plan 32 §3.8 L9）：成年学生的实行值在课中一跌破门槛，
+       她人还在课堂 H 里，此前却因此拿不到观摩收益。
+       状态那一层仍每次判（judge_sex_class_state_ok，实施复审补）：时停中被冻结、醉酒或半梦半醒的学生不拿观摩收益，也不派旁观口上
     Keyword arguments:
     无
     Return arguments:
@@ -912,15 +1011,7 @@ def get_watcher_list() -> List[int]:
     if not cache.sex_class_mode:
         return []
     in_template_list = group_sex_panel.count_group_sex_character_list()
-    result = []
-    for student_id in get_scene_student_list():
-        if student_id in in_template_list:
-            continue
-        student_data: game_type.Character = cache.character_data[student_id]
-        if not student_data.sp_flag.is_h:
-            continue
-        result.append(student_id)
-    return result
+    return [student_id for student_id in get_class_member_list() if student_id not in in_template_list and judge_sex_class_state_ok(student_id)]
 
 
 def judge_hp_low_only_watch(character_id: int) -> bool:

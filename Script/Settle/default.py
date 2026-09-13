@@ -3122,7 +3122,10 @@ def handle_sex_class_mode_off(
     """
     关闭性技实操课（课堂H）模式
 
-    口上在效果结算之前就已经输出了（settle_behavior.py:407 早于 :410 的效果循环），
+    玩家点「结束性技实操课」（6021）走这里。课堂 H 以别的方式结束（结束群交、玩家体力归零、学生全部力竭、群交中被撞见、
+       转单人 H 后再结束 H）时，效果串里没有它，由 sex_class_handle.settle_orphan_class 在玩家这一步的实时数据结算里按「玩家已不在 H」
+       一并下课（Plan 32 §3.1）；两处都调 end_sex_class，它没有 running 的课时直接返回，重复调无妨。
+    口上在效果结算之前就已经输出了（settle_behavior.handle_instruct_data 里先出口上、后跑效果循环），
        所以这里清 running 不会影响"提前/按时/拖堂"三档下课口上的判定。
     Keyword arguments:
     character_id -- 角色id
@@ -7604,6 +7607,9 @@ def handle_teach_add_just(
     # 教师自身的教学相长：加当节所授科目的习得与经验
     growth_handle.settle_teacher_class_gain(character_id, ability_id, add_time, change_data=change_data)
 
+    # 教师开讲的节次：按教师自己的行为开始时刻取（NPC 教师只发给听课节次与它相同的学生，Plan 32 §3.8 L6）
+    teacher_period = game_time.get_class_period(character_id)
+
     # 遍历当前场景的其他角色
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -7623,6 +7629,12 @@ def handle_teach_add_just(
                     student_course = schedule_handle.get_now_course(chara_id)
                     scheduled_here = student_course is not None and student_course["classroom"] == scene_data.scene_name
                     if character_id != 0 and not scheduled_here:
+                        continue
+                    # 各人按自己的时间线推进：她的听课行为（按她的开始时刻）落在别的节次，就不是这节课的学生（Plan 32 §3.8 L6）。
+                    #    典型是她下一节是玩家的临时实操课（格子教师为 0，557 不结算、也不写去重标记）、已坐在这间教室等，
+                    #    上一节的 NPC 教师换教室晚到才开讲：按她下一节的节次记出勤、发上一节的科目收益，玩家开课时又记一次。
+                    #    玩家手动授课不受影响
+                    if character_id != 0 and student_course["period"] != teacher_period:
                         continue
 
                     # 按课表科目结算该学生的习得与科目经验，学习速度由师生等级差决定；同一节只结算一次。
@@ -7698,7 +7710,9 @@ def handle_attent_class_add_just(
        settle_student_class_gain 按节次去重，教师随后开讲时的广播不会重复。
     代价：教师判能到岗、这一节却被临时叫走（比如被玩家拉进 H）时，学生照样拿到这节课，与「能到岗」判据的既有含义一致。
     不走这里的：课表上没排教师（那是自习，由 548 结算）、授课者是玩家（临时实操课，那是课堂 H，不是授课）、
-       学生不在本节的教室里（她是在那间教室坐下来等教师的；被玩家拉到别处听课的由玩家的广播结算）
+       学生不在本节的教室里（她是在那间教室坐下来等教师的；被玩家拉到别处听课的由玩家的广播结算）。
+    「这一节」按学生自己的行为开始时刻取；这一节已由实操课记过出勤的（sex_class_handle.settle_attend 也写去重标记，Plan 32 §3.8 L7），
+       settle_student_class_gain 按去重不再结算，同一节只落一种记录
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间

@@ -634,6 +634,183 @@ teacher_b.work.work_type = 151
 cache.npc_id_got.add(104)
 clear_schedules()
 
+section("Plan 32 §3.13（L21）：被监禁的教师标「（被监禁）」、灰字，选教师页不再列她")
+clear_schedules()
+set_time(period_time(0))
+_l21_day = cache.game_time.weekday()
+schedule_handle.set_class_cell(ROOM1, _l21_day, 0, 45, 103)
+teacher_b.sp_flag.imprisonment = True
+check("L21 被监禁的教师：全称「（被监禁）」、短写「（监禁）」（此前在岛、在岗，格子不灰不标）",
+      class_schedule_panel.get_teacher_absent_mark(103) == _("（被监禁）") and class_schedule_panel.get_teacher_absent_mark(103, short=True) == _("（监禁）"),
+      (class_schedule_panel.get_teacher_absent_mark(103), class_schedule_panel.get_teacher_absent_mark(103, short=True)))
+_button_log.clear()
+draw.CenterButton.draw = record_button
+draw.LeftButton.draw = record_button
+_l21_panel = class_schedule_panel.Class_Schedule_Panel(W)
+_l21_panel.now_room = ROOM1
+_l21_panel.draw_page([])
+draw.CenterButton.draw = _orig_center_draw
+draw.LeftButton.draw = _orig_left_draw
+_l21_cell = next((one for one in _button_log if one[0] == "{0}/教师乙{1}".format(_name45, _("（监禁）"))), None)
+check("L21 周表格子：名字后写短标注「（监禁）」、灰字，悬停写全称「（被监禁）」", _l21_cell is not None and _l21_cell[1] == "deep_gray" and "教师乙（被监禁）" in _l21_cell[2],
+      [one for one in _button_log if "教师乙" in one[0]])
+_l21_too_wide = [text for text in ("{0}/四字教师{1}".format(game_config.config_ability[_aid].name, _("（监禁）")) for _aid in E.SUBJECT_ABILITY_LIST)
+                 if text_handle.get_text_index(text) > _l6_cell_width]
+check("L21 全部科目 × 四个字的教师名加「（监禁）」都放得进周表的一格", not _l21_too_wide, _l21_too_wide)
+teacher_b.work.work_type = 21
+check("L21 同时改了岗：标「已离岗」（改了岗的人放出来也不会再授课，排在监禁之前）", class_schedule_panel.get_teacher_absent_mark(103) == _("（已离岗）"))
+teacher_b.work.work_type = 151
+cache.npc_id_got.discard(103)
+check("L21 被监禁、又不在 npc_id_got：标「被监禁」（排在「不在岛上」之前）", class_schedule_panel.get_teacher_absent_mark(103) == _("（被监禁）"))
+cache.npc_id_got.add(103)
+flow_handle.askfor_all = scripted_askfor
+answers[:] = [lambda o: o == _("取消")]
+_l21_panel._select_teacher(ROOM1, _l21_day, 1, 45)
+flow_handle.askfor_all = fake_askfor
+check("L21 选教师页不再列出被监禁的教师，其余教师照列", "103" not in captured["rl"] and all(str(cid) in captured["rl"] for cid in (101, 104, 105)), captured["rl"])
+teacher_b.sp_flag.imprisonment = False
+check("L21 放出来之后不再标注", class_schedule_panel.get_teacher_absent_mark(103) == "")
+clear_schedules()
+
+section("Plan 32 §3.8（L12）：排实操课页的三份选修名单去掉点名必修的人")
+clear_schedules()
+for _cid in (201, 202, 301):
+    schedule_handle.clear_selected_course(_cid, _l8_day, _l8_period)
+    schedule_handle.clear_selected_course(_cid, _l8_day, _l8_sex_period)
+# 与 Plan 31 L8 那一段同样的布置：这一节每周排料理，另一节排膣技；女儿01 两节都选了（算修过性技课），女儿02 只选了这一节
+schedule_handle.set_class_cell(ROOM_P, _l8_day, _l8_period, 43, -1)
+schedule_handle.set_class_cell(ROOM_P, _l8_day, _l8_sex_period, 74, -1)
+schedule_handle.set_selected_course(201, _l8_day, _l8_period, E.COURSE_TYPE_PRACTICE, ROOM_P)
+schedule_handle.set_selected_course(201, _l8_day, _l8_sex_period, E.COURSE_TYPE_PRACTICE, ROOM_P)
+schedule_handle.set_selected_course(202, _l8_day, _l8_period, E.COURSE_TYPE_PRACTICE, ROOM_P)
+_l12_date = sex_class_handle.get_date_ordinal_by_week_day(_l8_day, _l8_period)
+_count_line, _blocked_line, _no_course_line = draw_sex_class_page()
+check("L12 对照：没点名时，没修过性技课的女儿02 列在「不能参加（点名必修可豁免）」", "女儿02" in _no_course_line, _no_course_line)
+sex_class_handle.set_temp_class(_l12_date, _l8_period, ROOM_P, 74, must_attend=[202])
+_count_line, _blocked_line, _no_course_line = draw_sex_class_page()
+_must_line = next((t for t in drawn_text if "必修（无论原本排了什么都来" in t), "")
+check("L12 点名必修女儿02：只在必修行，不再同时列进「不能参加（点名必修可豁免）」（此前两行都有她）",
+      "女儿02" in _must_line and "女儿02" not in _no_course_line and "女儿02" not in _count_line and "女儿02" not in _blocked_line, (_must_line, _no_course_line))
+check("L12 其余选修生照旧：女儿01 算进「本节选修本教室的学生：1 人」", "：1 人（女儿01）" in _count_line, _count_line)
+sex_class_handle.set_temp_class(_l12_date, _l8_period, ROOM_P, 74, must_attend=[201, 202])
+_count_line, _blocked_line, _no_course_line = draw_sex_class_page()
+check("L12 选这一节的人都被点了名：选修写 0 人并说明点名的学生照常会来，不写「没有学生会来」",
+      "：0 人" in _count_line and "点名必修的学生照常会来" in _count_line and "没有学生会来" not in _count_line and not _no_course_line and not _blocked_line,
+      (_count_line, _no_course_line, _blocked_line))
+# 点名只豁免前置修习：点名之后才被监禁的必修生，开课拉人时照样不收（check_course=False 仍判状态），这一行要列出她（实施复审补）
+cache.character_data[202].sp_flag.imprisonment = True
+_count_line, _blocked_line, _no_course_line = draw_sex_class_page()
+_must_line = next((t for t in drawn_text if "必修（无论原本排了什么都来" in t), "")
+check("L12 复审补：点名之后被监禁的必修女儿02 仍列在必修行，同时列进「此刻进不了课堂」（此前 L12 把必修生从三份名单去掉后这一行漏了她）",
+      "女儿02" in _must_line and "另有 1 人会到场，但此刻进不了课堂" in _blocked_line and "女儿02" in _blocked_line and "女儿01" not in _blocked_line,
+      (_must_line, _blocked_line))
+cache.character_data[202].sp_flag.imprisonment = False
+clear_schedules()
+for _cid in (201, 202):
+    schedule_handle.clear_selected_course(_cid, _l8_day, _l8_period)
+    schedule_handle.clear_selected_course(_cid, _l8_day, _l8_sex_period)
+
+section("Plan 32 §3.9：<课> / <翘> 状态标识（L15 自习悬停、L13 听玩家手动授课、L14 缺课休息、L1 翘课只在 SKIP 时亮）")
+clear_schedules()
+set_time(period_time(0))
+_st_day = cache.game_time.weekday()
+_st = cache.character_data[201]
+_st_growth = growth_handle.get_child_growth(201)
+_st_growth.selected_course = {}
+_st_growth.skip_class_flag = False
+_st_growth.skip_class_day = 0
+_st_growth.last_absent_period = []
+_pl_saved = (pl.behavior.behavior_id, list(pl.position))
+schedule_handle.set_class_cell(ROOM1, _st_day, 0, 43, -1)
+schedule_handle.set_selected_course(201, _st_day, 0, E.COURSE_TYPE_THEORY, ROOM1)
+move_to(201, classroom_path(ROOM1))
+_st.behavior.behavior_id = constant.Behavior.SELF_STUDY
+_tip = character_info_head.get_now_class_tip(201)
+check("L15 本节没排教师、在自习：悬停写「本节无教师，按自习收益」，不再写「经验减半」（自习经验是理论课的 1/3、实践课的 1/5）",
+      _tip is not None and not _tip[0] and "本节无教师，按自习收益" in _tip[1] and "减半" not in _tip[1], _tip)
+
+schedule_handle.set_class_cell(ROOM1, _st_day, 0, 43, 101)
+_st.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+_tip = character_info_head.get_now_class_tip(201)
+check("L13 对照：玩家没在授课时照她的课表写「授课：教师甲」", _tip is not None and "授课：教师甲" in _tip[1], _tip)
+pl.behavior.behavior_id = constant.Behavior.TEACH
+move_to(0, classroom_path(ROOM1))
+_fallback_name = game_config.config_ability[E.FALLBACK_SUBJECT_ABILITY].name
+_theory_name = E.COURSE_TYPE_NAME[E.COURSE_TYPE_THEORY]
+_tip = character_info_head.get_now_class_tip(201)
+check("L13 节次内被玩家「授课」拉来：悬停写「授课：博士」与理论课·学识（此前写课表上的料理与教师甲，实际发的是学识）",
+      _tip is not None and "授课：{0}".format(pl.name) in _tip[1] and "{0}·{1}".format(_theory_name, _fallback_name) in _tip[1] and "教师甲" not in _tip[1]
+      and "第1节" in _tip[1], _tip)
+_st.behavior.start_time = period_time(0) + datetime.timedelta(minutes=5)
+_tip = character_info_head.get_now_class_tip(201)
+check("L13 对照：开始时刻与玩家没对齐（她自己坐下听课，不是被拉来的）→ 照她的课表写", _tip is not None and "授课：教师甲" in _tip[1], _tip)
+set_time(DEFAULT_TIME.replace(hour=20))
+_tip = character_info_head.get_now_class_tip(201)
+check("L13 节次外被拉来：同样写「授课：博士」，不写第几节（此前只写「上课中」）", _tip is not None and "授课：{0}".format(pl.name) in _tip[1] and "第" not in _tip[1], _tip)
+pl.behavior.behavior_id = _pl_saved[0]
+move_to(0, _pl_saved[1])
+set_time(period_time(0))
+
+schedule_handle.set_selected_course(201, _st_day, 0, E.COURSE_TYPE_PE, _("木桩房"))
+move_to(201, schedule_handle.get_course_place(schedule_handle.get_now_course(201)))
+_st.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+_tip = character_info_head.get_now_class_tip(201)
+check("L14 对照：人在体育课的地点：亮 <课>", _tip is not None and not _tip[0], _tip)
+_st.behavior.behavior_id = constant.Behavior.REST
+check("L14 体力不足缺这一节、在上课地点原地休息（721 派休息）：不亮 <课>（此前照亮）", character_info_head.get_now_class_tip(201) is None,
+      character_info_head.get_now_class_tip(201))
+_st.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+_st_growth.last_absent_period = [cache.game_time.toordinal(), 0]
+check("L14 这一节已记过缺课、休完回到地点：不亮 <课>", character_info_head.get_now_class_tip(201) is None, character_info_head.get_now_class_tip(201))
+_st_growth.last_absent_period = [cache.game_time.toordinal() - 1, 0]
+check("L14 前一天同一节的缺课记录不算：照亮", character_info_head.get_now_class_tip(201) is not None)
+_st_growth.last_absent_period = []
+_st.sp_flag.is_h = True
+check("L14 复审补：人在体育课的地点、但在 H 里（被玩家带进 H）：不亮 <课>（<翘> 对在 H 里的人也不亮，此前这里改亮 <课>）",
+      character_info_head.get_now_class_tip(201) is None, character_info_head.get_now_class_tip(201))
+_st.sp_flag.is_h = False
+
+schedule_handle.set_selected_course(201, _st_day, 0, E.COURSE_TYPE_THEORY, ROOM1)
+move_to(201, SCENE_DORM)
+_st_growth.skip_class_flag = True
+_st_growth.skip_class_day = cache.game_time.toordinal()
+_tip = character_info_head.get_now_class_tip(201)
+check("L1 对照：第 1 节有课、今天已翘课：亮 <翘>「本该上」", _tip is not None and _tip[0] and "本该上" in _tip[1], _tip)
+set_time(period_time(2))
+_tip = character_info_head.get_now_class_tip(201)
+check("L1 第 3 节她没课：不亮 <翘>（此前写「翘课中（第 3 节）」）", _tip is None or not _tip[0], _tip)
+set_time(period_time(0))
+_st.hit_point = 10
+_tip = character_info_head.get_now_class_tip(201)
+check("L1 体力不足（上课状态是体力缺课、不是翘课）：不亮 <翘>", _tip is None or not _tip[0], _tip)
+_st.hit_point = 100
+_st.sp_flag.is_h = True
+_tip = character_info_head.get_now_class_tip(201)
+check("L1 人在 H 里（课堂 H、被玩家带进 H）：不亮 <翘>（此前写「翘课中：本该上 实操课」）", _tip is None or not _tip[0], _tip)
+_st.sp_flag.is_h = False
+sex_class_handle.set_temp_class(cache.game_time.date().toordinal(), 0, ROOM_P, 74, must_attend=[201])
+move_to(201, classroom_path(ROOM_P))
+_tip = character_info_head.get_now_class_tip(201)
+check("L1 被点名必修、人在博士的实操课教室：不亮 <翘>", _tip is None or not _tip[0], _tip)
+cache.rhodes_island.temp_sex_class = {}
+_st_growth.skip_class_flag = False
+_st_growth.skip_class_day = 0
+_st_growth.selected_course = {}
+_st.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+move_to(201, SCENE_DORM)
+clear_schedules()
+
+section("Plan 32 L28：三个面板删掉不用的 window_width / normal_config 与函数内的重复导入；周日按一周天数推")
+import inspect  # noqa: E402
+
+check("L28 个人课表 / 养成总览 / 日程模板面板不再定义 window_width、不再导入 normal_config（全局课表的[返回]仍在用 window_width，保留）",
+      not any(hasattr(module, name) for module in (course_select_panel, growth_panel, schedule_template_panel) for name in ("window_width", "normal_config"))
+      and hasattr(class_schedule_panel, "window_width"))
+_l28_target_src = inspect.getsource(course_select_panel.Course_Select_Panel._select_target)
+check("L28 选目标页：周日判定按 WEEK_DAY_COUNT 推、不写死 6；函数内不再重复导入 schedule_template_handle",
+      "WEEK_DAY_COUNT" in _l28_target_src and "week_day == 6" not in _l28_target_src and "import schedule_template_handle" not in _l28_target_src)
+check("L28 养成履历不再在函数内另起别名导入 game_config", "_game_config" not in inspect.getsource(growth_panel.Growth_Panel._draw_event_history))
+
 section("Web 适配器冒烟")
 from Script.System.Web_Draw_System import web_draw_adapter
 

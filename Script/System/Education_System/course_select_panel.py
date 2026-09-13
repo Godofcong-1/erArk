@@ -11,7 +11,7 @@ from types import FunctionType
 from typing import Dict, List
 
 from Script.Core import cache_control, game_type, get_text, flow_handle
-from Script.Config import game_config, normal_config
+from Script.Config import game_config
 from Script.Design import game_time
 from Script.System.Education_System import education_constant, schedule_handle, growth_handle, schedule_template_handle, student_select
 from Script.System.Education_System.class_schedule_panel import get_period_time_text, get_teacher_absent_mark
@@ -24,8 +24,6 @@ _: FunctionType = get_text._
 line_feed = draw.NormalDraw()
 line_feed.text = "\n"
 line_feed.width = 1
-window_width: int = normal_config.config_normal.text_width
-""" 窗体宽度 """
 
 
 class Course_Select_Panel:
@@ -516,8 +514,6 @@ class Course_Select_Panel:
 
         # 兴趣课：class_ok == 1 的娱乐项；地点没开放、或这名学生不满足活动条件（need）的置灰（Plan 26 §3.8）
         elif course_type == education_constant.COURSE_TYPE_INTEREST:
-            from Script.System.Education_System import schedule_template_handle
-
             for cid in game_config.config_entertainment:
                 if not game_config.config_entertainment[cid].class_ok:
                     continue
@@ -546,7 +542,8 @@ class Course_Select_Panel:
 
         # 实习课：tag == 0 且非教师/学生的岗位；周日无人在岗，整列不可选
         else:
-            if week_day == 6:
+            # 周日是一周的最后一天（WEEK_NAME 的下标即 weekday()）：按一周的天数推，不写死 6（Plan 32 L28）
+            if week_day == education_constant.WEEK_DAY_COUNT - 1:
                 now_draw = draw.NormalDraw()
                 now_draw.width = self.width
                 now_draw.style = "deep_gray"

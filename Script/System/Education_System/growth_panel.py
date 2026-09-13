@@ -14,7 +14,7 @@ from types import FunctionType
 from typing import List
 
 from Script.Core import cache_control, game_type, get_text
-from Script.Config import game_config, normal_config
+from Script.Config import game_config
 from Script.Design import attr_calculation, game_time
 from Script.System.Education_System import education_constant, semester_handle, growth_handle, student_select, class_ai
 from Script.UI.Moudle import draw
@@ -26,8 +26,6 @@ _: FunctionType = get_text._
 line_feed = draw.NormalDraw()
 line_feed.text = "\n"
 line_feed.width = 1
-window_width: int = normal_config.config_normal.text_width
-""" 窗体宽度 """
 
 
 class Growth_Panel:
@@ -333,8 +331,6 @@ class Growth_Panel:
         输出类型: 无
         功能: 列出已触发过的养成事件与当时的选择，读 child_growth.event_history
         """
-        from Script.Config import game_config as _game_config
-
         growth_data = cache.character_data[character_id].child_growth
         if growth_data is None or not growth_data.event_history:
             return
@@ -353,7 +349,7 @@ class Growth_Panel:
             omit_draw.draw()
             history_list = history_list[-education_constant.HISTORY_SHOW_MAX:]
         for uid, record in history_list:
-            event_data = _game_config.config_official_event.get(uid)
+            event_data = game_config.config_official_event.get(uid)
             # 配置里已删掉的事件只留一条占位，不让履历出现空行
             if event_data is None:
                 continue

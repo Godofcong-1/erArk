@@ -154,6 +154,19 @@ if ENABLE_PROBE and WATCH:
     handle_npc_ai.judge_interrupt_character_behavior = _wrap_int
     character_behavior.handle_npc_ai.judge_interrupt_character_behavior = _wrap_int
 
+    # 学生赶去上课的截短（Plan 32 起）走 judge_student_leave_truncate，在实时结算之前调，不在 judge_interrupt_character_behavior 里
+    _orig_trunc = handle_npc_ai.judge_student_leave_truncate
+
+    def _wrap_trunc(cid):
+        pre = cache.character_data[cid].behavior.duration
+        r = _orig_trunc(cid)
+        if cid in WATCH and r:
+            print(f"    [学生截短] cid={cid} 时长 {pre} → {cache.character_data[cid].behavior.duration}")
+        return r
+
+    handle_npc_ai.judge_student_leave_truncate = _wrap_trunc
+    character_behavior.handle_npc_ai.judge_student_leave_truncate = _wrap_trunc
+
 # ==== 7. 内存模拟候选修复（可选：改源码前先验证收敛） ====
 # _orig_x = handle_npc_ai.judge_interrupt_character_behavior
 # def _patched(cid):

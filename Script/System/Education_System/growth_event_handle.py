@@ -290,7 +290,8 @@ def get_growth_event_title(queue_data: dict) -> str:
     # STAGE_TALENT_NAME 取自 Talent.csv，载入时已翻译过，不再包 _()
     stage_name = education_constant.STAGE_TALENT_NAME.get(stage, education_constant.STAGE_TALENT_NAME[104])
     # 写的是**本阶段**的第几天，进入该阶段当天为第 1 天（Plan 29 §3.3）：
-    #    此前取出生以来的总天数，出生 300 天的萝莉会写成「萝莉期第 300 天」，而萝莉期一共才 180 天
+    #    此前取出生以来的总天数，出生 300 天的萝莉会写成「萝莉期第 300 天」，而萝莉期一共才 180 天。
+    #    数的是可游玩天（Plan 32 §3.2）：婴儿期约 30 天、幼女 / 萝莉期约 60 天，季月交替那一夜只走一天，不再一夜跳六十天
     stage_day = growth_handle.get_stage_day(character_id) + 1
     return _("{0} · {1}期第 {2} 天").format(character_data.name, stage_name, stage_day)
 
@@ -321,6 +322,81 @@ def push_graduation_event(character_id: int):
         if not official_event_handle.judge_event_can_enqueue(uid, character_id):
             continue
         official_event_handle.push_official_event(uid, character_id, ignore_capacity=True)
+
+
+def push_birthday_event() -> List[int]:
+    """
+    跨天结算时给今天过生日的女儿把生日事件插到队首（Plan 32 §3.3）
+    Keyword arguments:
+    无
+    Return arguments:
+    List[int] -- 推入了生日事件的角色id列表，按id升序
+    功能: 生日按月、日比对，童年里只有第 365 天那一次（萝莉期）；只靠每日随机派发的话，当天先要过每晚 70% 的概率、
+             再从几十条候选里按权重抽中，绝大多数女儿一辈子都见不到它。
+          名单与日常派发相同（get_growth_event_character_list）；今天过生日（handle_self_birthday_today）、
+             能入队（没经历过、不在队列里）、阶段与事件前提都成立的才推，与 get_candidate_event_list 同一套判定。
+          插队首、不受队列容量约束，与毕业典礼同一写法（push_graduation_event）：一辈子只有这一次，队列满了也不能丢。
+          必须排在日常派发（official_event_handle.check_new_day_official_event）之前：推入之后它已在队列里，日常派发不会再抽到它
+    """
+    from Script.Design import handle_premise
+
+    uid = education_constant.BIRTHDAY_EVENT_UID
+    event_data = official_event_handle.get_event_data(uid)
+    if event_data is None:
+        return []
+    result = []
+    # 倒序插到队首：同一天过生日的几个女儿（双胞胎）最终按 id 升序排在队首
+    for character_id in reversed(get_growth_event_character_list()):
+        if not handle_premise.handle_self_birthday_today(character_id):
+            continue
+        if not official_event_handle.judge_event_can_enqueue(uid, character_id):
+            continue
+        if not judge_stage_pass(uid, character_id):
+            continue
+        partner_id = get_event_partner(uid, character_id)
+        if not official_event_handle.judge_premise_pass(event_data.get("premise", ""), character_id, partner_id):
+            continue
+        if official_event_handle.push_official_event(uid, character_id, partner_id, to_front=True):
+            result.append(character_id)
+    return sorted(result)
+
+
+def drop_stale_stage_event(character_id: int) -> int:
+    """
+    孩子长大时把队列里已经对不上阶段的日常养成事件清掉（Plan 32 §3.11）
+    Keyword arguments:
+    character_id -- 刚长大的孩子角色id（素质已换成新阶段）
+    Return arguments:
+    int -- 清掉的条数
+    功能: 公务队列出队时不重判阶段，长大前入队、还没处理的上一阶段事件会顶着新阶段的抬头弹出
+             （婴儿期入队的「忽然睁开了眼睛」写成「幼女期第 3 天」）。
+          只清部门 15 的阶段桶（sub_key 0 与 101~103）里 judge_stage_pass 已不成立的：婴儿→幼女、幼女→萝莉清掉上一阶段桶的事件，
+             通用桶的照留；成年时通用桶与萝莉桶一并清掉。
+          成年桶（104：毕业典礼、成年纪念、通用 59 / 60）与期末桶（200）不动：前者只由成年结算显式推入，后者由学期结算推入、阶段写在前提里。
+          事件配置已删掉的队列项留给 official_event_handle.clean_official_event_queue 处理。
+          由妊娠系统的三处阶段转换在换完素质后调用；成年结算要排在推毕业典礼之前
+    """
+    stage_bucket_set = {education_constant.STAGE_ANY, *education_constant.STAGE_ALL_CHILD}
+    queue = official_event_handle.get_queue()
+    keep_list = []
+    drop_count = 0
+    for one in queue:
+        if isinstance(one, dict) and one.get("chara_id") == character_id:
+            uid = one.get("uid")
+            event_data = official_event_handle.get_event_data(uid)
+            if (
+                event_data is not None
+                and official_event_handle.get_event_department(uid) == education_constant.GROWTH_EVENT_DEPARTMENT
+                and event_data.get("sub_key", education_constant.STAGE_ANY) in stage_bucket_set
+                and not judge_stage_pass(uid, character_id)
+            ):
+                drop_count += 1
+                continue
+        keep_list.append(one)
+    # 原地改写，队列本体的引用不变
+    if drop_count:
+        queue[:] = keep_list
+    return drop_count
 
 
 def push_semester_event(character_id: int) -> bool:

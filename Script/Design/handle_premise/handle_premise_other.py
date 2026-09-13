@@ -1208,7 +1208,7 @@ def handle_self_have_classmate(character_id: int) -> int:
 def handle_self_mother_available(character_id: int) -> int:
     """
     校验自己的母亲仍在队中且当前可跟随（Plan 23，母亲相关的公务事件用）
-    直接复用二期的 judge_mother_available：母亲正在H、被监禁、外出委托或住院时算不可跟随，
+    直接复用二期的 judge_mother_available：母亲正在H、被监禁、外出委托时算不可跟随（住院判定 Plan 32 删掉：医疗系统的住院表以抽象病人编号为键，干员从不进表），
        与幼女跟随见学的判定口径保持一致，免得事件里写「母亲带她去岗位」时母亲其实不在
     Keyword arguments:
     character_id -- 角色id
@@ -1334,6 +1334,21 @@ def handle_self_have_intern_course(character_id: int) -> int:
     from Script.System.Education_System import education_constant, growth_handle
 
     return 1 if growth_handle.judge_have_course_type(character_id, education_constant.COURSE_TYPE_INTERN) else 0
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_PUBLIC_COURSE)
+def handle_self_have_public_course(character_id: int) -> int:
+    """
+    校验自己有公开课：学生岗，且个人课表上至少有一格是每周确有的公开课（Plan 32 §3.14 L26，萝莉 51、幼女 24「大礼堂的公开课」用）
+    与 self_have_theory_course 同一个判据（growth_handle.judge_have_course_type），只读，不惰性创建养成数据
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import education_constant, growth_handle
+
+    return 1 if growth_handle.judge_have_course_type(character_id, education_constant.COURSE_TYPE_PUBLIC) else 0
 
 
 @add_premise(constant_promise.Premise.SELF_BIRTHDAY_TODAY)

@@ -45,22 +45,27 @@ def get_period_time_text(period: int) -> str:
 
 def get_teacher_absent_mark(teacher_id: int, short: bool = False) -> str:
     """
-    取课表格子上教师名字后的缺位标注（Plan 31 §3.10，全局课表与个人课表选课页共用）
+    取课表格子上教师名字后的缺位标注（Plan 31 §3.10，全局课表与个人课表选课页共用；Plan 32 §3.13 加监禁）
     Keyword arguments:
     teacher_id -- 格子上排的教师角色id；-1 为没排教师，0 为玩家（临时实操课的授课者）
-    short -- 是否取短写「（离岗）」「（离岛）」。全局周表一格只有 25 列（190 宽），「学识技能/三字名（不在岛上）」就有 27 列，
+    short -- 是否取短写「（离岗）」「（监禁）」「（离岛）」。全局周表一格只有 25 列（190 宽），「学识技能/三字名（不在岛上）」就有 27 列，
              会被截成「~」把标注吃掉；周表用短写（四个字的名字也放得下）、悬停提示写全称，个人课表选课页等宽裕的地方用全称
     Return arguments:
-    str -- 「（已离岗）」「（不在岛上）」（短写为「（离岗）」「（离岛）」）或空字符串
-    功能: 改了岗、或不在岛上（不在 npc_id_got）的教师，运行时 class_ai.judge_teacher_available 判来不了、学生降级自习；
+    str -- 「（已离岗）」「（被监禁）」「（不在岛上）」（短写为「（离岗）」「（监禁）」「（离岛）」）或空字符串
+    功能: 改了岗、被监禁、或不在岛上（不在 npc_id_got）的教师，运行时 class_ai.judge_teacher_available 判来不了、学生降级自习；
              但一键排课只填空格、不会替换她，这些格子每周都是自习。面板照写名字不加提示，玩家看不出要手动换人。
-          两种都成立时标「已离岗」：不在岛上的人回来就能照常授课，改了岗的人回来也不会再授课，后者才一定要换人。
-          只标这两种长期状态，睡着、H 中这类一节之内会恢复的不标；玩家与没排教师的格子不标
+          被监禁的教师仍在岛上、仍挂教师岗（Plan 32 §3.13 L21）：此前格子不灰不标，关着的这段时间每节都是自习。
+          几种同时成立时按「已离岗 → 被监禁 → 不在岛上」取第一种：改了岗的人放出来、回岛都不会再授课，一定要换人；
+             被监禁的人要等玩家放人；不在岛上的人回来就能照常授课。
+          只标这几种长期状态，睡着、H 中这类一节之内会恢复的不标；玩家与没排教师的格子不标
     """
     if teacher_id <= 0 or teacher_id not in cache.character_data:
         return ""
-    if cache.character_data[teacher_id].work.work_type != education_constant.TEACHER_WORK_TYPE:
+    teacher_data: game_type.Character = cache.character_data[teacher_id]
+    if teacher_data.work.work_type != education_constant.TEACHER_WORK_TYPE:
         return _("（离岗）") if short else _("（已离岗）")
+    if teacher_data.sp_flag.imprisonment:
+        return _("（监禁）") if short else _("（被监禁）")
     if teacher_id not in cache.npc_id_got:
         return _("（离岛）") if short else _("（不在岛上）")
     return ""
@@ -342,7 +347,7 @@ class Class_Schedule_Panel:
         输入类型: classroom(str)
         输出类型: Dict[str, tuple]，按钮返回值 → (星期, 节次)
         功能: 9 行节次 × 7 列星期，每格显示"科目/教师"；
-              教师已离岗 / 不在岛上的格子名字后加标注、整格灰字（Plan 31 §3.10）
+              教师已离岗 / 被监禁 / 不在岛上的格子名字后加标注、整格灰字（Plan 31 §3.10；监禁为 Plan 32 §3.13）
         """
         cell_return: Dict[str, tuple] = {}
         head_width = 14
@@ -525,7 +530,9 @@ class Class_Schedule_Panel:
             #    2. 修过、但此刻进不了课堂的：成年学生 H 模式实行值不足，或状态异常（临盆 / 意识模糊 / 离线 / 监禁等），开课拉人时不收她们。
             #       判据与开课拉人是同一个 judge_can_join_sex_class，它只判不扣（§3.3），画这一页不改任何数据
             #    3. 其余才算「本节选修本教室的学生」，与同一页必修名单的门槛同口径
-            all_selected_list = sex_class_handle.get_selected_student_list(classroom, week_day, period)
+            #    点名必修的人先从三份里去掉（Plan 32 §3.8 L12）：她只列在下面的必修行。此前三份名单不对照必修名单，
+            #       没修过性技理论的必修生同时列在「必修」与「不能参加（点名必修可豁免）」两行
+            all_selected_list = [cid for cid in sex_class_handle.get_selected_student_list(classroom, week_day, period) if cid not in must_attend]
             course_ok_list = [cid for cid in all_selected_list if sex_class_handle.judge_has_sex_skill_course(cid)]
             # 前置修习已在上一行分出，这里传 check_course=False，只判状态与实行值
             selected_list = [cid for cid in course_ok_list if sex_class_handle.judge_can_join_sex_class(cid, check_course=False)]
@@ -538,10 +545,17 @@ class Class_Schedule_Panel:
             elif all_selected_list:
                 # 有人选了这一节、但一个都进不了课堂：不能再写「没有学生会来」，下面的行会写她们照样到场
                 student_draw.text = _("  本节选修本教室的学生：0 人 —— 选修的人都进不了课堂（见下），建议指定必修学生\n")
+            elif must_attend:
+                # 选修的人都已被点名、或只有点名的人会来（Plan 32 §3.8 L12）：必修行写着谁会来，不能再写「没有学生会来」
+                student_draw.text = _("  本节选修本教室的学生：0 人（点名必修的学生照常会来，见下）\n")
             else:
                 student_draw.text = _("  本节选修本教室的学生：0 人 —— 没有学生会来，建议指定必修学生\n")
             student_draw.draw()
             blocked_name_list = [cache.character_data[cid].name for cid in course_ok_list if cid not in selected_list and cid in cache.character_data]
+            # 点名必修只豁免前置修习：状态与成年学生的实行值开课拉人时照判（check_course=False），
+            #    点名之后才被监禁、意识模糊或实行值跌破的必修生，同样列进这一行（实施复审补）
+            blocked_name_list += [cache.character_data[cid].name for cid in must_attend
+                                  if cid in cache.character_data and not sex_class_handle.judge_can_join_sex_class(cid, check_course=False)]
             if blocked_name_list:
                 blocked_draw = draw.NormalDraw()
                 blocked_draw.width = self.width

@@ -242,6 +242,17 @@ PRESET_TEMPLATE_SLOT_NAME = {
     **必须过 `_()`**：反查的对象是 `config_entertainment[].name`，那是翻译过的；
        写死中文会让四套预设模板在非中文语言下全部套用失败（三个时段都查不到、一个都不改写）。
     二期方案 §3.6 的「兴趣活动」在配置里没有同名项，取「下棋」作为代表性的兴趣类娱乐 """
+TEMPLATE_KEY_NAME = "name"
+""" 日程模板数据里「模板名」的键（Plan 32 自 schedule_template_handle 挪入：模板的读写与面板一律用它，不写字面量） """
+TEMPLATE_KEY_SLOT = "slot"
+""" 日程模板数据里「三个时段」的键 """
+TEMPLATE_NEED_NONE = "无"
+""" Entertainment.csv 的 need 列里表示「无条件」的占位值（数据键，不能包 `_()`） """
+TEMPLATE_NEED_SPLIT = "&"
+""" need 列里多个条件之间的分隔符（「且」），与 handle_npc_ai 的随机抽取分支保持一致 """
+TEMPLATE_NEED_OR_SPLIT = "/"
+""" need 列同一项内多个候选条件之间的分隔符（「或」），如 T102|1/T103|1；判定由 attr_calculation.judge_require 负责，
+    这里只在解析年龄限制标注时用它拆项 """
 
 # ==== 6. 上课结算：习得与经验 ====
 COURSE_LEARN_BASE = {
@@ -296,7 +307,8 @@ SKIP_CLASS_RATE_MAX = 0.70
 # 上课状态（Plan 24）：class_ai.get_course_stage / get_teacher_duty 的返回值，工作链的教师 / 学生前提都从这里取值，
 #    同一时刻只会处于其中一个状态，保证 target.csv 组 07 / 08 的行两两互斥
 COURSE_STAGE_NONE = 0
-""" 学生此刻与课表无关：本节没课、20 分钟内也没有，或不是学生岗 """
+""" 学生此刻与课表无关：本节没课、20 分钟内也没有，或不是学生岗。
+    今天已翘课的（class_ai.judge_skip_class_today），本节没课、下一节马上开课也归这里（Plan 31 §3.5）：开课那一刻她照样判翘课，不去教室门口等 """
 COURSE_STAGE_SEX_PENDING = 1
 """ 下一节是自己要上的性技实操课（必修或选修）且 PRE_ARRIVE_MINUTE 分钟内开始，优先于本节的一切 """
 COURSE_STAGE_ABSENT_HP = 2
@@ -306,7 +318,8 @@ COURSE_STAGE_SKIP = 3
 COURSE_STAGE_ATTEND = 4
 """ 本节有课且照常上课（必修实操课在体力不足、心情糟糕时也归入这里） """
 COURSE_STAGE_UPCOMING = 5
-""" 本节没课（含不在节次内），20 分钟内（schedule_handle.get_upcoming_course 的默认 minute_limit）开始的那一节有课（Plan 25 起节次内也看下一节） """
+""" 本节没课（含不在节次内），20 分钟内（schedule_handle.get_upcoming_course 的默认 minute_limit）开始的那一节有课（Plan 25 起节次内也看下一节）。
+    今天已翘课的不算，判 NONE（Plan 31 §3.5） """
 TEACHER_DUTY_NONE = 0
 """ 教师本节与 20 分钟内都没课，或不是教师岗 """
 TEACHER_DUTY_NOW = 1
@@ -317,7 +330,7 @@ COURSE_STAGE_JOIN_SEX_CLASS = 6
 """ 本节的课所在教室正在上性技实操课、人已在教室、可以参加但还没进 H：走进来就加入课堂（Plan 25 §3.2）。
     判在本该返回 ATTEND 的地方，所以两道闸（必修生豁免）照常先过 """
 UPCOMING_MINUTE = 20
-""" 「马上开课」的提前量（分钟）：教师与学生都在下一节开始前这么多分钟内先去上课地点。
+""" 「马上开课」的提前量（分钟）：教师与学生都在下一节开始前这么多分钟内先去上课地点（今天已翘课的学生不去，Plan 31 §3.5）。
     get_upcoming_teaching / get_upcoming_course 的默认窗口与学生的打断规则共用它（Plan 25 §3.1） """
 
 # ==== 8. 见学（跟随母亲） ====
@@ -345,7 +358,7 @@ WATCH_EXP_RATE = 0.25
 """ 旁观学生获得的主修科目经验比例。观摩不如亲身，1/4 让「多排学生」有意义又不喧宾夺主 """
 WATCH_STATE_BASE = 15
 """ 旁观学生的状态结算基础值。既有露出补正对被操作者本人用默认的30
-    （Script/Settle/default.py:3627 handle_target_add_small_shy），旁观是二手刺激，取一半 """
+    （Script/Settle/default.py 的 handle_target_add_small_shy），旁观是二手刺激，取一半 """
 WATCH_TALK_RATE = 0.30
 """ 旁观口上的触发概率。只限流口上，收益结算每个动作都给——
     玩家一节课可能做20个动作，每次都描写一遍旁观者会刷满屏幕 """
@@ -488,6 +501,10 @@ ADULT_EXTRA_EVENT_UID_LIST = ("通用59", "通用60")
 """ 成年结算时在毕业典礼、成年纪念之后推入队尾的成年事件（Plan 31 §3.2）。
     成年桶（sub_key 104）只有显式推入的事件会出现：日常派发名单只收 101~103（第五轮），默认提供者又跳过部门 15。
     这是**数据键**，不能包 `_()`；tools/official_event_check.py 另抄一份，据此拦截成年桶里别的 uid """
+BIRTHDAY_EVENT_UID = "通用3"
+""" 生日事件的uid（Plan 32 §3.3）：跨天结算时对今天过生日的女儿直接插队首推入（growth_event_handle.push_birthday_event）。
+    生日按月、日比对，童年里只有第 365 天那一次，只靠每日随机派发时当天抽中的机会只有百分之一二。
+    这是**数据键**，不能包 `_()` """
 SEMESTER_EVENT_SUB_KEY = 200
 """ 期末事件的**保留**子桶键（对应 data/official_event/期末.csv 的 sub_key 列）。
 

@@ -173,6 +173,9 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
         elif character_data.behavior.behavior_id == constant.Behavior.MOVE:
             # 结算状态与事件
             judge_character_status(character_id)
+        # 学生赶去上课的截短排在实时结算之前（Plan 32 §3.7 L4）：实时结算按行为的结束时刻封顶，
+        #    先结算后截短的话，截掉的那一段饥饿、尿意、疲劳会在下一个行为（从离开时刻开始）里再算一遍
+        handle_npc_ai.judge_student_leave_truncate(character_id)
         # 刷新会根据时间即时增加的角色数值
         realtime_settle.character_aotu_change_value(character_id, now_time, pl_start_time)
         # 结算角色的状态是否会持续

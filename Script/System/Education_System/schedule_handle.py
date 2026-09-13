@@ -562,12 +562,18 @@ def get_teacher_candidate_list() -> List[int]:
     无
     Return arguments:
     List[int] -- 角色id列表
+    功能: 在岛、教师岗、没被监禁。被监禁的教师仍在岛上、仍挂教师岗，但关着的这段时间每节都来不了
+             （class_ai.judge_teacher_available），一键排课与选教师页不再把她排进空格子（Plan 32 §3.13 L21）；
+             已经排着她的格子由面板标「（被监禁）」提醒换人（class_schedule_panel.get_teacher_absent_mark）
     """
     result = []
     for character_id in cache.npc_id_got:
         character_data: game_type.Character = cache.character_data[character_id]
-        if character_data.work.work_type == education_constant.TEACHER_WORK_TYPE:
-            result.append(character_id)
+        if character_data.work.work_type != education_constant.TEACHER_WORK_TYPE:
+            continue
+        if character_data.sp_flag.imprisonment:
+            continue
+        result.append(character_id)
     return result
 
 

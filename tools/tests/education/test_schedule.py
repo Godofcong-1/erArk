@@ -321,4 +321,18 @@ check("L18 get_now_course 的返回说明写全：不在学生岗、兴趣课读
 growth_handle.get_child_growth(201).selected_course = {}
 clear_schedules()
 
+section("Plan 32 §3.13（L21）：教师候选排除被监禁的教师，一键排课不再把她排进空格子")
+clear_schedules()
+open_all_classroom()
+check("L21 对照：两名教师岗都在候选里", sorted(schedule_handle.get_teacher_candidate_list()) == [101, 102], sorted(schedule_handle.get_teacher_candidate_list()))
+teacher_b.sp_flag.imprisonment = True
+check("L21 被监禁的教师不在候选里（此前在岛、在岗照列，一键排课与选教师页会把她排进空格子，关着的这段时间每节都降级自习）",
+      sorted(schedule_handle.get_teacher_candidate_list()) == [101], sorted(schedule_handle.get_teacher_candidate_list()))
+auto_schedule.auto_fill_class_schedule()
+_l21_teacher_set = {cell[1] for week_data in cache.rhodes_island.class_schedule.values() for period_data in week_data.values() for cell in period_data.values()}
+check("L21 一键排课排上的格子里没有被监禁的教师", 101 in _l21_teacher_set and 102 not in _l21_teacher_set, _l21_teacher_set)
+teacher_b.sp_flag.imprisonment = False
+check("L21 放出来之后回到候选名单", sorted(schedule_handle.get_teacher_candidate_list()) == [101, 102], sorted(schedule_handle.get_teacher_candidate_list()))
+clear_schedules()
+
 finish()

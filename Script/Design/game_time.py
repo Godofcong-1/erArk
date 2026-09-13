@@ -287,6 +287,41 @@ def count_day_for_datetime(
     return (end_date - start_date).days
 
 
+def count_play_day(
+        start_date: datetime.datetime,
+        end_date: datetime.datetime,
+) -> int:
+    """
+    计算两个时间之间经过的可游玩天数（Plan 32 §3.2）
+    Keyword arguments:
+    start_date -- 开始时间
+    end_date -- 结束时间
+    Return arguments:
+    int -- 经过的可游玩天数，结束早于开始时为0
+    功能: 游戏时钟只有 3 / 6 / 9 / 12 四个季月，季月最后一天的下一天直接跳到下一个季月的 1 日（sub_time_now / get_sub_date），
+          日历天数（count_day_for_datetime）会把被跳过的非季月也算进去，一次换季就多出约 60 天。
+          这里从日历上的经过时长里减去 [开始, 结束) 与各个非季月重叠的时长，再取整天；按月累加，不逐日遍历
+    """
+    total_second = (end_date - start_date).total_seconds()
+    if total_second <= 0:
+        return 0
+    skip_second = 0.0
+    month_start = datetime.datetime(start_date.year, start_date.month, 1)
+    while month_start < end_date:
+        if month_start.month == 12:
+            next_month_start = datetime.datetime(month_start.year + 1, 1, 1)
+        else:
+            next_month_start = datetime.datetime(month_start.year, month_start.month + 1, 1)
+        # 非季月整段被时钟跳过：与 [开始, 结束) 重叠的那一截不算可游玩的时间
+        if get_season_month(month_start.month) != month_start.month:
+            overlap_start = max(month_start, start_date)
+            overlap_end = min(next_month_start, end_date)
+            if overlap_end > overlap_start:
+                skip_second += (overlap_end - overlap_start).total_seconds()
+        month_start = next_month_start
+    return max(0, int((total_second - skip_second) // 86400))
+
+
 def judge_date_big_or_small(time_a: datetime.datetime, time_b: datetime.datetime) -> int:
     """
     比较a时间是否大于或等于b时间\n
