@@ -199,4 +199,161 @@ _g201.absent_count, _g201.skip_count = 0, 0
 _g201.report_card_history = []
 growth_handle.get_child_growth(202).report_card_history = []
 
+section("Plan 31 §3.11（L7）：同班同学只取幼女 / 萝莉，仍在学生岗的成年姐姐不算")
+import inspect  # noqa: E402
+
+from Script.System.Pregnancy_System import pregnancy_handle  # noqa: E402
+
+clear_schedules()
+set_time(period_time(0))
+ROOM3 = _("理论教室三")
+little = make_character(212, "幼女D", 152, daughter=True, stage=102, mother_id=103, born_days=120)
+big_sister = make_character(214, "成年姐姐", 152, daughter=True, stage=104, mother_id=103, born_days=500)
+schedule_handle.set_class_cell(ROOM3, 2, 3, 45, -1)
+schedule_handle.set_selected_course(212, 2, 3, E.COURSE_TYPE_THEORY, ROOM3)
+schedule_handle.set_selected_course(214, 2, 3, E.COURSE_TYPE_THEORY, ROOM3)
+check("L7 幼女与仍在学生岗的成年姐姐同在一格：姐姐不算她的同学，同学前提不成立（此前算，幼女 41 的对象会是她）",
+      214 not in growth_event_handle.get_classmate_list(212) and HP(constant_promise.Premise.SELF_HAVE_CLASSMATE, 212) == 0,
+      growth_event_handle.get_classmate_list(212))
+check("L7 幼女 41「班上的{TargetName}」不在她的候选里", "幼女41" not in {one[0] for one in growth_event_handle.get_candidate_event_list(212)})
+mate = make_character(211, "萝莉C", 152, daughter=True, stage=103, mother_id=103, born_days=300)
+schedule_handle.set_selected_course(211, 2, 3, E.COURSE_TYPE_THEORY, ROOM3)
+check("L7 再来一个同班的萝莉：同学只有她", growth_event_handle.get_classmate_list(212) == [211], growth_event_handle.get_classmate_list(212))
+check("L7 幼女 41 进候选，互动对象是萝莉、不是成年姐姐", "幼女41" in {one[0] for one in growth_event_handle.get_candidate_event_list(212)}
+      and growth_event_handle.get_event_partner("幼女41", 212) == 211)
+
+section("Plan 31 §3.2（M2）：成年结算在毕业典礼、成年纪念之后把通用 59 / 60 推到队尾")
+_adult_bucket = set(by_key.get((E.GROWTH_EVENT_DEPARTMENT, 104), ()))
+check("M2 通用 59 / 60 在成年桶里（部门 15、sub_key 104），日常派发与默认提供者都翻不到", set(E.ADULT_EXTRA_EVENT_UID_LIST) <= _adult_bucket, sorted(_adult_bucket))
+_adult_order = [E.GRADUATION_EVENT_UID, E.ADULT_MEMORIAL_EVENT_UID] + list(E.ADULT_EXTRA_EVENT_UID_LIST)
+cache.rhodes_island.official_event_queue = []
+growth_event_handle.push_graduation_event(214)
+_queue_uid = [one["uid"] for one in official_event_handle.get_queue()]
+check("M2 空队列：成年结算后依次是通用 1 / 2 / 59 / 60，主体都是她（此前只推 1 / 2，59 / 60 永远出不来）",
+      _queue_uid == _adult_order and all(one["chara_id"] == 214 for one in official_event_handle.get_queue()), _queue_uid)
+cache.rhodes_island.official_event_queue = []
+official_event_handle.push_official_event(loli_bucket[0], 201)
+growth_event_handle.push_graduation_event(214)
+_queue_uid = [one["uid"] for one in official_event_handle.get_queue()]
+check("M2 队里已有日常事件：1 / 2 插到队首，59 / 60 排在它后面（队尾）", _queue_uid == _adult_order[:2] + [loli_bucket[0]] + _adult_order[2:], _queue_uid)
+growth_event_handle.push_graduation_event(214)
+check("M2 已在队列里的 59 / 60 不重复推（judge_event_can_enqueue）",
+      all(sum(1 for one in official_event_handle.get_queue() if one["uid"] == uid and one["chara_id"] == 214) == 1 for uid in E.ADULT_EXTRA_EVENT_UID_LIST))
+cache.rhodes_island.official_event_queue = []
+growth_handle.get_child_growth(214).event_history[E.ADULT_EXTRA_EVENT_UID_LIST[0]] = {"time": cache.game_time, "choice": 0}
+growth_event_handle.push_graduation_event(214)
+_queue_uid = [one["uid"] for one in official_event_handle.get_queue()]
+check("M2 已经历过的通用 59 不再推，通用 60 照推", _queue_uid == _adult_order[:2] + [E.ADULT_EXTRA_EVENT_UID_LIST[1]], _queue_uid)
+growth_handle.get_child_growth(214).event_history.pop(E.ADULT_EXTRA_EVENT_UID_LIST[0], None)
+# 队列已满：59 / 60 与毕业典礼、成年纪念一样不受容量上限约束（Plan 31 §3.2，实施时补）——成年桶没有别的入口，按普通入队会永远丢掉
+cache.rhodes_island.official_event_queue = [{"uid": loli_bucket[0], "department": E.GROWTH_EVENT_DEPARTMENT, "chara_id": 999, "partner_id": 0, "add_time": cache.game_time}
+                                            for _index in range(official_event_handle.get_queue_max())]
+growth_event_handle.push_graduation_event(214)
+_queue_uid = [one["uid"] for one in official_event_handle.get_queue() if one["chara_id"] == 214]
+check("M2 队列已满：通用 1 / 2 照样插到队首、59 / 60 照样追加到队尾（此前按普通入队被挡，永远丢掉）",
+      _queue_uid == _adult_order and [one["uid"] for one in official_event_handle.get_queue()[-2:]] == list(E.ADULT_EXTRA_EVENT_UID_LIST), _queue_uid)
+check("M2 队列已满时普通事件仍被挡", not official_event_handle.push_official_event(loli_bucket[0], 201))
+cache.rhodes_island.official_event_queue = []
+check("M2 真实的成年结算（pregnancy_handle.check_grow_to_girl）走的就是 push_graduation_event",
+      "growth_event_handle.push_graduation_event(" in inspect.getsource(pregnancy_handle.check_grow_to_girl))
+
+
+def candidate_uid_set(cid: int) -> set:
+    """
+    取某个孩子此刻的候选事件 uid 集合
+    Keyword arguments:
+    cid -- 角色id
+    Return arguments:
+    set -- 候选事件的 uid 集合
+    """
+    return {one[0] for one in growth_event_handle.get_candidate_event_list(cid)}
+
+
+section("Plan 31 §3.14（Q4 / L11）：点名课型的事件改挂按课型查课表的前提")
+clear_schedules()
+set_time(period_time(0))
+growth_handle.get_child_growth(211).selected_course = {}
+growth_handle.get_child_growth(212).selected_course = {}
+_intern_work = next(cid for cid in game_config.config_work_type
+                    if cid and not game_config.config_work_type[cid].tag and game_config.config_work_type[cid].ability_id
+                    and cid not in E.EXCLUDE_INTERN_WORK_TYPE and game_config.config_work_type[cid].place_tag in constant.place_data)
+schedule_handle.set_class_cell(_("理论教室一"), 0, 0, 45, -1)
+schedule_handle.set_class_cell(_("实践教室一"), 0, 1, 43, -1)
+schedule_handle.set_selected_course(211, 0, 0, E.COURSE_TYPE_THEORY, _("理论教室一"))
+_loli_steps = [
+    ("萝莉7", E.COURSE_TYPE_PE, _("木桩房"), 2),
+    ("萝莉8", E.COURSE_TYPE_INTERN, _intern_work, 3),
+    ("萝莉9", E.COURSE_TYPE_INTEREST, E.ENTERTAINMENT_PLAY_HOUSE, 4),
+    ("萝莉16", E.COURSE_TYPE_PRACTICE, _("实践教室一"), 1),
+]
+_step_uid_list = [step[0] for step in _loli_steps]
+_hit = sorted(set(_step_uid_list) & candidate_uid_set(211))
+check("L11 只排理论课的萝莉：萝莉 7 / 8 / 9 / 16（体育 / 实习 / 兴趣 / 实践课）都不在候选里（此前都在）", not _hit, _hit)
+_added = []
+for _step_uid, _step_type, _step_target, _step_period in _loli_steps:
+    schedule_handle.set_selected_course(211, 0, _step_period, _step_type, _step_target)
+    _added.append(_step_uid)
+    _now = candidate_uid_set(211)
+    check("L11 再排一格{0}：{1}进候选，还没排的课型对应的事件仍不在".format(E.COURSE_TYPE_NAME[_step_type], _step_uid),
+          all(uid in _now for uid in _added) and not any(uid in _now for uid in _step_uid_list if uid not in _added), sorted(set(_step_uid_list) & _now))
+schedule_handle.set_selected_course(212, 0, 2, E.COURSE_TYPE_PE, _("木桩房"))
+growth_handle.get_child_growth(212).attend_class_count = 3
+_now = candidate_uid_set(212)
+check("L11 只排体育课、听过课的幼女：幼女 1（第一次坐进理论教室）、幼女 22（实践课）都不在候选里（此前都在）", "幼女1" not in _now and "幼女22" not in _now)
+schedule_handle.set_selected_course(212, 0, 0, E.COURSE_TYPE_THEORY, _("理论教室一"))
+check("L11 排上理论课：幼女 1 进候选", "幼女1" in candidate_uid_set(212))
+growth_handle.get_child_growth(212).attend_class_count = 0
+check("L11 一节课都没听过：幼女 1 仍不在（保留累计听课 ≥ 1）", "幼女1" not in candidate_uid_set(212))
+schedule_handle.set_selected_course(212, 0, 1, E.COURSE_TYPE_PRACTICE, _("实践教室一"))
+check("L11 排上实践课：幼女 22 进候选", "幼女22" in candidate_uid_set(212))
+
+section("Plan 31 §3.14（Q4 / L10）：写成绩单的事件要有待查看的新成绩单；萝莉 6 读本学期出勤")
+_growth_211 = growth_handle.get_child_growth(211)
+_growth_211.attend_class_count = 20
+_growth_211.report_card_flag = False
+_report_uid = {"萝莉1", "萝莉20", "萝莉26"}
+_now = candidate_uid_set(211)
+check("L10 听过 20 节课、有课、有同胞，但没有待查看的新成绩单：萝莉 1 / 20 / 26 都不在候选里（此前学期中途也抽得到「拿着这学期的成绩单」）",
+      not (_report_uid & _now), sorted(_report_uid & _now))
+_growth_211.report_card_flag = True
+_now = candidate_uid_set(211)
+check("L10 有待查看的新成绩单：三条都进候选", _report_uid <= _now, sorted(_report_uid - _now))
+# 待查看的是一份档位 3（这学期没有上课）的成绩单：三条正文写的是各科成绩，对不上（Plan 31 实施复审补）
+_growth_211.report_card_history = [{"grade": E.REPORT_GRADE_NO_CLASS}]
+_now = candidate_uid_set(211)
+check("L10 待查看的新成绩单是档位 3（这学期没有上课）：三条都不进候选", not (_report_uid & _now), sorted(_report_uid & _now))
+_growth_211.report_card_history = []
+_growth_211.report_card_flag = False
+_growth_211.attend_class_count, _growth_211.absent_count = 50, 5
+_growth_211.semester_base_attend, _growth_211.semester_base_absent = 46, 0
+check("L10 终身出勤 50 / 55（此前按终身出勤率 ≥ 90 判），本学期 4 听 5 缺：萝莉 6「这学期一节课都没落下」不在候选里", "萝莉6" not in candidate_uid_set(211))
+_growth_211.semester_base_attend, _growth_211.semester_base_absent = 30, 5
+check("L10 本学期 20 听 0 缺：萝莉 6 进候选", "萝莉6" in candidate_uid_set(211))
+_growth_211.attend_class_count = _growth_211.absent_count = _growth_211.semester_base_attend = _growth_211.semester_base_absent = 0
+
+section("Plan 31 §3.14（Q4 / L13）：生日、季月交替、断奶的事件只在正文写的时点出现")
+_saved_born_211 = mate.pregnancy.born_time
+mate.pregnancy.born_time = cache.game_time.replace(year=cache.game_time.year - 1, hour=6)
+check("L13 今天是她的生日：通用 3 进候选", "通用3" in candidate_uid_set(211))
+mate.pregnancy.born_time = mate.pregnancy.born_time - datetime.timedelta(days=1)
+check("L13 生日是昨天：通用 3 不在候选里（此前任意一天都抽得到）", "通用3" not in candidate_uid_set(211))
+mate.pregnancy.born_time = _saved_born_211
+check("L13 学期第 7 天（进度约 21%）：通用 15「季月交替的这几天」不在候选里", "通用15" not in candidate_uid_set(211), semester_handle.get_semester_progress())
+set_time(datetime.datetime(2026, 9, 29, 0, 5))
+check("L13 季月最后几天（进度 ≥ 90）：通用 15 进候选", "通用15" in candidate_uid_set(211), semester_handle.get_semester_progress())
+set_time(period_time(0))
+baby_e = make_character(213, "婴儿E", 0, daughter=True, stage=101, mother_id=103, born_days=5)
+check("L13 出生 5 天的婴儿：婴儿 4「断奶的日子到了」、婴儿 50「断奶之后」都不在候选里（此前出生当天就有）",
+      not ({"婴儿4", "婴儿50"} & candidate_uid_set(213)), sorted({"婴儿4", "婴儿50"} & candidate_uid_set(213)))
+baby_e.pregnancy.born_time = cache.game_time - datetime.timedelta(days=50)
+_now = candidate_uid_set(213)
+check("L13 阶段进度过半（第 50 / 90 天）：婴儿 4 进候选，婴儿 50 仍不在（要 ≥ 60，排在断奶之后）", "婴儿4" in _now and "婴儿50" not in _now,
+      growth_handle.get_stage_progress(213))
+baby_e.pregnancy.born_time = cache.game_time - datetime.timedelta(days=60)
+check("L13 进度 ≥ 60、母亲可跟随：婴儿 50 进候选", "婴儿50" in candidate_uid_set(213) and class_ai.judge_mother_available(213) == 103, growth_handle.get_stage_progress(213))
+check("L18 期末推送处的注释改成 Plan 30 Q1 的口径，不再写「已成年的女儿照旧出成绩单」",
+      "照旧出成绩单" not in inspect.getsource(growth_event_handle.push_semester_event_for_list)
+      and "Plan 30 Q1" in inspect.getsource(growth_event_handle.push_semester_event_for_list))
+clear_schedules()
+
 finish()

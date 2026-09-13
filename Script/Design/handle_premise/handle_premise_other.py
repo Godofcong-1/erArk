@@ -1,3 +1,4 @@
+import calendar
 import datetime
 from functools import wraps
 from types import FunctionType
@@ -1189,8 +1190,10 @@ def handle_self_have_sibling_child(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SELF_HAVE_CLASSMATE)
 def handle_self_have_classmate(character_id: int) -> int:
     """
-    校验自己的个人课表与别的孩子有重合节次（Plan 22 三期，同班同学事件用）
-    同学关系由课表反查而非落成字段：课表一改同学就跟着变，存字段反而多一处同步点
+    校验自己有同班同学（Plan 22 三期，同班同学事件用）：双方都在学生岗、同一格上确有同一节课（Plan 30 §3.6），
+       对方是幼女或萝莉（Plan 31 §3.11，与同胞同口径）
+    同学关系由课表反查而非落成字段：课表一改同学就跟着变，存字段反而多一处同步点。
+       判据在 growth_event_handle.get_classmate_list，只读，不惰性创建养成数据
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1255,6 +1258,103 @@ def handle_self_have_any_course(character_id: int) -> int:
             if growth_handle.judge_selected_cell_real(character_id, week_day, period):
                 return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_THEORY_COURSE)
+def handle_self_have_theory_course(character_id: int) -> int:
+    """
+    校验自己有理论课：学生岗，且个人课表上至少有一格是每周确有的理论课（Plan 31 §3.14 L11，幼女 1 等点名课型的养成事件用）
+    日常事件在 0 点推送，读「此刻这一节」的 CVP CourseType 恒为 -1，所以查整张个人课表（growth_handle.judge_have_course_type）；
+       只读 child_growth，不惰性创建养成数据
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import education_constant, growth_handle
+
+    return 1 if growth_handle.judge_have_course_type(character_id, education_constant.COURSE_TYPE_THEORY) else 0
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_PRACTICE_COURSE)
+def handle_self_have_practice_course(character_id: int) -> int:
+    """
+    校验自己有实践课：学生岗，且个人课表上至少有一格是每周确有的实践课（Plan 31 §3.14 L11，萝莉 16、幼女 22 用）
+    与 self_have_theory_course 同一个判据，只读，不惰性创建养成数据
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import education_constant, growth_handle
+
+    return 1 if growth_handle.judge_have_course_type(character_id, education_constant.COURSE_TYPE_PRACTICE) else 0
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_PE_COURSE)
+def handle_self_have_pe_course(character_id: int) -> int:
+    """
+    校验自己有体育课：学生岗，且个人课表上至少有一格是确有的体育课（Plan 31 §3.14 L11，萝莉 7 用）
+    个人式课看场地开放与活动条件，不看此刻上不上得成（growth_handle.judge_selected_cell_real）。只读，不惰性创建养成数据
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import education_constant, growth_handle
+
+    return 1 if growth_handle.judge_have_course_type(character_id, education_constant.COURSE_TYPE_PE) else 0
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_INTEREST_COURSE)
+def handle_self_have_interest_course(character_id: int) -> int:
+    """
+    校验自己有兴趣课：学生岗，且个人课表上至少有一格是确有的兴趣课（Plan 31 §3.14 L11，萝莉 9 用）
+    活动条件不符（孩子长大了）、场所未开放的不算；读书课不看书库此刻借没借空（那是一时的状态）。只读，不惰性创建养成数据
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import education_constant, growth_handle
+
+    return 1 if growth_handle.judge_have_course_type(character_id, education_constant.COURSE_TYPE_INTEREST) else 0
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_INTERN_COURSE)
+def handle_self_have_intern_course(character_id: int) -> int:
+    """
+    校验自己有实习课：学生岗，且个人课表上至少有一格是确有的实习课（Plan 31 §3.14 L11，萝莉 8「实习课第一次上岗」用）
+    实习课本节无人在岗时地点仍解析得出，照旧算有课（降级见习）。只读，不惰性创建养成数据
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import education_constant, growth_handle
+
+    return 1 if growth_handle.judge_have_course_type(character_id, education_constant.COURSE_TYPE_INTERN) else 0
+
+
+@add_premise(constant_promise.Premise.SELF_BIRTHDAY_TODAY)
+def handle_self_birthday_today(character_id: int) -> int:
+    """
+    校验今天是自己的生日：出生日的月、日与今天相同（Plan 31 §3.14 L13，通用 3「今天是{Name}的生日」用）
+    读 pregnancy.born_time，与 cache.game_time 比月、日；2 月 29 日出生的，平年按 2 月 28 日过。
+       born_time 还是缺省值（公元 1 年）的角色不是在岛上出生的，没有可认的出生日，按不成立判。只读
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    born_time = cache.character_data[character_id].pregnancy.born_time
+    if born_time.year <= 1:
+        return 0
+    born_month, born_day = born_time.month, born_time.day
+    now_time = cache.game_time
+    if born_month == 2 and born_day == 29 and not calendar.isleap(now_time.year):
+        born_day = 28
+    return 1 if now_time.month == born_month and now_time.day == born_day else 0
 
 
 @add_premise(constant_promise.Premise.TARGET_IS_PLAYER_DAUGHTER)

@@ -281,4 +281,176 @@ pl.target_character_id = 0
 remove_character(206)
 remove_character(302)
 
+section("Plan 31：六个新前提已注册；§3.14 L11 按课型查整张个人课表的五个前提")
+_new_premise_list = (P.SELF_HAVE_THEORY_COURSE, P.SELF_HAVE_PRACTICE_COURSE, P.SELF_HAVE_PE_COURSE, P.SELF_HAVE_INTEREST_COURSE, P.SELF_HAVE_INTERN_COURSE,
+                     P.SELF_BIRTHDAY_TODAY)
+for name in _new_premise_list:
+    check(f"L11 / L13 前提 {name} 已注册", name in constant.handle_premise_data)
+clear_schedules()
+set_time(period_time(0))
+growth_handle.get_child_growth(201).selected_course = {}
+_type_premise = {
+    E.COURSE_TYPE_THEORY: P.SELF_HAVE_THEORY_COURSE,
+    E.COURSE_TYPE_PRACTICE: P.SELF_HAVE_PRACTICE_COURSE,
+    E.COURSE_TYPE_PE: P.SELF_HAVE_PE_COURSE,
+    E.COURSE_TYPE_INTEREST: P.SELF_HAVE_INTEREST_COURSE,
+    E.COURSE_TYPE_INTERN: P.SELF_HAVE_INTERN_COURSE,
+}
+
+
+def course_type_hit(cid: int) -> list:
+    """
+    取五个课型前提里对某角色成立的课型
+    Keyword arguments:
+    cid -- 角色id
+    Return arguments:
+    list -- 成立的课型编号，升序
+    """
+    return sorted(course_type for course_type, premise_name in _type_premise.items() if HP(premise_name, cid))
+
+
+check("L11 课表为空：五个课型前提都不成立", course_type_hit(201) == [], course_type_hit(201))
+schedule_handle.set_class_cell(ROOM1, 1, 2, 45, 101)
+schedule_handle.set_selected_course(201, 1, 2, E.COURSE_TYPE_THEORY, ROOM1)
+check("L11 只排理论课：只有 self_have_theory_course 成立（此前点名体育 / 实习 / 兴趣 / 实践课的事件只挂 self_have_any_course，照样抽得到）",
+      course_type_hit(201) == [E.COURSE_TYPE_THEORY], course_type_hit(201))
+schedule_handle.set_class_cell(ROOM_P, 1, 3, 43, -1)
+schedule_handle.set_selected_course(201, 1, 3, E.COURSE_TYPE_PRACTICE, ROOM_P)
+schedule_handle.set_selected_course(201, 1, 4, E.COURSE_TYPE_PE, _("木桩房"))
+schedule_handle.set_selected_course(201, 1, 5, E.COURSE_TYPE_INTEREST, E.ENTERTAINMENT_PLAY_HOUSE)
+schedule_handle.set_selected_course(201, 1, 6, E.COURSE_TYPE_INTERN, intern_work)
+check("L11 五种课型各排一格：五个前提都成立", course_type_hit(201) == sorted(_type_premise), course_type_hit(201))
+schedule_handle.clear_class_cell(ROOM1, 1, 2)
+check("L11 理论课那一格在每周课表上停了课：只有理论课前提不成立", course_type_hit(201) == sorted(set(_type_premise) - {E.COURSE_TYPE_THEORY}), course_type_hit(201))
+student.work.work_type = 21
+check("L11 改了岗：课表残留不算，五个都不成立", course_type_hit(201) == [], course_type_hit(201))
+student.work.work_type = 152
+check("L11 前提只读：没有养成数据的干员五个都不成立，也不被惰性创建养成数据", adult.child_growth is None and course_type_hit(301) == [] and adult.child_growth is None)
+growth_handle.get_child_growth(201).selected_course = {}
+clear_schedules()
+
+section("Plan 31 §3.14 L13：self_birthday_today 读 pregnancy.born_time，2 月 29 日出生的平年按 2 月 28 日过")
+_saved_born_time = student.pregnancy.born_time
+student.pregnancy.born_time = datetime.datetime(2025, 9, 7, 6, 30)
+set_time(datetime.datetime(2026, 9, 7, 0, 5))
+check("L13 出生的月日与今天相同：成立", HP(P.SELF_BIRTHDAY_TODAY, 201) == 1)
+set_time(datetime.datetime(2026, 9, 8, 0, 5))
+check("L13 第二天：不成立（此前没有生日前提，通用 3「今天是{Name}的生日」任意一天都抽得到）", HP(P.SELF_BIRTHDAY_TODAY, 201) == 0)
+student.pregnancy.born_time = datetime.datetime(2024, 2, 29, 12, 0)
+_leap_birthday = []
+for _now_time in (datetime.datetime(2027, 2, 28, 9, 0), datetime.datetime(2027, 3, 1, 9, 0), datetime.datetime(2028, 2, 28, 9, 0), datetime.datetime(2028, 2, 29, 9, 0)):
+    set_time(_now_time)
+    _leap_birthday.append(HP(P.SELF_BIRTHDAY_TODAY, 201))
+check("L13 2 月 29 日出生：平年 2 月 28 日成立、3 月 1 日不成立；闰年 2 月 28 日不成立、2 月 29 日成立", _leap_birthday == [1, 0, 0, 1], _leap_birthday)
+set_time(datetime.datetime(2027, 1, 1, 9, 0))
+check("L13 born_time 还是缺省值（公元 1 年 1 月 1 日）的干员：1 月 1 日也不成立", adult.pregnancy.born_time.year == 1 and HP(P.SELF_BIRTHDAY_TODAY, 301) == 0)
+student.pregnancy.born_time = _saved_born_time
+set_time(period_time(0))
+
+section("Plan 31 §3.4（M3）：教师能到岗的两个学生前提传本节教室（空气催眠只在人在教室时算能到岗，木头人一律来不了）")
+clear_schedules()
+set_time(period_time(0))
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+move_to(101, classroom_path(ROOM1))
+
+
+def teacher_premise_pair() -> tuple:
+    """
+    刷新教师 101 的异常位掩码后，取学生 201 的「教师能到岗 / 来不了」两个前提
+    Keyword arguments:
+    无
+    Return arguments:
+    tuple -- (self_course_teacher_available, self_course_teacher_unavailable)
+    """
+    handle_premise.refresh_unnormal_flag(101)
+    return HP("self_course_teacher_available", 201), HP("self_course_teacher_unavailable", 201)
+
+
+check("M3 对照：教师正常、人在本节教室：能到岗", teacher_premise_pair() == (1, 0), teacher_premise_pair())
+teacher.sp_flag.unconscious_h = 5
+check("M3 空气催眠、人已在本节教室：仍算能到岗（前提传了教室，授课行照样成立）", teacher_premise_pair() == (1, 0), teacher_premise_pair())
+move_to(101, SCENE_DORM)
+check("M3 空气催眠、人不在教室：来不了（此前判能到岗，学生空坐整节）", teacher_premise_pair() == (0, 1), teacher_premise_pair())
+teacher.sp_flag.unconscious_h = 0
+teacher.hypnosis.blockhead = True
+move_to(101, classroom_path(ROOM1))
+check("M3 木头人：人在教室也来不了（每轮被锁成原地等待；此前判能到岗）", teacher_premise_pair() == (0, 1), teacher_premise_pair())
+teacher.hypnosis.blockhead = False
+check("M3 解除后恢复能到岗", teacher_premise_pair() == (1, 0), teacher_premise_pair())
+schedule_handle.clear_selected_course(201, 0, 0)
+clear_schedules()
+
+section("Plan 31 §3.8（L4）：改任实习岗位的女儿在那个岗位上不再亮 <课>，CVP 不再读成实习课")
+set_time(period_time(0))
+student.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_INTERN, intern_work)
+move_to(201, intern_place)
+_tip = character_info_head.get_now_class_tip(201)
+check("L4 对照：学生岗、人在实习地点：<课> 写实习课，CVP CourseType 为实习课", _tip is not None and not _tip[0] and HP("CVP_A1_CourseType|5_E_1", 201) == 1, _tip)
+student.work.work_type = intern_work
+_tip = character_info_head.get_now_class_tip(201)
+check("L4 改任这个岗位、本人就在岗：不亮 <课>，CVP CourseType / Course 都不成立（此前按残留课表显示在上实习课）",
+      _tip is None and HP("CVP_A1_CourseType|5_E_1", 201) == 0 and HP("CVP_A1_Course|43_G_0", 201) == 0, _tip)
+student.work.work_type = 152
+check("L4 改回学生岗：恢复", character_info_head.get_now_class_tip(201) is not None)
+
+section("Plan 31 §3.6（L2）：<翘> 只认今天挂上的翘课 flag")
+_growth_201 = growth_handle.get_child_growth(201)
+_growth_201.skip_class_flag = True
+_growth_201.skip_class_day = cache.game_time.toordinal() - 1
+_tip = character_info_head.get_now_class_tip(201)
+check("L2 前一天挂上、没清掉的 flag（一步跨过午夜 / 翘课当天离线）：不亮 <翘>，照常显示在上课（此前整天挂着 <翘>）", _tip is not None and not _tip[0], _tip)
+_growth_201.skip_class_day = cache.game_time.toordinal()
+_tip = character_info_head.get_now_class_tip(201)
+check("L2 今天挂上的：亮 <翘>", _tip is not None and _tip[0], _tip)
+_growth_201.skip_class_flag = False
+_growth_201.skip_class_day = 0
+schedule_handle.clear_selected_course(201, 0, 0)
+move_to(201, SCENE_DORM)
+
+section("Plan 31 §3.10（L6）：前教师改当学生，CVP 按她自己的课表取课，不再读旧授课格")
+set_time(period_time(0))
+schedule_handle.set_class_cell(ROOM1, 0, 0, 43, 101)
+schedule_handle.set_selected_course(101, 0, 0, E.COURSE_TYPE_PE, _("木桩房"))
+check("L6 对照：教师岗时按授课格读成理论课、科目 43", HP("CVP_A1_CourseType|0_E_1", 101) == 1 and HP("CVP_A1_Course|43_G_0", 101) == 1)
+teacher.work.work_type = 152
+check("L6 改当学生：CourseType 读她自己的体育课，旧授课格的理论课与科目 43 都不成立（此前读成旧授课格）",
+      HP("CVP_A1_CourseType|3_E_1", 101) == 1 and HP("CVP_A1_CourseType|0_E_1", 101) == 0 and HP("CVP_A1_Course|43_G_0", 101) == 0)
+teacher.work.work_type = 151
+schedule_handle.clear_selected_course(101, 0, 0)
+clear_schedules()
+
+section("Plan 31 §3.13（L9）：玩家手动授课时 CVP 按所在教室判课型、科目回落学识（与 512 同口径）")
+set_time(period_time(0))
+_pl_behavior = pl.behavior.behavior_id
+pl.behavior.behavior_id = constant.Behavior.TEACH
+move_to(0, classroom_path(ROOM1))
+check("L9 在理论教室一手动授课：CourseType 为理论课、Course|45（学识）成立（此前两项都是 -1，授课口上只剩占位地文）",
+      HP("CVP_A1_CourseType|0_E_1", 0) == 1 and HP("CVP_A1_Course|45_G_0", 0) == 1)
+move_to(0, classroom_path(ROOM_P))
+check("L9 在实践教室一：CourseType 为实践课，科目仍回落学识", HP("CVP_A1_CourseType|1_E_1", 0) == 1 and HP("CVP_A1_CourseType|0_E_1", 0) == 0
+      and HP("CVP_A1_Course|45_G_0", 0) == 1)
+move_to(0, classroom_path(schedule_handle.get_classroom_list(E.COURSE_TYPE_PUBLIC)[0]))
+check("L9 在大礼堂：公开课", HP("CVP_A1_CourseType|2_E_1", 0) == 1)
+move_to(0, classroom_path(ROOM1))
+set_time(DEFAULT_TIME.replace(hour=20))
+check("L9 节次外手动授课：同样按教室判（512 也不看节次）", HP("CVP_A1_CourseType|0_E_1", 0) == 1 and HP("CVP_A1_Course|45_G_0", 0) == 1)
+set_time(period_time(0))
+sex_class_handle.set_temp_class(cache.game_time.date().toordinal(), 0, ROOM_P, 70)
+move_to(0, classroom_path(ROOM_P))
+check("L9 人在当天临时实操课的教室里：教师反查优先，科目取那节课的 70、不回落学识", HP("CVP_A1_Course|70_G_0", 0) == 1 and HP("CVP_A1_Course|45_G_0", 0) == 0)
+cache.rhodes_island.temp_sex_class = {}
+pl.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+check("L9 玩家没在授课：不回落，两项都不成立", HP("CVP_A1_CourseType|1_E_1", 0) == 0 and HP("CVP_A1_Course|45_G_0", 0) == 0)
+adult.behavior.behavior_id = constant.Behavior.TEACH
+move_to(301, classroom_path(ROOM1))
+check("L9 回落只给玩家：行为是授课的非教师 NPC 不按教室判", HP("CVP_A1_CourseType|0_E_1", 301) == 0 and HP("CVP_A1_Course|45_G_0", 301) == 0)
+adult.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+move_to(301, SCENE_DORM)
+pl.behavior.behavior_id = _pl_behavior
+move_to(0, SCENE_DORM)
+check("L18 同学前提的 docstring 写上新口径（双方都在学生岗、确有的课、对方是幼女或萝莉）",
+      all(k in (handle_premise.handle_self_have_classmate.__doc__ or "") for k in ("学生岗", "确有", "萝莉")))
+
 finish()

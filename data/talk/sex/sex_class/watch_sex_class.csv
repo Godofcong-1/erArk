@@ -57,5 +57,5 @@ str,str,int,str,str
 1051,watch_sex_class,0,CVP_A1_T|103_E_1&self_is_player_daughter,旁观的{Name}忽然很想哭，又不知道为什么。她告诉自己这是上课。
 1052,watch_sex_class,0,CVP_A1_T|102_E_1&self_is_player_daughter,{Name}看着爸爸和别人，小声问：“那个也可以是我吗？”没有人回答。
 1053,watch_sex_class,0,CVP_A1_T|102_E_1&self_is_player_daughter,{Name}跑到爸爸身边想抱住他，被轻轻推开了。她站在原地，瘪着嘴，但没有哭。
-1054,watch_sex_class,0,CVP_A1_T|103_E_1&CVP_A1_Growth|0_G_10,{Name}上过很多次实操课了。她看得很专注，眼神里没有慌，只有在对照自己的差距。
-1055,watch_sex_class,0,CVP_A1_T|103_E_1&CVP_A1_Growth|0_G_10,旁观的{Name}轻声跟旁边的新生说：“别怕，第一次都这样。”
+1054,watch_sex_class,0,CVP_A1_T|103_E_1&CVP_A1_Growth|25_GE_5,{Name}上过很多次实操课了。她看得很专注，眼神里没有慌，只有在对照自己的差距。
+1055,watch_sex_class,0,CVP_A1_T|103_E_1&CVP_A1_Growth|25_GE_5,旁观的{Name}轻声跟旁边的新生说：“别怕，第一次都这样。”

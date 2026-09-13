@@ -299,6 +299,28 @@ def get_weight_from_premise_dict(talk_premise_dict: set, character_id: int, calc
     return now_weight, now_premise_data
 
 
+def get_player_manual_teach_course(character_id: int) -> Optional[tuple]:
+    """
+    取玩家手动授课这一节的课型与科目（Plan 31 §3.13：CVP Course / CourseType 对玩家手动授课的回落）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    Optional[tuple] -- (课型编号int, 科目能力id int)；不是玩家、或此刻的行为不是授课时为None
+    功能: 玩家手动发起的授课不在课表上（他从不出现在全局课表的教师位上），教师反查只取得到他人就在那间教室里的当天临时实操课。
+             此前 CVP 两项都读成 -1，授课口上全判不过，只剩开发占位地文。
+          与结算 512（Settle/default.py 的授课结算）共用同两处定义：课型 schedule_handle.get_course_type_by_position（理论 / 实践教室、大礼堂，
+             不在这三类教室里按理论课），科目 education_constant.FALLBACK_SUBJECT_ABILITY（学识）。调用方只在 get_now_teaching 取不到时才问它。只读
+    """
+    from Script.System.Education_System import education_constant, schedule_handle
+
+    if character_id != 0:
+        return None
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.behavior.behavior_id != constant.Behavior.TEACH:
+        return None
+    return schedule_handle.get_course_type_by_position(character_data.position), education_constant.FALLBACK_SUBJECT_ABILITY
+
+
 def get_now_course_type(character_id: int) -> int:
     """
     取角色当前这一节在上（或在教）的课型，供 CourseType 型 CVP token 使用
@@ -306,6 +328,7 @@ def get_now_course_type(character_id: int) -> int:
     character_id -- 角色id
     Return arguments:
     int -- 课型编号0~5，不在上课则为-1
+    功能: 教师反查优先，其次是玩家手动授课的回落（按所在教室判，Plan 31 §3.13），最后查学生自己的课表
     """
     from Script.System.Education_System import schedule_handle
 
@@ -313,6 +336,10 @@ def get_now_course_type(character_id: int) -> int:
     teaching = schedule_handle.get_now_teaching(character_id)
     if teaching is not None:
         return teaching["course_type"]
+    # 玩家手动授课不在课表上，教师反查取不到：课型按所在教室判（Plan 31 §3.13，与 512 同口径）
+    manual_course = get_player_manual_teach_course(character_id)
+    if manual_course is not None:
+        return manual_course[0]
     now_course = schedule_handle.get_now_course(character_id)
     if now_course is not None:
         return now_course["course_type"]
@@ -327,6 +354,7 @@ def get_now_course_ability(character_id: int) -> int:
     正在进行的性技实操课优先于课表（Plan 22 四期）：当场开课与拖堂都可能发生在节次之外，
        此时下面那两条课表链一律取不到东西，所以先问 judge_in_running_class()。
        （教师反查 get_teacher_cell() 自 2026-09-09 起也并入了临时课覆盖层，节次内查玩家同样取得到）
+    玩家手动授课不在课表上，教师反查取不到时科目回落学识（Plan 31 §3.13，与 512 同口径，见 get_player_manual_teach_course）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -341,6 +369,10 @@ def get_now_course_ability(character_id: int) -> int:
     teaching = schedule_handle.get_now_teaching(character_id)
     if teaching is not None:
         return teaching["ability_id"]
+    # 玩家手动授课：科目回落学识（Plan 31 §3.13）
+    manual_course = get_player_manual_teach_course(character_id)
+    if manual_course is not None:
+        return manual_course[1]
     now_course = schedule_handle.get_now_course(character_id)
     if now_course is None:
         return -1

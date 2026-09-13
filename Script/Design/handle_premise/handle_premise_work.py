@@ -630,6 +630,7 @@ def handle_self_not_in_course_place(character_id: int) -> int:
 def handle_self_course_teacher_available(character_id: int) -> int:
     """
     自己是学生，本节是教室课且授课教师能到岗
+    传本节的教室（Plan 31 §3.4）：空气催眠的教师只在人已在这间教室时算能到岗，不传教室时一律判来不了
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -643,13 +644,14 @@ def handle_self_course_teacher_available(character_id: int) -> int:
     now_course = schedule_handle.get_now_course(character_id)
     if now_course is None or now_course["course_type"] not in education_constant.CLASSROOM_COURSE_TYPE_SET:
         return 0
-    return int(class_ai.judge_teacher_available(now_course["teacher_id"]))
+    return int(class_ai.judge_teacher_available(now_course["teacher_id"], now_course["classroom"]))
 
 
 @add_premise(constant_promise.Premise.SELF_COURSE_TEACHER_UNAVAILABLE)
 def handle_self_course_teacher_unavailable(character_id: int) -> int:
     """
     自己是学生，本节是教室课但授课教师来不了（或课表没排教师）
+    与 self_course_teacher_available 互补，同样传本节的教室（Plan 31 §3.4）：人不在这间教室的空气催眠教师、木头人都算来不了
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -663,7 +665,7 @@ def handle_self_course_teacher_unavailable(character_id: int) -> int:
     now_course = schedule_handle.get_now_course(character_id)
     if now_course is None or now_course["course_type"] not in education_constant.CLASSROOM_COURSE_TYPE_SET:
         return 0
-    return int(not class_ai.judge_teacher_available(now_course["teacher_id"]))
+    return int(not class_ai.judge_teacher_available(now_course["teacher_id"], now_course["classroom"]))
 
 
 @add_premise(constant_promise.Premise.SELF_COURSE_JOIN_SEX_CLASS)

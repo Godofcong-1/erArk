@@ -11,7 +11,7 @@ import datetime
 from types import FunctionType
 from typing import Dict, List, Protocol
 
-from Script.Core import cache_control, game_type, get_text, flow_handle, constant
+from Script.Core import cache_control, game_type, get_text, flow_handle, constant, text_handle
 from Script.Config import game_config, normal_config
 from Script.Design import game_time, attr_calculation, basement
 from Script.System.Education_System import education_constant, schedule_handle
@@ -41,6 +41,50 @@ def get_period_time_text(period: int) -> str:
     end_hour = hour + end_minute // 60
     end_minute = end_minute % 60
     return "{0:02d}:{1:02d}~{2:02d}:{3:02d}".format(hour, minute, end_hour, end_minute)
+
+
+def get_teacher_absent_mark(teacher_id: int, short: bool = False) -> str:
+    """
+    取课表格子上教师名字后的缺位标注（Plan 31 §3.10，全局课表与个人课表选课页共用）
+    Keyword arguments:
+    teacher_id -- 格子上排的教师角色id；-1 为没排教师，0 为玩家（临时实操课的授课者）
+    short -- 是否取短写「（离岗）」「（离岛）」。全局周表一格只有 25 列（190 宽），「学识技能/三字名（不在岛上）」就有 27 列，
+             会被截成「~」把标注吃掉；周表用短写（四个字的名字也放得下）、悬停提示写全称，个人课表选课页等宽裕的地方用全称
+    Return arguments:
+    str -- 「（已离岗）」「（不在岛上）」（短写为「（离岗）」「（离岛）」）或空字符串
+    功能: 改了岗、或不在岛上（不在 npc_id_got）的教师，运行时 class_ai.judge_teacher_available 判来不了、学生降级自习；
+             但一键排课只填空格、不会替换她，这些格子每周都是自习。面板照写名字不加提示，玩家看不出要手动换人。
+          两种都成立时标「已离岗」：不在岛上的人回来就能照常授课，改了岗的人回来也不会再授课，后者才一定要换人。
+          只标这两种长期状态，睡着、H 中这类一节之内会恢复的不标；玩家与没排教师的格子不标
+    """
+    if teacher_id <= 0 or teacher_id not in cache.character_data:
+        return ""
+    if cache.character_data[teacher_id].work.work_type != education_constant.TEACHER_WORK_TYPE:
+        return _("（离岗）") if short else _("（已离岗）")
+    if teacher_id not in cache.npc_id_got:
+        return _("（离岛）") if short else _("（不在岛上）")
+    return ""
+
+
+def fit_text_width(text: str, width: int) -> str:
+    """
+    把文本按显示宽度截到不超过 width（Plan 31 §3.10）
+    Keyword arguments:
+    text -- 原文本
+    width -- 最大显示宽度（列数），不足 0 时截成空串
+    Return arguments:
+    str -- 截好的文本；原文本放得下时原样返回
+    功能: 全局周表的格子先截教师名、再拼离岗 / 离岛标注：整格超宽时 CenterButton 从尾部截成「~」，
+          异格干员这类五六个字的名字会把标注整个吃掉，只剩灰字；全名与后果写在悬停提示里
+    """
+    if text_handle.get_text_index(text) <= width:
+        return text
+    now_text = ""
+    for char in text:
+        if text_handle.get_text_index(now_text + char) > width:
+            break
+        now_text += char
+    return now_text
 
 
 class SubPanelProtocol(Protocol):
@@ -297,7 +341,8 @@ class Class_Schedule_Panel:
         绘制一间教室的周表
         输入类型: classroom(str)
         输出类型: Dict[str, tuple]，按钮返回值 → (星期, 节次)
-        功能: 9 行节次 × 7 列星期，每格显示"科目/教师"
+        功能: 9 行节次 × 7 列星期，每格显示"科目/教师"；
+              教师已离岗 / 不在岛上的格子名字后加标注、整格灰字（Plan 31 §3.10）
         """
         cell_return: Dict[str, tuple] = {}
         head_width = 14
@@ -321,20 +366,31 @@ class Class_Schedule_Panel:
             head_draw.draw()
             for week_day in range(len(education_constant.WEEK_NAME)):
                 cell = schedule_handle.get_class_cell(classroom, week_day, period)
+                # 格子上的教师已离岗 / 不在岛上：名字后加标注、整格灰字（Plan 31 §3.10），这一节每周都是自习，要玩家手动换人。
+                #    一格只有 25 列，格子里写短标注，悬停提示写全称与后果（见 get_teacher_absent_mark 的 short）
+                absent_mark = ""
+                absent_tip = ""
                 if cell is None:
                     cell_text = "--"
                 else:
                     ability_name = game_config.config_ability[cell[0]].name
-                    if cell[1] in cache.character_data:
-                        cell_text = "{0}/{1}".format(ability_name, cache.character_data[cell[1]].name)
-                    else:
-                        cell_text = "{0}/{1}".format(ability_name, _("待定"))
                     # 今天被临时实操课顶替的格子加「[临]」：格子上显示的是临时课，底下的每周课表还在（Plan 26 §3.6）
                     temp_class = schedule_handle.get_today_temp_class(week_day, period)
-                    if temp_class is not None and temp_class.get("classroom", "") == classroom:
-                        cell_text = _("[临]") + cell_text
+                    temp_prefix = _("[临]") if temp_class is not None and temp_class.get("classroom", "") == classroom else ""
+                    if cell[1] in cache.character_data:
+                        teacher_name = cache.character_data[cell[1]].name
+                        absent_mark = get_teacher_absent_mark(cell[1], short=True)
+                        if absent_mark:
+                            absent_tip = _("{0}{1}：她来不了，这一节学生会降级为自习；点格子可改排教师").format(teacher_name, get_teacher_absent_mark(cell[1]))
+                            # 名字太长时先截名字、不截标注：整格超宽时 CenterButton 从尾部截成「~」，标注会被吃掉（Plan 31 §3.10）
+                            name_width = cell_width - text_handle.get_text_index(temp_prefix + ability_name + "/" + absent_mark)
+                            teacher_name = fit_text_width(teacher_name, name_width)
+                        cell_text = "{0}{1}/{2}{3}".format(temp_prefix, ability_name, teacher_name, absent_mark)
+                    else:
+                        cell_text = "{0}{1}/{2}".format(temp_prefix, ability_name, _("待定"))
                 now_draw = draw.CenterButton(
-                    cell_text, "\nCELL_{0}_{1}".format(week_day, period), cell_width)
+                    cell_text, "\nCELL_{0}_{1}".format(week_day, period), cell_width,
+                    normal_style="deep_gray" if absent_mark else "standard", tooltip=absent_tip)
                 now_draw.draw()
                 cell_return[now_draw.return_text] = (week_day, period)
             line_feed.draw()
@@ -464,19 +520,36 @@ class Class_Schedule_Panel:
 
             # 这一行是必做项不是装饰：选课逻辑零改动的代价就是可能一个人都不来，
             #    玩家必须在排课当场就看得到会有几个人
-            # 前置修习（口径 63 宽松版）：选修生里没排过性技科目教室课的人会到场，但进不了实操课，单独列出来
+            # 选修生分三份（Plan 31 §3.12）：
+            #    1. 没排过性技科目教室课的（前置修习，口径 63 宽松版）：会到场，但进不了实操课
+            #    2. 修过、但此刻进不了课堂的：成年学生 H 模式实行值不足，或状态异常（临盆 / 意识模糊 / 离线 / 监禁等），开课拉人时不收她们。
+            #       判据与开课拉人是同一个 judge_can_join_sex_class，它只判不扣（§3.3），画这一页不改任何数据
+            #    3. 其余才算「本节选修本教室的学生」，与同一页必修名单的门槛同口径
             all_selected_list = sex_class_handle.get_selected_student_list(classroom, week_day, period)
-            selected_list = [cid for cid in all_selected_list if sex_class_handle.judge_has_sex_skill_course(cid)]
+            course_ok_list = [cid for cid in all_selected_list if sex_class_handle.judge_has_sex_skill_course(cid)]
+            # 前置修习已在上一行分出，这里传 check_course=False，只判状态与实行值
+            selected_list = [cid for cid in course_ok_list if sex_class_handle.judge_can_join_sex_class(cid, check_course=False)]
             name_list = [cache.character_data[cid].name for cid in selected_list if cid in cache.character_data]
             student_draw = draw.NormalDraw()
             student_draw.width = self.width
             if selected_list:
                 student_draw.text = _("  本节选修本教室的学生：{0} 人（{1}）\n").format(
                     len(selected_list), "、".join(name_list))
+            elif all_selected_list:
+                # 有人选了这一节、但一个都进不了课堂：不能再写「没有学生会来」，下面的行会写她们照样到场
+                student_draw.text = _("  本节选修本教室的学生：0 人 —— 选修的人都进不了课堂（见下），建议指定必修学生\n")
             else:
                 student_draw.text = _("  本节选修本教室的学生：0 人 —— 没有学生会来，建议指定必修学生\n")
             student_draw.draw()
-            no_course_name_list = [cache.character_data[cid].name for cid in all_selected_list if cid not in selected_list and cid in cache.character_data]
+            blocked_name_list = [cache.character_data[cid].name for cid in course_ok_list if cid not in selected_list and cid in cache.character_data]
+            if blocked_name_list:
+                blocked_draw = draw.NormalDraw()
+                blocked_draw.width = self.width
+                blocked_draw.style = "deep_gray"
+                blocked_draw.text = _("  另有 {0} 人会到场，但此刻进不了课堂（实行值不足或状态异常）：{1}\n").format(
+                    len(blocked_name_list), "、".join(blocked_name_list))
+                blocked_draw.draw()
+            no_course_name_list = [cache.character_data[cid].name for cid in all_selected_list if cid not in course_ok_list and cid in cache.character_data]
             if no_course_name_list:
                 no_course_draw = draw.NormalDraw()
                 no_course_draw.width = self.width
@@ -641,7 +714,9 @@ class Class_Schedule_Panel:
             if week_cell is None:
                 week_text = _("未排课")
             elif week_cell[1] in cache.character_data:
-                week_text = "{0}/{1}".format(game_config.config_ability[week_cell[0]].name, cache.character_data[week_cell[1]].name)
+                # 教师已离岗 / 不在岛上的标注与周表格子一致（Plan 31 §3.10）
+                week_text = "{0}/{1}{2}".format(
+                    game_config.config_ability[week_cell[0]].name, cache.character_data[week_cell[1]].name, get_teacher_absent_mark(week_cell[1]))
             else:
                 week_text = "{0}/{1}".format(game_config.config_ability[week_cell[0]].name, _("待定"))
             overlay_draw = draw.NormalDraw()

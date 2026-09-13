@@ -269,4 +269,56 @@ cache.rhodes_island.book_borrow_dict.update(_saved_borrow)
 schedule_handle.clear_selected_course(201, _wd, 0)
 clear_schedules()
 
+section("Plan 31 §3.8（L4）：取数口 get_course_at 只对学生岗生效；§3.10（L6）：教师反查只认教师岗")
+clear_schedules()
+set_time(period_time(0))
+_wd = cache.game_time.weekday()
+_today = cache.game_time.date().toordinal()
+growth_handle.get_child_growth(201).selected_course = {}
+schedule_handle.set_class_cell(ROOM1, _wd, 0, 45, 101)
+schedule_handle.set_class_cell(ROOM1, _wd, 1, 43, 101)
+schedule_handle.set_selected_course(201, _wd, 0, education_constant.COURSE_TYPE_THEORY, ROOM1)
+schedule_handle.set_selected_course(201, _wd, 1, education_constant.COURSE_TYPE_THEORY, ROOM1)
+schedule_handle.set_selected_course(201, _wd, 2, education_constant.COURSE_TYPE_PE, _("木桩房"))
+sex_class_handle.set_temp_class(_today, 3, ROOM_P, 70, must_attend=[201])
+_must_course = schedule_handle.get_course_at(201, period_time(3), 3)
+check("L4 对照：学生岗时本节的教室课、个人式课、点名必修的覆盖都取得到",
+      schedule_handle.get_now_course(201) is not None and schedule_handle.get_course_at(201, period_time(2), 2) is not None
+      and _must_course is not None and _must_course["classroom"] == ROOM_P, _must_course)
+_before_period_1 = period_time(1) - datetime.timedelta(minutes=10)
+set_time(_before_period_1)
+_upcoming = schedule_handle.get_upcoming_course(201)
+check("L4 对照：开课前 10 分钟，get_upcoming_course 取得到下一节", _upcoming is not None and _upcoming["period"] == 1, _upcoming)
+student.work.work_type = 21
+check("L4 改了岗（岗位 21）：马上开始的下一节为 None", schedule_handle.get_upcoming_course(201) is None)
+set_time(period_time(0))
+check("L4 改了岗：get_now_course 与各节的 get_course_at 都为 None（此前按残留的课表判在上课，<课> 与 CVP 跟着错）",
+      schedule_handle.get_now_course(201) is None and schedule_handle.get_course_at(201, period_time(0), 0) is None
+      and schedule_handle.get_course_at(201, period_time(2), 2) is None)
+check("L4 改了岗：点名必修的覆盖同样不再生效（必修名单只收学生岗）", schedule_handle.get_course_at(201, period_time(3), 3) is None)
+check("L4 取数口只读：个人课表原样保留", schedule_handle.get_selected_course(201, _wd, 0) == [education_constant.COURSE_TYPE_THEORY, ROOM1])
+student.work.work_type = 152
+check("L4 改回学生岗：恢复", schedule_handle.get_now_course(201) is not None and schedule_handle.get_course_at(201, period_time(3), 3) is not None)
+check("L6 对照：教师岗时教师反查生效、本节取得到授课格", schedule_handle.judge_schedule_teacher(101) and schedule_handle.get_now_teaching(101) is not None)
+set_time(_before_period_1)
+_upcoming_teaching = schedule_handle.get_upcoming_teaching(101)
+check("L6 对照：开课前 10 分钟，get_upcoming_teaching 取得到下一节", _upcoming_teaching is not None and _upcoming_teaching["period"] == 1, _upcoming_teaching)
+teacher.work.work_type = 152
+check("L6 前教师改当学生：get_upcoming_teaching 为 None", schedule_handle.get_upcoming_teaching(101) is None)
+set_time(period_time(0))
+check("L6 前教师改当学生：教师反查失效、get_now_teaching 为 None（此前 CVP 与 561 先按她旧的授课格取课）",
+      not schedule_handle.judge_schedule_teacher(101) and schedule_handle.get_now_teaching(101) is None)
+check("L6 全局课表的格子原样保留：get_teacher_cell 照查得到、撞课判定照旧（面板据此标「已离岗」）",
+      schedule_handle.get_teacher_cell(101, _wd, 0) == (ROOM1, 45) and schedule_handle.judge_teacher_conflict(101, _wd, 0, ROOM2) != "")
+teacher.work.work_type = 151
+check("L6 改回教师岗：恢复", schedule_handle.get_now_teaching(101) is not None)
+sex_class_handle.set_temp_class(_today, 0, ROOM_P, 70)
+move_to(0, schedule_handle.get_classroom_position(ROOM_P))
+check("L6 玩家不看岗位（岗位为 0）：人在当天临时课的教室里照常取得到授课",
+      pl.work.work_type != education_constant.TEACHER_WORK_TYPE and schedule_handle.judge_schedule_teacher(0) and schedule_handle.get_now_teaching(0) is not None)
+move_to(0, SCENE_DORM)
+check("L18 get_now_course 的返回说明写全：不在学生岗、兴趣课读书借不到书", all(k in (schedule_handle.get_now_course.__doc__ or "") for k in ("学生岗", "借不到书")))
+growth_handle.get_child_growth(201).selected_course = {}
+clear_schedules()
+
 finish()

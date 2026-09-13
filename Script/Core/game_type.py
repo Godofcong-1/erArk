@@ -402,6 +402,8 @@ class CHILD_GROWTH:
         """ 累计翘课节数（终身累计，只增不减，Plan 30）。翘掉的那一节同时记一节缺课（absent_count），同一节只记一次，与体力缺课共用 last_absent_period """
         self.skip_caught_day: int = 0
         """ 最近一次翘课被博士撞见那天的日期序数（date.toordinal()），0 为没有（Plan 30）。当天剩余节次不再掷翘课，次日自然失效 """
+        self.sex_class_count: int = 0
+        """ 累计上过的实操课次数（终身累计，Plan 31）。与 attend_class_count 在同一处 +1（sex_class_handle.settle_attend），这一节已缺课的也不记 """
         self.event_history: dict = {}
         """ 已触发的养成事件记录 键str:事件uid 值dict:{"time": datetime, "choice": 玩家选项index int}
             写入方在三期 """
@@ -410,7 +412,11 @@ class CHILD_GROWTH:
         self.report_card_flag: bool = False
         """ 学期成绩单是否待查看，学期结算时置True，玩家使用「检查成绩单」后置False """
         self.skip_class_flag: bool = False
-        """ 今日是否翘课，翘课行为触发时置True，被玩家撞见或次日刷新时置False """
+        """ 今日是否翘课，翘课行为触发时置True，被玩家撞见或次日刷新时置False。
+            只在 skip_class_day 那一天有效，读的时候一律走 class_ai.judge_skip_class_today（Plan 31） """
+        self.skip_class_day: int = 0
+        """ 翘课 flag 挂上那天的日期序数（date.toordinal()），0 为没有（Plan 31）。
+            跨天结算在 NPC 阶段之后才清 flag、离线的人跨天不清，靠它不把翘课带进另一天 """
         self.schedule_template_id: int = 0
         """ 本孩子套用的日程模板编号，0为未套用。写入方在二期 """
         self.schedule_override: dict = {}

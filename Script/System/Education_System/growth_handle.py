@@ -375,6 +375,29 @@ def judge_selected_cell_real(character_id: int, week_day: int, period: int) -> b
     return schedule_handle.judge_personal_course_real(character_id, {"course_type": course[0], "target": course[1]})
 
 
+def judge_have_course_type(character_id: int, course_type: int) -> bool:
+    """
+    校验个人课表上有没有至少一格是某课型的真课（Plan 31 §3.14：点名课型的养成事件用）
+    Keyword arguments:
+    character_id -- 角色id
+    course_type -- 课型编号（education_constant.COURSE_TYPE_*）
+    Return arguments:
+    bool -- 学生岗、且至少有一格课型相符并通过 judge_selected_cell_real 为True
+    功能: 日常事件在 0 点推送，读「此刻这一节」的 CVP CourseType 恒为 -1，写不出课型前提，这里查整张个人课表。
+          只读 child_growth，不惰性创建养成数据，前提路径上可以调用
+    """
+    if character_id not in cache.character_data:
+        return False
+    growth_data = cache.character_data[character_id].child_growth
+    if growth_data is None or not growth_data.selected_course:
+        return False
+    for week_day, day_data in growth_data.selected_course.items():
+        for period, course in day_data.items():
+            if course[0] == course_type and judge_selected_cell_real(character_id, week_day, period):
+                return True
+    return False
+
+
 def settle_course_attend(character_id: int) -> bool:
     """
     给一节体育课 / 兴趣课记一次出勤（Plan 29 §3.1）
@@ -763,6 +786,9 @@ def get_growth_value(character_id: int, value_id: int) -> float:
     # 累计翘课节数（Plan 30）：翘掉的课也记在编号 1 的累计缺课里，要单看翘课读这一项
     if value_id == education_constant.GROWTH_VALUE_SKIP:
         return float(growth_data.skip_count)
+    # 累计实操课次数（Plan 31）：口上里「第一次来 / 老学生」读它，不读含全部课型的编号 0
+    if value_id == education_constant.GROWTH_VALUE_SEX_CLASS:
+        return float(growth_data.sex_class_count)
     return 0.0
 
 

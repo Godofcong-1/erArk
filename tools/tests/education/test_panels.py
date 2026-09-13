@@ -225,6 +225,8 @@ flow_handle.askfor_all = scripted_askfor
 gp.handle_yrn(E.SELECT_STUDENT_RETURN)
 check("切人重置成绩单下标", gp.now_student == 202 and gp.report_card_index == -1)
 g.skip_class_flag = True
+# 翘课 flag 认日期（Plan 31 §3.6）：只在挂上的那一天显示「今天正在翘课」，这里同 549 一样把日期一并写上
+g.skip_class_day = cache.game_time.toordinal()
 g.show_off_ability = {45: 2}
 g.report_card_flag = True
 answers[:] = [lambda o: o == "女儿01"]
@@ -476,6 +478,161 @@ _replace_line = next((t for t in drawn_text if "会顶替原本的课" in t), ""
 check("书库此刻借空：排着读书兴趣课的学生照标「*」、明细照写（此前借空就不标）", "[  女儿04*]" in drawn_text and "女儿04→" in _replace_line,
       (_replace_line, [t for t in drawn_text if "女儿04" in t]))
 schedule_handle.clear_selected_course(204, 2, 3)
+
+section("Plan 31 §3.6：养成总览的翘课标记只认挂上 flag 的那一天")
+_g201 = growth_handle.get_child_growth(201)
+_g201.skip_class_flag = True
+_g201.skip_class_day = cache.game_time.toordinal()
+drawn_text.clear()
+growth_panel.Growth_Panel(W)._draw_flag(201)
+check("§3.6 今天挂上的翘课 flag：待处理写「今天正在翘课」", any("今天正在翘课" in t for t in drawn_text), drawn_text)
+_g201.skip_class_day = cache.game_time.toordinal() - 1
+drawn_text.clear()
+growth_panel.Growth_Panel(W)._draw_flag(201)
+check("§3.6 昨天挂上、跨天没清掉的 flag（一步跨过午夜、离线跨天）不再写「今天正在翘课」", not any("翘课" in t for t in drawn_text), drawn_text)
+_g201.skip_class_day = 0
+drawn_text.clear()
+growth_panel.Growth_Panel(W)._draw_flag(201)
+check("§3.6 旧档回填的 skip_class_day = 0 读作「不是今天」", not any("翘课" in t for t in drawn_text), drawn_text)
+_g201.skip_class_flag = False
+
+section("Plan 31 L8：排实操课页的选修人数按实操课门槛分开")
+clear_schedules()
+_l8_day, _l8_period, _l8_sex_period = 4, 7, 8
+for _cid in [201 + i for i in range(11)] + [301]:
+    schedule_handle.clear_selected_course(_cid, _l8_day, _l8_period)
+    schedule_handle.clear_selected_course(_cid, _l8_day, _l8_sex_period)
+# 这一节每周排的是料理（不是性技），另一节排膣技：女儿01 与成年学生两节都选了、算修过性技课，女儿02 只选了这一节
+schedule_handle.set_class_cell(ROOM_P, _l8_day, _l8_period, 43, -1)
+schedule_handle.set_class_cell(ROOM_P, _l8_day, _l8_sex_period, 74, -1)
+for _cid in (201, 301):
+    schedule_handle.set_selected_course(_cid, _l8_day, _l8_period, E.COURSE_TYPE_PRACTICE, ROOM_P)
+    schedule_handle.set_selected_course(_cid, _l8_day, _l8_sex_period, E.COURSE_TYPE_PRACTICE, ROOM_P)
+schedule_handle.set_selected_course(202, _l8_day, _l8_period, E.COURSE_TYPE_PRACTICE, ROOM_P)
+
+
+def draw_sex_class_page() -> tuple:
+    """
+    画一次排实操课页（脚本化点[返回]退出），取出与选修人数有关的三行
+    Keyword arguments:
+    无
+    Return arguments:
+    tuple -- (「本节选修本教室的学生」行, 「此刻进不了课堂」行, 「没修过性技科目的课」行)，没画出来的行为空字符串
+    """
+    flow_handle.askfor_all = scripted_askfor
+    answers[:] = [lambda o: o == "BACK"]
+    drawn_text.clear()
+    class_schedule_panel.Class_Schedule_Panel(W)._edit_sex_class(ROOM_P, _l8_day, _l8_period)
+    flow_handle.askfor_all = fake_askfor
+    return (next((t for t in drawn_text if "本节选修本教室的学生" in t), ""), next((t for t in drawn_text if "此刻进不了课堂" in t), ""),
+            next((t for t in drawn_text if "没修过性技科目的课" in t), ""))
+
+
+_count_line, _blocked_line, _no_course_line = draw_sex_class_page()
+check("L8 「本节选修本教室的学生」只数能参加的：1 人（女儿01），实行值不足的成年学生不算（此前算作会来）",
+      "：1 人（女儿01）" in _count_line and "成年学生" not in _count_line, _count_line)
+check("L8 实行值不足的成年学生单列一行「另有 1 人会到场，但此刻进不了课堂（实行值不足或状态异常）」",
+      "另有 1 人会到场，但此刻进不了课堂（实行值不足或状态异常）" in _blocked_line and "成年学生" in _blocked_line, _blocked_line)
+check("L8 没修过性技课的仍在原来那一行，不混进新行", "女儿02" in _no_course_line and "女儿02" not in _blocked_line and "女儿02" not in _count_line,
+      (_no_course_line, _blocked_line))
+instuct_judege.calculation_instuct_judege = lambda *a, **k: (1, 0, "")
+_count_line, _blocked_line, _no_course_line = draw_sex_class_page()
+instuct_judege.calculation_instuct_judege = _orig_judge
+check("L8 实行值够了：成年学生算进「本节选修本教室的学生：2 人」，不再单列", "：2 人（" in _count_line and "成年学生" in _count_line and not _blocked_line,
+      (_count_line, _blocked_line))
+cache.character_data[201].sp_flag.imprisonment = True
+_count_line, _blocked_line, _no_course_line = draw_sex_class_page()
+cache.character_data[201].sp_flag.imprisonment = False
+handle_premise.refresh_unnormal_flag(201)
+check("L8 状态异常（被监禁）的女儿同样归进「此刻进不了课堂」；一个能参加的都没有时写 0 人、说明选修的人都进不了课堂",
+      "女儿01" in _blocked_line and "：0 人" in _count_line and "进不了课堂" in _count_line, (_count_line, _blocked_line))
+clear_schedules()
+for _cid in (201, 202, 301):
+    schedule_handle.clear_selected_course(_cid, _l8_day, _l8_period)
+    schedule_handle.clear_selected_course(_cid, _l8_day, _l8_sex_period)
+
+section("Plan 31 L6：课表格子上的教师已离岗 / 不在岛上时名字后加标注、灰字")
+clear_schedules()
+set_time(period_time(0))
+_l6_day = cache.game_time.weekday()
+schedule_handle.set_class_cell(ROOM1, _l6_day, 0, 45, 103)
+schedule_handle.set_class_cell(ROOM1, _l6_day, 1, 45, 104)
+schedule_handle.set_class_cell(ROOM1, _l6_day, 2, 45, 105)
+teacher_b.work.work_type = 21  # 教师乙改了岗
+cache.npc_id_got.discard(104)  # 教师丙不在岛上（外勤等离线时移出 npc_id_got）
+_button_log = []
+_orig_center_draw = draw.CenterButton.draw
+_orig_left_draw = draw.LeftButton.draw
+
+
+def record_button(self, *a, **k):
+    """
+    记下按钮的文本、默认样式与悬停提示，再照常记进 drawn_text（样式与提示不进 drawn_text，要单独断言）
+    Keyword arguments:
+    self -- 按钮绘制对象
+    Return arguments:
+    无
+    """
+    _button_log.append((self.text, self.normal_style, getattr(self, "tooltip", "")))
+    _orig_center_draw(self, *a, **k)
+
+
+draw.CenterButton.draw = record_button
+draw.LeftButton.draw = record_button
+_l6_panel = class_schedule_panel.Class_Schedule_Panel(W)
+_l6_panel.now_room = ROOM1
+_l6_panel.draw_page([])
+_name45 = game_config.config_ability[45].name
+_button_by_text = {one[0]: one for one in _button_log}
+_l6_cells = [one for one in _button_log if _name45 in one[0]]
+_cell_b = _button_by_text.get("{0}/教师乙（离岗）".format(_name45))
+_cell_c = _button_by_text.get("{0}/教师丙（离岛）".format(_name45))
+_cell_d = _button_by_text.get("{0}/教师丁".format(_name45))
+check("L6 全局课表：已离岗的教师名字后加短标注「（离岗）」、灰字，悬停提示写全称「（已离岗）」",
+      _cell_b is not None and _cell_b[1] == "deep_gray" and "教师乙（已离岗）" in _cell_b[2], _l6_cells)
+check("L6 全局课表：不在岛上的教师名字后加短标注「（离岛）」、灰字，悬停提示写全称「（不在岛上）」",
+      _cell_c is not None and _cell_c[1] == "deep_gray" and "教师丙（不在岛上）" in _cell_c[2], _l6_cells)
+check("L6 全局课表：在岗、在岛的教师照旧、不灰、没有提示", _cell_d is not None and _cell_d[1] == "standard" and not _cell_d[2], _l6_cells)
+_l6_cell_width = max(8, int((W - 14) / len(E.WEEK_NAME)))
+_l6_marks = (class_schedule_panel.get_teacher_absent_mark(103, short=True), class_schedule_panel.get_teacher_absent_mark(104, short=True))
+_l6_too_wide = [text for text in ("{0}/四字教师{1}".format(game_config.config_ability[_aid].name, _mark) for _aid in E.SUBJECT_ABILITY_LIST for _mark in _l6_marks)
+                if text_handle.get_text_index(text) > _l6_cell_width]
+check("L6 全部科目 × 四个字的教师名加上短标注，都放得进周表的一格（{0} 列；全称会被截掉）".format(_l6_cell_width),
+      all(_l6_marks) and not _l6_too_wide, (_l6_marks, _l6_too_wide))
+_button_log.clear()
+_l6_select = course_select_panel.Course_Select_Panel(W)
+for _l6_period in range(3):
+    _l6_select._select_course(201, _l6_day, _l6_period)
+_l6_type_name = E.COURSE_TYPE_NAME[schedule_handle.get_course_type_by_classroom(ROOM1)]
+_style_by_text = {one[0]: one[1] for one in _button_log}
+_l6_want = {name: _("[{0}] {1}/{2}（{3}）").format(ROOM1, _name45, name, _l6_type_name) for name in ("教师乙（已离岗）", "教师丙（不在岛上）", "教师丁")}
+check("L6 个人课表选课页：本节各教室的课里，已离岗 / 不在岛上的教师名字后同样标注、灰字，在岗的照旧",
+      _style_by_text.get(_l6_want["教师乙（已离岗）"]) == "deep_gray" and _style_by_text.get(_l6_want["教师丙（不在岛上）"]) == "deep_gray"
+      and _style_by_text.get(_l6_want["教师丁"]) == "standard", [one for one in _button_log if ROOM1 in one[0]])
+sex_class_handle.set_temp_class(cache.game_time.date().toordinal(), 4, ROOM_P, 70)
+schedule_handle.set_class_cell(ROOM_P, _l6_day, 4, 43, 103)
+flow_handle.askfor_all = scripted_askfor
+answers[:] = [lambda o: o == _("取消")]
+drawn_text.clear()
+_l6_panel._edit_cell(ROOM_P, _l6_day, 4)
+flow_handle.askfor_all = fake_askfor
+check("L6 被临时课顶替的格子：选科目页「每周课表这一格」里的教师同样标注",
+      any("每周课表这一格：{0}/教师乙（已离岗）".format(game_config.config_ability[43].name) in t for t in drawn_text), [t for t in drawn_text if "每周课表这一格" in t])
+# 教师名很长（异格干员等五六个字的名字）：格子里先截名字、不截标注，整格仍放得进一格（Plan 31 实施复审补）
+_l6_saved_name = teacher_b.name
+teacher_b.name = "名字很长的教师乙"
+_button_log.clear()
+_l6_panel.draw_page([])
+_cell_long = next((one for one in _button_log if one[0].startswith(_name45 + "/") and one[0].endswith("（离岗）")), None)
+check("L6 教师名很长（8 个字）：格子里先截名字、「（离岗）」照样写全，整格不超宽；悬停提示写全名",
+      _cell_long is not None and text_handle.get_text_index(_cell_long[0]) <= _l6_cell_width and "名字很长的教师乙（已离岗）" in _cell_long[2],
+      [one for one in _button_log if _name45 in one[0]])
+teacher_b.name = _l6_saved_name
+draw.CenterButton.draw = _orig_center_draw
+draw.LeftButton.draw = _orig_left_draw
+teacher_b.work.work_type = 151
+cache.npc_id_got.add(104)
+clear_schedules()
 
 section("Web 适配器冒烟")
 from Script.System.Web_Draw_System import web_draw_adapter

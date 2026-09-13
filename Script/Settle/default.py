@@ -7590,18 +7590,16 @@ def handle_teach_add_just(
     character_data: game_type.Character = cache.character_data[character_id]
 
     # 取本节所授科目与课型：教师视角反查全局课表
-    ability_id = 45
+    ability_id = education_constant.FALLBACK_SUBJECT_ABILITY
     course_type = education_constant.COURSE_TYPE_THEORY
     teaching = schedule_handle.get_now_teaching(character_id)
     if teaching is not None and teaching["ability_id"] > 0:
         ability_id = teaching["ability_id"]
         course_type = teaching["course_type"]
     else:
-        # 玩家手动发起的授课不在课表上，课型按所在教室的场景标签判定，科目回落学识
-        scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-        now_course_type = schedule_handle.get_course_type_by_classroom(cache.scene_data[scene_path_str].scene_name)
-        if now_course_type != -1:
-            course_type = now_course_type
+        # 玩家手动发起的授课不在课表上：课型按所在教室判定，科目回落学识。
+        #    与 CVP 对玩家手动授课的回落（handle_premise.get_player_manual_teach_course）共用这两处定义，口上读到的与实际结算不会分叉（Plan 31）
+        course_type = schedule_handle.get_course_type_by_position(character_data.position)
 
     # 教师自身的教学相长：加当节所授科目的习得与经验
     growth_handle.settle_teacher_class_gain(character_id, ability_id, add_time, change_data=change_data)
@@ -7672,8 +7670,8 @@ def handle_self_study_add_just(
     from Script.System.Education_System import education_constant, growth_handle, schedule_handle
 
     now_course = schedule_handle.get_now_course(character_id)
-    # 查不到课表就没有科目可自习，回落为学识
-    ability_id = 45
+    # 查不到课表就没有科目可自习，回落为学识（与玩家手动授课 512 共用 FALLBACK_SUBJECT_ABILITY，Plan 31）
+    ability_id = education_constant.FALLBACK_SUBJECT_ABILITY
     if now_course is not None and now_course["ability_id"] > 0:
         ability_id = now_course["ability_id"]
     # 教师id传-1即走自习分支：基础值降档、速度系数恒取1.0
@@ -7692,10 +7690,15 @@ def handle_attent_class_add_just(
         now_time: datetime.datetime,
 ):
     """
-    （听课用）学生晚于教师到场时，从学生这一侧结算本节课的收益与出勤（Plan 22 第五轮）
-    NPC 的行为结算发生在行为**开始**时：教师开讲那一刻的广播（512）只发得到已经坐下听课的人，
-       走班晚到几分钟的学生就会整节白上。这里在学生开始听课时补一次：本节的授课教师就在同一间教室、且正在授课，
-       就按与广播完全相同的口径结算；先到的学生已被广播结算过，settle_student_class_gain 按节次去重，不会重复
+    （听课用）学生开始听课时，从学生这一侧结算本节课的收益与出勤（Plan 22 第五轮加，Plan 31 §3.1 放宽）
+    NPC 的行为结算发生在行为**开始**时，而且各按自己的时间线推进：玩家一步跨满一整节时，教师换教室（或先处理需求）晚到几分钟，
+       学生这一步里早已听完这一节、走去了下一节，教师开讲那一刻的广播（512）发不到她，303 也不再把时间线在前的她拉回来。
+       所以学生坐下听课时，本节授课教师判「能到岗」（class_ai.judge_teacher_available，学生当初就是按它坐下来等的）就按与广播完全相同的口径结算
+       （科目、课型取课表，速度系数按师生等级差），不再要求教师此刻已在同一间教室、正在授课；
+       settle_student_class_gain 按节次去重，教师随后开讲时的广播不会重复。
+    代价：教师判能到岗、这一节却被临时叫走（比如被玩家拉进 H）时，学生照样拿到这节课，与「能到岗」判据的既有含义一致。
+    不走这里的：课表上没排教师（那是自习，由 548 结算）、授课者是玩家（临时实操课，那是课堂 H，不是授课）、
+       学生不在本节的教室里（她是在那间教室坐下来等教师的；被玩家拉到别处听课的由玩家的广播结算）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -7704,16 +7707,20 @@ def handle_attent_class_add_just(
     """
     if not add_time:
         return
-    from Script.System.Education_System import growth_handle, schedule_handle
+    from Script.System.Education_System import class_ai, growth_handle, schedule_handle
 
     now_course = schedule_handle.get_now_course(character_id)
-    if now_course is None or now_course["teacher_id"] not in cache.character_data or now_course["ability_id"] <= 0:
+    if now_course is None or now_course["ability_id"] <= 0:
         return
     teacher_id = now_course["teacher_id"]
-    teacher_data: game_type.Character = cache.character_data[teacher_id]
-    character_data: game_type.Character = cache.character_data[character_id]
-    # 教师得人在这间教室、而且正在讲课；玩家的临时实操课不走这里（那是课堂H，不是授课）
-    if teacher_data.position != character_data.position or teacher_data.behavior.behavior_id != constant.Behavior.TEACH:
+    # 没排教师（-1）与玩家的临时实操课（0）都不是这里的事
+    if teacher_id <= 0 or teacher_id not in cache.character_data:
+        return
+    classroom = now_course["classroom"]
+    if not class_ai.judge_in_scene(character_id, classroom):
+        return
+    # 教师这一节能不能到岗，与学生决定坐下听课 / 降级自习用的是同一个判据（传本节教室：空气催眠的教师只在人已在教室时算能到岗，Plan 31 §3.4）
+    if not class_ai.judge_teacher_available(teacher_id, classroom):
         return
     growth_handle.settle_student_class_gain(
         character_id, teacher_id, now_course["ability_id"], now_course["course_type"], add_time, change_data=change_data
@@ -7728,21 +7735,28 @@ def handle_skip_class_add_just(
         now_time: datetime.datetime,
 ):
     """
-    （翘课用）置翘课flag，小幅回复心情，本节不获得任何学习收益
+    （翘课用）置翘课flag并记下挂上的日期，小幅回复心情，本节不获得任何学习收益
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
     change_data -- 状态变更信息记录对象
-    now_time -- 结算的时间
+    now_time -- 结算的时间（结算传进来的是行为结束时刻）
     """
     if not add_time:
         return
     from Script.System.Education_System import growth_handle
 
     growth_data = growth_handle.get_child_growth(character_id)
-    growth_data.skip_class_flag = True
-    # 翘课换来的那点轻松：抑郁小幅回落。不给任何学习收益，这是翘课的代价
     character_data: game_type.Character = cache.character_data[character_id]
+    growth_data.skip_class_flag = True
+    # 翘课 flag 认日期（Plan 31 §3.6）：记下挂上 flag 的那一天，取行为开始时刻（now_time 是行为结束时刻）。
+    #    flag 只在这一天有效，读的地方一律走 class_ai.judge_skip_class_today：跨天结算在 NPC 阶段之后才清 flag、离线的人跨天不清，
+    #    认了日期就不会把翘课带进另一天
+    start_time = character_data.behavior.start_time
+    if start_time is None:
+        start_time = cache.game_time
+    growth_data.skip_class_day = start_time.toordinal()
+    # 翘课换来的那点轻松：抑郁小幅回落。不给任何学习收益，这是翘课的代价
     if 19 in character_data.status_data:
         character_data.status_data[19] = max(0, character_data.status_data[19] - add_time)
 

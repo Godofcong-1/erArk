@@ -297,6 +297,28 @@ cache.rhodes_island.book_borrow_dict.update(_saved_borrow)
 for _p in (3, 4, 5, 6):
     schedule_handle.clear_selected_course(201, 2, _p)
 clear_schedules()
+
+section("Plan 31：养成数值 25、judge_have_course_type")
+g.sex_class_count = 4
+check("L12 养成数值 25 读累计实操课次数；没有养成数据为 0", growth_handle.get_growth_value(201, V.GROWTH_VALUE_SEX_CLASS) == 4.0
+      and growth_handle.get_growth_value(209, V.GROWTH_VALUE_SEX_CLASS) == 0.0 and no_growth.child_growth is None)
+g.sex_class_count = 0
+schedule_handle.set_selected_course(201, 3, 0, E6.COURSE_TYPE_THEORY, ROOM1)
+check("L11 理论课那一格已停课：不算有理论课", not growth_handle.judge_have_course_type(201, E6.COURSE_TYPE_THEORY))
+schedule_handle.set_class_cell(ROOM1, 3, 0, 45, -1)
+check("L11 每周课表排了课：有理论课，没有体育课", growth_handle.judge_have_course_type(201, E6.COURSE_TYPE_THEORY)
+      and not growth_handle.judge_have_course_type(201, E6.COURSE_TYPE_PE))
+student.work.work_type = 21
+check("L11 改了岗：课表残留不算", not growth_handle.judge_have_course_type(201, E6.COURSE_TYPE_THEORY))
+student.work.work_type = 152
+schedule_handle.set_selected_course(201, 3, 1, E6.COURSE_TYPE_PE, _lockable_pe)
+check("L11 体育课场地开放：有体育课", growth_handle.judge_have_course_type(201, E6.COURSE_TYPE_PE), _lockable_pe)
+check("L11 没有养成数据、角色不存在都不算，且不惰性创建养成数据",
+      not growth_handle.judge_have_course_type(209, E6.COURSE_TYPE_THEORY) and not growth_handle.judge_have_course_type(999, E6.COURSE_TYPE_THEORY)
+      and no_growth.child_growth is None)
+for _p in (0, 1):
+    schedule_handle.clear_selected_course(201, 3, _p)
+clear_schedules()
 remove_character(209)
 
 finish()

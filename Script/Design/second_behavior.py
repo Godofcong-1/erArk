@@ -322,13 +322,14 @@ def judge_child_growth_second_behavior(character_id: int):
         return
     if handle_premise.handle_hidden_sex_mode_3_or_4(0):
         return
-    # 翘课被抓优先于炫耀：正翘着课的孩子不会先炫耀成绩
-    if growth_data.skip_class_flag:
+    from Script.System.Education_System import class_ai, growth_handle
+
+    # 翘课被抓优先于炫耀：正翘着课的孩子不会先炫耀成绩。
+    #    翘课 flag 认日期（Plan 31 §3.6）：前一天挂上、跨天没清掉的（一步跨过午夜、翘课当天离线）不算今天翘课，不再触发被抓
+    if class_ai.judge_skip_class_today(character_id):
         character_get_second_behavior(character_id, "caught_skip_class")
         return
     # 炫耀只派给幼女 / 萝莉期（Plan 26 L5）：炫耀口上全部限定这两个阶段；成年时留下的待炫耀已在成年结算里清空
-    from Script.System.Education_System import growth_handle
-
     if growth_data.show_off_ability and growth_handle.get_character_stage(character_id) in (102, 103):
         character_get_second_behavior(character_id, "show_off_study")
 

@@ -83,6 +83,25 @@
 - 改了脚本或 args 想续跑：`Workflow({scriptPath, resumeFromRunId})`，没改动的前缀代理直接用缓存
 - 某个代理返回 `null`（被跳过或出错）：脚本已 `.filter(Boolean)`，对应维度或单元会缺一份，看 `log` 提示后由主代理 inline 补
 
+## 运行中：怎么判断停没停住
+
+Workflow 在后台一跑几十分钟，中途不出声（Plan 31 试跑时用户两次以为卡住了，其实代理都还在写记录）。停没停住看文件判断：
+
+- 运行目录：`~/.claude/projects/<项目目录名>/<会话id>/subagents/workflows/<runId>/`，runId 就是启动结果里的 `wf_xxx`
+  - `journal.jsonl`：每个代理开始时一条 `started`、交卷时一条 `result`
+  - `agent-<id>.jsonl`：代理的完整记录，每走一步追加一行
+- **启动后马上挂 Monitor**：某个代理交卷、停住、卡在命令上时，对话里各出一行；交卷数够了自动退出（`timeout_ms` 给 3600000）：
+  `./.conda/python.exe -u .claude/skills/system-review-round/wf_watch.py <运行目录> --watch 60 --expect <代理总数> --stale 10`
+- 一次性检查：同一个脚本去掉 `--watch` / `--expect`；`--dump 文件` 把全部交卷结果写成 JSON，逐条核对时用
+- `TaskOutput(task_id, block=false)` 只看得到 Workflow 整体是否还在跑，看不到单个代理
+
+| 状态 | 判据 | 怎么办 |
+| --- | --- | --- |
+| 已交卷 | journal 里有它的 `result` | 用 `--dump` 取结果 |
+| 进行中 | 记录在阈值（默认 10 分钟）内更新过 | 等；写大文件、长推理时十来分钟不落记录属正常 |
+| 等命令 | 它发出的某个工具调用超过阈值没回结果 | 多半是测试或构建挂住（例：`lint_target_csv` 不带 `--fast`）。脚本会列出跑了很久的 python 进程，确认后 `Stop-Process -Id <pid>`，代理拿到报错会接着干 |
+| 疑似停住 | 记录超过阈值没更新，也没有未回结果的调用 | 再等一个阈值；仍不动就 `TaskStop` 停掉 Workflow，用 `resumeFromRunId` 续跑，已交卷的代理直接用缓存 |
+
 ## 为什么核查代理不用 Explore
 
 Explore 只读片段、不注入 CLAUDE.md，适合定位，不适合逐行审查；两个脚本都用默认的 workflow 子代理。

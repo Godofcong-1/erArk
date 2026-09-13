@@ -9,7 +9,8 @@ student_b = make_character(202, "女儿B", 152, daughter=True, stage=102, mother
 adult = make_character(301, "成年干员", 21)
 ga = growth_handle.get_child_growth(201)
 gb = growth_handle.get_child_growth(202)
-for name in ("semester_id", "report_card_history", "schedule_override", "follow_mother_flag", "last_absent_period", "skip_count", "skip_caught_day", "semester_base_work_type"):
+for name in ("semester_id", "report_card_history", "schedule_override", "follow_mother_flag", "last_absent_period", "skip_count", "skip_caught_day", "semester_base_work_type",
+             "skip_class_day", "sex_class_count"):
     delattr(ga, name)
     delattr(gb, name)
 ga.last_report_card = {"year": 2026, "month": 6, "grade": 1}
@@ -24,6 +25,8 @@ check("没有养成数据的角色补出 child_growth = None", adult.child_growt
 check("母亲侧胎教字段回填", student_b.pregnancy.prenatal_point == 0.0)
 check("Plan 30 的三个新字段按默认值回填：累计翘课 0、被抓日 0、学期初岗位 -1（未知）",
       all(one.skip_count == 0 and one.skip_caught_day == 0 and one.semester_base_work_type == -1 for one in (ga, gb)))
+check("Plan 31 的两个新字段按默认值回填：翘课 flag 的日期 0（读作不是今天）、累计实操课次数 0",
+      all(one.skip_class_day == 0 and one.sex_class_count == 0 for one in (ga, gb)))
 
 section("教育区娱乐改编号的读档迁移（175~178 → 152~155）")
 migrated = [save_handle._migrate_entertainment_cid(value) for value in (175, 176, 177, 178, 152, 58, 0, None, True)]

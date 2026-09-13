@@ -290,4 +290,117 @@ check("下一节没缺课：照常记", growth_handle.get_child_growth(201).atte
 growth_handle.get_child_growth(201).last_absent_period = []
 cache.rhodes_island.temp_sex_class = {}
 
+section("Plan 31 M1：实操课门槛的实行值只判不扣——门槛与前提求值多次，不扣理智、不累加今日消耗、不解除催眠")
+from Script.Design import instuct_judege  # noqa: E402
+
+cache.sex_class_mode = False
+cache.group_sex_mode = False
+set_time(period_time(3))
+_hypno_day = (cache.game_time.weekday() + 3) % 7
+hypno = make_character(305, "心控中的成年学生", 152)
+hypno.talent[72] = 1  # 被深层催眠
+hypno.sp_flag.unconscious_h = 7  # 心控：不在 normal 5 / 6 里，门槛一路走到实行值计算的催眠补正段
+schedule_handle.set_class_cell(ROOM_P, _hypno_day, 8, 74, -1)
+schedule_handle.set_selected_course(305, _hypno_day, 8, education_constant.COURSE_TYPE_PRACTICE, ROOM_P)
+move_to(0, classroom_path(ROOM_P))
+move_to(305, classroom_path(ROOM_P))
+pl.sanity_point_max = 2000
+pl.sanity_point = 2000
+pl.pl_ability.today_sanity_point_cost = 0
+pl.talent[332] = 0
+check("M1 前置：成年非女儿的学生岗、排过性技教室课、好感为 0；玩家没有中级催眠时实行值不足，进不了课堂",
+      hypno.relationship.father_id != 0 and sex_class_handle.judge_has_sex_skill_course(305) and hypno.favorability.get(0, 0) == 0
+      and not sex_class_handle.judge_can_join_sex_class(305))
+pl.talent[332] = 1  # 中级催眠：对深层催眠的目标，实行值不足的部分由理智折算补上
+_m1_list = []
+for _index in range(4):
+    _m1_list.append(sex_class_handle.judge_can_join_sex_class(305))
+    _m1_list.append(bool(handle_premise.handle_premise("scene_have_sex_class_student", 0)))
+check("M1 理智够时门槛照样成立（催眠补正照算）：门槛与指令 5209 的前提 scene_have_sex_class_student 各求值 4 次都成立", all(_m1_list), _m1_list)
+check("M1 求值 8 次后玩家理智不变、今日消耗不累加（此前每求值一次扣一回）", pl.sanity_point == 2000 and pl.pl_ability.today_sanity_point_cost == 0,
+      (pl.sanity_point, pl.pl_ability.today_sanity_point_cost))
+check("M1 她的心控没被动过", hypno.sp_flag.unconscious_h == 7, hypno.sp_flag.unconscious_h)
+cache.sex_class_mode = True
+cache.group_sex_mode = True
+_m1_running = sex_class_handle.set_temp_class(today, 3, ROOM_P, 74, running=True)
+hypno.sp_flag.is_h = True
+_m1_in_class = [bool(handle_premise.handle_premise("self_in_sex_class", 305)) for _index in range(3)]
+hypno.sp_flag.is_h = False
+_m1_joinable = [class_ai.judge_pending_class_joinable(305, _m1_running, ROOM_P) for _index in range(3)]
+check("M1 口上前提 self_in_sex_class 与她自己决策时的入课判定（judge_pending_class_joinable）各求值 3 次都成立，理智仍不变",
+      all(_m1_in_class) and all(_m1_joinable) and pl.sanity_point == 2000 and pl.pl_ability.today_sanity_point_cost == 0,
+      (_m1_in_class, _m1_joinable, pl.sanity_point, pl.pl_ability.today_sanity_point_cost))
+cache.sex_class_mode = False
+cache.group_sex_mode = False
+cache.rhodes_island.temp_sex_class = {}
+pl.sanity_point = 0
+check("M1 理智为 0：没有补正，门槛不成立", not sex_class_handle.judge_can_join_sex_class(305))
+handle_premise.handle_premise("scene_have_sex_class_student", 0)
+check("M1 理智为 0 时判门槛、求值前提都不解除她的催眠（此前心控被清零），今日消耗仍为 0",
+      hypno.sp_flag.unconscious_h == 7 and pl.sanity_point == 0 and pl.pl_ability.today_sanity_point_cost == 0,
+      (hypno.sp_flag.unconscious_h, pl.sanity_point, pl.pl_ability.today_sanity_point_cost))
+pl.sanity_point = 2000
+_m1_default = instuct_judege.calculation_instuct_judege(0, 305, _("H模式"), not_draw_flag=True)
+_m1_cost = 2000 - pl.sanity_point
+check("M1 其它系统的缺省调用（settle_hypnosis=True）照旧：补正后通过、扣理智、累加今日消耗",
+      _m1_default[0] == 1 and _m1_cost > 0 and pl.pl_ability.today_sanity_point_cost == _m1_cost, (_m1_default, _m1_cost, pl.pl_ability.today_sanity_point_cost))
+pl.sanity_point = 0
+instuct_judege.calculation_instuct_judege(0, 305, _("H模式"), not_draw_flag=True)
+check("M1 缺省调用在理智不足时照旧解除催眠", hypno.sp_flag.unconscious_h == 0, hypno.sp_flag.unconscious_h)
+pl.talent[332] = 0
+pl.sanity_point = 0
+pl.sanity_point_max = 0
+pl.pl_ability.today_sanity_point_cost = 0
+schedule_handle.clear_class_cell(ROOM_P, _hypno_day, 8)
+remove_character(305)
+
+section("Plan 31 L3：提前几分钟开讲预约的实操课，按那一节判「本节已缺课」；L12：记出勤时累计实操课次数")
+cache.rhodes_island.temp_sex_class = {}
+cache.sex_class_mode = False
+cache.group_sex_mode = False
+move_to(0, classroom_path(ROOM_P))
+move_to(201, classroom_path(ROOM_P))
+student_a.sp_flag.is_h = False
+_g201 = growth_handle.get_child_growth(201)
+_l3_early = period_time(5) - datetime.timedelta(minutes=5)
+check("L3 前置：14:40 开讲还在上一节（节次 4），预约的是 14:45 开始的节次 5", game_time.get_class_period_by_time(_l3_early) == 4)
+sex_class_handle.set_temp_class(today, 5, ROOM_P, 70)
+set_time(_l3_early)
+_g201.last_absent_period = [today, 4]
+_attend, _sex = _g201.attend_class_count, _g201.sex_class_count
+sex_class_handle.start_sex_class(70, [201])
+check("L3 提前 5 分钟开讲、上一节缺过课：出勤 +1（此前按开讲时刻判成本节已缺课，出勤记不上）", _g201.attend_class_count == _attend + 1, (_attend, _g201.attend_class_count))
+check("L12 记出勤的同时累计实操课次数 +1，养成数值 25 读得到",
+      _g201.sex_class_count == _sex + 1 and growth_handle.get_growth_value(201, education_constant.GROWTH_VALUE_SEX_CLASS) == _sex + 1, (_sex, _g201.sex_class_count))
+_g201.last_absent_period = [today, 5]
+_attend, _sex = _g201.attend_class_count, _g201.sex_class_count
+sex_class_handle.settle_attend(201)
+check("L3 722 晚到（取行为开始时刻 14:40）同样按那一节判：这一节已缺课，出勤与实操课次数都不加",
+      _g201.attend_class_count == _attend and _g201.sex_class_count == _sex, (_attend, _g201.attend_class_count, _sex, _g201.sex_class_count))
+_g201.last_absent_period = [today, 4]
+sex_class_handle.settle_attend(201)
+check("L3 722 晚到、只有上一节缺过课：出勤与实操课次数照记",
+      _g201.attend_class_count == _attend + 1 and _g201.sex_class_count == _sex + 1, (_attend, _g201.attend_class_count, _sex, _g201.sex_class_count))
+sex_class_handle.end_sex_class()
+cache.rhodes_island.temp_sex_class = {}
+sex_class_handle.set_temp_class(today, 5, ROOM_P, 70)
+set_time(_l3_early)
+_g201.last_absent_period = [today, 5]
+_attend, _sex = _g201.attend_class_count, _g201.sex_class_count
+sex_class_handle.start_sex_class(70, [201])
+check("L3 提前开讲、这一节本身已记缺课：开课时出勤与实操课次数都不加",
+      _g201.attend_class_count == _attend and _g201.sex_class_count == _sex, (_attend, _g201.attend_class_count, _sex, _g201.sex_class_count))
+sex_class_handle.end_sex_class()
+cache.rhodes_island.temp_sex_class = {}
+set_time(datetime.datetime(_l3_early.year, _l3_early.month, _l3_early.day, 12, 30))
+_g201.last_absent_period = [today, 3]
+_attend, _sex = _g201.attend_class_count, _g201.sex_class_count
+sex_class_handle.start_sex_class(70, [201])
+check("L3 节次外的当场课（节次 -1）没有开始时刻，照旧按参照时刻判：不报错，出勤与实操课次数照记",
+      sex_class_handle.get_running_class_key() == sex_class_handle.get_class_key(today, -1)
+      and _g201.attend_class_count == _attend + 1 and _g201.sex_class_count == _sex + 1, (sex_class_handle.get_running_class_key(), _attend, _g201.attend_class_count))
+sex_class_handle.end_sex_class()
+_g201.last_absent_period = []
+cache.rhodes_island.temp_sex_class = {}
+
 finish()

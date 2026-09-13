@@ -105,26 +105,63 @@ settle_default.base_chara_favorability_and_trust_common_settle = _orig_favor
 reset_mark(201, 202)
 move_to(0, SCENE_DORM)
 
-section("557 学生晚到的补结算（第五轮）")
+section("557 学生侧结算：本节教师判能到岗，学生开始听课时就结算（第五轮加的晚到补结算，Plan 31 §3.1 放宽）")
 schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
 reset_mark(201, 202)
+# 教师还在路上：人不在这间教室、也没在授课——玩家一步跨满一整节、教师换教室晚到时，学生坐下那一刻就是这样
+move_to(101, SCENE_DORM)
 teacher.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
 before = student_a.experience.get(exp_45, 0)
 attend_before = student_a.child_growth.attend_class_count
 EFFECT[557](201, 45, change, cache.game_time)
-check("教师还没开讲：学生侧不结算（等教师的广播）", student_a.experience.get(exp_45, 0) == before)
+check("H1 教师还在路上、判能到岗：学生开始听课时就结算这一节（此前要等教师到场开讲，玩家一步跨满一整节时整节白上）",
+      student_a.experience.get(exp_45, 0) - before == int(3 * 2.0) and student_a.child_growth.attend_class_count == attend_before + 1,
+      (student_a.experience.get(exp_45, 0) - before, student_a.child_growth.attend_class_count - attend_before))
+move_to(101, classroom_path(ROOM1))
 teacher.behavior.behavior_id = constant.Behavior.TEACH
-EFFECT[557](201, 45, change, cache.game_time)
-check("教师已在同一教室授课：晚到的学生自己补上这一节", student_a.experience.get(exp_45, 0) - before == int(3 * 2.0) and student_a.child_growth.attend_class_count == attend_before + 1)
-EFFECT[557](201, 45, change, cache.game_time)
 EFFECT[512](101, 45, change, cache.game_time)
-check("补过之后再补 / 再广播都不重复", student_a.child_growth.attend_class_count == attend_before + 1)
-move_to(101, SCENE_DORM)
+check("H1 教师随后到场开讲：512 广播不再给她重复发（同一节去重）",
+      student_a.experience.get(exp_45, 0) - before == int(3 * 2.0) and student_a.child_growth.attend_class_count == attend_before + 1)
+EFFECT[557](201, 45, change, cache.game_time)
+check("补过之后再补也不重复", student_a.child_growth.attend_class_count == attend_before + 1)
+# 教师判来不了：学生这一节该降级自习（548），557 不结算
 reset_mark(202)
+teacher.sp_flag.is_h = True
 before = student_b.experience.get(exp_45, 0)
 EFFECT[557](202, 45, change, cache.game_time)
-check("教师不在这间教室：不结算", student_b.experience.get(exp_45, 0) == before)
+check("H1 教师判来不了（H 中）：557 不结算", student_b.experience.get(exp_45, 0) == before and student_b.child_growth.last_attend_period == [])
+teacher.sp_flag.is_h = False
+# Plan 31 §3.4：空气催眠只在人已在本节教室时算能到岗，木头人一律来不了（测试直接改状态位，要自己刷新异常位）
+teacher.sp_flag.unconscious_h = 5
+move_to(101, SCENE_DORM)
+handle_premise.refresh_unnormal_flag(101)
+EFFECT[557](202, 45, change, cache.game_time)
+check("M3 空气催眠的教师、人不在本节教室（去教室的移动行走不了）：557 不结算", student_b.child_growth.last_attend_period == [])
 move_to(101, classroom_path(ROOM1))
+EFFECT[557](202, 45, change, cache.game_time)
+check("M3 空气催眠的教师、人已在本节教室（授课行照样成立）：照常结算", student_b.child_growth.last_attend_period == [cache.game_time.toordinal(), 0],
+      student_b.child_growth.last_attend_period)
+reset_mark(202)
+teacher.sp_flag.unconscious_h = 6
+teacher.hypnosis.blockhead = True
+handle_premise.refresh_unnormal_flag(101)
+EFFECT[557](202, 45, change, cache.game_time)
+check("M3 体控-木头人的教师（每轮被锁成原地等待）：人就在教室也不结算", student_b.child_growth.last_attend_period == [])
+teacher.hypnosis.blockhead = False
+teacher.sp_flag.unconscious_h = 0
+handle_premise.refresh_unnormal_flag(101)
+# 授课者是玩家（当天的临时实操课）：那是课堂 H，不是授课
+sex_class_handle.set_temp_class(cache.game_time.date().toordinal(), 0, ROOM_P, 70, must_attend=[202])
+move_to(202, classroom_path(ROOM_P))
+reset_mark(202)
+EFFECT[557](202, 45, change, cache.game_time)
+check("H1 本节是玩家的临时实操课（授课者为玩家）：557 不结算", student_b.child_growth.last_attend_period == [])
+cache.rhodes_island.temp_sex_class = {}
+# 学生不在本节的教室里（被玩家拉到别处听课）：她这一节由把她拉去的人结算，557 不接手
+move_to(202, SCENE_DORM)
+EFFECT[557](202, 45, change, cache.game_time)
+check("H1 学生不在本节的教室里：557 不结算", student_b.child_growth.last_attend_period == [])
+move_to(202, classroom_path(ROOM1))
 teacher.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
 reset_mark(201, 202)
 
@@ -412,5 +449,39 @@ schedule_handle.clear_selected_course(201, 0, 0)
 schedule_handle.clear_selected_course(201, 0, 1)
 clear_schedules()
 reset_mark(201)
+
+section("Plan 31 §3.6（L2）：549 置翘课 flag 时记下行为开始那一天；前一天挂的 flag 不触发翘课被抓")
+from Script.Design import second_behavior  # noqa: E402
+
+growth_a = growth_handle.get_child_growth(201)
+_late_start = DEFAULT_TIME.replace(hour=23, minute=40)
+set_time(_late_start)
+growth_a.skip_class_flag = False
+growth_a.skip_class_day = 0
+# 结算传进来的 now_time 是行为结束时刻（这里跨过了午夜），日期要按行为开始时刻记
+EFFECT[549](201, 45, change, _late_start + datetime.timedelta(minutes=45))
+check("L2 549：置 flag，日期记的是行为开始那一天（23:40 开始、跨过午夜才结束）", growth_a.skip_class_flag and growth_a.skip_class_day == _late_start.toordinal(),
+      (growth_a.skip_class_flag, growth_a.skip_class_day, _late_start.toordinal()))
+check("L2 judge_skip_class_today：挂上那天为真、次日为假", class_ai.judge_skip_class_today(201, _late_start)
+      and not class_ai.judge_skip_class_today(201, _late_start + datetime.timedelta(minutes=45)))
+# 623 的触发条件：孩子与玩家同场景、双方都醒着、玩家不在隐奸中
+set_time(period_time(1))
+move_to(0, classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+pl.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+student_a.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+second_behavior.character_get_second_behavior(201, "caught_skip_class", reset=True)
+growth_a.skip_class_flag = True
+growth_a.skip_class_day = period_time(1).toordinal() - 1
+second_behavior.judge_child_growth_second_behavior(201)
+check("L2 前一天挂上、跨天没清掉的 flag（一步跨过午夜 / 翘课当天离线）：与玩家同场景也不触发翘课被抓",
+      student_a.second_behavior.get("caught_skip_class", 0) == 0, student_a.second_behavior.get("caught_skip_class", 0))
+growth_a.skip_class_day = period_time(1).toordinal()
+second_behavior.judge_child_growth_second_behavior(201)
+check("L2 对照：今天挂上的 flag 照常触发翘课被抓", student_a.second_behavior.get("caught_skip_class", 0) == 1)
+second_behavior.character_get_second_behavior(201, "caught_skip_class", reset=True)
+growth_a.skip_class_flag = False
+growth_a.skip_class_day = 0
+move_to(0, SCENE_DORM)
 
 finish()

@@ -46,6 +46,7 @@ description: 对 erArk 某个已实现的系统做一轮全面复查：主代理
 
 - args 的字段、返回结构、代理数估算、续跑方式见 `tools/Workflow编排.md`；正式跑之前先用 `validateOnly: true` 检查 args（0 个代理）。
 - 用户调起本 skill，就等于同意本 skill 里写明要跑的这两个 Workflow；规模明显超出常规（例如一轮 30 个代理以上）时先告诉用户估算再跑。
+- 跑起来之后马上挂 Monitor 盯着（本目录 `wf_watch.py --watch`），用户在对话里看得到每个代理交卷；停没停住的判法与处理见 `tools/Workflow编排.md`「运行中：怎么判断停没停住」。
 
 ## 在 plan mode 下被调起时
 

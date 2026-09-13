@@ -133,34 +133,56 @@ def constand_2_handle():
 
     return out_str
 
-def constand_promise_2_csv():
-    with open("Script\\Core\\constant_promise.py", "r",encoding="utf-8") as f:
-        a=f.readlines()
-        f.close()
+def build_promise_csv_text(line_list: list) -> str:
+    """
+    把 constant_promise.py 的全部行转成 ArkEditor 前提表（tools/ArkEditor/csv/Premise.csv）的文本
+    只做字符串处理、不读写文件：本模块顶层会调 game_config.init()，回归测试不 import 本模块，
+       而是用 ast 单独取出这个函数来跑（tools/tests/education/test_talk_data.py）
+    Keyword arguments:
+    line_list -- constant_promise.py 的全部行（readlines() 的结果，每行带换行符）
+    Return arguments:
+    str -- 前提表的完整文本：表头 + 每个前提一行「前提id,常量名,分类,描述」
+    """
     out_str = "cid,premise_name,premise_type,premise\n"
-
-    for line in a:
+    for line in line_list:
+        # 只看以引号收尾、不带注释的行：常量行（NAME = "id"）与紧随其后的单行 docstring
         if len(line) >= 3 and line[-2] == "\"" and "#" not in line:
             if line[-3] == "\"":
+                # docstring 行：取三引号中间的「分类 描述」
                 promise_text = line.split("\"")[-4].strip()
                 if promise_text != "前提id":
-                    promise_type,promise_info = promise_text.split(" ")[0],promise_text.split(" ")[1]
+                    # 按第一个空格切一刀（Plan 31 §3.16）：分类里没有空格，描述里的空格原样保留；
+                    #    此前按每个空格切、只取第二段，描述带出处括注（如「Plan 22 三期」）的会截断在「（Plan」
+                    part_list = promise_text.split(" ", 1)
+                    promise_type = part_list[0]
+                    promise_info = part_list[1] if len(part_list) > 1 else ""
                     out_str += f"{promise_type},{promise_info}\n"
-                    # out_str += f"未分类,{promise_text}\n"
-                # print(f"debug promise_text = {promise_text}")
             else:
+                # 常量行：先写前提id与常量名，分类与描述由下一行的 docstring 补齐
                 promise_cid = line.split("\"")[-2].strip()
                 promise_name = line.split(" =")[0].strip()
                 out_str += f"{promise_cid},{promise_name},"
-                # print(f"debug promise_name = {promise_name}")
         elif len(line) == 1:
             out_str += "\n"
+    return out_str
+
+
+def constand_promise_2_csv():
+    """
+    前提文件转csv（mode 2）：读 constant_promise.py，重新生成 ArkEditor 的前提表
+    Keyword arguments:
+    无
+    Return arguments:
+    str -- 写入的前提表文本
+    """
+    with open("Script\\Core\\constant_promise.py", "r", encoding="utf-8") as f:
+        line_list = f.readlines()
+    out_str = build_promise_csv_text(line_list)
 
     # 开始保存
-    with open("tools\\ArkEditor\\csv\\premise.csv", "w",encoding="utf-8") as f:
+    with open("tools\\ArkEditor\\csv\\premise.csv", "w", encoding="utf-8") as f:
         f.write(out_str)
-        f.close()
-    print(f"已写入csv文件末尾")
+    print("已写入csv文件末尾")
 
     return out_str
 

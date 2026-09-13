@@ -112,6 +112,7 @@ def get_classmate_list(character_id: int) -> List[int]:
        存成字段反而要多一处同步点
     只认双方都在学生岗、且那一格是每周确有的课（Plan 30 §3.6，growth_handle.judge_selected_cell_real）：
        改了岗的女儿课表残留、已停课的格子、上不成的个人式课都还躺在课表上，那都不是在一起上课
+    对方只取幼女 / 萝莉（Plan 31 §3.11，与同胞同口径）：同学事件写的都是能一起玩的孩子
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -134,7 +135,9 @@ def get_classmate_list(character_id: int) -> List[int]:
     for other_id in cache.npc_id_got:
         if other_id == character_id:
             continue
-        if not get_character_stage(other_id):
+        # 只取幼女 / 萝莉（Plan 31 §3.11，与同胞同口径，Plan 26 口径 5）：仍在学生岗的成年姐姐与妹妹同班时，
+        #    会被点成幼女 41「班上的{TargetName}」这类事件的对象；婴儿不上学，本就没有课表
+        if get_character_stage(other_id) not in education_constant.SIBLING_PLAY_STAGE_SET:
             continue
         other_growth = cache.character_data[other_id].child_growth
         if other_growth is None or not other_growth.selected_course:
@@ -294,12 +297,14 @@ def get_growth_event_title(queue_data: dict) -> str:
 
 def push_graduation_event(character_id: int):
     """
-    成年结算时把毕业典礼与成年纪念插到队首
+    成年结算时把毕业典礼与成年纪念插到队首，再把成年后的里程碑事件（通用 59 / 60）推到队尾
 
     **不做成玩家指令**（口径44）：一辈子只触发一次的叙事节点，
        做成指令要配行为、时长、口上、前提一整套，事件系统的一次性叙事正是为此而生
     插队首而不是追加：成年是叙事上的大节点，让它排在一堆日常事件后面会很怪
     幂等由成年结算本身的守卫保证（素质 103→104，一个孩子只会经过一次）
+    成年桶（sub_key 104）只有这里显式推入的事件会出现（Plan 31 §3.2）：日常派发名单只收 101~103（第五轮），
+       默认提供者又跳过部门 15。通用 59 / 60 此前没有入口，永远推不出来
     Keyword arguments:
     character_id -- 刚成年的孩子角色id
     Return arguments:
@@ -308,6 +313,14 @@ def push_graduation_event(character_id: int):
     # 倒序插入，使毕业典礼最终排在成年纪念之前
     official_event_handle.push_official_event(education_constant.ADULT_MEMORIAL_EVENT_UID, character_id, to_front=True)
     official_event_handle.push_official_event(education_constant.GRADUATION_EVENT_UID, character_id, to_front=True)
+    # 通用 59 / 60（人事送来干员编号、第一次以干员身份报到）按普通顺序推到队尾（Plan 31 §3.2）：
+    #    成年当天先看到毕业典礼与成年纪念，之后处理公务时再遇到这两条。
+    #    仍过 judge_event_can_enqueue：已触发过、已在队列里的不重复推。
+    #    不受队列容量上限约束：与毕业典礼、成年纪念一样一辈子只有这一次入口，成年那一刻队列若已满，按普通入队就永远丢了
+    for uid in education_constant.ADULT_EXTRA_EVENT_UID_LIST:
+        if not official_event_handle.judge_event_can_enqueue(uid, character_id):
+            continue
+        official_event_handle.push_official_event(uid, character_id, ignore_capacity=True)
 
 
 def push_semester_event(character_id: int) -> bool:
@@ -349,8 +362,8 @@ def push_semester_event_for_list(character_list: List[int]) -> int:
     """
     push_count = 0
     for character_id in character_list:
-        # 期末事件写的都是在上学的孩子（成绩单、教室、课表），只推给幼女 / 萝莉（Plan 26 §3.4）；
-        #    已成年的女儿照旧出成绩单（Plan 24 §3.10），只是不推事件
+        # 期末事件写的都是在上学的孩子（成绩单、教室、课表），只推给幼女 / 萝莉（Plan 26 §3.4）。
+        #    成年女儿在学生岗时照出成绩单、整学期不在学生岗的不出（Plan 30 Q1），两种都不推事件
         if get_character_stage(character_id) not in (102, 103):
             continue
         if push_semester_event(character_id):

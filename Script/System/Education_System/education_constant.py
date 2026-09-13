@@ -93,6 +93,9 @@ FEMALE_SUBJECT_LIST: List[int] = [ability_id for ability_id in SUBJECT_ABILITY_L
 """ 女儿学得了的科目（17门 = 10门技能 + 7门性技）：全部科目去掉男性专属的那些。
     自动排课取的是这一张，下面实操课的主修表也从它筛。它原先叫 PRENATAL_SUBJECT_LIST、只写了胎教转写一个用途；
     Plan 26 起胎教出生时改折习得珠，不再按科目转写 """
+FALLBACK_SUBJECT_ABILITY = 45
+""" 取不到科目时回落的科目：学识（Plan 31 收拢）。玩家手动授课（结算 512）、日程自习（548）与 CVP 对玩家手动授课的回落
+    （handle_premise.get_player_manual_teach_course）共用，口上读到的科目与实际结算不会分叉 """
 SEX_CLASS_ABILITY_LIST = [ability_id for ability_id in FEMALE_SUBJECT_LIST if game_config.config_ability[ability_id].ability_type == ABILITY_TYPE_SEX_SKILL]
 """ 实操课可选的主修性技科目：指技70/舌技71/足技72/胸技73/膣技74/肛技75/榨精77 """
 SEX_SKILL_SUBJECT_SET = {ability_id for ability_id in SUBJECT_ABILITY_LIST if game_config.config_ability[ability_id].ability_type == ABILITY_TYPE_SEX_SKILL}
@@ -426,6 +429,8 @@ GROWTH_VALUE_REPORT_PENDING = 23
     「检查成绩单」按档位分的口上用它挑出查看新成绩单的那一次：学期中途看的是截至目前的情况，只出通用口上（Plan 27 §3.6） """
 GROWTH_VALUE_SKIP = 24
 """ 养成数值编号：累计翘课节数（Plan 30）。翘掉的课同时记进累计缺课（编号 1）；要单看翘课的事件（如萝莉 2）读它 """
+GROWTH_VALUE_SEX_CLASS = 25
+""" 养成数值编号：累计实操课次数（Plan 31）。开课与开课后到场各记一次，与出勤同一处写入；口上里「第一次来 / 老学生」读它，不读含全部课型的编号 0 """
 
 # ==== 13. 学期与成绩单 ====
 SEMESTER_NAME = {3: _("春季学期"), 6: _("夏季学期"), 9: _("秋季学期"), 12: _("冬季学期")}
@@ -479,6 +484,10 @@ GRADUATION_EVENT_UID = "通用1"
     这是**数据键**不是显示文本，绝不能包 `_()`——包了就再也对不上事件表 """
 ADULT_MEMORIAL_EVENT_UID = "通用2"
 """ 成年纪念的事件uid，紧跟在毕业典礼之后 """
+ADULT_EXTRA_EVENT_UID_LIST = ("通用59", "通用60")
+""" 成年结算时在毕业典礼、成年纪念之后推入队尾的成年事件（Plan 31 §3.2）。
+    成年桶（sub_key 104）只有显式推入的事件会出现：日常派发名单只收 101~103（第五轮），默认提供者又跳过部门 15。
+    这是**数据键**，不能包 `_()`；tools/official_event_check.py 另抄一份，据此拦截成年桶里别的 uid """
 SEMESTER_EVENT_SUB_KEY = 200
 """ 期末事件的**保留**子桶键（对应 data/official_event/期末.csv 的 sub_key 列）。
 

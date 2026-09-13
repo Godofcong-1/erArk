@@ -34,15 +34,16 @@ def get_now_class_tip(character_id: int):
     Return arguments:
     tuple or None -- 不在上课中则为None，否则为 (是否翘课bool, 悬停提示文本str)
     """
-    from Script.System.Education_System import education_constant, schedule_handle
+    from Script.System.Education_System import class_ai, education_constant, schedule_handle
     from Script.Design import game_time
 
     character_data: game_type.Character = cache.character_data[character_id]
-    growth_data = character_data.child_growth
     period = game_time.get_class_period(character_id)
 
-    # 翘课中：本该上课的节次里挂着翘课flag
-    if growth_data is not None and growth_data.skip_class_flag and period != -1:
+    # 翘课中：本该上课的节次里挂着今天的翘课flag。
+    #    flag 只在挂上的那一天有效（Plan 31 §3.6）：跨天结算在 NPC 阶段之后才清 flag、离线的人跨天不清，
+    #    直接读 flag 会让前一天翘过课的女儿第二天整天挂着 <翘>
+    if period != -1 and class_ai.judge_skip_class_today(character_id):
         now_course = schedule_handle.get_now_course(character_id)
         if now_course is not None:
             return True, _("翘课中：本该上 {0}（第{1}节）").format(

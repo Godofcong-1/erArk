@@ -14,7 +14,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle
 from Script.Config import game_config, normal_config
 from Script.Design import game_time
 from Script.System.Education_System import education_constant, schedule_handle, growth_handle, schedule_template_handle, student_select
-from Script.System.Education_System.class_schedule_panel import get_period_time_text
+from Script.System.Education_System.class_schedule_panel import get_period_time_text, get_teacher_absent_mark
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -374,7 +374,8 @@ class Course_Select_Panel:
         输出类型: (课型int, 目标) 元组；"CLEAR"为清空该格；None为取消
         功能: 班级式课不再让玩家「先猜课型、再看有没有课」——课型信息本就蕴含在教室名里
                  （理论教室→理论课、实践教室→实践课、大礼堂→公开课），
-                 所以直接列出本节各教室实际排了什么，玩家选的是「去上哪节课」而不是「什么类型的课」
+                 所以直接列出本节各教室实际排了什么，玩家选的是「去上哪节课」而不是「什么类型的课」。
+              格子上的教师已离岗 / 不在岛上的，名字后加标注、整行灰字（Plan 31 §3.10），与全局课表同口径
         """
         draw.TitleLineDraw(_("选择课程"), self.width).draw()
         info_draw = draw.NormalDraw()
@@ -408,14 +409,17 @@ class Course_Select_Panel:
                 continue
             class_count += 1
             teacher_name = _("无教师（自习）")
+            # 教师已离岗 / 不在岛上时名字后加标注、整行灰字（Plan 31 §3.10）：这节课每周都会降级为自习，但仍可选，所以照旧是按钮
+            absent_mark = ""
             if cell[1] in cache.character_data:
-                teacher_name = cache.character_data[cell[1]].name
+                absent_mark = get_teacher_absent_mark(cell[1])
+                teacher_name = cache.character_data[cell[1]].name + absent_mark
             course_type = schedule_handle.get_course_type_by_classroom(classroom)
             now_draw = draw.LeftButton(
                 _("[{0}] {1}/{2}（{3}）").format(
                     classroom, game_config.config_ability[cell[0]].name, teacher_name,
                     education_constant.COURSE_TYPE_NAME.get(course_type, _("未知"))),
-                f"CLS_{classroom}", int(self.width / 2))
+                f"CLS_{classroom}", int(self.width / 2), normal_style="deep_gray" if absent_mark else "standard")
             now_draw.draw()
             return_list.append(now_draw.return_text)
             result_by_return[now_draw.return_text] = (course_type, classroom)

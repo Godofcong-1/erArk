@@ -16,7 +16,7 @@ from typing import List
 from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.Design import attr_calculation, game_time
-from Script.System.Education_System import education_constant, semester_handle, growth_handle, student_select
+from Script.System.Education_System import education_constant, semester_handle, growth_handle, student_select, class_ai
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -373,7 +373,7 @@ class Growth_Panel:
         绘制待处理的几个 flag
         输入类型: character_id(int)
         输出类型: 无
-        功能: 成绩单待查看、有待炫耀的能力、今日翘课中
+        功能: 成绩单待查看、有待炫耀的能力、今日翘课中（翘课只认挂上 flag 的那一天，Plan 31 §3.6）
         """
         growth_data = cache.character_data[character_id].child_growth
         if growth_data is None:
@@ -392,7 +392,9 @@ class Growth_Panel:
                          for ability_id in growth_data.show_off_ability
                          if ability_id in game_config.config_ability]
             text_list.append(_("有想炫耀的进步：{0}（下次见到你时会说）").format("、".join(name_list)))
-        if growth_data.skip_class_flag:
+        # 翘课 flag 认日期（Plan 31 §3.6）：跨天结算在 NPC 阶段之后才清、离线的人跨天不清，只看布尔值会把前一天的翘课写成「今天」。
+        #    参照时刻取游戏时间：这里的「今天」是玩家看面板的这一天，不是她当前行为开始的那一刻
+        if class_ai.judge_skip_class_today(character_id, cache.game_time):
             text_list.append(_("今天正在翘课"))
         # 队列是全岛共用的，这里只数这个孩子的那几条（Plan 23）
         # 不提示的话玩家不知道要去博士办公室处理公务，事件会一直躺在队列里

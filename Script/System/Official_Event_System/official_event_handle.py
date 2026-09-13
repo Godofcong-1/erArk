@@ -345,7 +345,7 @@ def get_event_weight(uid: str) -> int:
         return 1
 
 
-def push_official_event(uid: str, character_id: int = 0, partner_id: int = 0, to_front: bool = False) -> bool:
+def push_official_event(uid: str, character_id: int = 0, partner_id: int = 0, to_front: bool = False, ignore_capacity: bool = False) -> bool:
     """
     把一条事件推进待处理队列
     Keyword arguments:
@@ -353,14 +353,16 @@ def push_official_event(uid: str, character_id: int = 0, partner_id: int = 0, to
     character_id -- 主体角色id，无主体为0
     partner_id -- 互动对象角色id，默认0为玩家
     to_front -- 是否插到队首（一次性的叙事节点用，如毕业典礼）
+    ignore_capacity -- 追加到队尾时是否不受队列容量上限约束（排在队尾的一次性叙事节点用，如成年后的通用 59 / 60，Plan 31 §3.2）；插队首的本就不受约束
     Return arguments:
     bool -- 是否成功入队
     """
     if get_event_data(uid) is None:
         return False
     queue = get_queue()
-    # 插队首的是一辈子只有一次的叙事节点（毕业典礼 / 成年纪念），队列满了也不能丢，不受容量上限约束
-    if not to_front and len(queue) >= get_queue_max():
+    # 插队首的是一辈子只有一次的叙事节点（毕业典礼 / 成年纪念），队列满了也不能丢，不受容量上限约束；
+    #    排在队尾、同样一辈子只有一次入口的节点（通用 59 / 60）由调用方传 ignore_capacity
+    if not to_front and not ignore_capacity and len(queue) >= get_queue_max():
         return False
     queue_data = {
         "uid": uid,

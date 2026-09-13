@@ -327,7 +327,10 @@ def judge_can_join_sex_class(character_id: int, check_course: bool = True) -> bo
     成年干员没有这层前置，仍需满足既有的「H模式」实行值（InstructJudge.csv:10，S 350），
     否则这条无实行值要求的入口就成了绕过全部既有H前提的旁路。
     第3层「前置修习」对两者都生效：个人课表里要排过性技科目的教室课（judge_has_sex_skill_course）；
-       玩家点名的必修生由调用方传 check_course=False 豁免——点名本身就是玩家的决定
+       玩家点名的必修生由调用方传 check_course=False 豁免——点名本身就是玩家的决定。
+    本函数必须是纯函数（Plan 31 §3.3）：开课前提、口上前提、旁观名单、必修名单、排课页人数与学生自己的决策都挂在它上面，
+       每刷新一次就求值一次。所以成年干员的实行值只判不扣——催眠补正照算（玩家理智够就能进），
+       但不扣理智、不累加今日消耗、理智不够时也不解除催眠；进了课堂之后每个 H 动作照常各自结算实行值与理智
     Keyword arguments:
     character_id -- 角色id
     check_course -- 是否检查前置修习
@@ -360,8 +363,8 @@ def judge_can_join_sex_class(character_id: int, check_course: bool = True) -> bo
     # 孩子零门槛
     if character_data.relationship.father_id == 0:
         return True
-    # 成年干员仍走既有的H模式实行值
-    return bool(instuct_judege.calculation_instuct_judege(0, character_id, _("H模式"), not_draw_flag=True)[0])
+    # 成年干员仍走既有的H模式实行值，只判不扣（Plan 31 §3.3，见上方说明）
+    return bool(instuct_judege.calculation_instuct_judege(0, character_id, _("H模式"), not_draw_flag=True, settle_hypnosis=False)[0])
 
 
 def get_scene_student_list(scene_path: Optional[list] = None) -> List[int]:
@@ -831,15 +834,42 @@ def pull_student_into_class(student_id: int) -> None:
     second_behavior.character_get_second_behavior(student_id, constant.Behavior.JOIN_SEX_CLASS)
 
 
+def get_attend_judge_time(now_time: datetime.datetime) -> datetime.datetime:
+    """
+    取判「这一节已记缺课」时用的时刻（Plan 31 §3.7）
+    Keyword arguments:
+    now_time -- 参照时刻（开课时的游戏时间，或 722 晚到学生的行为开始时刻）
+    Return arguments:
+    datetime.datetime -- 正在进行的实操课是提前开讲的（节次开始时刻晚于参照时刻）时取那一节的开始时刻，其余情况取参照时刻本身
+    功能: find_reserved_class 允许在开课前 NOTIFY_BEFORE_MINUTE 分钟内提前开讲，此时参照时刻还落在上一节，
+             按它判会把上一节的缺课算到这节课头上。
+          节次外的当场课（节次 -1）没有开始时刻、拖堂进后面节次的课开始时刻早于参照时刻，都照旧按参照时刻判。只读，不写数据
+    """
+    class_key = get_running_class_key()
+    if not class_key:
+        return now_time
+    date_ordinal, period = parse_class_key(class_key)
+    if date_ordinal <= 0:
+        return now_time
+    start_time = get_period_start_time(date_ordinal, period)
+    if start_time is None or start_time <= now_time:
+        return now_time
+    return start_time
+
+
 def settle_attend(student_id: int, now_time=None) -> None:
     """
-    给一名到场学生记一次出勤
+    给一名到场学生记一次出勤，并累计一次实操课
     Keyword arguments:
     student_id -- 学生的角色id
     now_time -- 参照时刻，None 时取学生的行为开始时刻（722 晚到的人用）；开课时传 cache.game_time
     Return arguments:
     无
-    功能: 这一节已记了缺课（开课时体力不足、休完才到场）的不记（Plan 30，同一节只落一种记录）
+    功能: 这一节已记了缺课（开课时体力不足、休完才到场）的不记（Plan 30，同一节只落一种记录）。
+          「这一节」按正在进行的那节实操课判（get_attend_judge_time，Plan 31 §3.7）：玩家提前几分钟开讲预约的课时，
+             参照时刻还在上一节，上一节缺过课的学生出勤会记不上，而她进了 H 不再进 AI，这一节也不会再记缺课。
+          记出勤的同时累计实操课次数 sex_class_count（养成数值 25，Plan 31 §3.14 L12）：口上里「第一次来 / 老学生」读它，
+             不读含全部课型的累计听课节数；这一节已缺课、不记出勤的也不记它
     """
     # 只给「女儿 ∪ 学生岗」记：凭 H 模式实行值到场的成年非学生干员不是学生，
     #    给她们惰性创建养成数据只会让全岛的存档一起变大（与 semester_handle 的约定一致）
@@ -850,9 +880,11 @@ def settle_attend(student_id: int, now_time=None) -> None:
         return
     if now_time is None:
         now_time = student_data.behavior.start_time or cache.game_time
-    if growth_handle.judge_absent_this_period(student_id, now_time):
+    if growth_handle.judge_absent_this_period(student_id, get_attend_judge_time(now_time)):
         return
-    growth_handle.get_child_growth(student_id).attend_class_count += 1
+    growth_data = growth_handle.get_child_growth(student_id)
+    growth_data.attend_class_count += 1
+    growth_data.sex_class_count += 1
 
 
 # ---------------------------------------------------------------------------

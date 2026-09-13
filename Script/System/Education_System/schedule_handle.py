@@ -108,6 +108,24 @@ def get_course_type_by_classroom(classroom: str) -> int:
     return -1
 
 
+def get_course_type_by_position(position: List[str]) -> int:
+    """
+    按所在位置判一节课的课型（玩家手动授课用，Plan 31 收拢）
+    Keyword arguments:
+    position -- 场景路径
+    Return arguments:
+    int -- 所在场景是理论 / 实践教室、大礼堂时为对应课型，其余一律按理论课
+    功能: 玩家手动发起的授课不在课表上，结算 512 与 CVP 的回落（handle_premise.get_player_manual_teach_course）都按这里判课型，
+          两处共用一个定义，口上读到的课型与实际结算不会分叉。只读
+    """
+    scene_path_str = map_handle.get_map_system_path_str_for_list(position)
+    if scene_path_str in cache.scene_data:
+        course_type = get_course_type_by_classroom(cache.scene_data[scene_path_str].scene_name)
+        if course_type != -1:
+            return course_type
+    return education_constant.COURSE_TYPE_THEORY
+
+
 def get_classroom_position(classroom: str) -> List[str]:
     """
     按教室场景名取它的场景路径，供移动使用
@@ -226,6 +244,23 @@ def get_teacher_cell(teacher_id: int, week_day: int, period: int, include_temp: 
     return None
 
 
+def judge_schedule_teacher(character_id: int) -> bool:
+    """
+    校验一个角色的教师反查（get_now_teaching / get_upcoming_teaching）是否生效（Plan 31 §3.10）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 玩家恒为True；NPC 只在教师岗时为True
+    功能: 改了岗或离岛的教师还挂在全局课表上。运行时 class_ai.judge_teacher_available 会挡住她，学生降级自习；
+             但前教师改当学生后，CVP Course / CourseType 与 561 都先问教师反查，取到的是她旧的授课格，而不是她自己的课。
+          与 class_ai.get_teacher_duty 同口径。玩家的授课只来自当天的临时实操课，他从不在全局课表的教师位上，不看岗位。
+          全局课表面板、撞课判定读的是 get_teacher_cell / get_teacher_week_schedule，不经过这里，照旧看得到她
+    """
+    if character_id == 0:
+        return True
+    return cache.character_data[character_id].work.work_type == education_constant.TEACHER_WORK_TYPE
+
+
 def get_upcoming_teaching(character_id: int, minute_limit: int = education_constant.UPCOMING_MINUTE) -> Optional[dict]:
     """
     取教师接下来 minute_limit 分钟内要开始的那一节课（到岗时间与课间用，2026-09-12 第五轮）
@@ -233,12 +268,15 @@ def get_upcoming_teaching(character_id: int, minute_limit: int = education_const
     character_id -- 教师的角色id
     minute_limit -- 往后看多少分钟
     Return arguments:
-    Optional[dict] -- 与 get_now_teaching 同结构，没有则为None
+    Optional[dict] -- 与 get_now_teaching 同结构；没有、或角色不是玩家且不在教师岗（Plan 31 §3.10）则为None
     功能: 8:40 到岗时 get_now_teaching 查不到第一节，教师若先随便去一间教室、9:00 再挪，
           第一节就会迟到；按「马上要上的那一节」提前去对的教室
     """
     import datetime
 
+    # 教师反查只认教师岗（Plan 31 §3.10），与 get_now_teaching 同口径
+    if not judge_schedule_teacher(character_id):
+        return None
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = character_data.behavior.start_time
     if now_time is None:
@@ -374,7 +412,8 @@ def get_now_course(character_id: int) -> Optional[dict]:
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
-    Optional[dict] -- 不在节次内、没排课、班级式课那一格已停课（全局课表空着，Plan 27）、或个人式课这一节上不成（场所未开放、兴趣课条件不符，Plan 28）时为None，否则为：
+    Optional[dict] -- 不在节次内、角色不在学生岗（Plan 31 §3.8）、没排课、班级式课那一格已停课（全局课表空着，Plan 27）、
+        或个人式课这一节上不成（场所未开放、兴趣课条件不符，Plan 28；兴趣课读书借不到书，Plan 29）时为None，否则为：
         {"course_type": 课型int, "target": 目标, "period": 节次int, "week_day": 星期int,
          "classroom": 教室场景名str（仅班级式课）, "ability_id": 科目能力id int（仅班级式课，-1为未知）,
          "teacher_id": 授课教师id int（仅班级式课，-1为无教师即自习）}
@@ -426,8 +465,17 @@ def get_course_at(character_id: int, now_time, period: int) -> Optional[dict]:
     now_time -- 那一节所在的时刻（取它的日期与星期）
     period -- 节次0~8
     Return arguments:
-    Optional[dict] -- 结构见 get_now_course，没排课、班级式课的全局课表那一格已停课、或个人式课这一节上不成（Plan 28）则为None
+    Optional[dict] -- 结构见 get_now_course；角色不在学生岗（Plan 31 §3.8）、没排课、班级式课的全局课表那一格已停课、
+        或个人式课这一节上不成（Plan 28）则为None
     """
+    # 课表只对学生岗生效（Plan 24 口径 1），取数口在这里统一收窄（Plan 31 §3.8）：
+    #    改了岗的女儿课表还残留着。此前 <课> 标识的个人式课分支、CVP Course / CourseType 按残留的课表判「在上课」——
+    #    改任厨师的女儿在厨房上班，每逢残留的「实习：厨师」节次都显示在上课（实习地点按谁在岗取，连她自己也算）。
+    #    下游（561 的学生分支、548 的计出勤、552 的实习课、实习导师认学徒）一并跟上；
+    #    get_course_stage、judge_selected_cell_real 等已有的岗位判断保留，冗余无害。
+    #    点名必修的覆盖也在这之后：必修名单只收学生岗，名单开出后改了岗的，不再被带去实操教室
+    if cache.character_data[character_id].work.work_type != education_constant.STUDENT_WORK_TYPE:
+        return None
     week_day = now_time.weekday()
     course = get_selected_course(character_id, week_day, period)
     # 被玩家点名必修的性技实操课优先于她自己的课表（口径 60「无论原本排了什么都来」，2026-09-12 第五轮）：
@@ -476,9 +524,12 @@ def get_now_teaching(character_id: int) -> Optional[dict]:
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
-    Optional[dict] -- 不在节次内或本节没课时为None，否则为
+    Optional[dict] -- 角色不是玩家且不在教师岗（Plan 31 §3.10）、不在节次内或本节没课时为None，否则为
         {"course_type": 课型int, "classroom": 教室场景名str, "ability_id": 科目能力id int, "period": 节次int}
     """
+    # 教师反查只认教师岗（Plan 31 §3.10）：前教师改当学生后，CVP 与 561 不再按她旧的授课格取课，改按她自己的课表
+    if not judge_schedule_teacher(character_id):
+        return None
     period = game_time.get_class_period(character_id)
     if period == -1:
         return None

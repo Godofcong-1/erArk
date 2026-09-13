@@ -3,7 +3,8 @@
 
 事件表有一堆**静默失败**的坑：`department` 写成非数字会让事件永远抽不中且不报错、
 空着的选项列在构建时会被删掉、正文里的裸 `{}` 会在绘制时抛异常、
-所有选项都带前提的事件会反复弹出、期末事件读本学期的养成数值会永远判不过……手写两百多条时这些错误几乎必然发生，
+所有选项都带前提的事件会反复弹出、期末事件读推送时恒定的养成数值会恒成立或永远判不过、
+写进成年桶却不由成年结算推入的事件永远推不出来……手写两百多条时这些错误几乎必然发生，
 所以每写完一批就跑一次本工具。
 
 用法（仓库根目录）：
@@ -43,31 +44,43 @@ PARTNER_PREMISE = ("self_have_sibling_child", "self_have_classmate")
 GROWTH_DEPARTMENT = 15
 """ 教育区（养成事件） """
 
-CHILD_SUB_KEY = {0, 101, 102, 103}
-""" 未成年阶段的子桶键：这些事件不允许改能力与素质（选错不该掉能力） """
-
 SEMESTER_SUB_KEY = 200
 """ 期末桶的子桶键（与 education_constant.SEMESTER_EVENT_SUB_KEY 一致） """
 
-SEMESTER_VALUE_ID = {4, 5, 6}
-""" 期末事件的前提不许读的养成数值：本学期听课 / 缺课 / 出勤率（Plan 30）。
-    期末事件在跨天结算里、学期基线重置之后才推送，这几项读的已是新学期（0/0，出勤率按 100）；
+CHILD_SUB_KEY = {0, 101, 102, 103, SEMESTER_SUB_KEY}
+""" 未成年阶段的子桶键：这些事件不允许改能力与素质（选错不该掉能力）。
+    期末桶只推给幼女 / 萝莉（成年女儿不推期末事件），同样算未成年（Plan 31 §3.15） """
+
+SEMESTER_VALUE_ID = {4, 5, 6, 9, 23}
+""" 期末事件的前提不许读的养成数值：推送那一刻它们都是定值，写了不是恒成立就是永远判不过（Plan 30，Plan 31 §3.15 补 9 / 23）。
+    期末事件在跨天结算里、学期基线重置之后才推送：4 / 5 / 6 本学期听课 / 缺课 / 出勤率读的已是新学期（0/0，出勤率按 100），
+    9 学期进度推送当天恒为 0，23 成绩单待查看推送时恒为 1（推给的正是刚出成绩单的孩子）；
     刚结束的学期只能从成绩单读（编号 7 档位、8 升级门数） """
 
 GROWTH_VALUE_RE = re.compile(r"CVP_A[12]_Growth\|(\d+)_")
 """ 从前提串里取养成数值编号 """
 
-DORM_SUB_KEY = {102, 103, 104}
-""" 幼女期起孩子住自己的宿舍，正文不该再出现育儿室 """
+DORM_SUB_KEY = {102, 103, 104, SEMESTER_SUB_KEY}
+""" 幼女期起孩子住自己的宿舍，正文不该再出现育儿室。期末桶只推给幼女 / 萝莉，同样算（Plan 31 §3.15） """
 
 DORM_TEXT_ALLOW = {"幼女": {"5"}}
 """ 上一条的例外：文件名 -> cid集合。
     只放「搬离育儿室」这类**本身就在讲这件事**的里程碑事件，别拿它当报错的消音器 """
 
+ADULT_SUB_KEY = 104
+""" 成年桶的子桶键（少女期素质 104） """
+
+ADULT_EVENT_UID_SET = {"通用1", "通用2", "通用59", "通用60"}
+""" 成年桶里允许出现的事件uid：只有成年结算显式推入的那几条（Plan 31 §3.2）。
+    与 education_constant 的 GRADUATION_EVENT_UID / ADULT_MEMORIAL_EVENT_UID / ADULT_EXTRA_EVENT_UID_LIST 一致（本工具不 import 游戏模块，另抄一份）；
+    日常派发名单只收 101~103、默认提供者又跳过部门 15，写进成年桶的别的事件永远推不出来（通用 59 / 60 就这样漏过一次） """
+
 MIN_COUNT = {"婴儿": 50, "幼女": 70, "萝莉": 70, "通用": 56}
 """ --full 模式下的条数下限（通用只数跨阶段的那部分，成年后事件不计入） """
 
 TEXT_DUP_LEN = 15
+""" 查重时比对的正文前缀长度 """
+
 TEXT_PLACEHOLDER = {
     "Name", "NickName", "NickNameToPl", "PlayerName", "PlayerNickName", "PlayerTargetName", "TargetName", "TargetNickName",
     "TargetNickNameToPl", "FoodName", "MakeFoodTime", "AllFoodName", "SceneName", "SceneOneCharaName", "TargetSceneName",
@@ -81,7 +94,6 @@ TEXT_PLACEHOLDER = {
        除此之外的花括号才会在 .format() 时抛 KeyError """
 PLACEHOLDER_RE = re.compile(r"\{([A-Za-z_]+)\}")
 """ 匹配 {Xxx} 形式的占位符 """
-""" 查重时比对的正文前缀长度 """
 
 
 def load_premise_name_set() -> set:
@@ -372,6 +384,14 @@ class Checker:
         file_name = os.path.splitext(os.path.basename(path))[0]
         if department == GROWTH_DEPARTMENT and sub_key in DORM_SUB_KEY and "育儿室" in text and cid not in DORM_TEXT_ALLOW.get(file_name, set()):
             self.error(path, line, "幼女期起孩子住自己的宿舍，正文不该再出现育儿室（确实在写搬离育儿室的话，把 cid 加进 DORM_TEXT_ALLOW）")
+        # 成年桶只收成年结算显式推入的事件（Plan 31 §3.2）：事件uid是「文件名 + cid」，日常派发不收成年女儿，别的事件写进来永远推不出来
+        if department == GROWTH_DEPARTMENT and sub_key == ADULT_SUB_KEY and f"{file_name}{cid}" not in ADULT_EVENT_UID_SET:
+            self.error(
+                path,
+                line,
+                f"成年桶只有成年结算显式推入的事件会出现：{file_name}{cid} 不在 {sorted(ADULT_EVENT_UID_SET)} 里"
+                "（要加成年事件，先登记进 education_constant.ADULT_EXTRA_EVENT_UID_LIST 与本工具的 ADULT_EVENT_UID_SET）",
+            )
         self.check_premise_text(path, line, "事件前提", row.get("premise", "").strip())
         if department == GROWTH_DEPARTMENT and sub_key == SEMESTER_SUB_KEY:
             self.check_semester_premise(path, line, row)
@@ -389,7 +409,7 @@ class Checker:
 
     def check_semester_premise(self, path: str, line: int, row: dict):
         """
-        期末事件的主前提与四个选项前提不许读本学期的养成数值（Plan 30）
+        期末事件的主前提与四个选项前提不许读推送时恒定的养成数值（Plan 30 禁 4 / 5 / 6，Plan 31 §3.15 补 9 / 23）
         Keyword arguments:
         path -- 文件路径
         line -- 行号
@@ -400,7 +420,12 @@ class Checker:
         for field in ["premise"] + [f"option_{index}_premise" for index in range(1, 5)]:
             for value_id in GROWTH_VALUE_RE.findall(row.get(field, "")):
                 if int(value_id) in SEMESTER_VALUE_ID:
-                    self.error(path, line, f"{field} 读了养成数值 {value_id}：期末事件在学期基线重置之后推送，养成数值 4 / 5 / 6 读的是新学期；看刚结束的学期用编号 7 / 8")
+                    self.error(
+                        path,
+                        line,
+                        f"{field} 读了养成数值 {value_id}：期末事件在学期基线重置之后推送，养成数值 4 / 5 / 6 读的是新学期、9 推送当天恒为 0、23 推送时恒为 1；"
+                        "看刚结束的学期用编号 7 / 8",
+                    )
 
     def check_dir(self):
         """
