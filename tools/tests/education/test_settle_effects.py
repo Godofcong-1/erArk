@@ -186,8 +186,12 @@ mentor = make_character(103, "带教", intern_work, position=place)
 mentor.ability[work_ability] = 4
 reset_mark(201)
 before = student_a.experience.get(exp_work, 0)
+_attend_552 = student_a.child_growth.attend_class_count
 EFFECT[552](201, 45, change, cache.game_time)
 check("有导师：按师徒等级差学该岗位能力", student_a.experience.get(exp_work, 0) - before == int(E.COURSE_EXP_BASE[E.COURSE_TYPE_INTERN] * 2.0))
+check("Plan 29 §3.1：实习课的出勤由 552 记一节，同一节 settle_course_attend（716 给体育 / 兴趣课用的）不会再记一份",
+      student_a.child_growth.attend_class_count == _attend_552 + 1 and not growth_handle.settle_course_attend(201)
+      and student_a.child_growth.attend_class_count == _attend_552 + 1)
 schedule_handle.clear_selected_course(201, 0, 0)
 before = student_a.experience.get(exp_work, 0)
 EFFECT[552](201, 45, change, cache.game_time)

@@ -322,7 +322,11 @@ move_to(201, SCENE_DORM)
 check("体育课：人不在场地 → 715 移动", dispatch(201) == SM.EDUCATION_MOVE_TO_COURSE_PLACE)
 pe_place = schedule_handle.get_course_place(schedule_handle.get_now_course(201))
 move_to(201, pe_place)
+_attend = growth_handle.get_child_growth(201).attend_class_count
 check("体育课：到场 → 716 执行该课行为", dispatch(201) == SM.EDUCATION_DO_COURSE)
+check("Plan 29 §3.1：体育课派出时记一节出勤（此前体育 / 兴趣课上完不计出勤，体力不足缺课却照记）",
+      growth_handle.get_child_growth(201).attend_class_count == _attend + 1)
+check("同一节再派 716（被打断后回去上）不重复记", dispatch(201) == SM.EDUCATION_DO_COURSE and growth_handle.get_child_growth(201).attend_class_count == _attend + 1)
 schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_INTEREST, 99999)
 move_to(201, SCENE_DORM)
 check("地点解析不出 → 交回既有 AI（去育儿室自由玩耍）", dispatch(201) == SM.MOVE_TO_NURSERY)
@@ -356,12 +360,27 @@ for _cid in _interest_list:
     move_to(201, course_start_place(_place))
     _move_sm = dispatch(201)
     move_to(201, _place)
+    # 各项都在同一节里验，去重标记逐项清掉，出勤才验得到每一项（Plan 29）
+    growth_handle.get_child_growth(201).last_attend_period = []
+    _attend_before = growth_handle.get_child_growth(201).attend_class_count
     _do_sm = dispatch(201)
     _expect_behavior = schedule_handle.get_behavior_name_by_cid(_cfg.behavior_id)
     if (_move_sm != SM.EDUCATION_MOVE_TO_COURSE_PLACE or _do_sm != SM.EDUCATION_DO_COURSE or not _expect_behavior
-            or student.behavior.behavior_id != _expect_behavior or student.state != _cfg.behavior_id or student.behavior.duration != 45):
-        _interest_bad.append((_cid, _cfg.name, scene_str(_place), _move_sm, _do_sm, student.behavior.behavior_id, _expect_behavior, student.behavior.duration))
-check("兴趣课逐项：不在地点 → 715，到场 → 716 执行该娱乐的行为、时长截到本节结束（45 分钟）", not _interest_bad, _interest_bad)
+            or student.behavior.behavior_id != _expect_behavior or student.state != _cfg.behavior_id or student.behavior.duration != 45
+            or growth_handle.get_child_growth(201).attend_class_count != _attend_before + 1):
+        _interest_bad.append((_cid, _cfg.name, scene_str(_place), _move_sm, _do_sm, student.behavior.behavior_id, _expect_behavior, student.behavior.duration,
+                              growth_handle.get_child_growth(201).attend_class_count - _attend_before))
+    # 读书：借到的那本要写进 behavior（Plan 29 §3.2）
+    if _expect_behavior == constant.Behavior.READ_BOOK and (student.behavior.book_id not in student.entertainment.borrow_book_id_set
+                                                             or student.behavior.book_name != game_config.config_book[student.behavior.book_id].name):
+        _interest_bad.append((_cid, _cfg.name, "读书没借书或 behavior 没写书", student.behavior.book_id, student.behavior.book_name))
+check("兴趣课逐项：不在地点 → 715，到场 → 716 执行该娱乐的行为、时长截到本节结束（45 分钟）、记一节出勤（Plan 29）、读书写入借到的书", not _interest_bad, _interest_bad)
+# 逐项时借的书还回去，别带进后面的用例
+for _book_id in list(student.entertainment.borrow_book_id_set):
+    cache.rhodes_island.book_borrow_dict[_book_id] = -1
+    student.entertainment.borrow_book_id_set.discard(_book_id)
+student.behavior.book_id = 0
+student.behavior.book_name = ""
 
 section("整链派发：实习课逐岗（WorkType.csv 里可排实习的全部岗位）")
 _intern_list = [cid for cid in game_config.config_work_type
@@ -380,11 +399,14 @@ for _wid in _intern_list:
     move_to(201, course_start_place(_place))
     _move_sm = dispatch(201)
     move_to(201, _place)
+    growth_handle.get_child_growth(201).last_attend_period = []
+    _attend_before = growth_handle.get_child_growth(201).attend_class_count
     _do_sm = dispatch(201)
     if (_move_sm != SM.EDUCATION_MOVE_TO_COURSE_PLACE or _do_sm != SM.EDUCATION_DO_COURSE or student.behavior.behavior_id != constant.Behavior.INTERN_CLASS
-            or student.state != constant.CharacterStatus.STATUS_INTERN_CLASS or student.behavior.duration != 45):
+            or student.state != constant.CharacterStatus.STATUS_INTERN_CLASS or student.behavior.duration != 45
+            or growth_handle.get_child_growth(201).attend_class_count != _attend_before):
         _intern_bad.append((_wid, _cfg.name, scene_str(_place), _move_sm, _do_sm, student.behavior.behavior_id, student.behavior.duration))
-check(f"实习课逐岗（{len(_intern_list)} 个岗位，无人在岗）：不在地点 → 715，到场 → 716 执行实习、时长截到本节结束", not _intern_bad, _intern_bad)
+check(f"实习课逐岗（{len(_intern_list)} 个岗位，无人在岗）：不在地点 → 715，到场 → 716 执行实习、时长截到本节结束、716 不记出勤（由 552 记，Plan 29）", not _intern_bad, _intern_bad)
 # 实习的地点跟着人走（口径 53）：同一标签下有多间房的岗位，导师在哪间学徒就去哪间
 _multi_work = next((wid for wid in _intern_list if len(constant.place_data.get(game_config.config_work_type[wid].place_tag, [])) >= 2), None)
 check("有同一标签下多间房的实习岗位", _multi_work is not None, _intern_list)
@@ -1147,6 +1169,80 @@ check("幼女的体育课排在未解锁的游泳池：上课状态 NONE，照�
 cache.rhodes_island.facility_open[pool_open_cid] = True
 check("游泳池解锁后照常上课、不见学", class_ai.get_course_stage(202) == E.COURSE_STAGE_ATTEND and not class_ai.judge_should_follow_mother(202))
 schedule_handle.clear_selected_course(202, 0, 0)
+clear_schedules()
+
+section("Plan 29 §3.2：兴趣课「读书」先借书，借不到书的这一节视为没课；娱乐读书（401）的行为不变")
+from Script.UI.Panel import borrow_book_panel  # noqa: E402
+
+set_time(period_time(0))
+prepare_ai(201)
+_read_cid = next(cid for cid in game_config.config_entertainment if game_config.config_entertainment[cid].class_ok
+                 and schedule_handle.get_behavior_name_by_cid(game_config.config_entertainment[cid].behavior_id) == constant.Behavior.READ_BOOK)
+check("读书是可排的兴趣课，按行为判得出是读书课（不写死娱乐编号）",
+      schedule_handle.judge_interest_course_is_read_book({"course_type": E.COURSE_TYPE_INTEREST, "target": _read_cid})
+      and not schedule_handle.judge_interest_course_is_read_book({"course_type": E.COURSE_TYPE_INTEREST, "target": E.ENTERTAINMENT_PLAY_HOUSE}))
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_INTEREST, _read_cid)
+_read_place = class_ai.get_course_place_now_or_upcoming(201)
+move_to(201, _read_place)
+# 先把 0 号书标成被别人借走：改后随机借到 0 号书会让「不再读 0 号书」偶然失真
+cache.rhodes_island.book_borrow_dict[0] = 999
+student.behavior.book_id = 0
+student.behavior.book_name = ""
+growth_handle.get_child_growth(201).last_attend_period = []
+_attend = growth_handle.get_child_growth(201).attend_class_count
+sm = dispatch(201)
+check("到场 → 716 派读书、先借了一本、behavior 写的是借到的那本（此前不借书、一律读 0 号书《天灾详解》、书名为空）",
+      sm == SM.EDUCATION_DO_COURSE and student.behavior.behavior_id == constant.Behavior.READ_BOOK and len(student.entertainment.borrow_book_id_set) == 1
+      and student.behavior.book_id in student.entertainment.borrow_book_id_set and student.behavior.book_id != 0
+      and student.behavior.book_name == game_config.config_book[student.behavior.book_id].name
+      and cache.rhodes_island.book_borrow_dict[student.behavior.book_id] == 201,
+      (sm, student.behavior.book_id, student.behavior.book_name, student.entertainment.borrow_book_id_set))
+check("记一节出勤", growth_handle.get_child_growth(201).attend_class_count == _attend + 1)
+_held_book = student.behavior.book_id
+growth_handle.get_child_growth(201).last_attend_period = []
+dispatch(201)
+check("手上已有书：再派不另借，读的还是那本", student.entertainment.borrow_book_id_set == {_held_book} and student.behavior.book_id == _held_book)
+cache.rhodes_island.book_borrow_dict[_held_book] = -1
+student.entertainment.borrow_book_id_set.discard(_held_book)
+_saved_borrow = dict(cache.rhodes_island.book_borrow_dict)
+for _book_id in cache.rhodes_island.book_borrow_dict:
+    cache.rhodes_island.book_borrow_dict[_book_id] = 999
+check("书库里借不到书：这一节视为没课（get_now_course 为 None、上课状态 NONE，判定只读）",
+      schedule_handle.get_now_course(201) is None and class_ai.get_course_stage(201) == E.COURSE_STAGE_NONE and not student.entertainment.borrow_book_id_set)
+_attend = growth_handle.get_child_growth(201).attend_class_count
+sm = dispatch(201)
+check("整条链：不派 715 / 716、不记出勤，交回娱乐链", sm not in (SM.EDUCATION_MOVE_TO_COURSE_PLACE, SM.EDUCATION_DO_COURSE)
+      and growth_handle.get_child_growth(201).attend_class_count == _attend, sm)
+cache.rhodes_island.book_borrow_dict.update(_saved_borrow)
+# 判定与执行之间书被别人借走：716 等 1 分钟、不记出勤
+_orig_borrow = borrow_book_panel.check_random_borrow_book
+borrow_book_panel.check_random_borrow_book = lambda cid: 0
+growth_handle.get_child_growth(201).last_attend_period = []
+_attend = growth_handle.get_child_growth(201).attend_class_count
+constant.handle_state_machine_data[SM.EDUCATION_DO_COURSE](201)
+check("判定与执行之间书被别人借走：716 等 1 分钟、不记出勤", student.behavior.behavior_id == constant.Behavior.WAIT and student.behavior.duration == 1
+      and growth_handle.get_child_growth(201).attend_class_count == _attend, (student.behavior.behavior_id, student.behavior.duration))
+borrow_book_panel.check_random_borrow_book = _orig_borrow
+# 401 对照：娱乐读书抽出的装配函数，行为与改前一致
+reader = make_character(402, "读书的干员", 21, position=_read_place)
+constant.handle_state_machine_data[SM.ENTERTAIN_READ](402)
+check("对照：娱乐读书（401）借到书、写入 book_id 与书名、行为 read_book、时长 30",
+      reader.behavior.behavior_id == constant.Behavior.READ_BOOK and reader.behavior.duration == 30 and len(reader.entertainment.borrow_book_id_set) == 1
+      and reader.behavior.book_id in reader.entertainment.borrow_book_id_set
+      and reader.behavior.book_name == game_config.config_book[reader.behavior.book_id].name and reader.state == constant.CharacterStatus.STATUS_READ_BOOK,
+      (reader.behavior.behavior_id, reader.behavior.duration, reader.behavior.book_id))
+for _book_id in list(reader.entertainment.borrow_book_id_set):
+    cache.rhodes_island.book_borrow_dict[_book_id] = -1
+    reader.entertainment.borrow_book_id_set.discard(_book_id)
+for _book_id in cache.rhodes_island.book_borrow_dict:
+    cache.rhodes_island.book_borrow_dict[_book_id] = 999
+constant.handle_state_machine_data[SM.ENTERTAIN_READ](402)
+check("对照：401 借不到书仍等 1 分钟", reader.behavior.behavior_id == constant.Behavior.WAIT and reader.behavior.duration == 1)
+cache.rhodes_island.book_borrow_dict.update(_saved_borrow)
+cache.rhodes_island.book_borrow_dict[0] = -1
+remove_character(402)
+move_to(201, SCENE_DORM)
+schedule_handle.clear_selected_course(201, 0, 0)
 clear_schedules()
 
 finish()

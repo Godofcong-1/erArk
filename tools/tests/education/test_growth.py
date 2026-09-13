@@ -223,4 +223,23 @@ check("成年干员不受影响：150 珠照旧升技巧 1 级", grown_npc.abili
 remove_character(206)
 remove_character(207)
 
+section("Plan 29 §3.3：本阶段第几天（get_stage_day）")
+student.pregnancy.born_time = cache.game_time - datetime.timedelta(days=300)
+child.pregnancy.born_time = cache.game_time - datetime.timedelta(days=120)
+baby.pregnancy.born_time = cache.game_time - datetime.timedelta(days=10)
+teen = make_character(208, "少女", 152, daughter=True, stage=104, mother_id=102, born_days=500)
+check("各阶段起点：婴儿 0 / 幼女 90 / 萝莉 270 / 少女 450，成年干员 0",
+      [growth_handle.get_stage_start_day(cid) for cid in (203, 202, 201, 208, 301)] == [0, 90, 270, 450, 0])
+check("萝莉出生 300 天：本阶段第 30 天", growth_handle.get_stage_day(201) == 30, growth_handle.get_stage_day(201))
+check("幼女出生 120 天：第 30 天；婴儿出生 10 天：第 10 天；少女出生 500 天：第 50 天",
+      growth_handle.get_stage_day(202) == 30 and growth_handle.get_stage_day(203) == 10 and growth_handle.get_stage_day(208) == 50)
+check("成年干员与不存在的角色：0", growth_handle.get_stage_day(301) == 0 and growth_handle.get_stage_day(999) == 0)
+student.pregnancy.born_time = cache.game_time - datetime.timedelta(days=200)
+check("有效天数低于本阶段起点（成长停滞解除前的近似）：夹到 0", growth_handle.get_stage_day(201) == 0)
+student.pregnancy.born_time = cache.game_time - datetime.timedelta(days=300)
+check("阶段进度改用 get_stage_day 后数值不变：幼女 120 天约 16.7%、萝莉 300 天约 16.7%、少女 100",
+      abs(growth_handle.get_stage_progress(202) - 30 * 100.0 / 180) < 0.01 and abs(growth_handle.get_stage_progress(201) - 30 * 100.0 / 180) < 0.01
+      and growth_handle.get_stage_progress(208) == 100.0)
+remove_character(208)
+
 finish()

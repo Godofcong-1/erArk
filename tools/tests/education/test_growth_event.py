@@ -142,4 +142,22 @@ for _uid in _baby_uid_list:
 check("婴儿桶与她可抽的通用事件逐条逐选项结算，都不报错（修好之后这些事件真的会派到婴儿身上）", bool(_baby_uid_list) and _option_count > 0 and not _error_list,
       (len(_baby_uid_list), _option_count, _error_list[:5]))
 
+section("Plan 29 §3.3 / L2：抬头写本阶段第几天；改了岗的萝莉照推期末事件（用户拍板：成绩单照出并写明理由，推送不收窄）")
+loli.pregnancy.born_time = cache.game_time - datetime.timedelta(days=300)
+child.pregnancy.born_time = cache.game_time - datetime.timedelta(days=120)
+baby.pregnancy.born_time = cache.game_time - datetime.timedelta(days=5)
+check("萝莉出生 300 天：「萝莉期第 31 天」（此前写第 300 天，而萝莉期一共才 180 天）",
+      growth_event_handle.get_growth_event_title({"chara_id": 201}) == "{0} · {1}期第 31 天".format(loli.name, E.STAGE_TALENT_NAME[103]),
+      growth_event_handle.get_growth_event_title({"chara_id": 201}))
+check("幼女出生 120 天：第 31 天；婴儿出生 5 天：第 6 天（出生当天为第 1 天）",
+      growth_event_handle.get_growth_event_title({"chara_id": 202}).endswith(_("期第 {0} 天").format(31))
+      and growth_event_handle.get_growth_event_title({"chara_id": 204}).endswith(_("期第 {0} 天").format(6)),
+      (growth_event_handle.get_growth_event_title({"chara_id": 202}), growth_event_handle.get_growth_event_title({"chara_id": 204})))
+cache.rhodes_island.official_event_queue = []
+loli.work.work_type = 21
+check("改了岗（岗位 21）的萝莉：学期结束照推期末事件", growth_event_handle.push_semester_event_for_list([201]) == 1
+      and official_event_handle.get_queue()[0]["chara_id"] == 201)
+loli.work.work_type = 152
+cache.rhodes_island.official_event_queue = []
+
 finish()

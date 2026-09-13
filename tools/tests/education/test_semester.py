@@ -97,4 +97,40 @@ check("成绩单正文含姓名、出勤与评定", "女儿A" in text and "出�
 text = semester_handle.get_report_card_text(201, semester_handle.build_report_card(201), False)
 check("学期中途的正文标「尚未结束」", "尚未结束" in text)
 
+section("Plan 29 §3.1 / L2：只排个人式课的孩子按档评；改了岗的萝莉照出成绩单并写明不全的理由（用户拍板）")
+set_time(datetime.datetime(2026, 12, 7, 9, 0))
+g.report_card_history = []
+g.last_attend_period = []
+semester_handle.reset_semester_baseline(201, [2026, 12])
+student.work.work_type = 152
+check("settle_course_attend：记上一节、同一节再记不重复", growth_handle.settle_course_attend(201) and not growth_handle.settle_course_attend(201)
+      and semester_handle.get_semester_attend(201) == (1, 0))
+set_time(datetime.datetime(2026, 12, 7, 13, 0))
+check("节次外不记", not growth_handle.settle_course_attend(201))
+set_time(datetime.datetime(2026, 12, 7, 9, 0))
+check("不是女儿也不是学生岗的不记", not growth_handle.settle_course_attend(102) and mother.child_growth is None)
+card = semester_handle.build_report_card(201)
+check("只排体育 / 兴趣课、一学期没缺过：按档评（出勤率 100%、良好），不再是「无课可评」", card["grade"] == E.REPORT_GRADE_GOOD and card["reason"] == "", card)
+g.absent_count += 1
+card = semester_handle.build_report_card(201)
+check("缺过一节：按实际出勤算（50%、待努力），不再是出勤率 0%", card["rate"] == 50 and card["grade"] == E.REPORT_GRADE_POOR, card)
+g.absent_count -= 1
+student.work.work_type = 21
+card = semester_handle.build_report_card(201)
+check("改岗（岗位 21）的萝莉：照按改岗前上过的课评档，快照带不全的理由、写明改任的岗位",
+      card["grade"] == E.REPORT_GRADE_GOOD and card["attend"] == 1 and card["reason"] and game_config.config_work_type[21].name in card["reason"], card)
+text = semester_handle.get_report_card_text(201, card, True)
+check("成绩单正文写出理由", "※ " in text and card["reason"] in text, text)
+student.work.work_type = 0
+check("岗位为无：理由写「不再担任学生」", "不再担任学生" in semester_handle.build_report_card(201)["reason"])
+student.work.work_type = 21
+set_time(datetime.datetime(2027, 3, 1, 9, 0))
+report_list = semester_handle.settle_semester_change()
+check("学期切换：改岗萝莉照出成绩单，理由随快照冻结", report_list == [201] and semester_handle.get_last_report_card(201)["reason"]
+      and semester_handle.get_last_report_card(201)["grade"] == E.REPORT_GRADE_GOOD, semester_handle.get_last_report_card(201))
+student.work.work_type = 152
+text = semester_handle.get_report_card_text(201, semester_handle.build_report_card(201), False)
+check("学生岗：理由为空、正文没有那一行；旧档没有 reason 键的快照照常出正文",
+      semester_handle.build_report_card(201)["reason"] == "" and "※ " not in text and "※ " not in semester_handle.get_report_card_text(201, {"year": 2026, "month": 9}, True))
+
 finish()

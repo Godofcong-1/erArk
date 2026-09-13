@@ -250,6 +250,13 @@ class Growth_Panel:
                 report_data.get("grade", education_constant.REPORT_GRADE_NO_CLASS), _("无课可评")),
             report_data.get("attend", 0), report_data.get("absent", 0), report_data.get("rate", 100))
         info_draw.draw()
+        # 改了岗的女儿的成绩单只计改岗前的课，理由随快照一起冻结（Plan 29 §3.4）；旧档的快照没有这个键
+        if report_data.get("reason", ""):
+            reason_draw = draw.NormalDraw()
+            reason_draw.width = self.width
+            reason_draw.text = _("  ※ {0}\n").format(report_data["reason"])
+            reason_draw.style = "deep_gray"
+            reason_draw.draw()
         level_text = semester_handle.get_level_change_text(report_data.get("level_change", {}))
         now_draw = draw.NormalDraw()
         now_draw.width = self.width

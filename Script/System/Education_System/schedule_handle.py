@@ -650,11 +650,37 @@ def judge_personal_course_valid(character_id: int, course: dict) -> bool:
     character_id -- 角色id
     course -- 课程dict，至少含 course_type 与 target，结构见 get_now_course
     Return arguments:
-    bool -- 兴趣课的活动条件相符、且上课地点解析得出（含场所已开放）为True
+    bool -- 兴趣课的活动条件相符、上课地点解析得出（含场所已开放）、兴趣课读书借得到书为True
     功能: get_course_at 判不过就视为没课；必修名单的「*会顶替」也用它判那一节是不是确有的课。
-          只读不写，前提路径上可以调用。实习课本节无人在岗时地点仍解析得出（回落到已开放的那间），照旧算一节课
+          只读不写，前提路径上可以调用。实习课本节无人在岗时地点仍解析得出（回落到已开放的那间），照旧算一节课。
+          兴趣课的行为是读书时再要求借得到书（手上有借着的书，或书库里有没被借走、读得了、没读完的书，Plan 29 §3.2）：
+             借不到书的这一节视为没课，与 Plan 28 的口径相同；真正借书在状态机 716 里做，这里一行都不写
     """
-    return judge_course_need_pass(character_id, course) and bool(get_course_place(course))
+    if not (judge_course_need_pass(character_id, course) and bool(get_course_place(course))):
+        return False
+    if judge_interest_course_is_read_book(course):
+        # UI 层模块，顶层 import 会成环，照现有写法延迟
+        from Script.UI.Panel import borrow_book_panel
+
+        return borrow_book_panel.judge_can_get_read_book(character_id)
+    return True
+
+
+def judge_interest_course_is_read_book(course: dict) -> bool:
+    """
+    校验一节课是不是行为为读书的兴趣课（Plan 29 §3.2）
+    按 Entertainment.csv 的 behavior_id 反查行为名与 READ_BOOK 比对，不写死娱乐编号
+    Keyword arguments:
+    course -- 课程dict，至少含 course_type 与 target
+    Return arguments:
+    bool -- 是否为读书兴趣课
+    """
+    if course.get("course_type") != education_constant.COURSE_TYPE_INTEREST:
+        return False
+    target = course.get("target")
+    if target not in game_config.config_entertainment:
+        return False
+    return get_behavior_name_by_cid(game_config.config_entertainment[target].behavior_id) == constant.Behavior.READ_BOOK
 
 
 _BEHAVIOR_NAME_BY_CID: Dict[int, str] = {}

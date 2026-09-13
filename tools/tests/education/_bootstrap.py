@@ -117,6 +117,9 @@ cache.all_system_setting = attr_calculation.get_system_setting_zero()
 # 罗德岛设施：全部设施 Lv1，教育区另由测试按需调；facility_open 默认空（只开放三间基础教室）
 for _facility_cid in game_config.config_facility:
     cache.rhodes_island.facility_level.setdefault(_facility_cid, 1)
+# 书库：全部书籍在架、没被借走（与 basement 初始化一致）；兴趣课读书要先借书（Plan 29），空书库会让那一节视为没课
+for _book_cid in game_config.config_book:
+    cache.rhodes_island.book_borrow_dict.setdefault(_book_cid, -1)
 
 # ==== 3. 屏蔽 UI，并把绘制文本收进 drawn_text ====
 drawn_text = []

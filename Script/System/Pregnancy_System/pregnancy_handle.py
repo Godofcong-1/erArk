@@ -580,7 +580,7 @@ def _settle_baby_grow_up(character_id: int, child_id: int):
     else:
         draw_text += _("\n{0}还有其他婴儿需要照顾，会继续留在育儿室进行育儿\n").format(character_data.name)
     draw_text += _("\n{0}能够初步独立了，在长大成人之前会一直在教育区上课学习\n").format(child_character_data.name)
-    if len(cache.rhodes_island.all_work_npc_set[151]) == 0:
+    if len(cache.rhodes_island.all_work_npc_set[education_constant.TEACHER_WORK_TYPE]) == 0:
         draw_text += _("\n当前教育区没有进行授课工作的老师，请尽快安排一名干员负责教师工作\n")
     if rearing_complete_flag:
         draw_text += _("\n{0}失去了[育儿]\n").format(character_data.name)

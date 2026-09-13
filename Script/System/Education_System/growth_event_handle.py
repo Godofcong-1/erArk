@@ -270,7 +270,7 @@ def get_growth_event_title(queue_data: dict) -> str:
     Return arguments:
     str -- 抬头文本
     """
-    from Script.System.Pregnancy_System import pregnancy_handle
+    from Script.System.Education_System import growth_handle
 
     character_id = queue_data.get("chara_id", 0)
     if character_id not in cache.character_data:
@@ -279,9 +279,10 @@ def get_growth_event_title(queue_data: dict) -> str:
     stage = get_character_stage(character_id)
     # STAGE_TALENT_NAME 取自 Talent.csv，载入时已翻译过，不再包 _()
     stage_name = education_constant.STAGE_TALENT_NAME.get(stage, education_constant.STAGE_TALENT_NAME[104])
-    # 成长天数由妊娠系统统一计算（含成长加速药），这里只取用不重算
-    grow_day = pregnancy_handle.get_child_grow_day(character_id)
-    return _("{0} · {1}期第 {2} 天").format(character_data.name, stage_name, grow_day)
+    # 写的是**本阶段**的第几天，进入该阶段当天为第 1 天（Plan 29 §3.3）：
+    #    此前取出生以来的总天数，出生 300 天的萝莉会写成「萝莉期第 300 天」，而萝莉期一共才 180 天
+    stage_day = growth_handle.get_stage_day(character_id) + 1
+    return _("{0} · {1}期第 {2} 天").format(character_data.name, stage_name, stage_day)
 
 
 def push_graduation_event(character_id: int):

@@ -224,4 +224,49 @@ remove_character(211)
 schedule_handle.clear_selected_course(201, _wd, 0)
 clear_schedules()
 
+section("Plan 29 §3.2：兴趣课读书借不到书的这一节视为没课（judge_personal_course_valid 只读）")
+set_time(period_time(0))
+_read_cid = next(cid for cid in game_config.config_entertainment if game_config.config_entertainment[cid].class_ok
+                 and schedule_handle.get_behavior_name_by_cid(game_config.config_entertainment[cid].behavior_id) == constant.Behavior.READ_BOOK)
+read_course = {"course_type": education_constant.COURSE_TYPE_INTEREST, "target": _read_cid}
+check("judge_interest_course_is_read_book：读书课成立，过家家与体育课不成立",
+      schedule_handle.judge_interest_course_is_read_book(read_course) and not schedule_handle.judge_interest_course_is_read_book(play_house)
+      and not schedule_handle.judge_interest_course_is_read_book(pe_pool))
+schedule_handle.set_selected_course(201, _wd, 0, education_constant.COURSE_TYPE_INTEREST, _read_cid)
+_reader = cache.character_data[201]
+check("书库有书：成立，是一节课", schedule_handle.judge_personal_course_valid(201, read_course) and schedule_handle.get_now_course(201) is not None)
+_saved_borrow = dict(cache.rhodes_island.book_borrow_dict)
+for _book_id in cache.rhodes_island.book_borrow_dict:
+    cache.rhodes_island.book_borrow_dict[_book_id] = 999
+check("书库全被借走：不成立，视为没课（此前照样是课，到了图书馆读 0 号书）",
+      not schedule_handle.judge_personal_course_valid(201, read_course) and schedule_handle.get_now_course(201) is None)
+_easy_book = next(b for b in game_config.config_book if game_config.config_book[b].difficulty <= 1)
+_reader.entertainment.borrow_book_id_set.add(_easy_book)
+check("手上有借着的书：照常成立", schedule_handle.judge_personal_course_valid(201, read_course) and schedule_handle.get_now_course(201) is not None)
+_reader.entertainment.borrow_book_id_set.discard(_easy_book)
+cache.rhodes_island.book_borrow_dict[_easy_book] = -1
+_reader.entertainment.read_book_progress[_easy_book] = 100
+check("书库里只剩一本读完了的书：不成立", not schedule_handle.judge_personal_course_valid(201, read_course))
+_reader.entertainment.read_book_progress[_easy_book] = 50
+check("那本没读完：成立", schedule_handle.judge_personal_course_valid(201, read_course))
+del _reader.entertainment.read_book_progress[_easy_book]
+cache.rhodes_island.book_borrow_dict[_easy_book] = 999
+_hard_book = next((b for b in game_config.config_book if game_config.config_book[b].difficulty == 3
+                   and game_config.config_book_type[game_config.config_book[b].type].father_type_name == _("技能")
+                   and game_config.config_book_type[game_config.config_book[b].type].ability_id), None)
+check("书库里有难度 3 的技能书", _hard_book is not None)
+if _hard_book is not None:
+    cache.rhodes_island.book_borrow_dict[_hard_book] = -1
+    _hard_ability = game_config.config_book_type[game_config.config_book[_hard_book].type].ability_id
+    _hard_level = _reader.ability.get(_hard_ability, 0)
+    _reader.ability[_hard_ability] = 0
+    check("只剩一本能力不够读的书：不成立（与 check_random_borrow_book 的筛选同口径）", not schedule_handle.judge_personal_course_valid(201, read_course))
+    _reader.ability[_hard_ability] = 6
+    check("能力够了：成立", schedule_handle.judge_personal_course_valid(201, read_course))
+    _reader.ability[_hard_ability] = _hard_level
+check("判定不写数据：没借书、书库借出状态没被改", not _reader.entertainment.borrow_book_id_set and all(v != 201 for v in cache.rhodes_island.book_borrow_dict.values()))
+cache.rhodes_island.book_borrow_dict.update(_saved_borrow)
+schedule_handle.clear_selected_course(201, _wd, 0)
+clear_schedules()
+
 finish()

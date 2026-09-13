@@ -318,6 +318,39 @@ def settle_student_class_gain(
     return True
 
 
+def settle_course_attend(character_id: int) -> bool:
+    """
+    给一节体育课 / 兴趣课记一次出勤（Plan 29 §3.1）
+    这两种课是「人到地点，执行该地点既有的行为」（状态机 716）：打木桩 / 锻炼 / 游泳，或该娱乐的行为。
+       这些行为全岛共用（成年干员娱乐时也走它们），不能往效果串里加上课结算，所以出勤在 716 派出行为时记。
+       实习课不走这里：它的行为 intern_class 的效果 552 经 settle_student_class_gain 记出勤，再记就是两份
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 是否真的记上了（不是女儿也不是学生岗、不在节次内、同一节已记过则为False）
+    功能: 守卫与 sex_class_handle.settle_attend 相同，只给女儿或学生岗记；
+          节次内按 last_attend_period 去重，同一节被打断后再回去上只记一次；与教室课共用这个标记也不会互相挤占——一格只有一门课
+    """
+    from Script.Design import game_time
+
+    if character_id not in cache.character_data:
+        return False
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.relationship.father_id != 0 and character_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
+        return False
+    period = game_time.get_class_period(character_id)
+    if period == -1:
+        return False
+    now_time = character_data.behavior.start_time or cache.game_time
+    now_mark = [now_time.toordinal(), period]
+    growth_data = get_child_growth(character_id)
+    if growth_data.last_attend_period == now_mark:
+        return False
+    growth_data.last_attend_period = now_mark
+    growth_data.attend_class_count += 1
+    return True
+
+
 def settle_teacher_class_gain(
         teacher_id: int,
         ability_id: int,
@@ -534,33 +567,66 @@ def get_career_suggestion_text(character_id: int) -> str:
 # ---------------------------------------------------------------------------
 
 
+def get_stage_start_day(character_id: int) -> int:
+    """
+    取角色当前成长阶段的起点（累计有效成长天数）
+    阶段阈值是**累计**天数（婴儿0~90 / 幼女90~270 / 萝莉270~450 / 少女450起），起点即上一阶段的阈值
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 起点天数：婴儿0 / 幼女90 / 萝莉270 / 少女450；不在成长阶段时为0
+    """
+    from Script.System.Pregnancy_System import pregnancy_constant
+
+    stage = get_character_stage(character_id)
+    if stage == 102:
+        return pregnancy_constant.REARING_COMPLETE_DAY
+    if stage == 103:
+        return pregnancy_constant.GROW_TO_LOLI_DAY
+    if stage == 104:
+        return pregnancy_constant.GROW_TO_GIRL_DAY
+    return 0
+
+
+def get_stage_day(character_id: int) -> int:
+    """
+    取角色在当前成长阶段里已经过了几天（Plan 29 §3.3）
+    即有效成长天数减去本阶段的起点，进入该阶段当天为第0天；养成事件的抬头写「第 N+1 天」。
+       单位是日历天，与养成总览、阶段阈值一致。成长停滞解除后按阈值一次长大时，这个数会比实际偏大——
+       与养成数值 3（阶段进度）是同一个近似，阶段的实际起点不入档
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 本阶段已过的天数，不小于0；不是孩子时为0
+    """
+    from Script.System.Pregnancy_System import pregnancy_handle
+
+    if character_id not in cache.character_data or not get_character_stage(character_id):
+        return 0
+    return max(0, pregnancy_handle.get_child_grow_day(character_id) - get_stage_start_day(character_id))
+
+
 def get_stage_progress(character_id: int) -> float:
     """
     取角色在当前成长阶段里已经走过的进度百分比
 
     阶段阈值是**累计**天数（婴儿0~90 / 幼女90~270 / 萝莉270~450），
-       所以进度要减掉本阶段的起点，否则幼女期一开始就会显示成 33%
+       所以进度要减掉本阶段的起点（get_stage_day），否则幼女期一开始就会显示成 33%
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     float -- 0~100 的进度百分比；已成年或不在成长阶段时为100
     """
-    from Script.System.Pregnancy_System import pregnancy_constant, pregnancy_handle
+    from Script.System.Pregnancy_System import pregnancy_handle
 
     stage_end = pregnancy_handle.get_child_growth_stage_total_day(character_id)
     if not stage_end:
         # 已经不在成长阶段（成年或不是孩子），按走完算
         return 100.0
-    stage_start = 0
-    if stage_end == pregnancy_constant.GROW_TO_LOLI_DAY:
-        stage_start = pregnancy_constant.REARING_COMPLETE_DAY
-    elif stage_end == pregnancy_constant.GROW_TO_GIRL_DAY:
-        stage_start = pregnancy_constant.GROW_TO_LOLI_DAY
-    stage_day = stage_end - stage_start
-    if stage_day <= 0:
+    stage_total = stage_end - get_stage_start_day(character_id)
+    if stage_total <= 0:
         return 100.0
-    now_day = pregnancy_handle.get_child_grow_day(character_id) - stage_start
-    return max(0.0, min(100.0, now_day * 100.0 / stage_day))
+    return max(0.0, min(100.0, get_stage_day(character_id) * 100.0 / stage_total))
 
 
 def get_growth_value(character_id: int, value_id: int) -> float:

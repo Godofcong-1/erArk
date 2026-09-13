@@ -215,6 +215,29 @@ def get_report_grade(attend_count: int, absent_count: int, level_up_count: int) 
     return education_constant.REPORT_GRADE_POOR
 
 
+def get_report_incomplete_reason(character_id: int) -> str:
+    """
+    取成绩单不全的理由（Plan 29 §3.4，用户拍板）
+    改了岗的女儿照常出成绩单，出勤、缺课与进步都只计她改岗前上过的课（改岗后既不记出勤也不记缺课，Plan 24 §3.10）；
+       这份成绩单是不全的，要在正文里写明为什么，玩家才不会把「出勤 3 节」误读成她这学期只上了 3 节就没再去。
+       只看结算这一刻的岗位：改岗的时刻不入档，学期中途改回学生岗的就当没改过
+    Keyword arguments:
+    character_id -- 孩子的角色id
+    Return arguments:
+    str -- 理由文本；仍是学生岗（或角色不存在）时为空串
+    """
+    if character_id not in cache.character_data:
+        return ""
+    character_data: game_type.Character = cache.character_data[character_id]
+    work_type = character_data.work.work_type
+    if work_type == education_constant.STUDENT_WORK_TYPE:
+        return ""
+    if work_type and work_type in game_config.config_work_type:
+        return _("{0}本学期改任了{1}，改岗后不再上课，成绩单只计改岗前上过的课").format(
+            character_data.name, game_config.config_work_type[work_type].name)
+    return _("{0}本学期不再担任学生，之后没有再上课，成绩单只计那之前上过的课").format(character_data.name)
+
+
 def build_report_card(character_id: int) -> dict:
     """
     结算一份成绩单快照（纯计算，不写任何字段）
@@ -243,6 +266,7 @@ def build_report_card(character_id: int) -> dict:
         "top_ability": top_ability_id,  # 学期末等级最高的科目，一门都没学过为-1
         "top_level": top_level,         # 该科目的等级
         "grade": get_report_grade(attend_count, absent_count, len(level_change)),
+        "reason": get_report_incomplete_reason(character_id),    # 成绩单不全的理由（改了岗的女儿），完整时为空串（Plan 29）
     }
 
 
@@ -385,6 +409,9 @@ def get_report_card_text(character_id: int, report_data: dict, finished: bool) -
             semester_text, character_data.name)
     info_text += _("\n出勤：{0} 节，缺课：{1} 节（出勤率 {2}%）\n").format(
         report_data.get("attend", 0), report_data.get("absent", 0), report_data.get("rate", 100))
+    # 改了岗的女儿的成绩单只计改岗前的课，写明理由（Plan 29 §3.4）；旧档的快照没有这个键，.get() 读
+    if report_data.get("reason", ""):
+        info_text += _("\n※ {0}\n").format(report_data["reason"])
     level_text = get_level_change_text(report_data.get("level_change", {}))
     if level_text:
         info_text += _("\n本学期的进步：{0}\n").format(level_text)

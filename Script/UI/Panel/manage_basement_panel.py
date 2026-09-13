@@ -1206,6 +1206,7 @@ class Change_Npc_Work_Panel:
 
     def button_0(self, character_id: int):
         """选项1"""
+        from Script.System.Education_System import education_constant
 
         while 1:
 
@@ -1263,8 +1264,8 @@ class Change_Npc_Work_Panel:
                         open_cid = game_config.config_facility_open_name_to_cid[work_place]
                         if not cache.rhodes_island.facility_open[open_cid]:
                             flag_open = False
-                # 幼女不能进行学生以外的工作
-                if handle_premise.handle_self_is_child(character_id) and work_cid != 152:
+                # 幼女不能进行学生以外的工作（岗位编号取教育系统的常量，不写死 152，Plan 29 §3.5）
+                if handle_premise.handle_self_is_child(character_id) and work_cid != education_constant.STUDENT_WORK_TYPE:
                     flag_open = False
                     reason_text += ' ' + _("幼女无法进行学生以外的工作")
                 # 特殊解锁的工作不直接开放

@@ -1429,21 +1429,14 @@ def character_entertain_read(character_id: int):
     """
     from Script.UI.Panel import borrow_book_panel
     character_data: game_type.Character = cache.character_data[character_id]
-    # 检查是否要借书
-    can_borrow = borrow_book_panel.check_random_borrow_book(character_id)
-    if not can_borrow:
+    # 没借书就先借一本，并把借着的那本写进 behavior（与兴趣课读书共用，Plan 29 §3.2）；借不到就等 1 分钟
+    if not borrow_book_panel.prepare_npc_read_book(character_id):
         character_data.behavior.behavior_id = constant.Behavior.WAIT
         character_data.behavior.duration = 1
         character_data.state = constant.CharacterStatus.STATUS_WAIT
         return
-
-    for book_id_all in character_data.entertainment.borrow_book_id_set:
-        book_id = book_id_all
-    book_data = game_config.config_book[book_id]
     character_data.behavior.behavior_id = constant.Behavior.READ_BOOK
     character_data.state = constant.CharacterStatus.STATUS_READ_BOOK
-    character_data.behavior.book_id = book_id
-    character_data.behavior.book_name = book_data.name
     character_data.behavior.duration = 30
 
 
@@ -2811,14 +2804,19 @@ def character_education_move_to_course_place(character_id: int):
 def character_education_do_course(character_id: int):
     """
     上课：在个人式课型的地点执行该课对应的既有行为（Plan 22 §3.21）
-    体育课与兴趣课执行的是自带效果串的既有行为，学生侧无需另加结算；
-       实习课走新增的 intern_class，它的效果串里带一次学徒侧结算
+    体育课与兴趣课执行的是自带效果串的既有行为，学生侧的学习收益无需另加结算；
+       但这些行为全岛共用（成年干员娱乐时也走它们），效果串里加不了出勤，所以出勤在这里派出行为时记一节
+       （growth_handle.settle_course_attend，同一节只记一次，Plan 29 §3.1）；
+       实习课走新增的 intern_class，它的效果串里带一次学徒侧结算（552），出勤也由那里记，这里不另记
+    兴趣课「读书」要先借书：读书结算按 behavior.book_id 取书、口上按 behavior.book_name 写书名，
+       与娱乐读书（401）共用 prepare_npc_read_book 装配；借不到书（判定与执行之间被别人借走）就等 1 分钟、不记出勤，
+       下一次决策时 get_now_course 会按「借不到书视为没课」交回娱乐链（Plan 29 §3.2）
     时长一律截到45分钟（一节课）：战斗训练本是120分钟、锻炼与游泳是60分钟，
        照原时长会让一节体育课吃掉整个上午。既有结算按 add_time 线性计算，截断天然成立
     Keyword arguments:
     character_id -- 角色id
     """
-    from Script.System.Education_System import education_constant, schedule_handle
+    from Script.System.Education_System import education_constant, growth_handle, schedule_handle
 
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
@@ -2838,6 +2836,15 @@ def character_education_do_course(character_id: int):
         if now_course["target"] in game_config.config_entertainment:
             state_id = game_config.config_entertainment[now_course["target"]].behavior_id
             behavior_name = schedule_handle.get_behavior_name_by_cid(state_id)
+            # 读书先借书并装配 behavior.book_id / book_name
+            if behavior_name == constant.Behavior.READ_BOOK:
+                from Script.UI.Panel import borrow_book_panel
+
+                if not borrow_book_panel.prepare_npc_read_book(character_id):
+                    character_data.behavior.behavior_id = constant.Behavior.WAIT
+                    character_data.behavior.duration = 1
+                    character_data.state = constant.CharacterStatus.STATUS_WAIT
+                    return
     # 实习课：本计划新增的行为
     elif course_type == education_constant.COURSE_TYPE_INTERN:
         behavior_name = constant.Behavior.INTERN_CLASS
@@ -2848,6 +2855,9 @@ def character_education_do_course(character_id: int):
     # 截到本节结束（Plan 22 第五轮），最多一节课45分钟
     character_data.behavior.duration = schedule_handle.get_period_left_minute(character_id)
     character_data.state = state_id
+    # 体育课与兴趣课在派出行为时记一节出勤（实习课由 552 记）
+    if course_type in (education_constant.COURSE_TYPE_PE, education_constant.COURSE_TYPE_INTEREST):
+        growth_handle.settle_course_attend(character_id)
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.EDUCATION_MOVE_TO_MOTHER)
