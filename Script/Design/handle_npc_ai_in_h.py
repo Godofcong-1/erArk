@@ -438,11 +438,24 @@ def settle_unconscious_semen_and_cloth(character_id: int) -> None:
         当角色在恢复意识时触发的二段行为。
     """
     from Script.Design import second_behavior
+    from Script.System.Sex_System import mental_virginity
     # 从缓存中获取角色数据
     character_data: game_type.Character = cache.character_data[character_id]
     # 对数据进行去重
     character_data.dirty.body_semen_in_unconscious = list(set(character_data.dirty.body_semen_in_unconscious))
     character_data.dirty.cloth_semen_in_unconscious = list(set(character_data.dirty.cloth_semen_in_unconscious))
+    # 在污浊标记被清除前固化角色从身体、衣物和失窃服装中得到的认知，避免换装或清洗后心理状态倒退。
+    discovery_cloth_part_list = character_data.dirty.cloth_semen_in_unconscious.copy()
+    if character_data.cloth.stolen_panties_in_unconscious:
+        discovery_cloth_part_list.append(9)
+    if character_data.cloth.stolen_socks_in_unconscious:
+        discovery_cloth_part_list.append(10)
+    if character_data.dirty.body_semen_in_unconscious or discovery_cloth_part_list:
+        mental_virginity.record_unconscious_discovery(
+            character_id,
+            character_data.dirty.body_semen_in_unconscious,
+            discovery_cloth_part_list,
+        )
     # 触发角色的部位精液二段行为
     for body_part in character_data.dirty.body_semen_in_unconscious:
         second_behavior_id = "in_unconscious_cum_on_body_" + str(body_part)
