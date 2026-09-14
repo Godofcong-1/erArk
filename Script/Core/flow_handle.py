@@ -27,6 +27,11 @@ _web_module_loaded = False
 flow_handle_web = None
 """ Web版flow_handle模块的引用（延迟导入） """
 
+CTRL_SKIP_WAIT_DELAY = 0.1
+""" Ctrl长按快进时每个文本等待点的停顿秒数 """
+DEFAULT_SKIP_WAIT_DELAY = 0.001
+""" 右键与系统自动跳过时的原有停顿秒数 """
+
 
 def _is_web_mode():
     """
@@ -525,6 +530,34 @@ def askfor_int(list, print_order=False):
             io_init.era_print(order + "\n")
             io_init.era_print(_("您输入的选项无效，请重试\n"))
             continue
+
+
+def is_wait_skip_active() -> bool:
+    """
+    判断当前是否需要跳过被动文本等待。
+
+    参数：无
+    返回值：bool -- 右键、系统自动跳过或Ctrl长按任一状态生效时返回True
+    功能描述：统一管理各类文本等待跳过状态，避免Ctrl松开时误清除系统自身的跳过标志。
+    """
+    mouse_state = cache.wframe_mouse
+    return bool(mouse_state.w_frame_skip_wait_mouse or getattr(mouse_state, "w_frame_skip_wait_ctrl", 0))
+
+
+def get_wait_skip_delay() -> float:
+    """
+    获取当前文本快进状态的停顿时间。
+
+    参数：无
+    返回值：float -- 建议的停顿秒数；没有快进状态时返回0
+    功能描述：保留右键与系统跳过的原有高速节奏，并为Ctrl长按留出可以及时松键停止的间隔。
+    """
+    mouse_state = cache.wframe_mouse
+    if mouse_state.w_frame_skip_wait_mouse:
+        return DEFAULT_SKIP_WAIT_DELAY
+    if getattr(mouse_state, "w_frame_skip_wait_ctrl", 0):
+        return CTRL_SKIP_WAIT_DELAY
+    return 0.0
 
 
 def askfor_wait():
