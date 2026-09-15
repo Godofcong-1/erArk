@@ -10,7 +10,7 @@ description: 对 erArk 某个已实现的系统做一轮全面复查：主代理
 必读的仓库资料：
 - 计划文档格式：`plan/计划模板.md`（双文件附录）；本轮用的骨架在本目录 `templates/`
 - 蓝本：`plan/done/plan_30_生长养成系统第十一轮复查_方案.md` 与 `_实施步骤与记录.md`
-- 无头测试：`.claude/skills/headless-game-test/SKILL.md`；日志：`update-changelog` skill
+- 无头测试：`.github/skills/headless-game-test/SKILL.md`；日志：`update-changelog` skill
 - 各阶段详解：本目录 `tools/`（进入某阶段前先读对应文件）
 
 ## 铁律

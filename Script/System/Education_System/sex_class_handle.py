@@ -339,7 +339,8 @@ def judge_can_join_sex_class(character_id: int, check_course: bool = True) -> bo
     否则这条无实行值要求的入口就成了绕过全部既有H前提的旁路。
     第3层「前置修习」对两者都生效：个人课表里要排过性技科目的教室课（judge_has_sex_skill_course）；
        玩家点名的必修生由调用方传 check_course=False 豁免——点名本身就是玩家的决定。
-    本函数必须是纯函数（Plan 31 §3.3）：开课前提、口上前提、旁观名单、必修名单、排课页人数与学生自己的决策都挂在它上面，
+    本函数必须是纯函数（Plan 31 §3.3）：开课前提、口上前提、必修名单、排课页人数与学生自己的决策都挂在它上面
+       （已在课上的旁观名单 Plan 32 起按课堂成员认，只另判状态那一层 judge_sex_class_state_ok），
        每刷新一次就求值一次。所以成年干员的实行值只判不扣——催眠补正照算（玩家理智够就能进），
        但不扣理智、不累加今日消耗、理智不够时也不解除催眠；进了课堂之后每个 H 动作照常各自结算实行值与理智
     Keyword arguments:
@@ -356,7 +357,7 @@ def judge_can_join_sex_class(character_id: int, check_course: bool = True) -> bo
     if character_data.dead:
         return False
     # 课堂 H 只收学生岗（Plan 26 §3.10，Plan 24 口径 1「课表只对学生岗生效」的延伸）：改了岗的女儿人在教室也不拉进来。
-    #    开课拉人、旁观名单、开课后到场的 JOIN、课堂模式下的邀请都经这里，一并收紧；必修名单本来就只列学生岗
+    #    开课拉人、开课后到场的 JOIN、课堂模式下的邀请都经这里，一并收紧；必修名单本来就只列学生岗
     if character_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
         return False
     # 状态异常的不拉进来（第2层，见 judge_sex_class_state_ok；刻意不查服装异常）
@@ -425,7 +426,8 @@ def get_class_member_list() -> List[int]:
     功能: 「已被拉进这节课」按身份认，不再重算入课门槛：门槛（judge_can_join_sex_class）只在入课那一刻判——
              开课拉人（10014）、开课后到场（722）、受邀到场都过它。成年学生的实行值随苦痛、露出、玩家理智在课中变化，
              一跌破门槛，她人还在课堂 H 里，却拿不到旁观收益、在课的口上前提也判不过。
-          旁观名单（get_watcher_list）、在课前提（self_in_sex_class）与课堂模式下群交模板的选人（group_sex_panel）都读这份名单。
+          旁观名单（get_watcher_list）、在课前提（self_in_sex_class）、课堂模式下群交模板的选人（group_sex_panel）
+             与主修科目加成（common_default 的经验写入段，实施复审补）都读这份名单。
           只读不写，前提路径上可以调用
     """
     if not cache.sex_class_mode:
@@ -653,7 +655,7 @@ def judge_time_crossed(target_time: Optional[datetime.datetime], last_time: date
 
     游戏时间是按行为时长跳跃的，不逐分钟走：玩家13:00开始一个60分钟的行为，时间直接跳到14:00，
        13:30这个时刻从来没有被"经过"过。所以提醒一律用跨越判定（上次 < 目标 <= 当前），
-       用 now_time == target_time 的等于判定会永远不触发。写法同 game_time.py:153 的切月判定。
+       用 now_time == target_time 的等于判定会永远不触发。写法同 game_time.sub_time_now 的切月判定。
     Keyword arguments:
     target_time -- 目标时刻
     last_time -- 上次结算时刻

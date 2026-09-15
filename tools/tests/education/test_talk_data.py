@@ -734,4 +734,16 @@ for _growth in _growth_by_cid.values():
 remove_character(202)
 clear_schedules()
 
+section("Plan 32 实施复审补：ArkEditor 两张表与 CHILD_GROWTH 说明的数据锁（L26 / L27）")
+with open(os.path.join("tools", "ArkEditor", "csv", "Effect.csv"), encoding="utf-8") as _effect_csv_file:
+    _effect_csv_line_list = _effect_csv_file.read().splitlines()
+_effect_line_557 = next((line for line in _effect_csv_line_list if line.startswith("557,")), "")
+_effect_line_512 = next((line for line in _effect_csv_line_list if line.startswith("512,")), "")
+check("L26 ArkEditor 前提表有新前提 self_have_public_course 一行（常量名 SELF_HAVE_PUBLIC_COURSE）",
+      any(line.startswith("self_have_public_course,SELF_HAVE_PUBLIC_COURSE,") for line in _premise_csv_line_list))
+check("L27 ArkEditor 效果表 557 的说明改为学生坐下听课时「教师判能到岗」即结算，不再写「学生晚于教师到场」",
+      "教师判能到岗" in _effect_line_557 and "晚于教师到场" not in _effect_line_557, _effect_line_557)
+check("L27 ArkEditor 效果表 512 的说明补上 NPC 教师只发给「听课节次与自己开讲的节次相同」的学生", "听课节次与自己开讲的节次相同" in _effect_line_512, _effect_line_512)
+check("L27 CHILD_GROWTH 的类说明写明「出生时不一定创建」（胎教值大于 0 才建，否则首次写入时惰性建）", "出生时不一定创建" in (game_type.CHILD_GROWTH.__doc__ or ""))
+
 finish()

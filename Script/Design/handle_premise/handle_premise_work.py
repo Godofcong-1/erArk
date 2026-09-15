@@ -687,6 +687,22 @@ def handle_self_course_join_sex_class(character_id: int) -> int:
     return int(class_ai.get_course_stage(character_id) == education_constant.COURSE_STAGE_JOIN_SEX_CLASS)
 
 
+@add_premise(constant_promise.Premise.SELF_NOT_ATTEND_SEX_CLASS_HERE)
+def handle_self_not_attend_sex_class_here(character_id: int) -> int:
+    """
+    自己不是来这里上正在进行的性技实操课的学生（Plan 32 §8.1，目击 H 的 target 500 用）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    功能: 课堂 H 里总有别的学生在 H 中，开课后才走进教室的学生不挂这条就会先命中高优先级的目击 H、画被撞见面板；
+             挂上之后她落到工作链：够格的 220835 加入课堂，够不上的判「教师来不了」、自习。非学生照旧目击
+    """
+    from Script.System.Education_System import class_ai
+
+    return int(not class_ai.judge_attend_running_sex_class_here(character_id))
+
+
 @add_premise(constant_promise.Premise.NURSERY_HAVE_WORK_TO_DO)
 def handle_nursery_have_work_to_do(character_id: int) -> int:
     """

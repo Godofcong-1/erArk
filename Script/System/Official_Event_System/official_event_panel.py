@@ -2,9 +2,11 @@
 
 玩家在博士办公室「处理公务」时，待处理队列里的公务事件逐条弹出，每条给2~4个选项。
 
-两条界面口径：
-   1. 选项的后果提示**写方向不写数值**（"倾向：坚强"而不是"坚强+2"）——写了数值，决断就变成算数题了
+三条界面口径：
+   1. 后果提示**写方向不写数值**（"倾向：坚强"而不是"坚强+2"）——写了数值，决断就变成算数题了
    2. 前提不满足的选项**置灰并标明原因**而不是隐藏——让玩家看见"这里本来有更好的选择，但我没养到"
+   3. 后果提示**不写在选项上**（Plan 32 §8.2，用户要求）：选项只写选项本身，玩家选定、结算之后，
+      才用一个 WaitDraw 单独写出选了什么、结果如何（Official_Event_Draw.draw_result）
 """
 from types import FunctionType
 from typing import List
@@ -125,7 +127,6 @@ class Official_Event_Draw:
         button_index = 0
         for option in self.option_list:
             option_text = get_code_text(option["text"], self.character_id, self.partner_id)
-            tip_text = get_code_text(option["tip"], self.character_id, self.partner_id)
             # 前提不满足：置灰保留，并把原因写在后面
             if not option["can_use"]:
                 reason_text = get_code_text(option["reason"], self.character_id, self.partner_id)
@@ -139,9 +140,8 @@ class Official_Event_Draw:
                 gray_draw.draw()
                 continue
             button_index += 1
+            # 选项上只写选项本身，不写后果提示（Plan 32 §8.2）：后果在玩家选定之后由 draw_result 单独显示
             button_text = "{0}{1}".format(text_handle.id_index(button_index), option_text)
-            if tip_text:
-                button_text += _("（{0}）").format(tip_text)
             return_text = f"\nOEVENT_{option['index']}"
             now_draw = draw.LeftButton(button_text, return_text, self.width)
             now_draw.draw()
@@ -154,6 +154,29 @@ class Official_Event_Draw:
             if yrn == f"\nOEVENT_{option['index']}":
                 return option["index"]
         return 0
+
+    def draw_result(self, option_index: int):
+        """
+        玩家选定并结算之后，单独显示这个选项带来的后果（Plan 32 §8.2）
+        Keyword arguments:
+        option_index -- 玩家选定的选项序号（1~4）
+        Return arguments:
+        无
+        功能: 后果提示不写在选项上，选定之后才用一个 WaitDraw 写出选了什么、结果如何，等玩家按键再弹下一条；
+                 提示照旧写方向不写数值（界面口径 1）。这个选项没写提示、或序号对不上时什么都不画
+        """
+        for option in self.option_list:
+            if option["index"] != option_index:
+                continue
+            tip_text = get_code_text(option["tip"], self.character_id, self.partner_id)
+            if not tip_text:
+                return
+            option_text = get_code_text(option["text"], self.character_id, self.partner_id)
+            result_draw = draw.WaitDraw()
+            result_draw.width = self.width
+            result_draw.text = _("\n  你选择了「{0}」\n  结果：{1}\n").format(option_text, tip_text)
+            result_draw.draw()
+            return
 
 
 def handle_official_event_queue(width: int = 0):
@@ -184,3 +207,5 @@ def handle_official_event_queue(width: int = 0):
             official_event_handle.record_event_done(queue_data["uid"], queue_data.get("chara_id", 0), 0)
             continue
         official_event_handle.settle_official_event_option(queue_data["uid"], queue_data.get("chara_id", 0), queue_data.get("partner_id", 0), option_index)
+        # 结算之后再单独显示这个选择的后果（Plan 32 §8.2），玩家按键后才弹下一条
+        now_draw.draw_result(option_index)

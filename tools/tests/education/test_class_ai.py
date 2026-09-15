@@ -2061,6 +2061,378 @@ cache.sex_class_mode = False
 cache.group_sex_mode = False
 child_g32.selected_course = {}
 
+section("Plan 32 实施复审补：M4 学生侧——住院表里有编号恰为教师角色 id 的病人时，教室里的学生照常听课（304）")
+clear_schedules()
+g32.selected_course = {}
+g32.last_attend_period = []
+g32.last_absent_period = []
+student.hit_point_max = student.hit_point = 100
+student.mana_point_max = student.mana_point = 100
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+set_time(period_time(0))
+for _cid in (101, 201):
+    prepare_ai(_cid)
+    clear_need(_cid)
+move_to(101, classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+teacher.sp_flag.is_h = False
+cache.rhodes_island.medical_hospitalized = {101: medical_constant.MedicalPatient(patient_id=101, state=medical_constant.MedicalPatientState.HOSPITALIZED)}
+sm = dispatch(201)
+check("M4 学生侧：住院表里有编号恰为 101 的病人（与教师甲无关），人在教室的学生派 304 坐下听课、「本节教师能到岗」成立（此前教师被判住院来不了，降级 713 自习）",
+      sm == SM.WORK_ATTENT_CLASS and handle_premise.handle_premise("self_course_teacher_available", 201) == 1, sm)
+teacher.sp_flag.is_h = True
+sm = dispatch(201)
+check("M4 学生侧对照：同一现场教师真的来不了（H 中）→ 713 自习（说明上一条走的是教师能否到岗的判定）", sm == SM.EDUCATION_SELF_STUDY, sm)
+teacher.sp_flag.is_h = False
+cache.rhodes_island.medical_hospitalized = {}
+schedule_handle.clear_selected_course(201, 0, 0)
+move_to(201, SCENE_DORM)
+clear_schedules()
+
+section("Plan 32 实施复审补：L10 降级自习跑完——不够格的选修生开课前在实践教室里 713 自习，行为循环里 548 结算：计一节出勤、拿自习档的科目经验")
+clear_schedules()
+g32.selected_course = {}
+child_g32.selected_course = {}
+child_g32.last_attend_period = []
+child_g32.last_absent_period = []
+sex_class_handle.set_temp_class(DEFAULT_TIME.date().toordinal(), 2, ROOM_P, 70, must_attend=[201])
+schedule_handle.set_selected_course(202, 0, 2, E.COURSE_TYPE_PRACTICE, ROOM_P)
+move_to(0, SCENE_DORM)
+move_to(201, SCENE_DORM)
+move_to(202, classroom_path(ROOM_P))
+pl.sp_flag.is_h = False
+set_time(T1030)
+cache.pre_game_time = cache.game_time
+prepare_ai(202)
+child.hit_point_max = 2000
+child.mana_point_max = 2000
+child.sp_flag.is_h = False
+child.sp_flag.is_follow = 0
+child.sp_flag.unconscious_h = 0
+for key in child.second_behavior:
+    child.second_behavior[key] = 0
+child.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+child.behavior.start_time = T1030
+child.behavior.duration = 0
+child.behavior.move_target = []
+child.behavior.move_final_target = []
+child.state = constant.CharacterStatus.STATUS_ARDER
+child.target_character_id = 202
+clear_need(202)
+_l10_exp_id = growth_handle.get_class_exp_id(70)
+""" 指技课堂只发的理论经验（Plan 26 §3.1） """
+_l10_real_exp_id = growth_handle.get_subject_exp_id(70)
+""" 指技的真实性交经验（手交） """
+_l10_expect = max(1, int(E.SELF_STUDY_EXP_BASE * growth_handle.get_class_adjust(70, 202, -1)))
+""" 自习档的科目经验：自习基础值 × 自习的总倍率（无教师，速度系数恒为 1） """
+_l10_attend = child_g32.attend_class_count
+_l10_exp = child.experience.get(_l10_exp_id, 0)
+_l10_real = child.experience.get(_l10_real_exp_id, 0)
+_l10_course = schedule_handle.get_now_course(202)
+check("L10 跑完前提：10:30 她本节是实践教室一的临时实操课（授课者玩家、还没开讲），没修过性技理论、进不了课堂；指技的理论经验与真实经验是两个 id",
+      _l10_course is not None and _l10_course["teacher_id"] == 0 and not sex_class_handle.judge_can_join_sex_class(202)
+      and _l10_exp_id > 0 and _l10_real_exp_id > 0 and _l10_exp_id != _l10_real_exp_id, _l10_course)
+H1_SM_LOG.clear()
+H1_GAIN_LOG.clear()
+rounds = run_h1((45,), [202])
+_l10_sm = [(one[1], one[2]) for one in H1_SM_LOG if one[0] == 202]
+check("L10 跑完：玩家一步 45 分钟（10:30 → 11:15）收敛，她 10:30 派 713 自习，没有坐下等玩家（304）、也没有进课堂（722）",
+      not rounds[0][2] and bool(_l10_sm) and _l10_sm[0] == (SM.EDUCATION_SELF_STUDY, T1030)
+      and not any(one[0] in (SM.WORK_ATTENT_CLASS, SM.EDUCATION_JOIN_SEX_CLASS) for one in _l10_sm), (rounds, _l10_sm))
+check("L10 跑完：自习在行为循环里经 548 结算这一节（第 3 节），计一节出勤（此前开课前坐下听课，557 对授课者 0 直接返回，整节零收益、不计出勤）",
+      child_g32.attend_class_count == _l10_attend + 1 and [(one[1], one[2]) for one in H1_GAIN_LOG if one[0] == 202 and one[3]] == [(T1030, 2)],
+      (child_g32.attend_class_count - _l10_attend, H1_GAIN_LOG))
+check("L10 跑完：拿到自习档的科目经验——指技的理论经验加上自习基础值（× 自习倍率），真实的手交经验不变",
+      child.experience.get(_l10_exp_id, 0) - _l10_exp == _l10_expect and child.experience.get(_l10_real_exp_id, 0) == _l10_real,
+      (child.experience.get(_l10_exp_id, 0) - _l10_exp, _l10_expect, child.experience.get(_l10_real_exp_id, 0) - _l10_real))
+child.hit_point_max = child.hit_point = 100
+child.mana_point_max = child.mana_point = 100
+child.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+child.behavior.duration = 0
+child_g32.selected_course = {}
+child_g32.last_attend_period = []
+move_to(202, SCENE_DORM)
+clear_schedules()
+
+section("Plan 32 实施复审补：H1 走真实玩家分支与行为循环——幽灵课堂在玩家这一步收掉，学生不再被拉进没有博士的课堂")
+from time import perf_counter  # noqa: E402
+
+from Script.Design import update  # noqa: E402
+
+GHOST_START = period_time(0) + datetime.timedelta(minutes=5)
+""" 9:05：第 1 节（9:00~9:45）刚开始，幽灵课堂与她的常规课都落在这一节 """
+GHOST_PROBE = []
+""" NPC 阶段第一次处理 NPC 时（玩家阶段刚走完）的现场：(课堂模式是否开着, 是否还有 running 的实操课) """
+GHOST_FLOW_CALL = []
+""" 行为循环里嵌套调到 update.game_update_flow 的记录：(步进分钟数, 当时玩家的行为id) """
+_orig_character_behavior = character_behavior.character_behavior
+_orig_game_update_flow = update.game_update_flow
+_ghost_pl_point = (pl.hit_point_max, pl.hit_point, pl.mana_point_max, pl.mana_point)
+""" 玩家原来的体力 / 气力（上限与当前值），本段跑完还原 """
+
+
+def ghost_flow_stub(add_time: int):
+    """
+    update.game_update_flow 的桩：只记下调用，不进真实主循环
+    Keyword arguments:
+    add_time -- 游戏步进的时间
+    Return arguments:
+    无
+    功能: 行为循环里嵌套的 game_update_flow 会再跑一遍 init_character_behavior，一路进到成就结算（夹具缺 materials_resouce）；
+          幽灵课堂的群交模式开着时，玩家体力落到 1 就会经 handle_group_sex_end（群交中玩家体力归零）走到这里
+    """
+    GHOST_FLOW_CALL.append((add_time, pl.behavior.behavior_id))
+
+
+def ghost_probe_spy(character_id: int, now_time: datetime.datetime, pl_start_time: datetime.datetime):
+    """
+    行为循环里 character_behavior 的记录包装：NPC 阶段第一次处理 NPC 时记下课堂模式与实操课的状态，再照常执行
+    Keyword arguments:
+    character_id -- 角色id
+    now_time -- 当前时刻
+    pl_start_time -- 玩家这一步的开始时刻
+    Return arguments:
+    原函数的返回值
+    功能: run_loop_round 先把玩家阶段跑完才进 NPC 阶段，第一次以 NPC 调进来的那一刻就是「玩家这一步刚走完」
+    """
+    if character_id and not GHOST_PROBE:
+        GHOST_PROBE.append((cache.sex_class_mode, sex_class_handle.get_running_class() is not None))
+    return _orig_character_behavior(character_id, now_time, pl_start_time)
+
+
+def setup_ghost() -> dict:
+    """
+    摆「幽灵课堂」的现场：课堂 H 已以别的方式结束（玩家不在 H、人在宿舍），课堂模式与群交模式却还开着，
+    实践教室一第 1 节挂着一条 running 的当场实操课；学生 201 本节是这间教室的常规课（膣技、没排教师）、人在教室里、正要决策
+    Keyword arguments:
+    无
+    Return arguments:
+    dict -- 那节 running 的临时实操课
+    功能: 夹具设定照 setup_h1：体力 / 气力 2000、二段行为清空、交互对象设回自己；翘课概率已在本轮开头钉成 0。
+          她的常规课格子排的是性技科目（膣技 74）：个人课表里有性技教室课，改前的 JOIN 判定（judge_can_join_sex_class）才过得去
+    """
+    clear_schedules()
+    g32.selected_course = {}
+    g32.last_attend_period = []
+    g32.last_absent_period = []
+    g32.skip_class_flag = False
+    g32.skip_class_day = 0
+    g32.skip_caught_day = 0
+    schedule_handle.set_class_cell(ROOM_P, 0, 0, 74, -1)
+    schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_PRACTICE, ROOM_P)
+    student.entertainment.entertainment_type = [E.ENTERTAINMENT_FREE_PLAY] * 3
+    move_to(0, SCENE_DORM)
+    move_to(201, classroom_path(ROOM_P))
+    move_to(202, SCENE_DORM)
+    set_time(GHOST_START)
+    cache.pre_game_time = cache.game_time
+    ghost = sex_class_handle.set_temp_class(DEFAULT_TIME.date().toordinal(), 0, ROOM_P, 70, running=True)
+    cache.sex_class_mode = True
+    cache.group_sex_mode = True
+    # 群交模式开着时，玩家这一步的结算走群交分支（settle_behavior.handle_settle_behavior），要读监禁调教设置（性爱助手，键 12）；
+    #    夹具的罗德岛这张表是空的，照新建角色时的置零表补齐缺的键（不覆盖已有的值）
+    for key, value in attr_calculation.get_confinement_training_setting_zero().items():
+        cache.rhodes_island.confinement_training_setting.setdefault(key, value)
+    pl.sp_flag.is_h = False
+    # 玩家的体力 / 气力也换成 2000：体力落到 1 时玩家分支的疲劳判定按「群交中玩家体力归零」调结束群交（handle_group_sex_end），
+    #    幽灵课堂的群交模式开着，就会经 update.game_update_flow 嵌套一层真实主循环（夹具跑不了，前面各段已把玩家体力耗到 1）
+    pl.hit_point_max = pl.hit_point = 2000
+    pl.mana_point_max = pl.mana_point = 2000
+    child.sp_flag.is_h = False
+    prepare_ai(201)
+    student.hit_point_max = 2000
+    student.mana_point_max = 2000
+    student.sp_flag.is_h = False
+    student.sp_flag.see_pl_h = False
+    student.sp_flag.is_follow = 0
+    student.sp_flag.unconscious_h = 0
+    student.hypnosis.blockhead = False
+    for key in student.second_behavior:
+        student.second_behavior[key] = 0
+    for list_name in ("must_settle_second_behavior_id_list", "must_show_second_behavior_id_list"):
+        if hasattr(student, list_name):
+            getattr(student, list_name).clear()
+    student.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+    student.behavior.start_time = GHOST_START
+    student.behavior.duration = 0
+    student.behavior.move_target = []
+    student.behavior.move_final_target = []
+    student.state = constant.CharacterStatus.STATUS_ARDER
+    student.target_character_id = 201
+    clear_need(201)
+    H1_SM_LOG.clear()
+    H1_GAIN_LOG.clear()
+    GHOST_PROBE.clear()
+    GHOST_FLOW_CALL.clear()
+    return ghost
+
+
+_ghost = setup_ghost()
+check("H1 前提（幽灵课堂）：课堂模式与群交模式开着、实践教室一第 1 节的当场实操课 running，玩家不在 H、人在宿舍；"
+      "她本节是这间教室的常规课、人在教室，个人课表里有性技教室课（过得了改前的 JOIN 判定）",
+      cache.sex_class_mode and cache.group_sex_mode and sex_class_handle.get_running_class() is _ghost and not pl.sp_flag.is_h
+      and pl.position == SCENE_DORM and class_ai.judge_in_scene(201, ROOM_P) and sex_class_handle.judge_has_sex_skill_course(201)
+      and sex_class_handle.judge_can_join_sex_class(201))
+_ghost_attend, _ghost_sex = g32.attend_class_count, g32.sex_class_count
+character_behavior.character_behavior = ghost_probe_spy
+update.game_update_flow = ghost_flow_stub
+try:
+    rounds = run_h1((60,), [201])
+finally:
+    character_behavior.character_behavior = _orig_character_behavior
+    update.game_update_flow = _orig_game_update_flow
+_ghost_sm = [(one[1], one[2].strftime("%H:%M"), one[3]) for one in H1_SM_LOG if one[0] == 201]
+check("H1 真实循环（玩家一步 60 分钟）：玩家这一步走完时就下了课——NPC 阶段第一次处理 NPC 时课堂模式已关、没有 running 的实操课（此前一直开着）；"
+      "收掉它的是玩家实时结算里的 settle_orphan_class，这一步没有走别的收尾（没有嵌套的 game_update_flow）",
+      GHOST_PROBE == [(False, False)] and not GHOST_FLOW_CALL, (GHOST_PROBE, GHOST_FLOW_CALL))
+check("H1 真实循环：跑完仍没有进行中的课、课堂模式关着，那条当场开的实操课已删掉",
+      not cache.sex_class_mode and sex_class_handle.get_running_class() is None and not cache.rhodes_island.temp_sex_class,
+      (cache.sex_class_mode, cache.rhodes_island.temp_sex_class))
+check("H1 真实循环：收敛（没有撞护栏），状态机记录里没有 722，她没被拉进 H（此前判 JOIN、722 把她拉进没有博士的课堂）",
+      rounds[0][0] <= 30 and rounds[0][1] <= 60 and not rounds[0][2] and not any(one[0] == SM.EDUCATION_JOIN_SEX_CLASS for one in _ghost_sm)
+      and not student.sp_flag.is_h, (rounds, _ghost_sm))
+check("H1 真实循环：累计实操课次数不变，出勤最多 +1（只有常规课那一节；此前 722 每拉一次各 +1）",
+      g32.sex_class_count == _ghost_sex and 0 <= g32.attend_class_count - _ghost_attend <= 1,
+      (g32.sex_class_count - _ghost_sex, g32.attend_class_count - _ghost_attend, _ghost_sm))
+# 前提对照：把 settle_orphan_class 桩成什么都不做（改前的样子），同一现场重跑一步
+_ghost = setup_ghost()
+_orig_settle_orphan = sex_class_handle.settle_orphan_class
+sex_class_handle.settle_orphan_class = lambda: False
+update.game_update_flow = ghost_flow_stub
+_ghost_clock = perf_counter()
+try:
+    rounds = run_h1((60,), [201])
+finally:
+    sex_class_handle.settle_orphan_class = _orig_settle_orphan
+    update.game_update_flow = _orig_game_update_flow
+_ghost_second = perf_counter() - _ghost_clock
+_ghost_join = sum(1 for one in H1_SM_LOG if one[0] == 201 and one[1] == SM.EDUCATION_JOIN_SEX_CLASS)
+check("H1 前提对照：settle_orphan_class 桩成什么都不做时，同一现场课堂模式留着，她被 722 拉进没有博士的课堂或行为循环撞护栏（说明上面几条走到了要修的路径）",
+      _ghost_join > 0 or bool(rounds[0][2]), (rounds, _ghost_join, round(_ghost_second, 1), GHOST_FLOW_CALL))
+print(f"  （H1 前提对照：722 派了 {_ghost_join} 次，NPC 阶段 {rounds[0][1]} 遍，没收敛的 {rounds[0][2]}，"
+      f"嵌套 game_update_flow {len(GHOST_FLOW_CALL)} 次，耗时 {_ghost_second:.1f} 秒）")
+pl.hit_point_max, pl.hit_point, pl.mana_point_max, pl.mana_point = _ghost_pl_point
+cache.sex_class_mode = False
+cache.group_sex_mode = False
+cache.rhodes_island.temp_sex_class = {}
+for _cid in (0, 201, 202):
+    cache.character_data[_cid].sp_flag.is_h = False
+student.sp_flag.see_pl_h = False
+for key in student.second_behavior:
+    student.second_behavior[key] = 0
+student.hit_point_max = student.hit_point = 100
+student.mana_point_max = student.mana_point = 100
+student.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+student.behavior.duration = 0
+g32.selected_course = {}
+g32.last_attend_period = []
+g32.last_absent_period = []
+move_to(201, SCENE_DORM)
+clear_schedules()
+
+section("Plan 32 §8.1（追加调整）：课堂 H 里已有别的学生在 H 中，晚到的学生照常加入课堂，不再先触发目击 H（target 500）")
+# 目击 H 的状态机 40 会画「H中被发现」面板、等玩家选；这里只看派发了什么，把它临时换成空函数（本段末尾还原）
+_orig_see_h = constant.handle_state_machine_data[SM.SEE_H_AND_MOVE_TO_DORMITORY]
+constant.handle_state_machine_data[SM.SEE_H_AND_MOVE_TO_DORMITORY] = lambda character_id: None
+class_ai.get_skip_class_rate = lambda cid: 0.0
+_T500 = "default500"
+""" 目击 H 的目标行（type 0，排在工作链之前）；构建时 cid 带文件夹名前缀 """
+_NOT_HERE = "self_not_attend_sex_class_here"
+""" 本段要验的新前提：自己不是来这里上正在进行的性技实操课的学生（写成字面量，改前没有这个常量时本段照样能跑到派发那一步） """
+for _cid in (201, 202):
+    _cd = cache.character_data[_cid]
+    _cd.hit_point_max = _cd.hit_point = 100
+    _cd.mana_point_max = _cd.mana_point = 100
+    _cd.sp_flag.is_h = False
+    _cd.sp_flag.see_pl_h = False
+    _cd.sp_flag.go_to_join_group_sex = False
+clear_schedules()
+set_time(period_time(5))
+move_to(0, classroom_path(ROOM_P))
+schedule_handle.set_class_cell(ROOM_P, 0, 5, 74, -1)
+for _cid in (201, 202):
+    schedule_handle.set_selected_course(_cid, 0, 5, E.COURSE_TYPE_PRACTICE, ROOM_P)
+sex_class_handle.start_sex_class(70, [])
+cache.sex_class_mode = True
+cache.group_sex_mode = True
+pl.sp_flag.is_h = True
+# 开课时已在教室、被拉进课堂 H 的学生：她在 H 里，晚到的人一进门就满足「该地点有其他角色在和玩家进行非隐奸的 H」
+move_to(201, classroom_path(ROOM_P))
+student.sp_flag.is_h = True
+_late = period_time(5) + datetime.timedelta(minutes=10)
+move_to(202, classroom_path(ROOM_P))
+set_time(_late)
+check("§8.1 前提：她晚到、走进正在上实操课的教室、能参加 → JOIN_SEX_CLASS；教室里另有学生在课堂 H 里，目击 H 的其余前提对她都成立（改前正是这样先命中 target 500）",
+      class_ai.get_course_stage(202) == E.COURSE_STAGE_JOIN_SEX_CLASS and handle_premise.handle_premise("scene_someone_h_but_not_hidden_sex", 202) > 0
+      and handle_premise.handle_premise("not_witness_pl_h_with_others", 202) and handle_premise.handle_premise("self_not_go_to_join_group_sex", 202)
+      and handle_premise.handle_premise("not_in_dor", 202), class_ai.get_course_stage(202))
+_premise_500 = game_config.config_target_premise_data.get(_T500, set())
+check("§8.1 target 500 挂上「自己不是来这里上正在进行的实操课的学生」，对她判 0", _NOT_HERE in _premise_500 and handle_premise.handle_premise(_NOT_HERE, 202) == 0,
+      (sorted(_premise_500), handle_premise.handle_premise(_NOT_HERE, 202)))
+_attend = growth_handle.get_child_growth(202).attend_class_count
+sm = dispatch(202, _late)
+check("§8.1 晚到的学生派 722 加入课堂：进 H、看见玩家的 H、补记一节出勤（此前先命中 target 500、派 40 画「H中被发现」面板，220835 一次都走不到）",
+      sm == SM.EDUCATION_JOIN_SEX_CLASS and child.sp_flag.is_h and child.sp_flag.see_pl_h and growth_handle.get_child_growth(202).attend_class_count == _attend + 1, sm)
+# 对照一：走进来的非学生干员照旧目击 H
+prepare_ai(102)
+move_to(102, classroom_path(ROOM_P))
+mother.sp_flag.see_pl_h = False
+mother.sp_flag.go_to_join_group_sex = False
+sm = dispatch(102, _late)
+check("§8.1 对照：走进课堂的非学生干员照旧目击 H（派 40），新前提对她判 1", sm == SM.SEE_H_AND_MOVE_TO_DORMITORY and handle_premise.handle_premise(_NOT_HERE, 102) == 1, sm)
+mother.sp_flag.see_pl_h = False
+move_to(102, SCENE_DORM)
+# 对照二：选了这一节、却够不上课堂的学生（实行值不足的成年学生）
+make_character(301, "成年学生", 152)
+prepare_ai(301)
+schedule_handle.set_selected_course(301, 0, 5, E.COURSE_TYPE_PRACTICE, ROOM_P)
+move_to(301, classroom_path(ROOM_P))
+set_time(_late)
+sm = dispatch(301, _late)
+check("§8.1 够不上课堂的学生（实行值不足的成年学生）同样不触发目击 H：判「教师来不了」、派 713 在一边自习（L10 的口径），新前提对她判 0",
+      sm == SM.EDUCATION_SELF_STUDY and handle_premise.handle_premise(_NOT_HERE, 301) == 0, sm)
+check("§8.1 对照：同一名学生不在那间教室时新前提判 1（只认人已在课堂里的）",
+      (move_to(301, SCENE_DORM), set_time(_late), handle_premise.handle_premise(_NOT_HERE, 301))[2] == 1)
+remove_character(301)
+# 对照三：待赴的那节被玩家提前开讲（Plan 26 §3.5），教室里已有别的学生在课堂 H 里
+child.sp_flag.is_h = False
+child.sp_flag.see_pl_h = False
+for key in child.second_behavior:
+    child.second_behavior[key] = 0
+pl.sp_flag.is_h = False
+sex_class_handle.end_sex_class()
+cache.sex_class_mode = False
+cache.group_sex_mode = False
+clear_schedules()
+sex_class_handle.set_temp_class(DEFAULT_TIME.date().toordinal(), 1, ROOM_P, 70, must_attend=[202])
+_early_81 = period_time(1) - datetime.timedelta(minutes=5)
+set_time(_early_81)
+sex_class_handle.start_sex_class(70, [])
+cache.sex_class_mode = True
+cache.group_sex_mode = True
+pl.sp_flag.is_h = True
+student.sp_flag.is_h = True
+move_to(202, classroom_path(ROOM_P))
+set_time(_early_81)
+sm = dispatch(202, _early_81)
+check("§8.1 提前开讲的待赴课：点名必修的学生开讲前 5 分钟到场，教室里已有学生在课堂 H 里 → 照样派 722 加入（同样不先目击 H）", sm == SM.EDUCATION_JOIN_SEX_CLASS and child.sp_flag.is_h, sm)
+# 还原
+constant.handle_state_machine_data[SM.SEE_H_AND_MOVE_TO_DORMITORY] = _orig_see_h
+pl.sp_flag.is_h = False
+sex_class_handle.end_sex_class()
+cache.sex_class_mode = False
+cache.group_sex_mode = False
+cache.rhodes_island.temp_sex_class = {}
+for _cid in (0, 102, 201, 202):
+    cache.character_data[_cid].sp_flag.is_h = False
+    cache.character_data[_cid].sp_flag.see_pl_h = False
+for key in child.second_behavior:
+    child.second_behavior[key] = 0
+move_to(201, SCENE_DORM)
+move_to(202, SCENE_DORM)
+clear_schedules()
+
 # 收尾：还原本轮改过的夹具
 class_ai.get_skip_class_rate = _orig_rate
 student.hit_point_max = student.hit_point = 100

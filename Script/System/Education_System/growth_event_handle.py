@@ -334,7 +334,8 @@ def push_birthday_event() -> List[int]:
     功能: 生日按月、日比对，童年里只有第 365 天那一次（萝莉期）；只靠每日随机派发的话，当天先要过每晚 70% 的概率、
              再从几十条候选里按权重抽中，绝大多数女儿一辈子都见不到它。
           名单与日常派发相同（get_growth_event_character_list）；今天过生日（handle_self_birthday_today）、
-             能入队（没经历过、不在队列里）、阶段与事件前提都成立的才推，与 get_candidate_event_list 同一套判定。
+             能入队（没经历过、不在队列里）、阶段与事件前提都成立的才推，与 get_candidate_event_list 同一套判定；
+             只是事件前提逐条判、不带口上的口球判定（judge_premise_all_pass，实施复审补）：跨天那一刻她或博士被塞着口球，也不该错过一辈子仅此一次的生日。
           插队首、不受队列容量约束，与毕业典礼同一写法（push_graduation_event）：一辈子只有这一次，队列满了也不能丢。
           必须排在日常派发（official_event_handle.check_new_day_official_event）之前：推入之后它已在队列里，日常派发不会再抽到它
     """
@@ -354,25 +355,87 @@ def push_birthday_event() -> List[int]:
         if not judge_stage_pass(uid, character_id):
             continue
         partner_id = get_event_partner(uid, character_id)
-        if not official_event_handle.judge_premise_pass(event_data.get("premise", ""), character_id, partner_id):
+        # 逐条判前提、不带口上的口球判定（judge_premise_all_pass）：跨天那一刻她或博士被塞着口球时，按口上的判法整组判 0，这一次就永远错过了
+        if not judge_premise_all_pass(event_data.get("premise", ""), character_id, partner_id):
             continue
         if official_event_handle.push_official_event(uid, character_id, partner_id, to_front=True):
             result.append(character_id)
     return sorted(result)
 
 
+def judge_premise_all_pass(premise_text: str, character_id: int, partner_id: int = 0) -> bool:
+    """
+    逐条判定一组事件前提是否全部成立，不带口上的口球判定（Plan 32 §3.3 / §3.11）
+    Keyword arguments:
+    premise_text -- & 连接的前提串
+    character_id -- 主体角色id
+    partner_id -- 互动对象角色id，默认0为玩家
+    Return arguments:
+    bool -- 全部成立（或前提为空）为 True；主体不存在为 False
+    功能: official_event_handle.judge_premise_pass 走口上的权重计算（handle_premise.get_weight_from_premise_dict），
+             主体或交互对象被塞着口球、前提里又没写口球时整组判 0。每日派发里这只是那天少派一条，
+             一辈子只推一次的生日事件、孩子长大时重判阶段记号却会因此错过或误清。
+          这里逐条调前提处理函数（handle_premise.handle_premise，CVP 走 handle_comprehensive_value_premise）；
+             权重类前提（high_ 开头的与 CVP 的 Weight|0）只管权重、不算条件，跳过。
+          判定期间照 judge_premise_pass 的写法把交互对象临时指向 partner_id（前提里的 A2 与 target_* 于是指向互动对象），判完立刻还原
+    """
+    from Script.Design import handle_premise
+
+    premise_set = official_event_handle.get_premise_set(premise_text)
+    if not premise_set:
+        return True
+    if character_id not in cache.character_data:
+        return False
+    character_data: game_type.Character = cache.character_data[character_id]
+    old_target_id = character_data.target_character_id
+    character_data.target_character_id = partner_id
+    try:
+        for premise in sorted(premise_set):
+            if premise.startswith("high_") or "Weight|0" in premise:
+                continue
+            if not handle_premise.handle_premise(premise, character_id):
+                return False
+    finally:
+        character_data.target_character_id = old_target_id
+    return True
+
+
+def judge_stage_marker_pass(uid: str, character_id: int) -> bool:
+    """
+    判定一条事件前提里的阶段素质记号对孩子当前的阶段是否仍成立（Plan 32 §3.11）
+    Keyword arguments:
+    uid -- 事件uid
+    character_id -- 孩子角色id
+    Return arguments:
+    bool -- 前提里没有阶段素质记号、或记号全部成立时为 True；事件不存在时为 False
+    功能: 期末桶的阶段区分与通用桶的「不派婴儿 / 不派萝莉」写在前提里（education_constant.STAGE_TALENT_PREMISE_SET），
+             sub_key 上看不出来，judge_stage_pass 管不到；这里只取这些记号去判，别的前提一概不看。
+          记号经 judge_premise_all_pass 逐条求值，不走 official_event_handle.judge_premise_pass：
+             那条路带着口上的口球判定，长大那一刻她正被塞着口球时，会把成立的记号误判为不成立
+    """
+    event_data = official_event_handle.get_event_data(uid)
+    if event_data is None:
+        return False
+    marker_set = official_event_handle.get_premise_set(event_data.get("premise", "")) & education_constant.STAGE_TALENT_PREMISE_SET
+    return judge_premise_all_pass("&".join(sorted(marker_set)), character_id)
+
+
 def drop_stale_stage_event(character_id: int) -> int:
     """
-    孩子长大时把队列里已经对不上阶段的日常养成事件清掉（Plan 32 §3.11）
+    孩子长大时把队列里已经对不上新阶段的养成事件清掉（Plan 32 §3.11）
     Keyword arguments:
     character_id -- 刚长大的孩子角色id（素质已换成新阶段）
     Return arguments:
     int -- 清掉的条数
     功能: 公务队列出队时不重判阶段，长大前入队、还没处理的上一阶段事件会顶着新阶段的抬头弹出
              （婴儿期入队的「忽然睁开了眼睛」写成「幼女期第 3 天」）。
-          只清部门 15 的阶段桶（sub_key 0 与 101~103）里 judge_stage_pass 已不成立的：婴儿→幼女、幼女→萝莉清掉上一阶段桶的事件，
-             通用桶的照留；成年时通用桶与萝莉桶一并清掉。
-          成年桶（104：毕业典礼、成年纪念、通用 59 / 60）与期末桶（200）不动：前者只由成年结算显式推入，后者由学期结算推入、阶段写在前提里。
+          阶段桶（sub_key 0 与 101~103）：judge_stage_pass 已不成立的清掉——婴儿→幼女、幼女→萝莉清掉上一阶段桶的事件，
+             成年时通用桶与萝莉桶一并清掉；前提里的阶段素质记号（judge_stage_marker_pass）已不成立的也清掉——
+             幼女期入队、写婴儿的通用 6 / 15 / 27（前提写着不派萝莉）长成萝莉时清掉。
+          期末桶（200）：sub_key 不分阶段，judge_stage_pass 对它恒不成立，只按阶段素质记号判——
+             幼女期的期末 2 / 6 / 12 长成萝莉时、萝莉期的期末 3 / 7 / 10 / 17 / 18 / 19 成年时清掉，前提不写阶段的照留。
+          成年桶（104：毕业典礼、成年纪念、通用 59 / 60）不动：只由成年结算显式推入。
+          只重判阶段，别的前提（课型、好感、养成数值等）出队时照旧不复核。
           事件配置已删掉的队列项留给 official_event_handle.clean_official_event_queue 处理。
           由妊娠系统的三处阶段转换在换完素质后调用；成年结算要排在推毕业典礼之前
     """
@@ -384,14 +447,20 @@ def drop_stale_stage_event(character_id: int) -> int:
         if isinstance(one, dict) and one.get("chara_id") == character_id:
             uid = one.get("uid")
             event_data = official_event_handle.get_event_data(uid)
-            if (
-                event_data is not None
-                and official_event_handle.get_event_department(uid) == education_constant.GROWTH_EVENT_DEPARTMENT
-                and event_data.get("sub_key", education_constant.STAGE_ANY) in stage_bucket_set
-                and not judge_stage_pass(uid, character_id)
-            ):
-                drop_count += 1
-                continue
+            if event_data is not None and official_event_handle.get_event_department(uid) == education_constant.GROWTH_EVENT_DEPARTMENT:
+                sub_key = event_data.get("sub_key", education_constant.STAGE_ANY)
+                # 阶段桶：sub_key 与前提里的阶段素质记号都要对得上新阶段
+                if sub_key in stage_bucket_set:
+                    stale = not judge_stage_pass(uid, character_id) or not judge_stage_marker_pass(uid, character_id)
+                # 期末桶：阶段只写在前提里，只按记号判
+                elif sub_key == education_constant.SEMESTER_EVENT_SUB_KEY:
+                    stale = not judge_stage_marker_pass(uid, character_id)
+                # 成年桶：只由成年结算显式推入，不动
+                else:
+                    stale = False
+                if stale:
+                    drop_count += 1
+                    continue
         keep_list.append(one)
     # 原地改写，队列本体的引用不变
     if drop_count:

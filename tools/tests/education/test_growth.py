@@ -442,4 +442,130 @@ check("L28 表里没有的课型回落到理论课的基础值，按课型常量
 check("L27 557 的说明改为「学生坐下听课时，本节教师判能到岗即结算」，不再写「晚到的学生」",
       "晚到的学生" not in growth_handle.settle_student_class_gain.__doc__ and "本节教师判能到岗" in growth_handle.settle_student_class_gain.__doc__)
 
+section("Plan 32 实施复审补：M1 count_play_day 的起点落在被跳过的月份")
+check("M1 起点落在被跳过的 11 月：11/26 09:00 → 12/3 00:05，11 月那一截整段不算，只数 12/1 00:00 起的 2 天 5 分钟 → 2（日历天 6）",
+      game_time.count_play_day(DT(2026, 11, 26, 9, 0), DT(2026, 12, 3, 0, 5)) == 2
+      and game_time.count_day_for_datetime(DT(2026, 11, 26, 9, 0), DT(2026, 12, 3, 0, 5)) == 6,
+      game_time.count_play_day(DT(2026, 11, 26, 9, 0), DT(2026, 12, 3, 0, 5)))
+check("M1 起点落在被跳过的 1 月、跨过 2 月：2027/1/10 → 3/2 12:00，只数 3/1 00:00 起的 1 天 12 小时 → 1（日历天 51）",
+      game_time.count_play_day(DT(2027, 1, 10), DT(2027, 3, 2, 12, 0)) == 1 and game_time.count_day_for_datetime(DT(2027, 1, 10), DT(2027, 3, 2, 12, 0)) == 51,
+      game_time.count_play_day(DT(2027, 1, 10), DT(2027, 3, 2, 12, 0)))
+check("M1 起点、终点都落在被跳过的月份（10/5 → 11/20）：一个可游玩天都没有 → 0", game_time.count_play_day(DT(2026, 10, 5), DT(2026, 11, 20)) == 0)
+
+section("Plan 32 实施复审补：M1 萝莉期 Growth|3_GE_70 的窗口（全年 122 个季月出生日期，用真实时钟 sub_time_now 逐日推进萝莉期）")
+_saved_time = cache.game_time
+_saved_born_loli = student.pregnancy.born_time
+_loli_ge70 = {}
+_loli_ge70_old = {}
+_loli_span = pregnancy_constant.GROW_TO_GIRL_DAY - pregnancy_constant.GROW_TO_LOLI_DAY
+for _month in (3, 6, 9, 12):
+    for _day in range(1, calendar.monthrange(2026, _month)[1] + 1):
+        # 06:00 出生，此后每天 00:05（跨天结算派养成事件的时刻）取样；只数有效成长天数落在萝莉期 [270, 450) 的可游玩日
+        student.pregnancy.born_time = DT(2026, _month, _day, 6, 0)
+        cache.game_time = DT(2026, _month, _day, 0, 5)
+        _loli_ge70[(_month, _day)] = 0
+        _loli_ge70_old[(_month, _day)] = 0
+        for _step in range(400):
+            game_time.sub_time_now(day=1)
+            _grow_day = pregnancy_handle.get_child_grow_day(201)
+            if _grow_day >= pregnancy_constant.GROW_TO_GIRL_DAY:
+                break
+            if _grow_day < pregnancy_constant.GROW_TO_LOLI_DAY:
+                continue
+            if growth_handle.get_stage_progress(201) >= 70:
+                _loli_ge70[(_month, _day)] += 1
+            # 对照：按日历天的旧口径（萝莉期已过的有效成长天 ÷ 180）
+            if (_grow_day - pregnancy_constant.GROW_TO_LOLI_DAY) * 100.0 / _loli_span >= 70:
+                _loli_ge70_old[(_month, _day)] += 1
+student.pregnancy.born_time = _saved_born_loli
+set_time(_saved_time)
+check("M1 萝莉期：枚举了全年 122 个季月出生日期", len(_loli_ge70) == 122, len(_loli_ge70))
+check("M1 萝莉期：每个出生日期都至少有 1 个阶段进度 ≥ 70 的可游玩日（萝莉桶 Growth|3_GE_70 的窗口都开得出来）",
+      min(_loli_ge70.values()) >= 1, sorted(set(_loli_ge70.values())))
+check("M1 萝莉期对照：按日历天的旧口径，26 / 122 个出生日期一天都到不了 70%（季月交替那一夜进度一跳就越过了这一段）",
+      sum(1 for one in _loli_ge70_old.values() if one == 0) == 26, sum(1 for one in _loli_ge70_old.values() if one == 0))
+
+section("Plan 32 实施复审补：M1 婴儿期阶段进度 ≥ 50 首次成立的可游玩日严格早于 ≥ 60（逐个出生日期，真实时钟）")
+_saved_time = cache.game_time
+_saved_born_baby = baby.pregnancy.born_time
+_first_gap = {}
+_old_strict = 0
+for _month in (3, 6, 9, 12):
+    for _day in range(1, calendar.monthrange(2026, _month)[1] + 1):
+        baby.pregnancy.born_time = DT(2026, _month, _day, 6, 0)
+        cache.game_time = DT(2026, _month, _day, 0, 5)
+        _first = {50: None, 60: None}
+        _first_old = {50: None, 60: None}
+        for _step in range(200):
+            game_time.sub_time_now(day=1)
+            _grow_day = pregnancy_handle.get_child_grow_day(203)
+            if _grow_day >= pregnancy_constant.REARING_COMPLETE_DAY:
+                break
+            _progress = growth_handle.get_stage_progress(203)
+            _progress_old = _grow_day * 100.0 / pregnancy_constant.REARING_COMPLETE_DAY
+            for _line in (50, 60):
+                if _first[_line] is None and _progress >= _line:
+                    _first[_line] = cache.game_time
+                if _first_old[_line] is None and _progress_old >= _line:
+                    _first_old[_line] = cache.game_time
+        _first_gap[(_month, _day)] = game_time.count_play_day(_first[50], _first[60]) if _first[50] and _first[60] and _first[50] < _first[60] else 0
+        if _first_old[50] and _first_old[60] and _first_old[50] < _first_old[60]:
+            _old_strict += 1
+baby.pregnancy.born_time = _saved_born_baby
+set_time(_saved_time)
+check("M1 婴儿期：122 个出生日期里，阶段进度 ≥ 50（婴儿 4「断奶的日子到了」）首次成立的可游玩日都严格早于 ≥ 60（婴儿 50「断奶之后」）",
+      len(_first_gap) == 122 and all(_first_gap.values()), sorted(key for key, one in _first_gap.items() if not one)[:10])
+check("M1 婴儿期：两条线首次成立都相隔 3 个可游玩日", set(_first_gap.values()) == {3}, sorted(set(_first_gap.values())))
+check("M1 婴儿期对照：按日历天的旧口径，没有一个出生日期的 ≥ 50 严格早于 ≥ 60（两条线在季月交替那一夜一起越过，或那一夜直接跳出了婴儿期）",
+      _old_strict == 0, _old_strict)
+
+section("Plan 32 实施复审补：M1 成长加速药——本阶段的起点按「出生 + (阈值 − 加速天数)」换算（get_grow_day_time）")
+set_time(DEFAULT_TIME)
+accel = make_character(212, "吃过成长加速药的萝莉", 152, daughter=True, stage=103, mother_id=102)
+_accel_born = DT(2025, 9, 10, 9, 0)
+accel.pregnancy.born_time = _accel_born
+accel.pregnancy.growth_acceleration_days = 30.0
+_accel_start = _accel_born + datetime.timedelta(days=pregnancy_constant.GROW_TO_LOLI_DAY - 30)
+_accel_end = _accel_born + datetime.timedelta(days=pregnancy_constant.GROW_TO_GIRL_DAY - 30)
+check("M1 加速药前提：出生 362 个日历天 + 加速药 30 天 = 有效成长 392 天，仍在萝莉期；本阶段起点 2026-05-08 09:00 落在被跳过的 5 月、终点 2026-11-04 09:00",
+      pregnancy_handle.get_child_grow_day(212) == 392 and growth_handle.get_character_stage(212) == 103
+      and _accel_start == DT(2026, 5, 8, 9, 0) and _accel_end == DT(2026, 11, 4, 9, 0), (pregnancy_handle.get_child_grow_day(212), _accel_start, _accel_end))
+check("M1 加速药：本阶段天数 = 从「出生 + (270 − 30) 天」数到此刻的可游玩天（6 月 30 天 + 9/1 ~ 9/7 的 6 天）= 36",
+      growth_handle.get_stage_day(212) == game_time.count_play_day(_accel_start, cache.game_time) == 36,
+      (growth_handle.get_stage_day(212), game_time.count_play_day(_accel_start, cache.game_time)))
+check("M1 加速药：阶段进度 = 36 ÷ 起点到终点的可游玩天（6 月、9 月共 60）= 60%，养成数值 3 读到的是同一个数",
+      game_time.count_play_day(_accel_start, _accel_end) == 60 and abs(growth_handle.get_stage_progress(212) - 60.0) < 0.01
+      and abs(growth_handle.get_growth_value(212, V.GROWTH_VALUE_STAGE_PROGRESS) - 60.0) < 0.01, growth_handle.get_stage_progress(212))
+accel.pregnancy.growth_acceleration_days = 30.7
+check("M1 加速药天数带小数（30.7）按整数 30 算，与有效成长天数（get_child_grow_day）同口径",
+      growth_handle.get_stage_day(212) == 36 and pregnancy_handle.get_child_grow_day(212) == 392, growth_handle.get_stage_day(212))
+accel.pregnancy.growth_acceleration_days = 0.0
+check("M1 加速药对照：同一出生日不吃药，本阶段从 2026-06-07 09:00 起、30 天", growth_handle.get_stage_day(212) == 30, growth_handle.get_stage_day(212))
+remove_character(212)
+
+section("Plan 32 实施复审补：M3 只重选被改写的那一对——另一对倾向不为 0、素质已清空，改写之后仍为 0")
+grown_b = make_character(213, "成年女儿乙", 21, daughter=True, stage=104, mother_id=102)
+grown_b.pregnancy.born_time = DT(2025, 3, 14, 9, 0)
+_g_grown_b = growth_handle.get_child_growth(213)
+_pair_talent = E6.PERSONALITY_PAIR_TALENT
+_g_grown_b.personality_point = {0: 2.0, 1: -1.0, 2: -3.0}
+for _pair_id in _pair_talent:
+    for _talent_id in _pair_talent[_pair_id]:
+        grown_b.talent[_talent_id] = 0
+check("M3 前提：成年女儿乙四对素质都是 0；勤劳 / 懒散一对倾向 +2、热情 / 孤僻一对 -3（逐对选边的话这两对都会写上）",
+      growth_handle.get_character_stage(213) == 104 and all(grown_b.talent[_talent_id] == 0 for _pair_id in _pair_talent for _talent_id in _pair_talent[_pair_id]))
+growth_handle.change_growth_value(213, V.GROWTH_VALUE_PERSONALITY_BASE + 1, 4.0)
+check("M3 只重选改写的那一对：坚强 / 脆弱一对 -1 → +3，落上坚强；倾向 +2 的勤劳 / 懒散、-3 的热情 / 孤僻两对素质仍为 0（原「其余三对都没动」在它们本就为 0、倾向也为 0 时恒真）",
+      grown_b.talent[_pair_talent[1][0]] == 1 and grown_b.talent[_pair_talent[1][1]] == 0
+      and all(grown_b.talent[_talent_id] == 0 for _pair_id in (0, 2, 3) for _talent_id in _pair_talent[_pair_id]),
+      {_talent_id: grown_b.talent[_talent_id] for _pair_id in _pair_talent for _talent_id in _pair_talent[_pair_id]})
+growth_handle.set_growth_value(213, V.GROWTH_VALUE_PERSONALITY_BASE + 3, -1.0)
+check("M3 set_growth_value 同理：改写开放 / 羞耻一对只落羞耻一侧，勤劳 / 懒散、热情 / 孤僻两对仍为 0，坚强不动",
+      grown_b.talent[_pair_talent[3][1]] == 1 and grown_b.talent[_pair_talent[3][0]] == 0 and grown_b.talent[_pair_talent[1][0]] == 1
+      and all(grown_b.talent[_talent_id] == 0 for _pair_id in (0, 2) for _talent_id in _pair_talent[_pair_id]),
+      {_talent_id: grown_b.talent[_talent_id] for _pair_id in _pair_talent for _talent_id in _pair_talent[_pair_id]})
+check("M3 对照：勤劳 / 懒散一对的倾向确实为正，单独对它逐对选边（settle_personality_pair）就会写上勤劳",
+      growth_handle.settle_personality_pair(213, 0) == _pair_talent[0][0] and grown_b.talent[_pair_talent[0][0]] == 1)
+remove_character(213)
+
 finish()

@@ -959,10 +959,12 @@ def base_chara_experience_common_settle(
 
     # 性技实操课的主修科目加成（Plan 22 四期 §3.28.8）：本节课主修哪门性技，命中它所需经验的动作就加成，
     # 其余动作照常结算但不加成。科目->经验id 的映射从 AbilityUp.csv 的升级需求解出，不另建映射表
+    # 只给课堂成员（sex_class_handle.get_class_member_list，Plan 32 §3.8 L11）：此前只判课堂模式，开课时被一并拉进 H 的非学生交互对象、
+    #    岛上别处拿到这门经验的人都乘加成，绕过「课堂 H 只收学生岗」。先比经验 id，命中了才取成员名单
     if cache.sex_class_mode and final_character_id != 0:
         from Script.System.Education_System import sex_class_handle
 
-        if experience_id and experience_id == sex_class_handle.get_now_bonus_exp_id():
+        if experience_id and experience_id == sex_class_handle.get_now_bonus_exp_id() and final_character_id in sex_class_handle.get_class_member_list():
             base_value = int(base_value * sex_class_handle.get_subject_bonus(final_character_id))
 
     # 结算最终值

@@ -61,11 +61,59 @@ check("新 uid 已有记录时不覆盖（旧键留着，养成总览查不到�
       save_handle._migrate_official_event_history(_both_history) == 0 and _both_history == {"萝莉1": {"choice": 1}, "期末17": {"choice": 3}}, _both_history)
 ga.event_history = {}
 
+OLD_REPORT_UID_SET = frozenset(save_handle._OFFICIAL_EVENT_UID_MIGRATE)
+""" Plan 32 L22 挪进期末桶的三条旧 uid（萝莉 1 / 20 / 26） """
+
+
+def find_old_report_uid_left(label) -> list:
+    """
+    找出缓存里还留着的旧 uid 履历：罗德岛全局履历的键是「uid@角色id」（没有主体时就是 uid），孩子的 event_history 以 uid 为键
+    Keyword arguments:
+    label -- 写进结果里的来源标记（存档编号）
+    Return arguments:
+    list -- [(来源, "rhodes" 或角色id, 键), ...]，没有残留时为空列表
+    """
+    result = []
+    for key in cache.rhodes_island.official_event_history:
+        if isinstance(key, str) and key.partition("@")[0] in OLD_REPORT_UID_SET:
+            result.append((label, "rhodes", key))
+    for cid, character_data in cache.character_data.items():
+        growth_data = getattr(character_data, "child_growth", None)
+        if growth_data is None:
+            continue
+        for key in sorted(set(growth_data.event_history) & OLD_REPORT_UID_SET):
+            result.append((label, cid, key))
+    return result
+
+
+section("Plan 32 实施复审补：读档后查旧 uid 残留的辅助函数（L22；下面真实存档一段逐个存档拿它查）")
+_saved_global_history = cache.rhodes_island.official_event_history
+ga.event_history = {"萝莉26": dict(_record), "萝莉2": dict(_record)}
+cache.rhodes_island.official_event_history = {"萝莉1@305": dict(_record), "通用3@305": dict(_record)}
+check("L22 迁移之前查得到两处残留：孩子履历里的萝莉 26、罗德岛全局履历里的「萝莉1@305」（萝莉 2、通用 3 不算）",
+      {one[2] for one in find_old_report_uid_left("本地")} == {"萝莉26", "萝莉1@305"}, find_old_report_uid_left("本地"))
+save_handle._normalize_loaded_save_paths(cache)
+save_handle._migrate_official_event_history(cache.rhodes_island.official_event_history)
+check("L22 照读档的两处迁移（孩子走 _normalize_loaded_save_paths，罗德岛走 input_load_save 里的 _migrate_official_event_history）之后查不到残留",
+      find_old_report_uid_left("本地") == [], find_old_report_uid_left("本地"))
+ga.event_history = {}
+cache.rhodes_island.official_event_history = _saved_global_history
+
 section("真实存档只读载入")
-candidate_list = [name for name in sorted(os.listdir(os.path.join(ROOT, "save"))) if name.isdigit()]
+# 本机没有 save 目录、或里面没有存档时跳过这一段（2026-09-15 用户拍板）：存档不入库，换机器、换目录后常常没带过来。
+#    先判目录在不在：save_handle.get_save_dir_path 会顺手建出 save 目录，只读的测试不该留下它
+_save_dir = os.path.join(ROOT, "save")
+candidate_list = [name for name in sorted(os.listdir(_save_dir)) if name.isdigit()] if os.path.isdir(_save_dir) else []
+if not candidate_list:
+    print("  跳过：本机没有可读的存档（save 目录不存在或为空）")
+    finish()
 check("有可用的存档目录", bool(candidate_list), candidate_list)
 loaded = 0
 problem = []
+_old_report_uid_gone = not (OLD_REPORT_UID_SET & set(game_config.config_official_event))
+""" 配置里已没有这三个旧 uid：读档迁移只在这时改名 """
+l22_left = []
+""" 各存档读档后残留的旧 uid 履历（Plan 32 实施复审补） """
 for save_id in candidate_list:
     if not save_handle.judge_save_file_exist(save_id):
         continue
@@ -75,6 +123,9 @@ for save_id in candidate_list:
         problem.append((save_id, "load", repr(error)))
         continue
     loaded += 1
+    # Plan 32 L22（实施复审补）：读档时挪了桶的旧 uid 已改名，罗德岛全局履历与孩子的履历里都查不到
+    if _old_report_uid_gone:
+        l22_left.extend(find_old_report_uid_left(save_id))
     for cid, character_data in cache.character_data.items():
         if not hasattr(character_data, "child_growth"):
             problem.append((save_id, cid, "no child_growth attr"))
@@ -113,5 +164,9 @@ for save_id in candidate_list:
         problem.append((save_id, "panel", repr(error)))
 check(f"载入了 {loaded} 个存档", loaded > 0)
 check("全部存档：养成字段完整、无死场景、罗德岛新字段齐全、课表结构合法、学期结算幂等、四个面板可画", not problem, problem[:6])
+
+section("Plan 32 实施复审补：真实存档读档后，履历里挪了桶的旧 uid 都已改名（L22）")
+check("L22 逐个存档读档后：罗德岛全局履历里没有以「萝莉1@」「萝莉20@」「萝莉26@」开头（或就是这三个 uid）的键，孩子的 event_history 里也没有这三个键（前提：配置里已没有这三个 uid）",
+      _old_report_uid_gone and not l22_left, (_old_report_uid_gone, l22_left[:6]))
 
 finish()

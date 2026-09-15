@@ -17,7 +17,9 @@ SE = constant_effect.SecondEffect
 EFFECT = constant.settle_behavior_effect_data
 SECOND = constant.settle_second_behavior_effect_data
 E = education_constant
-# 授课结算末尾会对每个学生调 judge_character_status（那是行为循环的事），单测里钉死它
+# 授课结算末尾会对每个学生调 judge_character_status（那是行为循环的事），单测里钉死它；
+#    原函数留一份：Plan 32 实施复审补的 L6 一段要走真实的听课结算
+_real_judge_character_status = settle_default.character_behavior.judge_character_status
 settle_default.character_behavior.judge_character_status = lambda cid: 0
 
 
@@ -533,5 +535,128 @@ student_b.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
 clear_schedules()
 reset_mark(201, 202)
 move_to(0, SCENE_DORM)
+
+section("Plan 32 实施复审补：L6 被跳过的学生体力不变——512 不再手动结算她下一节的听课行为（这一段走真实的 judge_character_status）")
+clear_schedules()
+for _cid in (101, 201, 202):
+    move_to(_cid, classroom_path(ROOM_P))
+# 现场照上面 L6 一段：第 0 节教师甲在实践教室一上课、两名学生都选了这一格；第 1 节玩家在同一间教室预约了临时实操课，女儿A 选修
+schedule_handle.set_class_cell(ROOM_P, _l6_week, 0, 45, 101)
+schedule_handle.set_selected_course(201, _l6_week, 0, E.COURSE_TYPE_PRACTICE, ROOM_P)
+schedule_handle.set_selected_course(202, _l6_week, 0, E.COURSE_TYPE_PRACTICE, ROOM_P)
+schedule_handle.set_selected_course(201, _l6_week, 1, E.COURSE_TYPE_PRACTICE, ROOM_P)
+set_time(period_time(1) + datetime.timedelta(minutes=2))
+sex_class_handle.set_temp_class(_l6_today, 1, ROOM_P, 70)
+teacher.behavior.behavior_id = constant.Behavior.TEACH
+teacher.behavior.start_time = period_time(0) + datetime.timedelta(minutes=40)
+teacher.behavior.duration = 5
+student_a.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+student_a.behavior.start_time = period_time(1) + datetime.timedelta(minutes=2)
+student_a.behavior.duration = 43
+student_b.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+student_b.behavior.start_time = period_time(0) + datetime.timedelta(minutes=40)
+student_b.behavior.duration = 5
+for _one in (student_a, student_b):
+    _one.hit_point_max = _one.hit_point = 100
+    _one.mana_point_max = _one.mana_point = 100
+    _one.target_character_id = _one.cid
+reset_mark(201, 202)
+student_a.child_growth.last_absent_period = []
+student_b.child_growth.last_absent_period = []
+_stub_judge = settle_default.character_behavior.judge_character_status
+settle_default.character_behavior.judge_character_status = _real_judge_character_status
+try:
+    EFFECT[512](101, 45, change, cache.game_time)
+finally:
+    settle_default.character_behavior.judge_character_status = _stub_judge
+check("L6 复审补：教师晚到开讲，512 跳过听课节次不同的女儿A，没有手动结算她下一节的听课行为——体力不变、也没写去重标记（此前体力 100 → 1）",
+      student_a.hit_point == 100 and student_a.child_growth.last_attend_period == [], (student_a.hit_point, student_a.child_growth.last_attend_period))
+check("L6 复审补对照：同在第 0 节听课的女儿B 照常结算这一节（写上本节标记），512 对她走的是真实的 judge_character_status",
+      student_b.child_growth.last_attend_period == [_l6_today, 0], (student_b.hit_point, student_b.child_growth.last_attend_period))
+_real_judge_character_status(201)
+check("L6 复审补对照：对女儿A 直接跑一遍真实的 judge_character_status（改前 512 对她做的事），体力就会掉——上面的「体力不变」不是恒真",
+      student_a.hit_point < 100, student_a.hit_point)
+for _one in (student_a, student_b):
+    _one.hit_point = 100
+    _one.mana_point = 100
+    _one.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+teacher.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+move_to(101, classroom_path(ROOM1))
+clear_schedules()
+reset_mark(201, 202)
+
+section("Plan 32 实施复审补：L13 走真实的授课链——节次外手动授课，512 结算学生那一刻她的科目回落学识、课型按教室")
+L13_LOG = []
+""" 512 手动结算学生那一刻的记录：(学生id, 她自己课表此刻取到的课, 科目, 课型, CVP Course|45, CVP CourseType|课型) """
+
+
+def l13_judge_spy(character_id: int) -> int:
+    """
+    512 结算学生时调的 judge_character_status 的记录桩：记下这一刻她的课程取值，不真的结算（与本文件开头的桩同口径）
+    Keyword arguments:
+    character_id -- 学生的角色id
+    Return arguments:
+    int -- 0
+    """
+    course_type = handle_premise.get_now_course_type(character_id)
+    L13_LOG.append((
+        character_id,
+        schedule_handle.get_now_course(character_id),
+        handle_premise.get_now_course_ability(character_id),
+        course_type,
+        handle_premise.handle_premise("CVP_A1_Course|45_G_0", character_id),
+        handle_premise.handle_premise(f"CVP_A1_CourseType|{course_type}_G_0", character_id),
+    ))
+    return 0
+
+
+def l13_game_update_flow(add_time: int):
+    """
+    update.game_update_flow 的桩：只做玩家这一步的授课结算（效果 512），不进真实的行为循环
+    Keyword arguments:
+    add_time -- 游戏步进的时间
+    Return arguments:
+    无
+    """
+    EFFECT[512](0, add_time, game_type.CharacterStatusChange(), cache.game_time)
+
+
+for _l13_room, _l13_type in ((ROOM1, E.COURSE_TYPE_THEORY), (ROOM_P, E.COURSE_TYPE_PRACTICE)):
+    clear_schedules()
+    move_to(0, classroom_path(_l13_room))
+    move_to(201, classroom_path(_l13_room))
+    move_to(202, SCENE_DORM)
+    set_time(DEFAULT_TIME.replace(hour=12, minute=30))
+    student_a.sp_flag.is_h = False
+    student_a.sp_flag.sleep = False
+    student_a.behavior.behavior_id = constant.Behavior.SELF_STUDY
+    reset_mark(201)
+    L13_LOG.clear()
+    _l13_exp = student_a.experience.get(exp_45, 0)
+    _saved_flow = handle_instruct.update.game_update_flow
+    _saved_judge = settle_default.character_behavior.judge_character_status
+    _saved_favor = settle_default.base_chara_favorability_and_trust_common_settle
+    handle_instruct.update.game_update_flow = l13_game_update_flow
+    settle_default.character_behavior.judge_character_status = l13_judge_spy
+    settle_default.base_chara_favorability_and_trust_common_settle = lambda *a, **k: None
+    try:
+        handle_instruct.handle_teach()
+    finally:
+        handle_instruct.update.game_update_flow = _saved_flow
+        settle_default.character_behavior.judge_character_status = _saved_judge
+        settle_default.base_chara_favorability_and_trust_common_settle = _saved_favor
+    check(f"L13 {_l13_room} 节次外 12:30 手动授课：handle_teach 把她拉成听课，512 按学识给了收益，并在结算她的那一刻调了 judge_character_status",
+          student_a.behavior.behavior_id == constant.Behavior.ATTENT_CLASS and student_a.experience.get(exp_45, 0) > _l13_exp and [one[0] for one in L13_LOG] == [201],
+          (student_a.behavior.behavior_id, student_a.experience.get(exp_45, 0) - _l13_exp, L13_LOG))
+    check(f"L13 {_l13_room}：那一刻她自己的课表取不到课（节次外），科目回落学识 45、课型按教室取{E.COURSE_TYPE_NAME[_l13_type]}，"
+          "CVP Course|45 与 CourseType 两个前提都成立（此前两项都是 -1，听课口上一句不出）",
+          bool(L13_LOG) and L13_LOG[0][1] is None and L13_LOG[0][2] == 45 and L13_LOG[0][3] == _l13_type
+          == schedule_handle.get_course_type_by_position(classroom_path(_l13_room)) and L13_LOG[0][4] == 1 and L13_LOG[0][5] == 1, L13_LOG)
+student_a.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+pl.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+move_to(0, SCENE_DORM)
+move_to(201, classroom_path(ROOM1))
+clear_schedules()
+reset_mark(201)
 
 finish()

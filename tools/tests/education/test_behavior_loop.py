@@ -12,11 +12,18 @@ from Script.UI.Panel import character_info_head
 E = education_constant
 
 section("挑一个女儿最多的存档")
+# 本机没有 save 目录、或里面没有可读的存档时整份跳过（2026-09-15 用户拍板）：存档不入库，换机器、换目录后常常没带过来，
+#    这时行为循环的验收由 test_class_ai 的循环段与复现探针兜底。
+#    先判目录在不在再调 judge_save_file_exist：后者经 get_save_dir_path 会顺手建出 save 目录，只读的测试不该留下它
+_save_dir = os.path.join(ROOT, "save")
+_save_id_list = sorted(name for name in os.listdir(_save_dir) if name.isdigit()) if os.path.isdir(_save_dir) else []
+_save_id_list = [save_id for save_id in _save_id_list if save_handle.judge_save_file_exist(save_id)]
+if not _save_id_list:
+    print("  跳过：本机没有可读的存档（save 目录不存在或为空），本文件要在真实存档上跑行为循环")
+    finish()
 best_id = ""
 best_count = -1
-for save_id in sorted(name for name in os.listdir(os.path.join(ROOT, "save")) if name.isdigit()):
-    if not save_handle.judge_save_file_exist(save_id):
-        continue
+for save_id in _save_id_list:
     try:
         save_handle.input_load_save(save_id)
     except Exception as error:

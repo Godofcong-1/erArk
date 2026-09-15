@@ -3757,6 +3757,8 @@
     """ 工作_条件 自己是学生，本节是教室课但授课教师来不了（或课表没排教师；临时实操课上进不了课堂的选修生也算来不了，Plan 32 L10） """
     SELF_COURSE_JOIN_SEX_CLASS = "self_course_join_sex_class"
     """ 工作_条件 自己是学生，本节的课所在教室正在上性技实操课、人已在教室、可以参加但还没进H """
+    SELF_NOT_ATTEND_SEX_CLASS_HERE = "self_not_attend_sex_class_here"
+    """ 工作_条件 自己不是来这里上正在进行的性技实操课的学生（目击H的 target 500 用：课堂H中晚到的学生去加入课堂或自习，不触发目击H） """
     WORK_IS_COMBAT_TRAINING = "work_is_combat_training"
     """ 工作_角色 自己的工作为训练学员 """
     TARGET_WORK_IS_COMBAT_TRAINING = "t_work_is_combat_training"

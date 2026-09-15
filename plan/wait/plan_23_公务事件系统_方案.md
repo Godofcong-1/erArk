@@ -257,7 +257,7 @@ EVENT_PROVIDER: Dict[int, Callable] = {}
 | `option_1~4` | str | 选项文本，空则该选项不存在 |
 | `option_1~4_premise` | str | 选项前提，不满足则置灰 |
 | `option_1~4_reason` | str | 置灰原因（作者手写） |
-| `option_1~4_tip` | str | 后果提示（只写方向不写数值） |
+| `option_1~4_tip` | str | 后果提示（只写方向不写数值）；Plan 32 §8.2 起不写在选项上，玩家选定、结算之后由 WaitDraw 单独显示 |
 | `option_1~4_effect` | str | 选项结算，`&` 连接 |
 
 三期的 `stage` 列**改名为 `sub_key`**（语义泛化），取值不变，所以总列数是 28 而不是 29。

@@ -4,11 +4,11 @@
 > 需求背景、发现、设计决策、接口定义、风险与范围外事项一律以方案为准；
 > 本文件只写"怎么做、怎么验、怎么回滚"，实施过程与结果记入 §6。
 
-- 状态：实施中（2026-09-14 用户指示「开始按方案实施」，Q1~Q3 均按推荐）
+- 状态：已实施（2026-09-16；2026-09-14 用户指示「开始按方案实施」，Q1~Q3 均按推荐，同日中期提交 `8d9cecacd`，2026-09-15 续做完收尾，另按用户要求追加调整 §8.1、§8.2；回归 15 个文件 1770 条断言全部通过，改前 1438）
 - 适用代码快照：`master @ 4275b1c98`
 - 实施前提：先通读方案 §2~§5；Q1~Q3 拍板后先回写方案元信息与 §3，再动代码；实施中发现与方案冲突的事实，**先更新方案再动代码**
 - 实施约定：主代理先改共用文件，再用 Workflow `system-review-implement` 按下方实施单元并行实施（代理规模先报估算、按用户口径控制）；解释器一律 `./.conda/python.exe`
-- 提交建议：一个提交（与 Plan 25~31 相同）
+- 提交建议：两个提交——2026-09-14 应用户要求先做的中期提交 `8d9cecacd` 与收尾提交（Plan 25~31 都是一个提交）
 
 ---
 
@@ -16,7 +16,7 @@
 
 | 文件 | 类型 | 改动 |
 | --- | --- | --- |
-| `Script/System/Education_System/education_constant.py` | 改 | `BIRTHDAY_EVENT_UID`；模板键 5 个常量挪入；翘课日口径与行号的 docstring |
+| `Script/System/Education_System/education_constant.py` | 改 | `BIRTHDAY_EVENT_UID`；`STAGE_TALENT_PREMISE_SET`（偏离 22）；模板键 5 个常量挪入；翘课日口径与行号的 docstring |
 | `Script/Core/constant_promise.py` | 改 | `SELF_HAVE_PUBLIC_COURSE`；`SELF_COURSE_UPCOMING` 说明 |
 | `Script/Design/game_time.py` | 改 | `count_play_day` |
 | `Script/Core/game_type.py` | 改 | `CHILD_GROWTH` 类说明与 `last_attend_period` 说明 |
@@ -36,7 +36,8 @@
 | `Script/Design/character_behavior.py` | 改 | NPC 分支在实时结算之前截短 |
 | `Script/Design/handle_npc_ai.py` | 改 | 抽出 `judge_student_leave_truncate` |
 | `Script/System/Education_System/growth_handle.py` | 改 | 阶段天数与进度按可游玩天；`settle_personality_pair`；倾向改写后重选；`BASE[0]`；557 说明 |
-| `Script/System/Education_System/growth_event_handle.py` | 改 | `push_birthday_event`、`drop_stale_stage_event` |
+| `Script/System/Education_System/growth_event_handle.py` | 改 | `push_birthday_event`、`drop_stale_stage_event`；`judge_stage_marker_pass`、`judge_premise_all_pass`（偏离 22、26） |
+| `Script/Settle/common_default.py` | 改 | 主修科目加成只给课堂成员（偏离 25） |
 | `Script/System/Pregnancy_System/pregnancy_handle.py` | 改 | 三处阶段转换清残留；婴儿→幼女重刷娱乐 |
 | `Script/Settle/past_day_settle.py` | 改 | 翘课 flag 只清过期的；推生日事件 |
 | `Script/UI/Panel/character_info_head.py` | 改 | `<翘>`、`<课>`（手动授课、缺课休息、悬停文案） |
@@ -49,8 +50,11 @@
 | `data/official_event/通用.csv`、`萝莉.csv`、`幼女.csv`、`期末.csv` | 改 | 方案 §4.3 |
 | `data/talk/sex/sex_class/join_sex_class.csv`、`watch_sex_class.csv`、`data/talk/daily/check_report_card.csv` | 改 | 方案 §4.3 |
 | `data/target/default/target.csv` | 改 | 210810 / 220830 说明 |
-| `tools/tests/education/` 11 个测试文件与 `README.md` | 改 | §2.10 |
+| `Script/Core/save_handle.py` | 改 | 读档时旧履历的萝莉 1 / 20 / 26 改名为期末 17 / 18 / 19（偏离 18，实施复审补） |
+| `tools/official_event_check.py` | 改 | 萝莉条数下限 70 → 67（偏离 7） |
+| `tools/tests/education/` 13 个测试文件与 `README.md` | 改 | §2.12（另有 `test_save_compat` 的履历迁移；没有存档时两个读档的测试跳过，偏离 24） |
 | 说明文档、索引文档、Plan 22 总纲、`update.log` | 改 | 方案 §3.15 |
+| `.claude/workflows/system-review-find.js` 与 `.github/skills/` 下 7 个文件（`headless-game-test` 的 `SKILL.md` / `harness_template.py`，`system-review-round` 的 `SKILL.md` / `P0_建档与基线.md` / `P3_复现脚本.md` / `复查清单.md`，`game-design-dialogue` 的 `E1_BUG与漏洞检查.md`） | 改 | 截短挪出打断点之后的探针包装、挂接点、复查清单，过期行号改为函数名，`.claude/skills` 路径改为 `.github/skills`（偏离 20，收尾补） |
 
 **未改动**：
 - `StateMachine/default.py`：303 / 304 / 713~722 不动，判据在 `class_ai`、`sex_class_handle`；716 照旧由截短后的决策派出
@@ -83,8 +87,9 @@
 1. 跑 `./.conda/python.exe tools/tests/education/run_all.py`，记下各文件断言数（定案时 15 个文件、1438 条）
 2. 重建复现脚本（不入库）：
    - 定案时的脚本是 scratchpad 的 `p32/repro_c1.py`（13 项）、`p32/repro_main.py`（22 项）、`p32/repro_loop.py`（14 项）、`p32/repro_plan32.py`（复现代理，重跑后填）与探针 `p32/probe_loop.py`（40 项），会话结束即丢；丢了照下表重建
-   - 骨架：`.claude/skills/system-review-round/repro_template.py`；行为循环照抄 `test_class_ai.run_loop_round`（`probe_loop.py` / `repro_loop.py` 的 `run_steps` 另装了状态机派发与实时结算的记录包装）
+   - 骨架：`.github/skills/system-review-round/repro_template.py`；行为循环照抄 `test_class_ai.run_loop_round`（`probe_loop.py` / `repro_loop.py` 的 `run_steps` 另装了状态机派发与实时结算的记录包装）
    - 夹具的特殊设定（Plan 31 方案 §2.5-3 与 README）：体力 / 气力设 2000；长循环里清需求后 `refresh_unnormal_flag`；真实 `update_new_day` 要把 `basement.update_base_resouce_newday` 换成空函数，还要补 `cache.rhodes_island.party_day_of_week = {0~6: 0}`（`get_chara_entertainment` 按星期取派对日，本轮复现踩到）；指令的显示前提按 `InstructConfig.csv` 原始行逐个求值
+   - 2026-09-15 按下表重建了主代理的三份脚本与探针（`p32/repro_c1.py`、`repro_main.py`、`repro_loop.py`、`probe_loop.py`，公共部分在 `p32_common.py`；改前在 `c870b587f` 的 worktree `p32/head` 里跑，改后在仓库根目录跑，`REPRO_PHASE=after`）；复现代理的 `repro_plan32.py` 没有重建（§6.4）。重建要点：R2 的女儿不挂在岛的母亲（缺省 `mother_id=-1`；挂了母亲候选会多出 9 条带 `self_mother_available` 的，变成 63 条 / 458），「第 365 天」按日期差算（3/15 06:00 出生、次年 3/15 00:05 时 `get_child_grow_day` 是 364）；R3-3 要另有一名学生当开课指令的交互对象，翘课的学生由 10014 一并拉进课堂，否则改前她在开课那一步就被 623 判被抓、flag 当场清掉；`repro_c1` 用预约的课、点名两名女儿必修（次日 JOIN 靠必修名单过门槛），C1-12 用 `get_subject_exp_id(70)`（经验 41）、基础值 10，走真实的 `common_default.base_chara_experience_common_settle`；开课效果 10010 会调成就结算，要把 `achievement_panel.achievement_flow` 桩成空函数；课上玩家的动作走 `settle_behavior` 的群交分支，先 `attr_calculation.get_confinement_training_setting_zero()`
 
    **主代理脚本 `repro_c1.py`**（H1）
 
@@ -98,8 +103,8 @@
 
    | 组 | 检查 | 改后 |
    | --- | --- | --- |
-   | R1 | M3：<br>0 成年结算先 `settle_personality_talent`、后 `push_graduation_event`；1 全仓库 `settle_personality_talent` 只有两处；2 四条成年事件里结算倾向的选项 13 个、提示写倾向的 8 个<br>3 成年结算后队列依次是通用 1 / 2 / 59 / 60；4 毕业典礼选项 2 倾向 +4；5 提示「倾向：坚强」、素质 274 仍为 0<br>6 成年那一刻萝莉 38 还在队列里；7 成年后才处理萝莉 38，倾向 +3、素质仍为 0 | 5 不再成立；7 随 Q3（按推荐不再成立）；0、1、2、4 随 Q3（按推荐照旧）；3、6 照旧 |
-   | R2 | M2：<br>0 3/15 出生的孩子童年里只有第 365 天是生日；1 当天 `self_birthday_today` 成立；2 当天候选 54 条、通用 3 权重 10 / 392<br>3 理论入队概率 1.8%；4 实跑 400 次抽中不到 10% | 3、4 随 Q2（按推荐：日常随机派发的概率不变，照旧成立；改由 `test_growth_event` 断言生日当天插队首）；0~2 照旧 |
+   | R1 | M3：<br>0 成年结算先 `settle_personality_talent`、后 `push_graduation_event`；1 生产代码里 `settle_personality_talent` 只有两处（定义与成年结算的调用，测试另有调用）；2 四条成年事件里结算倾向的选项 13 个、提示写倾向的 8 个<br>3 成年结算后队列依次是通用 1 / 2 / 59 / 60；4 毕业典礼选项 2 倾向 +4；5 提示「倾向：坚强」、素质 274 仍为 0<br>6 成年那一刻萝莉 38 还在队列里；7 成年后才处理萝莉 38，倾向 +3、素质仍为 0 | 5 不再成立；7 随 Q3（按推荐不再成立）；0、1、2、4 随 Q3（按推荐照旧）；3、6 照旧 |
+   | R2 | M2：<br>0 3/15 出生的孩子童年里只有第 365 天是生日；1 当天 `self_birthday_today` 成立；2 当天候选 54 条、通用 3 权重 10 / 392<br>3 理论入队概率 1.8%；4 实跑 400 次抽中不到 10% | 3、4 随 Q2（按推荐：日常随机派发的概率不变，照旧成立；改由 `test_growth_event` 断言生日当天插队首）；0~2 照旧。2 / 3 的具体数随本轮 L23 / L26 的数据改动而变（这个萝莉的候选少了通用 6 / 27 与萝莉 57：54 → 51 条、392 → 375，1.79% → 1.87%），重建时改按「通用 3 权重 10、占总权重 < 3%」「理论入队概率 < 3%」核对，改前改后都成立 |
    | R3 | L1：<br>0 第 3 节她没课；1 第 3 节没课 `<翘>` 照亮；2 对照：第 1 节有课亮「本该上」；3 必修生人在博士的实操课里；4 课堂上 `<翘>` 照亮 | 1、4 不再成立；0、2、3 照旧 |
    | R4 | L2：<br>0 课堂上与博士同场景派出 caught_skip_class；1 对照：今天翘过课的选修生开课前 5 分钟是 SEX_PENDING；2 在实操教室等开课、博士也在，同样派出；3 16 条被抓口上里 11 条写回教室 / 去上课 | 0、2 不再成立；1、3 照旧 |
 
@@ -175,7 +180,7 @@
 
 ### 2.1 主代理先改：共用常量、前提、时钟与手动授课判据（方案 §4.1、§3.2、§3.9）
 
-1. `education_constant`：`BIRTHDAY_EVENT_UID`；模板键 5 个常量（取值照搬 `schedule_template_handle` 现有定义）；`COURSE_STAGE_NONE` / `COURSE_STAGE_UPCOMING` / `UPCOMING_MINUTE` 补翘课日例外；`WATCH_STATE_BASE` 的行号引用改成函数名
+1. `education_constant`：`BIRTHDAY_EVENT_UID`；模板键 5 个常量（取值照搬 `schedule_template_handle` 现有定义）；`COURSE_STAGE_NONE` / `COURSE_STAGE_UPCOMING` / `UPCOMING_MINUTE` 补翘课日例外；`WATCH_STATE_BASE` 的行号引用改成函数名；`STAGE_TALENT_PREMISE_SET`（偏离 22，中期提交后补）
 2. `constant_promise`：`SELF_HAVE_PUBLIC_COURSE`；`SELF_COURSE_UPCOMING` 说明补翘课日例外
 3. `handle_premise_other`：`handle_self_have_public_course`（经 `growth_handle.judge_have_course_type(character_id, COURSE_TYPE_PUBLIC)`，只读）
 4. `game_time.count_play_day`：日历天数减去其间非季月的天数，按月累加
@@ -184,7 +189,7 @@
 7. `Premise.csv`：1896 补说明；新前提一行
 8. 检查点：`test_premise_tokens` 能取到新前提；`count_play_day(9/7 06:00, 12/1 00:05)` 等于 9 月剩余天数加 12 月的天数（不含 10、11 月）
 
-### 2.2 U1：课堂收尾与课堂计数（方案 §3.1、§3.8 L6~L9、L11）
+### 2.2 课堂收尾与课堂计数（U1；方案 §3.1、§3.8 L6~L9、L11）
 
 1. `sex_class_handle`：
    - `settle_orphan_class`：课堂模式开着且玩家不在 H → 关课堂模式、`end_sex_class()`，返回 True
@@ -207,7 +212,7 @@
    - 课中实行值跌破门槛的成年学生仍在旁观名单与在课前提里（L9）
    - 课堂模式的模板选人不含非学生（L11）
 
-### 2.3 U2：上课状态、见学与截短判据（方案 §3.5、§3.6、§3.7 L3、§3.8 L7 / L10）
+### 2.3 上课状态、见学与截短判据（U2；方案 §3.5、§3.6、§3.7 L3、§3.8 L7 / L10）
 
 1. `class_ai`：
    - `judge_teacher_available` / `judge_mother_available` 删住院判定
@@ -224,13 +229,13 @@
    - 同一节已记出勤：721 不再记缺课
    - 不够格的选修生：玩家开课前后都判教师来不了
 
-### 2.4 U3：行为循环（方案 §3.7 L4）
+### 2.4 行为循环（U2；方案 §3.7 L4）
 
 1. `handle_npc_ai.judge_student_leave_truncate`：从 `judge_interrupt_character_behavior` 抽出（守卫：行为开始时刻早于 `cache.game_time`）；原处删掉
 2. `character_behavior` 的 NPC 分支：`character_aotu_change_value` 之前调它
 3. 检查点：一步 60 分钟、截到 8:40 的学生实时结算累计 60 分钟（此前 110）；`test_behavior_loop` 各轮收敛、上午人均出勤不变
 
-### 2.5 U4：阶段进度与性格（方案 §3.2、§3.4、L28 的 `BASE[0]`）
+### 2.5 阶段进度与性格（U3；方案 §3.2、§3.4、L28 的 `BASE[0]`）
 
 1. `get_stage_day` / `get_stage_progress` 按可游玩天（`game_time.count_play_day`；阶段起止按有效成长天数换算回日历时刻，早于出生的按出生算）
 2. `settle_personality_pair`；`settle_personality_talent` 改为逐对调它
@@ -241,18 +246,18 @@
    - 夹具出生日落在季月（旧断言里 `born_time = now − N 天` 的改写）
    - 成年女儿毕业典礼选「倾向：坚强」：坚强素质落上；倾向归零时两侧不动；未成年女儿改倾向不选边
 
-### 2.6 U5：养成事件、成长与跨天（方案 §3.3、§3.7 L5、§3.11）
+### 2.6 养成事件、成长与跨天（U3；方案 §3.3、§3.7 L5、§3.11）
 
-1. `growth_event_handle.push_birthday_event`、`drop_stale_stage_event`
+1. `growth_event_handle.push_birthday_event`、`drop_stale_stage_event`（阶段桶按 sub_key 与阶段素质记号、期末桶只按记号，`judge_stage_marker_pass`，偏离 22）；生日推入与记号判定逐条判前提、不带口球判定（`judge_premise_all_pass`，偏离 26）
 2. `past_day_settle.update_new_day`：翘课 flag 只清过期的；`check_new_day_official_event` 之前调 `push_birthday_event`
 3. `pregnancy_handle`：三处阶段转换换完素质后调 `drop_stale_stage_event`（成年结算在推毕业典礼之前）；`_settle_baby_grow_up` 换完素质后重刷当天娱乐
 4. 检查点：
    - 生日当天跨天：通用 3 在她的队首；已在队列里的不重复；非生日不推
    - 新一天的翘课 flag 跨天后仍在；前一天的照清
-   - 婴儿 5 入队后长成幼女：队列里不再有它；成年那一刻残留的萝莉桶与通用桶事件都被清、期末桶照留、毕业典礼照在队首
+   - 婴儿 5 入队后长成幼女：队列里不再有它；成年那一刻残留的萝莉桶、通用桶与只派萝莉的期末事件都被清，前提不写阶段的期末事件照留，毕业典礼照在队首
    - 婴儿长成幼女：当天娱乐在幼女默认池里
 
-### 2.7 U6：状态标识与面板（方案 §3.9、§3.13、L28 面板部分）
+### 2.7 状态标识与面板（U4；方案 §3.9、§3.13、L28 面板部分）
 
 1. `character_info_head.get_now_class_tip`：L1 / L13 / L14 / L15
 2. `class_schedule_panel`：`get_teacher_absent_mark` 加监禁；`_edit_sex_class` 选修名单去掉必修
@@ -260,21 +265,21 @@
 4. 三个面板删无用导入；`course_select_panel` 周日按 `WEEK_DAY_COUNT`；`schedule_template_panel` 改用模板键常量
 5. 检查点：没课的节次与必修实操课上 `<翘>` 不亮；手动授课的学生悬停写博士；缺课休息 `<课>` 不亮；自习悬停不再写减半；囚犯教师标注、一键排课不排；点名必修的选修生只在必修行
 
-### 2.8 U7：前提、二段与待炫耀（方案 §3.10）
+### 2.8 前提、二段与待炫耀（U4；方案 §3.10）
 
 1. `handle_premise/__init__`：`get_now_course_type` / `get_now_course_ability` 对学生先问 `get_listen_manual_teach_course`
 2. `second_behavior.judge_child_growth_second_behavior`：623 的三种不派情形
 3. `handle_ability`：待炫耀只记学生岗
 4. 检查点：节次外手动授课，学生 CVP 课型按教室、科目 45；课堂上 / 等开课时不派被抓，翘课在外撞见照派；改任厨师的萝莉升级料理不记待炫耀
 
-### 2.9 U8：日程模板（方案 §3.12）
+### 2.9 日程模板（U4；方案 §3.12）
 
 1. `delete_template` / `get_template_use_count` 遍历 `cache.character_data`
 2. `apply_schedule_for_child`：非女儿且不在学生岗的跳过
 3. 模块内的模板键与 need 分隔符改用 `education_constant` 的常量（删掉模块级定义）
 4. 检查点：离线女儿指着被删的最大号模板，新建同号模板后她的 `schedule_template_id` 已是 0；成年干员改岗后日程不再改写
 
-### 2.10 U9：数据与口上（方案 §3.14、§4.3）
+### 2.10 数据与口上（U5；方案 §3.14、§4.3）
 
 1. `通用.csv` 3 / 5 / 6 / 15 / 27；`萝莉.csv` 删 1 / 20 / 26、改 51 / 57；`幼女.csv` 24；`期末.csv` 新增 3 行
 2. `join_sex_class.csv` 1053~1056、`watch_sex_class.csv` 1054 / 1055 加女儿前提；`check_report_card.csv` 新增 2 行
@@ -292,18 +297,19 @@
 
 | 文件 | 新增 / 改写 |
 | --- | --- |
-| `test_sex_class.py` | H1 各收尾路径与旧档幽灵课；6008 显示前提；L8 重开；L9 成员名单；L11 模板选人 |
-| `test_settle_effects.py` | L6 的 512 跳过；557 说明（模块 docstring） |
-| `test_class_ai.py` | M4 撞号；M5 改岗萝莉；L3 规则 B；L7 `settle_absent`；L10 教师为玩家；`CLASS_SM_SET` 与 target 一致 |
-| `test_behavior_loop.py` | L4 实时结算只算一遍（真实循环） |
-| `test_growth.py` | M1 可游玩天（122 个出生日期）；M3 成年后重选；`count_play_day` |
-| `test_growth_event.py` | M2 生日推入；L16 长大清残留；L13 婴儿 4 / 50 断言按季月出生日重写 |
-| `test_prenatal_baby.py` | L19 婴儿→幼女的当天娱乐；L5 跨天只清过期 flag（与 `update_new_day` 同段） |
-| `test_panels.py` | L1、L12、L13 悬停、L14、L15、L21 |
+| `test_sex_class.py` | H1 各收尾路径与旧档幽灵课（含最后一名学生力竭退出走真实调用链）；6008 显示前提；L7 记出勤写标记与跨单元整链；L8 重开；L9 成员名单与旁观过状态（时停）；L11 模板选人；实施复审补：L11 主修加成只给课堂成员（真实的 464 + 10014 摆现场） |
+| `test_settle_effects.py` | L6 的 512 跳过；557 说明（模块 docstring）；实施复审补：L6 被跳过的学生体力不变、L13 走真实 `handle_teach` 的 512 |
+| `test_class_ai.py` | M4 撞号；M5 改岗萝莉；L3 规则 B；L4 真实循环段；L7 `settle_absent`；L10 教师为玩家；`CLASS_SM_SET` 与 target 一致；截短规则的断言改调 `judge_student_leave_truncate`（约 20 处）；实施复审补：H1 走真实玩家分支与行为循环（含把 `settle_orphan_class` 桩空的对照）、M4 学生侧、L10 跑完自习 |
+| `test_behavior_loop.py` | L4 实时结算只算一遍（真实存档、真实循环）；跨天段改为前一天挂上的 flag（偏离 11）；没有存档时整份跳过（偏离 24） |
+| `test_growth.py` | M1 可游玩天（122 个出生日期）；M3 成年后重选；`count_play_day`；缺省出生日的角色本阶段 0 天（偏离 13）；L20 改岗段换回学生岗；L27 / L28 基础值与 557 说明；实施复审补：M1 的萝莉期、起点落在跳过月份与成长加速药分支，M3 只重选改写的那一对 |
+| `test_growth_event.py` | M2 生日推入；L16 长大清残留（阶段素质记号与直调、真实转换两段）；L13 婴儿 4 / 50 断言按季月出生日重写；Plan 31 的 L10 / L13 段按 L22 / L23 改写；实施复审补：M2 双胞胎与口球、`judge_premise_all_pass` |
+| `test_prenatal_baby.py` | L19 婴儿→幼女的当天娱乐；L16 婴儿桶残留清掉；L5 跨天只清过期 flag（与 `update_new_day` 同段）；M2 真实跨天后队首是生日事件 |
+| `test_panels.py` | L1、L12（含被监禁的必修生，实施复审补）、L13 悬停、L14（含在 H 里，实施复审补）、L15、L21、L28 |
 | `test_schedule.py` | L21 教师候选 |
 | `test_premise_tokens.py` | 公开课前提；L13 CVP；L2 被抓；L20 待炫耀 |
 | `test_schedule_template.py` | L17、L18；模板键常量 |
-| `test_talk_data.py` | 方案 §4.3 的各数据行；期末桶新 3 行过校验 |
+| `test_talk_data.py` | 方案 §4.3 的各数据行；期末桶新 3 行过校验；期末桶条数 16 → 19；L27 target 行说明；实施复审补：编辑器前提行、效果说明与 `CHILD_GROWTH` 类说明 |
+| `test_save_compat.py` | L22 旧履历改名（孩子与罗德岛两处、幂等、新 uid 已有记录不覆盖）；没有存档时跳过真实存档一段（偏离 24）；实施复审补：迁移残留检查（构造的履历两条、真实存档一条） |
 | `README.md` | 覆盖描述、断言总数、夹具陷阱 |
 
 ## 3. 构建与缓存
@@ -316,37 +322,39 @@ git checkout -- data/po/                                             # 本机无
 ```
 
 - 口上改动后先删 `data/Character_Talk.json` 再 `./.conda/python.exe buildconfig.py`（README），否则增量构建跳过口上
-- 不新增存档字段，不需要存档迁移
+- 不新增存档字段；读档时把公务事件履历里挪了桶的 uid 改名（`save_handle._migrate_official_event_history`，偏离 18）
 
 ## 4. 验证清单
 
 ### 4.1 单元测试（实施方执行，按 `headless-game-test` 模式 A）
 
-- [ ] §2.0 复现：各脚本改前全部成立；改后问题命中不再成立（随口径的按拍板结果读），其余照旧
-- [ ] `tools/official_event_check.py` 通过
-- [ ] §2.12 各文件新增断言通过
-- [ ] `run_all.py` 全部文件 PASS，断言数记入 §6.3
+- [x] §2.0 复现：各脚本改前全部成立；改后问题命中不再成立（随口径的按拍板结果读），其余照旧（主代理的三份脚本与探针重建后各跑一遍；`repro_plan32.py` 未重建，见 §6.4）
+- [x] `tools/official_event_check.py` 通过
+- [x] §2.12 各文件新增断言通过
+- [x] `run_all.py` 全部文件 PASS，断言数记入 §6.3
 
 ### 4.2 行为循环（实施方执行，按 `headless-game-test` 模式 B）
 
-- [ ] `test_behavior_loop` 各轮收敛；上午四节人均出勤 ≥ 3 节
-- [ ] 探针 `probe_loop.py` 照旧 40 项全部成立
+- [x] `test_behavior_loop` 各轮收敛；上午四节人均出勤 ≥ 3 节（在真实存档 `save/11` 上）
+- [x] 探针 `probe_loop.py` 照旧 40 项全部成立
 
 ### 4.3 游戏内整体测试（由用户执行）
 
 - [ ] 上一节实操课，中途点「结束性技实操课」以外的方式收尾（体力耗尽、学生全部力竭）：下一步课堂模式已关，可以再开课；次日学生照常上那间教室的常规课
 - [ ] 课上指令面板只有「结束性技实操课」，没有「结束群交」
-- [ ] 新生的婴儿跨过一次季月交替：养成事件抬头与养成总览的进度连续、不跳；婴儿期能遇到「第一次自己坐稳了」等中期事件
+- [ ] 新生的婴儿跨过一次季月交替：养成事件抬头的「婴儿期第 N 天」连续、不跳（养成总览的「距成长为幼女还有 N 天（日历天）」照旧按日历天、一夜少约六十天，预计日期不变，属原有口径）；婴儿期能遇到「第一次自己坐稳了」等中期事件
 - [ ] 女儿第一次生日那天处理公务：队首是生日事件
 - [ ] 女儿成年后处理毕业典礼、选带「倾向」的选项：性格素质随之变化
 - [ ] 改任厨师的萝莉日程上午排着跟随母亲：工作日上午在厨房
+- [ ] 性技实操课上已有学生在课堂 H 里时，让一名选了这节课的学生晚到：她直接加入课堂，不弹「H中被发现」面板；路过的非学生干员照旧会撞见（方案 §8.1）
+- [ ] 处理公务时：选项上只写选项本身、看不到后果；选定之后弹出一段「你选择了……／结果：……」，按键后才弹下一条；不能选的选项照旧灰着、写着原因（方案 §8.2）
 - [ ] Tk 与 Web 两种模式下无报错
 
 ## 5. 回滚
 
 | 单元 | 内容 | 回滚方式 | 备注 |
 | --- | --- | --- | --- |
-| 全部 | 本 Plan | `git revert` 该提交 | 不改存档结构；M3 已重选的素质、L22 清掉的旧 uid 不会自动恢复 |
+| 全部 | 本 Plan | 依次 `git revert` 收尾提交与中期提交 `8d9cecacd` | 不改存档结构；M3 已重选的素质、L22 清掉的旧 uid、读档时改名为期末 17 / 18 / 19 的履历都不会自动恢复（萝莉 1 / 20 / 26 恢复后，经历过的孩子在日常派发里可能再遇到一次） |
 
 ## 6. 实施过程记录
 
@@ -354,6 +362,44 @@ git checkout -- data/po/                                             # 本机无
 
 | 文件 | 改动 |
 | --- | --- |
+| `Script/System/Education_System/sex_class_handle.py` | 新增 `settle_orphan_class`（课堂 H 以别的方式结束时一并下课）、`get_class_member_list`（课堂成员按身份认）、`judge_sex_class_state_ok`（自 `judge_can_join_sex_class` 抽出的状态判定）；`clean_expired_temp_class` 先收尾、返回清理前后的条目数之差；`get_must_attend_set` 没有 running 时走 `find_class_to_start`；`settle_attend` 写 `last_attend_period`；`get_watcher_list` 改用成员名单并过状态判定；`end_sex_class` 等说明（H1、L7、L8、L9） |
+| `Script/Settle/realtime_settle.py` | `judge_pl_real_time_data` 末尾调 `settle_orphan_class`（H1） |
+| `Script/Settle/default.py` | 512 对 NPC 教师跳过节次不同的学生（L6）；557 / 10015 说明（L27） |
+| `Script/Design/handle_premise/handle_premise_H.py` | `handle_self_in_sex_class` 改用成员名单（L9）；行号引用改为函数名（L27） |
+| `Script/System/Sex_System/group_sex_panel.py` | 课堂模式下模板选人只列课堂成员（L11） |
+| `Script/Settle/common_default.py` | 主修科目加成只给课堂成员（L11，偏离 25） |
+| `Script/Core/constant_effect.py`、`tools/ArkEditor/csv/Effect.csv` | 512 / 557 说明（L27） |
+| `data/csv/InstructConfig.csv` | 6008「结束群交」前提加 `SEX_CLASS_MODE_OFF`（H1） |
+| `Script/System/Education_System/class_ai.py` | 删住院判定（M4）；见学入口 2 另要休息时间（M5）；截短规则 B 人已在地点时截到开课那一刻（L3）；`settle_absent` 本节已记出勤不记（L7）；新增 `judge_course_teacher_available`（L10） |
+| `Script/Design/handle_premise/handle_premise_work.py` | 教师能否到岗的两个前提改用 `judge_course_teacher_available`（L10）；`self_course_upcoming` 说明（L27） |
+| `Script/Design/handle_npc_ai.py` | 自 `judge_interrupt_character_behavior` 抽出 `judge_student_leave_truncate`（L4） |
+| `Script/Design/character_behavior.py` | NPC 分支在实时结算之前截短（L4） |
+| `Script/Design/game_time.py` | `count_play_day`（M1） |
+| `Script/System/Education_System/growth_handle.py` | `get_grow_day_time`，`get_stage_day` / `get_stage_progress` 按可游玩天（M1）；`settle_personality_pair` / `settle_adult_personality_pair`，`change_growth_value` / `set_growth_value` 改写倾向后重选（M3）；`BASE[COURSE_TYPE_THEORY]`（L28）；557 说明（L27） |
+| `Script/System/Education_System/growth_event_handle.py` | `push_birthday_event`（M2）；`drop_stale_stage_event` 与 `judge_stage_marker_pass`（L16）；`judge_premise_all_pass`（逐条判事件前提、不带口球判定，偏离 26）；抬头的注释 |
+| `Script/System/Pregnancy_System/pregnancy_handle.py` | 三处阶段转换换完素质后清残留（L16）；婴儿→幼女重刷当天娱乐（L19） |
+| `Script/Settle/past_day_settle.py` | 翘课 flag 只清过期的（L5）；日常派发之前推生日事件（M2）；清理临时课处的注释（H1） |
+| `Script/Core/save_handle.py` | `_OFFICIAL_EVENT_UID_MIGRATE` 与 `_migrate_official_event_history`：读档时旧履历的萝莉 1 / 20 / 26 改名为期末 17 / 18 / 19（L22） |
+| `Script/UI/Panel/character_info_head.py` | `<翘>` 只在 SKIP 且不在 H 时亮（L1）；`<课>`：听玩家手动授课写博士（L13），缺课休息、在 H 里不亮（L14），自习悬停「按自习收益」（L15） |
+| `Script/System/Education_System/class_schedule_panel.py` | 教师缺位标注加监禁（L21）；排实操课页的选修名单去掉必修，必修生按状态补列「此刻进不了课堂」（L12） |
+| `Script/System/Education_System/schedule_handle.py` | 教师候选排除被监禁的（L21） |
+| `Script/System/Education_System/course_select_panel.py`、`growth_panel.py`、`schedule_template_panel.py` | 删不用的 `window_width` / `normal_config` 与函数内的重复导入；周日按 `WEEK_DAY_COUNT` 推；模板键常量（L28） |
+| `Script/Design/handle_premise/__init__.py` | `get_listen_manual_teach_course`；CVP 课型 / 科目对学生回落（L13） |
+| `Script/Design/second_behavior.py` | 623 的三种不派情形（L2） |
+| `Script/Design/handle_ability.py` | 待炫耀只记学生岗（L20） |
+| `Script/System/Education_System/schedule_template_handle.py` | 删模板与「套用中」计数遍历全部角色（L17）；非女儿离岗跳过（L18）；模板键常量（L28） |
+| `Script/System/Education_System/education_constant.py` | `BIRTHDAY_EVENT_UID`、`STAGE_TALENT_PREMISE_SET`、模板键与 need 分隔符 5 个常量；翘课日口径与行号引用的说明（L27） |
+| `Script/Core/constant_promise.py` | `SELF_HAVE_PUBLIC_COURSE`；`SELF_COURSE_UPCOMING` 与教师能否到岗两个前提的说明 |
+| `Script/Core/game_type.py` | `CHILD_GROWTH` 类说明与 `last_attend_period` 说明（L27） |
+| `Script/Design/handle_premise/handle_premise_other.py` | `handle_self_have_public_course`（L26） |
+| `tools/ArkEditor/csv/Premise.csv` | 1896 补翘课日例外；新前提一行；教师能否到岗两个前提的说明 |
+| `data/official_event/通用.csv`、`萝莉.csv`、`幼女.csv`、`期末.csv` | 方案 §4.3（M2、L22、L23、L26） |
+| `data/talk/sex/sex_class/join_sex_class.csv`、`watch_sex_class.csv`、`data/talk/daily/check_report_card.csv` | 方案 §4.3（L24、L25） |
+| `data/target/default/target.csv` | 210810 / 220830 的说明补翘课日例外（L27） |
+| `tools/official_event_check.py` | 萝莉条数下限 70 → 67（偏离 7） |
+| `tools/tests/education/` 13 个测试文件与 `README.md` | 见 §6.3；`test_behavior_loop` / `test_save_compat` 没有存档时跳过读档段（偏离 24） |
+| `.github/prompts/数据处理工作流/生长养成系统.md`、`Script/System/Education_System/生长养成系统设计文档.md`、`plan/done/plan_22_生长养成系统_总纲.md`、`update.log` | 说明文档、索引计划表、总纲 §18、更新日志 |
+| `.github/skills/headless-game-test/SKILL.md`、`harness_template.py`、`.github/skills/system-review-round/tools/P0_建档与基线.md`、`复查清单.md`、`.github/skills/game-design-dialogue/tools/E1_BUG与漏洞检查.md`、`.claude/workflows/system-review-find.js` | 截短挪出 `judge_interrupt_character_behavior` 之后的探针包装、挂接点、复查清单与过期行号（偏离 20） |
 
 与方案的偏离：
 
@@ -390,11 +436,17 @@ git checkout -- data/po/                                             # 本机无
    - 注释：`settle_orphan_class` 写明两类例外（意外中断 H 的二次确认只清玩家与对象；转隐奸 1 / 2 清玩家的 H），`settle_sex_class_notify` 与 `past_day_settle` 调 `clean_expired_temp_class` 处的注释随 H1 改写
 20. **实施复审补（U2）**：
    - L7 跨单元整链：开课记出勤（按 `get_attend_judge_time` 那一节写标记）→ 本节内下课 → `settle_absent`（721 调它）按她所在的节次读；按时开讲、提前 5 分钟开讲各一条，外加下一节照记缺课的对照；`test_sex_class` 3 条
-   - `judge_interrupt_character_behavior` / `judge_student_leave_truncate` 的 docstring、`system-review-find.js` 与复查清单补上「工作 / 娱乐中到了淋浴时间」这一打断分支；`E1_BUG与漏洞检查.md` 的过期行号改为引用函数名，`P0_建档与基线.md` 的挂接点补 `judge_student_leave_truncate`
+   - `judge_interrupt_character_behavior` / `judge_student_leave_truncate` 的 docstring、`system-review-find.js` 与复查清单补上「工作 / 娱乐中到了淋浴时间」这一打断分支；`E1_BUG与漏洞检查.md` 的过期行号改为引用函数名，`P0_建档与基线.md` 的挂接点补 `judge_student_leave_truncate`；`headless-game-test` 的 `SKILL.md` 与 `harness_template.py` 给 `judge_student_leave_truncate` 补了探针包装（只包 `judge_interrupt_character_behavior` 的探针会漏掉截短）
    - L10 扩了语义的两条前提（`self_course_teacher_available` / `unavailable`）在 `constant_promise` 与 `Premise.csv` 的说明补上临时实操课的情形
 21. **实施复审补（U3）**：`settle_personality_pair` 的 docstring 里「方案 §3.8」改为「Plan 22 二期 §3.8」
+22. **实施复审补（U3，中期提交后）**：`drop_stale_stage_event` 只按 sub_key 判阶段时，前提里的阶段素质记号长大时不重判——L23 之后幼女期入队的通用 6 / 15 / 27（不派萝莉）长成萝莉照弹，期末 2 / 6 / 12（只派幼女）、3 / 7 / 10 / 17 / 18 / 19（只派萝莉）长大后照弹。新增常量 `education_constant.STAGE_TALENT_PREMISE_SET`（年龄素质 101~104 × 六种运算符 × 0 / 1）与 `growth_event_handle.judge_stage_marker_pass`：阶段桶另判记号，期末桶只判记号，成年桶不动。记号逐个走 `handle_premise.handle_comprehensive_value_premise`，不走中期记录原拟的 `official_event_handle.judge_premise_pass`：那条路带着口上的口球 / 无意识判定，长大那一刻她正被塞着口球时会把成立的记号误判为不成立。`test_growth_event` 的 L16 两段改写：期末事件改用前提不写阶段的期末 1 验照留，另加期末 2 / 3 验清掉；通用桶照留改用前提为空的通用 16；另加「事件表里的记号全收在常量里」与 `judge_stage_marker_pass` 正反两向各一条。方案 §3.11、§4.1、§4.2 与说明文档 §8 已同步
+23. **方案文字更正（中期提交后）**：§3.2 与 §6 的「养成总览的阶段进度同源」与实际不符（`growth_panel._draw_stage` 写的是日历天与预计日期，不读阶段进度），实施文档 §4.3 游戏内测试第 3 条随之改写；§3.3 补「生日当天离岛的不推」；§3.5 注明理由只对教师成立；§3.8 补 `judge_sex_class_state_ok`（偏离 19）；§4.2 补 `judge_stage_marker_pass`、`judge_sex_class_state_ok`、`save_handle._migrate_official_event_history` 三行；§4.3 萝莉 51 改为替换；§6 风险表 H1 补两类例外、L22 补履历迁移；§7 补母亲临盆 / 产后的窄做法与三条新范围外事项
+24. **两个读真实存档的测试在没有存档时跳过**（2026-09-15 用户拍板）：仓库从 `C:\code\erArk` 挪到 `G:\code\erArk` 后 `save/` 没带过来（存档不入库），`test_behavior_loop`（在女儿最多的存档上跑真实行为循环）与 `test_save_compat` 的「真实存档只读载入」一段读不到存档就中断。改为 `save` 目录不存在或没有可读存档时打印提示并跳过（前者整份、后者只跳这一段，都不计失败）；先判目录再调 `judge_save_file_exist`，免得 `get_save_dir_path` 顺手建出 `save` 目录。本机的行为循环验收因此由 `test_class_ai` 的循环段与重建的探针 `probe_loop.py` 兜底（§6.3）
+25. **主修加成只给课堂成员**（实施复审补，L11）：`common_default` 经验写入段的主修科目加成原来只判课堂模式。开课效果串 383 里的 464 会把玩家当时的交互对象一并拉进 H，她若是跟随进教室的非学生干员，玩家直接对她下 H 指令、或岛上别处有人拿到这门经验，都乘加成；方案原修法只收模板的选人名单，堵不住这两条。改为另要 `final_character_id in get_class_member_list()`（先比经验 id，命中才取名单）。开课时要不要把非学生对象挡在 H 外列入方案 §7。方案 §3.8、§7 与说明文档 §10 已同步
+26. **生日推入的前提判定不带口球判定**（实施复审补，M2）：`push_birthday_event` 原用 `official_event_handle.judge_premise_pass`，它走口上的 `get_weight_from_premise_dict`，主体或交互对象被塞着口球、前提里又没写口球时整组判 0；跨天那一刻她或博士被塞着口球，一辈子只有一次的生日就错过了。新增 `growth_event_handle.judge_premise_all_pass`（逐条调 `handle_premise.handle_premise`，跳过 `high_` 与 `Weight|0` 两类权重前提，判定期间把交互对象临时指向互动对象），生日推入与 `judge_stage_marker_pass` 共用（后者原先逐个直调 CVP 求值，改为经它）。方案 §3.3、§4.2 与说明文档 §8 已同步
+27. **测试覆盖复审补的断言**（实施复审补；收尾的测试代理写、主代理核过）：H1 走真实玩家分支与行为循环（幽灵课堂在玩家这一步由 `settle_orphan_class` 收掉、循环收敛、不派 722；把它桩空的对照派出 722 30 次、撞 60 遍护栏）；M1 的萝莉期（122 个出生日期各有 17~18 个进度 ≥ 70 的可游玩日，旧口径 26 个一天都没有）、起点落在被跳过的月份、婴儿期 ≥ 50 严格早于 ≥ 60（122 个都相隔 3 天）、成长加速药分支；M3 只重选被改写的那一对；L6 被跳过的学生体力不变；L13 走真实 `handle_teach` 的 512；L10 跑完自习；M4 学生侧；M2 双胞胎与口球、`judge_premise_all_pass`；L11 主修加成只给课堂成员；编辑器前提行、效果说明与 `CHILD_GROWTH` 类说明；L22 迁移残留检查。共 63 条，7 个测试文件。两处与定案记录不同：婴儿 4 / 50 的旧口径对照按 06:00 出生、00:05 取样实测是 122 / 122 同日或都等不到（定案时的 117 是另一种取样），对照写成「没有一个严格更早」；本机两份真实存档里的女儿没有养成数据与事件履历，L22 在真实存档上只验到「没有残留」，改名本身由构造的履历验
 
-**中期提交（2026-09-14，用户要求先暂停）时尚未处理的事项，下次从这里接着做**（提交时 `run_all.py` 15 个文件、断言 1693 条全部通过，改前基线 1438；`official_event_check.py` 通过；`update.log` 已追加本轮已实施的条目）：
+**中期提交（2026-09-14，用户要求先暂停）时尚未处理的事项**（2026-09-15 续做时已逐条处理，结果见本清单末尾的「续做记录」）（提交时 `run_all.py` 15 个文件、断言 1693 条全部通过，改前基线 1438；`official_event_check.py` 通过；`update.log` 已追加本轮已实施的条目）：
 
 1. U3 复审（M）：`drop_stale_stage_event` 只按 sub_key 桶判阶段，前提里的阶段素质记号（`CVP_A1_T|101~104_E_0/1`）长大时不重判——L23 之后幼女期入队的通用 6 / 15 / 27 长成萝莉照弹，期末 2 / 6 / 12（幼女）、3 / 7 / 10 / 17 / 18 / 19（萝莉）长大后照弹。拟按复审建议改：新增常量 `education_constant.STAGE_TALENT_PREMISE_SET`，`growth_event_handle.judge_stage_marker_pass(uid, character_id)` 用 `official_event_handle.judge_premise_pass` 只判这些记号；`drop_stale_stage_event` 对 sub_key 0 / 101~103 再加判记号，对期末桶（200）只判记号（`judge_stage_pass` 对 200 恒不成立，不能套用），成年桶（104）不动。同步 docstring、方案 §3.11、说明文档 §8，以及 `test_growth_event` 的 L16 两段：期末事件改用前提不写阶段的一条（期末 1），幼女→萝莉时通用 27 应被清掉、改用通用 16（前提为空）验「通用桶照留」；每孩队列容量 4，推毕业典礼要 `ignore_capacity=True` 或少推一条
 2. 方案文字：§3.2 与 §6 风险表写「养成总览的阶段进度同源」，与实际不符（`growth_panel._draw_stage` 写的是「距成长为X还有 N 天（日历天）」与预计日期，按有效成长天数），实施文档 §4.3 游戏内测试第 3 条随之改写；§3.3 补「生日当天离岛（外勤、外交）的幼女 / 萝莉不推，一生仅此一次，属已知取舍」；§3.5 的理由只对教师成立（`judge_teacher_available` 查 normal_2，`judge_mother_available` / `judge_mother_followable` 都不查），§7「见学的母亲临盆 / 产后」补复审提的窄做法（只在 followable 里加 normal_2，不动公务事件前提 `self_mother_available`）；§4.3 萝莉 51 一行改为替换；§6 风险表 H1 一行补两类例外、L22 一行补履历迁移
@@ -402,6 +454,13 @@ git checkout -- data/po/                                             # 本机无
 4. 三视角复审（收尾与文档、方案对照、测试覆盖）中期提交时仍在跑，结果在本会话（b579dc5f）的 Workflow 运行目录 `~/.claude/projects/C--code-erArk/b579dc5f-ec77-4275-8734-78e9419994f1/subagents/workflows/wf_b0533574-437`，用 `wf_watch.py <运行目录> --dump <文件>` 导出后逐条核实
 5. 改后复现：`repro_c1` / `repro_main` / `repro_loop` / `repro_plan32`（`REPRO_PHASE=after`）与探针 `probe_loop`（应仍 40 / 40），脚本在 `%TEMP%/claude/C--code-erArk/b579dc5f-ec77-4275-8734-78e9419994f1/scratchpad/p32/`（不入库；找不到时按 §2.0 的表重建）
 6. P6 收尾：测试 README 的覆盖描述、断言总数与夹具陷阱（`open_all_classroom`、`all_work_npc_set.setdefault(151, set())`、`talk.must_show_talk_check` 打桩、截短断言调 `judge_student_leave_truncate`、自建循环要把 `target_character_id` 设回自己、读档后 `pl` 已不是 `cache.character_data[0]`）；说明文档 §1 补新函数、§8、§16 计数；实施文档 §6.1 文件表、§6.3、§6.4；`update.log` 补本轮余下的条目；两个方案文档 `git mv` 到 `plan/done/`；停止点 2
+
+**续做记录（2026-09-15）**：仓库从 `C:\code\erArk` 挪到了 `G:\code\erArk`，上一会话的 scratchpad、Workflow 运行目录与 `.conda` 环境都不在了。按 `requirements.txt` 在仓库根目录重建 `.conda`（Python 3.12），`.git/info/exclude` 加 `.conda/`（只在本机生效）。上面六条的处理：
+- 第 1 条 → 偏离 22；第 2、3 条 → 偏离 23
+- 第 4 条 → 三视角复审的结果随运行目录丢失，本会话用三个只读代理重跑（收尾与文档 / 方案对照 / 测试覆盖，都没有 H 级问题），逐条核实后修：说明文档、代码注释、skill 文档与实施文档的不一致，偏离 25 / 26 两处代码，偏离 27 的 63 条断言；两个读真实存档的测试在没有存档时跳过（偏离 24，用户拍板；用户随后在 `save/11` 放了带多个女儿的真实存档，最终回归两段都真跑）
+- 第 5 条 → 主代理的三份脚本与探针按 §2.0 的表重建，改前（`c870b587f` 的 worktree）、改后（仓库根目录）各跑一遍，见 §6.3；复现代理的 `repro_plan32.py` 没有重建（§6.4）
+- 第 6 条 → 本会话完成（测试 README、说明文档、索引、`update.log`、实施文档 §6.1~§6.4、`git mv`）
+- 另按用户要求追加调整 §8.1（课堂 H 中晚到的学生不再触发目击 H），见方案 §8.1 与本文 §6.5.1
 
 ### 6.2 实施前的假设复核
 
@@ -424,13 +483,67 @@ git checkout -- data/po/                                             # 本机无
 
 | 文件 | 改前 | 改后 | 新增覆盖 |
 | --- | --- | --- | --- |
-| **合计** | **1438** | | |
+| `test_auto_schedule` | 25 | 25 | — |
+| `test_behavior_loop` | 18 | 23 | L4 真实存档段；跨天段改为前一天挂上的 flag；没有存档时整份跳过（偏离 24） |
+| `test_class_ai` | 315 | 358 | M4、M5、L3、L4、L7、L10、L29；截短断言改调 `judge_student_leave_truncate`；实施复审补 H1 真实玩家分支与行为循环、M4 学生侧、L10 跑完自习 |
+| `test_growth` | 100 | 143 | M1（`count_play_day`、122 个出生日期、季月交替、萝莉期、起点落在跳过月份、成长加速药）、M3（含只重选改写的那一对）、L20、L27 / L28 |
+| `test_growth_event` | 97 | 131 | M2（生日推入、双胞胎、口球、`judge_premise_all_pass`）、L16（阶段素质记号、真实转换）、L13 / L22 / L23 对 Plan 31 段的改写 |
+| `test_panels` | 107 | 137 | L1、L12、L13、L14、L15、L21、L28 |
+| `test_premise_tokens` | 169 | 188 | L26、L13、L2、L20 |
+| `test_prenatal_baby` | 36 | 44 | L19、L16、L5、M2 |
+| `test_save_compat` | 14 | 22 | L22 旧履历改名与残留检查；没有存档时跳过真实存档段（偏离 24） |
+| `test_schedule` | 96 | 100 | L21 |
+| `test_schedule_template` | 68 | 82 | L17、L18、L28 |
+| `test_semester` | 75 | 75 | — |
+| `test_settle_effects` | 96 | 107 | L6（含被跳过的学生体力不变）、L13 走真实 512、557 说明 |
+| `test_sex_class` | 108 | 157 | H1（各收尾路径、旧档幽灵课、力竭退出走真实调用链）、L7、L8、L9、L11（模板选人与主修加成） |
+| `test_talk_data` | 114 | 166 | M2、L22~L27 的数据行、期末桶条数、编辑器前提行与效果说明 |
+| **合计** | **1438** | **1758** | 中期提交时 1693；本表的改后是 2026-09-15 带真实存档 `save/11` 跑的；追加调整 §8.1 之后为 1765（`test_class_ai` 365，见 §6.5.1），§8.2 之后为 1770（`test_growth_event` 136，见 §6.5.2） |
+
+- `tools/official_event_check.py` 的 `--quiet` 与 `--full` 都通过：5 个文件共 266 条事件，萝莉桶 67 条（下限 67）。构建写乱的 `data/po/` 已还原，`config_def.py` 没变
+- 复现（主代理重建、自己跑）：
+  - 改前（`c870b587f` 的 worktree）四份全部成立：`repro_c1` 13 项（问题命中 9 / 前提对照 3 / 数据事实 1）、`repro_main` 22 项（8 / 9 / 5）、`repro_loop` 14 项（5 / 8 / 1）、探针 40 项（全是前提对照），与定案时的计数一致
+  - 改后（仓库根目录，含收尾的全部改动）全部符合预期：问题命中只剩 `repro_main` 的 R2-3 / R2-4 按 Q2 照旧成立（日常随机派发的概率不变，改由生日当天推入保证），其余问题命中全部不再成立，前提对照与数据事实照旧；探针仍 40 / 40。R2-2 / R2-3 的具体数随 L23 / L26 的数据改动而变，改按占比核对（§2.0）
+- 关键实测值（改后）：H1 走 371 的效果链、玩家这一步走完即下课，那节课打上 ended，次日判 ATTEND、派 304，无关干员拿主修经验 10 → 10；M3 毕业典礼、成年后才处理的萝莉 38 选「倾向：坚强」后坚强素质 274 = 1；L1 / L2 `<翘>` 不亮、不派被抓；L3 人在多媒体室看电影截到 9:00、9:00 派 716 记出勤；L4 一步 60 分钟的实时结算累计 60（改前 110）；L5 新一天的 flag 留着、判 SKIP；M1 每个季月出生日期的婴儿中期窗口都有 12~14 个可游玩日，萝莉期进度 ≥ 70 的可游玩日每个 17~18 天
 
 ### 6.4 尚未覆盖的验证
 
 - 实施文档 §4.3 的游戏内整体测试留给用户
 - PO / MO 重建（本机无 gettext）
+- 真实存档上的两段：`test_behavior_loop`（女儿最多的存档上跑行为循环，含 L4 的真实存档段）与 `test_save_compat` 的「真实存档只读载入」（含 L22 全局履历迁移的调用点）。本机没有 `save/`，两处跳过（偏离 24）；把存档放回仓库根目录的 `save/` 后跑一次 `run_all.py` 即补上（中期提交时这两个文件在真实存档上是通过的）
+- 复现代理的 `repro_plan32.py`（196 项）随上一会话的 scratchpad 丢失，没有重建：它的 110 项问题命中由测试覆盖复审逐组对到回归断言上，没锁住的几项由收尾补了断言（偏离 27）；主代理的三份脚本与探针已重建并在改前、改后两个快照上各跑一遍（§6.3）
 
 ### 6.5 追加调整实施记录
 
-（与方案 §8 成对，每轮一节，附回归测试计数。暂无）
+（与方案 §8 成对，每轮一节，附回归测试计数）
+
+#### 6.5.1 课堂 H 中晚到的学生不再触发目击 H（方案 §8.1，2026-09-15）
+
+| 文件 | 改动 |
+| --- | --- |
+| `Script/Core/constant_promise.py` | 新前提常量 `SELF_NOT_ATTEND_SEX_CLASS_HERE` |
+| `Script/System/Education_System/class_ai.py` | 新增 `judge_attend_running_sex_class_here` |
+| `Script/Design/handle_premise/handle_premise_work.py` | 注册 `handle_self_not_attend_sex_class_here` |
+| `data/target/default/target.csv` | 500（目击 H）的前提加 `self_not_attend_sex_class_here`，说明补一句 |
+| `tools/ArkEditor/csv/Premise.csv` | 新前提一行（按 CRLF 插在 `self_course_join_sex_class` 之后） |
+| `tools/tests/education/test_class_ai.py` | 新节「Plan 32 §8.1（追加调整）」7 条 |
+| 说明文档（§4 第 8 条、§12 前提、§15 第 29 条）、测试 README、`update.log`、方案 §7 / §8.1、本文 §4.3 | 同步 |
+
+- 改前复现：先写测试、在没修的代码上跑，`test_class_ai` 挂 6 条——晚到而能参加的学生、够不上课堂的成年学生、提前开讲时到场的待赴必修生都派出 40（目击 H），target 500 的前提里还没有新前提；前提对照（她判 JOIN、目击 H 的其余前提对她都成立）照旧成立
+- 改后：`test_class_ai` 365 条（+7）全部通过；新前提对晚到的学生、够不上课堂的学生判 0，对走进来的非学生干员判 1，非学生照旧派 40
+- 构建：target.csv 改了，全量 `buildconfig.py`（没改口上，6 秒），`data/po/` 已还原
+- `tools/lint_target_csv.py`：全部规则通过（含 R5 新前提能解析、R6 状态机存在）。不带 `--fast` 时它导入游戏后进程不退出（skill 文档记着的坑），打印完结果后挂住，手动停掉
+- `run_all.py`：15 个文件 1765 条断言全部通过（带真实存档 `save/11`）
+
+#### 6.5.2 公务事件的后果不写在选项上，选定之后单独显示（方案 §8.2，2026-09-16）
+
+| 文件 | 改动 |
+| --- | --- |
+| `Script/System/Official_Event_System/official_event_panel.py` | 选项按钮去掉「（后果提示）」；新增 `Official_Event_Draw.draw_result`（一个 WaitDraw 写「你选择了「…」／结果：…」）；`handle_official_event_queue` 结算之后调它；模块说明的界面口径补第 3 条 |
+| `tools/ArkEditor/ui/official_event_edit.py` | 表单标签改为「后果提示（选定后显示）」，模块说明同步 |
+| `tools/tests/education/test_growth_event.py` | 新节「Plan 32 §8.2（追加调整）」5 条 |
+| 说明文档 §8 与 §16、测试 README、`update.log`（本版块那条新增改写为「做出选择之后会单独显示后果」）、Plan 23 方案的字段表、方案 §3.4 / §8.2、本文 §4.3、Plan 22 总纲 §18、索引文档 | 同步 |
+
+- 数据列 `option_1~4_tip` 与校验工具「每个选项都要有后果提示」的规则不变；公务事件的全部部门共用这一个面板，改动对所有部门生效
+- Web 模式：面板只用抽象绘制类（`LeftButton` / `WaitDraw`），由 `web_draw_adapter` 适配，不另改
+- `run_all.py`：15 个文件 1770 条断言全部通过（`test_growth_event` 136，+5；带真实存档 `save/11`）。新断言走真实的面板绘制与处理公务流程（`handle_official_event_queue`），WaitDraw 换成记录桩，只看画了什么、是不是在结算之后

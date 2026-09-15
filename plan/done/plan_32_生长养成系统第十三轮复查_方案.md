@@ -6,7 +6,7 @@
 > 本 Plan 是 Plan 22（生长养成系统）、Plan 24（师生并入工作链）、Plan 25~31（第六~十二轮复查）之后的又一轮全面复查，前述各 Plan 均在 `plan/done/`。
 > 实施完成后在 Plan 22 总纲追加 §18，只写一行指向本 Plan。
 
-- 状态：实施中（方案定稿 2026-09-14；同日用户指示「开始按方案实施」，Q1~Q3 均按推荐；同日应用户要求先做一次中期提交，余下事项见实施文档 §6.1 末尾的待办）
+- 状态：已实施（2026-09-16；方案定稿 2026-09-14，同日用户指示「开始按方案实施」，Q1~Q3 均按推荐；同日应用户要求先做一次中期提交 `8d9cecacd`，2026-09-15 续做完收尾，并按用户要求追加调整 §8.1、§8.2；回归 15 个文件 1770 条断言全部通过，改前 1438）
 - 来源：用户需求 → "使用skill，对 养成 系统再进行一次检查"
   - 本轮是 `system-review-round` skill 的第二次使用。用户选「约 10 个代理」：7 个核查代理（七个维度各一）+ 2 个核实代理（46 条分两批对抗式核实）+ 1 个复现代理；补漏与复查清单由主代理做
   - 每条发现都由主代理读到代码落点；H1、M2、M3、L1~L5 由主代理另写复现脚本跑出，另跑了一个长步长行为循环的探针（40 项全部正常，见 §2.3）
@@ -21,7 +21,7 @@
   5. **住院判定删掉**：干员从不进住院表，拿角色 id 查病人编号只会误判（§3.5）
   6. **非学生岗的萝莉只在自己的休息时间见学**（§3.6）
   7. 其余小修（§3.7~§3.15）
-- 预计改动量：**约 55 个文件**，净增约 650 行（按 Q1~Q3 都选推荐估）
+- 预计改动量：**约 55 个文件**，净增约 650 行（按 Q1~Q3 都选推荐估）；实际两个提交合计 74 个文件（含追加调整 §8.1 / §8.2 与方案双文件改名；逻辑、数据、编辑器副本与校验工具、测试与 README、文档与 skill 各若干），增约 4430 行、删约 520 行（不含 `data/po/` 与本轮之外的 `package.json`），超出估算的主要是测试（断言 1438 → 1770）与文档
   - 逻辑 29 个：`sex_class_handle`、`realtime_settle`、`Settle/default.py`、`class_ai`、`handle_premise_work`、`character_behavior`、`handle_npc_ai`、`growth_handle`、`growth_event_handle`、`pregnancy_handle`、`past_day_settle`、`character_info_head`、`class_schedule_panel`、`schedule_handle`、`course_select_panel`、`growth_panel`、`schedule_template_panel`、`handle_premise/__init__`、`handle_premise_other`、`handle_premise_H`、`second_behavior`、`handle_ability`、`group_sex_panel`、`schedule_template_handle`、`game_time`、`education_constant`、`constant_promise`、`constant_effect`、`game_type`
   - 数据 11 个：`InstructConfig.csv`、`data/official_event/` 四张表、`data/talk/` 下 3 个口上文件、`target.csv`、`tools/ArkEditor/csv/Effect.csv` 与 `Premise.csv`
   - 测试约 12 个（含 README）；文档 4 个（说明文档、索引文档、Plan 22 总纲、`update.log`）
@@ -35,7 +35,7 @@
 
 1. 课堂 H 不再留下「幽灵课堂」：H 以任何方式结束都会下课，学生不会被拉进没有博士的课堂，主修加成不再对全岛生效，也不会从此开不了课（H1）
 2. 阶段进度窗口在每个出生日期上都开得出来；养成事件抬头的「本阶段第几天」不再一夜跳六十天（M1）
-3. 生日事件在生日那天一定出现（M2）
+3. 生日事件在生日那天一定出现（M2；生日当天离岛的除外，§3.3）
 4. 成年事件与成年前入队、成年后才处理的日常事件里，「倾向」选项落到性格素质上（M3）
 5. 教师 / 母亲不再因为住院病人的编号与自己的角色 id 撞号而被判来不了（M4）
 6. 改岗的萝莉按新岗位上班，不被日程里的「跟随母亲」顶掉（M5）
@@ -234,7 +234,7 @@
 - `growth_handle.get_stage_day`：本阶段已过的**可游玩天**数；`get_stage_progress`：本阶段已过可游玩天 ÷ 本阶段总可游玩天。阶段的起点、终点仍按有效成长天数（90 / 270 / 450，含成长加速药）换算回日历时刻：出生时刻 + (阈值 − 加速药天数) 天，早于出生的按出生算；再用 `count_play_day` 数这一段里的可游玩天。
 - 阶段转换（长大）照旧按有效成长天数，不变。
 - 阈值换算回日历时刻抽成 `growth_handle.get_grow_day_time(character_id, grow_day)`，两个函数共用；`born_time` 还是缺省公元 1 年的角色（不是在岛上出生的）本阶段天数为 0、进度按走完 100，免得从公元 1 年逐月累加（实施时定）。
-- 养成事件抬头「萝莉期第 N 天」随之按可游玩天（婴儿期约 30 天、幼女 / 萝莉期约 60 天）；养成总览的阶段进度同源。
+- 养成事件抬头「萝莉期第 N 天」随之按可游玩天（婴儿期约 30 天、幼女 / 萝莉期约 60 天）。养成总览的阶段行（`growth_panel._draw_stage`）写的是「距成长为X还有 N 天（日历天）」与时钟真正会走到的预计日期，按有效成长天数算、不读阶段进度，本条不改它（实施复审更正：原写「养成总览的阶段进度同源」与实际不符）。
 - 改后：婴儿期 28~31 个可游玩日，每个出生日期的婴儿中期窗口 [30%, 75%) 都有 12~14 个可游玩日；婴儿 4（≥50）与婴儿 50（≥60）首次成立相隔约 3 个可游玩日。校验工具不另加「窗口日历宽度」规则。
 
 | 候选 | 弃选原因 |
@@ -249,6 +249,8 @@
 - 新增 `growth_event_handle.push_birthday_event() -> List[int]`：跨天结算里，对日常派发名单（`get_growth_event_character_list`）中今天过生日（`handle_self_birthday_today`）、`judge_event_can_enqueue` 通过、事件前提成立的女儿，插队首推入（不受容量约束）；返回推入的角色 id。
 - `update_new_day` 在 `check_new_day_official_event` 之前调它：日常随机派发因「已在队列里」不会再抽到它。
 - 另过 `judge_stage_pass`（与日常候选同一套，防事件日后改桶）；倒序插到队首，同一天过生日的几个女儿（双胞胎）按 id 升序排在队首（实施时定）。
+- 名单与日常派发相同，只收在岛的幼女 / 萝莉：生日当天离岛（外勤、外交）的，这一次生日事件推不出来。一生仅此一次，属已知取舍（实施复审补）：回岛后补推要另存「欠一次生日」的状态，本轮不做。
+- 事件前提逐条判、不带口上的口球判定（`growth_event_handle.judge_premise_all_pass`，实施复审补）：`official_event_handle.judge_premise_pass` 走口上的权重计算，她或博士在跨天那一刻被塞着口球时整组判 0，这一次生日就永远错过了。
 - 正文不再写死「今天」：「今天是{Name}的生日。」→「{Name}的生日到了。」（插了队首，玩家多半当天就看到；隔几天才处理时也不矛盾）。
 
 | 候选 | 弃选原因 |
@@ -260,7 +262,7 @@
 
 - 从 `settle_personality_talent` 抽出按对的 `settle_personality_pair(character_id, pair_id) -> int`：正值取正向素质、负值取负向并清掉另一侧；为 0 时两侧都不动（与成年结算同一规则）；返回写上的素质 id（没写为 0）。`settle_personality_talent` 改为逐对调它，行为不变。
 - `change_growth_value` / `set_growth_value` 改写性格倾向（10~13）之后：角色是已成年（阶段 104）的女儿，就对这一对调 `settle_personality_pair`。成年结算之后的一切倾向改写（毕业典礼、成年纪念、通用 59 / 60、成年前入队成年后才处理的日常事件）都因此落到素质上。
-- 静默改写，不另出文本：事件选项的提示已写明倾向。
+- 静默改写，不另出文本：事件选项的后果提示已写明倾向（§8.2 起在玩家选定之后单独显示）。
 - 「只对已成年的女儿重选」的判定抽成 `settle_adult_personality_pair(character_id, pair_id)`，`change_growth_value` / `set_growth_value` 共用（实施时定）。
 - 与 L16 叠加：成年结算先调 `drop_stale_stage_event`，她队列里残留的萝莉桶与通用桶事件在成年那一刻就清掉了，「成年前入队、成年后才处理的日常事件」只剩旧档里原本就在队列中的那种；M3 对它们仍然成立（实施时核实）。
 
@@ -272,6 +274,7 @@
 ### 3.5 住院判定删掉（M4，推荐口径 5）
 
 - `judge_teacher_available`、`judge_mother_available` 删掉 `medical_hospitalized` 两行；注释写明理由（那张表的键是抽象病人编号，干员从不进表；干员真正「住院」的临盆 / 产后已由 normal_2 挡住）。
+  - 后半句只对教师成立（实施复审更正）：`judge_teacher_available` 查 normal_2，`judge_mother_available` / `judge_mother_followable` 都不查，临盆 / 产后的母亲照样判可跟。被删的住院判定从来命中不了角色，母亲一侧本轮行为不变；要不要补 normal_2 见 §7。
 - `test_class_ai` 的住院夹具改为：住院表里有编号等于教师角色 id 的病人时，教师照常可用。
 
 | 候选 | 弃选原因 |
@@ -295,15 +298,15 @@
 - **L6**：512 对 NPC 教师：学生当前行为的节次（按她的开始时刻）与教师开讲的节次不同，就跳过她（她已在上别的节次）。玩家手动授课不变。
 - **L7**：`settle_absent` 在本节已记出勤（`last_attend_period` 等于本节）时不记；`settle_attend` 记出勤时一并写 `last_attend_period`（按 `get_attend_judge_time` 那一节，节次外不写）。同一节只落一种记录的两个方向都齐了。
 - **L8**：`get_must_attend_set(classroom)` 在没有 running 时改走 `find_class_to_start`（含本节已下课的那条），与 `start_sex_class` 取条目同源。
-- **L9**：新增 `sex_class_handle.get_class_member_list() -> List[int]`：课堂模式下与玩家同场景、`is_h`、是学生岗或女儿的角色——「已被拉进这节课」按身份认，不再重算入课门槛（门槛只在入课那一刻判）。`get_watcher_list` 与 `handle_self_in_sex_class` 改用它。
+- **L9**：新增 `sex_class_handle.get_class_member_list() -> List[int]`：课堂模式下与玩家同场景、`is_h`、是学生岗或女儿的角色——「已被拉进这节课」按身份认，不再重算入课门槛（门槛只在入课那一刻判）。`get_watcher_list` 与 `handle_self_in_sex_class` 改用它。旁观名单另过状态那一层（实施复审补）：从 `judge_can_join_sex_class` 抽出 `judge_sex_class_state_ok(character_id) -> bool`（normal 2 / 5 / 6 / 7 与监禁，刻意不查服装），时停中被冻结、醉酒、半梦半醒的学生不拿观摩收益与旁观口上；在课前提与模板选人照旧只按身份认。
 - **L10**：新增 `class_ai.judge_course_teacher_available(student_id, course) -> bool`：课表格子的教师是玩家（0，临时实操课）时，另要她能进课堂（`judge_can_join_sex_class`，必修生豁免前置修习）；否则同 `judge_teacher_available(教师, 教室)`。`self_course_teacher_available` / `unavailable` 改用它：不够格的选修生无论开课前后都判「教师来不了」，降级自习、计出勤，与开课后到场的现行为一致。
-- **L11**：群交模板选人：课堂模式下名单只收 `get_class_member_list()`（已在课堂 H 里的学生）；普通群交不变。
+- **L11**：群交模板选人：课堂模式下名单只收 `get_class_member_list()`（已在课堂 H 里的学生）；普通群交不变。主修科目加成（`common_default` 的经验写入段）同样只给课堂成员（实施复审补：此前只判课堂模式，开课效果串里的 464 一并拉进 H 的非学生交互对象、岛上别处拿到这门经验的人都乘加成；只收选人名单时，玩家直接对这名交互对象下 H 指令照样吃加成）。
 - **L12**：排实操课页：三份选修名单先去掉本页必修名单里的人（必修行单列）；选这一节的人都被点了名时，第一行写「0 人（点名必修的学生照常会来，见下）」，不再写「没有学生会来」（实施时补）。点名只豁免前置修习，状态与成年学生的实行值开课拉人时照判：进不了课堂的必修生（点名之后被监禁、意识模糊、实行值跌破等）照列进「此刻进不了课堂」一行（实施复审补）。
 
 ### 3.9 状态标识（L1、L13 的 `<课>`、L14、L15）
 
 - **L1**：`<翘>` 只在 `get_course_stage` 判 SKIP、且人不在 H 时亮（与 SKIP 同口径：本节有课、不是点名必修；体力缺课、去上 / 正要上实操课时也不亮，实施时定）；其余节次落到下面的 `<课>` 判定，「翘课中（第N节）」这一支删掉。
-- **L13**：听玩家手动授课的学生（行为是听课、与玩家同场景、玩家正在授课且 `get_now_teaching(0)` 取不到、开始时刻与玩家对齐），悬停写「授课：{玩家}」与玩家的课型、学识。判据抽成 `handle_premise.get_listen_manual_teach_course(character_id) -> Optional[tuple]`（§3.10 的 CVP 共用）。
+- **L13**：听玩家手动授课的学生（行为是听课、与玩家同场景、玩家正在授课且 `get_now_teaching(0)` 取不到、开始时刻与玩家对齐），悬停写「授课：{玩家}」与玩家的课型、学识。判据抽成 `handle_premise.get_listen_manual_teach_course(character_id) -> Optional[tuple]`（§3.10 的 CVP 共用）。`<课>` 这一半属防御性（实施复审注）：主界面在玩家这一步走完后才画，那时玩家的授课行为已复位，真实流程里看不到这个悬停；口上前提那一半在 512 结算学生时生效（§3.10）。
 - **L14**：个人式课分支：本节已记缺课、行为是休息、或人在 H 里时不亮（「在 H 里」为实施复审补：L1 让 `<翘>` 对在 H 里的人不亮，这里不挡，她在上课地点被带进 H 时就改亮 `<课>`）。
 - **L15**：悬停改为「本节无教师，按自习收益」。
 
@@ -315,7 +318,8 @@
 
 ### 3.11 事件队列与成长（L16、L19）
 
-- **L16**：新增 `growth_event_handle.drop_stale_stage_event(character_id) -> int`：把队列里这个孩子的部门 15 阶段桶事件（sub_key 0 / 101~103）中 `judge_stage_pass` 已不成立的删掉；成年桶（104）与期末桶（200）不动。婴儿→幼女、幼女→萝莉、萝莉→少女三处阶段转换在换完素质后调它；成年结算在推毕业典礼之前调。
+- **L16**：新增 `growth_event_handle.drop_stale_stage_event(character_id) -> int`：把队列里这个孩子的部门 15 事件中对不上新阶段的删掉——阶段桶（sub_key 0 / 101~103）按 `judge_stage_pass` 与前提里的阶段素质记号判；期末桶（200）只按记号判（`judge_stage_pass` 对它恒不成立）；成年桶（104）不动。婴儿→幼女、幼女→萝莉、萝莉→少女三处阶段转换在换完素质后调它；成年结算在推毕业典礼之前调。
+  - 阶段素质记号（实施复审补）：前提里主体自己的年龄素质 101~104 与 0 / 1 比较的 CVP（`CVP_A1_T|103_E_0` 之类），收在新常量 `education_constant.STAGE_TALENT_PREMISE_SET`；新函数 `judge_stage_marker_pass(uid, character_id) -> bool` 只取这些记号逐个走 CVP 求值（不走 `judge_premise_pass`：那条路带着口上的口球 / 无意识判定）。只按 sub_key 判时，L23 之后幼女期入队的通用 6 / 15 / 27（不派萝莉）长成萝莉照弹，期末 2 / 6 / 12（只派幼女）、3 / 7 / 10 / 17 / 18 / 19（只派萝莉）长大后照弹。别的前提出队时照旧不复核（§7「公务事件出队复核事件前提」）。
 - **L19**：`_settle_baby_grow_up` 换完素质、置学生岗之后重刷当天娱乐（`get_chara_entertainment` + `apply_schedule_for_child`）。
 
 ### 3.12 日程模板（L17、L18、L28 的模板键）
@@ -358,9 +362,9 @@
 - 说明文档：
   - §1：`sex_class_handle` 一行补「课堂随 H 收尾、课堂成员按身份认」；`growth_handle` 补「阶段进度按可游玩天」
   - §2：`CHILD_GROWTH` 生命周期（L27）；`last_attend_period` 的写入点加上 `settle_attend`
-  - §4：截短规则 B 人已在地点时截到开课那一刻；截短在实时结算之前；512 跳过节次不同的学生；教师为玩家时够不够格的判据
-  - §5：课堂收尾；必修名单与开课条目同源；旁观按成员名单
-  - §6：翘课 flag 跨天只清过期的
+  - §4：截短规则 B 人已在地点时截到开课那一刻；截短在实时结算之前；教师为玩家时够不够格的判据；§5：512 跳过节次不同的学生
+  - §10：课堂收尾；必修名单与开课条目同源；旁观按成员名单（原写 §5，实施时按说明文档的实际节号落）
+  - §15 第 24 条：翘课 flag 跨天只清过期的（原写 §6）
   - §8：生日事件推入；阶段桶事件在长大时清掉；阶段进度按可游玩天；萝莉 1 / 20 / 26 挪进期末；公开课前提
   - §12、§13：557 描述、口上条数、通用桶 40 条
   - §15：新增三条：「课堂模式以玩家在 H 为前提，任何只关群交的收尾都由 `settle_orphan_class` 兜住」「按日历天设计的窗口一律按可游玩天复核」「同一步里改行为时长的打断要排在实时结算之前」
@@ -378,6 +382,8 @@
 ```python
 BIRTHDAY_EVENT_UID = "通用3"
 """ 生日事件（Plan 32）：跨天结算时对今天过生日的女儿直接插队首推入，不走每日随机派发（一生只有一次生日落在童年里） """
+STAGE_TALENT_PREMISE_SET = frozenset(…)  # CHILD_TALENT_ID_LIST × 六种运算符 × 判定值 0 / 1 拼出的 "CVP_A1_T|{素质}_{运算符}_{值}"
+""" 事件前提里的阶段素质记号（§3.11 L16，实施复审补）：孩子长大时 drop_stale_stage_event 只拿这些记号重判队列里的事件 """
 ```
 
 `education_constant.py`（日程模板一组，自 `schedule_template_handle` 挪入）：
@@ -413,12 +419,15 @@ SELF_HAVE_PUBLIC_COURSE = "self_have_public_course"
 | `growth_handle` | `get_grow_day_time(character_id, grow_day) -> datetime` | 新增：有效成长天数换算回日历时刻，阶段天数与进度共用（§3.2，实施时补） |
 | `growth_handle` | `settle_adult_personality_pair(character_id, pair_id) -> int` | 新增：阶段 104 的女儿才调 `settle_personality_pair`（§3.4，实施时补） |
 | `growth_event_handle` | `push_birthday_event() -> List[int]` | 新增（§3.3） |
-| `growth_event_handle` | `drop_stale_stage_event(character_id) -> int` | 新增（§3.11） |
+| `growth_event_handle` | `drop_stale_stage_event(character_id) -> int` | 新增（§3.11）；阶段桶另判阶段素质记号，期末桶只判记号（实施复审补） |
+| `growth_event_handle` | `judge_stage_marker_pass(uid, character_id) -> bool` | 新增：只判前提里的阶段素质记号（§3.11，实施复审补） |
+| `growth_event_handle` | `judge_premise_all_pass(premise_text, character_id, partner_id=0) -> bool` | 新增：逐条判事件前提、不带口上的口球判定，生日推入与阶段记号共用（§3.3 / §3.11，实施复审补） |
 | `past_day_settle` | `update_new_day` | 翘课 flag 只清过期的；派发前推生日事件（§3.7、§3.3） |
-| `pregnancy_handle` | `_settle_baby_grow_up` / `check_grow_to_loli` / `check_grow_to_girl` | 换完素质后清阶段桶残留；婴儿→幼女重刷娱乐（§3.11） |
+| `pregnancy_handle` | `_settle_baby_grow_up` / `check_grow_to_loli` / `check_grow_to_girl` | 换完素质后清对不上新阶段的事件（阶段桶，与带阶段记号的期末事件）；婴儿→幼女重刷娱乐（§3.11） |
 | `sex_class_handle` | `settle_orphan_class() -> bool` | 新增（§3.1） |
 | `sex_class_handle` | `clean_expired_temp_class` | 先调 `settle_orphan_class`，之后 running 的只在课堂模式仍开着（玩家在 H、拖堂跨天）时跳过；返回值改为清理前后的条目数之差，含收尾时删掉的当场课（§3.1，实施时定） |
 | `sex_class_handle` | `get_class_member_list() -> List[int]` | 新增；`get_watcher_list` 改用它（§3.8 L9） |
+| `sex_class_handle` | `judge_sex_class_state_ok(character_id) -> bool` | 新增：自 `judge_can_join_sex_class` 抽出的状态判定，`get_watcher_list` 另过它（§3.8 L9，实施复审补） |
 | `sex_class_handle` | `get_must_attend_set(classroom)` | 没有 running 时走 `find_class_to_start`（§3.8 L8） |
 | `sex_class_handle` | `settle_attend` | 记出勤时写 `last_attend_period`（§3.8 L7） |
 | `realtime_settle` | `judge_pl_real_time_data` | 末尾调 `settle_orphan_class`（§3.1） |
@@ -441,6 +450,7 @@ SELF_HAVE_PUBLIC_COURSE = "self_have_public_course"
 | `class_schedule_panel` | `get_teacher_absent_mark`、`_edit_sex_class` | 监禁标注（L21）；选修名单去掉必修（L12） |
 | `schedule_handle` | `get_teacher_candidate_list` | 排除被监禁的教师（L21） |
 | `schedule_template_handle` | `delete_template` / `get_template_use_count` / `apply_schedule_for_child` | 遍历全部角色（L17）；非女儿离岗跳过（L18）；模板键常量（L28） |
+| `save_handle` | `_migrate_official_event_history(history_data) -> int` | 新增：读档时把旧履历里的萝莉 1 / 20 / 26 改名为期末 17 / 18 / 19（§3.14 L22，实施复审补） |
 
 ### 4.3 数据行
 
@@ -451,14 +461,15 @@ SELF_HAVE_PUBLIC_COURSE = "self_have_public_course"
 | 同上 | cid 5 | 前提加 `&self_have_practice_course` |
 | 同上 | cid 6 / 15 / 27 | 前提加 `CVP_A1_T\|103_E_0` |
 | `data/official_event/萝莉.csv` | cid 1 / 20 / 26 | 删去（挪进期末） |
-| 同上 | cid 51 / 57 | 前提加 `self_have_public_course` / `self_have_pe_course` |
+| 同上 | cid 51 | 前提的 `self_have_any_course` 换成 `self_have_public_course`（实施复审更正：原写「前提加」） |
+| 同上 | cid 57 | 前提加 `self_have_pe_course` |
 | `data/official_event/幼女.csv` | cid 24 | 前提改 `self_have_public_course`（替换 `self_have_any_course`） |
 | `data/official_event/期末.csv` | 新增 3 行 | 原萝莉 1 / 20 / 26 的正文与选项；前提见 §3.14 L22 |
 | `data/talk/sex/sex_class/join_sex_class.csv` | 1053~1056 | 前提加 `&self_is_player_daughter` |
 | `data/talk/sex/sex_class/watch_sex_class.csv` | 1054 / 1055 | 同上 |
 | `data/talk/daily/check_report_card.csv` | 新增 2 行 | 成年女儿档位 3（§3.14 L25） |
 | `data/target/default/target.csv` | 210810 / 220830 | 说明补翘课日例外（L27） |
-| `tools/ArkEditor/csv/Effect.csv` | 557 | 说明改写（L27） |
+| `tools/ArkEditor/csv/Effect.csv` | 512 / 557 | 说明改写（L27；512 另补「NPC 教师只发给自己的学生」，实施时补） |
 | `tools/ArkEditor/csv/Premise.csv` | 1896；新增 1 行 | 补翘课日例外；`self_have_public_course` |
 
 ## 5. 行为对照
@@ -506,13 +517,13 @@ SELF_HAVE_PUBLIC_COURSE = "self_have_public_course"
 
 | 风险 | 说明 | 对策 |
 | --- | --- | --- |
-| M1 改了阶段进度的单位 | 全部 Growth\|3 窗口的开放日期都变；抬头天数变小；养成总览同源 | 窗口百分比不动；`test_growth` / `test_growth_event` 按季月出生日重写夹具（§2.5-4），断言 122 个出生日期都开得出婴儿中期 |
+| M1 改了阶段进度的单位 | 全部 Growth\|3 窗口的开放日期都变；抬头天数变小（养成总览的阶段行写日历天与预计日期，不读阶段进度，不受影响） | 窗口百分比不动；`test_growth` / `test_growth_event` 按季月出生日重写夹具（§2.5-4），断言 122 个出生日期都开得出婴儿中期 |
 | M3 让成年后的倾向改写素质 | 成年后事件选项可能把已定型的素质翻到另一侧 | 这正是选项提示的本意；倾向为 0 时两侧都不动；只对已成年的女儿生效 |
-| H1 以「玩家不在 H」判下课 | 若有别的系统在课中临时清掉玩家的 H 标记，课会被收掉 | 全仓库清玩家 `is_h` 的都是结束 H 的效果；`test_sex_class` 覆盖 6008 隐藏、体力归零、全员力竭、转单人 H 后结束 H、旧档幽灵课 |
+| H1 以「玩家不在 H」判下课 | 若有别的系统在课中临时清掉玩家的 H 标记，课会被收掉 | 全仓库清玩家 `is_h` 的都是结束 H 的效果，例外有二（实施复审补）：意外中断 H 的二次确认只清玩家与交互对象，群交模式与其余学生的 H 状态留着（普通群交同样如此，属群交系统，§7）；转隐奸 1 / 2（男不隐）清玩家的 H 而这场 H 仍在继续，课随之收掉。`test_sex_class` 覆盖 6008 隐藏、体力归零、全员力竭、转单人 H 后结束 H、旧档幽灵课 |
 | L4 改了行为循环主干的顺序 | NPC 分支里截短挪到实时结算之前 | 只挪学生截短一段，守卫与判据不变；`test_behavior_loop` 与探针的收敛、出勤不变 |
 | L7 让 `settle_attend` 写 `last_attend_period` | 同一节实操课之后，557 / 512 不再给她结算这一节的常规课 | 同一节只落一种记录（Plan 30 口径）；实操课本身已记出勤 |
 | L10 改变了开课前到场的不够格选修生 | 从零收益改为自习、计出勤 | 与开课后到场的现行为一致；成绩单出勤率略升 |
-| L22 删掉三条萝莉事件的 uid | 旧档队列里的萝莉 1 / 20 / 26 会被清理掉，履历照留 | `clean_official_event_queue` 静默清掉失效 uid；新 uid 在期末池 |
+| L22 删掉三条萝莉事件的 uid | 旧档队列里的萝莉 1 / 20 / 26 会被清理掉；旧履历记的是旧 uid | `clean_official_event_queue` 静默清掉失效 uid；新 uid 在期末池；读档时 `save_handle._migrate_official_event_history` 把旧履历改名为期末 17 / 18 / 19（实施复审补），经历过的孩子不会在学期切换时再遇到一次 |
 | L24 给 6 行口上加女儿前提 | 萝莉化世界里的非女儿萝莉学生不再有这 6 行 | 萝莉化是建角时的一次性设定，学生口上仍有其余通用行 |
 | 事件表与口上是编译产物 | 改 CSV 后要重建 | 测试引导的增量构建会重建；口上改动后先删 `data/Character_Talk.json` 再 `buildconfig.py`（README） |
 | 构建会写乱 PO | 本机无 gettext | 收尾 `git checkout -- data/po/` |
@@ -521,8 +532,14 @@ SELF_HAVE_PUBLIC_COURSE = "self_have_public_course"
 
 - **行为循环「交互对象不在场即把结束时刻改写为这一步的结束」**：见学的对象是母亲，见学跨过玩家一步的边界、下一步里母亲先决策离开时，孩子的时间线跳到这一步的末尾，中间的节次不计出勤也不记缺课（核实代理确认成立，触发要求较窄）。这条规则作用于全部带对象的行为（聊天、H 等），改成「取原结束与这一步结束的较早者」属行为循环主干
 - **一步跨过两个午夜只跑一次跨天结算**（`new_day_flag`）：属行为循环主干，与 Plan 31 §7「换季首日」同类
-- **见学的母亲临盆 / 产后**：`judge_mother_available` 不查 normal_2，临盆 / 产后被移回住院部的母亲照样判有效（M4 删掉的住院判定从来命中不了角色，本轮行为不变）；补 normal_2 会连带让公务事件前提 `self_mother_available` 在产后期不成立，属设计决定（实施代理提出）
+- **见学的母亲临盆 / 产后**：`judge_mother_available` 不查 normal_2，临盆 / 产后被移回住院部的母亲照样判有效（M4 删掉的住院判定从来命中不了角色，本轮行为不变）；补 normal_2 会连带让公务事件前提 `self_mother_available` 在产后期不成立，属设计决定（实施代理提出）。窄做法（实施复审提）：只在 `judge_mother_followable` 里加 normal_2、不动 `judge_mother_available`，见学不跟临盆 / 产后的母亲，带母亲的事件照抽；留待拍板
 - **婴儿 4 与婴儿 50 的严格先后**：M1 之后两条相隔约 3 个可游玩日开放，仍可能先后颠倒；严格先后要「某事件已触发」的前提，本轮不做
+- ~~**课堂 H 进行中晚到的学生触发「目击 H」而不是加入课堂**~~（已按用户要求在本轮修掉，见 §8.1；下面是当时的记录）（疑似，2026-09-15 重建复现脚本时顺带发现，未深究）：target 500（目击 H，状态机 40，type 0）的前提不排除课堂模式，排在学生工作链的 220835（→ 722，type 22）之前；场上已有别人在和玩家做课堂 H 时，开课后才到场的必修生实际派出的是 40、画被撞见面板，改前改后都一样。Plan 25 的「开课后到场加入课堂」只在场上没有别人在 H 时走得到，`test_class_ai` 也只覆盖这种情形。面板之后会不会结束这场群交（结束的话 Plan 32 起会连带下课）没有追，列入下一轮的已知清单
+- **`handle_comprehensive_value_premise` 没有 Weight 分支**（收尾补测试时顺带发现）：带 `Weight|0` 的 CVP 直接交给 `handle_premise.handle_premise` 求值会抛 `UnboundLocalError`；口上的 `get_weight_from_premise_dict` 在调它之前就把这类前提截走了，所以游戏里不出错，`judge_premise_all_pass` 也显式跳过。属前提系统，本轮不改
+- **开课时一并被拉进 H 的非学生交互对象**（实施复审提）：开课效果串 383 含 464（交互对象变成 H 状态），5209 的前提不限交互对象的身份，玩家开课时的交互对象若是跟随进教室的干员，她会一并进入课堂 H。本轮只让课堂成员名单与主修加成都不认她（§3.8 L11）；要不要在开课时把非学生对象挡在 H 外，属群交 / 课堂的设计决定
+- **意外中断 H 的群交残留**（实施复审提）：`constant.special_end_H_list` 里的中断（催眠解除、时停解除等）之后的二次确认只清玩家与交互对象（`handle_npc_ai_in_h` 调 `Settle/default.handle_both_h_state_reset`），中断行为的效果串不清全场 H 状态时，群交模式与其余学生的 H 状态会留着。课堂模式由 `settle_orphan_class` 照收（玩家已不在 H），群交侧的残留普通群交同样存在，属群交系统
+- **通用 5「分到了同一组」的互动对象不要求与她同一格实践课**（实施复审提）：前提只要她有实践课、对方是同胞，现有 token 表达不了「与对方同一格」
+- **`test_behavior_loop` 的 `run_one_round` 读档后仍用夹具 `pl`**（实施复审提）：读档换掉了 `cache.character_data`，夹具里的 `pl` 已不是 `cache.character_data[0]`；旧问题，现有断言不受影响，列入下一轮的已知清单
 - **公务事件出队复核事件前提**：M2 只处理生日正文；季末入队、新学期才处理的通用 15 等同类时效问题属公务事件系统
 - **口上 / 事件校验的防复发规则**（运算符白名单、编号白名单、sub_key 值域）：现有数据没有实例，留作工具改进
 - **成年（非女儿）学生的听课、翘课口上**：总纲 §5、§10.2
@@ -531,4 +548,34 @@ SELF_HAVE_PUBLIC_COURSE = "self_have_public_course"
 
 ## 8. 追加调整
 
-（实施后每轮追加一节，只写设计；实施记录见实施文档 §6.5。暂无）
+（实施后每轮追加一节，只写设计；实施记录见实施文档 §6.5）
+
+### 8.1 课堂 H 中晚到的学生不再触发目击 H（2026-09-15，用户要求在本轮修）
+
+**问题**（重建复现脚本时顺带发现，原列在 §7；主代理读代码核实，新测试改前复现）：`handle_npc_ai.find_character_target` 先扫 type 0 的高优先级目标，命中了就不再往下看工作链。target 500（目击 H → 状态机 40，画「H中被发现」面板）的前提是「当前地点门开着、自己还没目击过本次 H、该地点有其他角色在和玩家进行非隐奸的 H、不在自己宿舍、没有前往加入群交」，不排除课堂模式。课堂 H 里总有开课时被 10014 拉进 H 的学生，所以开课后才走进教室的学生一进门就先命中 500，工作链里的 220835（→ 722，开课后到场加入课堂，Plan 25 §3.2）一次都走不到；够不上课堂、本该按 L10 在一边自习的学生，与玩家提前开讲时到场的待赴必修生（Plan 26 §3.5）也一样。面板是阻塞式的选项（花言巧语支开对方 / 邀请加入 / 结束 H 等），选「结束 H」会结束这场群交，Plan 32 起连带下课（§3.1）。`test_class_ai` 此前只覆盖「场上只有玩家在 H」的情形，所以没测出来。
+
+**做法**：
+- 新前提 `self_not_attend_sex_class_here`（`constant_promise`，`handle_premise_work` 注册，工作_条件）：自己不是来这里上正在进行的性技实操课的学生。判据抽成 `class_ai.judge_attend_running_sex_class_here(character_id) -> bool`：课堂模式开着、有 running 的那节课、她是学生岗、人已在那间教室，且那节课是她这一节的课（本节课表或必修覆盖指向那间教室，`schedule_handle.get_now_course`），或是她待赴、已被玩家提前开讲的那一节（`get_next_sex_class`）。时刻按行为开始时刻取，与 `get_course_stage` 同口径；只读不写
+- target 500 的前提加上它：能进课堂的学生落到工作链，220835 → 722 加入课堂；够不上课堂的（没修过性技理论的选修生、实行值不足的成年学生）判「教师来不了」、713 在一边自习（L10 的口径），也不再弹面板
+- 非学生、不是这一节在这间教室上课的学生照旧目击 H；普通群交（课堂模式没开）不变
+
+| 候选 | 弃选原因 |
+| --- | --- |
+| 500 加 `sex_class_mode_off` | 课上走进教室的非学生干员也不再目击，超出本条（要修的是晚到的学生） |
+| 只排除判 JOIN 的学生（`self_course_join_sex_class` 取反） | 够不上课堂的选修生照样弹面板，与 L10「在一边自习」的口径不符 |
+| 把 220835 挪进 type 0 | 改的是工作链与高优先级目标的分层，影响面大 |
+
+### 8.2 公务事件的后果不写在选项上，选定之后单独显示（2026-09-16，用户要求）
+
+**要求**：事件的结果不要在选项里写出来，而是在选择选项之后，单独使用一个 WaitDraw 来显示。此前（Plan 22 / 23 的界面口径）每个可选选项的按钮都写成「选项文本（后果提示）」，如「一栏一栏念出来（好感＋＋，倾向：开放）」，玩家先看结果再挑选项。
+
+**做法**（`Script/System/Official_Event_System/official_event_panel.py`，公务事件的全部部门共用这一个面板）：
+- `Official_Event_Draw.draw()`：可选选项的按钮只写选项文本；置灰选项后面照旧写不能选的原因（那是条件，不是后果）
+- 新方法 `Official_Event_Draw.draw_result(option_index)`：用一个 `draw.WaitDraw` 写「你选择了「选项文本」／结果：后果提示」，等玩家按键；这个选项没写提示、或序号对不上时不画
+- `handle_official_event_queue`：结算（`settle_official_event_option`）之后调 `draw_result`，玩家按键后才弹下一条；一个选项都不可选而被跳过的事件照旧只记履历、不画结果
+- 后果提示照旧写方向不写数值（界面口径 1）；数据列 `option_1~4_tip` 与校验工具「每个选项都要有后果提示」的规则不变，只是显示的时机变了。ArkEditor 表单的标签改为「后果提示（选定后显示）」
+
+| 候选 | 弃选原因 |
+| --- | --- |
+| 结果用 NormalDraw 接着画、不等待 | 下一条事件紧接着弹出，结果一闪而过；用户指定 WaitDraw |
+| 显示结算的实际数值（好感 +150） | 违背「写方向不写数值」的口径；用户只要求挪位置 |

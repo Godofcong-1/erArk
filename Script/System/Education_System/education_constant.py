@@ -347,7 +347,7 @@ FOLLOW_MOTHER_FAVORABILITY = 2
 # ==== 9. 性技实操课 ====
 PRE_ARRIVE_MINUTE = 10
 """ 选修学生提前到岗的分钟数（四期方案 §3.28.5）。
-    既有节次表首尾相接、没有课间（game_time.py:519），9个节次里有7个的「提前10分钟」
+    既有节次表首尾相接、没有课间（game_time.CLASS_PERIOD_START），9个节次里有7个的「提前10分钟」
        落在上一节课的最后10分钟内，届时学生会中止当前节次的课转为移动（口径62 提前退场） """
 NOTIFY_BEFORE_MINUTE = 30
 """ 第二次提醒的提前量（分钟） """
@@ -513,6 +513,16 @@ SEMESTER_EVENT_SUB_KEY = 200
        用一个日常池永远不会翻的键，期末事件就只能由学期结算显式推入。
     于是期末事件的**阶段区分只能写进 premise**（CVP_A1_T|102_E_1 等），
        不能像日常养成事件那样靠 sub_key 分桶 """
+STAGE_TALENT_PREMISE_SET = frozenset(
+    "CVP_A1_T|{0}_{1}_{2}".format(talent_id, operator_text, judge_value)
+    for talent_id in CHILD_TALENT_ID_LIST
+    for operator_text in ("E", "NE", "G", "GE", "L", "LE")
+    for judge_value in (0, 1)
+)
+""" 事件前提里的「阶段素质记号」（Plan 32 §3.11）：主体自己的四个年龄素质与 0 / 1 比较的 CVP，六种运算符全收。
+    期末桶的阶段区分（上面 SEMESTER_EVENT_SUB_KEY 的说明）、通用桶里的「不派婴儿 / 不派萝莉」都写成这种记号，sub_key 上看不出来。
+    孩子长大时 growth_event_handle.drop_stale_stage_event 只拿这些记号重判队列里的事件；
+    别的前提（课型、好感、养成数值等）出队时照旧不复核 """
 SIBLING_PLAY_STAGE_SET = {102, 103}
 """ 养成事件里同胞互动的对象只取这两个阶段（Plan 26 §3.9）：互动事件写的都是能一起玩、一起闯祸的孩子，
     婴儿与已成年的少女都不合适；婴儿期自己的两条同胞事件（婴儿 37 / 38）主体是婴儿、对手是哥哥姐姐，照样成立 """

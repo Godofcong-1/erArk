@@ -340,7 +340,7 @@ def get_course_stage(character_id: int) -> int:
     character_id -- 角色id
     Return arguments:
     int -- COURSE_STAGE_* 之一
-    功能: 待赴实操课（SEX_PENDING）优先于本节的一切：既有节次表首尾相接、没有课间（game_time.py:519 CLASS_PERIOD_START），
+    功能: 待赴实操课（SEX_PENDING）优先于本节的一切：既有节次表首尾相接、没有课间（game_time.CLASS_PERIOD_START），
              9个节次里有7个的"提前10分钟"落在上一节课的最后10分钟内，命中时学生会**中止当前节次的课**转为移动
              （口径62 提前退场）——这是有意为之，玩家踩着点到教室时人应该已经在了。
           提前退场的那一节**不算缺课**：绝不能在这条路上调 settle_absent()。那个函数用 last_absent_period
@@ -437,6 +437,45 @@ def judge_pending_class_joinable(character_id: int, pending_class: dict, pending
         return False
     must_attend = character_id in pending_class.get("must_attend", [])
     return sex_class_handle.judge_can_join_sex_class(character_id, check_course=not must_attend)
+
+
+def judge_attend_running_sex_class_here(character_id: int) -> bool:
+    """
+    判断这名学生此刻是不是来这里上正在进行的性技实操课的（Plan 32 §8.1）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 课堂模式开着、有 running 的那节课、她是学生岗、人已在那间教室，且那节课是她这一节的课
+            （本节课表或必修覆盖指向那间教室），或是她待赴、已被玩家提前开讲的那一节时为 True
+    功能: 目击 H 的 target 500（type 0）排在工作链之前，前提是「该地点有其他角色在和玩家进行非隐奸的 H」等；
+             课堂 H 里总有开课时被拉进 H 的学生，此前开课后才走进教室的学生一进门就先命中它、画「H中被发现」面板，
+             工作链里的 220835（→ 722，开课后到场加入课堂）一次都走不到。target 500 挂它的否定（self_not_attend_sex_class_here）。
+          能不能进课堂不在这里判：够格的走 220835 加入，够不上的判「教师来不了」、713 自习（Plan 32 §3.8 L10），两种都不该弹面板。
+          时刻按行为开始时刻取，与 get_course_stage 同口径；只读不写，前提路径上可以调用
+    """
+    from Script.System.Education_System import sex_class_handle
+
+    if not cache.sex_class_mode:
+        return False
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
+        return False
+    running_class = sex_class_handle.get_running_class()
+    if running_class is None:
+        return False
+    classroom = running_class.get("classroom", "")
+    if not classroom or not judge_in_scene(character_id, classroom):
+        return False
+    now_time = character_data.behavior.start_time
+    if now_time is None:
+        now_time = cache.game_time
+    # 待赴、已被玩家提前开讲的那一节（Plan 26 §3.5）
+    pending_class, pending_classroom = get_next_sex_class(character_id, now_time)
+    if pending_class is not None and pending_class.get("running", False) and pending_classroom == classroom:
+        return True
+    # 本节的课（含必修覆盖）就在这间教室
+    now_course = schedule_handle.get_now_course(character_id)
+    return now_course is not None and now_course.get("classroom", "") == classroom
 
 
 def get_course_place_now_or_upcoming(character_id: int) -> List[str]:

@@ -722,4 +722,68 @@ cache.rhodes_island.temp_sex_class = {}
 cache.sex_class_mode = False
 cache.group_sex_mode = False
 
+section("Plan 32 实施复审补：L11 主修加成只给课堂成员——经验写入段（common_default.base_chara_experience_common_settle）对非成员不乘加成")
+from Script.Settle import common_default  # noqa: E402
+
+for _cid in (0, 201, 202, 204, 301, 303):
+    cache.character_data[_cid].sp_flag.is_h = False
+for _cid in (0, 201, 301):
+    move_to(_cid, classroom_path(ROOM_P))
+for _cid in (202, 204, 303):
+    move_to(_cid, SCENE_DORM)
+set_time(period_time(3) + datetime.timedelta(minutes=5))
+sex_class_handle.start_sex_class(70, [201])
+pl.sp_flag.is_h = True  # 开课效果串里 462 的事（玩家进 H），与上面 H1 一段同写法
+pl.target_character_id = 301
+# 开课效果串里的 464（交互对象变成 H 状态）：玩家的交互对象是跟进教室的成年干员，一并被拉进 H
+EFFECT_DATA[464](0, 5, game_type.CharacterStatusChange(), cache.game_time)
+# 10014：两个模式置位、把场景里能参加的学生拉进 H（成年干员不是学生岗，门槛拦住她）
+EFFECT_DATA[10014](0, 5, game_type.CharacterStatusChange(), cache.game_time)
+student_b.sp_flag.is_h = True  # 女儿B 在宿舍、别处的 H 里：是学生岗的女儿，但不在玩家的场景
+_l11_exp = sex_class_handle.get_now_bonus_exp_id()
+""" 本节主修（指技）对应的经验：手交 """
+_l11_other_exp = growth_handle.get_subject_exp_id(72)
+""" 别门性技（足技）对应的经验：足交 """
+_l11_members = sex_class_handle.get_class_member_list()
+_l11_bonus = sex_class_handle.get_subject_bonus(201)
+check("L11 前提：课堂模式开着、主修指技（主修经验 = 手交经验）；女儿A 被 10014 拉进课堂 H、是课堂成员；开课效果 464 把玩家的交互对象（非学生岗的成年干员）拉进了 H，"
+      "她在玩家场景、在 H 里却不是成员；在宿舍 H 里的女儿B 不在玩家场景、也不是成员",
+      cache.sex_class_mode and cache.group_sex_mode and _l11_exp == growth_handle.get_subject_exp_id(70) > 0 and student_a.sp_flag.is_h and 201 in _l11_members
+      and adult.sp_flag.is_h and adult.position == pl.position and 301 not in _l11_members and 202 not in _l11_members,
+      (_l11_members, adult.sp_flag.is_h, adult.position))
+check("L11 前提：主修加成倍率大于 1（为 1 时下面几条「不乘」恒真），对成年干员算出的倍率同样大于 1（挡住她的是成员判定，不是倍率）；别门性技的经验 id 与主修不同",
+      _l11_bonus > 1 and sex_class_handle.get_subject_bonus(301) > 1 and _l11_other_exp not in (0, _l11_exp), (_l11_bonus, sex_class_handle.get_subject_bonus(301), _l11_other_exp))
+
+
+def l11_exp_gain(character_id: int, experience_id: int) -> int:
+    """
+    以角色自己为主体走一次经验写入（基础值 10），返回实际加上的经验
+    Keyword arguments:
+    character_id -- 角色id
+    experience_id -- 经验id
+    Return arguments:
+    int -- 这次加上的经验
+    """
+    before = cache.character_data[character_id].experience.get(experience_id, 0)
+    common_default.base_chara_experience_common_settle(character_id, experience_id, base_value=10)
+    return cache.character_data[character_id].experience.get(experience_id, 0) - before
+
+
+_l11_gain = l11_exp_gain(201, _l11_exp)
+check("L11 课堂成员（女儿A）拿主修经验：基础 10 乘主修加成", _l11_gain == int(10 * _l11_bonus), (_l11_gain, _l11_bonus))
+_l11_gain = l11_exp_gain(201, _l11_other_exp)
+check("L11 课堂成员拿别门性技的经验（足交）：不乘", _l11_gain == 10, _l11_gain)
+_l11_gain = l11_exp_gain(301, _l11_exp)
+check("L11 被开课效果 464 拉进 H 的成年干员（同场景、在 H 里，但不是学生岗也不是女儿）拿主修经验：不乘加成（此前乘）", _l11_gain == 10, _l11_gain)
+_l11_gain_list = [l11_exp_gain(202, _l11_exp), l11_exp_gain(102, _l11_exp)]
+check("L11 不在玩家场景的角色（宿舍 H 里的女儿B、别处的母亲）拿主修经验：不乘加成（此前岛上别处拿到这门经验的人都乘）", _l11_gain_list == [10, 10], _l11_gain_list)
+sex_class_handle.end_sex_class()
+cache.rhodes_island.temp_sex_class = {}
+cache.sex_class_mode = False
+cache.group_sex_mode = False
+for _cid in (0, 201, 202, 301):
+    cache.character_data[_cid].sp_flag.is_h = False
+pl.target_character_id = 0
+move_to(301, SCENE_DORM)
+
 finish()

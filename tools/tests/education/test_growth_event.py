@@ -416,32 +416,49 @@ check("M2 跨天结算在日常派发（check_new_day_official_event）之前推
       0 <= _new_day_src.find("growth_event_handle.push_birthday_event(") < _new_day_src.find("official_event_handle.check_new_day_official_event("))
 set_time(period_time(0))
 
-section("Plan 32 L16：孩子长大时清掉队列里对不上阶段的日常养成事件（drop_stale_stage_event）")
+section("Plan 32 L16：孩子长大时清掉队列里对不上新阶段的养成事件（drop_stale_stage_event）")
 clear_schedules()
 set_time(period_time(0))
 child_bucket = list(by_key.get((E.GROWTH_EVENT_DEPARTMENT, 102), ()))
+# 前提里的阶段素质记号：主体自己的年龄素质 101~104 与 0 / 1 比较的 CVP
+_marker_used = {
+    token
+    for uid, one in game_config.config_official_event.items()
+    if official_event_handle.get_event_department(uid) == E.GROWTH_EVENT_DEPARTMENT
+    for token in official_event_handle.get_premise_set(one.get("premise", ""))
+    if token.startswith("CVP_A1_T|") and token.split("|")[1].split("_")[0] in {"101", "102", "103", "104"}
+}
+check("L16 事件表里写的阶段素质记号都收在 STAGE_TALENT_PREMISE_SET 里（漏收的写法长大时清不掉）",
+      _marker_used and _marker_used <= E.STAGE_TALENT_PREMISE_SET, sorted(_marker_used - E.STAGE_TALENT_PREMISE_SET))
+check("L16 judge_stage_marker_pass：前提不写阶段记号的恒成立，写了的按当前阶段判（通用 27 不派萝莉、期末 2 只派幼女），事件不存在的不成立",
+      growth_event_handle.judge_stage_marker_pass("通用16", 201) and growth_event_handle.judge_stage_marker_pass("通用27", 202)
+      and not growth_event_handle.judge_stage_marker_pass("通用27", 201) and growth_event_handle.judge_stage_marker_pass("期末2", 202)
+      and not growth_event_handle.judge_stage_marker_pass("期末2", 201) and not growth_event_handle.judge_stage_marker_pass("不存在999", 201))
 growing = make_character(215, "长大中的孩子", 152, daughter=True, stage=101, mother_id=103, born_days=5)
-for _uid in ("婴儿5", "通用27", semester_bucket[0]):
+for _uid in ("婴儿5", "通用27", "通用16", "期末1"):
     official_event_handle.push_official_event(_uid, 215)
 official_event_handle.push_official_event("婴儿5", 204)
 official_event_handle.push_official_event(loli_bucket[0], 201)
 growing.talent[101], growing.talent[102] = 0, 1
 _dropped = growth_event_handle.drop_stale_stage_event(215)
 _left = queue_pair_list()
-check("L16 婴儿→幼女：她的婴儿 5 清掉（1 条），通用 27（通用桶）与期末事件照留，别的孩子的不动",
-      _dropped == 1 and _left == [("通用27", 215), (semester_bucket[0], 215), ("婴儿5", 204), (loli_bucket[0], 201)], (_dropped, _left))
+check("L16 婴儿→幼女：她的婴儿 5 清掉（1 条）；通用 27（前提写着不派萝莉，幼女照派）、通用 16（前提为空）与期末 1 照留，别的孩子的不动",
+      _dropped == 1 and _left == [("通用27", 215), ("通用16", 215), ("期末1", 215), ("婴儿5", 204), (loli_bucket[0], 201)], (_dropped, _left))
 check("L16 再调一次没有可清的：返回 0、队列不变", growth_event_handle.drop_stale_stage_event(215) == 0 and queue_pair_list() == _left)
-official_event_handle.push_official_event(child_bucket[0], 215)
+for _uid in (child_bucket[0], "期末2"):
+    official_event_handle.push_official_event(_uid, 215)
 growing.talent[102], growing.talent[103] = 0, 1
 _dropped = growth_event_handle.drop_stale_stage_event(215)
-check("L16 幼女→萝莉：幼女桶的清掉（1 条），通用桶照留", _dropped == 1 and queue_pair_list() == _left, (_dropped, queue_pair_list()))
-official_event_handle.push_official_event(loli_bucket[0], 215)
-official_event_handle.push_official_event(E.GRADUATION_EVENT_UID, 215)
+_left_215 = [one[0] for one in queue_pair_list() if one[1] == 215]
+check("L16 幼女→萝莉：幼女桶的、前提写着不派萝莉的通用 27、前提写着只派幼女的期末 2 都清掉（3 条），通用 16 与期末 1 照留",
+      _dropped == 3 and _left_215 == ["通用16", "期末1"], (_dropped, _left_215))
+for _uid in (loli_bucket[0], "期末3", E.GRADUATION_EVENT_UID):
+    official_event_handle.push_official_event(_uid, 215)
 growing.talent[103], growing.talent[104] = 0, 1
 _dropped = growth_event_handle.drop_stale_stage_event(215)
 _left_215 = [one[0] for one in queue_pair_list() if one[1] == 215]
-check("L16 萝莉→少女：萝莉桶与通用桶都清掉（2 条），期末桶（200）与成年桶（104）不动",
-      _dropped == 2 and _left_215 == [semester_bucket[0], E.GRADUATION_EVENT_UID], (_dropped, _left_215))
+check("L16 萝莉→少女：萝莉桶、通用桶与前提写着只派萝莉的期末 3 都清掉（3 条），前提不写阶段的期末 1 与成年桶（104）不动",
+      _dropped == 3 and _left_215 == ["期末1", E.GRADUATION_EVENT_UID], (_dropped, _left_215))
 remove_character(215)
 
 section("Plan 32 L16：真实的成长结算在换完素质后清残留；成年时毕业典礼照在队首")
@@ -452,21 +469,21 @@ clear_schedules()
 set_time(period_time(0))
 to_loli = make_character(216, "要长成萝莉的幼女", 152, daughter=True, stage=102, mother_id=103)
 to_loli.pregnancy.born_time = datetime.datetime(2025, 12, 1, 9, 0)  # 出生 280 个日历天，满 270 长成萝莉
-official_event_handle.push_official_event(child_bucket[0], 216)
-official_event_handle.push_official_event("通用27", 216)
+for _uid in (child_bucket[0], "通用27", "通用16", "期末2"):
+    official_event_handle.push_official_event(_uid, 216)
 pregnancy_handle.check_grow_to_loli(216)
-check("L16 幼女长成萝莉（pregnancy_handle.check_grow_to_loli）：素质已换成萝莉，幼女桶的事件清掉、通用桶照留",
-      to_loli.talent[103] == 1 and to_loli.talent[102] == 0 and queue_pair_list() == [("通用27", 216)], queue_pair_list())
+check("L16 幼女长成萝莉（pregnancy_handle.check_grow_to_loli）：素质已换成萝莉，幼女桶的与前提写着不派萝莉 / 只派幼女的（通用 27、期末 2）清掉，通用 16 照留",
+      to_loli.talent[103] == 1 and to_loli.talent[102] == 0 and queue_pair_list() == [("通用16", 216)], queue_pair_list())
 to_girl = make_character(217, "要成年的萝莉", 152, daughter=True, stage=103, mother_id=103)
 to_girl.pregnancy.born_time = datetime.datetime(2025, 6, 1, 9, 0)  # 出生 463 个日历天，满 450 成年
-for _uid in (loli_bucket[0], "通用27", semester_bucket[0]):
+for _uid in (loli_bucket[0], "通用16", "期末1", "期末3"):
     official_event_handle.push_official_event(_uid, 217)
 pregnancy_handle.check_grow_to_girl(217)
 talk.must_show_talk_check = _orig_must_show
 _left_217 = [one[0] for one in queue_pair_list() if one[1] == 217]
-check("L16 萝莉成年（pregnancy_handle.check_grow_to_girl）：残留的萝莉桶、通用桶事件清掉，期末事件照留；毕业典礼在队首、成年纪念紧随，通用 59 / 60 在队尾",
+check("L16 萝莉成年（pregnancy_handle.check_grow_to_girl）：残留的萝莉桶、通用桶与前提写着只派萝莉的期末 3 清掉，期末 1 照留；毕业典礼在队首、成年纪念紧随，通用 59 / 60 在队尾",
       to_girl.talent[104] == 1 and queue_pair_list()[0] == (E.GRADUATION_EVENT_UID, 217)
-      and _left_217 == [E.GRADUATION_EVENT_UID, E.ADULT_MEMORIAL_EVENT_UID, semester_bucket[0]] + list(E.ADULT_EXTRA_EVENT_UID_LIST), (_left_217, queue_pair_list()))
+      and _left_217 == [E.GRADUATION_EVENT_UID, E.ADULT_MEMORIAL_EVENT_UID, "期末1"] + list(E.ADULT_EXTRA_EVENT_UID_LIST), (_left_217, queue_pair_list()))
 _src_baby = inspect.getsource(pregnancy_handle._settle_baby_grow_up)
 _src_loli = inspect.getsource(pregnancy_handle.check_grow_to_loli)
 _src_girl = inspect.getsource(pregnancy_handle.check_grow_to_girl)
@@ -477,5 +494,171 @@ check("L16 三处阶段转换都在换完素质之后清残留，成年结算排
 remove_character(216)
 remove_character(217)
 clear_schedules()
+
+section("Plan 32 实施复审补：M2 双胞胎同一天过生日、口球不挡生日事件；judge_premise_all_pass 的逐条判定")
+clear_schedules()
+set_time(datetime.datetime(2026, 9, 8, 0, 5))
+twin_a = make_character(218, "双胞胎姐姐", 152, daughter=True, stage=103, mother_id=102)
+twin_b = make_character(219, "双胞胎妹妹", 152, daughter=True, stage=103, mother_id=102)
+for _twin in (twin_a, twin_b):
+    _twin.pregnancy.born_time = datetime.datetime(2025, 9, 8, 6, 0)
+_birthday_premise = game_config.config_official_event[E.BIRTHDAY_EVENT_UID].get("premise", "")
+""" 通用 3 的前提串（非婴儿且今天过生日） """
+_birthday_today = [cid for cid in growth_event_handle.get_growth_event_character_list() if HP(constant_promise.Premise.SELF_BIRTHDAY_TODAY, cid)]
+_twin_head = [(E.BIRTHDAY_EVENT_UID, 218), (E.BIRTHDAY_EVENT_UID, 219)]
+""" 双胞胎的生日事件在队首的样子：按 id 升序 """
+check("M2 双胞胎前提：今天（9/8）过生日的只有这对双胞胎（萝莉 C 的生日在 9/7），口球字段在（h_state.body_item[14]）",
+      _birthday_today == [218, 219] and 14 in twin_a.h_state.body_item and 14 in pl.h_state.body_item, _birthday_today)
+_pushed = growth_event_handle.push_birthday_event()
+check("M2 双胞胎：push_birthday_event 返回按 id 升序的 [218, 219]，队首依次是（通用 3, 218）、（通用 3, 219）",
+      _pushed == [218, 219] and queue_pair_list()[:2] == _twin_head, (_pushed, queue_pair_list()))
+cache.rhodes_island.official_event_queue = []
+check("M2 口球对照：没人塞口球时，按口上的判法（official_event_handle.judge_premise_pass）通用 3 的前提对姐姐成立",
+      official_event_handle.judge_premise_pass(_birthday_premise, 218, 0) > 0)
+twin_a.h_state.body_item[14][1] = True
+check("M2 姐姐被塞着口球：self_now_gag 成立，按口上的判法通用 3 的前提整组判 0（口球状态真的生效了）",
+      bool(HP(constant_promise.Premise.SELF_NOW_GAG, 218)) and official_event_handle.judge_premise_pass(_birthday_premise, 218, 0) == 0)
+_pushed = growth_event_handle.push_birthday_event()
+check("M2 姐姐被塞着口球：生日事件照样推入（逐条判前提、不带口上的口球判定），两人仍按 id 升序排在队首（此前她一辈子仅此一次的生日就错过了）",
+      _pushed == [218, 219] and queue_pair_list()[:2] == _twin_head, (_pushed, queue_pair_list()))
+twin_a.h_state.body_item[14][1] = False
+cache.rhodes_island.official_event_queue = []
+pl.h_state.body_item[14][1] = True
+check("M2 博士被塞着口球：按口上的判法（交互对象指向博士）同样整组判 0", official_event_handle.judge_premise_pass(_birthday_premise, 218, 0) == 0)
+_pushed = growth_event_handle.push_birthday_event()
+check("M2 博士被塞着口球：生日事件照样推入，两人按 id 升序排在队首", _pushed == [218, 219] and queue_pair_list()[:2] == _twin_head, (_pushed, queue_pair_list()))
+pl.h_state.body_item[14][1] = False
+cache.rhodes_island.official_event_queue = []
+JP = growth_event_handle.judge_premise_all_pass
+check("M2 judge_premise_all_pass：空前提为 True（主体不存在也一样）；前提非空而主体不存在为 False",
+      JP("", 218) is True and JP("", 999) is True and JP(_birthday_premise, 999) is False)
+check("M2 judge_premise_all_pass：逐条判——今天过生日的萝莉成立，前提里多一条不成立的（是婴儿）就不成立",
+      JP(_birthday_premise, 218) is True and JP(_birthday_premise + "&CVP_A1_T|101_E_1", 218) is False)
+_weight_token = "CVP_A1_Weight|0_E_50"
+try:
+    _weight_direct = handle_premise.handle_premise(_weight_token, 218)
+except Exception as error:
+    _weight_direct = repr(error)
+check("M2 judge_premise_all_pass：CVP 的 Weight|0 只管权重、跳过不判（直接当条件求值不成立：返回 0 或抛异常），同串的别的前提照判",
+      (isinstance(_weight_direct, str) or not _weight_direct) and JP(_weight_token, 218) is True and JP(_weight_token + "&" + _birthday_premise, 218) is True
+      and JP(_weight_token + "&CVP_A1_T|101_E_1", 218) is False, _weight_direct)
+_high_calls = []
+""" high_5 前提被求值时记下的主体 """
+
+
+def high_5_spy(character_id: int) -> int:
+    """
+    high_5 前提的记录桩：记下被求值的主体并返回 0（若被当成条件求值，整组就判不过）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 0
+    """
+    _high_calls.append(character_id)
+    return 0
+
+
+_orig_high_5 = constant.handle_premise_data.get(constant_promise.Premise.HIGH_5)
+constant.handle_premise_data[constant_promise.Premise.HIGH_5] = high_5_spy
+try:
+    _high_pass = JP(constant_promise.Premise.HIGH_5 + "&" + _birthday_premise, 218)
+finally:
+    if _orig_high_5 is None:
+        constant.handle_premise_data.pop(constant_promise.Premise.HIGH_5, None)
+    else:
+        constant.handle_premise_data[constant_promise.Premise.HIGH_5] = _orig_high_5
+check("M2 judge_premise_all_pass：high_ 开头的权重前提跳过不判（high_5 已注册；换成返回 0 的记录桩后一次都没被调到，整组照样成立）",
+      _orig_high_5 is not None and _high_pass is True and _high_calls == [], _high_calls)
+_target_premise = constant_promise.Premise.TARGET_IS_PLAYER_DAUGHTER
+twin_a.target_character_id = 102
+check("M2 judge_premise_all_pass：判定期间交互对象指向 partner_id——指向妹妹 219 时 target_is_player_daughter 成立，判完交互对象还原为原来的 102（母亲）",
+      JP(_target_premise, 218, 219) is True and twin_a.target_character_id == 102, twin_a.target_character_id)
+check("M2 judge_premise_all_pass：指向博士（0）时不成立、中途返回 False，交互对象同样还原为 102；原交互对象（母亲）本身判不过这条前提",
+      JP(_target_premise, 218, 0) is False and twin_a.target_character_id == 102 and not HP(_target_premise, 218), twin_a.target_character_id)
+remove_character(218)
+remove_character(219)
+cache.rhodes_island.official_event_queue = []
+set_time(period_time(0))
+clear_schedules()
+
+section("Plan 32 §8.2（追加调整）：公务事件的后果不写在选项上，玩家选定、结算之后单独用一个 WaitDraw 显示")
+import _bootstrap as _boot  # noqa: E402
+from Script.System.Official_Event_System import official_event_panel  # noqa: E402
+from Script.UI.Moudle import draw as _draw_module  # noqa: E402
+
+cache.rhodes_island.official_event_queue = []
+set_time(period_time(0))
+_od_uid = "期末1"
+_od_queue_data = {"uid": _od_uid, "department": E.GROWTH_EVENT_DEPARTMENT, "chara_id": 201, "partner_id": 0}
+_od_option = official_event_handle.get_option_list(_od_uid, 201, 0)
+_od_tip = [official_event_panel.get_code_text(one["tip"], 201, 0) for one in _od_option]
+_od_text = [official_event_panel.get_code_text(one["text"], 201, 0) for one in _od_option]
+check("§8.2 前提：期末 1 的四个选项都可选、都写了后果提示（校验工具要求每个选项都有）",
+      len(_od_option) == 4 and all(one["can_use"] for one in _od_option) and all(_od_tip), _od_tip)
+_boot.drawn_text.clear()
+_od = official_event_panel.Official_Event_Draw(_od_queue_data, 120)
+_od_pick = _od.draw()
+_od_button = [one for one in _boot.drawn_text if any(text in one for text in _od_text)]
+check("§8.2 选项按钮只写选项本身：四个选项都画出来了，画面上任何一处都没有后果提示（此前按钮是「选项文本（后果提示）」）",
+      _od_pick == 1 and len(_od_button) == 4 and not any(tip in one for one in _boot.drawn_text for tip in _od_tip), (_od_pick, _od_button))
+_od_wait = []
+""" 本段记下的 WaitDraw 文本 """
+_orig_wait_draw = _draw_module.WaitDraw.draw
+_draw_module.WaitDraw.draw = lambda self, *args, **kwargs: _od_wait.append(self.text)
+try:
+    _od.draw_result(2)
+    _od.draw_result(9)
+finally:
+    _draw_module.WaitDraw.draw = _orig_wait_draw
+check("§8.2 draw_result：选定第 2 个选项后画一个 WaitDraw，写出选了什么（选项文本）与它的后果提示；序号对不上时什么都不画",
+      len(_od_wait) == 1 and _od_text[1] in _od_wait[0] and _od_tip[1] in _od_wait[0], _od_wait)
+# 处理公务的真实流程：出队 → 决断（askfor_all 桩默认选第一个可选项）→ 结算 → 单独显示后果
+cache.rhodes_island.official_event_queue = []
+growth_handle.get_child_growth(201).event_history.pop(_od_uid, None)
+official_event_handle.push_official_event(_od_uid, 201)
+_od_seq = []
+""" 结算与 WaitDraw 的先后：("settle", 选项序号) / ("wait", 文本) """
+_orig_settle_option = official_event_handle.settle_official_event_option
+
+
+def od_settle_spy(uid: str, character_id: int, partner_id: int, option_index: int):
+    """
+    记下结算发生的时刻（与 WaitDraw 比先后），再照常结算
+    Keyword arguments:
+    uid -- 事件uid
+    character_id -- 主体角色id
+    partner_id -- 互动对象角色id
+    option_index -- 选定的选项序号
+    Return arguments:
+    无
+    """
+    _od_seq.append(("settle", option_index))
+    _orig_settle_option(uid, character_id, partner_id, option_index)
+
+
+official_event_handle.settle_official_event_option = od_settle_spy
+_draw_module.WaitDraw.draw = lambda self, *args, **kwargs: _od_seq.append(("wait", self.text))
+try:
+    official_event_panel.handle_official_event_queue(120)
+finally:
+    official_event_handle.settle_official_event_option = _orig_settle_option
+    _draw_module.WaitDraw.draw = _orig_wait_draw
+check("§8.2 处理公务（handle_official_event_queue）：选了第 1 个选项 → 先结算、记进履历，再弹一个写着它的后果的 WaitDraw；队列清空",
+      [one[0] for one in _od_seq] == ["settle", "wait"] and _od_seq[0][1] == 1 and _od_tip[0] in _od_seq[1][1]
+      and growth_handle.get_child_growth(201).event_history.get(_od_uid, {}).get("choice") == 1 and official_event_handle.get_queue() == [], _od_seq)
+# 置灰的选项照旧写不能选的原因（那是条件，不是后果）
+_gray_uid = "期末17"
+loli.favorability[0] = 0
+loli.trust = 0
+_gray_option = official_event_handle.get_option_list(_gray_uid, 201, 0)
+_gray_off = [one for one in _gray_option if not one["can_use"]]
+_boot.drawn_text.clear()
+official_event_panel.Official_Event_Draw({"uid": _gray_uid, "department": E.GROWTH_EVENT_DEPARTMENT, "chara_id": 201, "partner_id": 0}, 120).draw()
+_gray_line = [one for one in _boot.drawn_text if "○" in one]
+check("§8.2 置灰的选项照旧画出来并写着原因（好感、信赖不够的两项），同样不写后果提示",
+      len(_gray_off) == 2 and len(_gray_line) == 2 and all(official_event_panel.get_code_text(one["reason"], 201, 0) in "".join(_gray_line) for one in _gray_off)
+      and not any(official_event_panel.get_code_text(one["tip"], 201, 0) in text for one in _gray_option for text in _boot.drawn_text), _gray_line)
+growth_handle.get_child_growth(201).event_history.pop(_od_uid, None)
+cache.rhodes_island.official_event_queue = []
 
 finish()

@@ -3,7 +3,7 @@
 公务事件属性编辑UI组件（Plan 23）
 功能：
     - 右侧表单编辑一条公务事件的基本字段
-    - 四个选项块各自一个 QGroupBox，含文本、前提、置灰原因、后果提示、结算
+    - 四个选项块各自一个 QGroupBox，含文本、前提、置灰原因、后果提示（游戏里在玩家选定之后才显示，Plan 32 §8.2）、结算
     - 前提与结算复用编辑器既有的选择器（PremiseMenu / CVPMenu / EffectMenu / CVEMenu）
 
 那几个选择器都是直接往 `cache_control.now_event_data[now_select_id].premise/effect` 里写的，
@@ -173,7 +173,7 @@ class OfficialEventEditWidget(QWidget):
             box_layout.addRow("选项文本", option_text)
             box_layout.addRow("选项前提", self.make_token_row(option_premise, True))
             box_layout.addRow("置灰原因", option_reason)
-            box_layout.addRow("后果提示", option_tip)
+            box_layout.addRow("后果提示（选定后显示）", option_tip)
             box_layout.addRow("选项结算", self.make_token_row(option_effect, False))
             self.option_widget_list.append(
                 {"text": option_text, "premise": option_premise, "reason": option_reason, "tip": option_tip, "effect": option_effect}
