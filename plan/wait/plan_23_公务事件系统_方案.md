@@ -254,7 +254,7 @@ EVENT_PROVIDER: Dict[int, Callable] = {}
 | `weight` | int | 入队权重，与前提算出的权重相乘 |
 | `premise` | str | 触发前提，`&` 连接 |
 | `text` | str | 事件正文 |
-| `option_1~4` | str | 选项文本，空则该选项不存在 |
+| `option_1~4` | str | 选项文本，空则该选项不存在；**出现顺序在每次弹出时随机洗牌**（2026-09-17，用户要求，置灰项一起洗），画面上的编号只是显示序，结算与履历一律认这里的原序号 |
 | `option_1~4_premise` | str | 选项前提，不满足则置灰 |
 | `option_1~4_reason` | str | 置灰原因（作者手写） |
 | `option_1~4_tip` | str | 后果提示（只写方向不写数值）；Plan 32 §8.2 起不写在选项上，玩家选定、结算之后由 WaitDraw 单独显示 |

@@ -2,12 +2,16 @@
 
 玩家在博士办公室「处理公务」时，待处理队列里的公务事件逐条弹出，每条给2~4个选项。
 
-三条界面口径：
+四条界面口径：
    1. 后果提示**写方向不写数值**（"倾向：坚强"而不是"坚强+2"）——写了数值，决断就变成算数题了
    2. 前提不满足的选项**置灰并标明原因**而不是隐藏——让玩家看见"这里本来有更好的选择，但我没养到"
    3. 后果提示**不写在选项上**（Plan 32 §8.2，用户要求）：选项只写选项本身，玩家选定、结算之后，
       才用一个 WaitDraw 单独写出选了什么、结果如何（Official_Event_Draw.draw_result）
+   4. 选项的**出现顺序每次随机**（用户要求）：CSV 里的选项顺序是固定写死的（养成事件大多是
+      「严厉 / 温和 / 放任」这类同一组倾向），照原序画的话玩家几条之后就按位置选而不再读选项，
+      养成倾向于是变成按键顺序的产物。序号只是画面上的编号，结算与履历一律认 CSV 里的原序号
 """
+import random
 from types import FunctionType
 from typing import List
 
@@ -96,7 +100,11 @@ class Official_Event_Draw:
         self.width: int = width
         """ 绘制宽度 """
         self.option_list: List[dict] = official_event_handle.get_option_list(self.uid, self.character_id, self.partner_id)
-        """ 本条事件的选项列表 """
+        """ 本条事件的选项列表，按 CSV 原序（结算、履历与 draw_result 都认这个序） """
+        self.draw_option_list: List[dict] = list(self.option_list)
+        """ 本条事件的选项显示顺序，每次弹出时重新洗牌（界面口径 4）。
+            置灰的选项一起参与洗牌——只洗可选项的话，置灰项固定在原位，位置仍然泄露了原序 """
+        random.shuffle(self.draw_option_list)
 
     def draw(self) -> int:
         """
@@ -108,7 +116,9 @@ class Official_Event_Draw:
         """
         event_data = game_config.config_official_event[self.uid]
         line_feed.draw()
-        draw.LittleTitleLineDraw(_("【公务事件】{0}").format(get_event_title(self.queue_data)), self.width).draw()
+        # count_title_width：抬头（「【公务事件】薇薇安 · 婴儿期第 8 天」）本身就有三十多个半角宽，
+        #    按 LittleTitleLineDraw 的默认口径（标题不计宽）整行会画成 width + 抬头宽，行尾的线条被挤到第二行去
+        draw.LittleTitleLineDraw(_("【公务事件】{0}").format(get_event_title(self.queue_data)), self.width, count_title_width=True).draw()
         # 事件正文
         text_draw = draw.NormalDraw()
         text_draw.width = self.width
@@ -125,7 +135,7 @@ class Official_Event_Draw:
             return 0
         return_list = []
         button_index = 0
-        for option in self.option_list:
+        for option in self.draw_option_list:
             option_text = get_code_text(option["text"], self.character_id, self.partner_id)
             # 前提不满足：置灰保留，并把原因写在后面
             if not option["can_use"]:

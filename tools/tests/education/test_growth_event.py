@@ -600,7 +600,22 @@ _od = official_event_panel.Official_Event_Draw(_od_queue_data, 120)
 _od_pick = _od.draw()
 _od_button = [one for one in _boot.drawn_text if any(text in one for text in _od_text)]
 check("§8.2 选项按钮只写选项本身：四个选项都画出来了，画面上任何一处都没有后果提示（此前按钮是「选项文本（后果提示）」）",
-      _od_pick == 1 and len(_od_button) == 4 and not any(tip in one for one in _boot.drawn_text for tip in _od_tip), (_od_pick, _od_button))
+      _od_pick == _od.draw_option_list[0]["index"] and len(_od_button) == 4 and not any(tip in one for one in _boot.drawn_text for tip in _od_tip), (_od_pick, _od_button))
+# 界面口径 4（用户要求）：选项的出现顺序每次随机，画面上的编号只是显示序，结算认 CSV 原序号
+_od_order = set()
+""" 连续弹出同一条事件时出现过的显示顺序（元素为选项原序号的元组） """
+_od_pick_list = []
+""" 每次决断（桩固定选第一个按钮）返回的选项原序号，应当等于该次显示顺序的第一项 """
+for _ in range(60):
+    _od_shuffle = official_event_panel.Official_Event_Draw(_od_queue_data, 120)
+    _od_order.add(tuple(one["index"] for one in _od_shuffle.draw_option_list))
+    _od_pick_list.append((_od_shuffle.draw(), _od_shuffle.draw_option_list[0]["index"]))
+check("界面口径4 选项顺序每次随机：连续弹出同一条事件 60 次出现了多种显示顺序，每次都不重不漏地画出原有的四个选项",
+      len(_od_order) > 1 and all(sorted(one) == [1, 2, 3, 4] for one in _od_order), sorted(_od_order)[:5])
+check("界面口径4 洗牌只动显示顺序：选中画面上的第一个按钮，拿回来的一律是它在 CSV 里的原序号（结算与履历据此不会串行）",
+      all(one[0] == one[1] for one in _od_pick_list) and len({one[0] for one in _od_pick_list}) > 1, _od_pick_list[:8])
+check("界面口径4 option_list 保持原序：洗牌洗的是 draw_option_list 的副本，原列表仍是 1~4 的顺序",
+      [one["index"] for one in _od.option_list] == [1, 2, 3, 4], [one["index"] for one in _od.option_list])
 _od_wait = []
 """ 本段记下的 WaitDraw 文本 """
 _orig_wait_draw = _draw_module.WaitDraw.draw
@@ -643,9 +658,12 @@ try:
 finally:
     official_event_handle.settle_official_event_option = _orig_settle_option
     _draw_module.WaitDraw.draw = _orig_wait_draw
-check("§8.2 处理公务（handle_official_event_queue）：选了第 1 个选项 → 先结算、记进履历，再弹一个写着它的后果的 WaitDraw；队列清空",
-      [one[0] for one in _od_seq] == ["settle", "wait"] and _od_seq[0][1] == 1 and _od_tip[0] in _od_seq[1][1]
-      and growth_handle.get_child_growth(201).event_history.get(_od_uid, {}).get("choice") == 1 and official_event_handle.get_queue() == [], _od_seq)
+# 选项顺序随机之后，桩选中的「画面上第一个」不再固定是原序号 1，改为按实际结算到的那一项来对照
+_od_choice = _od_seq[0][1] if _od_seq and _od_seq[0][0] == "settle" else 0
+_od_choice_tip = {one["index"]: official_event_panel.get_code_text(one["tip"], 201, 0) for one in _od_option}.get(_od_choice, "")
+check("§8.2 处理公务（handle_official_event_queue）：选了画面上的第一个选项 → 先结算、记进履历，再弹一个写着它的后果的 WaitDraw；队列清空",
+      [one[0] for one in _od_seq] == ["settle", "wait"] and _od_choice in (1, 2, 3, 4) and _od_choice_tip and _od_choice_tip in _od_seq[1][1]
+      and growth_handle.get_child_growth(201).event_history.get(_od_uid, {}).get("choice") == _od_choice and official_event_handle.get_queue() == [], _od_seq)
 # 置灰的选项照旧写不能选的原因（那是条件，不是后果）
 _gray_uid = "期末17"
 loli.favorability[0] = 0
@@ -660,5 +678,67 @@ check("§8.2 置灰的选项照旧画出来并写着原因（好感、信赖不�
       and not any(official_event_panel.get_code_text(one["tip"], 201, 0) in text for one in _gray_option for text in _boot.drawn_text), _gray_line)
 growth_handle.get_child_growth(201).event_history.pop(_od_uid, None)
 cache.rhodes_island.official_event_queue = []
+
+section("抬头只占一行（用户报告）：LittleTitleLineDraw 的线条长度要把标题算进去")
+# 绘制类在 _bootstrap 里已被整体换成记录桩，这里另外加载一份干净的 draw.py（不进 sys.modules，
+#    不影响其他用例），把 io_init.era_print 换成收集器，量一量真实画出来的总宽度
+import importlib.util as _importlib_util  # noqa: E402
+import os as _test_os  # noqa: E402
+
+from Script.Core import io_init as _test_io_init  # noqa: E402
+from Script.Core import text_handle as _test_text_handle  # noqa: E402
+
+_raw_draw_spec = _importlib_util.spec_from_file_location("_raw_draw_module_for_test", _test_os.path.join(_boot.ROOT, "Script", "UI", "Moudle", "draw.py"))
+_raw_draw_module = _importlib_util.module_from_spec(_raw_draw_spec)
+_raw_draw_spec.loader.exec_module(_raw_draw_module)
+_title_text = "【公务事件】AMA11 · 婴儿期第 8 天"
+""" 用户截图里那条抬头：本身就有 33 个半角宽 """
+_title_piece = []
+""" 画出来的每一段文本 """
+_orig_era_print = _test_io_init.era_print
+
+
+def title_era_print_spy(text: str = "", style: str = "standard", *args, **kwargs):
+    """
+    收集绘制文本的 era_print 桩（不碰 Tk）
+    Keyword arguments:
+    text -- 要绘制的文本
+    style -- 文本样式
+    Return arguments:
+    无
+    """
+    _title_piece.append(text)
+
+
+
+
+def draw_title_line(title: str, width: int, count_title_width: bool) -> int:
+    """
+    画一条小标题线并量出它实际占的宽度
+    Keyword arguments:
+    title -- 标题
+    width -- 绘制宽度
+    count_title_width -- 是否把标题宽度算进总长
+    Return arguments:
+    int -- 这一行实际画出的总宽（半角宽）
+    """
+    _title_piece.clear()
+    _test_io_init.era_print = title_era_print_spy
+    try:
+        _raw_draw_module.LittleTitleLineDraw(title, width, count_title_width=count_title_width).draw()
+    finally:
+        _test_io_init.era_print = _orig_era_print
+    return sum(_test_text_handle.get_text_index(one) for one in _title_piece if one.strip())
+
+
+_title_width = draw_title_line(_title_text, 190, True)
+_title_drawn = "".join(_title_piece)
+check("抬头 + 线条 = 绘制宽度：33 个半角宽的公务事件抬头画在 190 宽里，总宽正好 190，与同宽的 LineDraw 对齐（此前标题不计宽，整行画成 190 + 33，尾巴上的线条被挤到第二行）",
+      _title_width == 190 and _title_text in _title_drawn, (_title_width, _title_drawn[:40]))
+check("抬头比绘制宽度还长时不画负数条线：20 宽里画 33 宽的抬头，只画抬头本身",
+      draw_title_line(_title_text, 20, True) == _test_text_handle.get_text_index(_title_text), _title_piece)
+check("不影响其他地方：不传 count_title_width 时仍是旧口径（线条自己就有 190，整行为 190 + 标题宽），养成面板等几十处小标题的样子原样不动",
+      draw_title_line(_title_text, 190, False) == 190 + _test_text_handle.get_text_index(_title_text)
+      and draw_title_line("出勤", 190, False) == 190 + _test_text_handle.get_text_index("出勤"), _title_piece)
 
 finish()
