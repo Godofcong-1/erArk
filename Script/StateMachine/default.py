@@ -434,7 +434,7 @@ def character_move_to_library(character_id: int):
 def character_move_to_class_room(character_id: int):
     """
     移动到教室
-    ⚠️ Plan 22 改造：目标教室改为由课表决定——教师去自己本节要授课的教室，学生去自己本节选的教室；
+    Plan 22 改造：目标教室改为由课表决定——教师去自己本节要授课的教室，学生去自己本节选的教室；
        课表查不到（没排课、非师生、旧存档）时回落既有的"在全部理论教室里随机选一间"，不留死分支
     Keyword arguments:
     character_id -- 角色id
@@ -2728,7 +2728,7 @@ def character_attend_class(character_id: int):
 def character_education_self_study(character_id: int):
     """
     上课：本节无可用教师，降级为自习（Plan 22 §3.5）
-    ⚠️ 与听课的区别只在结算：自习走 548 效果，基础值降档且不吃师生等级差
+    与听课的区别只在结算：自习走 548 效果，基础值降档且不吃师生等级差
     Keyword arguments:
     character_id -- 角色id
     """
@@ -2788,9 +2788,9 @@ def character_education_move_to_course_place(character_id: int):
 def character_education_do_course(character_id: int):
     """
     上课：在个人式课型的地点执行该课对应的既有行为（Plan 22 §3.21）
-    ⚠️ 体育课与兴趣课执行的是自带效果串的既有行为，学生侧无需另加结算；
+    体育课与兴趣课执行的是自带效果串的既有行为，学生侧无需另加结算；
        实习课走新增的 intern_class，它的效果串里带一次学徒侧结算
-    ⚠️ 时长一律截到45分钟（一节课）：战斗训练本是120分钟、锻炼与游泳是60分钟，
+    时长一律截到45分钟（一节课）：战斗训练本是120分钟、锻炼与游泳是60分钟，
        照原时长会让一节体育课吃掉整个上午。既有结算按 add_time 线性计算，截断天然成立
     Keyword arguments:
     character_id -- 角色id
@@ -2830,7 +2830,7 @@ def character_education_do_course(character_id: int):
 def character_education_move_to_mother(character_id: int):
     """
     见学：移动到母亲当前所在的场景（Plan 22 二期 §3.24）
-    ⚠️ 每次都重新读母亲的位置：母亲自己也在走班/上下工，钉死一个目标点会追丢
+    每次都重新读母亲的位置：母亲自己也在走班/上下工，钉死一个目标点会追丢
     Keyword arguments:
     character_id -- 角色id
     """
@@ -2863,7 +2863,7 @@ def character_education_follow_mother(character_id: int):
     character_data.behavior.duration = 60
     character_data.state = constant.CharacterStatus.STATUS_FOLLOW_MOTHER
     # 见学期间置跟随标记，供口上前提与面板判定使用。
-    # ⚠️ 不复用 sp_flag.is_follow：那是"跟随玩家"的语义，且会被移动逻辑清零（方案 §2.3）
+    # 不复用 sp_flag.is_follow：那是"跟随玩家"的语义，且会被移动逻辑清零（方案 §2.3）
     from Script.System.Education_System import growth_handle
 
     growth_handle.get_child_growth(character_id).follow_mother_flag = True

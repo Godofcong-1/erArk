@@ -6,4 +6,4 @@ str,str,int,str,str
 1000,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|40_G_0,{Name}跑过来，站定，然后清了清嗓子。\n“博士，我要跟你说一件事。”{Name}一本正经地说，“但是我要先说为什么，再说是什么，因为你是我爸爸不是我上级。”\n说完{Name}忘了自己本来要说什么，愣在原地。
 1001,show_off_study,0,self_is_player_daughter&CVP_A1_T|102_E_1&CVP_A1_CourseShowOff|40_G_0,{Name}拦住博士，“你随便说一句话，我猜你是什么心情。”\n博士说了一句最普通不过的话，{Name}歪着头想了半天，猜错了。\n“再来一次！”{Name}不服气地说，“这次我一定能猜对。”
 1002,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|40_G_0,{Name}走过来的时候明显在斟酌开场白，最后选了最平淡的那一句。\n“我最近说话的时候……好像顺了一点。”{Name}说完停了一下，“这句话我在心里排了三遍才说出口。”\n然后{Name}自己先笑了。
-1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|40_G_0,“我今天拒绝了一个人。”{Name}说得很轻描淡写，眼神却一直往博士脸上瞟。\n“没有直接说不行，先给了理由。他……好像没有生气。”\n{Name}说完这句就不说话了，但站着没走。
+1003,show_off_study,0,self_is_player_daughter&CVP_A1_T|103_E_1&CVP_A1_CourseShowOff|40_G_0,“我今天拒绝了一个人。”{Name}说得很轻描淡写，眼神却一直往博士脸上瞟。\n“没有直接说不行，先给了理由。她……好像没有生气。”\n{Name}说完这句就不说话了，但站着没走。

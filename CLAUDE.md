@@ -32,6 +32,8 @@ Key dependencies: `PySide6` (ArkEditor GUI), `flask` + `flask-socketio` + `pytho
 ### Testing Individual Components
 The game uses a debug mode (configured in config.ini) for testing. Set `debug = 1` to enable debug features.
 
+Headless regression tests live under `tools/tests/` (currently `tools/tests/education/` for the child-raising system: `.conda\python.exe tools/tests/education/run_all.py`, each `test_*.py` runs in its own process). Writing new ones: see the `headless-game-test` skill and `tools/tests/education/README.md`.
+
 ## High-Level Architecture
 
 ### Core Game Flow
@@ -286,7 +288,7 @@ When `web_draw = 1`, the game runs as a Flask-SocketIO web server (port 5000):
 
 ## Data Processing Workflow Documentation
 
-The `.github/prompts/数据处理工作流` directory contains 62 detailed documentation files (61 system/workflow docs plus a README). These documents explain the relationships between different systems and code components. When working on related features, refer to these documents for understanding system interconnections, dependencies, and data flow. Additionally, each `Script/System/*` subsystem directory carries its own design docs.
+The `.github/prompts/数据处理工作流` directory contains 63 detailed documentation files (62 system/workflow docs plus a README). These documents explain the relationships between different systems and code components. When working on related features, refer to these documents for understanding system interconnections, dependencies, and data flow. Additionally, each `Script/System/*` subsystem directory carries its own design docs.
 
 ### 🏗️ Core System Architecture Documents
 - **[角色行为系统](.github/prompts/数据处理工作流/角色行为系统.md)** - Core behavior loop, time management, status changes
@@ -323,6 +325,7 @@ The `.github/prompts/数据处理工作流` directory contains 62 detailed docum
 ### 👥 Character Creation & Growth
 - **[角色创建流程](.github/prompts/数据处理工作流/角色创建流程.md)** - Character creation workflow
 - **[能力升级面板](.github/prompts/数据处理工作流/能力升级面板.md)** - Ability upgrade interface
+- **[生长养成系统](.github/prompts/数据处理工作流/生长养成系统.md)** - Child-raising chain: prenatal education, infant care, timetables & six course types, semesters & report cards, daily schedules, growth events, sex-skill practical class (`Script/System/Education_System`)
 - **[成就系统](.github/prompts/数据处理工作流/成就系统.md)** - Achievement system
 
 ### 👗 Appearance & Decoration Systems

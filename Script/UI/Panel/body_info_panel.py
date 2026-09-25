@@ -182,6 +182,21 @@ class CharacterBodyText:
                 now_text += _("  正在[产后]休息\n")
             elif character_data.talent[24]:
                 now_text += _("  [育儿]中，正在给宝宝喂奶\n")
+            # 胎教累积（Plan 22 四期 §3.27）：生产前只有这一处看得到——
+            # 否则玩家整个孕期做下来毫无反馈，要等孩子出生那一刻才第一次知道攒了多少
+            from Script.System.Education_System import baby_growth_handle, education_constant
+            prenatal_point = baby_growth_handle.get_prenatal_point(character_id)
+            if prenatal_point > 0:
+                prenatal_count = baby_growth_handle.get_prenatal_count(character_id)
+                prenatal_exp = baby_growth_handle.get_prenatal_exp_value(prenatal_point)
+                if prenatal_exp > 0:
+                    now_text += _("  已做过{0}次胎教，孩子出生时每门科目可获得{1}点初始经验").format(prenatal_count, prenatal_exp)
+                else:
+                    now_text += _("  已做过{0}次胎教，但累积还太少，孩子出生时还留不下什么").format(prenatal_count)
+                # 到顶之后再做也不会涨了，得说一声，否则玩家会一直做下去
+                if prenatal_point >= education_constant.PRENATAL_POINT_MAX:
+                    now_text += _("（已达上限）")
+                now_text += "\n"
             # 假孕状态
             if character_data.talent[25]:
                 now_text += _("  处于[假孕]状态，肚子隆起如孕妇但并未真正怀孕\n")

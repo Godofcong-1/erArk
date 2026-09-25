@@ -12,7 +12,7 @@ from Script.Core import (
     old_chara_to_new
 )
 from Script.Config import normal_config, game_config, character_config
-from Script.Design import attr_calculation, character_handle
+from Script.Design import attr_calculation, character_handle, map_handle
 from Script.UI.Moudle import draw
 import json
 
@@ -116,6 +116,48 @@ def write_save_data(save_id: str, data_id: str, write_data: dict):
         os.makedirs(save_path)
     with open(file_path, "wb+") as f:
         pickle.dump(write_data, f)
+
+
+_ENTERTAINMENT_CID_MIGRATE = {175: 152, 176: 153, 177: 154, 178: 155}
+""" 教育区娱乐改编号（2026-09-09）：旧编号 → 新编号。
+    照料卵 / 跟随母亲 / 自由玩耍 / 上课（无课时自习）原来排在大浴场段（17x），改到教育区段（15x）紧接 151 过家家。
+    存档里存娱乐编号的三处（日程模板的时段、单孩覆盖、当天的三个娱乐槽位）读档时都过一遍 _migrate_entertainment_cid """
+
+
+def _migrate_entertainment_cid(value):
+    """
+    把存档里的旧娱乐编号换成新编号
+    Keyword arguments:
+    value -- 存档里的娱乐cid（也可能是别的类型，原样返回）
+    Return arguments:
+    value -- 换算后的娱乐cid
+    功能: 只在旧编号已经不在 Entertainment.csv 里时才换：日后大浴场段真的用上 175 时，
+          新档里的 175 就是那项浴场娱乐，不该被当成旧编号改掉
+    """
+    from Script.Config import game_config
+
+    if isinstance(value, int) and not isinstance(value, bool) and value in _ENTERTAINMENT_CID_MIGRATE and value not in game_config.config_entertainment:
+        return _ENTERTAINMENT_CID_MIGRATE[value]
+    return value
+
+
+def _migrate_child_schedule_template(rhodes_island_data) -> int:
+    """
+    把罗德岛数据里日程模板各时段存的旧娱乐编号换成新编号
+    Keyword arguments:
+    rhodes_island_data -- 存档里的 Rhodes_Island 对象（须已有 child_schedule_template 字段）
+    Return arguments:
+    int -- 换掉的时段数
+    """
+    count = 0
+    for template_data in getattr(rhodes_island_data, "child_schedule_template", {}).values():
+        slot_data = template_data.get("slot", {}) if isinstance(template_data, dict) else {}
+        for slot in list(slot_data):
+            new_cid = _migrate_entertainment_cid(slot_data[slot])
+            if new_cid != slot_data[slot]:
+                slot_data[slot] = new_cid
+                count += 1
+    return count
 
 
 def _normalize_save_path(path_text):
@@ -348,9 +390,9 @@ def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
             if not hasattr(character, "child_growth"):
                 character.child_growth = None
             # 生长养成系统旧存档兼容：补全养成数据结构体在后续各期新增的字段
-            # ⚠️ 用属性表整体回填而不是逐字段 hasattr：CHILD_GROWTH 在二期（日程模板）、
+            # 用属性表整体回填而不是逐字段 hasattr：CHILD_GROWTH 在二期（日程模板）、
             #    四期（胎教）、学期制各加过字段，逐个写漏一个就是一次读档崩溃
-            # ⚠️ 每个角色各 new 一个默认体：dict/list 这类可变默认值不能被多个角色共享
+            # 每个角色各 new 一个默认体：dict/list 这类可变默认值不能被多个角色共享
             elif character.child_growth is not None:
                 default_growth_data = game_type.CHILD_GROWTH()
                 for growth_attr_name in vars(default_growth_data):
@@ -363,6 +405,14 @@ def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
                     character.child_growth.report_card_history = [old_report_card]
                 if hasattr(character.child_growth, "last_report_card"):
                     del character.child_growth.last_report_card
+                # 教育区娱乐改编号（2026-09-09）：单孩日程覆盖里存的旧编号换成新编号
+                for slot in list(character.child_growth.schedule_override):
+                    character.child_growth.schedule_override[slot] = _migrate_entertainment_cid(character.child_growth.schedule_override[slot])
+            # 教育区娱乐改编号（2026-09-09）：当天三个娱乐槽位里的旧编号也换掉，
+            # 免得读档当天照料卵 / 见学 / 自习的判定对不上号
+            entertainment_data = getattr(character, "entertainment", None)
+            if entertainment_data is not None and isinstance(getattr(entertainment_data, "entertainment_type", None), list):
+                entertainment_data.entertainment_type = [_migrate_entertainment_cid(one) for one in entertainment_data.entertainment_type]
             # 无壳卵生旧存档兼容：无壳卵生种族此前按单胎胎生运行，读档时一次性清除其正在进行的胎生孕程（受精/妊娠/临盆及伴生状态），产后/育儿/泌乳与已出生的孩子保留
             _clear_soft_egg_race_pregnancy(character, soft_egg_enabled)
             if pl_collection is not None and not hasattr(pl_collection, "held_eggs"):
@@ -575,6 +625,8 @@ def input_load_save(save_id: str):
     if not hasattr(loaded_dict["rhodes_island"], "child_schedule_template"):
         loaded_dict["rhodes_island"].child_schedule_template = {}
         update_count += 1
+    # 教育区娱乐改编号（2026-09-09）：日程模板各时段里存的旧编号换成新编号
+    update_count += _migrate_child_schedule_template(loaded_dict["rhodes_island"])
     # 临时性技实操课（Plan 22 四期）
     if not hasattr(loaded_dict["rhodes_island"], "temp_sex_class"):
         loaded_dict["rhodes_island"].temp_sex_class = {}
@@ -583,7 +635,7 @@ def input_load_save(save_id: str):
     if not hasattr(loaded_dict["rhodes_island"], "official_event_queue"):
         old_queue = getattr(loaded_dict["rhodes_island"], "growth_event_queue", [])
         new_queue = []
-        # ⚠️ 旧档的队列元素没有 department，按 uid 回查配置补上；事件已被删掉的直接丢弃，
+        # 旧档的队列元素没有 department，按 uid 回查配置补上；事件已被删掉的直接丢弃，
         #    留着会在出队时查不到配置而被清理，不如在载入时就清干净
         for one in old_queue:
             if not isinstance(one, dict) or one.get("uid") not in game_config.config_official_event:
@@ -747,6 +799,35 @@ def update_map(loaded_dict):
         now_draw = draw.LeftDraw()
         draw_text = _("\n游戏地图已更新\n")
         now_draw.text = draw_text
+        now_draw.draw()
+
+    # 把站在已被删除的场景里的角色挪回来
+    # 地图改建会删掉旧场景（如教育区改建把原本的单间「教室」拆成了6间理论教室、3间实践教室与大礼堂），
+    # 但站在里面的角色，position 不会跟着改，此后每一次 cache.scene_data[该路径] 都会直接 KeyError
+    # 必须放在 change_map_flag 之外无条件执行：上面那个删除循环只在地图有变动的那一次读取里跑，
+    #    它把死场景删掉了却没管站在里面的人，之后每次读取 change_map_flag 都是假，
+    #    坏位置于是永远留在存档里，再也没有代码会去碰它
+    move_back_count = 0
+    for character_id, character_data in loaded_dict["character_data"].items():
+        old_position_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+        if old_position_str in cache.scene_data:
+            continue
+        # 回落到同一区块的入口——每个区块都有一个"0"号入口场景；整个区块都没了才回落到地图原点
+        new_position = [character_data.position[0], "0"] if character_data.position else ["0", "0"]
+        if map_handle.get_map_system_path_str_for_list(new_position) not in cache.scene_data:
+            new_position = ["0", "0"]
+        new_position_str = map_handle.get_map_system_path_str_for_list(new_position)
+        # 死场景可能还留在存档里（本次读取没触发上面的删除），要先把人从它的名单里摘掉
+        if old_position_str in loaded_dict["scene_data"]:
+            loaded_dict["scene_data"][old_position_str].character_list.discard(character_id)
+        loaded_dict["scene_data"][new_position_str].character_list.add(character_id)
+        character_data.position = new_position
+        update_count += 1
+        move_back_count += 1
+    if move_back_count:
+        now_draw = draw.LeftDraw()
+        now_draw.text = _("\n有{0}名角色所在的房间已不存在（地图改建），已将她们移动到所属区块的入口\n").format(move_back_count)
+        now_draw.style = "gold_enrod"
         now_draw.draw()
 
     return update_count

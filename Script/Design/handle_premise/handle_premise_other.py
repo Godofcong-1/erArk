@@ -1175,7 +1175,7 @@ def handle_self_not_player_daughter(character_id: int) -> int:
 def handle_self_have_sibling_child(character_id: int) -> int:
     """
     校验自己有同为孩子的兄弟姐妹（Plan 22 三期，孩子间互动事件用）
-    ⚠️ 兄弟姐妹关系直接读既有的 relationship，不新建亲缘结构（方案 §3.25）
+    兄弟姐妹关系直接读既有的 relationship，不新建亲缘结构（方案 §3.25）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1190,7 +1190,7 @@ def handle_self_have_sibling_child(character_id: int) -> int:
 def handle_self_have_classmate(character_id: int) -> int:
     """
     校验自己的个人课表与别的孩子有重合节次（Plan 22 三期，同班同学事件用）
-    ⚠️ 同学关系由课表反查而非落成字段：课表一改同学就跟着变，存字段反而多一处同步点
+    同学关系由课表反查而非落成字段：课表一改同学就跟着变，存字段反而多一处同步点
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1205,7 +1205,7 @@ def handle_self_have_classmate(character_id: int) -> int:
 def handle_self_mother_available(character_id: int) -> int:
     """
     校验自己的母亲仍在队中且当前可跟随（Plan 23，母亲相关的公务事件用）
-    ⚠️ 直接复用二期的 judge_mother_available：母亲正在H、被监禁、外出委托或住院时算不可跟随，
+    直接复用二期的 judge_mother_available：母亲正在H、被监禁、外出委托或住院时算不可跟随，
        与幼女跟随见学的判定口径保持一致，免得事件里写「母亲带她去岗位」时母亲其实不在
     Keyword arguments:
     character_id -- 角色id
@@ -1221,7 +1221,7 @@ def handle_self_mother_available(character_id: int) -> int:
 def handle_self_follow_mother(character_id: int) -> int:
     """
     校验自己正处于跟随母亲见学的状态（Plan 22 二期）
-    ⚠️ 读的是 child_growth.follow_mother_flag 而不是当前行为id：
+    读的是 child_growth.follow_mother_flag 而不是当前行为id：
        玩家对见学中的女儿发起互动时，她的行为已经被换成被交互的那个了，
        只有这个跨行为保留的标记还能说明「她本来在跟着妈妈」
     Keyword arguments:

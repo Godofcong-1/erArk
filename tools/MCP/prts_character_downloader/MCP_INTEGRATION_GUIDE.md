@@ -56,7 +56,7 @@ python test_downloader.py
 
 ### 步骤 3: 重启VS Code
 
-⚠️ **重要**：保存设置文件后，**必须重启VS Code**以使MCP配置生效。
+**重要**：保存设置文件后，**必须重启VS Code**以使MCP配置生效。
 
 ### 步骤 4: 验证集成
 

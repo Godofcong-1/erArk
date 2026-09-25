@@ -94,7 +94,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
             change_data = handle_instruct_data(character_id, behavior_id, now_time, add_time, change_data)
 
         # 性技实操课：给没占到模板部位的旁观学生结算观摩收益（Plan 22 四期 §3.28.8）
-        # ⚠️ 判的是 sex_class_mode 而不是 group_sex_mode——课堂模式会同时置那个标志，
+        # 判的是 sex_class_mode 而不是 group_sex_mode——课堂模式会同时置那个标志，
         #    若判错，任何一场普通群交都会给全场围观干员发经验与状态
         if character_id == 0 and cache.sex_class_mode:
             from Script.System.Education_System import sex_class_handle
@@ -801,7 +801,7 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
     
         # 特殊处理
         # 养成数值（Plan 22 三期）：性格倾向与照料值，编号见 education_constant.GROWTH_VALUE_*
-        # ⚠️ 只走 growth_handle 的写口，不直接摸 child_growth——出勤数与胎教值不允许被事件改写
+        # 只走 growth_handle 的写口，不直接摸 child_growth——出勤数与胎教值不允许被事件改写
         if attribute_name == "child_growth":
             from Script.System.Education_System import growth_handle
 

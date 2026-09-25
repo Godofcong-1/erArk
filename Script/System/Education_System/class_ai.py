@@ -3,7 +3,7 @@
 每到一个上课节次，孩子（或选了课的干员）要先过两道闸，再决定这一节实际去做什么：
 
     1. 体力闸（方案 §3.14）：体力低于30%就上不动课了，转为休息并累计一节缺课。
-       ⚠️ 这是**被动**缺课，不置翘课flag、不触发「翘课被抓」事件。
+       这是**被动**缺课，不置翘课flag、不触发「翘课被抓」事件。
     2. 心情闸（方案 §3.19）：苦痛(17)+恐怖(18)+抑郁(19)+反感(20)四个负面状态的**等级**和
        越高，越可能主动翘课。判定写法照 `Script/Design/instuct_judege.py:103~104` 的实行值修正。
 
@@ -18,7 +18,7 @@ import random
 from typing import Optional
 from Script.Core import cache_control, game_type, constant
 from Script.Design import attr_calculation, game_time, map_handle
-from Script.System.Education_System import education_constant, schedule_handle, growth_handle
+from Script.System.Education_System import education_constant, schedule_handle, growth_handle, schedule_template_handle
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -93,7 +93,7 @@ def judge_in_scene(character_id: int, scene_name: str) -> bool:
 
 def settle_absent(character_id: int) -> None:
     """
-    记一节缺课。⚠️ 同一节课只记一次——休息行为30分钟、一节课45分钟，
+    记一节缺课。同一节课只记一次——休息行为30分钟、一节课45分钟，
     不做去重会在同一节课里被反复累加，成绩单的出勤率就废了
     Keyword arguments:
     character_id -- 角色id
@@ -143,10 +143,10 @@ def judge_pre_arrive_sex_class(character_id: int) -> int:
     """
     预到岗判定：下一节是自己要上的性技实操课时，提前若干分钟就动身去教室
 
-    ⚠️ 既有节次表首尾相接、没有课间（game_time.py:519 CLASS_PERIOD_START），9个节次里有7个的
+    既有节次表首尾相接、没有课间（game_time.py:519 CLASS_PERIOD_START），9个节次里有7个的
        "提前10分钟"落在上一节课的最后10分钟内。命中时学生会**中止当前节次的课**转为移动
        （口径62 提前退场）——这是有意为之，玩家踩着点到教室时人应该已经在了。
-    ⚠️ 提前退场的那一节**不算缺课**：这里绝不能调 settle_absent()。那个函数用 last_absent_period
+    提前退场的那一节**不算缺课**：这里绝不能调 settle_absent()。那个函数用 last_absent_period
        对「日期序数+节次」做去重，被提前退场占掉标记后，当天真正的缺课就再也记不上了（口径66）。
     Keyword arguments:
     character_id -- 角色id
@@ -219,7 +219,7 @@ def judge_class_state_machine(character_id: int) -> int:
     if now_course is None:
         return 0
     character_data: game_type.Character = cache.character_data[character_id]
-    # 上课接管即离开见学状态。⚠️ 这里不能省：本函数排在见学判定之前，
+    # 上课接管即离开见学状态。这里不能省：本函数排在见学判定之前，
     #    幼女从见学转去上课时走不到 judge_follow_mother_state_machine，标记会一直挂着
     clear_follow_mother_flag(character_id)
 
@@ -235,7 +235,7 @@ def judge_class_state_machine(character_id: int) -> int:
             return constant.StateMachine.REST
 
     # 第二道闸：心情。今日已经翘了就翘到底，否则按四个负面状态的等级和掷一次
-    # ⚠️ 必修的实操课整道闸都跳过——玩家点了名就不许翘（口径60）
+    # 必修的实操课整道闸都跳过——玩家点了名就不许翘（口径60）
     growth_data = growth_handle.get_child_growth(character_id)
     if not must_attend_flag:
         if growth_data.skip_class_flag:
@@ -274,7 +274,7 @@ def judge_mother_available(character_id: int) -> int:
     """
     判断幼女此刻能不能去跟着母亲见学，返回有效的母亲id
 
-    ⚠️ 回落链的每一条都必须有出路（方案 §3.24 的表），否则幼女会卡在 SHARE_BLANKLY。
+    回落链的每一条都必须有出路（方案 §3.24 的表），否则幼女会卡在 SHARE_BLANKLY。
     其中母亲在 H / 监禁 / 无意识时的排除是**硬要求不是优化**：既有的跟随链完全不判这几个状态，
     不显式挡住就会出现幼女跟进 H 场景。
     Keyword arguments:
@@ -290,7 +290,7 @@ def judge_mother_available(character_id: int) -> int:
     mother_data: game_type.Character = cache.character_data[mother_id]
     if mother_data.dead:
         return -1
-    # ⚠️ 绝不能让幼女跟进 H 场景：H中 / 无意识H中 / 被监禁
+    # 绝不能让幼女跟进 H 场景：H中 / 无意识H中 / 被监禁
     if mother_data.sp_flag.is_h or mother_data.sp_flag.unconscious_h or mother_data.sp_flag.imprisonment:
         return -1
     # 母亲人不在罗德岛（外勤 / 外交访问）
@@ -311,27 +311,41 @@ def judge_should_follow_mother(character_id: int) -> bool:
     判断本时刻是否应当走见学分支
 
     两种入口：
-        1. 幼女期的默认行为 —— 在节次内、且本节没排课（方案 §3.24 的触发条件）
-        2. 日程模板把当前娱乐时段排成了「跟随母亲」—— 晚上或没课的时段也能跟
-    ⚠️ 只对幼女（素质102）成立：萝莉期的自由时段是自由行动（口径 10）
+        1. 幼女期的默认行为 —— 在节次内、本节没排课，**且该时段没有明确排别的日程活动**
+           （方案 §3.24 的触发条件；2026-09-10 二期方案 §9.2.9 收窄：日程明确排了具体活动就去做那个活动，
+           排「自由选择」、或活动没写进槽位（need 不过、退回自由选择）时才默认见学）
+        2. 日程模板把当前娱乐时段排成了「跟随母亲」—— 晚上或没课的时段也能跟；
+           **萝莉只有这一个入口**（2026-09-09 二期方案 §9.2.3 放宽：口径 10 的「萝莉自由时段自由行动」
+           仍是默认，玩家明确在日程里排了「跟随母亲」时才去见学）
+    有课永远优先：在节次内且本节排了课时，两种入口都不成立
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     bool -- 是否应当见学
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if not character_data.talent.get(102, 0):
+    stage = growth_handle.get_character_stage(character_id)
+    if stage not in (102, 103):
         return False
-    # 入口1：在节次内且本节没课。get_now_course 已经把"不在节次内"和"没排课"都归为None，
-    # 所以这里要自己再判一次是不是真的在节次内
-    if game_time.get_class_period(character_id) != -1:
-        return schedule_handle.get_now_course(character_id) is None
-    # 入口2：当前娱乐时段的日程活动就是「跟随母亲」
+    # get_now_course 已经把"不在节次内"和"没排课"都归为None，所以这里要自己再判一次是不是真的在节次内
+    in_period = game_time.get_class_period(character_id) != -1
+    if in_period and schedule_handle.get_now_course(character_id) is not None:
+        return False
+    # 当前娱乐时段的槽位值；不在任何娱乐时段（如 8:40~9:00 的到岗时间、17:45~18:00）时为 -1
     enter_time = game_time.judge_entertainment_time(character_id)
-    if not enter_time:
-        return False
-    slot = enter_time - 1
-    return character_data.entertainment.entertainment_type[slot] == education_constant.ENTERTAINMENT_FOLLOW_MOTHER
+    slot = enter_time - 1 if enter_time else -1
+    slot_value = character_data.entertainment.entertainment_type[slot] if slot >= 0 else -1
+    # 入口2：当前娱乐时段的日程活动就是「跟随母亲」（幼女 / 萝莉共用）
+    if slot_value == education_constant.ENTERTAINMENT_FOLLOW_MOTHER:
+        return True
+    # 入口1：幼女在节次内且本节没课。该时段明确排了别的活动、且已经写进槽位时不见学，交给娱乐链去做那个活动；
+    #        「自由选择」（模板值 0）或活动没写进槽位（need 不过）时才是默认见学
+    if stage == 102 and in_period:
+        explicit_id = schedule_template_handle.get_child_slot_activity(character_id, slot) if slot >= 0 else 0
+        if explicit_id and slot_value == explicit_id:
+            return False
+        return True
+    return False
 
 
 def judge_follow_mother_state_machine(character_id: int) -> int:
@@ -365,7 +379,7 @@ def judge_in_follow_mother(character_id: int) -> bool:
     校验一个角色此刻是否处于跟随母亲见学的状态（Plan 22 二期）
 
     这是 child_growth.follow_mother_flag 的统一读口，前提系统与角色状态标识都走它。
-    ⚠️ 不要在外部直接读那个字段：全岛绝大多数干员的 child_growth 是 None，直接读会 AttributeError
+    不要在外部直接读那个字段：全岛绝大多数干员的 child_growth 是 None，直接读会 AttributeError
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -383,7 +397,7 @@ def clear_follow_mother_flag(character_id: int) -> None:
     """
     清掉见学标记（Plan 22 二期）
 
-    ⚠️ 置位只有见学状态机一处，清位却有四处——自由玩耍、见学结算、上课接管、见学判定不成立。
+    置位只有见学状态机一处，清位却有四处——自由玩耍、见学结算、上课接管、见学判定不成立。
        少一处，「见学中」这个状态标识就会粘在孩子身上摘不掉
     Keyword arguments:
     character_id -- 角色id

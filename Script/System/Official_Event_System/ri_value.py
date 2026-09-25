@@ -7,7 +7,7 @@
 所以这里另开一个 `RI` 主体，前提写 `CVP_RI_<类型>_<运算>_<值>`、结算写 `CVE_RI_<类型>_<G/L/E>_<值>`，
 两侧都从本模块取值与写值，免得同一个「龙门币」在前提、结算、面板三处各算各的。
 
-⚠️ 写入一律走 `change_ri_value()` / `set_ri_value()`，不要在别处直接改 dict：
+写入一律走 `change_ri_value()` / `set_ri_value()`，不要在别处直接改 dict：
    夹逼（资源不为负、公务量不超总量、效率 50~200）与 `setdefault` 都在这里做，
    绕过去就会出现负数资源或越界效率。
 """
@@ -28,7 +28,7 @@ RI_TYPE_REPUTATION = "Rep"
 """ 势力声望，子id为势力id """
 
 RI_TYPE_FACILITY = "Fac"
-""" 设施等级，子id为设施cid。⚠️ 只读——设施升级要走基建系统的资源消耗，事件直接改会绕过成本 """
+""" 设施等级，子id为设施cid。只读——设施升级要走基建系统的资源消耗，事件直接改会绕过成本 """
 
 RI_TYPE_OFFICE_WORK = "Work"
 """ 待处理的公务量 """
@@ -40,7 +40,7 @@ RI_TYPE_POWER = "Power"
 """ 电力储量 """
 
 RI_TYPE_PEOPLE = "People"
-""" 当前干员数。⚠️ 只读——干员数是角色表算出来的，不是一个能被赋值的数 """
+""" 当前干员数。只读——干员数是角色表算出来的，不是一个能被赋值的数 """
 
 READ_ONLY_TYPE_SET = {RI_TYPE_FACILITY, RI_TYPE_PEOPLE}
 """ 只读的数值类型：写入请求会被静默忽略（校验工具会在写 CSV 时就拦下来） """
@@ -74,7 +74,7 @@ def get_all_office_work() -> float:
     取公务量的上限（总工作量）
 
     与 basement.settle_office_work 的算法一致：设施等级和×10 + 干员数。
-    ⚠️ 不去 import basement：那里是每日结算模块，事件系统在函数级引用它容易绕出循环导入
+    不去 import basement：那里是每日结算模块，事件系统在函数级引用它容易绕出循环导入
     Keyword arguments:
     无
     Return arguments:
@@ -116,7 +116,7 @@ def set_ri_value(type_text: str, new_value: float):
     """
     把一项罗德岛全局数值直接设为指定值（CVE 的 E 运算）
 
-    ⚠️ 只读类型（设施等级、干员数）静默忽略：让事件直接改设施等级会绕过基建的资源成本
+    只读类型（设施等级、干员数）静默忽略：让事件直接改设施等级会绕过基建的资源成本
     Keyword arguments:
     type_text -- 类型段文本
     new_value -- 目标值
@@ -125,7 +125,7 @@ def set_ri_value(type_text: str, new_value: float):
     """
     type_name, son_id = parse_value_type(type_text)
     if type_name in READ_ONLY_TYPE_SET:
-        # ⚠️ 静默返回会让作者以为自己写的结算生效了，把值名打出来才查得动
+        # 静默返回会让作者以为自己写的结算生效了，把值名打出来才查得动
         print(f"\ndebug 公务事件试图改写只读的全局数值「{get_value_name(type_text)}」，已忽略\n")
         return
     if type_name == RI_TYPE_RESOURCE:

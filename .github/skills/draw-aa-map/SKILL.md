@@ -13,7 +13,7 @@ description: 创建或调整 erArk 的 AA 地图（data/map/*/Map），包括给
 
 `MapDrawLine.width` 走 `Script/Core/text_handle.py:65 get_text_index()`（即 `wcswidth`），但它**不参与行内排版**。`see_map_panel.py:97-109` 只用全局 `max_width` 算出**一个所有行共用**的居中空格前缀，之后逐段原样输出，不做任何裁剪或补齐。因此**行内对齐 100% 由字体字宽决定**。
 
-⚠️ **永远不要用"数列数"的方式判断对齐**——这正是历史上重画后实机仍然歪掉的原因。必须用 `tools/map_aa_check.py` 按像素校验。
+**永远不要用"数列数"的方式判断对齐**——这正是历史上重画后实机仍然歪掉的原因。必须用 `tools/map_aa_check.py` 按像素校验。
 
 ## 核心模型：U 单位
 
@@ -105,7 +105,7 @@ python tools/map_aa_check.py <地图名> --tol 2    # 明知有小偏差时
 
 ### 第五步：若同时新增了场景，补两个数据文件
 
-1. 新建 `data/map/<区块>/<房间名>/Scene.json`——照抄同类场景，字段含义见 `地图系统.md`。⚠️ 目录名必须与 `<mapbutton>` 里的名字**完全一致**，否则 `map_handle.py:363` 会无限递归抛 `RecursionError`。
+1. 新建 `data/map/<区块>/<房间名>/Scene.json`——照抄同类场景，字段含义见 `地图系统.md`。目录名必须与 `<mapbutton>` 里的名字**完全一致**，否则 `map_handle.py:363` 会无限递归抛 `RecursionError`。
 2. `data/map/<区块>/Map.json` 的 `PathEdge` 加**双向边**。
 
 通常**不需要**改任何 CSV、po 或 Python：`constant.place_data` 由 `SceneTag` 自动生成。
@@ -119,7 +119,7 @@ rm -f data/SceneData data/MapData data/PlaceData data/ScenePath
 python init_data.py     # 530 场景 O(N²) 全量寻路，会跑一会儿，产出 ~21MB
 ```
 
-> ⚠️ 第二层缓存：`save_handle.py:496-516` 只在**场景增删**或 `scene_tag`/`scene_img`/`room_area` 变化时才刷新存档里的 `map_data`。**只改 AA 图而不动 `Scene.json` 时，老存档读出来仍是旧地图**，必须用新档验证。
+> 第二层缓存：`save_handle.py:496-516` 只在**场景增删**或 `scene_tag`/`scene_img`/`room_area` 变化时才刷新存档里的 `map_data`。**只改 AA 图而不动 `Scene.json` 时，老存档读出来仍是旧地图**，必须用新档验证。
 
 ### 第七步：收尾
 

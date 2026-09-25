@@ -6,10 +6,10 @@
 本模块是纯函数层：只算与写数据，不碰任何绘制，面板只负责画按钮与报结果
 （照 Dormitory_System/common.py 的 pick_dormitory_room 分层）。
 
-⚠️ 排出来的课表必须是**无冲突**的。口径 29 明确「运行时不做兜错逻辑」，
+排出来的课表必须是**无冲突**的。口径 29 明确「运行时不做兜错逻辑」，
    同一个教师被排进同一节次的两间教室，运行时不会有人来收拾。
 
-⚠️ 结果必须**可复现**：同样的存档点两次一键，排出来的课表要一模一样。
+结果必须**可复现**：同样的存档点两次一键，排出来的课表要一模一样。
    所以凡是遍历 set 的地方都先 sorted()——schedule_handle.get_teacher_candidate_list()
    遍历的 cache.npc_id_got 是 set，直接用会让每次排课结果都不同。
 """
@@ -67,11 +67,11 @@ def pick_best_teacher(ability_id: int, week_day: int, period: int, classroom: st
     best_id = -1
     best_level = -1
     for teacher_id in teacher_list:
-        # ⚠️ judge_teacher_conflict 返回的是冲突原因文本，空串才表示不冲突
+        # judge_teacher_conflict 返回的是冲突原因文本，空串才表示不冲突
         if schedule_handle.judge_teacher_conflict(teacher_id, week_day, period, classroom):
             continue
         teacher_data: game_type.Character = cache.character_data[teacher_id]
-        # ⚠️ ability 的值可能是 float，比较前一律 int()
+        # ability 的值可能是 float，比较前一律 int()
         now_level = int(teacher_data.ability.get(ability_id, 0))
         if now_level > best_level:
             best_level = now_level
@@ -87,17 +87,17 @@ def auto_fill_class_schedule() -> Tuple[int, int]:
     Return arguments:
     Tuple[int, int] -- (新排上的格数, 因为没有空闲教师而留空的格数)
     功能: 学科均衡铺满、每格配该科等级最高且本节空闲的教师。
-          ⚠️ 只填空格，已有的排课一格都不动——所以重复点击是幂等的，不会弄丢手排内容
+          只填空格，已有的排课一格都不动——所以重复点击是幂等的，不会弄丢手排内容
     """
     room_list = schedule_handle.get_classroom_list()
     if not room_list:
         return 0, 0
-    # ⚠️ 必须 sorted：get_teacher_candidate_list 遍历的是 set，顺序不定会让结果不可复现
+    # 必须 sorted：get_teacher_candidate_list 遍历的是 set，顺序不定会让结果不可复现
     teacher_list = sorted(schedule_handle.get_teacher_candidate_list())
     if not teacher_list:
         return 0, 0
     subject_list = get_auto_subject_list()
-    # ⚠️ 先建一次映射：get_course_type_by_classroom 每次调用都全扫 place_data，
+    # 先建一次映射：get_course_type_by_classroom 每次调用都全扫 place_data，
     #    在 10教室×5天×9节=450 格的循环里逐格调会很慢
     course_type_by_room: Dict[str, int] = {
         room: schedule_handle.get_course_type_by_classroom(room) for room in room_list}
@@ -144,7 +144,7 @@ def auto_fill_selected_course(character_id: int) -> Tuple[int, int]:
     Tuple[int, int] -- (新选上的节数, 因为当节没有任何教室开课而跳过的节数)
     功能: 有课就上。同一节有多间教室开课时，选这孩子该科等级最低的那门——
           等级越低离升级越近，收益也越大（get_learn_speed 的师生等级差曲线）。
-          ⚠️ 只填空格，已有的选课一节都不动
+          只填空格，已有的选课一节都不动
     """
     if character_id not in cache.character_data:
         return 0, 0
@@ -158,7 +158,7 @@ def auto_fill_selected_course(character_id: int) -> Tuple[int, int]:
     filled_count = 0
     skip_count = 0
     period_count = len(game_time.CLASS_PERIOD_START)
-    # ⚠️ 遍历整整7天而不是只遍历自动排课铺的5天：玩家可能手排过周末的课
+    # 遍历整整7天而不是只遍历自动排课铺的5天：玩家可能手排过周末的课
     for week_day in range(education_constant.WEEK_DAY_COUNT):
         for period in range(period_count):
             if schedule_handle.get_selected_course(character_id, week_day, period) is not None:

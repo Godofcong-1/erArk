@@ -655,7 +655,7 @@ def check_grow_to_girl(character_id: int):
             chest_grow_text = chest_grow(character_id)
             body_part_grow_text = body_part_grow(character_id)
             # 成年结算（Plan 22 二期 §3.8）：能力已在一期做成即时成长，成年时只结算性格与职业倾向
-            # ⚠️ 守卫是 handle_self_is_loli，上面已把 talent[103] 清零，天然幂等，不需要额外防重复
+            # 守卫是 handle_self_is_loli，上面已把 talent[103] 清零，天然幂等，不需要额外防重复
             from Script.System.Education_System import growth_handle
 
             personality_text = growth_handle.settle_personality_talent(character_id)

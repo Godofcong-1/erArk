@@ -6,7 +6,7 @@
     - 四个选项块各自一个 QGroupBox，含文本、前提、置灰原因、后果提示、结算
     - 前提与结算复用编辑器既有的选择器（PremiseMenu / CVPMenu / EffectMenu / CVEMenu）
 
-⚠️ 那几个选择器都是直接往 `cache_control.now_event_data[now_select_id].premise/effect` 里写的，
+那几个选择器都是直接往 `cache_control.now_event_data[now_select_id].premise/effect` 里写的，
    本模块用一个**临时载体**顶上去（打开弹窗前换、关闭后换回），
    这样既不用改那6个文件，也不会污染正在编辑的口上/事件数据。
 """
@@ -36,7 +36,7 @@ SUBJECT_TEXT = {0: "0 无主体（部门事务）", 1: "1 角色"}
 """ 事件主体的下拉项 """
 
 ONCE_TEXT = {0: "0 普通", 1: "1 里程碑（仅标注）"}
-""" once 列的下拉项。⚠️ 它已经不影响触发：所有事件都对同一个角色只发生一次 """
+""" once 列的下拉项。它已经不影响触发：所有事件都对同一个角色只发生一次 """
 
 
 class SelectorShim:
@@ -224,7 +224,7 @@ class OfficialEventEditWidget(QWidget):
             dialog_maker: Callable 造弹窗的函数（在载体装好之后才调用）
         返回: 无
         功能:
-            ⚠️ 五个全局都要存下来再还原：选择器认的是
+            五个全局都要存下来再还原：选择器认的是
                now_edit_type_flag / now_event_data / now_select_id 与两个列表面板
         """
         old_flag = cache_control.now_edit_type_flag

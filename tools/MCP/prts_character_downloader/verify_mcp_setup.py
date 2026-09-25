@@ -46,7 +46,7 @@ async def test_mcp_server():
         if url:
             print(f"✅ 搜索成功: {url}")
         else:
-            print("⚠️ 未找到URL，但搜索功能正常")
+            print("未找到URL，但搜索功能正常")
         
         print("✅ 所有测试通过！")
         return True

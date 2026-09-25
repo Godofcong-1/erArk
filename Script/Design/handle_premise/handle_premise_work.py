@@ -43,7 +43,7 @@ def handle_have_work(character_id: int) -> int:
 def handle_t_have_work(character_id: int) -> int:
     """
     交互对象有工作
-    ⚠️ have_work 判的是行为发起者自己，跟随母亲见学一类「按对方岗位分差分」的口上
+    have_work 判的是行为发起者自己，跟随母亲见学一类「按对方岗位分差分」的口上
        必须用本前提，否则读到的是孩子自己那个恒为真的152学生岗（Plan 22 二期）
     Keyword arguments:
     character_id -- 角色id
@@ -58,7 +58,7 @@ def handle_t_have_work(character_id: int) -> int:
 def handle_t_not_have_work(character_id: int) -> int:
     """
     交互对象没有工作
-    ⚠️ 与 t_have_work 成对，专供「对方没有工作」那一侧的口上做排他
+    与 t_have_work 成对，专供「对方没有工作」那一侧的口上做排他
        —— 口上是加权随机不是最具体独占，不写反向前提的那一档会在两种情形下都出场
     Keyword arguments:
     character_id -- 角色id
@@ -921,7 +921,7 @@ def handle_prisoner_daily_management_set(character_id: int) -> int:
 def handle_have_intern_student(character_id: int) -> int:
     """
     校验此刻同场景有人正在自己这个岗位上实习（Plan 22 §3.21 的带教侧）
-    ⚠️ 这是 schedule_handle.get_intern_mentor() 的反向查询：学徒侧靠它找导师，
+    这是 schedule_handle.get_intern_mentor() 的反向查询：学徒侧靠它找导师，
        导师侧靠本前提知道自己身边有人在跟岗。两边读的是同一份判据，不会出现单向成立
     Keyword arguments:
     character_id -- 角色id

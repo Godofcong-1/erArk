@@ -329,7 +329,7 @@ def load_official_event_dir(dir_path):
     功能:
         目录下每个 csv 是一个部门的事件表，一次全读进来，
         左侧列表按文件分组显示，保存时只重写被改过的那个文件。
-        ⚠️ 跳表头按**行号**跳前5行，不能照抄外勤委托那种「找表名行」的写法——
+        跳表头按**行号**跳前5行，不能照抄外勤委托那种「找表名行」的写法——
            这里每个文件第5行的表名各不相同。
     """
     import os
@@ -365,7 +365,7 @@ def save_official_event_csv(dir_path, file_name, head_rows, event_list):
     返回:
         None
     功能:
-        整个文件重写。⚠️ 表头与数据行**一律走 csv.writer**，
+        整个文件重写。表头与数据行**一律走 csv.writer**，
         行尾统一 CRLF、编码 UTF-8 无 BOM——
         外勤委托那边表头用 f.write 数据行用 DictWriter，写出来是混合行尾，别照抄。
     """

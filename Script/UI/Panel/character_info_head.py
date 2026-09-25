@@ -27,7 +27,7 @@ window_width = normal_config.config_normal.text_width
 def get_now_class_tip(character_id: int):
     """
     取角色当前的上课信息，供 <课> / <翘> 状态标识使用（Plan 22）
-    ⚠️ 只在角色**此刻正在上课/授课**时返回内容，而不是"本节有排课"——状态标识描述的是此刻的状态，
+    只在角色**此刻正在上课/授课**时返回内容，而不是"本节有排课"——状态标识描述的是此刻的状态，
        与 <跟> <饿> 的口径一致。孩子因体力不足去休息、或被叫走跟随时不该显示 <课>
     Keyword arguments:
     character_id -- 角色id
@@ -66,7 +66,7 @@ def get_now_class_tip(character_id: int):
         if now_course is None:
             return False, _("上课中")
         text = get_course_text(now_course)
-        # ⚠️ 只有班级式的教室课才有"教师缺席降级自习"的说法；
+        # 只有班级式的教室课才有"教师缺席降级自习"的说法；
         #    体育/兴趣/实习课本就没有指派教师（teacher_id 恒为 -1），不能误报成自习
         if now_course["course_type"] not in education_constant.CLASSROOM_COURSE_TYPE_SET:
             return False, _("{0}｜第{1}节").format(text, period + 1)
@@ -77,7 +77,7 @@ def get_now_class_tip(character_id: int):
         return False, _("{0}｜授课：{1}｜第{2}节").format(text, teacher_data.name, period + 1)
 
     # 个人式课型：人在该课的地点上，就算在上课
-    # ⚠️ 这三种课执行的是既有行为（打木桩、下棋、跟岗），没有专属的"上课"行为可认，
+    # 这三种课执行的是既有行为（打木桩、下棋、跟岗），没有专属的"上课"行为可认，
     #    只能靠"本节排了这门课 + 人确实在那个地点"来判定
     if period != -1:
         now_course = schedule_handle.get_now_course(character_id)
@@ -172,10 +172,10 @@ def get_character_status_list(character_id: int) -> Tuple[List[draw.LeftDraw], L
     status_text_list.append(class_text)
 
     # 跟随母亲见学状态（Plan 22 二期）：与上面的 <课> 一样，一处改动同时覆盖 Tk 与 Web
-    # ⚠️ 函数内延迟 import：UI 层在 Core/UI，教育逻辑在 System，模块级 import 会启动即循环（口径16）
+    # 函数内延迟 import：UI 层在 Core/UI，教育逻辑在 System，模块级 import 会启动即循环（口径16）
     from Script.System.Education_System import class_ai
 
-    # ⚠️ 用 <学> 而不是 <跟>：<跟> 已经是「智能跟随玩家」的标识，两者语义完全不同
+    # 用 <学> 而不是 <跟>：<跟> 已经是「智能跟随玩家」的标识，两者语义完全不同
     follow_mother_draw = draw.LeftDraw()
     follow_mother_draw.style = "wheat"
     follow_mother_text = ""
