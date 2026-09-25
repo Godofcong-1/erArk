@@ -4206,6 +4206,9 @@ def handle_move_to_pre_scene(
         handle_move_to_target_scene(character_id, add_time, change_data, now_time)
         # 删除掉前一场景的移动数据
         character_data.action_info.past_move_position_list.pop(-1)
+    # 博士被赶回前一场景后，原寻路目标已不可达，取消本次连续寻路以避免再次进入并触发循环。
+    if character_id == 0:
+        character_data.behavior.move_final_target = []
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_MOVE_TO_PRE_SCENE)
