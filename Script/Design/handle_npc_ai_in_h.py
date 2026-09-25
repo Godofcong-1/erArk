@@ -751,8 +751,12 @@ def npc_ai_in_group_sex_type_3():
             # print(f"debug {character_data.name}加入侍奉{game_config.config_status[ A_template_data[1][1]].name}")
         else:
             # 获取该部位的状态id列表
-            pl_character_data.target_character_id = character_id
-            new_status_id_list = group_sex_panel.get_status_id_list_from_group_sex_body_part(body_part)
+            old_target_character_id = pl_character_data.target_character_id
+            try:
+                pl_character_data.target_character_id = character_id
+                new_status_id_list = group_sex_panel.get_status_id_list_from_group_sex_body_part(body_part)
+            finally:
+                pl_character_data.target_character_id = old_target_character_id
             # 随机选择一个状态
             status_id = random.choice(new_status_id_list)
             # 如果是侍奉
