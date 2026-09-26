@@ -649,6 +649,29 @@ def handle_adjust_body_manage_sleep_item(
         character_data.target_character_id = old_target_character_id
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CLEAR_USED_CONDOMS)
+def handle_clear_used_condoms(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    清理储存的避孕套
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 玩家清空用过的避孕套存量池（挂在角色身上的装饰保留）
+    if character_id == 0:
+        from Script.System.Item_System import condom_handle
+        condom_handle.clear_used_condoms()
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_BODY_LUBRICANT)
 def handle_use_body_lubricant(
         character_id: int,
