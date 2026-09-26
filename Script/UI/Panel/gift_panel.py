@@ -404,6 +404,7 @@ class Gift_Panel:
         Returns:\n
         bool -- 是否可以赠送\n
         """
+        from Script.Design import second_behavior
         character_data: game_type.Character = cache.character_data[0]
         target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
         gift_data = game_config.config_gift_items[gift_id]
@@ -424,6 +425,7 @@ class Gift_Panel:
                 return False
         # 道歉礼物的情况
         elif gift_data.type == 2:
+            hate_count, hate_count_text = second_behavior.get_now_state_all_value_and_text_from_mark_up_data(51, character_data.target_character_id)
             if target_character_data.ability[18] >= 2:
                 now_draw = draw.WaitDraw()
                 draw_text = _("\n  {0}的反发刻印大于等于2级，道歉礼物无效，需要先降低到1级\n").format(target_character_data.name)
@@ -433,6 +435,13 @@ class Gift_Panel:
             elif target_character_data.ability[18] == 0 and target_character_data.sp_flag.angry_with_player == False:
                 now_draw = draw.WaitDraw()
                 draw_text = _("\n  {0}没有生气，不需要赠送道歉礼物\n").format(target_character_data.name)
+                now_draw.text = draw_text
+                now_draw.draw()
+                return False
+            # 如果负面状态数值太高也无效
+            elif hate_count >= 10000:
+                now_draw = draw.WaitDraw()
+                draw_text = _("\n  {0}的反感、恐怖、苦痛等负面状态值过高，无法赠送道歉礼物，需要先降低负面状态值\n").format(target_character_data.name)
                 now_draw.text = draw_text
                 now_draw.draw()
                 return False
