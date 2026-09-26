@@ -546,6 +546,7 @@ class Ejaculation_Panel:
     def part_can_choose(self, body_part_cid: int):
         """判断该部位是否可以绘制"""
         from Script.Design import clothing
+        from Script.Design import instuct_judege
 
         character_data: game_type.Character = cache.character_data[0]
 
@@ -559,6 +560,10 @@ class Ejaculation_Panel:
         elif body_part_cid == 9 and not handle_premise.handle_penis_in_t_nrethral(0):
             return False
         elif body_part_cid == 15 and not handle_premise.handle_last_cmd_deep_throat(0):
+            return False
+
+        # 如果没有口交合意则无法射在口腔
+        if body_part_cid == 2 and not instuct_judege.calculation_instuct_judege(0, character_data.target_character_id, _("口交"), not_draw_flag=True):
             return False
 
         # 获取没有穿衣服的部位列表
