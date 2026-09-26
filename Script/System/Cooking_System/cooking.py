@@ -714,8 +714,8 @@ PROF_TIER_COUNTS = [3, 10, 25, 50]
 """ 熟练度各阶门槛（累计制作次数） """
 PROF_TIER_NAMES = [_("入门"), _("精通I"), _("精通II"), _("精通III"), _("宗师")]
 """ 熟练度各阶名称 """
-PROF_GAIN_PER_MAKE = 5
-""" 每次成功制作一道菜获得的熟练度 """
+PROF_GAIN_PER_MAKE = 1
+""" 每次成功制作一道菜获得的熟练度（不论本次份数，与上游"经验按单次行为结算"的惯例一致） """
 PROFICIENCY_ATTR = "recipe_proficiency"
 """ 菜谱熟练度的玩家属性名 """
 SPECIAL_EFFECTS_ATTR = "recipe_special"
@@ -759,13 +759,13 @@ def get_favorites() -> dict:
     Return arguments:
     dict -- 键为菜谱id，值为方案列表
     """
-    pl = cache.character_data.get(0)
-    if pl is None:
+    ri = getattr(cache, "rhodes_island", None)
+    if ri is None:
         return {}
-    data = getattr(pl, FAVORITES_ATTR, None)
+    data = getattr(ri, FAVORITES_ATTR, None)
     if data is None:
         data = {}
-        setattr(pl, FAVORITES_ATTR, data)
+        setattr(ri, FAVORITES_ATTR, data)
     return data
 
 
@@ -886,8 +886,10 @@ def get_prof_count(food_cid: int) -> int:
     Return arguments:
     int -- 制作次数
     """
-    pl = cache.character_data[0]
-    return getattr(pl, PROFICIENCY_ATTR, {}).get(_fid(food_cid), 0)
+    ri = getattr(cache, "rhodes_island", None)
+    if ri is None:
+        return 0
+    return getattr(ri, PROFICIENCY_ATTR, {}).get(_fid(food_cid), 0)
 
 
 def get_prof_tier(food_cid: int) -> int:
@@ -905,29 +907,29 @@ def get_prof_tier(food_cid: int) -> int:
     return len(PROF_TIER_COUNTS)
 
 
-def add_proficiency(food_cid: int, make_count: int) -> None:
+def add_proficiency(food_cid: int) -> None:
     """
     制作完成后累计熟练度，跨入宗师时赋予该菜谱配置的特技
     Keyword arguments:
     food_cid -- 菜谱id
-    make_count -- 本次制作份数
     """
-    pl = cache.character_data[0]
-    data = getattr(pl, PROFICIENCY_ATTR, None)
+    ri = cache.rhodes_island
+    data = getattr(ri, PROFICIENCY_ATTR, None)
     if data is None:
         data = {}
-        setattr(pl, PROFICIENCY_ATTR, data)
+        setattr(ri, PROFICIENCY_ATTR, data)
     fid = _fid(food_cid)
     old_tier = get_prof_tier(fid)
-    data[fid] = data.get(fid, 0) + PROF_GAIN_PER_MAKE * make_count
+    # 熟练度按"制作一次"结算，不随份数倍增（批量制作不再一次拉满）
+    data[fid] = data.get(fid, 0) + PROF_GAIN_PER_MAKE
     new_tier = get_prof_tier(fid)
     if old_tier < 4 <= new_tier:
         special = FEAST_PROF_SPECIAL.get(fid, "")
         if special:
-            sp = getattr(pl, SPECIAL_EFFECTS_ATTR, None)
+            sp = getattr(ri, SPECIAL_EFFECTS_ATTR, None)
             if sp is None:
                 sp = {}
-                setattr(pl, SPECIAL_EFFECTS_ATTR, sp)
+                setattr(ri, SPECIAL_EFFECTS_ATTR, sp)
             sp[fid] = special
 
 
@@ -988,8 +990,10 @@ def _get_special_effect(food_cid: int) -> str:
     Return arguments:
     str -- 特技名（无则为空字符串）
     """
-    pl = cache.character_data[0]
-    return getattr(pl, SPECIAL_EFFECTS_ATTR, {}).get(_fid(food_cid), "")
+    ri = getattr(cache, "rhodes_island", None)
+    if ri is None:
+        return ""
+    return getattr(ri, SPECIAL_EFFECTS_ATTR, {}).get(_fid(food_cid), "")
 
 
 def prof_std_master_active(food_cid: int) -> bool:

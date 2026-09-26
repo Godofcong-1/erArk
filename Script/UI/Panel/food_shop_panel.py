@@ -29,6 +29,11 @@ def put_selfmade_food_in():
     id_list_normal = []
     for i in character_data.food_bag.copy():
         food_data: game_type.Food = character_data.food_bag[i]
+        # 庆典料理（type=10）是宴席专用，不进入食堂取餐区：食堂会被 NPC 随机买走，
+        # 而 NPC 单独进食不应触发"会食"（见 handle_eat_add_just 的发起者判定）
+        recipe_id = food_data.recipe
+        if recipe_id in game_config.config_recipes and game_config.config_recipes[recipe_id].type == cooking.FEAST_TYPE:
+            continue
         if food_data.special_seasoning == 0:
             id_list_normal.append(i)
 

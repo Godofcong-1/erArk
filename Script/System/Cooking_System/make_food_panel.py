@@ -80,6 +80,29 @@ class Make_food_Panel:
         """
         cache.rhodes_island.makefood_cook_mode[self.make_food_type] = cook_mode
 
+    def get_panel_cookable_ids(self) -> set:
+        """
+        获取本面板当前真正可做的菜谱id集合
+        收藏页与普通列表同源筛选：可做菜谱过滤（料理技能门槛、博士房间限制）× 本面板页签类型
+        Return arguments:
+        set -- 菜谱id集合
+        """
+        ids = set(cooking.get_character_cookable_recipes())
+        if self.make_food_type == 0:
+            panel_types = {0, 1, 2, 3, cooking.FEAST_TYPE}
+        elif self.make_food_type == 1:
+            panel_types = {8}
+        elif self.make_food_type == 2:
+            panel_types = {3}
+        else:
+            return ids
+        result = set()
+        for recipe_id in ids:
+            recipe = game_config.config_recipes.get(recipe_id)
+            if recipe is not None and recipe.type in panel_types:
+                result.add(recipe_id)
+        return result
+
     def draw(self):
         """绘制对象"""
         character_data: game_type.Character = cache.character_data[0]
@@ -349,9 +372,13 @@ class Make_food_Panel:
             food_line.draw()
 
             if self.now_panel == _("收藏"):
+                # 收藏页同样要过"本面板可做菜谱"过滤，否则会串进做不了的菜谱（如泡咖啡面板收藏的咖啡）
+                cookable_ids = self.get_panel_cookable_ids()
                 food_name_list = []
                 for fid in cooking.get_favorite_recipe_ids():
                     try:
+                        if int(fid) not in cookable_ids:
+                            continue
                         recipe = game_config.config_recipes[fid]
                         food_name_list.append((str(fid), recipe.name))
                     except Exception:
@@ -410,9 +437,12 @@ class Make_food_Panel:
         self.now_panel = food_type
 
         if self.now_panel == _("收藏"):
+            cookable_ids = self.get_panel_cookable_ids()
             food_name_list = []
             for fid in cooking.get_favorite_recipe_ids():
                 try:
+                    if int(fid) not in cookable_ids:
+                        continue
                     recipe = game_config.config_recipes[fid]
                     food_name_list.append((str(fid), recipe.name))
                 except Exception:
@@ -828,25 +858,6 @@ class SeeFoodListByFoodNameDraw:
         facility_adjust = basement.calc_facility_efficiency(5)
         recipe_cid = int(self.food_cid)
 
-        # 预先计算基础品质（熟练度精通I起+1，封顶绝珍）
-        base_quality = cooking.get_base_food_quality(0) + cooking.get_prof_quality_bonus(recipe_cid)
-        # 如果当前是酒类，且当前地点在酒吧，则品质额外+1
-        if food_recipe.type == 3 and handle_premise.handle_in_bar(0):
-            base_quality += 1
-        base_quality = min(base_quality, cooking.get_max_food_quality())
-        # 大师模式：全局模式2 + 技能达标；或本菜谱开关 + 熟练度精通III；或宗师“稳定发挥”特技
-        global_master = cooking.is_master_unlocked()
-        master_active = (
-            (self.cook_mode == 2 and global_master)
-            or (getattr(self, "mod_recipe_master", False) and cooking.get_prof_tier(recipe_cid) >= 3)
-            or cooking.prof_std_master_active(recipe_cid)
-        )
-        max_quality = base_quality
-        if master_active:
-            max_quality = cooking.get_max_food_quality()
-        elif self.cook_mode == 1 and cooking.has_cook_question_library(recipe_cid):
-            max_quality = min(base_quality + 4, cooking.get_max_food_quality())
-
         # 预估消耗函数：对齐上游做饭行为链 DOWN_BOTH_MEDIUM（自/交互对象各扣 HP3/分、MP6/分）
         def estimate_cost(total_time):
             hp_cost = int(total_time * 3)
@@ -861,14 +872,42 @@ class SeeFoodListByFoodNameDraw:
             hp_cost, mp_cost = estimate_cost(check_time)
             return hp_cost <= character_data.hit_point - 1 and mp_cost <= character_data.mana_point
 
-        # 计算最大可制作数量（上限99+宗师批量特技；药物调味受库存/庆典3份限制；再受体力气力上限约束）
-        max_count = 99 + cooking.get_prof_batch_bonus(recipe_cid)
-        if self.special_seasoning > 100:
-            consume = 3 if food_recipe.type == cooking.FEAST_TYPE else 1
-            max_count = min(max_count, character_data.item[self.special_seasoning] // consume)
-        while max_count > 1 and not can_afford(max_count):
-            max_count -= 1
-        max_count = max(1, max_count)
+        def recalc_preview():
+            """
+            重算品质预测与可制作上限
+            载入收藏方案或切换大师模式会改变调味/模式，故确认循环每轮都要重算
+            Return arguments:
+            tuple -- (基础品质, 大师模式是否生效, 品质上限, 最大可制作数量)
+            """
+            # 基础品质（熟练度精通I起+1，封顶绝珍）
+            base_quality = cooking.get_base_food_quality(0) + cooking.get_prof_quality_bonus(recipe_cid)
+            # 如果当前是酒类，且当前地点在酒吧，则品质额外+1
+            if food_recipe.type == 3 and handle_premise.handle_in_bar(0):
+                base_quality += 1
+            base_quality = min(base_quality, cooking.get_max_food_quality())
+            # 大师模式：全局模式2 + 技能达标；或本菜谱开关 + 熟练度精通III；或宗师“稳定发挥”特技
+            global_master = cooking.is_master_unlocked()
+            master_active = (
+                (self.cook_mode == 2 and global_master)
+                or (getattr(self, "mod_recipe_master", False) and cooking.get_prof_tier(recipe_cid) >= 3)
+                or cooking.prof_std_master_active(recipe_cid)
+            )
+            max_quality = base_quality
+            if master_active:
+                max_quality = cooking.get_max_food_quality()
+            elif self.cook_mode == 1 and cooking.has_cook_question_library(recipe_cid):
+                max_quality = min(base_quality + 4, cooking.get_max_food_quality())
+            # 最大可制作数量（上限99+宗师批量特技；药物调味受库存/庆典3份限制；再受体力气力上限约束）
+            max_count = 99 + cooking.get_prof_batch_bonus(recipe_cid)
+            if self.special_seasoning > 100:
+                consume = 3 if food_recipe.type == cooking.FEAST_TYPE else 1
+                max_count = min(max_count, character_data.item[self.special_seasoning] // consume)
+            while max_count > 1 and not can_afford(max_count):
+                max_count -= 1
+            max_count = max(1, max_count)
+            return base_quality, master_active, max_quality, max_count
+
+        base_quality, master_active, max_quality, max_count = recalc_preview()
         # 沿用上次在同类型做饭面板中选择的制作数量，并按本次可制作上限钳制
         remember_count = cache.rhodes_island.makefood_make_count.get(self.make_food_type, 1)
         if not isinstance(remember_count, int) or remember_count < 1:
@@ -876,6 +915,9 @@ class SeeFoodListByFoodNameDraw:
         make_count = min(remember_count, max_count)
 
         while 1:
+            # 载入收藏方案/切换大师模式会改变调味与模式，本轮开头重算品质预测与数量上限
+            base_quality, master_active, max_quality, max_count = recalc_preview()
+            make_count = max(1, min(make_count, max_count))
             py_cmd.clr_cmd()
             line_feed.draw()
 
@@ -1157,7 +1199,7 @@ class SeeFoodListByFoodNameDraw:
             line_feed.draw()
 
         # 累计熟练度
-        cooking.add_proficiency(recipe_cid, real_count)
+        cooking.add_proficiency(recipe_cid)
 
         # 烹饪行为
         character_data.behavior.make_food_time = new_make_food_time

@@ -6152,8 +6152,8 @@ def handle_make_food_add_adjust(
     )
     # 帮厨共同成长：同场景跟随助理也获得相同的料理经验与习得
     if character_id == 0:
-        from Script.System.Cooking_System import cooking as _cooking_mod
-        for _helper_id in _cooking_mod.get_helpers():
+        from Script.System.Cooking_System import cooking as _cooking
+        for _helper_id in _cooking.get_helpers():
             _helper_data = cache.character_data[_helper_id]
             if _helper_data.dead:
                 continue
@@ -8102,7 +8102,7 @@ def handle_eat_add_just(
         return
     from Script.System.Cooking_System.food_bag_panel import calculate_food_effects
     from Script.System.Sex_System.drunk_sex_common import add_drunk_point
-    from Script.System.Cooking_System import cooking as _cooking_mod
+    from Script.System.Cooking_System import cooking as _cooking
 
     # 获取角色数据
     character_data: game_type.Character = cache.character_data[character_id]
@@ -8121,21 +8121,22 @@ def handle_eat_add_just(
     else:
         eat_flag = False
     # 庆典料理：作为正餐入席；博士发起会食，同场景干员共同享用
-    feast_flag = recipe_id in _cooking_mod.FEAST_DATA_BY_CID
-    feast_data = _cooking_mod.FEAST_DATA_BY_CID.get(recipe_id, {"effect": "base", "mult": 1.0})
+    feast_flag = recipe_id in _cooking.FEAST_DATA_BY_CID
+    feast_data = _cooking.FEAST_DATA_BY_CID.get(recipe_id, {"effect": "base", "mult": 1.0})
     feast_effect = feast_data["effect"]
     feast_mult = feast_data["mult"]
-    if recipe_data.type == _cooking_mod.FEAST_TYPE:
+    if recipe_data.type == _cooking.FEAST_TYPE:
         eat_flag = True
     # 判断是谁要吃食物
     eat_food_chara_id_list = []
-    if feast_flag:
+    # 会食只能由博士发起：NPC 自己吃庆典料理（含在食堂买到的）走原版单人进食路径
+    if feast_flag and character_id == 0:
         # 特殊调味是恶作剧：制作者自己不参与，只请（愿意接受的）同场景干员入席
         if food_seasoning == 0:
             eat_food_chara_id_list.append(character_id)
-        for _cid in _cooking_mod._get_feast_npcs():
+        for _cid in _cooking._get_feast_npcs():
             if food_seasoning != 0 and _cid:
-                if not _cooking_mod.judge_accept_special_seasoning_food(_cid):
+                if not _cooking.judge_accept_special_seasoning_food(_cid):
                     cache.character_data[_cid].angry_point += 40
                     cache.character_data[_cid].sp_flag.angry_with_player = True
                     continue
@@ -8235,6 +8236,8 @@ def handle_eat_add_just(
             if feast_effect == "reunion":
                 target_data.tired_point = max(0, target_data.tired_point - 50)
                 target_data.angry_point = 0
+                # 怒气清零时同步解除"对玩家生气"标志，否则干员仍按生气状态互动
+                target_data.sp_flag.angry_with_player = False
             elif feast_effect == "hearty":
                 target_data.tired_point = max(0, target_data.tired_point - 30)
             elif feast_effect == "melody":

@@ -1423,6 +1423,12 @@ class Rhodes_Island:
         """ 做饭记忆：烹饪模式（0标准模式，1精细模式），键为做饭类型（0普通做饭/1泡咖啡/2调酒） """
         self.makefood_make_count: Dict[int, int] = {0: 1, 1: 1, 2: 1}
         """ 做饭记忆：制作数量，键为做饭类型（0普通做饭/1泡咖啡/2调酒） """
+        self.recipe_favorites: Dict[int, List[Dict[str, int]]] = {}
+        """ 菜谱收藏制作方案：键为菜谱id，值为方案列表（seasoning/cook_mode/make_count），上限见cooking.MAX_FAVORITES_* """
+        self.recipe_proficiency: Dict[int, int] = {}
+        """ 菜谱熟练度：键为菜谱id，值为累计制作次数（放 Rhodes_Island 使其随新周目重建而重置） """
+        self.recipe_special: Dict[int, str] = {}
+        """ 菜谱宗师特技：键为菜谱id，值为特技名（fire/fast/batch/stable），由熟练度系统在宗师时赋予 """
 
         # 医疗部
         self.medical_patients_today: Dict[int, Any] = {}
@@ -1776,12 +1782,6 @@ class Character:
         """ 角色信赖度数据 """
         self.food_bag: Dict[UUID, Food] = {}
         """ 角色持有的食物数据 """
-        self.recipe_favorites: Dict[int, List[Dict[str, int]]] = {}
-        """ 菜谱收藏制作方案：键为菜谱id，值为方案列表（seasoning/cook_mode/make_count），上限见cooking.MAX_FAVORITES_* """
-        self.recipe_proficiency: Dict[int, int] = {}
-        """ 菜谱熟练度：键为菜谱id，值为累计制作次数（随新周目重置） """
-        self.recipe_special: Dict[int, str] = {}
-        """ 菜谱宗师特技：键为菜谱id，值为特技名（fire/fast/batch/stable），由熟练度系统在宗师时赋予 """
         self.target_character_id: int = 0
         """ 角色当前交互对象id """
         self.adv: int = 0

@@ -1,5 +1,5 @@
 cid,name,type,time,difficulty,money,restaurant,alcohol,introduce
-菜谱id,菜谱名字,菜的类型（0正餐1零食2饮品3酒类4乳制品5预制食物8加料咖啡9其他）,烹饪时间,烹饪难度,价格,餐馆id,酒精度数,说明介绍
+菜谱id,菜谱名字,菜的类型（0正餐1零食2饮品3酒类4乳制品5预制食物8加料咖啡9其他10庆典）,烹饪时间,烹饪难度,价格,餐馆id,酒精度数,说明介绍
 int,str,int,int,int,int,int,int,str
 0,1,0,0,0,0,0,0,1
 菜谱配置,,,,,,,,
