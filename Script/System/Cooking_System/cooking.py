@@ -710,6 +710,8 @@ MAX_FAVORITES_PER_RECIPE = 9
 """ 单个菜谱收藏方案上限（每行3个，3行共9个） """
 FAVORITES_ATTR = "recipe_favorites"
 """ 收藏制作方案的玩家属性名 """
+# 熟练度只影响耗时/批量上限/本菜谱大师解锁/宗师特技，**不提供任何品质加成**（review #6 收严行为）；
+# 品质只由料理技能（≤美味）、精细答题（≤绝珍）、大师模式（绝珍）三者决定。
 PROF_TIER_COUNTS = [3, 10, 25, 50]
 """ 熟练度各阶门槛（累计制作次数） """
 PROF_TIER_NAMES = [_("入门"), _("精通I"), _("精通II"), _("精通III"), _("宗师")]
@@ -721,7 +723,8 @@ PROFICIENCY_ATTR = "recipe_proficiency"
 SPECIAL_EFFECTS_ATTR = "recipe_special"
 """ 菜谱宗师特技的玩家属性名 """
 SPECIAL_EFFECTS = {
-    "fire": {"name": _("火候掌控"), "desc": _("品质额外+1")},
+    # fire 原效果「品质+1」随 review #6「熟练度不给品质」作废，新效果待 review #7 重定
+    "fire": {"name": _("火候掌控"), "desc": _("效果待定")},
     "fast": {"name": _("快手"), "desc": _("耗时-20%")},
     "batch": {"name": _("分身有术"), "desc": _("批量上限+10")},
     "stable": {"name": _("稳定发挥"), "desc": _("标准模式可冲击绝珍")},
@@ -931,23 +934,6 @@ def add_proficiency(food_cid: int) -> None:
                 sp = {}
                 setattr(ri, SPECIAL_EFFECTS_ATTR, sp)
             sp[fid] = special
-
-
-def get_prof_quality_bonus(food_cid: int) -> int:
-    """
-    获取熟练度提供的品质加成
-    Keyword arguments:
-    food_cid -- 菜谱id
-    Return arguments:
-    int -- 品质加成值
-    """
-    tier = get_prof_tier(food_cid)
-    bonus = 0
-    if tier >= 1:
-        bonus += 1
-    if tier >= 4 and _get_special_effect(food_cid) == "fire":
-        bonus += 1
-    return bonus
 
 
 def get_prof_time_mult(food_cid: int) -> float:

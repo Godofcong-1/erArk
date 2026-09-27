@@ -879,12 +879,13 @@ class SeeFoodListByFoodNameDraw:
             Return arguments:
             tuple -- (基础品质, 大师模式是否生效, 品质上限, 最大可制作数量)
             """
-            # 基础品质（熟练度精通I起+1，封顶绝珍）
-            base_quality = cooking.get_base_food_quality(0) + cooking.get_prof_quality_bonus(recipe_cid)
+            # 基础品质只由料理技能决定：熟练度不提供任何品质加成（review #6 收严行为）
+            base_quality = cooking.get_base_food_quality(0)
             # 如果当前是酒类，且当前地点在酒吧，则品质额外+1
             if food_recipe.type == 3 and handle_premise.handle_in_bar(0):
                 base_quality += 1
-            base_quality = min(base_quality, cooking.get_max_food_quality())
+            # 标准模式上限为美味（绝珍只能靠精细答题或大师模式达到），这行同时兜住上面「酒类在酒吧 +1」
+            base_quality = min(base_quality, cooking.get_good_quality_cap())
             # 大师模式：全局模式2 + 技能达标；或本菜谱开关 + 熟练度精通III；或宗师“稳定发挥”特技
             global_master = cooking.is_master_unlocked()
             master_active = (
@@ -1129,12 +1130,13 @@ class SeeFoodListByFoodNameDraw:
         food_recipe: game_type.Recipes = cache.recipe_data[int(self.food_cid)]
         recipe_cid = int(self.food_cid)
 
-        # 计算食物品质：基础品质为玩家料理技能，封顶到美味
-        base_quality = cooking.get_base_food_quality(0) + cooking.get_prof_quality_bonus(recipe_cid)
+        # 计算食物品质：基础品质只由料理技能决定（熟练度不提供任何品质加成，review #6 收严行为），
+        # 之后封顶到标准模式上限「美味」（绝珍只能靠精细答题或大师模式达到）
+        base_quality = cooking.get_base_food_quality(0)
         # 如果当前是酒类，且当前地点在酒吧，则品质额外+1
         if food_recipe.type == 3 and handle_premise.handle_in_bar(0):
             base_quality += 1
-        base_quality = min(base_quality, cooking.get_max_food_quality())
+        base_quality = min(base_quality, cooking.get_good_quality_cap())
         food_quality = base_quality
         # 大师模式（全局模式2/本菜谱开关/宗师稳定发挥）：免答题稳定绝珍
         global_master = cooking.is_master_unlocked()
