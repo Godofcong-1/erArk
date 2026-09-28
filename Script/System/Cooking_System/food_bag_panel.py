@@ -251,7 +251,7 @@ class FoodBagPanel:
             # 如果被限定为酒类食物，则跳过非酒类食物
             elif self.now_panel == _("酒类") and recipe_data is not None and recipe_data.type != 3:
                 continue
-            group_key = (food_data.recipe, food_data.special_seasoning)
+            group_key = (food_data.recipe, food_data.special_seasoning, getattr(food_data, "dish_special", ""))
             # 如果是正常调味食物，则加入group_normal，否则加入group_special
             if food_data.special_seasoning == 0:
                 group_normal.setdefault(group_key, [])
@@ -294,7 +294,8 @@ class FoodGroupDraw:
     ):
         """初始化绘制对象"""
         group_key, uid_list = text
-        recipe_id, special_seasoning = group_key
+        recipe_id, special_seasoning = group_key[0], group_key[1]
+        self.dish_special = group_key[2] if len(group_key) > 2 else ""
 
         self.uid_list: List[UUID] = uid_list
         """ 该分组下的食物uid列表 """
@@ -312,6 +313,8 @@ class FoodGroupDraw:
         """ 食物介绍 """
         self.special_seasoning: int = special_seasoning
         """ 特殊调味类型 """
+        self.dish_special: str = ""
+        """ 本组食物制作时定下的自选特技名（不同特技的同一道菜不再并堆） """
 
         # 获取食物名称和介绍
         if recipe_id != -1 and recipe_id in cache.recipe_data:
@@ -353,7 +356,8 @@ class FoodGroupDraw:
                 recipe_difficulty = 0
             recipe_difficulty_str = _("(食谱等级：{recipe_difficulty})").format(recipe_difficulty=recipe_difficulty)
 
-        button_text = f"  {self.food_name}{seasoning_str} {recipe_difficulty_str} {quality_text} x{count}"
+        special_str = f"[{self.dish_special}]" if getattr(self, "dish_special", "") else ""
+        button_text = f"  {self.food_name}{seasoning_str}{special_str} {recipe_difficulty_str} {quality_text} x{count}"
 
         # 判断是否可以点击（与原食用条件保持一致）
         draw_button_flag = True

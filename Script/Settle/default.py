@@ -8158,6 +8158,10 @@ def handle_eat_add_just(
     if feast_flag:
         state_add = int(state_add * feast_mult)
         hpmp_add = int(hpmp_add * feast_mult)
+    # 本菜自选特技的进食效果倍率（+15%；EX 阶升级为 +23%）；作用域见下方"入席干员，不含博士"
+    dish_special_dim = _cooking.get_food_special_dim(now_food)
+    dish_special_ex = _cooking.is_dish_special_ex(recipe_id)
+    dish_special_rate = 0.23 if dish_special_ex else 0.15
 
     # 删除该食物
     handle_delete_food(character_id,add_time=add_time,change_data=change_data,now_time=now_time)
@@ -8218,32 +8222,82 @@ def handle_eat_add_just(
                 if feast_effect == "starlight":
                     base_chara_state_common_settle(chara_id, state_add * 2, 11, 0, change_data_to_target_change = change_data)
 
-        # 仅食物加体力
+        # 仅食物加体力（本菜装了「体力」型自选特技时按倍率放大）
+        # 注意：**不能在这里提前 int()** —— hpmp_add 常年只有 1~20，先取整会把 +15% 整个抹平；
+        #       handle_add_small_hit_point 内部会乘上 (10 + hit_point_max*0.005) 再取整，小数留到最后才有效
         if eat_flag:
-            handle_add_small_hit_point(chara_id,add_time=hpmp_add,change_data=target_change,now_time=now_time)
-        # 都加气力
-        handle_add_small_mana_point(chara_id,add_time=hpmp_add,change_data=target_change,now_time=now_time)
+            hp_add = hpmp_add * (1 + dish_special_rate) if dish_special_dim == "体力" else hpmp_add
+            handle_add_small_hit_point(chara_id,add_time=hp_add,change_data=target_change,now_time=now_time)
+        # 都加气力（本菜装了「气力」型自选特技时按倍率放大）
+        mp_add = hpmp_add * (1 + dish_special_rate) if dish_special_dim == "气力" else hpmp_add
+        handle_add_small_mana_point(chara_id,add_time=mp_add,change_data=target_change,now_time=now_time)
         # 食物结算饥饿值，饮品结算尿意值
         if eat_flag:
-            handle_hunger_point_zero(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
+            # 维多利亚午后茶会「清茶淡点」：轻食，不把饥饿值清零，只吃个半饱，留出接着吃的余地
+            if feast_flag and feast_effect == "tea":
+                target_data.hunger_point = max(0, target_data.hunger_point // 2)
+            else:
+                handle_hunger_point_zero(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
         else:
             handle_add_small_urinate_point(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
         # 清除进食状态
         handle_eat_food_flag_to_0(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
 
-        # 庆典氛围：团圆/丰盛/安眠曲/星光对入席者的身心效果
-        if feast_flag:
+        # 庆典氛围：团圆/家常/丰盛/安眠曲/星光对入席者的身心效果
+        # 作用域：只对入席干员生效，**博士自己不吃这些效果**（review #7 定案；修复原先博士也会被扣疲劳/清生气的问题）
+        if feast_flag and character_id == 0 and chara_id:
             if feast_effect == "reunion":
                 target_data.tired_point = max(0, target_data.tired_point - 50)
                 target_data.angry_point = 0
                 # 怒气清零时同步解除"对玩家生气"标志，否则干员仍按生气状态互动
                 target_data.sp_flag.angry_with_player = False
+            elif feast_effect == "home":
+                # 家常（罗德岛家宴）：疲劳 -10，且对你的好感与信赖各 +15%
+                target_data.tired_point = max(0, target_data.tired_point - 10)
+                _saved_home_target = character_data.target_character_id
+                character_data.target_character_id = chara_id
+                try:
+                    base_chara_favorability_and_trust_common_settle(character_id, int(state_add * 0.15), True, 0, 0, change_data, chara_id)
+                    base_chara_favorability_and_trust_common_settle(character_id, int(state_add * 0.15), False, 0, 0, change_data, chara_id)
+                finally:
+                    character_data.target_character_id = _saved_home_target
             elif feast_effect == "hearty":
                 target_data.tired_point = max(0, target_data.tired_point - 30)
             elif feast_effect == "melody":
                 target_data.desire_point = max(0, target_data.desire_point - 30)
             elif feast_effect == "starlight":
                 target_data.tired_point = max(0, target_data.tired_point - 20)
+
+        # 本菜自选特技的「状态向」进食效果：只对入席干员生效、不含博士
+        if chara_id and dish_special_dim:
+            _special_gain = 23 if dish_special_ex else 15
+            # 「抚慰」要扣的负面状态（按 CSV 里的状态名取 id，别硬编码）
+            _NEG_STATE_IDS = [
+                _sid for _sid, _cfg in game_config.config_character_state.items()
+                if getattr(_cfg, "name", "") in ("苦痛", "恐怖", "抑郁", "反感")
+            ]
+            if dish_special_dim == "疲劳":
+                target_data.tired_point = max(0, target_data.tired_point - _special_gain)
+            elif dish_special_dim == "怒气":
+                target_data.angry_point = max(0, target_data.angry_point - _special_gain)
+            elif dish_special_dim in ("心情", "抚慰"):
+                # 「抚慰」：直接**扣当前**负面状态数值（苦痛17/恐怖18/抑郁19/反感20），不是只减少增长
+                for _neg_state in _NEG_STATE_IDS:
+                    target_data.status_data[_neg_state] = max(
+                        0, target_data.status_data.get(_neg_state, 0) - _special_gain
+                    )
+            elif dish_special_dim == "掩味":
+                # 「掩味」：被吃下时也扣当前反感（拒收路径见 handle_high_obscenity_failed_adjust）
+                target_data.status_data[20] = max(0, target_data.status_data.get(20, 0) - _special_gain)
+            elif dish_special_dim in ("好感", "信赖"):
+                _saved_special_target = character_data.target_character_id
+                character_data.target_character_id = chara_id
+                try:
+                    base_chara_favorability_and_trust_common_settle(
+                        character_id, int(state_add * dish_special_rate), dish_special_dim == "好感", 0, 0, change_data, chara_id
+                    )
+                finally:
+                    character_data.target_character_id = _saved_special_target
 
         # 酒类食物
         if recipe_data.type == 3:
@@ -8293,11 +8347,29 @@ def handle_eat_add_just(
                 if _redirect_target:
                     character_data.target_character_id = _saved_target
 
-    # 庆典开席播报
-    if feast_flag:
+    # 庆典开席播报（只有博士发起的会食才算「开席」；NPC 自己吃庆典菜走单人进食路径，见 review #1b）
+    if feast_flag and character_id == 0:
         info = draw.WaitDraw()
         info.text = _("\n○庆典开席！{0}人共同享用了{1}\n").format(len(eat_food_chara_id_list), recipe_data.name)
         info.draw()
+
+    # 结算提示：把这道菜自带的固定效果与已装的自选特技亮出来
+    # （review #7：显示端不能只剩「未选择」；庆典固定效果 = 会食效果，自选特技 = 4 选 1）
+    effect_lines = []
+    feast_effect_text = _cooking.get_feast_effect_text(recipe_id) if feast_flag and character_id == 0 else ""
+    if feast_effect_text:
+        effect_lines.append(_("○本菜特殊效果：{0}").format(feast_effect_text))
+    chosen_name = _cooking.get_food_special_choice(now_food)
+    if chosen_name:
+        effect_lines.append(_("○本菜特技：{0}（{1}，{2}）").format(
+            chosen_name, _cooking.get_food_special_dim(now_food), _cooking.food_special_effect_text(now_food)
+        ))
+    if effect_lines:
+        effect_draw = draw.NormalDraw()
+        effect_draw.text = "\n" + "\n".join(effect_lines) + "\n"
+        effect_draw.draw()
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_HPMP_MAX)
 def handle_add_hpmp_max(
         character_id: int,
@@ -9713,6 +9785,13 @@ def handle_high_obscenity_failed_adjust(
         adjust = handle_ability.get_ability_adjust(target_data.ability[18])
         now_add_lust *= adjust
         now_add_lust += now_lust / 2
+        # 「掩味」特技：被喂的那道菜自带掩味时，本次反感大幅降低。
+        # 只认"被喂的菜"，因为 effect152 也被「重度性骚扰失败」复用，不能无条件打折
+        _fed_food = character_data.behavior.target_food
+        if _fed_food is not None and getattr(_fed_food, "special_seasoning", 0) != 0:
+            from Script.System.Cooking_System import cooking as _ck
+            if _ck.get_food_special_dim(_fed_food) == "掩味":
+                now_add_lust *= 0.2 if _ck.is_dish_special_ex(getattr(_fed_food, "recipe", -1)) else 0.35
         now_add_lust = int(now_add_lust)
         target_data.status_data[20] += now_add_lust
         target_data.status_data[20] = min(99999, target_data.status_data[20])

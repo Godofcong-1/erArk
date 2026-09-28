@@ -795,10 +795,8 @@ class SeeFoodListByFoodNameDraw:
         """ 是否为加料咖啡 """
         self.last_confirm_result: str = ""
         """ 记录二级确认面板最后一次操作结果（如：取消） """
-        self.mod_recipe_master: bool = False
-        """ 本菜谱大师模式开关（熟练度精通III解锁，仅此菜生效） """
-        self._recipe_master_return = None
-        """ 本菜谱大师开关按钮的返回值 """
+        self._dish_special_returns = {}
+        """ 本菜自选特技按钮返回值 → 候选名 的映射 """
 
         # 如果是用来占位的空白项，绘制一个固定宽度的空白文本
         if self.cid == "-1":
@@ -886,20 +884,16 @@ class SeeFoodListByFoodNameDraw:
                 base_quality += 1
             # 标准模式上限为美味（绝珍只能靠精细答题或大师模式达到），这行同时兜住上面「酒类在酒吧 +1」
             base_quality = min(base_quality, cooking.get_good_quality_cap())
-            # 大师模式：全局模式2 + 技能达标；或本菜谱开关 + 熟练度精通III；或宗师“稳定发挥”特技
+            # 大师模式：全局模式2 + 料理技能达标（本菜谱开关与 stable 特技已随 review #7 退役）
             global_master = cooking.is_master_unlocked()
-            master_active = (
-                (self.cook_mode == 2 and global_master)
-                or (getattr(self, "mod_recipe_master", False) and cooking.get_prof_tier(recipe_cid) >= 3)
-                or cooking.prof_std_master_active(recipe_cid)
-            )
+            master_active = self.cook_mode == 2 and global_master
             max_quality = base_quality
             if master_active:
                 max_quality = cooking.get_max_food_quality()
             elif self.cook_mode == 1 and cooking.has_cook_question_library(recipe_cid):
                 max_quality = min(base_quality + 4, cooking.get_max_food_quality())
-            # 最大可制作数量（上限99+宗师批量特技；药物调味受库存/庆典3份限制；再受体力气力上限约束）
-            max_count = 99 + cooking.get_prof_batch_bonus(recipe_cid)
+            # 最大可制作数量（上限99；药物调味受库存/庆典3份限制；再受体力气力上限约束）
+            max_count = 99
             if self.special_seasoning > 100:
                 consume = 3 if food_recipe.type == cooking.FEAST_TYPE else 1
                 max_count = min(max_count, character_data.item[self.special_seasoning] // consume)
@@ -957,8 +951,14 @@ class SeeFoodListByFoodNameDraw:
             if helpers:
                 helper_names = "、".join(cache.character_data[h].name for h in helpers)
                 confirm_text += _("帮厨: {0}（-{1:.0f}%）\n").format(helper_names, (1 - cooking.get_helper_time_mult()) * 100)
+            feast_effect_text = cooking.get_feast_effect_text(recipe_cid)
+            if feast_effect_text:
+                confirm_text += _("本菜特殊效果: {0}\n").format(feast_effect_text)
             if cooking.get_prof_count(recipe_cid) > 0 or cooking.get_prof_tier(recipe_cid) > 0:
                 confirm_text += cooking.prof_summary_text(recipe_cid) + _("\n")
+            slot_summary = cooking.dish_special_summary_text(recipe_cid)
+            if slot_summary:
+                confirm_text += slot_summary + _("\n")
             
             info_draw = draw.NormalDraw()
             info_draw.text = confirm_text
@@ -1013,16 +1013,41 @@ class SeeFoodListByFoodNameDraw:
                 if len(favorites) % 3 != 0:
                     line_feed.draw()
 
-            # 本菜谱大师开关（全局未解锁但该菜谱熟练度达精通III时出现）
-            if not global_master and cooking.get_prof_tier(recipe_cid) >= 3:
-                rm_state = _("已开启") if getattr(self, "mod_recipe_master", False) else _("已关闭")
-                rm_text = _("[大师模式（本菜谱）] {0}（熟练度精通III解锁，免答题稳定绝珍）").format(rm_state)
-                rm_draw = draw.LeftButton(rm_text, "feast_recipe_master", self.width)
-                rm_draw.draw()
-                return_list.append(rm_draw.return_text)
-                self._recipe_master_return = rm_draw.return_text
+            # 本菜自选特技（4 选 1，免费、随时可换；B 拿手解锁，EX 阶数值升级）
+            self._dish_special_returns = {}
+            _slot_tier = cooking.get_prof_tier(recipe_cid)
+            if _slot_tier >= cooking.PROF_PREVIEW_TIER:
+                line_feed.draw()
+                slot_title = draw.NormalDraw()
+                if _slot_tier >= cooking.PROF_SLOT_TIER:
+                    slot_title.text = _("○本菜特技（4 选 1，免费随时换）：")
+                else:
+                    slot_title.text = _("○本菜特技池预览（还差 {0} 次到 {1} {2} 可选）：").format(
+                        max(0, cooking.PROF_TIER_COUNTS[cooking.PROF_SLOT_TIER - 1] - cooking.get_prof_count(recipe_cid)),
+                        cooking.PROF_TIER_LETTERS[cooking.PROF_SLOT_TIER],
+                        cooking.PROF_TIER_NAMES[cooking.PROF_SLOT_TIER],
+                    )
+                slot_title.draw()
+                line_feed.draw()
+                chosen_name = cooking.get_dish_special_choice(recipe_cid)
+                for slot_index, slot_item in enumerate(cooking.get_dish_special_candidates(recipe_cid)):
+                    slot_effect = slot_item[3] if cooking.is_dish_special_ex(recipe_cid) else slot_item[2]
+                    if _slot_tier >= cooking.PROF_SLOT_TIER:
+                        slot_prefix = _("[已选]") if slot_item[0] == chosen_name else _("[选择]")
+                        slot_text = _("{0}{1}（{2} {3}）").format(slot_prefix, slot_item[0], slot_item[1], slot_effect)
+                        slot_draw = draw.LeftButton(slot_text, "feast_dish_special_" + str(slot_index), self.width)
+                        slot_draw.draw()
+                        return_list.append(slot_draw.return_text)
+                        self._dish_special_returns[slot_draw.return_text] = slot_item[0]
+                    else:
+                        preview_draw = draw.NormalDraw()
+                        preview_draw.text = _("　[预览]{0}（{1} {2}）").format(slot_item[0], slot_item[1], slot_effect)
+                        preview_draw.draw()
+                    # 一行一条，避免和后面的批量制作按钮挤在同一行（用户 2026-09-29 截图）
+                    line_feed.draw()
 
-            # 数量调整按钮
+            # 数量调整按钮（先换行，避免和特技按钮挤在一起）
+            line_feed.draw()
             min_draw = draw.CenterButton(_("[最小]"), _("最小"), int(window_width / 6))
             min_draw.draw()
             return_list.append(min_draw.return_text)
@@ -1076,8 +1101,10 @@ class SeeFoodListByFoodNameDraw:
                 make_count = min(max_count, make_count + 10)
             elif yrn == max_draw.return_text:
                 make_count = max_count
-            elif self._recipe_master_return is not None and yrn == self._recipe_master_return:
-                self.mod_recipe_master = not getattr(self, "mod_recipe_master", False)
+            elif self._dish_special_returns and yrn in self._dish_special_returns:
+                # 4 选 1：再点已选项则取消（免费随时换）
+                picked = self._dish_special_returns[yrn]
+                cooking.set_dish_special_choice(recipe_cid, "" if picked == cooking.get_dish_special_choice(recipe_cid) else picked)
             elif yrn == "feast_fav_save":
                 result = cooking.save_favorite(recipe_cid, make_count, self.cook_mode, self.special_seasoning)
                 info_text = {
@@ -1138,13 +1165,9 @@ class SeeFoodListByFoodNameDraw:
             base_quality += 1
         base_quality = min(base_quality, cooking.get_good_quality_cap())
         food_quality = base_quality
-        # 大师模式（全局模式2/本菜谱开关/宗师稳定发挥）：免答题稳定绝珍
+        # 大师模式：全局模式2 + 料理技能达标（本菜谱开关与 stable 特技已随 review #7 退役）
         global_master = cooking.is_master_unlocked()
-        master_active = (
-            (self.cook_mode == 2 and global_master)
-            or (getattr(self, "mod_recipe_master", False) and cooking.get_prof_tier(recipe_cid) >= 3)
-            or cooking.prof_std_master_active(recipe_cid)
-        )
+        master_active = self.cook_mode == 2 and global_master
         if master_active:
             food_quality = cooking.get_max_food_quality()
         # 精细模式且存在题库时，进入答题流程（特殊调味会替换对应阶段的问题），答对可提升品质（封顶绝珍）
@@ -1172,6 +1195,8 @@ class SeeFoodListByFoodNameDraw:
                     break
             # 创建食物对象并赋予名字、作者、品质、味道
             new_food = cooking.create_food("", recipe_cid, food_quality, character_data.name)
+            # 制作时就把当前自选特技烙在这份食物上：之后换槽不影响已有成品，也不会与别的槽混堆
+            new_food.dish_special = cooking.get_dish_special_choice(recipe_cid)
             new_food.special_seasoning = self.special_seasoning
             if self.special_seasoning in {11, 12}:
                 new_food.special_seasoning_amount = semen_count

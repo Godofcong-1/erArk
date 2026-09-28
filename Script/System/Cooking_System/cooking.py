@@ -6,6 +6,7 @@ from Script.Core.game_type import Recipes, Food
 from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config
 from Script.Design import handle_premise
+from Script.System.Cooking_System import cooking_special_pool
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -497,6 +498,7 @@ def judge_accept_special_seasoning_food(character_id: int):
     # 口才+菜谱难度+食物品质的双重加成判定
     accept_rate = pl_character_data.ability[40] * 10 + food_difficulty * 5 + food_quality * 5
     accept_rate = max(accept_rate,5) # 保底5%几率
+    # 「掩味」不再改接受率，改为**被拒绝时大幅降低反感**（见 Settle/default.handle_high_obscenity_failed_adjust）
 
     # debug模式直接过
     # if cache.debug_mode:
@@ -610,8 +612,14 @@ def handle_food_deterioration(character_id: int):
         return 0
     for food_uid in character_data.food_bag:
         food_data: Food = character_data.food_bag[food_uid]
-        # 食物变质
-        food_data.quality = min(food_data.quality - 1, food_data.quality // 2)
+        # 食物变质；本菜装了「耐放」型自选特技时损耗更慢（EX 阶只掉 1 点）
+        if get_food_special_dim(food_data) == "耐放":
+            if is_dish_special_ex(food_data.recipe):
+                food_data.quality = food_data.quality - 1
+            else:
+                food_data.quality = min(food_data.quality - 1, food_data.quality * 3 // 4)
+        else:
+            food_data.quality = min(food_data.quality - 1, food_data.quality // 2)
         # 食物过期
         if food_data.quality <= 0:
             remove_food_uid_list.append(food_uid)
@@ -629,32 +637,48 @@ FEAST_TAB_NAME = _("庆典")
 """ 烹饪面板庆典页签名 """
 
 FEAST_DATA_BY_CID = {
-    9001: {"effect": "base", "mult": 1.0},
+    9001: {"effect": "home", "mult": 1.0},
     9002: {"effect": "reunion", "mult": 1.0},
     9003: {"effect": "hearty", "mult": 1.0},
     9004: {"effect": "melody", "mult": 1.0},
     9005: {"effect": "starlight", "mult": 1.0},
     9006: {"effect": "sakura", "mult": 1.0},
     9007: {"effect": "family", "mult": 1.0},
-    9008: {"effect": "tea", "mult": 0.6},
+    9008: {"effect": "tea", "mult": 1.0},
     9009: {"effect": "golden", "mult": 1.25},
     9010: {"effect": "anniversary", "mult": 1.5},
 }
-""" 庆典料理特有数据：effect 为会食附加效果名，mult 为进食基础效果倍率 """
+""" 庆典料理特有数据：effect 为会食附加效果名（＝这道菜自带的固定特技），mult 为进食基础效果倍率 """
 
-FEAST_PROF_SPECIAL = {
-    9001: "stable",
-    9002: "fire",
-    9003: "batch",
-    9004: "fast",
-    9005: "fire",
-    9006: "fast",
-    9007: "stable",
-    9008: "fast",
-    9009: "batch",
-    9010: "fire",
+FEAST_EFFECT_TEXT = {
+    "base": (_("无"), _("无额外效果")),
+    "home": (_("家常"), _("入席者疲劳 −10；对你的好感与信赖 +15%")),
+    "reunion": (_("团圆"), _("入席者疲劳 −50、怒气清零、解除对你的生气")),
+    "hearty": (_("饱足"), _("入席者疲劳 −30")),
+    "melody": (_("安眠曲"), _("入席者欲望 −30")),
+    "starlight": (_("星光助兴"), _("入席者疲劳 −20，且更兴奋")),
+    "sakura": (_("花见之情"), _("入席者对你的好感 +25%")),
+    "family": (_("家规约束"), _("你亲手做的这桌：信赖 +50%")),
+    "tea": (_("清茶淡点"), _("轻食：入席者不易吃饱（饥饿值只降到一半），可以接着吃")),
+    "golden": (_("黄金满席"), _("进食收益 ×1.25")),
+    "anniversary": (_("周年同庆"), _("进食收益 ×1.5")),
 }
-""" 庆典料理到达宗师（熟练度第4阶）时获得的特技名 """
+""" 会食效果（＝庆典料理的固定特技）的名字与效果说明：菜自带、不随熟练度、不入档 """
+
+
+def get_feast_effect_text(food_cid) -> str:
+    """
+    获取某道庆典料理自带的固定效果文案（非庆典或无效 effect 时为空字符串）
+    Keyword arguments:
+    food_cid -- 菜谱id
+    Return arguments:
+    str -- 「名字：说明」；无则空字符串
+    """
+    data = FEAST_DATA_BY_CID.get(_fid(food_cid))
+    if not data:
+        return ""
+    name, desc = FEAST_EFFECT_TEXT.get(data["effect"], (_("无"), _("无额外效果")))
+    return _("{0}：{1}").format(name, desc)
 
 
 def _get_feast_npcs() -> list:
@@ -710,26 +734,42 @@ MAX_FAVORITES_PER_RECIPE = 9
 """ 单个菜谱收藏方案上限（每行3个，3行共9个） """
 FAVORITES_ATTR = "recipe_favorites"
 """ 收藏制作方案的玩家属性名 """
-# 熟练度只影响耗时/批量上限/本菜谱大师解锁/宗师特技，**不提供任何品质加成**（review #6 收严行为）；
+# 熟练度只影响本菜耗时与「自选特技槽」，**不提供任何品质加成**（review #6 收严行为）；
 # 品质只由料理技能（≤美味）、精细答题（≤绝珍）、大师模式（绝珍）三者决定。
-PROF_TIER_COUNTS = [3, 10, 25, 50]
-""" 熟练度各阶门槛（累计制作次数） """
-PROF_TIER_NAMES = [_("入门"), _("精通I"), _("精通II"), _("精通III"), _("宗师")]
-""" 熟练度各阶名称 """
+# 9 级梯级（review #7；设计见 games/erark/prof_special_design.md §4c.1／§4c.10）：G 初见 … EX 本命
+PROF_TIER_COUNTS = [3, 6, 10, 16, 25, 40, 60, 90]
+""" 熟练度各阶门槛（累计制作次数；8 个阈值 → 0–8 共 9 档） """
+PROF_TIER_NAMES = [_("初见"), _("眼熟"), _("上手"), _("熟练"), _("娴熟"), _("拿手"), _("看家"), _("独门"), _("本命")]
+""" 熟练度各阶名称（关系轴：我与这道菜的关系，不是人的头衔） """
+PROF_TIER_LETTERS = ["G", "F", "E", "D", "C", "B", "A", "S", "EX"]
+""" 熟练度各阶字母（复用 attr_calculation.judge_grade 的 9 档评级与配色） """
+PROF_TIER_PAYOFF = {
+    1: _("本菜耗时-5%"),
+    2: _("特技池预览"),
+    3: _("本菜耗时-10%"),
+    4: _("本菜耗时-15%"),
+    5: _("解锁自选特技槽"),
+    6: _("本菜耗时-20%"),
+    7: _("本菜耗时-30%"),
+    8: _("已装特技效果×1.5"),
+}
+""" 各阶收益（用于确认页「距下一阶」提示） """
+PROF_TIME_MULT_STEPS = [(1, 0.95), (3, 0.90), (4, 0.85), (6, 0.80), (7, 0.70)]
+""" 本菜耗时倍率：按当前阶取最高档、不叠加 """
+PROF_PREVIEW_TIER = 2
+""" 特技池预览阶（E 上手，累计 6 次）：只读展示 4 条候选，还不能选 """
+PROF_SLOT_TIER = 5
+""" 自选特技槽解锁阶（B 拿手，累计 25 次） """
+PROF_EX_TIER = 8
+""" 顶阶 EX（累计 90 次） """
+PROF_EX_UPGRADE = 1.5
+""" EX 阶对已装自选特技的数值加成（升级已装效果，不新增效果） """
 PROF_GAIN_PER_MAKE = 1
 """ 每次成功制作一道菜获得的熟练度（不论本次份数，与上游"经验按单次行为结算"的惯例一致） """
 PROFICIENCY_ATTR = "recipe_proficiency"
 """ 菜谱熟练度的玩家属性名 """
 SPECIAL_EFFECTS_ATTR = "recipe_special"
-""" 菜谱宗师特技的玩家属性名 """
-SPECIAL_EFFECTS = {
-    # fire 原效果「品质+1」随 review #6「熟练度不给品质」作废，新效果待 review #7 重定
-    "fire": {"name": _("火候掌控"), "desc": _("效果待定")},
-    "fast": {"name": _("快手"), "desc": _("耗时-20%")},
-    "batch": {"name": _("分身有术"), "desc": _("批量上限+10")},
-    "stable": {"name": _("稳定发挥"), "desc": _("标准模式可冲击绝珍")},
-}
-""" 宗师特技定义 """
+""" 菜谱自选特技的玩家属性名（Dict[菜谱id, 候选名]，每菜最多 1 个；庆典的固定效果不入档） """
 
 
 def is_master_unlocked() -> bool:
@@ -897,7 +937,7 @@ def get_prof_count(food_cid: int) -> int:
 
 def get_prof_tier(food_cid: int) -> int:
     """
-    获取某菜谱的熟练度阶（0入门~4宗师）
+    获取某菜谱的熟练度阶（0 初见 ~ 8 本命，字母 G–EX）
     Keyword arguments:
     food_cid -- 菜谱id
     Return arguments:
@@ -925,20 +965,13 @@ def add_proficiency(food_cid: int) -> None:
     old_tier = get_prof_tier(fid)
     # 熟练度按"制作一次"结算，不随份数倍增（批量制作不再一次拉满）
     data[fid] = data.get(fid, 0) + PROF_GAIN_PER_MAKE
-    new_tier = get_prof_tier(fid)
-    if old_tier < 4 <= new_tier:
-        special = FEAST_PROF_SPECIAL.get(fid, "")
-        if special:
-            sp = getattr(ri, SPECIAL_EFFECTS_ATTR, None)
-            if sp is None:
-                sp = {}
-                setattr(ri, SPECIAL_EFFECTS_ATTR, sp)
-            sp[fid] = special
+    # 自选特技由玩家自己在确认页选择（见 set_dish_special_choice），跨阶不再自动写档
 
 
 def get_prof_time_mult(food_cid: int) -> float:
     """
-    获取熟练度提供的耗时倍率（小于1为缩短）
+    获取熟练度提供的耗时倍率（按当前阶取最高档、不叠加；小于1为缩短）
+    若本菜已装「耗时」型自选特技，再乘一份（EX 阶为 ×1.5 升级后的数值）
     Keyword arguments:
     food_cid -- 菜谱id
     Return arguments:
@@ -946,51 +979,157 @@ def get_prof_time_mult(food_cid: int) -> float:
     """
     tier = get_prof_tier(food_cid)
     mult = 1.0
-    if tier >= 2:
-        mult *= 0.8
-    if tier >= 4 and _get_special_effect(food_cid) == "fast":
-        mult *= 0.8
+    for min_tier, step_mult in PROF_TIME_MULT_STEPS:
+        if tier >= min_tier:
+            mult = step_mult
+    if tier >= PROF_SLOT_TIER and get_dish_special_dim(food_cid) == "耗时":
+        mult *= 0.85 if is_dish_special_ex(food_cid) else 0.90
     return mult
 
 
-def get_prof_batch_bonus(food_cid: int) -> int:
+def get_food_special(food) -> tuple:
     """
-    获取熟练度提供的批量制作上限加成
+    取「某一份食物」自己带的特技候选元组（食物实例在制作时就定下了名字，之后换槽不影响已有成品）
+
+    Keyword arguments:
+    food -- Food 实例（可为 None）
+    Return arguments:
+    tuple -- (候选名, 维度, 基础效果, EX 效果)；没选时为 ()
+    """
+    if food is None:
+        return ()
+    name = getattr(food, "dish_special", "") or ""
+    recipe_id = getattr(food, "recipe", -1)
+    if not name:
+        # 老存档的食物没有该字段，回落到"菜谱当前选择"（与改动前行为一致）
+        return get_dish_special(recipe_id)
+    for item in get_dish_special_candidates(recipe_id):
+        if item[0] == name:
+            return item
+    return ()
+
+
+def get_food_special_choice(food) -> str:
+    """ 取某一份食物上的自选特技名（可能为空字符串） """
+    item = get_food_special(food)
+    return item[0] if item else ""
+
+
+def get_food_special_dim(food) -> str:
+    """ 取某一份食物上的自选特技维度（可能为空字符串） """
+    item = get_food_special(food)
+    return item[1] if item else ""
+
+
+def food_special_effect_text(food) -> str:
+    """ 取某一份食物上的自选特技效果文案（EX 阶取升级后的数值） """
+    item = get_food_special(food)
+    if not item:
+        return ""
+    return item[3] if is_dish_special_ex(getattr(food, "recipe", -1)) else item[2]
+
+
+def get_dish_special_candidates(food_cid) -> list:
+    """
+    获取某道菜的自选特技候选（每菜 4 条，维度互不重复）
     Keyword arguments:
     food_cid -- 菜谱id
     Return arguments:
-    int -- 批量上限加成
+    list -- [(候选名, 效果维度, 基础效果, EX 升级后效果), ...]；无候选时为空列表
     """
-    tier = get_prof_tier(food_cid)
-    bonus = 0
-    if tier >= 4 and _get_special_effect(food_cid) == "batch":
-        bonus += 10
-    return bonus
+    return list(cooking_special_pool.DISH_SPECIAL_CANDIDATES.get(_fid(food_cid), []))
 
 
-def _get_special_effect(food_cid: int) -> str:
+def get_dish_special_choice(food_cid) -> str:
     """
-    获取某菜谱已获得的宗师特技名
+    获取玩家为这道菜选定的自选特技名（未选择或已失效时为空字符串）
     Keyword arguments:
     food_cid -- 菜谱id
     Return arguments:
-    str -- 特技名（无则为空字符串）
+    str -- 候选名
     """
     ri = getattr(cache, "rhodes_island", None)
     if ri is None:
         return ""
-    return getattr(ri, SPECIAL_EFFECTS_ATTR, {}).get(_fid(food_cid), "")
+    name = getattr(ri, SPECIAL_EFFECTS_ATTR, {}).get(_fid(food_cid), "")
+    names = [c[0] for c in get_dish_special_candidates(food_cid)]
+    return name if name in names else ""
 
 
-def prof_std_master_active(food_cid: int) -> bool:
+def set_dish_special_choice(food_cid, name: str) -> None:
     """
-    该菜谱的宗师特技是否允许标准模式冲击绝珍
+    设定/取消这道菜的自选特技（name 传空字符串表示取消）
+    Keyword arguments:
+    food_cid -- 菜谱id
+    name -- 候选名（必须在该菜候选表内，否则视为取消）
+    """
+    ri = getattr(cache, "rhodes_island", None)
+    if ri is None:
+        return
+    data = getattr(ri, SPECIAL_EFFECTS_ATTR, None)
+    if data is None:
+        data = {}
+        setattr(ri, SPECIAL_EFFECTS_ATTR, data)
+    fid = _fid(food_cid)
+    names = [c[0] for c in get_dish_special_candidates(fid)]
+    if name in names:
+        data[fid] = name
+    else:
+        data.pop(fid, None)
+
+
+def get_dish_special(food_cid) -> tuple:
+    """
+    获取已装自选特技的完整条目
     Keyword arguments:
     food_cid -- 菜谱id
     Return arguments:
-    bool -- 是否生效
+    tuple -- (候选名, 效果维度, 基础效果, EX 升级后效果)；未装时返回空元组
     """
-    return get_prof_tier(food_cid) >= 4 and _get_special_effect(food_cid) == "stable"
+    name = get_dish_special_choice(food_cid)
+    if not name:
+        return ()
+    for item in get_dish_special_candidates(food_cid):
+        if item[0] == name:
+            return item
+    return ()
+
+
+def get_dish_special_dim(food_cid) -> str:
+    """
+    获取已装自选特技的效果维度（未装时为空字符串）
+    Keyword arguments:
+    food_cid -- 菜谱id
+    Return arguments:
+    str -- 效果维度
+    """
+    item = get_dish_special(food_cid)
+    return item[1] if item else ""
+
+
+def is_dish_special_ex(food_cid) -> bool:
+    """
+    这道菜是否已达 EX 阶（已装自选特技的数值按 PROF_EX_UPGRADE 升级）
+    Keyword arguments:
+    food_cid -- 菜谱id
+    Return arguments:
+    bool -- 是否升级
+    """
+    return get_prof_tier(food_cid) >= PROF_EX_TIER
+
+
+def dish_special_effect_text(food_cid) -> str:
+    """
+    已装自选特技的效果文案（EX 阶自动取升级后的数值）
+    Keyword arguments:
+    food_cid -- 菜谱id
+    Return arguments:
+    str -- 效果说明
+    """
+    item = get_dish_special(food_cid)
+    if not item:
+        return ""
+    return item[3] if is_dish_special_ex(food_cid) else item[2]
 
 
 def get_helpers() -> list:
@@ -1044,9 +1183,47 @@ def prof_summary_text(food_cid: int) -> str:
     """
     count = get_prof_count(food_cid)
     tier = get_prof_tier(food_cid)
-    text = _("熟练度: {0}（累计{1}次）").format(PROF_TIER_NAMES[tier], count)
-    if tier == 4:
-        effect_key = _get_special_effect(food_cid)
-        effect_name = SPECIAL_EFFECTS[effect_key]["name"] if effect_key else _("未选择")
-        text += _("｜特殊效果: {0}").format(effect_name)
+    text = _("熟练度: {0} {1}（累计{2}次）").format(PROF_TIER_LETTERS[tier], PROF_TIER_NAMES[tier], count)
+    # 当前已经拿到的收益（不能只显示"下一阶给什么"，用户 2026-09-29 指出）
+    _now = []
+    _steps = [s for s in PROF_TIME_MULT_STEPS if tier >= s[0]]
+    if _steps:
+        _now.append(_("本菜耗时 -{0}%").format(int(round((1 - _steps[-1][1]) * 100))))
+    if tier >= PROF_SLOT_TIER:
+        _now.append(_("自选特技槽已解锁"))
+    if tier >= PROF_EX_TIER:
+        _now.append(_("已装特技效果 ×{0}").format(PROF_EX_UPGRADE))
+    if _now:
+        text += _("｜当前：{0}").format("、".join(_now))
+    if tier < len(PROF_TIER_COUNTS):
+        next_tier = tier + 1
+        need = max(0, PROF_TIER_COUNTS[tier] - count)
+        text += _("｜距 {0} {1} 还差 {2} 次：{3}").format(
+            PROF_TIER_LETTERS[next_tier], PROF_TIER_NAMES[next_tier], need, PROF_TIER_PAYOFF[next_tier]
+        )
+    else:
+        text += _("｜已至顶阶")
     return text
+
+
+def dish_special_summary_text(food_cid) -> str:
+    """
+    生成确认页的「本菜自选特技」摘要行
+    Keyword arguments:
+    food_cid -- 菜谱id
+    Return arguments:
+    str -- 摘要文本（无可选特技时为空字符串）
+    """
+    candidates = get_dish_special_candidates(food_cid)
+    if not candidates:
+        return ""
+    tier = get_prof_tier(food_cid)
+    if tier < PROF_SLOT_TIER:
+        return _("本菜特技: 未解锁（累计 {0} 次 / {1} {2} 解锁 4 选 1）").format(
+            PROF_TIER_COUNTS[PROF_SLOT_TIER - 1], PROF_TIER_LETTERS[PROF_SLOT_TIER], PROF_TIER_NAMES[PROF_SLOT_TIER]
+        )
+    item = get_dish_special(food_cid)
+    if not item:
+        return _("本菜特技: 未选择（4 选 1）")
+    ex_text = _("｜EX 已升级") if is_dish_special_ex(food_cid) else ""
+    return _("本菜特技: {0}（{1}，{2}）{3}").format(item[0], item[1], dish_special_effect_text(food_cid), ex_text)
