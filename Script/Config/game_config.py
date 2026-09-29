@@ -256,6 +256,8 @@ config_instruct_judge_data: Dict[int, config_def.InstructJudge] = {}
 """ 每个指令的实行值判定数据 """
 config_recipes: Dict[int, config_def.Recipes] = {}
 """ 菜谱配置 """
+config_dish_special: Dict[int, config_def.Dish_Special] = {}
+""" 每菜 4 条自选特技候选（键＝菜谱id*10+槽位） """
 config_season: Dict[int, config_def.Season] = {}
 """ 季节配置数据 """
 config_sex_tem: Dict[int, config_def.SexTem] = {}
@@ -1341,6 +1343,16 @@ def load_recipes():
         config_recipes[now_tem.cid] = now_tem
 
 
+def load_dish_special():
+    """载入每菜自选特技候选数据"""
+    now_data = config_data["Dish_Special"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Dish_Special()
+        now_tem.__dict__ = tem_data
+        config_dish_special[now_tem.cid] = now_tem
+
+
 def load_season():
     """载入季节配置"""
     now_data = config_data["Season"]
@@ -2311,6 +2323,7 @@ def init():
     load_restaurant()
     load_city()
     load_recipes()
+    load_dish_special()
     load_season()
     load_sex_tem()
     load_jj_tem()

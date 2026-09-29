@@ -6,7 +6,6 @@ from Script.Core.game_type import Recipes, Food
 from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config
 from Script.Design import handle_premise
-from Script.System.Cooking_System import cooking_special_pool
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -1037,7 +1036,14 @@ def get_dish_special_candidates(food_cid) -> list:
     Return arguments:
     list -- [(候选名, 效果维度, 基础效果, EX 升级后效果), ...]；无候选时为空列表
     """
-    return list(cooking_special_pool.DISH_SPECIAL_CANDIDATES.get(_fid(food_cid), []))
+    fid = _fid(food_cid)
+    out = []
+    for slot in range(1, 5):
+        row = game_config.config_dish_special.get(fid * 10 + slot)
+        if row is None:
+            continue
+        out.append((row.name, row.dim, row.base, row.ex))
+    return out
 
 
 def get_dish_special_choice(food_cid) -> str:
