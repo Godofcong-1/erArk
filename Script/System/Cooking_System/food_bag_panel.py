@@ -296,6 +296,7 @@ class FoodGroupDraw:
         group_key, uid_list = text
         recipe_id, special_seasoning = group_key[0], group_key[1]
         self.dish_special = group_key[2] if len(group_key) > 2 else ""
+        """ 本组食物制作时定下的自选特技名（不同特技的同一道菜不再并堆） """
 
         self.uid_list: List[UUID] = uid_list
         """ 该分组下的食物uid列表 """
@@ -313,9 +314,6 @@ class FoodGroupDraw:
         """ 食物介绍 """
         self.special_seasoning: int = special_seasoning
         """ 特殊调味类型 """
-        self.dish_special: str = ""
-        """ 本组食物制作时定下的自选特技名（不同特技的同一道菜不再并堆） """
-
         # 获取食物名称和介绍
         if recipe_id != -1 and recipe_id in cache.recipe_data:
             food_recipe: game_type.Recipes = cache.recipe_data[recipe_id]

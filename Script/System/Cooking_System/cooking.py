@@ -733,9 +733,9 @@ MAX_FAVORITES_PER_RECIPE = 9
 """ 单个菜谱收藏方案上限（每行3个，3行共9个） """
 FAVORITES_ATTR = "recipe_favorites"
 """ 收藏制作方案的玩家属性名 """
-# 熟练度只影响本菜耗时与「自选特技槽」，**不提供任何品质加成**（review #6 收严行为）；
+# 熟练度只影响本菜耗时与「自选特技槽」，**不提供任何品质加成**；
 # 品质只由料理技能（≤美味）、精细答题（≤绝珍）、大师模式（绝珍）三者决定。
-# 9 级梯级（review #7；设计见 games/erark/prof_special_design.md §4c.1／§4c.10）：G 初见 … EX 本命
+# 9 级梯级（与 attr_calculation.judge_grade 的 9 档评级一致）：G 初见 … EX 本命
 PROF_TIER_COUNTS = [3, 6, 10, 16, 25, 40, 60, 90]
 """ 熟练度各阶门槛（累计制作次数；8 个阈值 → 0–8 共 9 档） """
 PROF_TIER_NAMES = [_("初见"), _("眼熟"), _("上手"), _("熟练"), _("娴熟"), _("拿手"), _("看家"), _("独门"), _("本命")]
@@ -769,6 +769,21 @@ PROFICIENCY_ATTR = "recipe_proficiency"
 """ 菜谱熟练度的玩家属性名 """
 SPECIAL_EFFECTS_ATTR = "recipe_special"
 """ 菜谱自选特技的玩家属性名（Dict[菜谱id, 候选名]，每菜最多 1 个；庆典的固定效果不入档） """
+MASKED_REJECT_MULT = 0.35
+""" 「掩味」对"被喂特殊调味、判定失败"时反感增量的折扣（药剂类，调味 ≥100） """
+MASKED_REJECT_MULT_EX = 0.20
+""" 同上，EX 阶 """
+MASKED_REJECT_MULT_SEMEN = 0.15
+""" 「掩味」对精液类调味（11 巧妙混入 / 12 不作掩饰）的折扣：压不住多少，仍保留反发刻印压力 """
+MASKED_REJECT_MULT_SEMEN_EX = 0.08
+""" 同上，EX 阶：实测连续 4 次喂食也涨不到反发刻印 1 级（第 6 次才到） """
+SEMEN_SEASONING_SET = (11, 12)
+""" 精液类特殊调味：11 射入精液（巧妙混入）/ 12 射入精液（不作掩饰直接射上去） """
+CHEER_MIN_DEDUCT = 1500
+""" 「抚慰」型自选特技的最低扣除量：扣除 = max(当前值 × 比例, 本值)，**不设上限**
+数值依据（真实存档状态存量 + 结算公式复算）：
+一次重度单体事件（苦痛·大量）≈1060、常规反感事件 ≈65；一天按 3–4 顿计，
+下限 1500 ⇒ 一顿 ≥ 一次重度事件量级，一天 4 顿 ≈6000 < 一次反感重击（≈10560） """
 
 
 def is_master_unlocked() -> bool:
@@ -1190,7 +1205,7 @@ def prof_summary_text(food_cid: int) -> str:
     count = get_prof_count(food_cid)
     tier = get_prof_tier(food_cid)
     text = _("熟练度: {0} {1}（累计{2}次）").format(PROF_TIER_LETTERS[tier], PROF_TIER_NAMES[tier], count)
-    # 当前已经拿到的收益（不能只显示"下一阶给什么"，用户 2026-09-29 指出）
+    # 当前已经拿到的收益（不能只显示"下一阶给什么"）
     _now = []
     _steps = [s for s in PROF_TIME_MULT_STEPS if tier >= s[0]]
     if _steps:
