@@ -1,99 +1,203 @@
 from typing import Dict, List
 from types import FunctionType
-from Script.Core import cache_control, game_type, get_text, flow_handle, constant, py_cmd
+from Script.Core import cache_control, game_type, get_text, flow_handle, constant, py_cmd, text_handle
 from Script.Design import basement,character_handle, handle_premise, attr_calculation, clothing, map_handle
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 import os
 import json
 import csv
-import copy
-import functools
-import pickle
-
-'''
-Debug 输入属于直接修改运行时存档对象的高风险入口。所有调试修改都通过
-事务包装器执行：输入解析、索引访问或结构校验失败时恢复整个缓存快照，
-防止半次修改留下无法加载的存档。
-'''
+# Debug 仅在解析、校验当前输入通过后修改对应字段；不回滚此前已完成的修改。
 _DEBUG_MAX_INTEGER = 10 ** 9
 
 
-def _debug_parse_int(value):
-    result = int(str(value).strip())
+def _debug_parse_int(value: str) -> int:
+    """输入：value (str) 用户输入；返回：int 整数；功能：转换全角字符并限制数字范围。"""
+    result = int(text_handle.full_to_half_text(str(value)).strip())
     if abs(result) > _DEBUG_MAX_INTEGER:
         raise ValueError("数字超出 debug 安全范围")
     return result
 
 
-class _DebugScalarInt(int):
-    def __getitem__(self, index):
-        if index == 0:
-            return int(self)
-        raise IndexError("标量输入不能访问子项")
-
-
-def _debug_scalar_int(value):
-    return _DebugScalarInt(_debug_parse_int(value))
-
-
-def _debug_int_list(value):
-    parts = [part.strip() for part in str(value).split(",")]
+def _debug_int_list(value: str) -> List[int]:
+    """输入：value (str) 逗号分隔的编号；返回：List[int]，单个数字也为单元素列表；功能：解析编号。"""
+    parts = [part.strip() for part in text_handle.full_to_half_text(str(value)).split(",")]
     if not parts or any(part == "" for part in parts):
         raise ValueError("列表输入包含空项")
     return [_debug_parse_int(part) for part in parts]
 
 
-def _debug_validate_cache() -> None:
-    if not isinstance(cache.character_data, dict):
-        raise ValueError("character_data 必须是字典")
-    if not isinstance(cache.npc_id_got, (set, list)):
-        raise ValueError("npc_id_got 必须是集合或列表")
-    island = cache.rhodes_island
-    # recruit_line 的真实结构是 Dict[int, List]，键为招募位编号，值为
-    # [进度、策略、主招聘专员、效率]；此前误判为 list 会让任何一次性
-    # 修改（例如资源 99999）都在提交后被错误回滚。
-    if not isinstance(island.recruit_line, dict):
-        raise ValueError("recruit_line 必须是字典")
-    for line_id, line_data in island.recruit_line.items():
-        if not isinstance(line_id, int) or not isinstance(line_data, list) or len(line_data) < 4:
-            raise ValueError("recruit_line 项目结构无效")
-    if not isinstance(island.recruited_id, (set, list)):
-        raise ValueError("recruited_id 必须是集合或列表")
-    pickle.dumps(cache, protocol=pickle.HIGHEST_PROTOCOL)
+def _debug_input_error(message: str) -> None:
+    """输入：message (str) 错误原因；返回：None；功能：在游戏界面提示本次输入无效。"""
+    error_draw = draw.NormalDraw()
+    error_draw.width = window_width
+    error_draw.text = f"\n输入未应用：{message}。请重新输入。\n"
+    error_draw.draw()
+    line_feed.draw()
 
 
-def _debug_transaction(func):
-    @functools.wraps(func)
-    def wrapped(self, *args, **kwargs):
+def _debug_read_int(input_panel: panel.AskForOneMessage, validator=None) -> int:
+    """输入：input_panel (AskForOneMessage) 输入框、validator (可选函数) 校验器；返回：int；功能：仅对输入错误重新提问。"""
+    while True:
         try:
-            snapshot = copy.deepcopy(cache.__dict__)
-        except Exception:
-            snapshot = None
+            value = _debug_parse_int(input_panel.draw())
+            if validator is not None:
+                validator(value)
+            return value
+        except ValueError as error:
+            _debug_input_error(str(error))
+
+
+def _debug_read_parts(input_panel: panel.AskForOneMessage, validator=None) -> List[int]:
+    """输入：input_panel (AskForOneMessage) 输入框、validator (可选函数) 校验器；返回：List[int]；功能：校验编号后重新提问无效输入。"""
+    while True:
         try:
-            result = func(self, *args, **kwargs)
-            _debug_validate_cache()
-            return result
-        except (ValueError, TypeError, IndexError, KeyError, AttributeError, OverflowError,
-                pickle.PickleError) as error:
-            if snapshot is not None:
-                cache.__dict__.clear()
-                cache.__dict__.update(snapshot)
-            # 同时写入控制台和游戏界面；仅 print 会让玩家误以为输入已经生效。
-            message = f"\n输入未应用，缓存已回滚：{error}\n请检查格式后重试。\n"
-            self._debug_error_message = message
-            print(f"[debug] {message.strip()}")
-            try:
-                error_draw = draw.NormalDraw()
-                error_draw.width = window_width
-                error_draw.text = message
-                error_draw.draw()
-                line_feed.draw()
-            except Exception:
-                # 绘制提示失败时仍不能影响主流程和回滚结果。
-                pass
-            return None
-    return wrapped
+            parts = _debug_int_list(input_panel.draw())
+            if validator is not None:
+                validator(parts)
+            return parts
+        except ValueError as error:
+            _debug_input_error(str(error))
+
+
+def _debug_existing_key(parts: List[int], values: dict, config: dict) -> None:
+    """输入：parts (List[int]) 编号、values (dict) 角色数据、config (dict) 配置；返回：None；功能：禁止写入不存在的字典键。"""
+    if len(parts) != 1 or parts[0] not in values or parts[0] not in config:
+        raise ValueError("请输入列表中已有的单个编号")
+
+
+def _debug_require_adv_id(adv_id: int) -> None:
+    """输入：adv_id (int) 角色模板编号；返回：None；功能：确认快速测试的角色存在。"""
+    if not any(character.adv == adv_id for character in cache.character_data.values()):
+        raise ValueError("角色编号不存在")
+
+
+def _debug_require_existing_npc(character_id: int) -> None:
+    """输入：character_id (int) 干员编号；返回：None；功能：拒绝不存在或玩家自己的招募编号。"""
+    if character_id == 0 or character_id not in cache.character_data:
+        raise ValueError("干员编号不存在")
+
+
+def _debug_has_index(values, index: int) -> bool:
+    """输入：values (列表或字典) 容器、index (int) 编号；返回：bool；功能：判断编号能否安全索引。"""
+    return 0 <= index < len(values) if isinstance(values, (list, tuple)) else index in values
+
+
+def _debug_require_global_parts(page: int, parts: List[int]) -> None:
+    """输入：page (int) 全局项目、parts (List[int]) 编号；返回：None；功能：验证时间及干员操作格式。"""
+    if len(parts) != 2 or (page == 0 and (parts[0] != 0 or parts[1] not in (0, 1, 2))) or (page == 1 and parts[1] not in (0, 1)):
+        raise ValueError("请按页面说明输入两个有效编号")
+    if page == 1 and (parts[0] == 0 or parts[0] not in cache.character_data):
+        raise ValueError("请选择已有的非玩家角色编号")
+
+
+def _debug_validate_target_parts(page: int, parts: List[int], target: game_type.Character) -> None:
+    """输入：page (int) 页面、parts (List[int]) 输入编号、target (Character) 角色；返回：None；功能：写入前验证项目和子项。"""
+    item = parts[0]
+    scalar_pages = {6: (target.status_data, game_config.config_character_state), 7: (target.ability, game_config.config_ability),
+                    8: (target.experience, game_config.config_experience), 9: (target.juel, game_config.config_juel),
+                    10: (target.talent, game_config.config_talent), 14: (target.assistant_services, game_config.config_assistant_services)}
+    if page in scalar_pages:
+        _debug_existing_key(parts, *scalar_pages[page])
+    elif page == 0:
+        if len(parts) != 1 or item not in (*range(6), *range(11, 25)):
+            raise ValueError("请输入页面中已有的单个编号")
+    elif page == 4:
+        behavior = game_config.config_behavior_by_cid.get(item) if len(parts) == 1 else None
+        if behavior is None or behavior.en_name not in target.second_behavior:
+            raise ValueError("请输入页面中已有的二段行为数字编号")
+    elif page == 12:
+        containers = (target.dirty.body_semen, target.dirty.cloth_semen, target.dirty.cloth_locker_semen)
+        if item in (3, 8) and len(parts) == 1:
+            return
+        if item in (0, 1, 2) and len(parts) == 3 and _debug_has_index(containers[item], parts[1]) and parts[2] in (1, 2, 3):
+            return
+        if item in (4, 5, 6, 7) and len(parts) == 2 and _debug_has_index(containers[0 if item < 6 else 1], parts[1]):
+            return
+        raise ValueError("污浊项目、部位或数字字段编号无效")
+    elif page == 13:
+        if len(parts) == 1 and item in (1, 2, 3, 4):
+            return
+        if item == 0 and len(parts) == 3 and _debug_has_index(target.h_state.body_item, parts[1]) and parts[2] == 1:
+            return
+        if item in (5, 6) and len(parts) == 2 and _debug_has_index(target.h_state.orgasm_level if item == 5 else target.h_state.orgasm_count, parts[1]):
+            return
+        raise ValueError("H 状态项目或子项编号无效")
+    elif page == 17:
+        if item == 0 and len(parts) == 4 and all(value in game_config.config_entertainment for value in parts[1:]):
+            return
+        if item == 1 and len(parts) == 3 and parts[1] in (0, 1):
+            if (parts[1] == 1 and parts[2] in game_config.config_book) or (parts[1] == 0 and parts[2] in target.entertainment.borrow_book_id_set):
+                return
+        if item == 2 and len(parts) == 2 and 0 <= parts[1] <= 100:
+            return
+        raise ValueError("娱乐项目需要完整的子项编号")
+    elif page == 18:
+        if len(parts) == 1 and item in (0, 1, 5, 6, 7, 8):
+            if item == 6 and not target.relationship.child_id_list:
+                raise ValueError("当前角色没有孩子")
+            return
+        if len(parts) == 2 and ((item in (2, 4) and parts[1] in (0, 1, 2)) or (item == 3 and 0 <= parts[1] <= 4 and 20 + parts[1] in target.talent)):
+            return
+        raise ValueError("怀孕项目或子项编号无效")
+    elif page == 19:
+        if item in (0, 1) and len(parts) == 2 and (parts[1] == 0 or parts[1] in cache.character_data):
+            return
+        if item == 2 and len(parts) == 3 and parts[1] in (0, 1) and parts[2] in cache.character_data:
+            child_exists = parts[2] in target.relationship.child_id_list
+            if (parts[1] == 1 and not child_exists) or (parts[1] == 0 and child_exists):
+                return
+        raise ValueError("关系项目需要完整的编号与操作")
+    elif page == 20:
+        if len(parts) != 2 or item not in (*range(28), 29):
+            raise ValueError("请输入可修改的 flag 编号和值")
+        bool_fields = (0, 1, 3, 4, 5, 6, 8, 11, 12, 13, 14, 16, 22, 27)
+        limits = {2: 4, 9: 4, 10: 2, 15: 2, 17: 3, 18: 2, 19: 2, 20: 2, 21: 2, 23: 3, 24: 2, 25: 8, 29: 3}
+        if (item in bool_fields and parts[1] not in (0, 1)) or (item in limits and not 0 <= parts[1] <= limits[item]):
+            raise ValueError("flag 值不在页面允许的范围内")
+        if item == 7 and parts[1] not in cache.character_data:
+            raise ValueError("角色编号不存在")
+    elif page == 21:
+        if len(parts) != 2 or item not in range(6):
+            raise ValueError("请输入催眠项目编号和值")
+        if parts[1] < 0 or (item in (1, 2, 3, 4) and parts[1] not in (0, 1)):
+            raise ValueError("催眠项目的值无效")
+        if item == 5 and parts[1] not in game_config.config_roleplay:
+            raise ValueError("角色扮演编号不存在")
+        if item == 5 and parts[1] in target.hypnosis.roleplay:
+            raise ValueError("角色扮演编号已经存在")
+
+
+def _debug_validate_target_value(page: int, parts: List[int], value: int, target: game_type.Character) -> None:
+    """输入：page (int) 页面、parts (List[int]) 项目、value (int) 新值、target (Character) 角色；返回：None；功能：预先检查值域与日期。"""
+    item = parts[0]
+    if page == 4 and value not in (0, 1):
+        raise ValueError("二段行为只能输入 0 或 1")
+    if page == 12:
+        if item == 3 and value not in range(5):
+            raise ValueError("清洁状态必须在 0～4 之间")
+        if item != 3 and value < 0:
+            raise ValueError("精液量或等级不能为负数")
+    if page == 13 and item == 0 and value not in (0, 1):
+        raise ValueError("道具状态只能输入 0 或 1")
+    if page == 18:
+        if item == 0 and not 0 <= value <= 100:
+            raise ValueError("受精概率必须在 0～100 之间")
+        if item == 1 and value not in game_config.config_reproduction_period:
+            raise ValueError("生殖周期编号不存在")
+        if item in (7, 8) and value < 0:
+            raise ValueError("乳汁量不能为负数")
+        if item in (2, 4):
+            date = target.pregnancy.fertilization_time if item == 2 else target.pregnancy.born_time
+            date.replace(**({"year": value} if parts[1] == 0 else {"month": value} if parts[1] == 1 else {"day": value}))
+        if item == 5:
+            cache.game_time.replace(year=cache.game_time.year - 1)
+        if item == 6:
+            child_id = target.relationship.child_id_list[-1]
+            if child_id not in cache.character_data:
+                raise ValueError("孩子数据不存在")
+            born_time = cache.character_data[child_id].pregnancy.born_time
+            born_time.replace(year=born_time.year - 1)
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -246,7 +350,6 @@ class TALK_QUICK_TEST:
         """ 当前绘制的页面 """
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
-        self._debug_error_message = ""
 
     def draw(self):
         """绘制对象"""
@@ -261,12 +364,6 @@ class TALK_QUICK_TEST:
             return_list = []
             title_draw.draw()
 
-            if self._debug_error_message:
-                error_draw = draw.NormalDraw()
-                error_draw.width = self.width
-                error_draw.text = self._debug_error_message
-                error_draw.draw()
-                self._debug_error_message = ""
             info_draw = draw.NormalDraw()
             info_draw.width = self.width
 
@@ -325,7 +422,7 @@ class TALK_QUICK_TEST:
             # 获取角色id
             change_value_panel = panel.AskForOneMessage()
             change_value_panel.set(_("请输入角色id"), 100)
-            chara_adv_id = int(change_value_panel.draw())
+            chara_adv_id = _debug_read_int(change_value_panel, _debug_require_adv_id)
             pl_character_data = cache.character_data[0]
             target_chara_id = 0
             for tem_chara_id in cache.character_data:
@@ -646,7 +743,7 @@ class TALK_QUICK_TEST:
         # 要求输入角色的id
         change_value_panel = panel.AskForOneMessage()
         change_value_panel.set(_("请输入角色id"), 100)
-        chara_adv_id = int(change_value_panel.draw())
+        chara_adv_id = _debug_read_int(change_value_panel, _debug_require_adv_id)
 
         line = draw.LineDraw("-", window_width)
         line.draw()
@@ -987,7 +1084,6 @@ class Debug_Panel:
                 break
 
 
-    @_debug_transaction
     def change_value(self,key_index):
         """
         调整该变量的值
@@ -1011,21 +1107,12 @@ class Debug_Panel:
 
                     value_index_panel = panel.AskForOneMessage()
                     value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
-                    value_index = value_index_panel.draw()
-                    if "," in value_index: # 转成全int的list
-                        value_index = _debug_int_list(value_index)
-                    else:
-                        value_index = _debug_scalar_int(value_index)
+                    value_index = _debug_read_parts(value_index_panel, lambda parts: _debug_require_global_parts(key_index, parts))
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
-                    # print(f"debug value_index = {value_index},new_value = {new_value}")
+                    new_value = _debug_read_int(change_value_panel, lambda value: cache.game_time.replace(**({"year": value} if value_index[1] == 0 else {"month": value} if value_index[1] == 1 else {"day": value})))
 
-                    # 根据第几项更改对应值
-                    if len(value_index) == 1:
-                        info_draw.text = "\n输出格式错误，请重试\n"
-                        info_draw.draw()
-                        continue
+                    # 日期先经 replace 校验，通过后再写入。
                     if value_index[1] == 0:
                         cache.game_time = cache.game_time.replace(year = new_value)
                     elif value_index[1] == 1:
@@ -1053,16 +1140,8 @@ class Debug_Panel:
 
                     value_index_panel = panel.AskForOneMessage()
                     value_index_panel.set(_("输入要改变第几号角色，以及这一项变成0或者1，中间用英文小写逗号隔开"), 100)
-                    value_index = value_index_panel.draw()
-                    if "," in value_index: # 转成全int的list
-                        value_index = _debug_int_list(value_index)
-                    else:
-                        value_index = _debug_scalar_int(value_index)
-                    if len(value_index) == 1:
-                        info_draw.text = "\n输出格式错误，请重试\n"
-                        info_draw.draw()
-                        continue
-                    elif value_index[1] == 0:
+                    value_index = _debug_read_parts(value_index_panel, lambda parts: _debug_require_global_parts(key_index, parts))
+                    if value_index[1] == 0:
                         cache.npc_id_got.discard(value_index[0])
                     elif value_index[1] == 1:
                         character_handle.get_new_character(value_index[0])
@@ -1073,7 +1152,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel)
                     cache.rhodes_island.materials_resouce[1] = new_value
                 elif key_index == 4:
                     info_text = f"[004]:合成玉：{cache.rhodes_island.materials_resouce[2]}"
@@ -1082,7 +1161,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel)
                     cache.rhodes_island.materials_resouce[2] = new_value
                 elif key_index == 5:
                     info_text = f"[005]:粉红凭证：{cache.rhodes_island.materials_resouce[4]}"
@@ -1091,7 +1170,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel)
                     cache.rhodes_island.materials_resouce[4] = new_value
                 elif key_index == 6:
                     info_text = f"[006]:基地当前所有待开放设施的开放情况"
@@ -1099,37 +1178,29 @@ class Debug_Panel:
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
-                    change_value_panel = panel.AskForOneMessage()
-                    change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
-                    # cache.base_resouce.materials_resouce[1] = new_value
+                    info_draw.text = _("\n此项目尚未实现安全的子项编辑，暂时只供查看。\n")
+                    info_draw.draw()
                 elif key_index == 7:
                     info_text = f"[007]:一周内的派对计划，周一0~周日6:娱乐id：{cache.rhodes_island.party_day_of_week}"
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
-                    change_value_panel = panel.AskForOneMessage()
-                    change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
-                    cache.rhodes_island.party_day_of_week = new_value
+                    info_draw.text = _("\n此项目为字典，暂时只供查看。\n")
+                    info_draw.draw()
                 elif key_index == 8:
                     info_text = f"[008]:当前招募进度：{cache.rhodes_island.recruit_line}"
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
-                    change_value_panel = panel.AskForOneMessage()
-                    change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
-                    cache.rhodes_island.recruit_line = new_value
+                    info_draw.text = _("\n此项目为字典，暂时只供查看。\n")
+                    info_draw.draw()
                 elif key_index == 9:
                     info_text = f"[009]:已招募待确认的干员id：{cache.rhodes_island.recruited_id}"
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
-                    change_value_panel = panel.AskForOneMessage()
-                    change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
-                    cache.rhodes_island.recruited_id = new_value
+                    info_draw.text = _("\n此项目为集合，暂时只供查看。\n")
+                    info_draw.draw()
 
             elif self.now_panel == "常用更改":
 
@@ -1141,7 +1212,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel)
                     cache.character_data[0].hit_point = new_value
                 # 最大HP
                 elif key_index == 1:
@@ -1151,7 +1222,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel)
                     cache.character_data[0].hit_point_max = new_value
                 # 当前MP
                 elif key_index == 2:
@@ -1161,7 +1232,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel)
                     cache.character_data[0].mana_point = new_value
                 # 最大MP
                 elif key_index == 3:
@@ -1171,7 +1242,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel)
                     cache.character_data[0].mana_point_max = new_value
                 # 当前射精槽
                 elif key_index == 4:
@@ -1181,7 +1252,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel)
                     cache.character_data[0].eja_point = new_value
                 # 疲劳值
                 elif key_index == 5:
@@ -1191,7 +1262,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel)
                     cache.character_data[0].tired_point = new_value
                 # 尿意值
                 elif key_index == 6:
@@ -1201,7 +1272,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel)
                     cache.character_data[0].urinate_point = new_value
                 # 饥饿值
                 elif key_index == 7:
@@ -1211,7 +1282,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel)
                     cache.character_data[0].hunger_point = new_value
                 # 全源石技艺全开，理智9999
                 elif key_index == 8:
@@ -1259,7 +1330,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel)
                     target_id = cache.character_data[0].target_character_id
                     target_character_data = cache.character_data[target_id]
                     for state_id in game_config.config_character_state:
@@ -1271,7 +1342,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入adv_id"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel, lambda value: _debug_require_existing_npc(value))
                     character_id = character.get_character_id_from_adv(new_value)
                     if character_id not in cache.npc_id_got:
                         cache.rhodes_island.recruited_id.add(character_id)
@@ -1298,7 +1369,6 @@ class Debug_Panel:
             break
 
 
-    @_debug_transaction
     def change_target_value(self,key_index):
         """
         调整目标角色变量的值
@@ -1352,54 +1422,50 @@ class Debug_Panel:
                     line_feed.draw()
                     value_index_panel = panel.AskForOneMessage()
                     value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
-                    value_index = value_index_panel.draw()
-                    if "," in value_index: # 转成全int的list
-                        value_index = _debug_int_list(value_index)
-                    else:
-                        value_index = _debug_scalar_int(value_index)
+                    value_index = _debug_read_parts(value_index_panel, lambda parts: _debug_validate_target_parts(key_index, parts, target_data))
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel, lambda value: _debug_validate_target_value(key_index, value_index, value, target_data))
 
-                    if value_index == 0:
+                    if value_index == [0]:
                         target_data.hit_point = new_value
-                    elif value_index == 1:
+                    elif value_index == [1]:
                         target_data.hit_point_max = new_value
-                    elif value_index == 2:
+                    elif value_index == [2]:
                         target_data.mana_point = new_value
-                    elif value_index == 3:
+                    elif value_index == [3]:
                         target_data.mana_point_max = new_value
-                    elif value_index == 4:
+                    elif value_index == [4]:
                         target_data.sanity_point = new_value
-                    elif value_index == 5:
+                    elif value_index == [5]:
                         target_data.sanity_point_max = new_value
-                    elif value_index == 11:
+                    elif value_index == [11]:
                         target_data.tired_point = new_value
-                    elif value_index == 12:
+                    elif value_index == [12]:
                         target_data.urinate_point = new_value
-                    elif value_index == 13:
+                    elif value_index == [13]:
                         target_data.hunger_point = new_value
-                    elif value_index == 14:
+                    elif value_index == [14]:
                         target_data.sleep_point = new_value
-                    elif value_index == 15:
+                    elif value_index == [15]:
                         target_data.angry_point = new_value
-                    elif value_index == 16:
+                    elif value_index == [16]:
                         target_data.eja_point = new_value
-                    elif value_index == 17:
+                    elif value_index == [17]:
                         target_data.favorability[0] = new_value
-                    elif value_index == 18:
+                    elif value_index == [18]:
                         target_data.trust = new_value
-                    elif value_index == 19:
+                    elif value_index == [19]:
                         target_data.pregnancy.milk = new_value
-                    elif value_index == 20:
+                    elif value_index == [20]:
                         target_data.pregnancy.milk_max = new_value
-                    elif value_index == 21:
+                    elif value_index == [21]:
                         target_data.desire_point = new_value
-                    elif value_index == 22:
+                    elif value_index == [22]:
                         target_data.semen_point = new_value
-                    elif value_index == 23:
+                    elif value_index == [23]:
                         target_data.semen_point_max = new_value
-                    elif value_index == 24:
+                    elif value_index == [24]:
                         target_data.drunk_point = new_value
 
                     # 接着刷新一遍显示新内容
@@ -1410,10 +1476,10 @@ class Debug_Panel:
             elif key_index == 4:
                 draw_text_list = []
                 info_text = f"\n"
-                for cid in target_data.second_behavior:
-                    name = game_config.config_behavior[cid].name
-                    info_text += f"({cid}){name}:{target_data.second_behavior[cid]}  "
-                    if cid % 5 == 0:
+                for display_index, cid in enumerate(target_data.second_behavior, 1):
+                    behavior = game_config.config_behavior[cid]
+                    info_text += f"({behavior.cid}){behavior.name}:{target_data.second_behavior[cid]}  "
+                    if display_index % 5 == 0:
                         info_text += "\n"
                 draw_text_list.append(f"[000]:二段行为列表：\n{info_text}")
 
@@ -1428,16 +1494,22 @@ class Debug_Panel:
                     line_feed.draw()
                     value_index_panel = panel.AskForOneMessage()
                     value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
-                    value_index = value_index_panel.draw()
-                    if "," in value_index: # 转成全int的list
-                        value_index = _debug_int_list(value_index)
-                    else:
-                        value_index = _debug_scalar_int(value_index)
+                    value_index = _debug_read_parts(value_index_panel, lambda parts: _debug_validate_target_parts(key_index, parts, target_data))
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel, lambda value: _debug_validate_target_value(key_index, value_index, value, target_data))
 
-                    target_data.second_behavior[value_index] = new_value
+                    # 面板显示数字 cid；角色数据实际以行为 en_name 字符串为键。
+                    behavior_id = game_config.config_behavior_by_cid[value_index[0]].en_name
+                    target_data.second_behavior[behavior_id] = new_value
+                    # 二段行为的待结算、待显示列表也必须与状态同步。
+                    for config_ids, pending_ids in ((game_config.config_behavior_must_settle_cid_list, target_data.must_settle_second_behavior_id_list),
+                                                    (game_config.config_behavior_must_show_cid_list, target_data.must_show_second_behavior_id_list)):
+                        if behavior_id in config_ids:
+                            if new_value == 1 and behavior_id not in pending_ids:
+                                pending_ids.append(behavior_id)
+                            elif new_value == 0 and behavior_id in pending_ids:
+                                pending_ids.remove(behavior_id)
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False
@@ -1462,16 +1534,12 @@ class Debug_Panel:
                     line_feed.draw()
                     value_index_panel = panel.AskForOneMessage()
                     value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
-                    value_index = value_index_panel.draw()
-                    if "," in value_index: # 转成全int的list
-                        value_index = _debug_int_list(value_index)
-                    else:
-                        value_index = _debug_scalar_int(value_index)
+                    value_index = _debug_read_parts(value_index_panel, lambda parts: _debug_validate_target_parts(key_index, parts, target_data))
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel, lambda value: _debug_validate_target_value(key_index, value_index, value, target_data))
 
-                    target_data.status_data[value_index] = new_value
+                    target_data.status_data[value_index[0]] = new_value
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False
@@ -1496,16 +1564,12 @@ class Debug_Panel:
                     line_feed.draw()
                     value_index_panel = panel.AskForOneMessage()
                     value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
-                    value_index = value_index_panel.draw()
-                    if "," in value_index: # 转成全int的list
-                        value_index = _debug_int_list(value_index)
-                    else:
-                        value_index = _debug_scalar_int(value_index)
+                    value_index = _debug_read_parts(value_index_panel, lambda parts: _debug_validate_target_parts(key_index, parts, target_data))
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel, lambda value: _debug_validate_target_value(key_index, value_index, value, target_data))
 
-                    target_data.ability[value_index] = new_value
+                    target_data.ability[value_index[0]] = new_value
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False
@@ -1534,16 +1598,12 @@ class Debug_Panel:
                     line_feed.draw()
                     value_index_panel = panel.AskForOneMessage()
                     value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
-                    value_index = value_index_panel.draw()
-                    if "," in value_index: # 转成全int的list
-                        value_index = _debug_int_list(value_index)
-                    else:
-                        value_index = _debug_scalar_int(value_index)
+                    value_index = _debug_read_parts(value_index_panel, lambda parts: _debug_validate_target_parts(key_index, parts, target_data))
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel, lambda value: _debug_validate_target_value(key_index, value_index, value, target_data))
 
-                    target_data.experience[value_index] = new_value
+                    target_data.experience[value_index[0]] = new_value
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False
@@ -1569,16 +1629,12 @@ class Debug_Panel:
                     line_feed.draw()
                     value_index_panel = panel.AskForOneMessage()
                     value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
-                    value_index = value_index_panel.draw()
-                    if "," in value_index: # 转成全int的list
-                        value_index = _debug_int_list(value_index)
-                    else:
-                        value_index = _debug_scalar_int(value_index)
+                    value_index = _debug_read_parts(value_index_panel, lambda parts: _debug_validate_target_parts(key_index, parts, target_data))
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel, lambda value: _debug_validate_target_value(key_index, value_index, value, target_data))
 
-                    target_data.juel[value_index] = new_value
+                    target_data.juel[value_index[0]] = new_value
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False
@@ -1604,16 +1660,12 @@ class Debug_Panel:
                     line_feed.draw()
                     value_index_panel = panel.AskForOneMessage()
                     value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
-                    value_index = value_index_panel.draw()
-                    if "," in value_index: # 转成全int的list
-                        value_index = _debug_int_list(value_index)
-                    else:
-                        value_index = _debug_scalar_int(value_index)
+                    value_index = _debug_read_parts(value_index_panel, lambda parts: _debug_validate_target_parts(key_index, parts, target_data))
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel, lambda value: _debug_validate_target_value(key_index, value_index, value, target_data))
 
-                    target_data.talent[value_index] = new_value
+                    target_data.talent[value_index[0]] = new_value
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False
@@ -1626,10 +1678,10 @@ class Debug_Panel:
                 draw_text_list.append(f"\n[001]:服装精液情况，编号int:[部位名str,当前精液量int,当前精液等级int,总精液量int]：\n{target_data.dirty.cloth_semen}")
                 draw_text_list.append(f"\n[002]:衣柜里的服装精液情况，编号int:[部位名str,当前精液量int,当前精液等级int,总精液量int]：\n{target_data.dirty.cloth_locker_semen}")
                 draw_text_list.append(f"\n[003]:A是否干净 [0脏污,1灌肠中,2已灌肠,3精液灌肠中,4已精液灌肠]：{target_data.dirty.a_clean}")
-                draw_text_list.append(f"[004]:身体部位:当前精液量int，输入4,0,5即可把0号部位的精液量改为5")
-                draw_text_list.append(f"[005]:身体部位:当前精液等级int，输入5,0,1即可把0号部位的精液等级改为1")
-                draw_text_list.append(f"[006]:服装部位:当前精液量int，输入6,1,5即可把1号服装的精液量改为5")
-                draw_text_list.append(f"[007]:服装部位:当前精液等级int，输入7,1,1即可把1号服装的精液等级改为1")
+                draw_text_list.append(f"[004]:身体部位:当前精液量int，输入4,0后再输入新值")
+                draw_text_list.append(f"[005]:身体部位:当前精液等级int，输入5,0后再输入新值")
+                draw_text_list.append(f"[006]:服装部位:当前精液量int，输入6,1后再输入新值")
+                draw_text_list.append(f"[007]:服装部位:当前精液等级int，输入7,1后再输入新值")
                 draw_text_list.append(f"[008]:增加身体、服装、衣柜服装全部位精液量int")
 
                 # 进行显示
@@ -1643,28 +1695,24 @@ class Debug_Panel:
                     line_feed.draw()
                     value_index_panel = panel.AskForOneMessage()
                     value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
-                    value_index = value_index_panel.draw()
-                    if "," in value_index: # 转成全int的list
-                        value_index = _debug_int_list(value_index)
-                    else:
-                        value_index = _debug_scalar_int(value_index)
+                    value_index = _debug_read_parts(value_index_panel, lambda parts: _debug_validate_target_parts(key_index, parts, target_data))
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel, lambda value: _debug_validate_target_value(key_index, value_index, value, target_data))
 
                     # 根据第几项更改对应值
-                    if value_index == 3:
+                    if value_index == [3]:
                         target_data.dirty.a_clean = new_value
-                    elif value_index == 8:
-                        for i in range(len(target_data.dirty.body_semen)):
-                            target_data.dirty.body_semen[i][1] += new_value
-                            target_data.dirty.body_semen[i][2] = attr_calculation.get_semen_now_level(target_data.dirty.body_semen[i][1], i, 0)
-                        for i in range(len(target_data.dirty.cloth_semen)):
-                            target_data.dirty.cloth_semen[i][1] += new_value
-                            target_data.dirty.cloth_semen[i][2] = attr_calculation.get_semen_now_level(target_data.dirty.cloth_semen[i][1], i, 1)
-                        for i in range(len(target_data.dirty.cloth_locker_semen)):
-                            target_data.dirty.cloth_locker_semen[i][1] += new_value
-                            target_data.dirty.cloth_locker_semen[i][2] = attr_calculation.get_semen_now_level(target_data.dirty.cloth_locker_semen[i][1], i, 2)
+                    elif value_index == [8]:
+                        # 先计算全部位的新值，再统一赋值，避免计算中途失败留下半次修改。
+                        pending_updates = []
+                        for group, rows in enumerate((target_data.dirty.body_semen, target_data.dirty.cloth_semen, target_data.dirty.cloth_locker_semen)):
+                            for row_id in range(len(rows)):
+                                amount = rows[row_id][1] + new_value
+                                level = attr_calculation.get_semen_now_level(amount, row_id, group)
+                                pending_updates.append((rows[row_id], amount, level))
+                        for row, amount, level in pending_updates:
+                            row[1], row[2] = amount, level
                     elif value_index[0] == 0:
                         target_data.dirty.body_semen[value_index[1]][value_index[2]] = new_value
                     elif value_index[0] == 1:
@@ -1672,13 +1720,13 @@ class Debug_Panel:
                     elif value_index[0] == 2:
                         target_data.dirty.cloth_locker_semen[value_index[1]][value_index[2]] = new_value
                     elif value_index[0] == 4:
-                        target_data.dirty.body_semen[value_index[1]][1] = new_value
-                        target_data.dirty.body_semen[value_index[1]][2] = attr_calculation.get_semen_now_level(new_value, value_index[1], 0)
+                        level = attr_calculation.get_semen_now_level(new_value, value_index[1], 0)
+                        target_data.dirty.body_semen[value_index[1]][1:3] = [new_value, level]
                     elif value_index[0] == 5:
                         target_data.dirty.body_semen[value_index[1]][2] = new_value
                     elif value_index[0] == 6:
-                        target_data.dirty.cloth_semen[value_index[1]][1] = new_value
-                        target_data.dirty.cloth_semen[value_index[1]][2] = attr_calculation.get_semen_now_level(new_value, value_index[1], 1)
+                        level = attr_calculation.get_semen_now_level(new_value, value_index[1], 1)
+                        target_data.dirty.cloth_semen[value_index[1]][1:3] = [new_value, level]
                     elif value_index[0] == 7:
                         target_data.dirty.cloth_semen[value_index[1]][2] = new_value
 
@@ -1708,26 +1756,22 @@ class Debug_Panel:
                     line_feed.draw()
                     value_index_panel = panel.AskForOneMessage()
                     value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
-                    value_index = value_index_panel.draw()
-                    if "," in value_index: # 转成全int的list
-                        value_index = _debug_int_list(value_index)
-                    else:
-                        value_index = _debug_scalar_int(value_index)
+                    value_index = _debug_read_parts(value_index_panel, lambda parts: _debug_validate_target_parts(key_index, parts, target_data))
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel, lambda value: _debug_validate_target_value(key_index, value_index, value, target_data))
 
                     # 根据第几项更改对应值
-                    if value_index == 1:
+                    if value_index == [1]:
                         target_data.h_state.bondage = new_value
-                    elif value_index == 2:
+                    elif value_index == [2]:
                         target_data.h_state.insert_position = new_value
-                    elif value_index == 3:
+                    elif value_index == [3]:
                         target_data.h_state.shoot_position_body = new_value
-                    elif value_index == 4:
+                    elif value_index == [4]:
                         target_data.h_state.shoot_position_cloth = new_value
                     elif value_index[0] == 0:
-                        target_data.h_state.body_item[value_index[1]][value_index[2]] = new_value
+                        target_data.h_state.body_item[value_index[1]][value_index[2]] = bool(new_value)
                     elif value_index[0] == 5:
                         target_data.h_state.orgasm_level[value_index[1]] = new_value
                     elif value_index[0] == 6:
@@ -1757,16 +1801,12 @@ class Debug_Panel:
                     line_feed.draw()
                     value_index_panel = panel.AskForOneMessage()
                     value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
-                    value_index = value_index_panel.draw()
-                    if "," in value_index: # 转成全int的list
-                        value_index = _debug_int_list(value_index)
-                    else:
-                        value_index = _debug_scalar_int(value_index)
+                    value_index = _debug_read_parts(value_index_panel, lambda parts: _debug_validate_target_parts(key_index, parts, target_data))
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel, lambda value: _debug_validate_target_value(key_index, value_index, value, target_data))
 
-                    target_data.assistant_services[value_index] = new_value
+                    target_data.assistant_services[value_index[0]] = new_value
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False
@@ -1786,11 +1826,7 @@ class Debug_Panel:
                 if change_draw_flag:
                     value_index_panel = panel.AskForOneMessage()
                     value_index_panel.set(_("输入改变的项目，中间用英文小写逗号隔开。娱乐活动输入三个int；借还书则先输入0为删除1为增加，然后再输入书籍编号；可能性直接输入对应数字"), 100)
-                    value_index = value_index_panel.draw()
-                    if "," in value_index: # 转成全int的list
-                        value_index = _debug_int_list(value_index)
-                    else:
-                        value_index = _debug_scalar_int(value_index)
+                    value_index = _debug_read_parts(value_index_panel, lambda parts: _debug_validate_target_parts(key_index, parts, target_data))
                     if value_index[0] == 0:
                         target_data.entertainment.entertainment_type = [value_index[1], value_index[2], value_index[3]]
                     elif value_index[0] == 1:
@@ -1834,36 +1870,31 @@ class Debug_Panel:
                 if change_draw_flag:
                     value_index_panel = panel.AskForOneMessage()
                     value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
-                    value_index = value_index_panel.draw()
-                    if "," in value_index: # 转成全int的list
-                        value_index = _debug_int_list(value_index)
-                    else:
-                        value_index = _debug_scalar_int(value_index)
+                    value_index = _debug_read_parts(value_index_panel, lambda parts: _debug_validate_target_parts(key_index, parts, target_data))
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = _debug_parse_int(change_value_panel.draw())
+                    new_value = _debug_read_int(change_value_panel, lambda value: _debug_validate_target_value(key_index, value_index, value, target_data))
                     # print(f"debug value_index = {value_index},new_value = {new_value}")
 
                     # 根据第几项更改对应值
-                    if value_index == 0:
+                    if value_index == [0]:
                         target_data.pregnancy.fertilization_rate = new_value
                         # print(f"debug value_index = {value_index},new_value = {new_value}")
-                    elif value_index == 1:
+                    elif value_index == [1]:
                         target_data.pregnancy.reproduction_period = new_value
-                    elif value_index == 5:
+                    elif value_index == [5]:
+                        earlier_time = cache.game_time.replace(year=cache.game_time.year - 1)
                         target_data.talent[22] = 1
-                        target_data.pregnancy.fertilization_time = cache.game_time
-                        new_year = target_data.pregnancy.fertilization_time.year - 1
-                        target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(year = new_year)
-                    elif value_index == 6:
+                        target_data.pregnancy.fertilization_time = earlier_time
+                    elif value_index == [6]:
 
                         child_id = target_data.relationship.child_id_list[-1]
                         child_character_data: game_type.Character = cache.character_data[child_id]
                         new_year = child_character_data.pregnancy.born_time.year - 1
                         child_character_data.pregnancy.born_time = child_character_data.pregnancy.born_time.replace(year = new_year)
-                    elif value_index == 7:
+                    elif value_index == [7]:
                         target_data.pregnancy.milk = new_value
-                    elif value_index == 8:
+                    elif value_index == [8]:
                         target_data.pregnancy.milk_max = new_value
                     elif value_index[0] == 2:
                         if len(value_index) == 1:
@@ -1912,11 +1943,7 @@ class Debug_Panel:
                 if change_draw_flag:
                     value_index_panel = panel.AskForOneMessage()
                     value_index_panel.set(_("输入改变的项目，如果是列表则输入要改变第几号数据，以及这一项变成0或者1，中间用英文小写逗号隔开。列表的内容元素0为删除1为增加"), 100)
-                    value_index = value_index_panel.draw()
-                    if "," in value_index: # 转成全int的list
-                        value_index = _debug_int_list(value_index)
-                    else:
-                        value_index = _debug_scalar_int(value_index)
+                    value_index = _debug_read_parts(value_index_panel, lambda parts: _debug_validate_target_parts(key_index, parts, target_data))
                     if value_index[0] == 0:
                         target_data.relationship.father_id = value_index[1]
                     elif value_index[0] == 1:
@@ -1981,71 +2008,67 @@ class Debug_Panel:
                 if change_draw_flag:
                     value_index_panel = panel.AskForOneMessage()
                     value_index_panel.set(_("输入改变的项目，如果是列表则输入要改变第几号数据，以及这一项变成几，中间用英文小写逗号隔开"), 100)
-                    value_index = value_index_panel.draw()
-                    if "," in value_index: # 转成全int的list
-                        value_index = _debug_int_list(value_index)
-                    else:
-                        info_draw.text = "\n输出格式错误，请重试\n"
-                        info_draw.draw()
-                        continue
+                    value_index = _debug_read_parts(value_index_panel, lambda parts: _debug_validate_target_parts(key_index, parts, target_data))
+                    # bool 字段保留原有类型，避免把整数写入布尔状态。
+                    flag_value = bool(value_index[1]) if value_index[0] in (0, 1, 3, 4, 5, 6, 8, 11, 12, 13, 14, 16, 22, 27) else value_index[1]
                     if value_index[0] == 0:
-                        target_data.sp_flag.is_h = value_index[1]
+                        target_data.sp_flag.is_h = flag_value
                     elif value_index[0] == 1:
-                        target_data.sp_flag.wait_flag = value_index[1]
+                        target_data.sp_flag.wait_flag = flag_value
                     elif value_index[0] == 2:
-                        target_data.sp_flag.is_follow = value_index[1]
+                        target_data.sp_flag.is_follow = flag_value
                     elif value_index[0] == 3:
-                        target_data.sp_flag.tired = value_index[1]
+                        target_data.sp_flag.tired = flag_value
                     elif value_index[0] == 4:
-                        target_data.sp_flag.angry_with_player = value_index[1]
+                        target_data.sp_flag.angry_with_player = flag_value
                     elif value_index[0] == 5:
-                        target_data.sp_flag.move_stop = value_index[1]
+                        target_data.sp_flag.move_stop = flag_value
                     elif value_index[0] == 6:
-                        target_data.sp_flag.be_bagged = value_index[1]
+                        target_data.sp_flag.be_bagged = flag_value
                     elif value_index[0] == 7:
-                        target_data.sp_flag.bagging_chara_id = value_index[1]
+                        target_data.sp_flag.bagging_chara_id = flag_value
                     elif value_index[0] == 8:
-                        target_data.sp_flag.imprisonment = value_index[1]
+                        target_data.sp_flag.imprisonment = flag_value
                     elif value_index[0] == 9:
-                        target_data.sp_flag.shower = value_index[1]
+                        target_data.sp_flag.shower = flag_value
                     elif value_index[0] == 10:
-                        target_data.sp_flag.eat_food = value_index[1]
+                        target_data.sp_flag.eat_food = flag_value
                     elif value_index[0] == 11:
-                        target_data.sp_flag.sleep = value_index[1]
+                        target_data.sp_flag.sleep = flag_value
                     elif value_index[0] == 12:
-                        target_data.sp_flag.rest = value_index[1]
+                        target_data.sp_flag.rest = flag_value
                     elif value_index[0] == 13:
-                        target_data.sp_flag.pee = value_index[1]
+                        target_data.sp_flag.pee = flag_value
                     elif value_index[0] == 14:
-                        target_data.sp_flag.find_food_weird = value_index[1]
+                        target_data.sp_flag.find_food_weird = flag_value
                     elif value_index[0] == 15:
-                        target_data.sp_flag.swim = value_index[1]
+                        target_data.sp_flag.swim = flag_value
                     elif value_index[0] == 16:
-                        target_data.sp_flag.work_maintenance = value_index[1]
+                        target_data.sp_flag.work_maintenance = flag_value
                     elif value_index[0] == 17:
-                        target_data.sp_flag.help_buy_food = value_index[1]
+                        target_data.sp_flag.help_buy_food = flag_value
                     elif value_index[0] == 18:
-                        target_data.sp_flag.help_make_food = value_index[1]
+                        target_data.sp_flag.help_make_food = flag_value
                     elif value_index[0] == 19:
-                        target_data.sp_flag.morning_salutation = value_index[1]
+                        target_data.sp_flag.morning_salutation = flag_value
                     elif value_index[0] == 20:
-                        target_data.sp_flag.night_salutation = value_index[1]
+                        target_data.sp_flag.night_salutation = flag_value
                     elif value_index[0] == 21:
-                        target_data.sp_flag.bathhouse_entertainment = value_index[1]
+                        target_data.sp_flag.bathhouse_entertainment = flag_value
                     elif value_index[0] == 22:
-                        target_data.sp_flag.milk = value_index[1]
+                        target_data.sp_flag.milk = flag_value
                     elif value_index[0] == 23:
-                        target_data.sp_flag.masturebate = value_index[1]
+                        target_data.sp_flag.masturebate = flag_value
                     elif value_index[0] == 24:
-                        target_data.sp_flag.vistor = value_index[1]
+                        target_data.sp_flag.vistor = flag_value
                     elif value_index[0] == 25:
-                        target_data.sp_flag.aromatherapy = value_index[1]
+                        target_data.sp_flag.aromatherapy = flag_value
                     elif value_index[0] == 26:
-                        target_data.sp_flag.field_commission = value_index[1]
+                        target_data.sp_flag.field_commission = flag_value
                     elif value_index[0] == 27:
-                        target_data.sp_flag.npc_masturebate_for_player = value_index[1]
+                        target_data.sp_flag.npc_masturebate_for_player = flag_value
                     elif value_index[0] == 29:
-                        target_data.action_info.health_check_today = value_index[1]
+                        target_data.action_info.health_check_today = flag_value
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False
@@ -2068,23 +2091,17 @@ class Debug_Panel:
                 if change_draw_flag:
                     value_index_panel = panel.AskForOneMessage()
                     value_index_panel.set(_("输入改变的项目，如果是列表则输入要改变第几号数据，以及这一项变成几，中间用英文小写逗号隔开"), 100)
-                    value_index = value_index_panel.draw()
-                    if "," in value_index: # 转成全int的list
-                        value_index = _debug_int_list(value_index)
-                    else:
-                        info_draw.text = "\n输出格式错误，请重试\n"
-                        info_draw.draw()
-                        continue
+                    value_index = _debug_read_parts(value_index_panel, lambda parts: _debug_validate_target_parts(key_index, parts, target_data))
                     if value_index[0] == 0:
                         target_data.hypnosis.hypnosis_degree = value_index[1]
                     elif value_index[0] == 1:
-                        target_data.hypnosis.increase_body_sensitivity = value_index[1]
+                        target_data.hypnosis.increase_body_sensitivity = bool(value_index[1])
                     elif value_index[0] == 2:
-                        target_data.hypnosis.force_ovulation = value_index[1]
+                        target_data.hypnosis.force_ovulation = bool(value_index[1])
                     elif value_index[0] == 3:
-                        target_data.hypnosis.blockhead = value_index[1]
+                        target_data.hypnosis.blockhead = bool(value_index[1])
                     elif value_index[0] == 4:
-                        target_data.hypnosis.active_h = value_index[1]
+                        target_data.hypnosis.active_h = bool(value_index[1])
                     elif value_index[0] == 5:
                         target_data.hypnosis.roleplay.append(value_index[1])
                     # 接着刷新一遍显示新内容
