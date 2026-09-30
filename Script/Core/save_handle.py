@@ -732,6 +732,21 @@ def input_load_save(save_id: str):
     # 使用 update() 方法来更新 cache 的字典
     cache.__dict__.update(loaded_dict)
 
+    # 跨版本迁移：菜谱收藏/熟练度/宗师特技原挂在博士 Character 上，现移到 Rhodes_Island
+    # （Rhodes_Island 随新周目重建，故熟练度会正确地随新周目重置；Character 上的旧数据迁完即删）
+    _legacy_pl = cache.character_data.get(0)
+    if _legacy_pl is not None and getattr(cache, "rhodes_island", None) is not None:
+        for _attr in (cooking.FAVORITES_ATTR, cooking.PROFICIENCY_ATTR, cooking.SPECIAL_EFFECTS_ATTR):
+            _legacy = getattr(_legacy_pl, _attr, None)
+            if not _legacy:
+                continue
+            if not getattr(cache.rhodes_island, _attr, None):
+                setattr(cache.rhodes_island, _attr, _legacy)
+            try:
+                delattr(_legacy_pl, _attr)
+            except AttributeError:
+                pass
+
     # 鼠标状态属于临时界面状态，不该随存档带入：旧版存档可能把“正在按任意键继续”的0值一起存了进来，
     # 载入后 w_frame_up 残留为0，之后第一次左键会被 mouse_left_check 误判为“推进等待”，
     # 消耗掉一次性的输入许可却不产生任何指令，askfor_all 从此收不到输入，游戏静默卡死

@@ -641,12 +641,13 @@ def special_code_judge(now_talk: str):
 
     return now_talk, special_code
 
-def talk_common_judge(now_talk: str, character_id: int) -> str:
+def talk_common_judge(now_talk: str, character_id: int, _depth: int = 0) -> str:
     """
     转换文本中的通用占位符为对应文本
     参数:
         now_talk (str): 原始文本，包含 {key} 占位符
         character_id (int): 角色ID，用于获取相关配置
+        _depth (int): 内部递归深度（动作段可能新引入 mouth/throat 等占位符，需要多趟处理）
     返回:
         str: 转换后的文本
     """
@@ -756,7 +757,8 @@ def talk_common_judge(now_talk: str, character_id: int) -> str:
                     )
                     if weight:
                         now_talk_data.setdefault(weight, []).append(talk_common_cid)
-                # 如果有可替换的候选文本
+                # 如果有可替换的候选文本则随机替换；没有命中任何前提时，
+                # 将该占位符替换为空串（与部位类占位符一致），避免残留 {key} 在后续 format 崩溃
                 if now_talk_data:
                     # 定义替换函数：每次匹配都随机挑选一条文本
                     def _replacer(match, now_talk_data=now_talk_data):
@@ -773,6 +775,14 @@ def talk_common_judge(now_talk: str, character_id: int) -> str:
                         return game_config.config_talk_common_data[cid].context
                     # 使用 sub 回调逐个替换相同的占位符
                     now_talk = pattern.sub(_replacer, now_talk)
+                else:
+                    now_talk = pattern.sub(lambda _m: "", now_talk)
+    # 动作段（如 m_orgasm_strong）可能在替换时才引入 {mouth}/{throat} 等占位符；
+    # 单趟会因这些键已处理过而残留，这里递归再处理直到稳定（带深度上限防环）
+    if _depth < 6:
+        for _key in game_config.config_talk_common_cid_list_by_type:
+            if re.search(r'\{' + re.escape(_key) + r'\}', now_talk):
+                return talk_common_judge(now_talk, character_id, _depth + 1)
     return now_talk
 
 def code_text_to_draw_text(talk_text: str, character_id: int, common_talk_flag: bool = False):

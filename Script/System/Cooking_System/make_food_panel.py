@@ -57,8 +57,10 @@ class Make_food_Panel:
             cache.rhodes_island.makefood_cook_mode = {}
         if not isinstance(cache.rhodes_island.makefood_make_count, dict):
             cache.rhodes_island.makefood_make_count = {}
-        if cache.rhodes_island.makefood_cook_mode.get(self.make_food_type, 0) not in {0, 1}:
+        if cache.rhodes_island.makefood_cook_mode.get(self.make_food_type, 0) not in {0, 1, 2}:
             cache.rhodes_island.makefood_cook_mode[self.make_food_type] = 0
+        self.show_favorites_only = False
+        """ 是否只显示收藏菜谱 """
 
     @property
     def cook_mode(self) -> int:
@@ -78,6 +80,29 @@ class Make_food_Panel:
         """
         cache.rhodes_island.makefood_cook_mode[self.make_food_type] = cook_mode
 
+    def get_panel_cookable_ids(self) -> set:
+        """
+        获取本面板当前真正可做的菜谱id集合
+        收藏页与普通列表同源筛选：可做菜谱过滤（料理技能门槛、博士房间限制）× 本面板页签类型
+        Return arguments:
+        set -- 菜谱id集合
+        """
+        ids = set(cooking.get_character_cookable_recipes())
+        if self.make_food_type == 0:
+            panel_types = {0, 1, 2, 3, cooking.FEAST_TYPE}
+        elif self.make_food_type == 1:
+            panel_types = {8}
+        elif self.make_food_type == 2:
+            panel_types = {3}
+        else:
+            return ids
+        result = set()
+        for recipe_id in ids:
+            recipe = game_config.config_recipes.get(recipe_id)
+            if recipe is not None and recipe.type in panel_types:
+                result.add(recipe_id)
+        return result
+
     def draw(self):
         """绘制对象"""
         character_data: game_type.Character = cache.character_data[0]
@@ -89,6 +114,10 @@ class Make_food_Panel:
         elif self.make_food_type == 2:
             food_type_list = [_("酒类")]
             self.now_panel = _("酒类")
+        # 做饭面板追加庆典与收藏入口（泡咖啡/调酒保持原样）
+        if self.make_food_type == 0:
+            food_type_list.append(cooking.FEAST_TAB_NAME)
+            food_type_list.append(_("收藏"))
         # food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
         self.handle_panel = panel.PageHandlePanel([], SeeFoodListByFoodNameDraw, 50, 5, self.width, True, True, 0)
         while 1:
@@ -148,6 +177,15 @@ class Make_food_Panel:
             )
             reset_button.draw()
             return_list.append(reset_button.return_text)
+            # 只看收藏切换（做饭面板专属）
+            if self.make_food_type == 0:
+                fav_filter_text = _("[只看收藏]") if not self.show_favorites_only else _("[显示全部]")
+                fav_filter_button = draw.CenterButton(
+                    fav_filter_text, _("切换只看收藏"), int(self.width / 16),
+                    cmd_func=self.toggle_favorites_only,
+                )
+                fav_filter_button.draw()
+                return_list.append(fav_filter_button.return_text)
             line_feed.draw()
             
             # 排序维度 (直接列出两行)
@@ -277,6 +315,24 @@ class Make_food_Panel:
             fine_info = draw.NormalDraw()
             fine_info.text = _("：仔细考虑烹饪细节，根据细节的处理方式，食物品质能在料理技能的基础上进一步提升，最高可达到绝珍的级别\n")
             fine_info.draw()
+            # 大师模式行（料理技能达标后解锁，免答题稳定绝珍）
+            if cooking.is_master_unlocked():
+                if self.cook_mode == 2:
+                    master_draw = draw.CenterDraw()
+                    master_draw.text = _("[大师模式]")
+                    master_draw.style = "gold_enrod"
+                    master_draw.width = mode_button_width
+                    master_draw.draw()
+                else:
+                    master_draw = draw.CenterButton(
+                        _("[大师模式]"), _("大师模式"), mode_button_width,
+                        cmd_func=self.change_cook_mode, args=(2,),
+                    )
+                    master_draw.draw()
+                    return_list.append(master_draw.return_text)
+                master_info = draw.NormalDraw()
+                master_info.text = _("：免答题直接烹饪，稳定达到绝珍品质\n")
+                master_info.draw()
             
             # 品质预测绘制
             q_label = draw.NormalDraw()
@@ -287,13 +343,21 @@ class Make_food_Panel:
             max_quality = base_quality
             if self.cook_mode == 1:
                 max_quality = min(base_quality + 4, cooking.get_max_food_quality())
+            elif self.cook_mode == 2 and cooking.is_master_unlocked():
+                max_quality = cooking.get_max_food_quality()
                 
-            draw_q(base_quality)
-            if self.cook_mode == 1 and max_quality != base_quality:
-                tilde = draw.NormalDraw()
-                tilde.text = "~"
-                tilde.draw()
-                draw_q(max_quality)
+            if self.cook_mode == 2 and cooking.is_master_unlocked():
+                draw_q(cooking.get_max_food_quality())
+                stable_draw = draw.NormalDraw()
+                stable_draw.text = _("（稳定）")
+                stable_draw.draw()
+            else:
+                draw_q(base_quality)
+                if max_quality != base_quality:
+                    tilde = draw.NormalDraw()
+                    tilde.text = "~"
+                    tilde.draw()
+                    draw_q(max_quality)
             
             line_feed.draw()
             line_feed.draw()
@@ -307,7 +371,22 @@ class Make_food_Panel:
             food_line = draw.LineDraw("-", self.width)
             food_line.draw()
 
-            food_name_list = cooking.get_filtered_sorted_cook_data(self.now_panel)
+            if self.now_panel == _("收藏"):
+                # 收藏页同样要过"本面板可做菜谱"过滤，否则会串进做不了的菜谱（如泡咖啡面板收藏的咖啡）
+                cookable_ids = self.get_panel_cookable_ids()
+                food_name_list = []
+                for fid in cooking.get_favorite_recipe_ids():
+                    try:
+                        if int(fid) not in cookable_ids:
+                            continue
+                        recipe = game_config.config_recipes[fid]
+                        food_name_list.append((str(fid), recipe.name))
+                    except Exception:
+                        pass
+            else:
+                food_name_list = cooking.get_filtered_sorted_cook_data(self.now_panel)
+                if self.show_favorites_only:
+                    food_name_list = [x for x in food_name_list if cooking.has_favorites(x[0])]
             # 将调味、烹饪模式、做饭类型增加进去
             food_name_list = [(x[0], x[1], self.special_seasoning, self.cook_mode, self.make_food_type) for x in food_name_list]
             
@@ -357,7 +436,21 @@ class Make_food_Panel:
         """
         self.now_panel = food_type
 
-        food_name_list = cooking.get_filtered_sorted_cook_data(self.now_panel)
+        if self.now_panel == _("收藏"):
+            cookable_ids = self.get_panel_cookable_ids()
+            food_name_list = []
+            for fid in cooking.get_favorite_recipe_ids():
+                try:
+                    if int(fid) not in cookable_ids:
+                        continue
+                    recipe = game_config.config_recipes[fid]
+                    food_name_list.append((str(fid), recipe.name))
+                except Exception:
+                    pass
+        else:
+            food_name_list = cooking.get_filtered_sorted_cook_data(self.now_panel)
+            if self.show_favorites_only:
+                food_name_list = [x for x in food_name_list if cooking.has_favorites(x[0])]
         # 将调味、烹饪模式、做饭类型增加进去
         food_name_list = [(x[0], x[1], self.special_seasoning, self.cook_mode, self.make_food_type) for x in food_name_list]
 
@@ -384,7 +477,7 @@ class Make_food_Panel:
         """
         切换烹饪模式
         Keyword arguments:
-        cook_mode -- 烹饪模式：0标准，1精细
+        cook_mode -- 烹饪模式：0标准，1精细，2大师
         """
         self.cook_mode = cook_mode
 
@@ -567,6 +660,10 @@ class Make_food_Panel:
         cache.rhodes_island.makefood_filter_difficulty = -1
         cache.rhodes_island.makefood_filter_time = -1
         
+    def toggle_favorites_only(self):
+        """切换普通列表是否只看收藏"""
+        self.show_favorites_only = not getattr(self, "show_favorites_only", False)
+
     def clear_filter_and_sort(self):
         """清除筛选和排序"""
         self.clear_filter()
@@ -698,6 +795,8 @@ class SeeFoodListByFoodNameDraw:
         """ 是否为加料咖啡 """
         self.last_confirm_result: str = ""
         """ 记录二级确认面板最后一次操作结果（如：取消） """
+        self._dish_special_returns = {}
+        """ 本菜自选特技按钮返回值 → 候选名 的映射 """
 
         # 如果是用来占位的空白项，绘制一个固定宽度的空白文本
         if self.cid == "-1":
@@ -745,7 +844,7 @@ class SeeFoodListByFoodNameDraw:
         """ 绘制的对象 """
 
     def make_food_for_sure(self):
-        """确认是否制作食物，并选择制作数量"""
+        """确认是否制作食物，并选择制作数量（含收藏方案/大师模式/熟练度/帮厨）"""
         from Script.Design import basement
         from Script.Design import handle_premise
 
@@ -755,21 +854,55 @@ class SeeFoodListByFoodNameDraw:
         food_diffucty = food_recipe.difficulty
         seasoning_name = game_config.config_seasoning[self.special_seasoning].name
         facility_adjust = basement.calc_facility_efficiency(5)
-        
-        # 预先计算基础品质与最高品质
-        base_quality = cooking.get_base_food_quality(0)
-        # 如果当前是酒类，且当前地点在酒吧，则品质额外+1
-        if food_recipe.type == 3 and handle_premise.handle_in_bar(0):
-            base_quality += 1
-        max_quality = base_quality
-        if self.cook_mode == 1 and cooking.has_cook_question_library(int(self.food_cid)):
-            max_quality = min(base_quality + 4, cooking.get_max_food_quality())
+        recipe_cid = int(self.food_cid)
 
-        # 计算最大可制作数量（上限10，药物调味时受药物库存限制）
-        max_count = 10
-        if self.special_seasoning > 100:
-            max_count = min(max_count, character_data.item[self.special_seasoning])
-        max_count = max(1, max_count)
+        # 预估消耗函数：对齐上游做饭行为链 DOWN_BOTH_MEDIUM（自/交互对象各扣 HP3/分、MP6/分）
+        def estimate_cost(total_time):
+            hp_cost = int(total_time * 3)
+            mp_cost = int(total_time * 6)
+            return hp_cost, mp_cost
+
+        def can_afford(count):
+            check_time = int(self.make_food_time * (1 + (count - 1) * 0.1))
+            check_time = int(check_time * cooking.get_prof_time_mult(recipe_cid) * cooking.get_helper_time_mult())
+            if facility_adjust != 1.0 and check_time > 0:
+                check_time = int(check_time / facility_adjust)
+            hp_cost, mp_cost = estimate_cost(check_time)
+            return hp_cost <= character_data.hit_point - 1 and mp_cost <= character_data.mana_point
+
+        def recalc_preview():
+            """
+            重算品质预测与可制作上限
+            载入收藏方案或切换大师模式会改变调味/模式，故确认循环每轮都要重算
+            Return arguments:
+            tuple -- (基础品质, 大师模式是否生效, 品质上限, 最大可制作数量)
+            """
+            # 基础品质只由料理技能决定：熟练度不提供任何品质加成
+            base_quality = cooking.get_base_food_quality(0)
+            # 如果当前是酒类，且当前地点在酒吧，则品质额外+1
+            if food_recipe.type == 3 and handle_premise.handle_in_bar(0):
+                base_quality += 1
+            # 标准模式上限为美味（绝珍只能靠精细答题或大师模式达到），这行同时兜住上面「酒类在酒吧 +1」
+            base_quality = min(base_quality, cooking.get_good_quality_cap())
+            # 大师模式：全局模式2 + 料理技能达标
+            global_master = cooking.is_master_unlocked()
+            master_active = self.cook_mode == 2 and global_master
+            max_quality = base_quality
+            if master_active:
+                max_quality = cooking.get_max_food_quality()
+            elif self.cook_mode == 1 and cooking.has_cook_question_library(recipe_cid):
+                max_quality = min(base_quality + 4, cooking.get_max_food_quality())
+            # 最大可制作数量（上限99；药物调味受库存/庆典3份限制；再受体力气力上限约束）
+            max_count = 99
+            if self.special_seasoning > 100:
+                consume = 3 if food_recipe.type == cooking.FEAST_TYPE else 1
+                max_count = min(max_count, character_data.item[self.special_seasoning] // consume)
+            while max_count > 1 and not can_afford(max_count):
+                max_count -= 1
+            max_count = max(1, max_count)
+            return base_quality, master_active, max_quality, max_count
+
+        base_quality, master_active, max_quality, max_count = recalc_preview()
         # 沿用上次在同类型做饭面板中选择的制作数量，并按本次可制作上限钳制
         remember_count = cache.rhodes_island.makefood_make_count.get(self.make_food_type, 1)
         if not isinstance(remember_count, int) or remember_count < 1:
@@ -777,11 +910,15 @@ class SeeFoodListByFoodNameDraw:
         make_count = min(remember_count, max_count)
 
         while 1:
+            # 载入收藏方案/切换大师模式会改变调味与模式，每轮进入确认循环时重算品质预测与数量上限
+            base_quality, master_active, max_quality, max_count = recalc_preview()
+            make_count = max(1, min(make_count, max_count))
             py_cmd.clr_cmd()
             line_feed.draw()
 
-            # 计算总耗时：基础时间 + 每多一份增加食谱时间的10%，再根据设施效率调整
+            # 计算总耗时：基础时间 + 每多一份增加10%，再乘熟练度与帮厨系数，最后按设施效率调整
             base_total_time = int(self.make_food_time * (1 + (make_count - 1) * 0.1))
+            base_total_time = int(base_total_time * cooking.get_prof_time_mult(recipe_cid) * cooking.get_helper_time_mult())
             make_food_time = base_total_time
             facility_adjust_str = ""
             if facility_adjust != 1.0 and base_total_time > 0:
@@ -804,22 +941,45 @@ class SeeFoodListByFoodNameDraw:
             confirm_text += _("制作数量: {0} （最多 {1}）\n").format(make_count, max_count)
             confirm_text += _("预计耗时: {0} 分钟{1}\n").format(make_food_time, facility_adjust_str)
             confirm_text += _("当前调味: {0}\n").format(seasoning_name)
+            hp_cost, mp_cost = estimate_cost(make_food_time)
+            cost_str = _("预计消耗: 体力 -{0} / 气力 -{1}").format(hp_cost, mp_cost)
+            if character_data.target_character_id != character_data.cid:
+                cost_str += _("（交互对象同额）")
+            confirm_text += cost_str + _("\n")
+            # 帮厨与熟练度信息行
+            helpers = cooking.get_helpers()
+            if helpers:
+                helper_names = "、".join(cache.character_data[h].name for h in helpers)
+                confirm_text += _("帮厨: {0}（-{1:.0f}%）\n").format(helper_names, (1 - cooking.get_helper_time_mult()) * 100)
+            feast_effect_text = cooking.get_feast_effect_text(recipe_cid)
+            if feast_effect_text:
+                confirm_text += _("本菜特殊效果: {0}\n").format(feast_effect_text)
+            if cooking.get_prof_count(recipe_cid) > 0 or cooking.get_prof_tier(recipe_cid) > 0:
+                confirm_text += cooking.prof_summary_text(recipe_cid) + _("\n")
+            slot_summary = cooking.dish_special_summary_text(recipe_cid)
+            if slot_summary:
+                confirm_text += slot_summary + _("\n")
             
             info_draw = draw.NormalDraw()
             info_draw.text = confirm_text
             info_draw.draw()
             
-            # 品质预测绘制
+            # 品质预测绘制（大师模式显示稳定绝珍）
             q_label = draw.NormalDraw()
             q_label.text = _("品质预测: ")
             q_label.draw()
-                
-            draw_q(base_quality)
-            if max_quality != base_quality:
-                tilde = draw.NormalDraw()
-                tilde.text = "~"
-                tilde.draw()
-                draw_q(max_quality)
+            if master_active:
+                draw_q(cooking.get_max_food_quality())
+                stable_draw = draw.NormalDraw()
+                stable_draw.text = _("（稳定）")
+                stable_draw.draw()
+            else:
+                draw_q(base_quality)
+                if max_quality != base_quality:
+                    tilde = draw.NormalDraw()
+                    tilde.text = "~"
+                    tilde.draw()
+                    draw_q(max_quality)
             
             intro_draw = draw.NormalDraw()
             intro_draw.text = _("\n介绍    : {0}\n").format(food_recipe.introduce)
@@ -827,18 +987,101 @@ class SeeFoodListByFoodNameDraw:
             
             line_feed.draw()
 
-            # 数量调整按钮
+            # 收藏方案区
             return_list = []
-            minus_draw = draw.CenterButton(_("[-1]"), _("减少"), int(window_width / 4))
+            favorites = cooking.get_recipe_favorites(recipe_cid)
+            if favorites:
+                fav_title = draw.NormalDraw()
+                fav_title.text = _("○收藏方案：\n")
+                fav_title.draw()
+                mode_names = [_("标准"), _("精细"), _("大师")]
+                season_short = {
+                    0: _("正常"), 1: _("酸"), 2: _("甜"), 3: _("苦"), 4: _("辣"),
+                    11: _("精液巧混"), 12: _("精液直射"),
+                    102: _("事后避孕药"), 103: _("媚药"), 105: _("利尿剂"),
+                    106: _("持续利尿"), 107: _("安眠药"), 108: _("排卵药"),
+                }
+                for idx, preset in enumerate(favorites):
+                    preset_season = season_short.get(preset["seasoning"], _("调味{0}").format(preset["seasoning"]))
+                    preset_mode = mode_names[preset["cook_mode"]] if preset["cook_mode"] in (0, 1, 2) else mode_names[0]
+                    btn_text = _("[收藏{0}]{1} / {2} / ×{3}").format(idx + 1, preset_season, preset_mode, preset["make_count"])
+                    fav_btn = draw.CenterButton(btn_text, f"feast_fav_{idx}", int(window_width / 3))
+                    fav_btn.draw()
+                    return_list.append(fav_btn.return_text)
+                    if (idx + 1) % 3 == 0:
+                        line_feed.draw()
+                if len(favorites) % 3 != 0:
+                    line_feed.draw()
+
+            # 本菜自选特技（4 选 1，免费、随时可换；B 拿手解锁，EX 阶数值升级）
+            self._dish_special_returns = {}
+            _slot_tier = cooking.get_prof_tier(recipe_cid)
+            if _slot_tier >= cooking.PROF_PREVIEW_TIER:
+                line_feed.draw()
+                slot_title = draw.NormalDraw()
+                if _slot_tier >= cooking.PROF_SLOT_TIER:
+                    slot_title.text = _("○本菜特技（4 选 1，免费随时换）：")
+                else:
+                    slot_title.text = _("○本菜特技池预览（还差 {0} 次到 {1} {2} 可选）：").format(
+                        max(0, cooking.PROF_TIER_COUNTS[cooking.PROF_SLOT_TIER - 1] - cooking.get_prof_count(recipe_cid)),
+                        cooking.PROF_TIER_LETTERS[cooking.PROF_SLOT_TIER],
+                        cooking.PROF_TIER_NAMES[cooking.PROF_SLOT_TIER],
+                    )
+                slot_title.draw()
+                line_feed.draw()
+                chosen_name = cooking.get_dish_special_choice(recipe_cid)
+                for slot_index, slot_item in enumerate(cooking.get_dish_special_candidates(recipe_cid)):
+                    slot_effect = slot_item[3] if cooking.is_dish_special_ex(recipe_cid) else slot_item[2]
+                    # 一行一条（前缀＋名字＋维度），效果文案单独一行完整显示：
+                    # 按钮文本超宽会被截断成「本菜：制作 耗~」，玩家看不到完整效果
+                    if _slot_tier >= cooking.PROF_SLOT_TIER:
+                        slot_prefix = _("[已选]") if slot_item[0] == chosen_name else _("[选择]")
+                        slot_text = _("{0}{1}（{2}）").format(slot_prefix, slot_item[0], slot_item[1])
+                        slot_draw = draw.LeftButton(slot_text, "feast_dish_special_" + str(slot_index), self.width)
+                        slot_draw.draw()
+                        return_list.append(slot_draw.return_text)
+                        self._dish_special_returns[slot_draw.return_text] = slot_item[0]
+                    else:
+                        preview_draw = draw.NormalDraw()
+                        preview_draw.text = _("　[预览]{0}（{1}）").format(slot_item[0], slot_item[1])
+                        preview_draw.draw()
+                    line_feed.draw()
+                    effect_draw = draw.NormalDraw()
+                    effect_draw.text = _("　　{0}").format(slot_effect)
+                    effect_draw.draw()
+                    line_feed.draw()
+
+            # 数量调整按钮（先换行，避免和特技按钮挤在一起）
+            line_feed.draw()
+            min_draw = draw.CenterButton(_("[最小]"), _("最小"), int(window_width / 6))
+            min_draw.draw()
+            return_list.append(min_draw.return_text)
+            minus10_draw = draw.CenterButton(_("[-10]"), _("减十"), int(window_width / 6))
+            minus10_draw.draw()
+            return_list.append(minus10_draw.return_text)
+            minus_draw = draw.CenterButton(_("[-1]"), _("减少"), int(window_width / 6))
             minus_draw.draw()
             return_list.append(minus_draw.return_text)
-            plus_draw = draw.CenterButton(_("[+1]"), _("增加"), int(window_width / 4))
+            plus_draw = draw.CenterButton(_("[+1]"), _("增加"), int(window_width / 6))
             plus_draw.draw()
             return_list.append(plus_draw.return_text)
-            max_draw = draw.CenterButton(_("[最大]"), _("最大"), int(window_width / 4))
+            plus10_draw = draw.CenterButton(_("[+10]"), _("加十"), int(window_width / 6))
+            plus10_draw.draw()
+            return_list.append(plus10_draw.return_text)
+            max_draw = draw.CenterButton(_("[最大]"), _("最大"), int(window_width / 6))
             max_draw.draw()
             return_list.append(max_draw.return_text)
             line_feed.draw()
+
+            # 收藏当前方案/取消当前收藏
+            save_fav_btn = draw.CenterButton(_("[收藏当前方案]"), "feast_fav_save", int(window_width / 2))
+            save_fav_btn.draw()
+            return_list.append(save_fav_btn.return_text)
+            current_fav_idx = cooking.find_favorite_index(recipe_cid, self.special_seasoning, self.cook_mode, make_count)
+            if current_fav_idx >= 0:
+                del_fav_btn = draw.CenterButton(_("[取消当前收藏]"), "feast_fav_delete", int(window_width / 2))
+                del_fav_btn.draw()
+                return_list.append(del_fav_btn.return_text)
             line_feed.draw()
 
             # 确认/取消按钮
@@ -851,12 +1094,52 @@ class SeeFoodListByFoodNameDraw:
             line_feed.draw()
 
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == minus_draw.return_text:
+            if yrn == minus10_draw.return_text:
+                make_count = max(1, make_count - 10)
+            elif yrn == minus_draw.return_text:
                 make_count = max(1, make_count - 1)
+            elif yrn == min_draw.return_text:
+                make_count = 1
             elif yrn == plus_draw.return_text:
                 make_count = min(max_count, make_count + 1)
+            elif yrn == plus10_draw.return_text:
+                make_count = min(max_count, make_count + 10)
             elif yrn == max_draw.return_text:
                 make_count = max_count
+            elif self._dish_special_returns and yrn in self._dish_special_returns:
+                # 4 选 1：再点已选项则取消（免费随时换）
+                picked = self._dish_special_returns[yrn]
+                cooking.set_dish_special_choice(recipe_cid, "" if picked == cooking.get_dish_special_choice(recipe_cid) else picked)
+            elif yrn == "feast_fav_save":
+                result = cooking.save_favorite(recipe_cid, make_count, self.cook_mode, self.special_seasoning)
+                info_text = {
+                    "added": _("已收藏当前方案\n"),
+                    "updated": _("已更新当前收藏方案\n"),
+                    "per_recipe_limit": _("该菜谱收藏方案已达上限\n"),
+                    "total_limit": _("总收藏方案已达上限\n"),
+                    "invalid": _("无法收藏该菜谱\n"),
+                }.get(result, _("\n"))
+                py_cmd.clr_cmd()
+                line_feed.draw()
+                info_draw = draw.NormalDraw()
+                info_draw.text = info_text
+                info_draw.draw()
+                line_feed.draw()
+                continue
+            elif yrn == "feast_fav_delete":
+                if current_fav_idx >= 0:
+                    cooking.remove_favorite(recipe_cid, current_fav_idx)
+                continue
+            elif yrn.startswith("feast_fav_"):
+                try:
+                    idx = int(yrn.split("_")[-1])
+                    preset = favorites[idx]
+                    self.special_seasoning = preset["seasoning"]
+                    self.cook_mode = preset["cook_mode"]
+                    make_count = preset["make_count"]
+                except Exception:
+                    pass
+                continue
             elif yrn == confirm_draw.return_text:
                 # 记忆本次的制作数量，供下次打开同类型做饭面板时沿用
                 cache.rhodes_island.makefood_make_count[self.make_food_type] = make_count
@@ -877,37 +1160,48 @@ class SeeFoodListByFoodNameDraw:
         from Script.Design import handle_premise
         character_data: game_type.Character = cache.character_data[0]
         food_recipe: game_type.Recipes = cache.recipe_data[int(self.food_cid)]
+        recipe_cid = int(self.food_cid)
 
-        # 计算食物品质：基础品质为玩家料理技能，封顶到美味
+        # 计算食物品质：基础品质只由料理技能决定（熟练度不提供任何品质加成），
+        # 之后封顶到标准模式上限「美味」（绝珍只能靠精细答题或大师模式达到）
         base_quality = cooking.get_base_food_quality(0)
         # 如果当前是酒类，且当前地点在酒吧，则品质额外+1
         if food_recipe.type == 3 and handle_premise.handle_in_bar(0):
             base_quality += 1
+        base_quality = min(base_quality, cooking.get_good_quality_cap())
         food_quality = base_quality
+        # 大师模式：全局模式2 + 料理技能达标
+        global_master = cooking.is_master_unlocked()
+        master_active = self.cook_mode == 2 and global_master
+        if master_active:
+            food_quality = cooking.get_max_food_quality()
         # 精细模式且存在题库时，进入答题流程（特殊调味会替换对应阶段的问题），答对可提升品质（封顶绝珍）
-        if (
+        elif (
             self.cook_mode == 1
-            and cooking.has_cook_question_library(int(self.food_cid))
+            and cooking.has_cook_question_library(recipe_cid)
         ):
             food_quality = cook_question_panel.run_cook_question_flow(
-                int(self.food_cid), base_quality, self.special_seasoning
+                recipe_cid, base_quality, self.special_seasoning
             )
 
         # 按数量逐个创建食物对象（延迟创建：仅在制作时才创建对应菜谱的食物对象）
+        drug_consume = 3 if food_recipe.type == cooking.FEAST_TYPE else 1
         real_count = 0
         for _i in range(make_count):
-            # 药物调味则每份扣除一个药物，库存不足时停止制作
+            # 药物调味则每份扣除对应数量的药物，库存不足时停止制作
             if self.special_seasoning > 100:
-                if character_data.item[self.special_seasoning] <= 0:
+                if character_data.item[self.special_seasoning] < drug_consume:
                     break
-                character_data.item[self.special_seasoning] -= 1
+                character_data.item[self.special_seasoning] -= drug_consume
             # 精液调味则每份扣除一次精液量，库存不足时停止制作
             if self.special_seasoning in {11, 12}:
                 semen_text, semen_count = ejaculation_panel.common_ejaculation()
                 if semen_count <= 0:
                     break
             # 创建食物对象并赋予名字、作者、品质、味道
-            new_food = cooking.create_food("", int(self.food_cid), food_quality, character_data.name)
+            new_food = cooking.create_food("", recipe_cid, food_quality, character_data.name)
+            # 制作时就把当前自选特技烙在这份食物上：之后换槽不影响已有成品，也不会与别的槽混堆
+            new_food.dish_special = cooking.get_dish_special_choice(recipe_cid)
             new_food.special_seasoning = self.special_seasoning
             if self.special_seasoning in {11, 12}:
                 new_food.special_seasoning_amount = semen_count
@@ -936,6 +1230,9 @@ class SeeFoodListByFoodNameDraw:
             info_draw.draw()
             line_feed.draw()
 
+        # 累计熟练度
+        cooking.add_proficiency(recipe_cid)
+
         # 烹饪行为
         character_data.behavior.make_food_time = new_make_food_time
         character_data.behavior.make_food_count = real_count
@@ -949,6 +1246,7 @@ class SeeFoodListByFoodNameDraw:
         update.game_update_flow(new_make_food_time)
         # 结算成就
         achievement_panel.achievement_flow(_("烹饪"))
+
 
     def draw(self):
         """绘制对象"""
