@@ -233,11 +233,13 @@ def set_time(now_time: datetime.datetime):
     """
     设置游戏时间，并把全部角色的行为起始时间同步过去
     get_class_period 等函数读的是 behavior.start_time（默认是公元1年），不同步会永远算成不在节次内
+    与真实游戏一致，游戏时间一律规整成 GameTime（按游戏日历计算）
     Keyword arguments:
     now_time -- 新的游戏时间
     Return arguments:
     无
     """
+    now_time = game_time.to_game_time(now_time)
     cache.game_time = now_time
     for character_data in cache.character_data.values():
         character_data.behavior.start_time = now_time
@@ -255,7 +257,7 @@ def make_character(cid: int, name: str, work_type: int = 0, daughter: bool = Fal
     stage -- 成长阶段素质id（101 婴儿 / 102 幼女 / 103 萝莉 / 104 少女），0 为成年干员；婴儿不进 npc_id_got（Plan 28）
     mother_id -- 母亲的角色id
     position -- 初始场景路径，默认宿舍
-    born_days -- 出生距今的日历天数（成长天数用）
+    born_days -- 出生距今的游戏天数（成长天数用）
     Return arguments:
     game_type.Character -- 角色对象
     """

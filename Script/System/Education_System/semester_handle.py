@@ -17,7 +17,6 @@
 成绩单必须**冻结**成快照而不是查看时现算：新学期一开课，现算出来的数就变了，
    玩家隔两天再看「同一份」成绩单会得到不一样的内容。
 """
-import calendar
 from typing import Dict, List, Tuple
 
 from Script.Core import cache_control, game_type, get_text
@@ -46,16 +45,15 @@ def get_semester_name(year: int, month: int) -> str:
 def get_semester_day_total(year: int, month: int) -> int:
     """
     取一个学期有多少天
-    学期长度就是**这个季月的日历天数**（28~31），不是笼统的「约30天」：
-       切月时 sub_time_now 会把日期 replace(day=1)，非季月被时钟整段跳过，
-       所以一个学期恰好等于这个季月本身。写死30会在2月与大月上各错一两天
+    学期长度就是这个季月的天数：游戏日历每个季月固定 game_time.SEASON_DAY（30）天，非季月被时钟整段跳过，
+       所以一个学期恰好等于这个季月本身
     Keyword arguments:
     year -- 年份
     month -- 季月（3/6/9/12）
     Return arguments:
     int -- 天数
     """
-    return calendar.monthrange(year, month)[1]
+    return game_time.SEASON_DAY
 
 
 def get_semester_progress() -> float:

@@ -1,4 +1,3 @@
-import calendar
 import datetime
 import time
 import random
@@ -24,6 +23,129 @@ moon = ephem.Moon()
 time_zone = datetime.timezone(datetime.timedelta(hours=+8))
 
 
+SEASON_MONTH_LIST = (3, 6, 9, 12)
+""" 游戏日历的季月：一年只有春夏秋冬 3/6/9/12 四个月，其余月份被时钟跳过 """
+SEASON_DAY = 30
+""" 游戏日历每个季月固定 30 天，30 日的下一刻就是下一个季月的 1 日，不存在 31 日 """
+YEAR_DAY = SEASON_DAY * len(SEASON_MONTH_LIST)
+""" 游戏一年的天数（120 天） """
+CALENDAR_ANCHOR = datetime.datetime(2019, 3, 1)
+""" 游戏日与公历日的对齐基准（默认开局日）：星期、月相从这一天起按游戏日连续推进，开局这一天与公历一致 """
+
+
+def get_play_time(date: datetime.datetime) -> datetime.timedelta:
+    """
+    把时间换算成游戏日历上的绝对时长（游戏日序号 + 当日时刻），游戏时间的加减都按它计算
+    Keyword arguments:
+    date -- 时间（GameTime 或普通 datetime 均可）
+    Return arguments:
+    datetime.timedelta -- 游戏日历上的绝对时长；
+        不在游戏日历上的时间（被时钟跳过的非季月、季月的31日）按下一个季月的1日0时算
+    """
+    season_month = get_season_month(date.month)
+    day_index = date.year * YEAR_DAY + SEASON_MONTH_LIST.index(season_month) * SEASON_DAY
+    if season_month != date.month:
+        return datetime.timedelta(days=day_index)
+    if date.day > SEASON_DAY:
+        return datetime.timedelta(days=day_index + SEASON_DAY)
+    return datetime.timedelta(days=day_index + date.day - 1, hours=date.hour, minutes=date.minute, seconds=date.second, microseconds=date.microsecond)
+
+
+def to_game_time(date: datetime.datetime) -> "GameTime":
+    """
+    把任意时间规整成游戏日历上的游戏时间（读旧存档、读配置、普通 datetime 参与推算时用）
+    Keyword arguments:
+    date -- 时间
+    Return arguments:
+    GameTime -- 规整后的游戏时间，规则同 get_play_time
+    """
+    return GameTime.from_play_time(get_play_time(date))
+
+
+class GameTime(datetime.datetime):
+    """
+    游戏时间：加减、相减与星期都按游戏日历计算的 datetime\n
+    游戏日历只有 3/6/9/12 四个季月、每月 30 天（见 SEASON_MONTH_LIST / SEASON_DAY），30 日的下一刻就是下一个季月的1日；
+    datetime 自带的运算按公历走，换季一次会多算约两个月、星期也会跳。
+    与普通 datetime 混合相减时（无论左右）同样按游戏日历计算
+    """
+
+    __slots__ = ()
+
+    @classmethod
+    def from_play_time(cls, play_time: datetime.timedelta) -> "GameTime":
+        """
+        由游戏日历上的绝对时长（见 get_play_time）还原出游戏时间
+        Keyword arguments:
+        play_time -- 游戏日历上的绝对时长
+        Return arguments:
+        GameTime -- 对应的游戏时间
+        """
+        year, day_index = divmod(play_time.days, YEAR_DAY)
+        season_index, day_index = divmod(day_index, SEASON_DAY)
+        hour, second = divmod(play_time.seconds, 3600)
+        return cls(year, SEASON_MONTH_LIST[season_index], day_index + 1, hour, second // 60, second % 60, play_time.microseconds)
+
+    def __add__(self, other):
+        """
+        游戏时间加上一段时长，按游戏日历推进（不经过被跳过的非季月）
+        Keyword arguments:
+        other -- datetime.timedelta 时长
+        Return arguments:
+        GameTime -- 推进后的游戏时间
+        """
+        if isinstance(other, datetime.timedelta):
+            return GameTime.from_play_time(get_play_time(self) + other)
+        return NotImplemented
+
+    __radd__ = __add__
+
+    def __sub__(self, other):
+        """
+        游戏时间减去一段时长（得到更早的游戏时间），或减去另一个时间（得到游戏日历上经过的时长）
+        Keyword arguments:
+        other -- datetime.timedelta 时长，或 datetime.datetime 时间
+        Return arguments:
+        GameTime | datetime.timedelta -- 回退后的游戏时间，或经过的时长
+        """
+        if isinstance(other, datetime.timedelta):
+            return GameTime.from_play_time(get_play_time(self) - other)
+        if isinstance(other, datetime.datetime):
+            return get_play_time(self) - get_play_time(other)
+        return NotImplemented
+
+    def __rsub__(self, other):
+        """
+        普通 datetime 减去游戏时间，同样按游戏日历计算经过的时长
+        Keyword arguments:
+        other -- datetime.datetime 时间
+        Return arguments:
+        datetime.timedelta -- 经过的时长
+        """
+        if isinstance(other, datetime.datetime):
+            return get_play_time(other) - get_play_time(self)
+        return NotImplemented
+
+    def weekday(self) -> int:
+        """
+        按游戏日连续推算的星期，换季时不跳
+        Return arguments:
+        int -- 星期0~6（0为周一）
+        """
+        return get_anchor_date(self).weekday()
+
+
+def get_anchor_date(date: datetime.datetime) -> datetime.datetime:
+    """
+    把游戏日换算成以 CALENDAR_ANCHOR 为基准、按天连续的公历日期，供星期、月相这类按天循环的推算使用
+    Keyword arguments:
+    date -- 时间
+    Return arguments:
+    datetime.datetime -- 连续的公历日期（0点）
+    """
+    return CALENDAR_ANCHOR + datetime.timedelta(days=get_play_time(date).days - get_play_time(CALENDAR_ANCHOR).days)
+
+
 def init_time():
     """
     初始化游戏时间
@@ -35,13 +157,15 @@ def init_time():
         normal_config.config_normal.hour,
         normal_config.config_normal.minute,
     )
+    # 配置里的开局日期规整到游戏日历上（不在游戏日历上的日期按下一个季月的1日算）
+    game_time = to_game_time(game_time)
     cache.game_time = game_time
     cache.pre_game_time = game_time
 
 
 def get_season_month(month: int) -> int:
     """
-    将任意月份归并为游戏使用的四季月（3春/6夏/9秋/12冬），规则与 get_sub_date 一致：1,2→3、4,5→6、7,8→9、10,11→12
+    将任意月份归并为游戏使用的四季月（3春/6夏/9秋/12冬），非季月归到其后的季月：1,2→3、4,5→6、7,8→9、10,11→12
     Keyword arguments:
     month -- 月份（1~12）
     Return arguments:
@@ -160,18 +284,7 @@ def sub_time_now(minute=0, hour=0, day=0, month=0, year=0) -> datetime.datetime:
     month -- 增加的月数
     year -- 增加的年数
     """
-    new_date = get_sub_date(minute, hour, day, month, year)
-    tem_date = new_date
-
-    # 切月时对全角色的行为开始时间进行重置
-    if new_date.month != cache.game_time.month:
-        tem_date = new_date.replace(day = 1)
-        new_date = new_date.replace(day = 1, hour = 0, minute = 0)
-        # 不再重置全角色的行为开始时间
-        # for character_id in cache.npc_id_got:
-        #     character.init_character_behavior_start_time(character_id, new_date)
-
-    cache.game_time = tem_date
+    cache.game_time = get_sub_date(minute, hour, day, month, year)
 
 
 def get_sub_date(
@@ -191,47 +304,30 @@ def get_sub_date(
     month -- 增加月数
     year -- 增加年数
     old_date -- 旧日期，若为None，则获取当前游戏时间
+    Return arguments:
+    GameTime -- 新日期
     """
     if old_date is None:
         old_date = cache.game_time
-    # 如果增加了月或年，则直接使用 relativedelta 进行计算
+    # 普通 datetime（如占位用的默认时间）先规整成游戏时间，保证按游戏日历计算
+    new_date = to_game_time(old_date)
+    # 年、月按日历推算，落进非季月时按下一个季月的1日0时算
     if month != 0 or year != 0:
-        new_date = old_date + relativedelta.relativedelta(
-            years=year, months=month, days=day, hours=hour, minutes=minute
-        )
-    # 否则使用更简单的 timedelta 进行计算
-    else:
-        new_date = old_date + datetime.timedelta(
-            days=day, hours=hour, minutes=minute
-        )
-
-    # 进行月份调整，保留四个月为春夏秋冬四月，其他月份自动跳转为以上月份（规则见 get_season_month）
-    season_month = get_season_month(new_date.month)
-    if season_month != new_date.month:
-        # 目标季月天数可能少于原月份（如5月31日→6月只有30天），日期需夹取到目标月的最后一天，否则 replace 会报错
-        max_day = calendar.monthrange(new_date.year, season_month)[1]
-        new_date = new_date.replace(month=season_month, day=min(new_date.day, max_day))
-    return new_date
+        new_date = to_game_time(new_date + relativedelta.relativedelta(years=year, months=month))
+    # 天、时、分按游戏日历推进，被跳过的非季月不计入
+    return new_date + datetime.timedelta(days=day, hours=hour, minutes=minute)
 
 
 def get_predict_date(day: int, old_date: datetime.datetime) -> datetime.datetime:
     """
-    获取旧日期经过指定天数后、游戏时钟真正会走到的日期，用于各类"预计X日"的展示\n
-    游戏一年只有3/6/9/12四个季月，非季月会被时钟整段跳过（见 sub_time_now 的切月归1处理），
-    因此目标日期落在被跳过的月份时，取其之后第一个季月的1日；
-    直接用 get_sub_date 会保留被跳过月份的"日"再把月份改成季月，得到时钟永远不会显示的日期，
-    并且随天数减少反而可能显示成更晚的日期
+    获取旧日期经过指定天数后、游戏时钟会走到的日期，用于各类"预计X日"的展示
     Keyword arguments:
     day -- 经过的天数
     old_date -- 起始日期
     Return arguments:
-    datetime.datetime -- 预计日期
+    GameTime -- 预计日期
     """
-    predict_date = old_date + datetime.timedelta(days=day)
-    season_month = get_season_month(predict_date.month)
-    if season_month == predict_date.month:
-        return predict_date
-    return predict_date.replace(month=season_month, day=1, hour=0, minute=0, second=0, microsecond=0)
+    return get_sub_date(day=day, old_date=old_date)
 
 
 def get_rand_day_for_year(year: int) -> datetime.datetime:
@@ -242,8 +338,8 @@ def get_rand_day_for_year(year: int) -> datetime.datetime:
     Return arguments:
     time.time -- 随机日期
     """
-    start = datetime.datetime(year, 1, 1, 0, 0, 0, 0)
-    end = datetime.datetime(year, 12, 31, 23, 59, 59)
+    start = GameTime(year, SEASON_MONTH_LIST[0], 1)
+    end = GameTime(year, SEASON_MONTH_LIST[-1], SEASON_DAY, 23, 59, 59)
     return get_rand_day_for_date(start, end)
 
 
@@ -277,14 +373,14 @@ def count_day_for_datetime(
         end_date: datetime.datetime,
 ) -> int:
     """
-    计算两个时间之间经过的天数
+    计算两个时间之间在游戏日历上经过的天数
     Keyword arguments:
     start_date -- 开始时间
     end_date -- 结束时间
     Return arguments:
-    int -- 经过天数
+    int -- 经过天数，结束早于开始时为负
     """
-    return (end_date - start_date).days
+    return (get_play_time(end_date) - get_play_time(start_date)).days
 
 
 def count_play_day(
@@ -292,34 +388,30 @@ def count_play_day(
         end_date: datetime.datetime,
 ) -> int:
     """
-    计算两个时间之间经过的可游玩天数（Plan 32 §3.2）
+    计算两个时间之间经过的游戏天数，结束早于开始时取0（Plan 32 §3.2）
     Keyword arguments:
     start_date -- 开始时间
     end_date -- 结束时间
     Return arguments:
-    int -- 经过的可游玩天数，结束早于开始时为0
-    功能: 游戏时钟只有 3 / 6 / 9 / 12 四个季月，季月最后一天的下一天直接跳到下一个季月的 1 日（sub_time_now / get_sub_date），
-          日历天数（count_day_for_datetime）会把被跳过的非季月也算进去，一次换季就多出约 60 天。
-          这里从日历上的经过时长里减去 [开始, 结束) 与各个非季月重叠的时长，再取整天；按月累加，不逐日遍历
+    int -- 经过的游戏天数，结束早于开始时为0
     """
-    total_second = (end_date - start_date).total_seconds()
-    if total_second <= 0:
-        return 0
-    skip_second = 0.0
-    month_start = datetime.datetime(start_date.year, start_date.month, 1)
-    while month_start < end_date:
-        if month_start.month == 12:
-            next_month_start = datetime.datetime(month_start.year + 1, 1, 1)
-        else:
-            next_month_start = datetime.datetime(month_start.year, month_start.month + 1, 1)
-        # 非季月整段被时钟跳过：与 [开始, 结束) 重叠的那一截不算可游玩的时间
-        if get_season_month(month_start.month) != month_start.month:
-            overlap_start = max(month_start, start_date)
-            overlap_end = min(next_month_start, end_date)
-            if overlap_end > overlap_start:
-                skip_second += (overlap_end - overlap_start).total_seconds()
-        month_start = next_month_start
-    return max(0, int((total_second - skip_second) // 86400))
+    return max(0, count_day_for_datetime(start_date, end_date))
+
+
+def get_duration_text(day: int) -> str:
+    """
+    把一段天数换成玩家看的时长文本：满一个季月（30天）的写成「X季月Y天」（Y为0时只写「X季月」），不满一个季月的写成「Y天」
+    Keyword arguments:
+    day -- 天数（负数按0处理，小数向下取整）
+    Return arguments:
+    str -- 时长文本，如「2季月5天」「1季月」「12天」
+    """
+    season_count, rest_day = divmod(max(0, int(day)), SEASON_DAY)
+    if season_count == 0:
+        return _("{0}天").format(rest_day)
+    if rest_day == 0:
+        return _("{0}季月").format(season_count)
+    return _("{0}季月{1}天").format(season_count, rest_day)
 
 
 def judge_date_big_or_small(time_a: datetime.datetime, time_b: datetime.datetime) -> int:
@@ -490,7 +582,8 @@ def get_moon_phase(now_time: datetime.datetime) -> int:
         cache.__dict__["moon_phase"] = {}
     now_date_str = f"{now_time.year}/{now_time.month}/{now_time.day}"
     if now_date_str not in cache.moon_phase:
-        new_time = datetime.datetime(now_time.year, now_time.month, now_time.day)
+        # 按游戏日连续换算出的公历日期推算月相，换季时月相不跳
+        new_time = get_anchor_date(now_time)
         new_time.astimezone(time_zone)
         gatech.date = datetime.datetime.utcfromtimestamp(time.mktime(new_time.utctimetuple()))
         moon.compute(gatech)

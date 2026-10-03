@@ -47,12 +47,12 @@ def get_pregnancy_past_day(character_id: int) -> int:
 
 def get_acceleration_amount(now_acc: float, effective_day: int, day_cap: int, total_day: int = pregnancy_constant.PREGNANCY_TOTAL_DAY) -> float:
     """
-    计算加速药单次可入账的加速天数（三重夹取：剩余期30%/累计上限250/临盆(破壳)前一天）
+    计算加速药单次可入账的加速天数（三重夹取：剩余期30%/累计上限83/临盆(破壳)前一天）
     Keyword arguments:
     now_acc -- 当前已累计的加速天数
     effective_day -- 当前有效天数（自然天数+已累计加速）
-    day_cap -- 注入后允许的有效天数上限（胎生259=临盆前一天，卵264=破壳前一天）
-    total_day -- 剂量公式基数（胎生为名义孕期270，卵为孵化总天数265）
+    day_cap -- 注入后允许的有效天数上限（胎生86=临盆前一天，卵91=破壳前一天）
+    total_day -- 剂量公式基数（胎生为名义孕期90，卵为孵化总天数92）
     Return arguments:
     float -- 可入账加速天数（<=0时表示已到极限无法使用）
     """
@@ -76,7 +76,7 @@ def get_pregnancy_acceleration_amount(character_id: int) -> float:
 
 def get_child_grow_day(child_id: int) -> int:
     """
-    计算孩子的有效成长天数（自出生起的自然天数+成长加速药累计的成长天数）
+    计算孩子的有效成长天数（自出生起的游戏天数+成长加速药累计的成长天数）
     Keyword arguments:
     child_id -- 孩子角色id
     Return arguments:
@@ -89,7 +89,7 @@ def get_child_grow_day(child_id: int) -> int:
 
 def get_child_growth_stage_total_day(child_id: int) -> int:
     """
-    获取孩子当前成长阶段进入下一阶段所需的有效成长天数阈值（婴儿→幼女90 / 幼女→萝莉270 / 萝莉→少女450）
+    获取孩子当前成长阶段进入下一阶段所需的有效成长天数阈值（婴儿→幼女30 / 幼女→萝莉90 / 萝莉→少女150）
     Keyword arguments:
     child_id -- 孩子角色id
     Return arguments:
@@ -442,7 +442,7 @@ def check_pregnancy(character_id: int):
     if handle_premise.handle_fertilization_1(character_id):
         # 计算经过的天数（含妊娠加速药的加速天数）
         past_day = get_pregnancy_past_day(character_id)
-        # 90天在游戏内实际体验是30天
+        # 受精满一个季月（30天）转为妊娠
         if past_day >= pregnancy_constant.PREGNANCY_DAY:
             character_data.talent[20] = 0
             character_data.talent[21] = 1
@@ -478,7 +478,7 @@ def check_near_born(character_id: int):
     if handle_premise.handle_pregnancy_1(character_id):
         # 计算经过的天数（含妊娠加速药的加速天数）
         past_day = get_pregnancy_past_day(character_id)
-        # 从受精开始算，标准妊娠时间是265天
+        # 从受精开始算，满 PARTURIENT_DAY 天进入临盆，之后每天按概率生产
         if past_day >= pregnancy_constant.PARTURIENT_DAY:
             # 清零污浊结构体
             character_data.dirty = attr_calculation.get_dirty_reset(character_data.dirty)
@@ -606,12 +606,12 @@ def _settle_baby_grow_up(character_id: int, child_id: int):
 
 def check_rearing_complete(character_id: int):
     """
-    判断是否完成育儿：逐个检查母亲名下的全部婴儿，有效成长天数满90天的婴儿各自成长为幼女
+    判断是否完成育儿：逐个检查母亲名下的全部婴儿，有效成长天数满30天的婴儿各自成长为幼女
     """
     character_data: game_type.Character = cache.character_data[character_id]
     # 需要已经是育儿状态
     if handle_premise.handle_rearing_1(character_id):
-        # 90天在游戏内实际体验是30天
+        # 婴儿满一个季月（30天）成长为幼女
         for child_id in get_baby_id_list(character_id):
             if get_child_grow_day(child_id) >= pregnancy_constant.REARING_COMPLETE_DAY:
                 _settle_baby_grow_up(character_id, child_id)

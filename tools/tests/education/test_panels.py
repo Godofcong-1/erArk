@@ -13,7 +13,7 @@ teacher_b = make_character(103, "教师乙", 151)
 teacher_c = make_character(104, "教师丙", 151)
 teacher_d = make_character(105, "教师丁", 151)
 mother = make_character(102, "母亲", 0)
-daughter_list = [make_character(201 + i, f"女儿{i + 1:02d}", 152, daughter=True, stage=103, mother_id=102, born_days=300) for i in range(11)]
+daughter_list = [make_character(201 + i, f"女儿{i + 1:02d}", 152, daughter=True, stage=103, mother_id=102, born_days=100) for i in range(11)]
 adult_student = make_character(301, "成年学生", 152)
 # 容器每轮都会按设施等级刷新房间开放状态，最小 fixture 没有完整的罗德岛数据，钉死它
 class_schedule_panel.basement.get_base_updata = lambda *a, **k: None
@@ -199,7 +199,8 @@ drawn_text.clear()
 gp.draw_page(rl)
 check("画出阶段 / 科目 / 出勤 / 性格四栏", all(any(key in t for t in drawn_text) for key in ("当前阶段", "科目水平", "出勤", "性格倾向")))
 stage_text = next((t for t in drawn_text if "母亲" in t), "")
-check("阶段行：母亲名、距少女还有 150 天（日历天）、预计日期", mother.name in stage_text and "150" in stage_text and "日历天" in stage_text and "预计" in stage_text and "少女" in stage_text, stage_text)
+# 出生 100 天的萝莉离少女（150 天）还差 50 天，满一个季月写成「1季月20天」
+check("阶段行：母亲名、距少女还有 1季月20天、预计日期", mother.name in stage_text and "还有 1季月20天" in stage_text and "预计" in stage_text and "少女" in stage_text, stage_text)
 cache.character_data[201].talent[E.GROWTH_STOP_TALENT_ID] = 1
 drawn_text.clear()
 gp.draw_page([])

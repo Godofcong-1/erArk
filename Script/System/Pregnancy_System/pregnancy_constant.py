@@ -21,31 +21,32 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 # ==== 1. 胎生孕程天数阈值（基准为受精时间，天数经 pregnancy_handle.get_pregnancy_past_day 计入妊娠加速药） ====
-PREGNANCY_DAY = 90
+# 以下孕程、加速上限、成长、孵化天数均按游戏日历计（一个季月 30 天，一年 120 天），约为旧版按现实日历数值的三分之一
+PREGNANCY_DAY = 30
 """ 受精转妊娠的天数阈值 """
-PARTURIENT_DAY = 260
+PARTURIENT_DAY = 87
 """ 妊娠转临盆的天数阈值（临盆后每过一天+20%生产概率） """
-PREGNANCY_TOTAL_DAY = 270
+PREGNANCY_TOTAL_DAY = 90
 """ 名义孕期总天数（妊娠加速药剂量公式的基数） """
 POSTPARTUM_REST_DAY = 2
 """ 产后休养转育儿的天数阈值（基准为最新一个孩子的出生时间） """
 
 # ==== 2. 加速药剂量（妊娠加速药与孵化加速药共用） ====
-ACCELERATION_MAX_DAY = 250
+ACCELERATION_MAX_DAY = 83
 """ 加速药额外加速时间的累计上限（天） """
 ACCELERATION_RATE = 0.3
 """ 加速药单次剂量：剩余期（基数-当前有效天数）的比例 """
 
 # ==== 3. 孩子成长天数阈值（基准为孩子出生时间，天数经 pregnancy_handle.get_child_grow_day 计入成长加速药） ====
-REARING_COMPLETE_DAY = 90
+REARING_COMPLETE_DAY = 30
 """ 婴儿成长为幼女（育儿完成）所需的有效成长天数 """
-GROW_TO_LOLI_DAY = 270
+GROW_TO_LOLI_DAY = 90
 """ 幼女成长为萝莉所需的有效成长天数 """
-GROW_TO_GIRL_DAY = 450
+GROW_TO_GIRL_DAY = 150
 """ 萝莉成长为少女所需的有效成长天数 """
 
 # ==== 4. 卵生 ====
-HATCH_TOTAL_DAY = 265
+HATCH_TOTAL_DAY = 92
 """ 孵化总天数（与胎生受精→标准生产时长一致，基准为卵的排出时间） """
 TEND_EGGS_ENTERTAINMENT_ID = 152
 """ 照料卵娱乐的模板id（Entertainment.csv）。

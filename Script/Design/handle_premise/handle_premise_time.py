@@ -316,7 +316,7 @@ def handle_tired_ge_75_or_sleep_time(character_id: int) -> int:
     # now_time = game_time.get_sun_time(character_data.behavior.start_time)
     # return (now_time == 4) * 100
     # print(f"debug {character_data.name}的疲劳条≥75%或到了睡觉的时间前提判定，当前时间为{character_data.behavior.start_time}，疲劳值为{character_data.tired_point}")
-    if character_data.behavior.start_time != datetime.datetime(1, 1, 1):
+    if character_data.behavior.start_time.year > 1:
         if character_data.behavior.start_time.hour in {0, 1, 2, 3, 4, 5, 22, 23}:
             now_hour = character_data.behavior.start_time.hour if character_data.behavior.start_time.hour > 20 else character_data.behavior.start_time.hour + 24
             # print(f"debug {character_data.name}的睡觉前提判定，now_hour = {now_hour}，返回值为{(now_hour-21) *100}")
@@ -705,7 +705,7 @@ def handle_still_30_minutes_before_end(character_id: int) -> int:
     start_time = character_data.behavior.start_time
     end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
     now_time = cache.game_time
-    true_add_time = int((now_time.timestamp() - end_time.timestamp()) / 60)
+    true_add_time = int((now_time - end_time).total_seconds() / 60)
     if true_add_time >= 30:
         return 1
     return 0

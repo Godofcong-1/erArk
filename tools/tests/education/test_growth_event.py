@@ -145,16 +145,18 @@ for _uid in _baby_uid_list:
 check("婴儿桶与她可抽的通用事件逐条逐选项结算，都不报错（修好之后这些事件真的会派到婴儿身上）", bool(_baby_uid_list) and _option_count > 0 and not _error_list,
       (len(_baby_uid_list), _option_count, _error_list[:5]))
 
-section("Plan 29 §3.3 / L2：抬头写本阶段第几天（Plan 32 M1 起按可游玩天）；改了岗的萝莉照推期末事件（用户拍板：成绩单照出并写明理由，推送不收窄）")
-# 出生日要落在季月（Plan 32 §2.5-4）。今天 2026-09-07 09:00：萝莉与幼女的本阶段都从 2026-06-07 09:00 起，中间跳过 7、8 两个非季月
+section("Plan 29 §3.3 / L2：抬头写本阶段第几天（按游戏日历数）；改了岗的萝莉照推期末事件（用户拍板：成绩单照出并写明理由，推送不收窄）")
+# 今天 2026-09-07 09:00（游戏时间）：萝莉与幼女的本阶段都从 30 天前（2026-06-07 09:00）起，婴儿 5 天前出生
+from Script.System.Pregnancy_System import pregnancy_constant  # noqa: E402
+
 set_time(DEFAULT_TIME)
-loli.pregnancy.born_time = datetime.datetime(2025, 9, 10, 9, 0)
-child.pregnancy.born_time = datetime.datetime(2026, 3, 9, 9, 0)
-baby.pregnancy.born_time = datetime.datetime(2026, 9, 2, 9, 0)
-check("M1 萝莉 2025-09-10 出生：「萝莉期第 31 天」（6/7 起 30 个可游玩天；按日历天会写第 93 天，按出生以来会写第 362 天）",
+loli.pregnancy.born_time = cache.game_time - datetime.timedelta(days=pregnancy_constant.GROW_TO_LOLI_DAY + 30)
+child.pregnancy.born_time = cache.game_time - datetime.timedelta(days=pregnancy_constant.REARING_COMPLETE_DAY + 30)
+baby.pregnancy.born_time = cache.game_time - datetime.timedelta(days=5)
+check("M1 萝莉本阶段已过 30 天：「萝莉期第 31 天」（不按出生以来的总天数写）",
       growth_event_handle.get_growth_event_title({"chara_id": 201}) == "{0} · {1}期第 31 天".format(loli.name, E.STAGE_TALENT_NAME[103]),
       growth_event_handle.get_growth_event_title({"chara_id": 201}))
-check("M1 幼女 2026-03-09 出生：同样是第 31 天；婴儿 9/2 出生：第 6 天（出生当天为第 1 天）",
+check("M1 幼女同样是第 31 天；婴儿 5 天前出生：第 6 天（出生当天为第 1 天）",
       growth_event_handle.get_growth_event_title({"chara_id": 202}).endswith(_("期第 {0} 天").format(31))
       and growth_event_handle.get_growth_event_title({"chara_id": 204}).endswith(_("期第 {0} 天").format(6)),
       (growth_event_handle.get_growth_event_title({"chara_id": 202}), growth_event_handle.get_growth_event_title({"chara_id": 204})))
@@ -204,7 +206,7 @@ growth_handle.get_child_growth(202).report_card_history = []
 section("Plan 31 §3.11（L7）：同班同学只取幼女 / 萝莉，仍在学生岗的成年姐姐不算")
 import inspect  # noqa: E402
 
-from Script.System.Pregnancy_System import pregnancy_handle  # noqa: E402
+from Script.System.Pregnancy_System import pregnancy_constant, pregnancy_handle  # noqa: E402
 
 clear_schedules()
 set_time(period_time(0))
@@ -351,19 +353,25 @@ set_time(period_time(0))
 baby_e = make_character(213, "婴儿E", 0, daughter=True, stage=101, mother_id=103, born_days=5)
 check("L13 出生 5 天的婴儿：婴儿 4「断奶的日子到了」、婴儿 50「断奶之后」都不在候选里（此前出生当天就有）",
       not ({"婴儿4", "婴儿50"} & candidate_uid_set(213)), sorted({"婴儿4", "婴儿50"} & candidate_uid_set(213)))
-# 出生日落在季月（Plan 32 §2.5-4）：9/1 06:00 出生，婴儿期 9/1 ~ 11/30 跳过 10、11 月共 29 个可游玩天；每天 00:05（跨天派发的时刻）取样
-baby_e.pregnancy.born_time = datetime.datetime(2026, 9, 1, 6, 0)
-set_time(datetime.datetime(2026, 9, 16, 0, 5))
-check("L13 / M1 第 14 / 29 个可游玩天（进度约 48.3%）：婴儿 4、婴儿 50 都还不在", not ({"婴儿4", "婴儿50"} & candidate_uid_set(213)), growth_handle.get_stage_progress(213))
-set_time(datetime.datetime(2026, 9, 17, 0, 5))
+# 9/1 06:00 出生；每天 00:05（跨天派发的时刻）取样，本阶段第 N 天的取样时刻是出生 + N 天 18 时 5 分
+_baby_e_born = game_time.GameTime(2026, 9, 1, 6, 0)
+baby_e.pregnancy.born_time = _baby_e_born
+_rearing_day = pregnancy_constant.REARING_COMPLETE_DAY
+_day_50 = next(one for one in range(_rearing_day + 1) if one * 100.0 / _rearing_day >= 50)
+""" 婴儿期进度首次 ≥ 50 的本阶段天数 """
+_day_60 = next(one for one in range(_rearing_day + 1) if one * 100.0 / _rearing_day >= 60)
+""" 婴儿期进度首次 ≥ 60 的本阶段天数 """
+set_time(_baby_e_born + datetime.timedelta(days=_day_50 - 1, hours=18, minutes=5))
+check("L13 / M1 进度刚好不到 50：婴儿 4、婴儿 50 都还不在", not ({"婴儿4", "婴儿50"} & candidate_uid_set(213)), growth_handle.get_stage_progress(213))
+set_time(_baby_e_born + datetime.timedelta(days=_day_50, hours=18, minutes=5))
 _now = candidate_uid_set(213)
-check("L13 / M1 第 15 / 29 个可游玩天（进度约 51.7%）：婴儿 4 进候选，婴儿 50 仍不在（要 ≥ 60，排在断奶之后）", "婴儿4" in _now and "婴儿50" not in _now,
+check("L13 / M1 进度首次 ≥ 50：婴儿 4 进候选，婴儿 50 仍不在（要 ≥ 60，排在断奶之后）", "婴儿4" in _now and "婴儿50" not in _now,
       growth_handle.get_stage_progress(213))
-set_time(datetime.datetime(2026, 9, 19, 0, 5))
-check("L13 / M1 第 17 / 29 个可游玩天（进度约 58.6%）：婴儿 50 仍不在", "婴儿50" not in candidate_uid_set(213), growth_handle.get_stage_progress(213))
-set_time(datetime.datetime(2026, 9, 20, 0, 5))
-check("L13 / M1 第 18 / 29 个可游玩天（进度约 62.1%）、母亲可跟随：婴儿 50 进候选，与婴儿 4 首次成立相隔 3 个可游玩日（此前按日历天多数出生日期是同一天）",
-      "婴儿50" in candidate_uid_set(213) and class_ai.judge_mother_available(213) == 103, growth_handle.get_stage_progress(213))
+set_time(_baby_e_born + datetime.timedelta(days=_day_60 - 1, hours=18, minutes=5))
+check("L13 / M1 进度刚好不到 60：婴儿 50 仍不在", "婴儿50" not in candidate_uid_set(213), growth_handle.get_stage_progress(213))
+set_time(_baby_e_born + datetime.timedelta(days=_day_60, hours=18, minutes=5))
+check("L13 / M1 进度首次 ≥ 60、母亲可跟随：婴儿 50 进候选，比婴儿 4 晚几天",
+      "婴儿50" in candidate_uid_set(213) and class_ai.judge_mother_available(213) == 103 and _day_60 > _day_50, growth_handle.get_stage_progress(213))
 set_time(period_time(0))
 check("L18 期末推送处的注释改成 Plan 30 Q1 的口径，不再写「已成年的女儿照旧出成绩单」",
       "照旧出成绩单" not in inspect.getsource(growth_event_handle.push_semester_event_for_list)
@@ -393,6 +401,10 @@ clear_schedules()
 set_time(datetime.datetime(2026, 9, 7, 0, 5))
 mate.pregnancy.born_time = datetime.datetime(2025, 9, 7, 6, 0)
 big_sister.pregnancy.born_time = datetime.datetime(2024, 9, 7, 6, 0)
+# 游戏一年 120 天，出生恰好 120 天的萝莉 201、幼女 202、212 今天也过生日；把她们的出生日往前挪一天，只留萝莉 C 与成年姐姐（本段末还原）
+_saved_born_other = {cid: cache.character_data[cid].pregnancy.born_time for cid in (201, 202, 212)}
+for _cid in _saved_born_other:
+    cache.character_data[_cid].pregnancy.born_time -= datetime.timedelta(days=1)
 check("M2 前提：萝莉 C 与成年姐姐今天都过生日",
       HP(constant_promise.Premise.SELF_BIRTHDAY_TODAY, 211) and HP(constant_promise.Premise.SELF_BIRTHDAY_TODAY, 214))
 official_event_handle.push_official_event(loli_bucket[0], 201)
@@ -414,6 +426,8 @@ check("M2 第二天（不是生日）不推", growth_event_handle.push_birthday_
 _new_day_src = inspect.getsource(past_day_settle.update_new_day)
 check("M2 跨天结算在日常派发（check_new_day_official_event）之前推生日事件",
       0 <= _new_day_src.find("growth_event_handle.push_birthday_event(") < _new_day_src.find("official_event_handle.check_new_day_official_event("))
+for _cid, _born_time in _saved_born_other.items():
+    cache.character_data[_cid].pregnancy.born_time = _born_time
 set_time(period_time(0))
 
 section("Plan 32 L16：孩子长大时清掉队列里对不上新阶段的养成事件（drop_stale_stage_event）")
@@ -468,14 +482,14 @@ talk.must_show_talk_check = lambda character_id: None
 clear_schedules()
 set_time(period_time(0))
 to_loli = make_character(216, "要长成萝莉的幼女", 152, daughter=True, stage=102, mother_id=103)
-to_loli.pregnancy.born_time = datetime.datetime(2025, 12, 1, 9, 0)  # 出生 280 个日历天，满 270 长成萝莉
+to_loli.pregnancy.born_time = cache.game_time - datetime.timedelta(days=pregnancy_constant.GROW_TO_LOLI_DAY + 10)  # 已过长成萝莉的阈值 10 天
 for _uid in (child_bucket[0], "通用27", "通用16", "期末2"):
     official_event_handle.push_official_event(_uid, 216)
 pregnancy_handle.check_grow_to_loli(216)
 check("L16 幼女长成萝莉（pregnancy_handle.check_grow_to_loli）：素质已换成萝莉，幼女桶的与前提写着不派萝莉 / 只派幼女的（通用 27、期末 2）清掉，通用 16 照留",
       to_loli.talent[103] == 1 and to_loli.talent[102] == 0 and queue_pair_list() == [("通用16", 216)], queue_pair_list())
 to_girl = make_character(217, "要成年的萝莉", 152, daughter=True, stage=103, mother_id=103)
-to_girl.pregnancy.born_time = datetime.datetime(2025, 6, 1, 9, 0)  # 出生 463 个日历天，满 450 成年
+to_girl.pregnancy.born_time = cache.game_time - datetime.timedelta(days=pregnancy_constant.GROW_TO_GIRL_DAY + 13)  # 已过成年的阈值 13 天
 for _uid in (loli_bucket[0], "通用16", "期末1", "期末3"):
     official_event_handle.push_official_event(_uid, 217)
 pregnancy_handle.check_grow_to_girl(217)

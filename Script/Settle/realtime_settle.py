@@ -259,7 +259,7 @@ def get_true_add_time(character_id: int, now_time: datetime.datetime, pl_start_t
     now_character_end_time = game_time.get_sub_date(minute=add_time, old_date=now_character_behavior_start_time)
     true_end_time = min(now_character_end_time, now_time)
     # 真实的行动时间是真实的结束时间减去真实的开始时间
-    true_add_time = int((true_end_time.timestamp() - true_start_time.timestamp()) / 60)
+    true_add_time = int((true_end_time - true_start_time).total_seconds() / 60)
     # 避免负数
     true_add_time = max(true_add_time, 0)
     return true_add_time

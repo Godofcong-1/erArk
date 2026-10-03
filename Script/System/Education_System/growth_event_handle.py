@@ -290,8 +290,8 @@ def get_growth_event_title(queue_data: dict) -> str:
     # STAGE_TALENT_NAME 取自 Talent.csv，载入时已翻译过，不再包 _()
     stage_name = education_constant.STAGE_TALENT_NAME.get(stage, education_constant.STAGE_TALENT_NAME[104])
     # 写的是**本阶段**的第几天，进入该阶段当天为第 1 天（Plan 29 §3.3）：
-    #    此前取出生以来的总天数，出生 300 天的萝莉会写成「萝莉期第 300 天」，而萝莉期一共才 180 天。
-    #    数的是可游玩天（Plan 32 §3.2）：婴儿期约 30 天、幼女 / 萝莉期约 60 天，季月交替那一夜只走一天，不再一夜跳六十天
+    #    此前取出生以来的总天数，出生 100 天的萝莉会写成「萝莉期第 100 天」，而萝莉期一共才 60 天。
+    #    天数按游戏日历数，季月交替那一夜只走一天
     stage_day = growth_handle.get_stage_day(character_id) + 1
     return _("{0} · {1}期第 {2} 天").format(character_data.name, stage_name, stage_day)
 
@@ -331,7 +331,7 @@ def push_birthday_event() -> List[int]:
     无
     Return arguments:
     List[int] -- 推入了生日事件的角色id列表，按id升序
-    功能: 生日按月、日比对，童年里只有第 365 天那一次（萝莉期）；只靠每日随机派发的话，当天先要过每晚 70% 的概率、
+    功能: 生日按月、日比对，童年里只有第 120 天（满一个游戏年）那一次（萝莉期）；只靠每日随机派发的话，当天先要过每晚 70% 的概率、
              再从几十条候选里按权重抽中，绝大多数女儿一辈子都见不到它。
           名单与日常派发相同（get_growth_event_character_list）；今天过生日（handle_self_birthday_today）、
              能入队（没经历过、不在队列里）、阶段与事件前提都成立的才推，与 get_candidate_event_list 同一套判定；

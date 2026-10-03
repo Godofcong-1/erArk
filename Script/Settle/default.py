@@ -2585,7 +2585,7 @@ def handle_wait_unitl_traget_action_end(
     target_start_time = target_character_data.behavior.start_time
     target_end_time = game_time.get_sub_date(target_character_data.behavior.duration, old_date=target_start_time)
     # 到结束时间还有多少分钟
-    add_time = int((target_end_time.timestamp() - now_time.timestamp()) / 60)
+    add_time = int((target_end_time - now_time).total_seconds() / 60)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.state = constant.CharacterStatus.STATUS_WAIT
@@ -2617,7 +2617,7 @@ def handle_wait_unitl_player_action_end(
     player_action_start_time = pl_character_data.behavior.start_time
     player_action_end_time = game_time.get_sub_date(pl_character_data.behavior.duration, old_date=player_action_start_time)
     # 到结束时间还有多少分钟
-    add_time = int((player_action_end_time.timestamp() - now_time.timestamp()) / 60)
+    add_time = int((player_action_end_time - now_time).total_seconds() / 60)
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.state = constant.CharacterStatus.STATUS_WAIT
     character_data.behavior.duration = add_time + 1

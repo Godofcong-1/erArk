@@ -329,19 +329,19 @@ check("L11 前提只读：没有养成数据的干员五个都不成立，也不
 growth_handle.get_child_growth(201).selected_course = {}
 clear_schedules()
 
-section("Plan 31 §3.14 L13：self_birthday_today 读 pregnancy.born_time，2 月 29 日出生的平年按 2 月 28 日过")
+section("Plan 31 §3.14 L13：self_birthday_today 读 pregnancy.born_time")
 _saved_born_time = student.pregnancy.born_time
 student.pregnancy.born_time = datetime.datetime(2025, 9, 7, 6, 30)
 set_time(datetime.datetime(2026, 9, 7, 0, 5))
 check("L13 出生的月日与今天相同：成立", HP(P.SELF_BIRTHDAY_TODAY, 201) == 1)
 set_time(datetime.datetime(2026, 9, 8, 0, 5))
 check("L13 第二天：不成立（此前没有生日前提，通用 3「今天是{Name}的生日」任意一天都抽得到）", HP(P.SELF_BIRTHDAY_TODAY, 201) == 0)
-student.pregnancy.born_time = datetime.datetime(2024, 2, 29, 12, 0)
-_leap_birthday = []
-for _now_time in (datetime.datetime(2027, 2, 28, 9, 0), datetime.datetime(2027, 3, 1, 9, 0), datetime.datetime(2028, 2, 28, 9, 0), datetime.datetime(2028, 2, 29, 9, 0)):
+student.pregnancy.born_time = game_time.GameTime(2025, 12, 30, 12, 0)
+_last_day_birthday = []
+for _now_time in (datetime.datetime(2026, 12, 30, 9, 0), datetime.datetime(2027, 3, 1, 9, 0)):
     set_time(_now_time)
-    _leap_birthday.append(HP(P.SELF_BIRTHDAY_TODAY, 201))
-check("L13 2 月 29 日出生：平年 2 月 28 日成立、3 月 1 日不成立；闰年 2 月 28 日不成立、2 月 29 日成立", _leap_birthday == [1, 0, 0, 1], _leap_birthday)
+    _last_day_birthday.append(HP(P.SELF_BIRTHDAY_TODAY, 201))
+check("L13 季月最后一天（12/30）出生：每年 12/30 成立、下一天 3/1 不成立（游戏日历每年都有这一天）", _last_day_birthday == [1, 0], _last_day_birthday)
 set_time(datetime.datetime(2027, 1, 1, 9, 0))
 check("L13 born_time 还是缺省值（公元 1 年 1 月 1 日）的干员：1 月 1 日也不成立", adult.pregnancy.born_time.year == 1 and HP(P.SELF_BIRTHDAY_TODAY, 301) == 0)
 student.pregnancy.born_time = _saved_born_time

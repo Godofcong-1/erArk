@@ -38,13 +38,8 @@ def init_character_behavior_start_time(character_id: int, now_time: datetime.dat
     now_time -- 指定时间
     """
     character_data = cache.character_data[character_id]
-    start_time = datetime.datetime(
-        now_time.year,
-        now_time.month,
-        now_time.day,
-        now_time.hour,
-        now_time.minute,
-    )
+    # 用 replace 截到整分钟，保留游戏时间的类型
+    start_time = now_time.replace(second=0, microsecond=0)
     character_data.behavior.start_time = start_time
 
 

@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 """growth_handle：速度曲线、教育区加成、成长停滞、上课/见学结算、成年结算、养成数值、候选名单"""
 from _bootstrap import *  # noqa: F401,F403
+from Script.System.Pregnancy_System import pregnancy_constant  # noqa: E402
 
 open_all_classroom()
 clear_schedules()
@@ -134,13 +135,18 @@ check("发育偏移封顶", growth_handle.get_care_point_grow_bonus(201) == educ
 check("没有养成数据时偏移为 0", growth_handle.get_care_point_grow_bonus(301) == 0)
 
 section("阶段与进度")
-# 夹具的出生日要落在季月（Plan 32 §2.5-4）：游戏时钟只有 3 / 6 / 9 / 12 四个季月，born_days=120 这种写法出生在 5 月，真实时钟下不会出现。
-#    今天 2026-09-07 09:00：萝莉 2025-09-10 出生（362 个日历天）、幼女 2026-03-09 出生（182 个日历天），两人的本阶段都从 2026-06-07 09:00 起
-student.pregnancy.born_time = datetime.datetime(2025, 9, 10, 9, 0)
-child.pregnancy.born_time = datetime.datetime(2026, 3, 9, 9, 0)
+# 出生日与真实游戏一样取游戏时间（GameTime）：游戏日历只有 3 / 6 / 9 / 12 四个季月、每月 30 天，天天可玩。
+#    今天 2026-09-07 09:00：萝莉、幼女的本阶段都从 30 天前起
+NOW = game_time.to_game_time(DEFAULT_TIME)
+LOLI_SPAN = pregnancy_constant.GROW_TO_LOLI_DAY - pregnancy_constant.REARING_COMPLETE_DAY
+""" 幼女期一共的天数 """
+GIRL_SPAN = pregnancy_constant.GROW_TO_GIRL_DAY - pregnancy_constant.GROW_TO_LOLI_DAY
+""" 萝莉期一共的天数 """
+student.pregnancy.born_time = NOW - datetime.timedelta(days=pregnancy_constant.GROW_TO_LOLI_DAY + 30)
+child.pregnancy.born_time = NOW - datetime.timedelta(days=pregnancy_constant.REARING_COMPLETE_DAY + 30)
 check("阶段读取", growth_handle.get_character_stage(201) == 103 and growth_handle.get_character_stage(202) == 102 and growth_handle.get_character_stage(301) == 0)
 progress = growth_handle.get_stage_progress(202)
-check("M1 幼女：幼女期 6/7 ~ 12/4 跳过 7、8、10、11 月共 57 个可游玩天，已过 30 个，进度约 52.6%（按日历天是 51.1%）", abs(progress - 30 * 100.0 / 57) < 0.01, progress)
+check("M1 幼女：本阶段已过 30 天，进度 = 30 ÷ 幼女期天数", abs(progress - 30 * 100.0 / LOLI_SPAN) < 0.01, progress)
 check("成年干员进度 100", growth_handle.get_stage_progress(301) == 100.0)
 
 section("养成数值读写口")
@@ -230,25 +236,26 @@ remove_character(206)
 remove_character(207)
 
 section("Plan 29 §3.3（Plan 32 M1 起按可游玩天）：本阶段第几天（get_stage_day）")
-# 出生日都落在季月（Plan 32 §2.5-4）。今天 2026-09-07 09:00；幼女、萝莉、少女的本阶段都从 2026-06-07 09:00 起，中间跳过 7、8 两个非季月
+# 今天 2026-09-07 09:00；幼女、萝莉、少女的本阶段都从 30 天前（2026-06-07 09:00）起，婴儿出生 10 天（2026-06-27 09:00）
 set_time(period_time(0))
-student.pregnancy.born_time = datetime.datetime(2025, 9, 10, 9, 0)  # 萝莉：出生 362 个日历天，第 270 天是 2026-06-07
-child.pregnancy.born_time = datetime.datetime(2026, 3, 9, 9, 0)  # 幼女：出生 182 个日历天，第 90 天是 2026-06-07
-baby.pregnancy.born_time = datetime.datetime(2026, 6, 27, 9, 0)  # 婴儿：出生 72 个日历天
+student.pregnancy.born_time = NOW - datetime.timedelta(days=pregnancy_constant.GROW_TO_LOLI_DAY + 30)
+child.pregnancy.born_time = NOW - datetime.timedelta(days=pregnancy_constant.REARING_COMPLETE_DAY + 30)
+baby.pregnancy.born_time = NOW - datetime.timedelta(days=10)
 teen = make_character(208, "少女", 152, daughter=True, stage=104, mother_id=102)
-teen.pregnancy.born_time = datetime.datetime(2025, 3, 14, 9, 0)  # 少女：出生 542 个日历天，第 450 天是 2026-06-07
-check("各阶段起点：婴儿 0 / 幼女 90 / 萝莉 270 / 少女 450，成年干员 0",
-      [growth_handle.get_stage_start_day(cid) for cid in (203, 202, 201, 208, 301)] == [0, 90, 270, 450, 0])
-check("M1 萝莉期从 6/7 起：6/7 ~ 6/30 与 9/1 ~ 9/7 共 30 个可游玩天（按日历天会是 92）", growth_handle.get_stage_day(201) == 30, growth_handle.get_stage_day(201))
-check("M1 幼女、少女同样从 6/7 起：30；婴儿 6/27 出生：6/27 ~ 6/30 与 9/1 ~ 9/7 共 10 个可游玩天（按日历天会是 72）",
+teen.pregnancy.born_time = NOW - datetime.timedelta(days=pregnancy_constant.GROW_TO_GIRL_DAY + 30)
+check("各阶段起点：婴儿 0 / 幼女、萝莉、少女各为对应的成长阈值，成年干员 0",
+      [growth_handle.get_stage_start_day(cid) for cid in (203, 202, 201, 208, 301)]
+      == [0, pregnancy_constant.REARING_COMPLETE_DAY, pregnancy_constant.GROW_TO_LOLI_DAY, pregnancy_constant.GROW_TO_GIRL_DAY, 0])
+check("M1 萝莉期从 6/7 起：6/7 ~ 6/30 与 9/1 ~ 9/7 共 30 天", growth_handle.get_stage_day(201) == 30, growth_handle.get_stage_day(201))
+check("M1 幼女、少女同样从 6/7 起：30；婴儿 6/27 出生：10",
       growth_handle.get_stage_day(202) == 30 and growth_handle.get_stage_day(208) == 30 and growth_handle.get_stage_day(203) == 10,
       [growth_handle.get_stage_day(cid) for cid in (202, 208, 203)])
 check("成年干员与不存在的角色：0", growth_handle.get_stage_day(301) == 0 and growth_handle.get_stage_day(999) == 0)
-student.pregnancy.born_time = datetime.datetime(2026, 3, 1, 9, 0)
+student.pregnancy.born_time = NOW - datetime.timedelta(days=pregnancy_constant.GROW_TO_LOLI_DAY - 30)
 check("有效天数低于本阶段起点（成长停滞解除前的近似）：夹到 0", growth_handle.get_stage_day(201) == 0)
-student.pregnancy.born_time = datetime.datetime(2025, 9, 10, 9, 0)
-check("M1 阶段进度 = 本阶段已过可游玩天 ÷ 本阶段总可游玩天：幼女、萝莉都是 30 / 57（6/7 ~ 12/4），少女 100",
-      abs(growth_handle.get_stage_progress(202) - 30 * 100.0 / 57) < 0.01 and abs(growth_handle.get_stage_progress(201) - 30 * 100.0 / 57) < 0.01
+student.pregnancy.born_time = NOW - datetime.timedelta(days=pregnancy_constant.GROW_TO_LOLI_DAY + 30)
+check("M1 阶段进度 = 本阶段已过天数 ÷ 本阶段总天数：幼女 30 ÷ 幼女期天数、萝莉 30 ÷ 萝莉期天数，少女 100",
+      abs(growth_handle.get_stage_progress(202) - 30 * 100.0 / LOLI_SPAN) < 0.01 and abs(growth_handle.get_stage_progress(201) - 30 * 100.0 / GIRL_SPAN) < 0.01
       and growth_handle.get_stage_progress(208) == 100.0)
 lolified = make_character(219, "萝莉化的干员", 21, stage=103)
 check("M1 没有可认出生日的萝莉（不是女儿、born_time 为缺省的公元 1 年）：本阶段天数 0、进度按走完 100",
@@ -338,63 +345,59 @@ remove_character(209)
 # ---------------------------------------------------------------------------
 # Plan 32（第十三轮复查）
 # ---------------------------------------------------------------------------
-import calendar  # noqa: E402
 import inspect  # noqa: E402
 
 from Script.System.Official_Event_System import official_event_handle  # noqa: E402
 from Script.System.Pregnancy_System import pregnancy_constant, pregnancy_handle  # noqa: E402
 
 DT = datetime.datetime
+GT = game_time.GameTime
 
-section("Plan 32 M1：game_time.count_play_day（两个时刻之间的可游玩天数）")
+section("Plan 32 M1：game_time.count_play_day（两个时刻之间的游戏天数）")
 check("M1 同一季月内：与日历天数相同", game_time.count_play_day(DT(2026, 9, 7, 6, 0), DT(2026, 9, 17, 6, 0)) == 10)
-check("M1 跨过 10、11 月：9/7 06:00 → 12/1 00:05 是 23 天（9 月余下的 23 天多、12 月的 5 分钟；日历天 84）",
-      game_time.count_play_day(DT(2026, 9, 7, 6, 0), DT(2026, 12, 1, 0, 5)) == 23 and game_time.count_day_for_datetime(DT(2026, 9, 7, 6, 0), DT(2026, 12, 1, 0, 5)) == 84)
-check("M1 跨年跳过 1、2 月：12/31 12:00 → 次年 3/1 12:00 是 1 天（日历天 60）", game_time.count_play_day(DT(2026, 12, 31, 12, 0), DT(2027, 3, 1, 12, 0)) == 1)
-check("M1 终点落在被跳过的月份：只数到季月末（9/7 06:00 → 10/15 是 23 天）", game_time.count_play_day(DT(2026, 9, 7, 6, 0), DT(2026, 10, 15)) == 23)
-check("M1 整整一年：四个季月 31 + 30 + 30 + 31 = 122 天", game_time.count_play_day(DT(2026, 3, 1), DT(2027, 3, 1)) == 122)
+check("M1 9/30 的下一天是 12/1：9/7 06:00 → 12/1 00:05 是 23 天，count_day_for_datetime 同口径",
+      game_time.count_play_day(DT(2026, 9, 7, 6, 0), DT(2026, 12, 1, 0, 5)) == 23 and game_time.count_day_for_datetime(DT(2026, 9, 7, 6, 0), DT(2026, 12, 1, 0, 5)) == 23)
+check("M1 跨年：12/30 12:00 → 次年 3/1 12:00 是 1 天", game_time.count_play_day(DT(2026, 12, 30, 12, 0), DT(2027, 3, 1, 12, 0)) == 1)
+check("M1 旧档的 31 日按下一个季月 1 日 0 时算：12/31 12:00 规整为次年 3/1 0:00", game_time.to_game_time(DT(2026, 12, 31, 12, 0)) == GT(2027, 3, 1))
+check("M1 落在非季月的时刻按下一个季月 1 日 0 时算：9/7 06:00 → 10/15 是 23 天", game_time.count_play_day(DT(2026, 9, 7, 6, 0), DT(2026, 10, 15)) == 23)
+check("M1 整整一年：四个季月各 30 天 = 120 天", game_time.count_play_day(DT(2026, 3, 1), DT(2027, 3, 1)) == game_time.YEAR_DAY == 120)
 check("M1 终点早于起点：0", game_time.count_play_day(DT(2026, 9, 17), DT(2026, 9, 7)) == 0)
 
-section("Plan 32 M1：阶段进度按可游玩天（全年 122 个季月出生日期，用真实时钟 sub_time_now 逐日推进）")
+section("Plan 32 M1：阶段进度与出生日期无关（全年 120 个出生日期，用真实时钟 sub_time_now 逐日推进）")
 _saved_time = cache.game_time
 _saved_born = baby.pregnancy.born_time
 _new_count = {}
-_old_count = {}
-for _month in (3, 6, 9, 12):
-    for _day in range(1, calendar.monthrange(2026, _month)[1] + 1):
-        # 孩子只在季月出生；06:00 出生，此后每天 00:05（跨天结算派养成事件的时刻）取样，直到有效成长天数满 90（长成幼女）
-        baby.pregnancy.born_time = DT(2026, _month, _day, 6, 0)
-        cache.game_time = DT(2026, _month, _day, 0, 5)
+for _month in game_time.SEASON_MONTH_LIST:
+    for _day in range(1, game_time.SEASON_DAY + 1):
+        # 06:00 出生，此后每天 00:05（跨天结算派养成事件的时刻）取样，直到有效成长天数满婴儿期（长成幼女）
+        baby.pregnancy.born_time = GT(2026, _month, _day, 6, 0)
+        cache.game_time = GT(2026, _month, _day, 0, 5)
         _new_count[(_month, _day)] = 0
-        _old_count[(_month, _day)] = 0
-        for _step in range(200):
+        for _step in range(pregnancy_constant.REARING_COMPLETE_DAY + 10):
             game_time.sub_time_now(day=1)
             _grow_day = pregnancy_handle.get_child_grow_day(203)
             if _grow_day >= pregnancy_constant.REARING_COMPLETE_DAY:
                 break
             if 30 <= growth_handle.get_stage_progress(203) < 75:
                 _new_count[(_month, _day)] += 1
-            # 对照：按日历天的旧口径（有效成长天数 ÷ 90）
-            if 30 <= _grow_day * 100.0 / pregnancy_constant.REARING_COMPLETE_DAY < 75:
-                _old_count[(_month, _day)] += 1
-check("M1 枚举了全年 122 个季月出生日期", len(_new_count) == 122, len(_new_count))
-check("M1 每个出生日期的婴儿中期窗口 [30%, 75%) 都有 12~14 个可游玩日（婴儿期共 28~31 个可游玩天）",
-      min(_new_count.values()) >= 12 and max(_new_count.values()) <= 14, sorted(set(_new_count.values())))
-check("M1 对照：按日历天的旧口径，83 / 122 个出生日期的婴儿中期一天都开不出来（季月交替那一夜进度跳约 68 个百分点）",
-      sum(1 for one in _old_count.values() if one == 0) == 83, sum(1 for one in _old_count.values() if one == 0))
+_expect_count = sum(1 for one in range(pregnancy_constant.REARING_COMPLETE_DAY) if 30 <= one * 100.0 / pregnancy_constant.REARING_COMPLETE_DAY < 75)
+check("M1 枚举了全年 120 个出生日期", len(_new_count) == 120, len(_new_count))
+check("M1 每个出生日期的婴儿中期窗口 [30%, 75%) 开出的天数都一样，等于婴儿期里进度落在窗口内的天数",
+      set(_new_count.values()) == {_expect_count} and _expect_count > 0, (sorted(set(_new_count.values())), _expect_count))
 
 section("Plan 32 M1：9/7 出生的婴儿跨过季月交替，本阶段天数与进度只走一天")
-baby.pregnancy.born_time = DT(2026, 9, 7, 6, 0)
-cache.game_time = DT(2026, 9, 30, 0, 5)
+baby.pregnancy.born_time = GT(2026, 9, 7, 6, 0)
+cache.game_time = GT(2026, 9, 30, 0, 5)
 _day_before = growth_handle.get_stage_day(203)
 _progress_before = growth_handle.get_stage_progress(203)
 _grow_before = pregnancy_handle.get_child_grow_day(203)
 game_time.sub_time_now(day=1)
-check("M1 真实时钟：9/30 的下一个可游玩日是 12/1", cache.game_time == DT(2026, 12, 1, 0, 5), cache.game_time)
-check("M1 对照：成长天数（日历天）一夜 +62", pregnancy_handle.get_child_grow_day(203) - _grow_before == 62, pregnancy_handle.get_child_grow_day(203) - _grow_before)
-check("M1 婴儿期 9/7 ~ 12/6 共 29 个可游玩天：本阶段第 22 → 23 天、进度 22/29 → 23/29（按日历天是 24.4% → 93.3%）",
+check("M1 真实时钟：9/30 的下一天是 12/1", cache.game_time == DT(2026, 12, 1, 0, 5), cache.game_time)
+check("M1 成长天数一夜 +1", pregnancy_handle.get_child_grow_day(203) - _grow_before == 1, pregnancy_handle.get_child_grow_day(203) - _grow_before)
+check("M1 本阶段第 22 → 23 天、进度 22 → 23 ÷ 婴儿期天数",
       _day_before == 22 and growth_handle.get_stage_day(203) == 23
-      and abs(_progress_before - 2200.0 / 29) < 0.01 and abs(growth_handle.get_stage_progress(203) - 2300.0 / 29) < 0.01,
+      and abs(_progress_before - 2200.0 / pregnancy_constant.REARING_COMPLETE_DAY) < 0.01
+      and abs(growth_handle.get_stage_progress(203) - 2300.0 / pregnancy_constant.REARING_COMPLETE_DAY) < 0.01,
       (_day_before, growth_handle.get_stage_day(203), _progress_before, growth_handle.get_stage_progress(203)))
 baby.pregnancy.born_time = _saved_born
 set_time(_saved_time)
@@ -442,30 +445,27 @@ check("L28 表里没有的课型回落到理论课的基础值，按课型常量
 check("L27 557 的说明改为「学生坐下听课时，本节教师判能到岗即结算」，不再写「晚到的学生」",
       "晚到的学生" not in growth_handle.settle_student_class_gain.__doc__ and "本节教师判能到岗" in growth_handle.settle_student_class_gain.__doc__)
 
-section("Plan 32 实施复审补：M1 count_play_day 的起点落在被跳过的月份")
-check("M1 起点落在被跳过的 11 月：11/26 09:00 → 12/3 00:05，11 月那一截整段不算，只数 12/1 00:00 起的 2 天 5 分钟 → 2（日历天 6）",
+section("Plan 32 实施复审补：M1 count_play_day 的起点落在非季月")
+check("M1 起点落在 11 月：按 12/1 00:00 算，11/26 09:00 → 12/3 00:05 是 2 天，count_day_for_datetime 同口径",
       game_time.count_play_day(DT(2026, 11, 26, 9, 0), DT(2026, 12, 3, 0, 5)) == 2
-      and game_time.count_day_for_datetime(DT(2026, 11, 26, 9, 0), DT(2026, 12, 3, 0, 5)) == 6,
+      and game_time.count_day_for_datetime(DT(2026, 11, 26, 9, 0), DT(2026, 12, 3, 0, 5)) == 2,
       game_time.count_play_day(DT(2026, 11, 26, 9, 0), DT(2026, 12, 3, 0, 5)))
-check("M1 起点落在被跳过的 1 月、跨过 2 月：2027/1/10 → 3/2 12:00，只数 3/1 00:00 起的 1 天 12 小时 → 1（日历天 51）",
-      game_time.count_play_day(DT(2027, 1, 10), DT(2027, 3, 2, 12, 0)) == 1 and game_time.count_day_for_datetime(DT(2027, 1, 10), DT(2027, 3, 2, 12, 0)) == 51,
+check("M1 起点落在 1 月：按 3/1 00:00 算，2027/1/10 → 3/2 12:00 是 1 天，count_day_for_datetime 同口径",
+      game_time.count_play_day(DT(2027, 1, 10), DT(2027, 3, 2, 12, 0)) == 1 and game_time.count_day_for_datetime(DT(2027, 1, 10), DT(2027, 3, 2, 12, 0)) == 1,
       game_time.count_play_day(DT(2027, 1, 10), DT(2027, 3, 2, 12, 0)))
-check("M1 起点、终点都落在被跳过的月份（10/5 → 11/20）：一个可游玩天都没有 → 0", game_time.count_play_day(DT(2026, 10, 5), DT(2026, 11, 20)) == 0)
+check("M1 起点、终点都落在非季月（10/5 → 11/20）：都按 12/1 00:00 算 → 0", game_time.count_play_day(DT(2026, 10, 5), DT(2026, 11, 20)) == 0)
 
-section("Plan 32 实施复审补：M1 萝莉期 Growth|3_GE_70 的窗口（全年 122 个季月出生日期，用真实时钟 sub_time_now 逐日推进萝莉期）")
+section("Plan 32 实施复审补：M1 萝莉期 Growth|3_GE_70 的窗口（全年 120 个出生日期，用真实时钟 sub_time_now 逐日推进萝莉期）")
 _saved_time = cache.game_time
 _saved_born_loli = student.pregnancy.born_time
 _loli_ge70 = {}
-_loli_ge70_old = {}
-_loli_span = pregnancy_constant.GROW_TO_GIRL_DAY - pregnancy_constant.GROW_TO_LOLI_DAY
-for _month in (3, 6, 9, 12):
-    for _day in range(1, calendar.monthrange(2026, _month)[1] + 1):
-        # 06:00 出生，此后每天 00:05（跨天结算派养成事件的时刻）取样；只数有效成长天数落在萝莉期 [270, 450) 的可游玩日
-        student.pregnancy.born_time = DT(2026, _month, _day, 6, 0)
-        cache.game_time = DT(2026, _month, _day, 0, 5)
+for _month in game_time.SEASON_MONTH_LIST:
+    for _day in range(1, game_time.SEASON_DAY + 1):
+        # 06:00 出生，此后每天 00:05（跨天结算派养成事件的时刻）取样；只数有效成长天数落在萝莉期的日子
+        student.pregnancy.born_time = GT(2026, _month, _day, 6, 0)
+        cache.game_time = GT(2026, _month, _day, 0, 5)
         _loli_ge70[(_month, _day)] = 0
-        _loli_ge70_old[(_month, _day)] = 0
-        for _step in range(400):
+        for _step in range(pregnancy_constant.GROW_TO_GIRL_DAY + 10):
             game_time.sub_time_now(day=1)
             _grow_day = pregnancy_handle.get_child_grow_day(201)
             if _grow_day >= pregnancy_constant.GROW_TO_GIRL_DAY:
@@ -474,73 +474,61 @@ for _month in (3, 6, 9, 12):
                 continue
             if growth_handle.get_stage_progress(201) >= 70:
                 _loli_ge70[(_month, _day)] += 1
-            # 对照：按日历天的旧口径（萝莉期已过的有效成长天 ÷ 180）
-            if (_grow_day - pregnancy_constant.GROW_TO_LOLI_DAY) * 100.0 / _loli_span >= 70:
-                _loli_ge70_old[(_month, _day)] += 1
 student.pregnancy.born_time = _saved_born_loli
 set_time(_saved_time)
-check("M1 萝莉期：枚举了全年 122 个季月出生日期", len(_loli_ge70) == 122, len(_loli_ge70))
-check("M1 萝莉期：每个出生日期都至少有 1 个阶段进度 ≥ 70 的可游玩日（萝莉桶 Growth|3_GE_70 的窗口都开得出来）",
-      min(_loli_ge70.values()) >= 1, sorted(set(_loli_ge70.values())))
-check("M1 萝莉期对照：按日历天的旧口径，26 / 122 个出生日期一天都到不了 70%（季月交替那一夜进度一跳就越过了这一段）",
-      sum(1 for one in _loli_ge70_old.values() if one == 0) == 26, sum(1 for one in _loli_ge70_old.values() if one == 0))
+check("M1 萝莉期：枚举了全年 120 个出生日期", len(_loli_ge70) == 120, len(_loli_ge70))
+check("M1 萝莉期：每个出生日期都有同样多个阶段进度 ≥ 70 的日子（萝莉桶 Growth|3_GE_70 的窗口都开得出来）",
+      len(set(_loli_ge70.values())) == 1 and min(_loli_ge70.values()) >= 1, sorted(set(_loli_ge70.values())))
 
-section("Plan 32 实施复审补：M1 婴儿期阶段进度 ≥ 50 首次成立的可游玩日严格早于 ≥ 60（逐个出生日期，真实时钟）")
+section("Plan 32 实施复审补：M1 婴儿期阶段进度 ≥ 50 首次成立的日子严格早于 ≥ 60（逐个出生日期，真实时钟）")
 _saved_time = cache.game_time
 _saved_born_baby = baby.pregnancy.born_time
 _first_gap = {}
-_old_strict = 0
-for _month in (3, 6, 9, 12):
-    for _day in range(1, calendar.monthrange(2026, _month)[1] + 1):
-        baby.pregnancy.born_time = DT(2026, _month, _day, 6, 0)
-        cache.game_time = DT(2026, _month, _day, 0, 5)
+for _month in game_time.SEASON_MONTH_LIST:
+    for _day in range(1, game_time.SEASON_DAY + 1):
+        baby.pregnancy.born_time = GT(2026, _month, _day, 6, 0)
+        cache.game_time = GT(2026, _month, _day, 0, 5)
         _first = {50: None, 60: None}
-        _first_old = {50: None, 60: None}
-        for _step in range(200):
+        for _step in range(pregnancy_constant.REARING_COMPLETE_DAY + 10):
             game_time.sub_time_now(day=1)
             _grow_day = pregnancy_handle.get_child_grow_day(203)
             if _grow_day >= pregnancy_constant.REARING_COMPLETE_DAY:
                 break
             _progress = growth_handle.get_stage_progress(203)
-            _progress_old = _grow_day * 100.0 / pregnancy_constant.REARING_COMPLETE_DAY
             for _line in (50, 60):
                 if _first[_line] is None and _progress >= _line:
                     _first[_line] = cache.game_time
-                if _first_old[_line] is None and _progress_old >= _line:
-                    _first_old[_line] = cache.game_time
         _first_gap[(_month, _day)] = game_time.count_play_day(_first[50], _first[60]) if _first[50] and _first[60] and _first[50] < _first[60] else 0
-        if _first_old[50] and _first_old[60] and _first_old[50] < _first_old[60]:
-            _old_strict += 1
 baby.pregnancy.born_time = _saved_born_baby
 set_time(_saved_time)
-check("M1 婴儿期：122 个出生日期里，阶段进度 ≥ 50（婴儿 4「断奶的日子到了」）首次成立的可游玩日都严格早于 ≥ 60（婴儿 50「断奶之后」）",
-      len(_first_gap) == 122 and all(_first_gap.values()), sorted(key for key, one in _first_gap.items() if not one)[:10])
-check("M1 婴儿期：两条线首次成立都相隔 3 个可游玩日", set(_first_gap.values()) == {3}, sorted(set(_first_gap.values())))
-check("M1 婴儿期对照：按日历天的旧口径，没有一个出生日期的 ≥ 50 严格早于 ≥ 60（两条线在季月交替那一夜一起越过，或那一夜直接跳出了婴儿期）",
-      _old_strict == 0, _old_strict)
+_expect_gap = [next(one for one in range(pregnancy_constant.REARING_COMPLETE_DAY + 1) if one * 100.0 / pregnancy_constant.REARING_COMPLETE_DAY >= line) for line in (50, 60)]
+check("M1 婴儿期：120 个出生日期里，阶段进度 ≥ 50（婴儿 4「断奶的日子到了」）首次成立的日子都严格早于 ≥ 60（婴儿 50「断奶之后」）",
+      len(_first_gap) == 120 and all(_first_gap.values()), sorted(key for key, one in _first_gap.items() if not one)[:10])
+check("M1 婴儿期：两条线首次成立相隔的天数对每个出生日期都一样", set(_first_gap.values()) == {_expect_gap[1] - _expect_gap[0]}, (sorted(set(_first_gap.values())), _expect_gap))
 
 section("Plan 32 实施复审补：M1 成长加速药——本阶段的起点按「出生 + (阈值 − 加速天数)」换算（get_grow_day_time）")
 set_time(DEFAULT_TIME)
 accel = make_character(212, "吃过成长加速药的萝莉", 152, daughter=True, stage=103, mother_id=102)
-_accel_born = DT(2025, 9, 10, 9, 0)
+# 出生到今天 (萝莉阈值 − 30 + 36) 天，加上加速药 30 天，有效成长天数 = 萝莉阈值 + 36，本阶段已过 36 天
+_accel_born = NOW - datetime.timedelta(days=pregnancy_constant.GROW_TO_LOLI_DAY + 6)
 accel.pregnancy.born_time = _accel_born
 accel.pregnancy.growth_acceleration_days = 30.0
 _accel_start = _accel_born + datetime.timedelta(days=pregnancy_constant.GROW_TO_LOLI_DAY - 30)
 _accel_end = _accel_born + datetime.timedelta(days=pregnancy_constant.GROW_TO_GIRL_DAY - 30)
-check("M1 加速药前提：出生 362 个日历天 + 加速药 30 天 = 有效成长 392 天，仍在萝莉期；本阶段起点 2026-05-08 09:00 落在被跳过的 5 月、终点 2026-11-04 09:00",
-      pregnancy_handle.get_child_grow_day(212) == 392 and growth_handle.get_character_stage(212) == 103
-      and _accel_start == DT(2026, 5, 8, 9, 0) and _accel_end == DT(2026, 11, 4, 9, 0), (pregnancy_handle.get_child_grow_day(212), _accel_start, _accel_end))
-check("M1 加速药：本阶段天数 = 从「出生 + (270 − 30) 天」数到此刻的可游玩天（6 月 30 天 + 9/1 ~ 9/7 的 6 天）= 36",
+check("M1 加速药前提：有效成长天数 = 萝莉阈值 + 36，仍在萝莉期；本阶段起点是 36 天前",
+      pregnancy_handle.get_child_grow_day(212) == pregnancy_constant.GROW_TO_LOLI_DAY + 36 and growth_handle.get_character_stage(212) == 103
+      and _accel_start == NOW - datetime.timedelta(days=36), (pregnancy_handle.get_child_grow_day(212), _accel_start, _accel_end))
+check("M1 加速药：本阶段天数 = 从「出生 + (萝莉阈值 − 30) 天」数到此刻 = 36",
       growth_handle.get_stage_day(212) == game_time.count_play_day(_accel_start, cache.game_time) == 36,
       (growth_handle.get_stage_day(212), game_time.count_play_day(_accel_start, cache.game_time)))
-check("M1 加速药：阶段进度 = 36 ÷ 起点到终点的可游玩天（6 月、9 月共 60）= 60%，养成数值 3 读到的是同一个数",
-      game_time.count_play_day(_accel_start, _accel_end) == 60 and abs(growth_handle.get_stage_progress(212) - 60.0) < 0.01
-      and abs(growth_handle.get_growth_value(212, V.GROWTH_VALUE_STAGE_PROGRESS) - 60.0) < 0.01, growth_handle.get_stage_progress(212))
+check("M1 加速药：阶段进度 = 36 ÷ 萝莉期天数，养成数值 3 读到的是同一个数",
+      game_time.count_play_day(_accel_start, _accel_end) == GIRL_SPAN and abs(growth_handle.get_stage_progress(212) - 3600.0 / GIRL_SPAN) < 0.01
+      and abs(growth_handle.get_growth_value(212, V.GROWTH_VALUE_STAGE_PROGRESS) - 3600.0 / GIRL_SPAN) < 0.01, growth_handle.get_stage_progress(212))
 accel.pregnancy.growth_acceleration_days = 30.7
 check("M1 加速药天数带小数（30.7）按整数 30 算，与有效成长天数（get_child_grow_day）同口径",
-      growth_handle.get_stage_day(212) == 36 and pregnancy_handle.get_child_grow_day(212) == 392, growth_handle.get_stage_day(212))
+      growth_handle.get_stage_day(212) == 36 and pregnancy_handle.get_child_grow_day(212) == pregnancy_constant.GROW_TO_LOLI_DAY + 36, growth_handle.get_stage_day(212))
 accel.pregnancy.growth_acceleration_days = 0.0
-check("M1 加速药对照：同一出生日不吃药，本阶段从 2026-06-07 09:00 起、30 天", growth_handle.get_stage_day(212) == 30, growth_handle.get_stage_day(212))
+check("M1 加速药对照：同一出生日不吃药，本阶段才过 6 天", growth_handle.get_stage_day(212) == 6, growth_handle.get_stage_day(212))
 remove_character(212)
 
 section("Plan 32 实施复审补：M3 只重选被改写的那一对——另一对倾向不为 0、素质已清空，改写之后仍为 0")

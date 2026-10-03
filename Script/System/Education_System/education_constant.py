@@ -503,7 +503,7 @@ ADULT_EXTRA_EVENT_UID_LIST = ("通用59", "通用60")
     这是**数据键**，不能包 `_()`；tools/official_event_check.py 另抄一份，据此拦截成年桶里别的 uid """
 BIRTHDAY_EVENT_UID = "通用3"
 """ 生日事件的uid（Plan 32 §3.3）：跨天结算时对今天过生日的女儿直接插队首推入（growth_event_handle.push_birthday_event）。
-    生日按月、日比对，童年里只有第 365 天那一次，只靠每日随机派发时当天抽中的机会只有百分之一二。
+    生日按月、日比对，童年里只有第 120 天（满一个游戏年）那一次，只靠每日随机派发时当天抽中的机会只有百分之一二。
     这是**数据键**，不能包 `_()` """
 SEMESTER_EVENT_SUB_KEY = 200
 """ 期末事件的**保留**子桶键（对应 data/official_event/期末.csv 的 sub_key 列）。

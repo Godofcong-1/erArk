@@ -488,7 +488,7 @@ def get_date_ordinal_by_week_day(week_day: int, period: int) -> int:
     临时课程是一次性的（键含具体日期序数），而课表面板的格子是按星期排的，
     所以要在这里把"周三第3节"落到某个具体的哪一天。
     必须按**游戏时钟真正会走到的日子**逐日往后数（2026-09-12 第五轮）：一年只有 3/6/9/12 四个季月，
-       季月最后一天的下一天是下个季月的 1 日（如 9/30 → 12/1），星期也跟着跳。按日历直接加天数
+       季月最后一天的下一天是下个季月的 1 日（如 9/30 → 12/1）。按公历直接加天数
        会落到 10 月 2 日这种时钟永远不会走到的日子上，那节课永远不会开、提醒也永远不会发
     Keyword arguments:
     week_day -- 星期0~6
@@ -496,13 +496,13 @@ def get_date_ordinal_by_week_day(week_day: int, period: int) -> int:
     Return arguments:
     int -- 日期序数
     """
-    # 从今天的 0 点开始逐日步进；get_predict_date 会把落进非季月的日期归到下个季月的 1 日
+    # 从今天的 0 点开始按游戏日历逐日步进（get_predict_date 不经过非季月）
     now_date = cache.game_time.replace(hour=0, minute=0, second=0, microsecond=0)
     # 就是今天、但这一节的开始时刻已经过去了，就从明天开始找
     start_time = get_period_start_time(now_date.toordinal(), period)
     if start_time is not None and start_time <= cache.game_time:
         now_date = game_time.get_predict_date(1, now_date)
-    # 两周内必然能找到对应的星期（跨季月时星期会跳，给足余量）
+    # 星期按游戏日连续推进，一周内必然能找到对应的星期（循环上限留足余量）
     for _index in range(14):
         if now_date.weekday() == week_day:
             break
@@ -631,7 +631,7 @@ def get_period_start_time(date_ordinal: int, period: int) -> Optional[datetime.d
         return None
     hour, minute = game_time.CLASS_PERIOD_START[period]
     now_date = datetime.date.fromordinal(date_ordinal)
-    return datetime.datetime(now_date.year, now_date.month, now_date.day, hour, minute)
+    return game_time.GameTime(now_date.year, now_date.month, now_date.day, hour, minute)
 
 
 def get_period_end_time(date_ordinal: int, period: int) -> Optional[datetime.datetime]:
@@ -655,7 +655,7 @@ def judge_time_crossed(target_time: Optional[datetime.datetime], last_time: date
 
     游戏时间是按行为时长跳跃的，不逐分钟走：玩家13:00开始一个60分钟的行为，时间直接跳到14:00，
        13:30这个时刻从来没有被"经过"过。所以提醒一律用跨越判定（上次 < 目标 <= 当前），
-       用 now_time == target_time 的等于判定会永远不触发。写法同 game_time.sub_time_now 的切月判定。
+       用 now_time == target_time 的等于判定会永远不触发。
     Keyword arguments:
     target_time -- 目标时刻
     last_time -- 上次结算时刻

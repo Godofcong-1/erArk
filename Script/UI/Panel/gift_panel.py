@@ -73,7 +73,7 @@ def handle_drug_use_effect(character_id: int, drug_id: int):
             now_acc = int(character_data.pregnancy.acceleration_days)
             # 预计日期用游戏时间函数计算，自动归并到四季月
             predict_time = game_time.get_predict_date(pregnancy_constant.PARTURIENT_DAY - now_acc, character_data.pregnancy.fertilization_time)
-            now_draw.text += _("本次加速{0}天，累计加速{1}天，{2}的预计临盆日期提前到了{3}\n").format(int(add_day), now_acc, character_data.name, pregnancy_panel.get_date_text(predict_time))
+            now_draw.text += _("本次加速{0}，累计加速{1}，{2}的预计临盆日期提前到了{3}\n").format(game_time.get_duration_text(add_day), game_time.get_duration_text(now_acc), character_data.name, pregnancy_panel.get_date_text(predict_time))
         else:
             # 兜底：结算时已到加速极限则不生效（正常已被送出前校验拦截）
             now_draw.text += _("{0}的孕期已经加速到极限，药物没有产生效果\n").format(character_data.name)
@@ -92,7 +92,7 @@ def handle_drug_use_effect(character_id: int, drug_id: int):
                 egg_data["acceleration_days"] = egg_data.get("acceleration_days", 0) + add_day
                 now_acc = int(egg_data["acceleration_days"])
                 predict_time = game_time.get_predict_date(pregnancy_constant.HATCH_TOTAL_DAY - now_acc, egg_data["lay_time"])
-                now_draw.text += _("本次加速{0}天，累计加速{1}天，这枚卵的预计破壳日期提前到了{2}\n").format(int(add_day), now_acc, pregnancy_panel.get_date_text(predict_time))
+                now_draw.text += _("本次加速{0}，累计加速{1}，这枚卵的预计破壳日期提前到了{2}\n").format(game_time.get_duration_text(add_day), game_time.get_duration_text(now_acc), pregnancy_panel.get_date_text(predict_time))
             else:
                 now_draw.text += _("这枚卵已经加速到极限，药物没有产生效果\n")
     elif drug_id == 37:  # 假孕药
@@ -124,7 +124,7 @@ def handle_drug_use_effect(character_id: int, drug_id: int):
                 now_acc = int(child_character_data.pregnancy.growth_acceleration_days)
                 total_day = pregnancy_handle.get_child_growth_stage_total_day(child_id)
                 predict_time = game_time.get_predict_date(total_day - now_acc, child_character_data.pregnancy.born_time)
-                now_draw.text += _("本次加速{0}天，累计加速{1}天，{2}预计将在{3}成长为{4}\n").format(int(add_day), now_acc, child_character_data.name, pregnancy_panel.get_date_text(predict_time), next_stage_name)
+                now_draw.text += _("本次加速{0}，累计加速{1}，{2}预计将在{3}成长为{4}\n").format(game_time.get_duration_text(add_day), game_time.get_duration_text(now_acc), child_character_data.name, pregnancy_panel.get_date_text(predict_time), next_stage_name)
             else:
                 now_draw.text += _("{0}已经快要成长为{1}了，药物没有产生效果\n").format(child_character_data.name, next_stage_name)
     elif drug_id == 40:  # 成长停滞药
@@ -309,7 +309,7 @@ class Gift_Panel:
                 hatch_day = egg_handle.get_hatch_day(egg_data)
                 acc_day = int(egg_data.get("acceleration_days", 0))
                 born_time = game_time.get_predict_date(pregnancy_constant.HATCH_TOTAL_DAY - acc_day, egg_data["lay_time"])
-                egg_text = _("[{0}号卵] 孵化第{1}天（已加速{2}天，预计{3}破壳）").format(egg_id, hatch_day, acc_day, pregnancy_panel.get_date_text(born_time))
+                egg_text = _("[{0}号卵] 孵化第{1}天（已加速{2}，预计{3}破壳）").format(egg_id, hatch_day, game_time.get_duration_text(acc_day), pregnancy_panel.get_date_text(born_time))
                 button_draw = draw.LeftButton(
                     egg_text,
                     str(egg_id),
@@ -366,7 +366,7 @@ class Gift_Panel:
                 grow_day = pregnancy_handle.get_child_grow_day(child_id)
                 acc_day = int(getattr(child_character_data.pregnancy, "growth_acceleration_days", 0))
                 grow_time = game_time.get_predict_date(pregnancy_constant.REARING_COMPLETE_DAY - acc_day, child_character_data.pregnancy.born_time)
-                baby_text = _("[{0}] 出生第{1}天（已加速{2}天，预计{3}成长为幼女）").format(child_character_data.name, grow_day, acc_day, pregnancy_panel.get_date_text(grow_time))
+                baby_text = _("[{0}] 出生第{1}天（已加速{2}，预计{3}成长为幼女）").format(child_character_data.name, grow_day, game_time.get_duration_text(acc_day), pregnancy_panel.get_date_text(grow_time))
                 button_draw = draw.LeftButton(
                     baby_text,
                     str(child_id),

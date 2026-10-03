@@ -46,10 +46,10 @@ weekday = cache.game_time.weekday()
 check("今天、还没开始的节次 → 今天", sex_class_handle.get_date_ordinal_by_week_day(weekday, 5) == today)
 check("今天、已开始的节次 → 下周", sex_class_handle.get_date_ordinal_by_week_day(weekday, 3) == today + 7)
 check("别的星期 → 未来 1~6 天内", 1 <= sex_class_handle.get_date_ordinal_by_week_day((weekday + 2) % 7, 0) - today <= 6)
-# 季月最后一天的下一天是下个季月的 1 日（9/30 周三 → 12/1 周二），星期跟着跳（第五轮）
+# 季月最后一天的下一天是下个季月的 1 日，星期按游戏日历逐日连续（9/29 周二、9/30 周三 → 12/1 周四、12/2 周五）
 set_time(datetime.datetime(2026, 9, 29, 10, 0))
 month_jump = sex_class_handle.get_date_ordinal_by_week_day(4, 0)
-check("月底预约周五 → 按游戏时钟落在 12/4，而不是永远不会到的 10/2", month_jump == datetime.date(2026, 12, 4).toordinal(), datetime.date.fromordinal(month_jump))
+check("月底预约周五 → 按游戏时钟落在 12/2，而不是永远不会到的 10/2", month_jump == datetime.date(2026, 12, 2).toordinal(), datetime.date.fromordinal(month_jump))
 check("月底预约周三 → 就是明天 9/30", sex_class_handle.get_date_ordinal_by_week_day(2, 0) == datetime.date(2026, 9, 30).toordinal())
 set_time(period_time(3))
 

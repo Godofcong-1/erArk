@@ -589,7 +589,7 @@ def check_not_draw_talk(character_id: int, now_behavior_id: str, unusual_talk_fl
             # print(f"debug 智能跟随模式下，{character_data.name}在跟随博士，不显示移动文本")
             return True
         # 当前小时内已触发过的不触发
-        if character_data.action_info.move_talk_time.hour == cache.game_time.hour and character_data.action_info.move_talk_time.year != 1:
+        if character_data.action_info.move_talk_time.hour == cache.game_time.hour and character_data.action_info.move_talk_time.year > 1:
             # print(f"debug {character_data.name}在当前小时内已触发过一次移动文本")
             return True
         else:

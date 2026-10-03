@@ -300,7 +300,7 @@ def get_hatch_day(egg_data: dict) -> int:
 
 def get_egg_acceleration_amount(egg_data: dict) -> float:
     """
-    计算孵化加速药对该卵单次可入账的加速天数（破壳前一天封顶，剂量基数为孵化总天数265）
+    计算孵化加速药对该卵单次可入账的加速天数（破壳前一天封顶，剂量基数为孵化总天数92）
     Keyword arguments:
     egg_data -- 卵数据字典
     Return arguments:

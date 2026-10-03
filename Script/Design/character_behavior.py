@@ -106,7 +106,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    if character_data.behavior.start_time == datetime.datetime(1, 1, 1):
+    if character_data.behavior.start_time.year <= 1:
         instuct_judege.init_character_behavior_start_time(character_id, pl_start_time)
 
     # 处理特殊模式
@@ -299,7 +299,7 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
             end_time = now_time
     # print(f"debug {character_data.name}的end_time = {end_time}")
     time_judge = game_time.judge_date_big_or_small(now_time, end_time)
-    add_time = (end_time.timestamp() - start_time.timestamp()) / 60
+    add_time = (end_time - start_time).total_seconds() / 60
     # if character_data.name == "阿米娅":
     #     print(f"debug {character_data.name}的time_judge = {time_judge}，add_time = {add_time}")
     # 如果本次行动的持续时间为0或负数（负数见于状态机算出的异常时长，需在此拦截以保证时间前进）

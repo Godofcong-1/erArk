@@ -163,7 +163,7 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
         character_data.target_character_id = character_id
         # 防止行为的时间为0
         if character_data.behavior.duration == 0:
-            past_time = int((cache.game_time.timestamp() - pl_start_time.timestamp()) / 60)
+            past_time = int((cache.game_time - pl_start_time).total_seconds() / 60)
             past_time = max(1, past_time)
             character_data.behavior.duration = past_time
 

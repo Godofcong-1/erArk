@@ -702,11 +702,11 @@ def get_career_suggestion_text(character_id: int) -> str:
 def get_stage_start_day(character_id: int) -> int:
     """
     取角色当前成长阶段的起点（累计有效成长天数）
-    阶段阈值是**累计**天数（婴儿0~90 / 幼女90~270 / 萝莉270~450 / 少女450起），起点即上一阶段的阈值
+    阶段阈值是**累计**天数（婴儿0~30 / 幼女30~90 / 萝莉90~150 / 少女150起），起点即上一阶段的阈值
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
-    int -- 起点天数：婴儿0 / 幼女90 / 萝莉270 / 少女450；不在成长阶段时为0
+    int -- 起点天数：婴儿0 / 幼女30 / 萝莉90 / 少女150；不在成长阶段时为0
     """
     from Script.System.Pregnancy_System import pregnancy_constant
 
@@ -722,13 +722,13 @@ def get_stage_start_day(character_id: int) -> int:
 
 def get_grow_day_time(character_id: int, grow_day: int) -> datetime.datetime:
     """
-    把一个有效成长天数换算回日历时刻（Plan 32 §3.2：阶段的起点、终点）
+    把一个有效成长天数换算回游戏时刻（Plan 32 §3.2：阶段的起点、终点）
     Keyword arguments:
     character_id -- 角色id
-    grow_day -- 有效成长天数（阶段阈值：婴儿0 / 幼女90 / 萝莉270 / 少女450）
+    grow_day -- 有效成长天数（阶段阈值：婴儿0 / 幼女30 / 萝莉90 / 少女150）
     Return arguments:
     datetime.datetime -- 出生时刻 + (有效成长天数 − 成长加速药累计天数) 天；早于出生的按出生算
-    功能: 有效成长天数 = 出生以来的日历天数 + 成长加速药累计的天数（pregnancy_handle.get_child_grow_day，加速药取整），
+    功能: 有效成长天数 = 出生以来的游戏天数 + 成长加速药累计的天数（pregnancy_handle.get_child_grow_day，加速药取整），
              所以这里算出的就是有效成长天数走到该值的那一刻；用过加速药的，阶段的起点与终点整段往前挪。
           阶段转换（长大）本身仍按有效成长天数判，不走这里。只读
     """
@@ -739,15 +739,14 @@ def get_grow_day_time(character_id: int, grow_day: int) -> datetime.datetime:
 
 def get_stage_day(character_id: int) -> int:
     """
-    取角色在当前成长阶段里已经过了几个可游玩天（Plan 29 §3.3；Plan 32 §3.2 起按可游玩天）
+    取角色在当前成长阶段里已经过了几天（Plan 29 §3.3）
     进入该阶段当天为第0天，养成事件的抬头写「第 N+1 天」。
-       阶段的起点是有效成长天数走到本阶段阈值的那一刻（get_grow_day_time），从那一刻数到此刻的**可游玩天**（game_time.count_play_day）：
-       游戏时钟只有 3 / 6 / 9 / 12 四个季月，按日历天数的话季月交替那一夜会跳约 60 天，「萝莉期第 23 天」一夜变成「第 85 天」。
+       阶段的起点是有效成长天数走到本阶段阈值的那一刻（get_grow_day_time），从那一刻按游戏日历数到此刻（game_time.count_play_day）。
        成长停滞解除后按阈值一次长大时，这个数会比实际偏大——与养成数值 3（阶段进度）是同一个近似，阶段的实际起点不入档
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
-    int -- 本阶段已过的可游玩天数，不小于0；不是孩子、或没有可认的出生日（born_time 为缺省的公元 1 年）时为0
+    int -- 本阶段已过的天数，不小于0；不是孩子、或没有可认的出生日（born_time 为缺省的公元 1 年）时为0
     """
     from Script.Design import game_time
 
@@ -763,12 +762,10 @@ def get_stage_day(character_id: int) -> int:
 
 def get_stage_progress(character_id: int) -> float:
     """
-    取角色在当前成长阶段里已经走过的进度百分比（Plan 32 §3.2 起按可游玩天）
+    取角色在当前成长阶段里已经走过的进度百分比
 
-    进度 = 本阶段已过的可游玩天（get_stage_day） ÷ 本阶段一共的可游玩天。
-       阶段阈值是**累计**的有效成长天数（婴儿0~90 / 幼女90~270 / 萝莉270~450），起点、终点都换算回日历时刻（get_grow_day_time）再数可游玩天，
-       于是婴儿期约 30 天、幼女 / 萝莉期约 60 天。按日历天的话季月交替那一夜进度会跳约 68（婴儿）/ 34（幼女、萝莉）个百分点，
-       比一次跳跃窄的事件窗口（如婴儿中期 [30, 75)）对多数出生日期一天都开不出来。
+    进度 = 本阶段已过的天数（get_stage_day） ÷ 本阶段一共的天数。
+       阶段阈值是**累计**的有效成长天数（婴儿0~30 / 幼女30~90 / 萝莉90~150），起点、终点都换算回游戏时刻（get_grow_day_time）再按游戏日历数天数。
        阶段转换（长大）仍按有效成长天数，不变
     Keyword arguments:
     character_id -- 角色id
@@ -783,7 +780,7 @@ def get_stage_progress(character_id: int) -> float:
         # 已经不在成长阶段（成年或不是孩子），按走完算
         return 100.0
     if cache.character_data[character_id].pregnancy.born_time.year <= 1:
-        # 没有可认的出生日（不是在岛上出生的），与按日历天算时一样按走完算
+        # 没有可认的出生日（不是在岛上出生的），按走完算
         return 100.0
     stage_start_time = get_grow_day_time(character_id, get_stage_start_day(character_id))
     stage_end_time = get_grow_day_time(character_id, stage_end)

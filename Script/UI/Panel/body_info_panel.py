@@ -162,21 +162,22 @@ class CharacterBodyText:
                 ui_text = get_ability_lv_ui_text(character_id, 7)
             now_text += f"  {ui_text}\n"
             # 怀孕情况（有效孕期天数含妊娠加速药的加速天数）
-            from Script.System.Pregnancy_System import pregnancy_handle
+            from Script.System.Pregnancy_System import pregnancy_handle, pregnancy_constant
+            from Script.Design import game_time
             past_day = pregnancy_handle.get_pregnancy_past_day(character_id)
             if character_data.talent[20]:
-                now_text += _("  已受精{0}天，").format(past_day)
+                now_text += _("  已受精{0}，").format(game_time.get_duration_text(past_day))
                 now_text += _("但从外表上还看不出来\n")
             elif character_data.talent[21]:
-                now_text += _("  已受精{0}天，").format(past_day)
+                now_text += _("  已受精{0}，").format(game_time.get_duration_text(past_day))
                 now_text += _("[妊娠]中，肚子已经大起来了")
-                last_day = 261 - past_day
+                last_day = pregnancy_constant.PARTURIENT_DAY + 1 - past_day
                 if last_day > 0:
-                    now_text += _("，距离临盆预计还有{0}天左右\n").format(last_day)
+                    now_text += _("，距离临盆预计还有{0}左右\n").format(game_time.get_duration_text(last_day))
                 else:
                     now_text += "\n"
             elif character_data.talent[22]:
-                now_text += _("  已受精{0}天，").format(past_day)
+                now_text += _("  已受精{0}，").format(game_time.get_duration_text(past_day))
                 now_text += _("[临盆]中，即将诞下爱的结晶\n")
             elif character_data.talent[23]:
                 now_text += _("  正在[产后]休息\n")
