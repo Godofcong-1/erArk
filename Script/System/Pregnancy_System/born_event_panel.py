@@ -102,7 +102,8 @@ class Born_Panel:
             if character_data.name == _("凯尔希"):
                 dr_k_id = character_id
         if mom_character_data.name == _("凯尔希") or dr_k_id == 0:
-            doctor_id = random.choice(doctor_id_list)
+            if doctor_id_list:
+                doctor_id = random.choice(doctor_id_list)
         else:
             doctor_id = dr_k_id
         # 如果还是没有的话，则随机选取任何一位干员来接生
