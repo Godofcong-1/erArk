@@ -30,6 +30,8 @@ class WFrameMouse:
     """ 等待玩家确认后逐行 """
     w_frame_skip_wait_mouse: int = 0
     """ 跳过等待输入后继续输出文本 """
+    w_frame_skip_wait_ctrl: int = 0
+    """ 按住Ctrl键时快速推进被动文本等待 """
 
 
 class NpcTem:
