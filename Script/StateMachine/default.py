@@ -357,14 +357,31 @@ def character_move_to_clinic(character_id: int):
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_PHYSICAL_EXAMINATION)
 def character_move_to_physical_examination(character_id: int):
     """
-    移动至体检科
+    移动至体检科，体检科满员时放弃今天的体检
     Keyword arguments:
     character_id -- 角色id
     """
-    to_physical_examination = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["Physical_Examination"])
-    )
-    general_movement_module(character_id, to_physical_examination)
+    to_physical_examination_str = random.choice(constant.place_data["Physical_Examination"])
+    if map_handle.judge_scene_is_full(to_physical_examination_str):
+        give_up_today_health_check(character_id)
+        return
+    general_movement_module(character_id, map_handle.get_map_system_path_for_str(to_physical_examination_str))
+
+
+def give_up_today_health_check(character_id: int):
+    """
+    放弃今天的体检：清空今天的体检安排并退出等待体检名单，原地发呆1分钟后回到日常行动，下一个体检日照常抽选
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.action_info.health_check_today = 0
+    cache.rhodes_island.waiting_for_exam_operator_ids.discard(character_id)
+    handle_premise.settle_chara_unnormal_flag(character_id, 3)
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+    character_data.behavior.duration = 1
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_INPATIENT_DEPARTMENT)

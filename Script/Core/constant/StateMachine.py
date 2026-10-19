@@ -338,7 +338,7 @@ class StateMachine:
     MOVE_TO_CLINIC = 661
     """ 随机移动到门诊室（含急诊室）（优先去当前没有人的） """
     MOVE_TO_PHYSICAL_EXAMINATION = 662
-    """ 移动至体检科 """
+    """ 移动至体检科，体检科满员时放弃今天的体检 """
     MOVE_TO_INPATIENT_DEPARTMENT = 663
     """ 移动至住院部 """
     MOVE_TO_SURGERY_ROOM = 664
