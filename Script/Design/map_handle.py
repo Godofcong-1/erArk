@@ -102,8 +102,8 @@ def character_move_scene(old_scene_path: list, new_scene_path: list, character_i
     # 从旧场景移除角色
     if character_id in cache.scene_data[old_scene_path_str].character_list:
         cache.scene_data[old_scene_path_str].character_list.remove(character_id)
-    # 如果旧场景上锁了，则将其解锁
-    if cache.scene_data[old_scene_path_str].close_flag >= 1:
+    # 如果旧场景上锁了，且玩家不在其中，则将其解锁（玩家在屋内时，其他角色离开不解锁）
+    if cache.scene_data[old_scene_path_str].close_flag >= 1 and 0 not in cache.scene_data[old_scene_path_str].character_list:
         cache.scene_data[old_scene_path_str].close_flag = 0
     # 在新场景添加角色
     if character_id not in cache.scene_data[new_scene_path_str].character_list:
