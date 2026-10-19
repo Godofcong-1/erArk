@@ -1,6 +1,6 @@
 import os
 import json
-from Script.Core import cache_control, value_handle, game_type, get_text
+from Script.Core import cache_control, value_handle, game_type, get_text, constant
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
 from types import FunctionType
@@ -475,6 +475,26 @@ def judge_scene_is_full(scene_path_str: str) -> bool:
         return True
     return False
 
+def judge_follow_player_into_scene(character_id: int, target_scene_str: str) -> bool:
+    """
+    判断角色是否正跟着博士进入目标场景（目标场景是博士所在的场景，或博士本段移动正要进入的场景）
+    Keyword arguments:
+    character_id -- 角色id
+    target_scene_str -- 目标场景路径
+    Return arguments:
+    bool -- 智能跟随或强制跟随中，且目标场景是博士所在或正要进入的场景时为True
+    """
+    if cache.character_data[character_id].sp_flag.is_follow not in {1, 2}:
+        return False
+    pl_character_data = cache.character_data[0]
+    if get_map_system_path_str_for_list(pl_character_data.position) == target_scene_str:
+        return True
+    # 博士正在移动时，跟随者与博士同步走这一步，此时博士还在门外
+    if pl_character_data.behavior.behavior_id in {constant.Behavior.MOVE, constant.Behavior.CARRY_MOVE} and len(pl_character_data.behavior.move_target):
+        return get_map_system_path_str_for_list(pl_character_data.behavior.move_target) == target_scene_str
+    return False
+
+
 def init_scene_edge_path_data():
     """初始化全部地图寻路数据"""
     global scene_path_edge
@@ -685,8 +705,8 @@ def judge_scene_accessible(target_scene_str : str, character_id : int, draw_flag
         elif "Dormitory" in now_scene_data.scene_tag and character_data.dormitory != target_scene_str:
             return "private"
 
-    # 房间满员判断，仅限干员
-    if character_id and judge_scene_is_full(target_scene_str):
+    # 房间满员判断，仅限干员；跟着博士进门的干员不受满员限制
+    if character_id and judge_scene_is_full(target_scene_str) and not judge_follow_player_into_scene(character_id, target_scene_str):
         return "full"
 
     return "open"
