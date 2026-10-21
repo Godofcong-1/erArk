@@ -1260,7 +1260,7 @@ def handle_normal_7(character_id: int) -> int:
     if(
         handle_be_bagged_1(character_id)
         or handle_field_commission_1(character_id)
-        or handle_t_baby_1(character_id)
+        or handle_self_is_baby(character_id)
         or handle_in_diplomatic_visit_1_and_other_country(character_id)
         or handle_escaping_1(character_id)
     ):
