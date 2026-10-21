@@ -662,8 +662,15 @@ def judge_scene_accessible(target_scene_str : str, character_id : int, draw_flag
         # 即使关门，也可以进去自己的宿舍
         if character_data.dormitory == target_scene_str:
             pass
-        # 助理可以进锁门了的玩家房间
-        elif character_id and character_id == pl_character_data.assistant_character_id:
+        # 助理可以进锁门了的博士房间和博士办公室，跟着博士进门时也可以进
+        elif (
+            character_id
+            and character_id == pl_character_data.assistant_character_id
+            and ("Dr_room" in now_scene_data.scene_tag or "Dr_Office" in now_scene_data.scene_tag or judge_follow_player_into_scene(character_id, target_scene_str))
+        ):
+            pass
+        # 被博士召集到他当前位置的角色可以进博士所在的房间（博士为她开门）
+        elif character_id and character_data.sp_flag.is_follow == 4 and get_map_system_path_str_for_list(pl_character_data.position) == target_scene_str:
             pass
         # 博士可以无条件进博士房间和博士办公室
         elif character_id == 0 and ("Dr_room" in now_scene_data.scene_tag or "Dr_office" in now_scene_data.scene_tag):
