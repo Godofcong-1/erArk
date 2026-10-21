@@ -673,7 +673,7 @@ def judge_scene_accessible(target_scene_str : str, character_id : int, draw_flag
         elif character_id and character_data.sp_flag.is_follow == 4 and get_map_system_path_str_for_list(pl_character_data.position) == target_scene_str:
             pass
         # 博士可以无条件进博士房间和博士办公室
-        elif character_id == 0 and ("Dr_room" in now_scene_data.scene_tag or "Dr_office" in now_scene_data.scene_tag):
+        elif character_id == 0 and ("Dr_room" in now_scene_data.scene_tag or "Dr_Office" in now_scene_data.scene_tag):
             pass
         # 被邀请群交的角色可以进
         elif character_data.sp_flag.go_to_join_group_sex:
