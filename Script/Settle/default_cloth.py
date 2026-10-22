@@ -654,6 +654,12 @@ def handle_foot_cloth_to_shower_locker(
         return
     character_data = cache.character_data[character_id]
 
+    # 衣柜精液表先补齐全部服装部位：非空时须覆盖全部部位，穿回衣柜衣服的结算按全部部位下标读取它
+    for clothing_type in game_config.config_clothing_type:
+        if clothing_type not in character_data.dirty.cloth_locker_semen:
+            cloth_text = game_config.config_clothing_type[clothing_type].name
+            character_data.dirty.cloth_locker_semen[clothing_type] = [cloth_text,0,0,0]
+
     for clothing_type in {10,11}:
         if len(character_data.cloth.cloth_wear[clothing_type]):
             tem_list = character_data.cloth.cloth_wear[clothing_type].copy()
@@ -672,8 +678,6 @@ def handle_foot_cloth_to_shower_locker(
         empty_list = [cloth_text,0,0,0]
         if clothing_type not in character_data.dirty.cloth_semen:
             character_data.dirty.cloth_semen[clothing_type] = empty_list
-        if clothing_type not in character_data.dirty.cloth_locker_semen:
-            character_data.dirty.cloth_locker_semen[clothing_type] = empty_list
         character_data.dirty.cloth_semen[clothing_type], character_data.dirty.cloth_locker_semen[clothing_type] = character_data.dirty.cloth_locker_semen[clothing_type], character_data.dirty.cloth_semen[clothing_type]
     # 袜子和鞋子离开身体时去除对应部位上的避孕套装饰
     from Script.System.Item_System import condom_handle
