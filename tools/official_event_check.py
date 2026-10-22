@@ -195,10 +195,9 @@ class Checker:
             raw = f.read()
         if raw.startswith(b"\xef\xbb\xbf"):
             self.error(path, 1, "文件带BOM，构建时 cid 列名会变成 \\ufeffcid 并在载入配置时 KeyError")
-        if b"\r\n" not in raw:
-            self.error(path, 1, "文件不是CRLF换行")
-        elif raw.replace(b"\r\n", b"").count(b"\n"):
-            self.error(path, 1, "文件里混了裸LF换行")
+        # 仓库里存的是LF，Windows 上开了 core.autocrlf 的检出是CRLF：全LF或全CRLF都可以，两种混用才报错
+        if b"\r\n" in raw and raw.replace(b"\r\n", b"").count(b"\n"):
+            self.error(path, 1, "文件里CRLF与LF换行混用")
         with open(path, encoding="utf-8", newline="") as f:
             rows = list(csv.reader(f))
         if len(rows) < 5:
