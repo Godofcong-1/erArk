@@ -7,7 +7,7 @@
 import os
 import json
 from typing import Dict, List, Optional, Tuple
-from Script.Core import cache_control, game_type
+from Script.Core import cache_control, game_type, image_path_index
 from Script.Config import game_config
 from Script.System.Web_Draw_System.body_part_button import BodyPartButton
 from Script.System.Instruct_System.instruct_category import CLICKABLE_BODY_PARTS
@@ -28,8 +28,8 @@ class CharacterRenderer:
     DEFAULT_PORTRAIT_DIR = "image/立绘/干员"
     # 立绘根目录，用于遍历全部立绘子目录（干员、特殊NPC、路人、女儿等）
     PORTRAIT_ROOT_DIR = "image/立绘"
-    # 优先搜索的立绘子目录名，其余子目录按字典序排在其后
-    PRIOR_PORTRAIT_SUB_DIRS = ["干员", "特殊NPC", "路人", "女儿"]
+    # 优先搜索的立绘子目录名，其余子目录按字典序排在其后；与同名图片的取舍共用一个顺序
+    PRIOR_PORTRAIT_SUB_DIRS = image_path_index.PRIOR_PORTRAIT_SUB_DIRS
 
     # 默认部位布局所使用的参考图像边长（正方形，仅作为归一化坐标的基准）
     DEFAULT_BODY_IMAGE_SIZE = 1024
@@ -288,22 +288,24 @@ class CharacterRenderer:
         str -- 立绘相对路径，找不到时返回空字符串
 
         说明：
-        同时兼容两种目录结构：
-        1. 文件夹结构：{立绘目录}/{角色名}/{角色名}_{图层}.png（干员、特殊NPC）
+        指定图层图 {角色名}_{图层} 按 era_image 的图片名索引查找，同名图片与tk模式取同一个文件。
+        半身图再兼容两种目录结构：
+        1. 文件夹结构：{立绘目录}/{角色名}/ 下不含下划线的原始图片（干员、特殊NPC）
         2. 扁平结构：  {立绘目录}/{角色名}.png（路人、女儿）
         """
         if not character_name:
             return ""
 
+        # 指定图层图
+        part_path = self._get_era_image_path(f"{character_name}_{part}")
+        if part_path:
+            return part_path
+        # 头部与全身图在严格模式下不做进一步回退
+        if part in ("头部", "全身"):
+            return ""
+
         for portrait_dir in self._get_portrait_sub_dirs():
             char_dir = f"{portrait_dir}/{character_name}"
-            # 文件夹结构下的指定图层图
-            part_path = f"{char_dir}/{character_name}_{part}.png"
-            if os.path.exists(part_path):
-                return part_path
-            # 头部与全身图在严格模式下不做进一步回退
-            if part in ("头部", "全身"):
-                continue
             # 文件夹结构下不含下划线的原始图片
             if os.path.isdir(char_dir):
                 for filename in sorted(os.listdir(char_dir)):
