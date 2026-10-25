@@ -17,7 +17,13 @@ from mcp import types
 from mcp.server import NotificationOptions, Server
 from mcp.server.models import InitializationOptions
 
-from .downloader import PRTSCharacterDownloader
+# python -m prts_character_downloader 把本模块作为包成员载入
+# start_server.py 的 from server import main 与 python server.py 把它作为顶层模块载入，
+# 这时 __package__ 为空字符串或 None，相对导入不可用，按顶层模块名导入同目录的 downloader
+if __package__:
+    from .downloader import PRTSCharacterDownloader
+else:
+    from downloader import PRTSCharacterDownloader
 
 # 配置日志记录 - 针对Windows中文编码优化
 import sys
