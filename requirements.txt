@@ -11,6 +11,3 @@ google-genai>=1.0.0
 python-socketio>=5.7.1
 flask>=2.0.0
 flask-socketio>=5.3.0
-# imported directly by Script/Design/handle_chat_ai.py and Script/UI/Panel/chat_ai_setting.py.
-# openai / google-genai used to pull it in, but they moved to httpx2 (google-genai 2.33.0, 2026-10-23)
-httpx>=0.28.1
