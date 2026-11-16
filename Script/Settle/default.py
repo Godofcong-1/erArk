@@ -7252,7 +7252,8 @@ def handle_train_prisoners_add_adjust(
         target_part_id = value_handle.get_random_for_weight(all_part_data)
         def now_tarin(now_prisoner_cid):
             base_chara_state_common_settle(now_prisoner_cid, add_time, target_part_id, 0, ability_level = character_data.ability[30], change_data_to_target_change = change_data)
-            exp_id = target_part_id
+            # 快感状态id与经验id不一一对应（口喉21、兽部22、心理23对应经验153、154、155），需查快感关系表
+            exp_id = game_config.config_pleasure_relations[target_part_id].experience_id
             base_chara_experience_common_settle(now_prisoner_cid, exp_id, change_data_to_target_change = change_data)
     # 部位扩张训练
     elif now_train_id == 2:
