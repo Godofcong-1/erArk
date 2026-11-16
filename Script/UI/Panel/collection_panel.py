@@ -34,8 +34,11 @@ def collapse_collection():
     # 内裤
     if len(character_data.pl_collection.npc_panties_tem):
         for npc_id in character_data.pl_collection.npc_panties_tem:
-            if npc_id == 0:
+            # 跳过玩家与已不存在的角色（如被移除的异常女儿）
+            if npc_id == 0 or npc_id not in cache.character_data:
                 continue
+            # 该角色在收藏品中还没有条目时先补上，避免旧存档缺键报错
+            character_data.pl_collection.npc_panties.setdefault(npc_id, [])
             for pan_id in character_data.pl_collection.npc_panties_tem[npc_id]:
                 # 如果该内裤不存在，则跳过
                 if pan_id not in game_config.config_clothing_tem:
@@ -57,8 +60,11 @@ def collapse_collection():
     # 袜子
     if len(character_data.pl_collection.npc_socks_tem):
         for npc_id in character_data.pl_collection.npc_socks_tem:
-            if npc_id == 0:
+            # 跳过玩家与已不存在的角色（如被移除的异常女儿）
+            if npc_id == 0 or npc_id not in cache.character_data:
                 continue
+            # 该角色在收藏品中还没有条目时先补上，避免旧存档缺键报错
+            character_data.pl_collection.npc_socks.setdefault(npc_id, [])
             for socks_id in character_data.pl_collection.npc_socks_tem[npc_id]:
                 # 如果该袜子不存在，则跳过
                 if socks_id not in game_config.config_clothing_tem:

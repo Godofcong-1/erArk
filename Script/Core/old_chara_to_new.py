@@ -1331,21 +1331,31 @@ def fix_wrong_character(loaded_dict):
             # 寻找adv为448的角色
             for key2, value2 in loaded_dict["character_data"].items():
                 if value2.adv == 448:
+                    # 先记下阿玛雅原来占用的编号与adv，下面要用它们给原位置重建模板角色
+                    old_cid = value.cid
+                    old_adv = value.adv
                     # 将阿玛雅的角色数据复制过去
                     loaded_dict["character_data"][key2] = loaded_dict["character_data"][key]
-                    # 将adv改为448
+                    # 将adv与cid一起改为448（只改adv会让cid仍指向原编号的角色，收藏品等以cid为键的数据会错位）
                     loaded_dict["character_data"][key2].adv = 448
+                    loaded_dict["character_data"][key2].cid = 448
                     # 将当前角色改为当前模板的角色
-                    now_tem_chara = loaded_dict["npc_tem_data"].get(value.cid, None)
+                    now_tem_chara = loaded_dict["npc_tem_data"].get(old_cid, None)
                     if now_tem_chara is None:
-                        now_tem_chara = loaded_dict["npc_tem_data"].get(value.adv, None)
+                        now_tem_chara = loaded_dict["npc_tem_data"].get(old_adv, None)
                     if now_tem_chara is not None:
                         # 创建一个新的角色数据
-                        new_character = character_handle.init_character(value.cid, now_tem_chara)
+                        new_character = character_handle.init_character(old_cid, now_tem_chara)
                         # 重新赋值角色数据
                         loaded_dict["character_data"][key] = new_character
                     update_count += 1
                     break
+
+    # 修正cid与存档键、adv都不一致的角色（旧版的阿玛雅修正只改了adv没改cid，留下了键与adv为448、cid却仍为死芒450的阿玛雅）
+    for key, value in loaded_dict["character_data"].items():
+        if key != 0 and value.adv == key and value.cid != key:
+            value.cid = key
+            update_count += 1
 
     return update_count
 
