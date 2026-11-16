@@ -158,7 +158,7 @@ The GitHub Actions workflow (`.github/workflows/python-app.yml`) has three jobs:
 The release body ends with the commit subjects since the previous version tag.
 
 Things to know when touching it:
-- The generated-file check is only reproducible on Windows: `buildconfig.py` iterates `os.listdir` unsorted, so a rebuild on Linux/macOS produces a different class order in `config_def.py`.
+- The generated files are reproducible on any OS: `buildconfig.py` and `auto_build_config.py` list directories through `sorted_listdir` / `sorted_walk` (case-insensitive name order, the same order NTFS returns). Any new directory traversal in those scripts must use them, or Linux/macOS builds drift from Windows again (they did before 2026-11: different class order in `config_def.py`, and #316).
 - A new test directory under `tools/tests/` is not picked up automatically — add it to the `Regression Tests` step.
 - Adding a top-level directory the game needs at runtime means adding it to the `Copy Game Files` step; packaging no longer runs on every push, so a mistake there only shows up at the next release.
 

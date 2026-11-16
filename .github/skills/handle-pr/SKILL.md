@@ -69,7 +69,7 @@ description: 处理 erArk 的 Pull Request：给外来 PR 建档定级、按步�
 - **绿不等于可信。** PR 的 CI 用的是 PR 合并提交上的工作流、测试和检查配置。PR 改了 `.github/workflows/`、`tools/tests/`、`ruff.toml`、构建脚本或 `requirements.txt` 的，`triage` 会提示「CI 的绿不能当证据」：先读这些文件，需要时在快照里用主仓库的版本重跑（P4）。
 - **红先分清是谁的。**
   - `Install requirements` 失败，或者测试里是导入报错：先看是不是依赖上游发了新版（`requirements.txt` 全是 `>=`）。master 上最近一次运行也红，就是流水线的问题，不算 PR 的。
-  - `Check Generated Files` 红：作者改了配置表却没重建 `config_def.py`，或者是在 Linux / macOS 上重建的（类的顺序与 Windows 不同）。CI 日志里打印了应有的 diff，请作者照着改。
+  - `Check Generated Files` 红：作者改了配置表却没重建 `config_def.py`，或者手改了它。CI 日志里打印了应有的 diff，请作者重建或照着改。作者的分支早于 2026-11 时还有一种可能：旧的构建脚本在 Linux / macOS 上生成的类顺序与 Windows 不同，请作者先变基到最新 master 再重建。
   - `Check Version Files` 红：外部 PR 改了 `package.json` 或 `image/package.json`。版本号只由维护者修改，请作者去掉。
   - 其余的红（`Build Game Config`、`Regression Tests`、`Static Check`）是 PR 的问题。
 - **没有运行记录**有两种原因：首次贡献者的 PR 在等维护者批准；或者 PR 与 master 有合并冲突，GitHub 不为有冲突的 PR 触发 CI。
@@ -164,9 +164,9 @@ cmp "$OUT/pr-324-config_def.before.py" "$SNAP/Script/Config/config_def.py" && ec
 tail -1 "$OUT/pr-324-test.log" | iconv -f GBK -t UTF-8      # 这两份日志是 GBK 编码
 ```
 
-- **生成物**：重建后的 `config_def.py` 应与构建前的留底逐字节一致，不一致说明作者没重建或手改了生成物。比对只能用留底，不能用 `git show` 的内容：快照按本机的 `core.autocrlf` 导出，换行符是 CRLF，和 git 里存的 LF 对不上。CI 的 `Check Generated Files` 会自动做同一项比对，这里的手动比对用于 CI 没跑或不可信的时候。这项比对只在 Windows 上可复现：`buildconfig.py` 按目录的自然顺序生成，Linux 上类的顺序不同。
+- **生成物**：重建后的 `config_def.py` 应与构建前的留底逐字节一致，不一致说明作者没重建或手改了生成物。比对只能用留底，不能用 `git show` 的内容：快照按本机的 `core.autocrlf` 导出，换行符是 CRLF，和 git 里存的 LF 对不上。CI 的 `Check Generated Files` 会自动做同一项比对，这里的手动比对用于 CI 没跑或不可信的时候。构建脚本从 2026-11 起按固定顺序遍历目录，任何系统上重建的结果都一样；PR 分支早于那次修正时，快照里是旧的构建脚本，只有在 Windows 上跑的结果可信。
 - **回归测试**：`tools/tests/education/run_all.py` 约一分钟，改动涉及养成、怀孕或共用的行为循环时必跑。PR 改了测试本身时，先读它改了哪些断言——为了让测试通过而放宽断言，是重要发现。
-- **复现**：修 BUG 的 PR 要有「改前成立、改后消失」的证据。作者没附输出就自己写：按 `headless-game-test` skill 写一个无头脚本，同一个脚本先在主仓库跑出问题，再在快照里跑出修复。**先在主仓库跑**（主仓库是可信代码，不用等 P3）：在 Windows 的 master 上复现不出来，先怀疑作者的环境。构建脚本按未排序的 `os.listdir` 读目录，在 Linux 上构建出的数据顺序与 Windows 不同，有些 BUG 只在那种顺序下存在（#316 就是：口上占位符的处理顺序来自目录顺序）。这种修复可以收，但报告里要写明「在受支持的平台上不成立」，并把真正的根因写出来。
+- **复现**：修 BUG 的 PR 要有「改前成立、改后消失」的证据。作者没附输出就自己写：按 `headless-game-test` skill 写一个无头脚本，同一个脚本先在主仓库跑出问题，再在快照里跑出修复。**先在主仓库跑**（主仓库是可信代码，不用等 P3）：在 Windows 的 master 上复现不出来，先怀疑作者的环境。例如 2026-11 之前的构建脚本按未排序的 `os.listdir` 读目录，在 Linux 上构建出的数据顺序与 Windows 不同，有些 BUG 只在那种顺序下存在（#316 就是：口上占位符的处理顺序来自目录顺序）。这种修复可以收，但报告里要写明「在受支持的平台上不成立」，并把真正的根因写出来。
 - **存档**：需要旧存档时，把 `save/<id>` **复制**进快照的 `save/` 再读，跑完把这份复制删掉。有了存档，`tools/tests/education/test_behavior_loop.py` 才会真的跑（没有存档时它整份跳过），它就是现成的「带护栏的循环」。
 - **贴输出，不贴结论。** 报告里写跑了什么命令、退出码、关键输出行。「测试通过」四个字不算证据。
 

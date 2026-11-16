@@ -98,7 +98,7 @@ jobs:
           if ! diff -u --label "提交的 config_def.py" --label "CI 重建的 config_def.py" \
               <(git show HEAD:Script/Config/config_def.py | tr -d '\r') <(tr -d '\r' < Script/Config/config_def.py) > "$RUNNER_TEMP/config_def.diff"; then
             head -n 200 "$RUNNER_TEMP/config_def.diff"
-            echo "::error file=Script/Config/config_def.py::config_def.py 与 CI（Windows）重建的结果不一致。请在 Windows 上运行 python buildconfig.py 后提交；Linux / macOS 上生成的类顺序不同，可按上面打印的 diff 手动改成一致"
+            echo "::error file=Script/Config/config_def.py::config_def.py 与 CI 重建的结果不一致。请运行 python buildconfig.py 后提交重建出的 config_def.py，或按上面打印的 diff 手动改成一致。分支早于 2026-11 的，先变基到最新 master：旧的构建脚本在 Linux / macOS 上生成的类顺序与 Windows 不同"
             exit 1
           fi
 

@@ -890,7 +890,7 @@ SocketIO 事件（后端处理函数）：
 
 GitHub Actions `.github/workflows/python-app.yml`（push/PR 到 master）分三个任务：
 
-- **`Check`**（windows-latest，每次推送与每个 PR）：改动档案写进运行摘要 → `buildconfig.py` → 生成物比对（`config_def.py` 须与重建结果一致，只在 Windows 上可复现）→ `init_data.py` → 回归测试 `tools/tests/education/run_all.py` → 静态检查（`ruff`，规则在根目录 `ruff.toml`）→ 外部 PR 不得修改版本号文件。稀疏检出，不取 `image/`
+- **`Check`**（windows-latest，每次推送与每个 PR）：改动档案写进运行摘要 → `buildconfig.py` → 生成物比对（`config_def.py` 须与重建结果一致；构建脚本按固定顺序遍历目录，任何系统上重建的结果都相同）→ `init_data.py` → 回归测试 `tools/tests/education/run_all.py` → 静态检查（`ruff`，规则在根目录 `ruff.toml`）→ 外部 PR 不得修改版本号文件。稀疏检出，不取 `image/`
 - **`Release Plan`**（ubuntu-latest，仅 master 的推送）：判定是否发布
 - **`Build and Release`**（windows-latest）：仅当版本号未发布、`Check` 通过、推送者是仓库所有者且版本号不是别人的 PR 带进来的，才执行下面的打包发布
 

@@ -149,7 +149,7 @@ GitHub Actions 工作流（`.github/workflows/python-app.yml`）分三个任务�
 发布页正文末尾会列出自上一个版本标签以来的提交标题。
 
 改动它时要知道的事：
-- 生成物比对只在 Windows 上可复现：`buildconfig.py` 按未排序的 `os.listdir` 生成，在 Linux/macOS 上重建出的 `config_def.py` 类顺序不同。
+- 生成物在任何系统上都能复现：`buildconfig.py` 与 `auto_build_config.py` 都通过 `sorted_listdir` / `sorted_walk` 遍历目录（按名字不区分大小写排序，与 NTFS 给出的顺序一致）。在这两个脚本里新增目录遍历时必须用它们，否则 Linux/macOS 上的构建结果又会与 Windows 不同（2026-11 之前就是这样：`config_def.py` 类顺序不同，还引出了 #316）。
 - `tools/tests/` 下新开的测试目录不会被自动跑到，要加进 `Regression Tests` 一步。
 - 游戏运行时需要的新顶层目录要加进 `Copy Game Files` 一步；打包不再随每次推送执行，这里写错要到下次发版才暴露。
 - 本机复现静态检查：`ruff check --config ruff.toml .`（`ruff` 不在 `requirements.txt` 里，CI 自己固定版本）。规则只收「几乎一定是 BUG」的几类，不收风格类。

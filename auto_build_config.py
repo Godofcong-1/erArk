@@ -86,6 +86,32 @@ try:
 except:
     character_talk_data = {}
 
+
+def sorted_listdir(dir_path: str) -> list:
+    """
+    输入：
+        dir_path (str): 目录路径
+    返回：list，目录下的条目名，按名字排好序
+    功能：按固定顺序列出目录内容。os.listdir 的顺序由文件系统决定：NTFS 按名字排，Linux / macOS 常见的文件系统不按名字，
+          直接遍历会让在那些系统上构建出的 config_def.py 类顺序、各 JSON 的行序与 .po 的条目顺序都和 Windows 不同。
+          排序键取大写，与 NTFS 不区分大小写的名字顺序一致，Windows 上的构建结果因此不变
+    """
+    return sorted(os.listdir(dir_path), key=str.upper)
+
+
+def sorted_walk(dir_path: str):
+    """
+    输入：
+        dir_path (str): 目录路径
+    返回：生成器，与 os.walk 相同的 (root, dirs, files) 三元组
+    功能：按固定顺序递归遍历目录：子目录与文件都按与 sorted_listdir 相同的规则排序（原因见 sorted_listdir）
+    """
+    for root, dirs, files in os.walk(dir_path):
+        # 原地排序 dirs，os.walk 才会按这个顺序继续往下走
+        dirs.sort(key=str.upper)
+        yield root, dirs, sorted(files, key=str.upper)
+
+
 def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, talk_common: bool = False, cook_question: bool = False, official_event: bool = False):
     """
     输入：
@@ -307,7 +333,7 @@ def build_scene_config(data_path):
     功能：构建场景配置并提取文本
     """
     global config_po_lines
-    for i in os.listdir(data_path):
+    for i in sorted_listdir(data_path):
         now_path = os.path.join(data_path, i)
         if os.path.isfile(now_path):
             if i == "Scene.json":
@@ -434,7 +460,7 @@ if BUILD_PO:
     common_talk_po_lines.append(header_text)
     event_po_lines.append(header_text)
 
-file_list = os.listdir(config_dir)
+file_list = sorted_listdir(config_dir)
 index = 0
 for i in file_list:
     now_file = os.path.join(config_dir, i)
@@ -475,7 +501,7 @@ if BUILD_OFFICIAL_EVENT and os.path.isdir(official_event_dir):
 # 在写入 talk 数据时根据 BUILD_TALK 判断是否覆盖
 if BUILD_TALK:
     print("开始写入角色口上数据，该处理耗时较长，仅在第一次启动游戏时处理")
-    talk_file_list = os.listdir(talk_dir)
+    talk_file_list = sorted_listdir(talk_dir)
     for i in talk_file_list:
         # 跳过 ai 文件夹
         if i == "ai":
@@ -483,7 +509,7 @@ if BUILD_TALK:
         now_path = os.path.join(talk_dir, i)
         # 如果是目录，则递归遍历其子目录
         if os.path.isdir(now_path):
-            for root, dirs, files in os.walk(now_path):
+            for root, dirs, files in sorted_walk(now_path):
                 for f in files:
                     # 跳过非 csv 文件
                     if not f.endswith(".csv"):
@@ -507,12 +533,12 @@ else:
     pass
 
 if BUILD_TALK_COMMON:
-    talk_common_file_list = os.listdir(talk_common_dir)
+    talk_common_file_list = sorted_listdir(talk_common_dir)
     for i in talk_common_file_list:
         now_path = os.path.join(talk_common_dir, i)
         # 如果是目录，则递归遍历其子目录
         if os.path.isdir(now_path):
-            for root, dirs, files in os.walk(now_path):
+            for root, dirs, files in sorted_walk(now_path):
                 for f in files:
                     # 跳过非 csv 文件
                     if not f.endswith(".csv"):
@@ -533,22 +559,22 @@ if BUILD_TALK_COMMON:
 
 # 在写入 target 数据时根据 BUILD_TARGET 判断是否覆盖
 if BUILD_TARGET:
-    target_file_list = os.listdir(target_dir)
+    target_file_list = sorted_listdir(target_dir)
     for i in target_file_list:
         now_dir = os.path.join(target_dir, i)
-        for f in os.listdir(now_dir):
+        for f in sorted_listdir(now_dir):
             config_def_str += "\n\n\n"
             now_f = os.path.join(now_dir, f)
             build_csv_config(now_f, f, False, True)
 
 if BUILD_CHARACTER:
-    character_file_list = os.listdir(character_dir)
+    character_file_list = sorted_listdir(character_dir)
     for i in character_file_list:
         now_path = os.path.join(character_dir,i)
         build_character_config(now_path,i)
 
 if BUILD_UI_TEXT:
-    ui_text_file_list = os.listdir(ui_text_dir)
+    ui_text_file_list = sorted_listdir(ui_text_dir)
     for i in ui_text_file_list:
         now_path = os.path.join(ui_text_dir,i)
         build_ui_text(now_path,i)
@@ -556,7 +582,7 @@ if BUILD_UI_TEXT:
 # 在写入 event 数据时根据 BUILD_EVENT 判断是否覆盖
 if BUILD_EVENT:
     event_list = []
-    for root, dirs, files in os.walk(event_dir):
+    for root, dirs, files in sorted_walk(event_dir):
         for file in files:
             # 跳过非json文件
             if file.split(".")[-1] != "json":
