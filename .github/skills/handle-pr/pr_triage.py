@@ -57,6 +57,10 @@ TIER_HUMAN = {
 # 按顺序匹配，先中先得。fnmatch 的 * 可以跨越目录分隔符，所以 "Script/Core/*" 覆盖其下所有层级。
 # 起步从严：拿不准的放高一档，等积累了「这类改动从没出过事」的证据再往下调（调的时候改这张表）。
 PATH_RULES = [
+    # ---- 必须真人：能改变「检查本身」的文件，放在任何目录下都算（所以排在最前，先于各目录的规则）----
+    ("*ruff.toml", MUST, "静态检查配置（改它等于放宽 CI 的门槛；子目录里的同名文件会覆盖根目录那份）"),
+    ("*pyproject.toml", MUST, "工具配置（可以覆盖静态检查的规则）"),
+    ("*.gitattributes", MUST, "git 属性（一行 -diff 就能让 diff 不显示代码改动，网页上也一样）"),
     # ---- 必须真人：流水线、代理指令面、启动与构建链、依赖与版本、存档、密钥与联网 ----
     (".github/prompts/数据处理工作流/*", LOW, "系统说明文档"),
     (".github/prompts/重构文档/*", LOW, "重构文档"),
@@ -74,8 +78,8 @@ PATH_RULES = [
     ("buildpo.py", MUST, "构建链"),
     ("buildmo.py", MUST, "构建链"),
     ("requirements.txt", MUST, "依赖清单"),
-    ("package.json", MUST, "游戏版本号（推送到 master 即触发发布）"),
-    ("image/package.json", MUST, "图片包版本号（影响发布）"),
+    ("package.json", MUST, "游戏版本号（只由管理者修改：外部 PR 改它会被 CI 拦下，合入后也不会自动发布）"),
+    ("image/package.json", MUST, "图片包版本号（只由管理者修改：决定发布包的文件名）"),
     ("Script/Core/save_handle.py", MUST, "存档读写与跨版本迁移"),
     ("Script/Core/old_chara_to_new.py", MUST, "旧存档迁移"),
     ("Script/Core/mod_manager.py", MUST, "Mod 加载与函数替换"),
@@ -182,8 +186,15 @@ SIGNAL_RULES = [
     ("外部地址", "留意", "any", r"https?://[^\s'\"<>)\]]+|\b(?!127\.0\.0\.1|0\.0\.0\.0)\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{2,5}\b"),
 ]
 
-# CI 里这些步骤在 fork 的 PR 上必然失败（没有发布权限），不反映 PR 本身的质量
+# 2026-11 之前的旧流水线只有一个任务，最后几步是发布：fork 的 PR 没有发布权限，这几步必然失败，不反映 PR 本身的质量。
+# 新流水线里 PR 只跑 Check 任务、根本不进发布，这张表只在读旧运行时用得上
 CI_NOISE_STEPS = ("Create Release", "Upload Release Asset", "Upload ArkEditor Asset", "Upload Lite Version Asset", "Upload Images Asset")
+# 报告「通过」时点名的关键检查（新旧流水线的步骤名都在内，顺序即展示顺序）
+CI_KEY_STEPS = ("Run PyInstaller", "Build Game Config", "Check Generated Files", "Build Game Cache", "Regression Tests", "Static Check", "Check Version Files")
+# 新流水线才有的步骤：一次运行里完全没有它，就说明跑的还是旧流水线
+CI_NEW_MARK = "Regression Tests"
+# PR 的 CI 用的是 PR 合并提交上的工作流与脚本：改了这些文件的 PR，CI 查什么、怎么判由它自己决定，绿不能当证据
+CI_SELF_PATTERNS = [".github/workflows/*", "tools/tests/*", "*ruff.toml", "*pyproject.toml", "*.gitattributes", "buildconfig.py", "auto_build_config.py", "init_data.py", "requirements.txt"]
 
 # PR 描述里的证据关键词
 EVIDENCE_RULES = [
@@ -478,12 +489,13 @@ def check_merge(base: str, head: str, files: list) -> dict:
     return {"behind": int(behind.strip() or 0), "conflict_files": conflict_files, "clean": code == 0, "overlap": overlap, "unknown": code not in (0, 1)}
 
 
-def read_ci(slug: str, sha: str) -> list:
+def read_ci(slug: str, sha: str, has_conflict: bool = False) -> list:
     """
     读取某个提交的 CI 结果，精确到步骤
     Keyword arguments:
     slug -- owner/repo
     sha -- PR 头提交
+    has_conflict -- 这个 PR 与 master 是否有合并冲突（有冲突的 PR 不会触发 CI）
     Return arguments:
     list -- 若干行可直接打印的结论
     """
@@ -492,7 +504,9 @@ def read_ci(slug: str, sha: str) -> list:
         return ["读不到 CI：" + err]
     runs = [run for run in runs_data.get("workflow_runs", []) if run.get("event") == "pull_request"]
     if not runs:
-        return ["这个提交没有 CI 运行记录（首次贡献者的 PR 需要维护者在网页上点批准才会跑）"]
+        if has_conflict:
+            return ["这个提交没有 CI 运行记录：PR 与 master 有合并冲突，GitHub 不会为有冲突的 PR 触发 CI，请作者先变基解决冲突"]
+        return ["这个提交没有 CI 运行记录（首次贡献者的 PR 需要维护者在网页上点批准才会跑；与 master 有合并冲突的 PR 也不会触发 CI）"]
     run = runs[0]
     if run.get("status") != "completed":
         return ["CI 尚未跑完（{0}）".format(run.get("status"))]
@@ -502,20 +516,30 @@ def read_ci(slug: str, sha: str) -> list:
     if err or jobs is None:
         return ["CI 总结论 {0}，但读不到步骤明细：{1}".format(run.get("conclusion"), err)]
     lines = []
+    step_names = set()
     for job in jobs.get("jobs", []):
+        # PR 上的 Release Plan / Build and Release 本来就不跑，跳过的任务不是结论
+        if job.get("conclusion") == "skipped":
+            continue
         steps = job.get("steps", [])
+        step_names.update(step["name"] for step in steps)
         failed = [step["name"] for step in steps if step.get("conclusion") == "failure"]
         real_failed = [name for name in failed if name not in CI_NOISE_STEPS]
         passed = [step["name"] for step in steps if step.get("conclusion") == "success"]
+        key_steps = "、".join(name for name in CI_KEY_STEPS if name in passed) or "无关键检查"
         if real_failed:
-            lines.append("真失败：{0}（任务 {1}）。这是 PR 的问题，阻断合入".format("、".join(real_failed), job.get("name")))
+            lines.append("真失败：{0}（任务 {1}）。先确认不是流水线环境的问题（依赖上游发新版导致安装或导入失败），否则是 PR 的问题，阻断合入".format("、".join(real_failed), job.get("name")))
         elif failed:
-            key_steps = [name for name in ("Run PyInstaller", "Build Game Config", "Build Game Cache") if name in passed]
-            lines.append("有效检查全部通过（{0} 步，含 {1}）".format(len(passed), "、".join(key_steps) or "无构建步骤"))
-            lines.append("页面显示的红叉来自 {0}：fork 的 PR 没有发布权限，属于流水线自身的已知问题，不算 PR 的问题".format("、".join(failed)))
+            lines.append("有效检查全部通过（{0} 步，含 {1}）".format(len(passed), key_steps))
+            lines.append("页面显示的红叉来自 {0}：fork 的 PR 没有发布权限，属于旧流水线自身的已知问题，不算 PR 的问题".format("、".join(failed)))
+        elif job.get("conclusion") != "success":
+            # 没有失败的步骤、任务却不是成功：被取消或超时
+            lines.append("任务 {0} 没有跑完（{1}）：同一个 PR 推了更新的提交时旧运行会被取消，也可能是超时。以最新一次运行为准".format(job.get("name"), job.get("conclusion")))
         else:
-            lines.append("全部通过（{0} 步）".format(len(passed)))
+            lines.append("全部通过（{0} 步，含 {1}）".format(len(passed), key_steps))
     if lines:
+        if CI_NEW_MARK not in step_names:
+            lines.append("这次运行用的是旧流水线：没有跑静态检查、生成物比对和回归测试。点「重新运行」用的仍是旧流水线，要用上新检查得让作者推新提交，或关闭再重开 PR")
         return lines
     # ---- 一个任务都没有：CI 根本没有真正跑过 ----
     created, updated = (run.get("created_at") or "")[:10], (run.get("updated_at") or "")[:10]
@@ -718,8 +742,18 @@ def print_dossier(title: str, base: str, head: str, number: int = 0, pull: "dict
     # ---- CI ----
     if show_ci and slug:
         print("\n---- CI（按步骤读，不看总的红绿）----")
-        for line in read_ci(slug, head):
+        for line in read_ci(slug, head, has_conflict=not merge["unknown"] and not merge["clean"]):
             print("  " + line)
+    # PR 的 CI 用的是 PR 自己那份工作流、测试与检查配置：这些文件被改了，CI 的结果就由 PR 自己说了算
+    self_modified = [item["path"] for item in changes if match_any(item["path"], CI_SELF_PATTERNS)]
+    if self_modified:
+        if not (show_ci and slug):
+            print("\n---- CI ----")
+        print("  这次改动动了流水线 / 测试 / 检查配置 / 构建脚本本身：CI 的绿不能当证据，先读这些文件再看 CI")
+        for path in self_modified[:8]:
+            print("    " + path)
+        if len(self_modified) > 8:
+            print("    ……另有 {0} 个".format(len(self_modified) - 8))
     # ---- 轮次 ----
     if number:
         print("\n---- 轮次 ----")

@@ -888,7 +888,13 @@ SocketIO 事件（后端处理函数）：
 
 ## 25. CI/CD 发布结构
 
-GitHub Actions `.github/workflows/python-app.yml`（push/PR 到 master，windows-latest）：
+GitHub Actions `.github/workflows/python-app.yml`（push/PR 到 master）分三个任务：
+
+- **`Check`**（windows-latest，每次推送与每个 PR）：改动档案写进运行摘要 → `buildconfig.py` → 生成物比对（`config_def.py` 须与重建结果一致，只在 Windows 上可复现）→ `init_data.py` → 回归测试 `tools/tests/education/run_all.py` → 静态检查（`ruff`，规则在根目录 `ruff.toml`）→ 外部 PR 不得修改版本号文件。稀疏检出，不取 `image/`
+- **`Release Plan`**（ubuntu-latest，仅 master 的推送）：判定是否发布
+- **`Build and Release`**（windows-latest）：仅当版本号未发布、`Check` 通过、推送者是仓库所有者且版本号不是别人的 PR 带进来的，才执行下面的打包发布
+
+打包发布的步骤：
 
 1. Python 3.12 + 依赖 + PyInstaller 打包 `game.py`（`-F`，隐藏导入 `engineio.async_drivers.threading`）
 2. `buildconfig.py` 构建数据
@@ -899,8 +905,9 @@ GitHub Actions `.github/workflows/python-app.yml`（push/PR 到 master，windows
    - `erArk_Lite_{版本}.zip`：轻量版（移除 `image/场景`、`image/断面图`、`image/立绘`，仅保留基础场景）
    - `erArk_Images_{图片版本}.zip`：图片资源包
    - `erArkEditor.zip`：口上/事件编辑器（附教程、模板和参考 CSV）
-6. 版本号：游戏 `package.json`，图片 `image/package.json`
-7. 另有 `sync-wiki.yml` 同步 wiki
+6. 版本号：游戏 `package.json`，图片 `image/package.json`；发版的方法是把 `package.json` 改成一个 Releases 里还没有的版本号
+7. 发布页正文末尾列出自上一个版本标签以来的提交标题
+8. 另有 `sync-wiki.yml` 同步 wiki
 
 轻量版 + 图片资源包 = 完整版。
 

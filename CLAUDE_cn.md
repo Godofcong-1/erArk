@@ -133,7 +133,28 @@ pip install -r requirements.txt
 
 ## CI/CD 发布结构
 
-GitHub Actions 工作流（`.github/workflows/python-app.yml`，push/PR 到 master 时用 PyInstaller 打包）会生成 4 个发布包：
+GitHub Actions 工作流（`.github/workflows/python-app.yml`）分三个任务：
+
+| 任务 | 何时运行 | 做什么 |
+| --- | ------- | ------ |
+| `Check` | 每次推送到 master、每个 PR | 改动档案（`pr_triage.py` 的输出写进运行摘要，仅供参考）、`buildconfig.py`、生成物比对（`config_def.py` 必须与重建结果一致）、`init_data.py`、回归测试（`tools/tests/education/run_all.py`）、静态检查（`ruff`，规则在 `ruff.toml`），以及对作者不是仓库所有者的 PR 检查版本号文件没有被改。使用不含 `image/` 的稀疏检出 |
+| `Release Plan` | 仅 master 的推送 | 判定这次推送要不要发布 |
+| `Build and Release` | 仅当 `Release Plan` 判定发布且 `Check` 通过 | PyInstaller 打包、组装发布包、创建 GitHub Release |
+
+**只有以下条件同时成立才会打包发布**，普通推送不打包也不发布：
+1. `package.json` 里的版本号在 GitHub Releases 中还不存在（所以发版的方法是改 `package.json` 的版本号）
+2. `Check` 通过
+3. 推送者是仓库所有者，且最后一次修改 `package.json` 的提交不是从别人的 PR 合入的
+
+发布页正文末尾会列出自上一个版本标签以来的提交标题。
+
+改动它时要知道的事：
+- 生成物比对只在 Windows 上可复现：`buildconfig.py` 按未排序的 `os.listdir` 生成，在 Linux/macOS 上重建出的 `config_def.py` 类顺序不同。
+- `tools/tests/` 下新开的测试目录不会被自动跑到，要加进 `Regression Tests` 一步。
+- 游戏运行时需要的新顶层目录要加进 `Copy Game Files` 一步；打包不再随每次推送执行，这里写错要到下次发版才暴露。
+- 本机复现静态检查：`ruff check --config ruff.toml .`（`ruff` 不在 `requirements.txt` 里，CI 自己固定版本）。规则只收「几乎一定是 BUG」的几类，不收风格类。
+
+一次发布包含 4 个包：
 
 | 包名 | 说明 | 包含内容 |
 | --- | --- | ------- |

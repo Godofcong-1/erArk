@@ -14,6 +14,7 @@
 - 每个文件各起一个进程：游戏的全局缓存只能初始化一次，同进程串跑会互相污染。单文件超时 240 秒。
 - 日志写在 `%TEMP%/erArk_education_tests/<文件名>.log`；汇总行里的 `PASS= / FAIL=` 来自各文件末尾的同名行。
 - 改了 CSV（口上 / 前提 / 效果 / 事件）后先删 `data/Character_Talk.json` 再跑一次 `buildconfig.py`，然后 `git checkout -- data/po/`（构建会清空 PO），否则断言读到的是旧生成物。
+- CI 的 `Regression Tests` 一步在每次推送和每个 PR 上跑这一套（`.github/workflows/python-app.yml`）。CI 里没有 `.conda`，`run_all.py` 会退回当前解释器；那里也没有真实存档，依赖存档的两段按下面的 fixture 陷阱跳过。失败时紧接着的 `Show Test Logs` 一步会把各文件日志的末尾打出来。新开别的测试目录不会被自动跑到，要加进工作流。
 
 ## 文件与覆盖
 
