@@ -236,10 +236,10 @@ int,str,str
 430,deep_throat,21 - 13 - 14 - 22 - 51 - 52 - 54 - 56 - 58 - 59 - 60 - 62 - 70 - 118 - 142 - CVE_A2_E|30_G_1 - CVE_A2_E|32_G_1 - CVE_A2_E|42_G_1 - CVE_A2_E|153_G_1 - 817 - 1107
 431,sixty_nine,21 - 13 - 14 - 22 - 49 - 51 - 56 - 58 - 62 - 70 - 114 - 118 - 142 - CVE_A2_E|4_G_1 - CVE_A2_E|30_G_1 - CVE_A2_E|42_G_1 - CVE_A1_E|42_G_1 - CVE_A2_E|153_G_1 - CVE_A1_E|153_G_1 - 804 - 1107
 432,legjob,21 - 13 - 14 - 22 - 41 - 51 - 52 - 56 - 58 - 62 - 70 - 110 - 143 - CVE_A2_E|30_G_1 - 812
-433,tailjob,21 - 13 - 14 - 22 - 41 - 51 - 52 - 56 - 58 - 62 - 70 - 119 - 120 - CVE_A2_E|30_G_1 - CVE_A2_E|154_G_1 - 814
+433,tailjob,21 - 13 - 14 - 22 - 41 - 51 - 52 - 56 - 58 - 62 - 70 - 119 - 120 - CVE_A2_E|30_G_1 - CVE_A2_E|48_G_1 - CVE_A2_E|154_G_1 - 814
 434,face_rub,21 - 13 - 14 - 22 - 41 - 51 - 52 - 57 - 58 - 62 - 70 - 110 - 120 - CVE_A2_E|30_G_1 - 803
-435,horn_rub,21 - 13 - 14 - 22 - 41 - 51 - 52 - 57 - 58 - 62 - 70 - 119 - 120 - CVE_A2_E|30_G_1 - CVE_A2_E|154_G_1 - 815
-436,ears_rub,21 - 13 - 14 - 22 - 41 - 51 - 52 - 57 - 58 - 62 - 70 - 119 - 120 - CVE_A2_E|30_G_1 - CVE_A2_E|154_G_1 - 816
+435,horn_rub,21 - 13 - 14 - 22 - 41 - 51 - 52 - 57 - 58 - 62 - 70 - 119 - 120 - CVE_A2_E|30_G_1 - CVE_A2_E|48_G_1 - CVE_A2_E|154_G_1 - 815
+436,ears_rub,21 - 13 - 14 - 22 - 41 - 51 - 52 - 57 - 58 - 62 - 70 - 119 - 120 - CVE_A2_E|30_G_1 - CVE_A2_E|48_G_1 - CVE_A2_E|154_G_1 - 816
 437,clean_blowjob,21 - 13 - 14 - 22 - 41 - 51 - 52 - 54 - 56 - 58 - 62 - 70 - 118 - 142 - CVE_A2_E|30_G_1 - CVE_A2_E|42_G_1 - CVE_A2_E|153_G_1 - 804 - 1107 - 1406
 
 451,body_lubricant,21 - 13 - 14 - 58 - 62 - 941 - 1001
@@ -449,17 +449,17 @@ int,str,str
 879,examine_urination_status,21 - 11 - 12 - 57 - 58 - 116 - CVE_A2_E|6_G_1 - 81 - CVE_A1_E|88_G_1
 880,examine_urethra_firmness,21 - 11 - 12 - 57 - 58 - 124 - 133 - CVE_A2_E|6_G_1 - CVE_A2_E|63_G_1 - CVE_A2_E|67_G_1 - 120
 881,examine_tail,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|154_G_1 - 81 - CVE_A1_E|88_G_1
-882,examine_tail_flexibility,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|154_G_1 - 120
+882,examine_tail_flexibility,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|48_G_1 - CVE_A2_E|154_G_1 - 120
 883,examine_horn,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|154_G_1 - 81 - CVE_A1_E|88_G_1
-884,examine_horn_sensitivity,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|154_G_1 - 120
+884,examine_horn_sensitivity,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|48_G_1 - CVE_A2_E|154_G_1 - 120
 885,examine_ears,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|154_G_1 - 81 - CVE_A1_E|88_G_1
-886,examine_ears_sensitivity,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|154_G_1 - 120
+886,examine_ears_sensitivity,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|48_G_1 - CVE_A2_E|154_G_1 - 120
 887,examine_wing,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|154_G_1 - 81 - CVE_A1_E|88_G_1
-888,examine_wing_flexibility,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|154_G_1 - 120
+888,examine_wing_flexibility,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|48_G_1 - CVE_A2_E|154_G_1 - 120
 889,examine_ring,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|154_G_1 - 81 - CVE_A1_E|88_G_1
-890,examine_ring_sensitivity,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|154_G_1 - 120
+890,examine_ring_sensitivity,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|48_G_1 - CVE_A2_E|154_G_1 - 120
 891,examine_tentacle,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|154_G_1 - 81 - CVE_A1_E|88_G_1
-892,examine_tentacle_flexibility,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|154_G_1 - 120
+892,examine_tentacle_flexibility,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|48_G_1 - CVE_A2_E|154_G_1 - 120
 
 901,penetrating_vision_on,1201
 902,penetrating_vision_off,1202
