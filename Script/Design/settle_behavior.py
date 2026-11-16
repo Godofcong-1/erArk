@@ -32,7 +32,10 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
     player_character_data: game_type.Character = cache.character_data[0]
     change_data = game_type.CharacterStatusChange()
     start_time = now_character_data.behavior.start_time
-    add_time = int((now_time - start_time).seconds / 60)
+    # 行为已进行的分钟数。必须用 total_seconds()：timedelta.seconds 只是不足一天的那部分秒数，
+    # 行为持续满 24 小时会回绕（1440 分钟算成 0，所有结算直接跳过；1500 分钟只算 60 分钟）。
+    # 结算时间早于开始时间时按 0 处理（.seconds 会把 -5 分钟算成 1435 分钟）
+    add_time = max(0, int((now_time - start_time).total_seconds() / 60))
 
     # ——履历记录：H模式初体验中心判定（自己与交互对象各判一次，行为结算必经处，dict去重使重复判定零成本）——
     first_record_handle.check_first_h_mode(character_id)
