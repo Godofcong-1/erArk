@@ -205,6 +205,11 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, t
             for k in now_type_data:
                 now_type = now_type_data[k]
                 # print(f"debug row = {row}")
+                # 这一行的列数少于表头时，csv.DictReader 给缺的列填 None：打印出来并跳过，与 buildconfig.py 的处理一致
+                # （不判断的话下面的 len(None) 会让游戏启动时直接报错，而 CI 用的 buildconfig.py 只会打印一行错误，检查照常通过）
+                if row[k] is None:
+                    print(f"Error: 文件 {file_path} 的 {now_index} 出现缺失行[{row}]")
+                    continue
                 if not len(row[k]):
                     del row[k]
                     continue
