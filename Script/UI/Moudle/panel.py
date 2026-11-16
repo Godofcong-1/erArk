@@ -308,10 +308,10 @@ class LeftDrawTextListWaitPanel(LeftDrawTextListPanel):
             for value in now_list:
                 value.draw()
             io_init.era_print("\n")
-        if not cache.wframe_mouse.w_frame_skip_wait_mouse:
+        if not flow_handle.is_wait_skip_active():
             flow_handle.askfor_wait()
         else:
-            time.sleep(0.001)
+            time.sleep(flow_handle.get_wait_skip_delay())
 
     def __len__(self):
         """获取面板的内容宽度"""

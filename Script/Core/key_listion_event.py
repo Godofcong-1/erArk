@@ -7,6 +7,9 @@ wframe = main_frame.root
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 
+_pressed_ctrl_keys = set()
+""" 当前仍处于按下状态的左右Ctrl键名集合 """
+
 
 def _set_history_order(history_index: int):
     """
@@ -60,6 +63,82 @@ def on_wframe_listion():
     wframe.bind("<KP_Enter>", main_frame.send_input)
     wframe.bind("<Up>", key_up)
     wframe.bind("<Down>", key_down)
+    wframe.bind("<KeyPress-Control_L>", ctrl_press)
+    wframe.bind("<KeyRelease-Control_L>", ctrl_release)
+    wframe.bind("<KeyPress-Control_R>", ctrl_press)
+    wframe.bind("<KeyRelease-Control_R>", ctrl_release)
+    # FocusOut会在窗口内部焦点变化时同样触发，因此由空闲回调再判断游戏窗口是否真的失去焦点。
+    wframe.bind("<FocusOut>", ctrl_focus_out, add="+")
+
+
+def ctrl_press(event: Event):
+    """
+    开始Ctrl长按快进。
+
+    参数：event (Event) -- Tk键盘按下事件
+    返回值：无
+    功能描述：记录左右Ctrl的按下状态，结束逐字延迟，并解除当前正在进行的被动文本等待。
+    """
+    ctrl_key = getattr(event, "keysym", "Control_L")
+    _pressed_ctrl_keys.add(ctrl_key)
+    cache.wframe_mouse.w_frame_skip_wait_ctrl = 1
+    cache.text_wait = 0
+    # Ctrl长按明确表示希望快进；这里只改变等待状态，不向命令队列注入输入，因此不会自动选择菜单。
+    if not cache.wframe_mouse.w_frame_up:
+        set_wframe_up()
+
+
+def ctrl_release(event: Event):
+    """
+    处理Ctrl键松开事件。
+
+    参数：event (Event) -- Tk键盘松开事件
+    返回值：无
+    功能描述：移除已松开的Ctrl键，仅在左右Ctrl都松开后停止快进。
+    """
+    ctrl_key = getattr(event, "keysym", "Control_L")
+    _pressed_ctrl_keys.discard(ctrl_key)
+    cache.wframe_mouse.w_frame_skip_wait_ctrl = int(bool(_pressed_ctrl_keys))
+
+
+def clear_ctrl_skip_state():
+    """
+    清除Ctrl长按快进状态。
+
+    参数：无
+    返回值：无
+    功能描述：在窗口失去焦点且无法收到松键事件时防止Ctrl快进长期残留。
+    """
+    _pressed_ctrl_keys.clear()
+    cache.wframe_mouse.w_frame_skip_wait_ctrl = 0
+
+
+def _clear_ctrl_skip_if_window_inactive():
+    """
+    在Tk处理完当前焦点事件后检查游戏窗口是否真的失焦。
+
+    参数：无
+    返回值：无
+    功能描述：窗口内部的输入框与文本区切换不会停止快进，只在焦点离开整个应用时清理状态。
+    """
+    try:
+        if wframe.focus_displayof() is not None:
+            return
+    except Exception:
+        # 窗口销毁期间无法查询焦点时同样清理，避免运行时状态残留。
+        pass
+    clear_ctrl_skip_state()
+
+
+def ctrl_focus_out(event: Event):
+    """
+    安排窗口失焦后的Ctrl状态检查。
+
+    参数：event (Event) -- Tk焦点离开事件
+    返回值：无
+    功能描述：延迟到当前事件处理完成后再判断是应用失焦还是内部焦点切换。
+    """
+    wframe.after_idle(_clear_ctrl_skip_if_window_inactive)
 
 
 def mouse_left_check(event: Event):
