@@ -62,6 +62,24 @@ def get_trade_resource_types() -> List[str]:
         res_types.append(res_type)
     return res_types
 
+def check_specialty_trade_allowed(resouce_id: int, buy_flag: bool) -> bool:
+    """
+    判断资源在当前所在地能否按指定方向交易（特产只能在产地买入、在其他地区卖出）
+    输入:
+        resouce_id(int) 资源ID
+        buy_flag(bool) 买入(True)/卖出(False)
+    输出: bool 能否交易，非特产资源恒为True
+    功能: 统一特产的买卖地点限制，手动交易、自动交易与面板显示共用
+    """
+    resouce_data = game_config.config_resouce[resouce_id]
+    # 非特产资源不受所在地限制
+    if resouce_data.type != _("特产"):
+        return True
+    # 是否身处该特产的产地国家
+    in_origin = resouce_data.specialty == cache.rhodes_island.current_location[0]
+    # 产地只能买入，异地只能卖出
+    return in_origin if buy_flag else not in_origin
+
 def calculate_trade_multiplier(resouce_id: int, buy_flag: bool) -> Tuple[float, float, float]:
     """
     计算交易价格乘数及主副交易员加成\n
@@ -129,7 +147,9 @@ def perform_trade(resouce_id: int, quantity: int, buy_flag: bool) -> Optional[Di
     # 数量为0或负数直接返回无效
     if quantity <= 0:
         return None
-    resouce_data = game_config.config_resouce[resouce_id]
+    # 特产只能在产地买入、在其他地区卖出，手动交易与自动交易都经过这里
+    if not check_specialty_trade_allowed(resouce_id, buy_flag):
+        return None
     price, _percent = get_resouce_price(resouce_id, buy_flag)
     # 价格为0或负数直接返回无效
     if price <= 0:
@@ -266,8 +286,8 @@ def get_resouce_price(resouce_id: int, buy_or_sell_flag: bool, self_check: bool 
     """
     resouce_data = game_config.config_resouce[resouce_id]
     base_price = resouce_data.price
-    # 非本地特产的价格为1.5倍
-    if resouce_data.type == _("特产") and resouce_data.specialty == cache.rhodes_island.current_location[0]:
+    # 非本地特产的价格为1.5倍（在产地按常规买入价买入，运到其他地区按1.5倍卖出，赚取差价）
+    if resouce_data.type == _("特产") and resouce_data.specialty != cache.rhodes_island.current_location[0]:
         base_price *= 1.5
     else:
         base_price = 1.1 * base_price if buy_or_sell_flag else 0.9 * base_price
@@ -281,6 +301,8 @@ def get_resouce_price(resouce_id: int, buy_or_sell_flag: bool, self_check: bool 
     # 计算最终价格
     price = base_price * final_adjustment
     # 买入价格不能低于卖出价格，卖出价格不能高于买入价格
+    # 只在当地能反向交易时才约束：特产在同一地点不会既能买又能卖，若仍约束，异地特产的卖出价会被封顶在当地无法使用的买入价上，交易员加成反而会压低卖价
+    self_check = self_check and check_specialty_trade_allowed(resouce_id, not buy_or_sell_flag)
     if buy_or_sell_flag and self_check:
         sell_price = get_resouce_price(resouce_id, False, self_check=False)[0]
         price = max(price, sell_price)
@@ -609,7 +631,12 @@ class Resource_Exchange_Line_Panel:
             # 如果是不可购买的则显示提示
             if cant_buy_flag:
                 budget_warn.text += _("  ●该资源无法购买，只能卖出")
-            
+            # 特产的买卖地点限制提示
+            if not check_specialty_trade_allowed(self.now_select_resouce_id, True):
+                budget_warn.text += _("  ●特产只能在产地买入，在其他地区只能卖出")
+            elif not check_specialty_trade_allowed(self.now_select_resouce_id, False):
+                budget_warn.text += _("  ●本地特产只能买入，需要到其他地区才能卖出")
+
             budget_warn.draw()
             line_feed.draw()
             
@@ -675,9 +702,9 @@ class Resource_Exchange_Line_Panel:
             line_feed.draw(); line_feed.draw()
 
             # 以下情况绘制确认买入按钮
-            # 钱足够且该资源可以买入
+            # 钱足够且该资源可以买入，特产需身处产地
             if self.quantity_of_resouce > 0:
-                if money >= buy_price * abs_qty and not cant_buy_flag:
+                if money >= buy_price * abs_qty and not cant_buy_flag and check_specialty_trade_allowed(self.now_select_resouce_id, True):
                     buy_button = draw.CenterButton(
                         _("[确认买入]"),
                         _("确认买入"),
@@ -691,7 +718,7 @@ class Resource_Exchange_Line_Panel:
             # 以下情况绘制确认卖出按钮
             # 库存大于等于预定卖出的资源数量，且卖出资源不是特产或不是本地特产
             elif self.quantity_of_resouce < 0:
-                if (now_resouce_stock >= abs_qty) and (resouce_data.type != _("特产") or resouce_data.specialty == cache.rhodes_island.current_location[0]):
+                if (now_resouce_stock >= abs_qty) and check_specialty_trade_allowed(self.now_select_resouce_id, False):
                     sell_button = draw.CenterButton(
                         _("[确认卖出]"),
                         _("确认卖出"),
@@ -1182,8 +1209,8 @@ class Resource_Exchange_Line_Panel:
                             return_list.append(button_draw.return_text)
 
                             now_text = _("\n      当前存量：{0}/{1}").format(cache.rhodes_island.materials_resouce[resouce_id], cache.rhodes_island.warehouse_capacity)
-                            # 判断是否可以买入卖出
-                            if resouce_data.cant_buy == 0:
+                            # 判断是否可以买入卖出（特产只显示当地可进行的方向）
+                            if resouce_data.cant_buy == 0 and check_specialty_trade_allowed(resouce_id, True):
                                 price_buy, percent_buy = get_resouce_price(resouce_id, True)
                                 if percent_buy > 0:
                                     percent_str_buy = f"(+{percent_buy:.1f}%)"
@@ -1193,14 +1220,17 @@ class Resource_Exchange_Line_Panel:
                                     percent_str_buy = "(0%)"
                                 now_text += _("   买入:{0}龙门币/1单位 {1}").format(price_buy, percent_str_buy)
                             # 如果是卖出
-                            price_sell, percent_sell = get_resouce_price(resouce_id, False)
-                            if percent_sell > 0:
-                                percent_str_sell = f"(+{percent_sell:.1f}%)"
-                            elif percent_sell < 0:
-                                percent_str_sell = f"({percent_sell:.1f}%)"
+                            if check_specialty_trade_allowed(resouce_id, False):
+                                price_sell, percent_sell = get_resouce_price(resouce_id, False)
+                                if percent_sell > 0:
+                                    percent_str_sell = f"(+{percent_sell:.1f}%)"
+                                elif percent_sell < 0:
+                                    percent_str_sell = f"({percent_sell:.1f}%)"
+                                else:
+                                    percent_str_sell = ""
+                                now_text += _("   卖出:{0}龙门币/1单位 {1}\n").format(price_sell, percent_str_sell)
                             else:
-                                percent_str_sell = ""
-                            now_text += _("   卖出:{0}龙门币/1单位 {1}\n").format(price_sell, percent_str_sell)
+                                now_text += "\n"
                             info_draw.text = now_text
                             info_draw.draw()
 
@@ -1235,10 +1265,10 @@ class Resource_Exchange_Line_Panel:
     def settle_max_buy(self):
         """结算最大买入数量"""
         resouce_data = game_config.config_resouce[self.now_select_resouce_id]
-        # 如果是不可购买的商品则直接跳过
-        if resouce_data.cant_buy == 1:
-            return 
-            
+        # 如果是不可购买的商品，或不在产地的特产，则直接跳过
+        if resouce_data.cant_buy == 1 or not check_specialty_trade_allowed(self.now_select_resouce_id, True):
+            return
+
         buy_price, _ = get_resouce_price(self.now_select_resouce_id, True)
         if buy_price <= 0:
             return
@@ -1253,6 +1283,9 @@ class Resource_Exchange_Line_Panel:
 
     def settle_max_sell(self):
         """结算最大卖出数量"""
+        # 产地的特产无法卖出，直接跳过
+        if not check_specialty_trade_allowed(self.now_select_resouce_id, False):
+            return
         self.quantity_of_resouce = -cache.rhodes_island.materials_resouce[self.now_select_resouce_id]
 
     def reset_quantity(self,):
