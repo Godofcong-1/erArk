@@ -48,7 +48,7 @@ def handle_t_not_wear_hat(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    return not handle_t_not_wear_hat(character_id)
+    return not handle_t_wear_hat(character_id)
 
 @add_premise(constant_promise.Premise.TARGET_WEAR_GLASS)
 def handle_t_wear_glass(character_id: int) -> int:
