@@ -575,9 +575,8 @@ class MedicalPlayerDiagnosePanel:
                             opts = p_info.get("options", [])
                             if any(isinstance(opt, dict) and int(opt.get("cid", 0) or 0) in confirmed for opt in opts):
                                 has_confirmed_sys = True
+                                # 只跳出部位遍历；不可在此层之外再 break，否则会中断外层系统遍历，导致该系统及其后的系统全部不显示（#327）
                                 break
-                    if has_confirmed_sys:
-                        break
                 if has_confirmed_sys:
                     system_style = "deep_gray"
 
