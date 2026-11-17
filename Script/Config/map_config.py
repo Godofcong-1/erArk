@@ -108,12 +108,13 @@ def get_map_system_path_for_path(now_path: str) -> List[str]:
     List[str] -- 游戏地图路径
     """
     current_dir = os.path.dirname(os.path.abspath(now_path))
-    current_dir_str = str(current_dir)
-    map_start_list = current_dir_str.split("map")
-    current_dir_str = map_start_list[1]
-    map_system_path = current_dir_str.split(os.sep)
-    map_system_path = map_system_path[1:]
-    return map_system_path
+    part_list = os.path.normpath(current_dir).split(os.sep)
+    # 从后往前找 data\map 这两级目录，取其后的各级目录名；
+    # 不能按字符串 "map" 切分，否则安装目录里含 map 字样（如 C:\Users\maple）时会切在错误的位置
+    for index in range(len(part_list) - 1, 0, -1):
+        if part_list[index - 1] == "data" and part_list[index] == "map":
+            return part_list[index + 1:]
+    return []
 
 
 def get_map_system_path_str(now_path: List[str]) -> str:
