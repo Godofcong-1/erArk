@@ -8354,7 +8354,7 @@ msgstr "현재 제공되는 음식"
 #: .\Script\UI\Panel\food_shop_panel.py:103
 msgid ""
 "\n"
-"该商店已经没有没有可购买的食物了，请明天再来\n"
+"该商店已经没有可购买的食物了，请明天再来\n"
 msgstr "\n구매할 수 있는 음식이 없다. 내일 다시 오자.\n"
 
 #: .\Script\UI\Panel\food_shop_panel.py:250

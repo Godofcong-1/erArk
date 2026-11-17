@@ -132,7 +132,7 @@ class FoodShopPanel:
                 # 被买空时输出空提示后返回，不能回退到食堂的食物列表（食物按钮会在本商店的数据里查找该菜谱）
                 if not len(food_name_list):
                     info_draw = draw.NormalDraw()
-                    info_draw.text = _("\n该商店已经没有没有可购买的食物了，请明天再来\n")
+                    info_draw.text = _("\n该商店已经没有可购买的食物了，请明天再来\n")
                     info_draw.draw()
                     line_feed.draw()
                     break
