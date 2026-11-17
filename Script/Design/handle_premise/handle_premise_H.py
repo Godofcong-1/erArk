@@ -1440,7 +1440,8 @@ def handle_t_turn_m_orgasm_g_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.h_state.orgasm_count[8][1] > 3:
+    # M（口喉）绝顶记在状态 21 口喉上，8 是润滑，不是绝顶部位
+    if target_data.h_state.orgasm_count[21][1] > 3:
         return 1
     return 0
 
