@@ -104,7 +104,8 @@ def _adjust_supply_demand_after_trade(resouce_id: int, quantity: int, buy_flag: 
     if quantity <= 0:
         return
     cache.rhodes_island.supply_demand_dict.setdefault(resouce_id, 1)
-    steps = quantity // 50
+    # 步数必须是整数，浮点数量（如旧存档的浮点库存）会让下面的 range() 报错
+    steps = int(quantity // 50)
     if steps <= 0:
         return
     for _step in range(steps):
@@ -122,6 +123,9 @@ def _adjust_supply_demand_after_trade(resouce_id: int, quantity: int, buy_flag: 
 def perform_trade(resouce_id: int, quantity: int, buy_flag: bool) -> Optional[Dict[str, int]]:
     """执行具体交易结算，返回实际成交情况"""
 
+    # 交易数量统一取整：旧存档的库存与龙门币可能是浮点数（2025-10 前榨乳存入冰箱的母乳未取整，经流水线传到乳制品），
+    #    浮点数量会让供需调整的 range() 报错，并把浮点继续带进库存与龙门币
+    quantity = int(quantity)
     # 数量为0或负数直接返回无效
     if quantity <= 0:
         return None
@@ -137,13 +141,13 @@ def perform_trade(resouce_id: int, quantity: int, buy_flag: bool) -> Optional[Di
     result_quantity = quantity
     # 买入操作
     if buy_flag:
-        capacity_left = cache.rhodes_island.warehouse_capacity - cache.rhodes_island.materials_resouce[resouce_id]
+        capacity_left = int(cache.rhodes_island.warehouse_capacity - cache.rhodes_island.materials_resouce[resouce_id])
         # 仓库已满无法购买
         if capacity_left <= 0:
             return None
         result_quantity = min(result_quantity, capacity_left)
         if price > 0:
-            affordable = cache.rhodes_island.materials_resouce[1] // price
+            affordable = int(cache.rhodes_island.materials_resouce[1] // price)
             result_quantity = min(result_quantity, affordable)
         if result_quantity <= 0:
             return None
@@ -153,7 +157,7 @@ def perform_trade(resouce_id: int, quantity: int, buy_flag: bool) -> Optional[Di
         _adjust_supply_demand_after_trade(resouce_id, result_quantity, True)
     # 卖出操作
     else:
-        available = cache.rhodes_island.materials_resouce[resouce_id]
+        available = int(cache.rhodes_island.materials_resouce[resouce_id])
         result_quantity = min(result_quantity, available)
         # 无法卖出任何数量
         if result_quantity <= 0:
