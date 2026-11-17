@@ -32,7 +32,7 @@ Key dependencies: `PySide6` (ArkEditor GUI), `flask` + `flask-socketio` + `pytho
 ### Testing Individual Components
 The game uses a debug mode (configured in config.ini) for testing. Set `debug = 1` to enable debug features.
 
-Headless regression tests live under `tools/tests/` (currently `tools/tests/education/` for the child-raising system: `.conda\python.exe tools/tests/education/run_all.py`, each `test_*.py` runs in its own process). Writing new ones: see the `headless-game-test` skill and `tools/tests/education/README.md`.
+Headless regression tests live under `tools/tests/`, one directory per suite: `core/` (foundational systems: config cross-references, premise and settlement registries, map/navigation and game clock, medical, resource exchange, food shop, day/sleep settlement, saves) and `education/` (child-raising system). Run everything with `.conda\python.exe tools/tests/run_all.py` (or pass a keyword such as `core` / `core/test_medical`); each `test_*.py` runs in its own process. Suites share `tools/tests/headless_base.py` (init chain, UI stubs, `check/section/finish`, `make_character`). Writing new ones: see `tools/tests/README.md` and the `headless-game-test` skill.
 
 CI runs these tests on every push and PR, together with a narrow static check. To reproduce the static check locally: `ruff check --config ruff.toml .` (`ruff` is not in `requirements.txt`; CI pins its own version). The rule set in `ruff.toml` only covers near-certain bugs — syntax errors, undefined names, format-string/argument mismatches, repeated dict keys — never style.
 
@@ -146,7 +146,7 @@ The GitHub Actions workflow (`.github/workflows/python-app.yml`) has three jobs:
 
 | Job | Runs on | What it does |
 | --- | ------- | ------------ |
-| `Check` | every push to master, every PR | Change dossier (`pr_triage.py` output in the run summary, informational), `buildconfig.py`, generated-file check (`config_def.py` must equal a fresh rebuild), `init_data.py`, regression tests (`tools/tests/education/run_all.py`), static check (`ruff`, rules in `ruff.toml`), and — for PRs not authored by the repository owner — a check that the version files are untouched. Uses a sparse checkout without `image/` |
+| `Check` | every push to master, every PR | Change dossier (`pr_triage.py` output in the run summary, informational), `buildconfig.py`, generated-file check (`config_def.py` must equal a fresh rebuild), `init_data.py`, regression tests (`tools/tests/run_all.py`, all suites), static check (`ruff`, rules in `ruff.toml`), and — for PRs not authored by the repository owner — a check that the version files are untouched. Uses a sparse checkout without `image/` |
 | `Release Plan` | pushes to master only | Decides whether this push releases |
 | `Build and Release` | only when `Release Plan` says so and `Check` passed | PyInstaller build, packaging, GitHub Release |
 
@@ -159,7 +159,7 @@ The release body ends with the commit subjects since the previous version tag.
 
 Things to know when touching it:
 - The generated files are reproducible on any OS: `buildconfig.py` and `auto_build_config.py` list directories through `sorted_listdir` / `sorted_walk` (case-insensitive name order, the same order NTFS returns). Any new directory traversal in those scripts must use them, or Linux/macOS builds drift from Windows again (they did before 2026-11: different class order in `config_def.py`, and #316).
-- A new test directory under `tools/tests/` is not picked up automatically — add it to the `Regression Tests` step.
+- `tools/tests/run_all.py` discovers suites automatically (every directory under `tools/tests/` not starting with `_` or `.` that contains `test_*.py`), so a new suite needs no workflow change. Logs land in `%TEMP%/erArk_tests/<suite>/`, which the `Show Test Logs` step prints on failure.
 - Adding a top-level directory the game needs at runtime means adding it to the `Copy Game Files` step; packaging no longer runs on every push, so a mistake there only shows up at the next release.
 
 The release consists of 4 packages:

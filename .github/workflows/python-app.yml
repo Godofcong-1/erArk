@@ -110,12 +110,13 @@ jobs:
           $env:PYTHONIOENCODING="utf-8"
           python init_data.py
 
+      # tools/tests/run_all.py 自动发现 tools/tests/ 下的全部套件目录，新增套件不用改这里
       - name: Regression Tests
         id: tests
         if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         run: |
           $env:PYTHONIOENCODING="utf-8"
-          python tools/tests/education/run_all.py
+          python tools/tests/run_all.py
 
       # run_all.py 只带出含 [FAIL] / Error 的行，崩溃的完整回溯在日志文件里
       - name: Show Test Logs
@@ -124,8 +125,8 @@ jobs:
           $env:PYTHONIOENCODING="utf-8"
           @'
           import glob, os, tempfile
-          for path in sorted(glob.glob(os.path.join(tempfile.gettempdir(), "erArk_education_tests", "*.log"))):
-              print("::group::" + os.path.basename(path))
+          for path in sorted(glob.glob(os.path.join(tempfile.gettempdir(), "erArk_tests", "*", "*.log"))):
+              print("::group::" + os.path.relpath(path, os.path.join(tempfile.gettempdir(), "erArk_tests")))
               print(open(path, encoding="utf-8", errors="replace").read()[-8000:])
               print("::endgroup::")
           '@ | python -

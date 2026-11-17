@@ -160,12 +160,12 @@ SNAP="<scratchpad>/pr-324-run"; OUT="<scratchpad>"; PY="<主仓库绝对路径>/
 cp "$SNAP/Script/Config/config_def.py" "$OUT/pr-324-config_def.before.py"        # 构建前留底
 (cd "$SNAP" && "$PY" -u buildconfig.py > "$OUT/pr-324-build.log" 2>&1; echo "BUILD EXIT=$?")
 cmp "$OUT/pr-324-config_def.before.py" "$SNAP/Script/Config/config_def.py" && echo "生成物一致"
-(cd "$SNAP" && "$PY" -u tools/tests/education/run_all.py > "$OUT/pr-324-test.log" 2>&1; echo "TEST EXIT=$?")
+(cd "$SNAP" && "$PY" -u tools/tests/run_all.py > "$OUT/pr-324-test.log" 2>&1; echo "TEST EXIT=$?")   # 分支早于 2026-11-18 时快照里没有它，改跑 tools/tests/education/run_all.py
 tail -1 "$OUT/pr-324-test.log" | iconv -f GBK -t UTF-8      # 这两份日志是 GBK 编码
 ```
 
 - **生成物**：重建后的 `config_def.py` 应与构建前的留底逐字节一致，不一致说明作者没重建或手改了生成物。比对只能用留底，不能用 `git show` 的内容：快照按本机的 `core.autocrlf` 导出，换行符是 CRLF，和 git 里存的 LF 对不上。CI 的 `Check Generated Files` 会自动做同一项比对，这里的手动比对用于 CI 没跑或不可信的时候。构建脚本从 2026-11 起按固定顺序遍历目录，任何系统上重建的结果都一样；PR 分支早于那次修正时，快照里是旧的构建脚本，只有在 Windows 上跑的结果可信。
-- **回归测试**：`tools/tests/education/run_all.py` 约一分钟，改动涉及养成、怀孕或共用的行为循环时必跑。PR 改了测试本身时，先读它改了哪些断言——为了让测试通过而放宽断言，是重要发现。
+- **回归测试**：`tools/tests/run_all.py` 跑全部套件（`core` 基础系统 + `education` 养成系统），约两分钟，每个 PR 都跑；只想看某个套件时加关键字，如 `run_all.py core`。PR 改了测试本身时，先读它改了哪些断言——为了让测试通过而放宽断言，是重要发现。
 - **复现**：修 BUG 的 PR 要有「改前成立、改后消失」的证据。作者没附输出就自己写：按 `headless-game-test` skill 写一个无头脚本，同一个脚本先在主仓库跑出问题，再在快照里跑出修复。**先在主仓库跑**（主仓库是可信代码，不用等 P3）：在 Windows 的 master 上复现不出来，先怀疑作者的环境。例如 2026-11 之前的构建脚本按未排序的 `os.listdir` 读目录，在 Linux 上构建出的数据顺序与 Windows 不同，有些 BUG 只在那种顺序下存在（#316 就是：口上占位符的处理顺序来自目录顺序）。这种修复可以收，但报告里要写明「在受支持的平台上不成立」，并把真正的根因写出来。
 - **存档**：需要旧存档时，把 `save/<id>` **复制**进快照的 `save/` 再读，跑完把这份复制删掉。有了存档，`tools/tests/education/test_behavior_loop.py` 才会真的跑（没有存档时它整份跳过），它就是现成的「带护栏的循环」。
 - **贴输出，不贴结论。** 报告里写跑了什么命令、退出码、关键输出行。「测试通过」四个字不算证据。
@@ -243,7 +243,7 @@ CI：Check 全部通过（含生成物比对、回归测试、静态检查）/ �
 | --- | --- |
 | 档位定低了，或者没给出信号 | `pr_triage.py` 的 `PATH_RULES` / `SIGNAL_RULES` |
 | 审查读过却没看出来 | `REVIEW.md`「失败在这里长什么样」加一行 |
-| 机器本来可以测出来 | `tools/tests/` 下加回归测试。CI 的 `Regression Tests` 自动跑 `tools/tests/education/`；新开测试目录要同步加进工作流 |
+| 机器本来可以测出来 | `tools/tests/` 下加回归测试（写法见 `tools/tests/README.md`）。CI 的 `Regression Tests` 跑 `tools/tests/run_all.py`，自动发现全部套件目录，新开套件不用改工作流 |
 | 同一条意见每次都要重说 | `REVIEW.md`，或者写成 lint（仓库根目录的 `ruff.toml`，CI 的 `Static Check` 执行） |
 
 衡量这套流程只看两个数：维护者花在每个 PR 上的时间，以及合入后的回退与事故。后者是护栏——放宽档位之后回退变多，说明时间只是被挪走了，没有被省下来，把档位调回去。

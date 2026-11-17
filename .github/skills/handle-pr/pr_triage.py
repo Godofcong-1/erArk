@@ -924,7 +924,9 @@ def cmd_snapshot(args):
     print("对应提交：{0}（分叉点 {1}）{2}".format(short(head), short(base), "" if args.with_image else "；不含 image/"))
     print("快照里没有解释器、没有存档、没有已构建的数据。确认可以运行 PR 的代码之后，这样跑：")
     print('  cd "{0}" && "{1}" -u buildconfig.py'.format(target.replace("\\", "/"), python))
-    print('  cd "{0}" && "{1}" -u tools/tests/education/run_all.py'.format(target.replace("\\", "/"), python))
+    # 2026-11-18 起回归测试由 tools/tests/run_all.py 跑全部套件；更早的分支快照里只有养成套件自己的 run_all.py
+    test_runner = "tools/tests/run_all.py" if os.path.exists(os.path.join(target, "tools", "tests", "run_all.py")) else "tools/tests/education/run_all.py"
+    print('  cd "{0}" && "{1}" -u {2}'.format(target.replace("\\", "/"), python, test_runner))
 
 
 def cmd_comments(args):

@@ -30,7 +30,7 @@ description: 在不启动图形界面的情况下无头运行 erArk：加载游�
 5. **绝不调用会进入真实主循环的函数**：`handle_instruct.handle_xxx()`、`chara_handle_instruct_common_settle()`、`update.game_update_flow()` 最终都会调 `init_character_behavior()`。如果要排查的 BUG 正是死循环，harness 自己就会卡死。必须用"复刻指令赋值 + 手动推进时间 + 带护栏的自建循环"代替（见下文）。
 6. **只读纪律**：读档只用 `save_handle.input_load_save(id)`（纯读入内存）；绝不调用 `establish_save()`；不 inline 调用 `init_character_behavior()`（其结尾的成就结算可能写文件）。所有修复先用 monkeypatch 在内存中模拟验证，确认收敛后再改源码。
 7. **含中文的脚本一律写成文件再跑，不要走 heredoc/stdin**。Git Bash 把 heredoc 以 GBK 喂给 Python，脚本里的中文字符串会被解码成乱码，直接 `SyntaxError: invalid syntax`（报错行里能看到 `��` 就是这个原因）。正确做法：用 Write 工具把脚本写到 scratchpad（UTF-8），开头 `os.chdir(r"c:\code\erArk")` + `sys.path.insert(0, r"c:\code\erArk")`，再 `timeout 300 ./.conda/python.exe -u "<scratchpad>/xxx.py" > "$LOG" 2>&1`。纯 ASCII 的一次性小脚本才可以用 heredoc（`./.conda/python.exe -u - <<'EOF'`，此时 sys.path[0] 为当前目录，可直接 `import auto_build_config`）。同理，需要批量改含中文的 CSV/文档时也用脚本文件而不是 stdin。
-8. **测试脚本是回归资产，改完一轮功能就重跑上一轮的测试**。同一子系统连续多个 plan 时（如 plan_14→17→18 的怀孕系统），每次实施后除了跑新测试，还要重跑前几轮留下的测试文件（scratchpad 会随会话丢失，长期要用的测试请在 plan 文档里记录其断言清单，或在用户同意后收进仓库）。
+8. **测试脚本是回归资产，改完一轮功能就重跑上一轮的测试**。仓库里已收录的回归套件在 `tools/tests/`（`core` 基础系统、`education` 养成系统，`tools/tests/run_all.py` 一次跑全部，CI 每次提交都跑）；套件共用 `tools/tests/headless_base.py`，里面已经是下文第一步、第二步与模式 A 两条全局前置的成品，往仓库里加测试时直接 `from _bootstrap import *`，写法见 `tools/tests/README.md`。同一子系统连续多个 plan 时（如 plan_14→17→18 的怀孕系统），每次实施后除了跑新测试，还要重跑前几轮留下的测试文件（scratchpad 会随会话丢失，长期要用的测试请在 plan 文档里记录其断言清单，或在用户同意后收进仓库）。
 
 ## 模式 A：函数级单元测试
 
