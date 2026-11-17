@@ -891,8 +891,8 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
             # 将操作后的属性值重新设置到对象上
             setattr(final_character_data, attribute_name, attribute_value)
 
-            # 记录结算数据
-            if attribute_name not in ["flag", "talent"]:
+            # 记录结算数据（结算记录对象里没有的属性不记，如宝珠 juel，否则 AttributeError）
+            if attribute_name not in ["flag", "talent"] and hasattr(final_change_data, attribute_name):
                 change_data_attribute_value = getattr(final_change_data, attribute_name)
                 # 如果attribute_name没有type_son_id则创建一个
                 change_data_attribute_value.setdefault(type_son_id, 0)
