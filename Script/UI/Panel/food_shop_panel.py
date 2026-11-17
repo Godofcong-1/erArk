@@ -89,25 +89,28 @@ class FoodShopPanel:
             py_cmd.clr_cmd()
 
             # 地摊小贩
+            break_flag = False
             if "Stall_Vendor" in scene_tag:
                 food_name_list = list(cooking.get_food_list_from_food_shop(self.now_panel, restaurant_id="Stall_Vendor").items())
+                # 地摊被买光时同样视为商店已空，不能回退到食堂的食物列表（食物按钮会在地摊的数据里查找该菜谱）
+                if not len(food_name_list):
+                    break_flag = True
 
             # 根据场景标签查找对应的食物商店
-            break_flag = False
-            if not len(food_name_list):
+            if not break_flag and not len(food_name_list):
                 for restaurant_id in game_config.config_restaurant:
                     if game_config.config_restaurant[restaurant_id].tag_name in scene_tag:
                         food_name_list = list(cooking.get_food_list_from_food_shop(self.now_panel, restaurant_id=restaurant_id).items())
-                        # 如果食物列表为空，则输出空提示，然后返回
+                        # 如果食物列表为空，则标记为商店已空
                         if not len(food_name_list):
-                            info_draw = draw.NormalDraw()
-                            info_draw.text = _("\n该商店已经没有没有可购买的食物了，请明天再来\n")
-                            info_draw.draw()
-                            line_feed.draw()
                             break_flag = True
                         break
-            # 返回
+            # 商店已空时输出空提示，然后返回
             if break_flag:
+                info_draw = draw.NormalDraw()
+                info_draw.text = _("\n该商店已经没有没有可购买的食物了，请明天再来\n")
+                info_draw.draw()
+                line_feed.draw()
                 break
             # 如果都没有找到，则默认为食堂
             if not len(food_name_list):
