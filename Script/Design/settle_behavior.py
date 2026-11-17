@@ -757,6 +757,12 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         if final_character_id not in cache.npc_id_got:
             return 0
         final_character_data = cache.character_data[final_character_id]
+        # 结算记录：指定的就是自己时记在自己的变化里，否则与 A2 一样记进 target_change，缺了这一步后面记录结算时会 UnboundLocalError
+        if final_character_id == character_id:
+            final_change_data = change_data
+        else:
+            change_data.target_change.setdefault(final_character_id, game_type.TargetChange())
+            final_change_data = change_data.target_change[final_character_id]
 
     # 进行数值B的判别,A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
     if len(effect_all_value_list[1]) > 1:
