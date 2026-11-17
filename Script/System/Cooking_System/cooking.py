@@ -219,8 +219,8 @@ def init_food_shop_data(update_restaurant_id: int = -2, new_day_flag: bool = Fal
                 break
     # 初始化餐馆内的食物
     for restaurant_id in game_config.config_restaurant:
-        # 仅刷新指定id的餐馆
-        if update_restaurant_id >= 0:
+        # 仅刷新指定id的餐馆；-1 为只刷新食堂，不动任何餐馆（餐馆id从0开始，不会等于-1）
+        if update_restaurant_id != -2:
             if restaurant_id != update_restaurant_id:
                 continue
         cook_index = 0
