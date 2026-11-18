@@ -492,7 +492,15 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
         # 如果还没拥有该角色，则返回0
         if final_character_id not in cache.npc_id_got:
             return 0
+    else:
+        # 主体段既不是 A1 / A2 也不是 A3|编号：数据写错了。按前提不成立处理并提示，否则下面用到主体角色时会抛 UnboundLocalError
+        print(f"综合数值前提的主体写错了，已按不成立处理：{premise_all_value_list}")
+        return 0
 
+    # 属性段的子编号（如 A|12 的 12），没有子编号的属性（好感、信赖等）用不到，先给 0 以免写漏了「|编号」时未赋值
+    type_son_id = 0
+    # 取到的数值，先给 0 以免属性段是认不出的类型时未赋值
+    final_value = 0
     # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场,Dirty污浊,Bondage绳子捆绑,Roleplay角色扮演,PenisPos阴茎位置,ShootPos射精位置,Relationship身份关系,Course当前课程科目,CourseType当前课型,CourseShowOff待炫耀的已升级科目,Growth养成数值
     if (
         len(premise_all_value_list[1]) > 1 and
@@ -608,6 +616,10 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
                 target_character_adv = int(premise_all_value_list[3])
                 target_character_id = character.get_character_id_from_adv(target_character_adv)
                 target_character_data = cache.character_data[target_character_id]
+            else:
+                # 关系对象写的不是上面四种之一：数据写错了。按前提不成立处理并提示，否则下面取关系对象时会抛 UnboundLocalError
+                print(f"综合数值前提的关系对象写错了，已按不成立处理：{premise_all_value_list}")
+                return 0
             relation_type = premise_all_value_list[2]
             if relation_type == "父亲":
                 return final_character_id == target_character_data.relationship.father_id

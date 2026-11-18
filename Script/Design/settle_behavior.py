@@ -764,8 +764,14 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         else:
             change_data.target_change.setdefault(final_character_id, game_type.TargetChange())
             final_change_data = change_data.target_change[final_character_id]
+    else:
+        # 主体段既不是 A1 / A2 也不是 A3|编号：数据写错了。不结算并提示，否则下面用到主体角色时会抛 UnboundLocalError
+        print(f"综合数值结算的主体写错了，未结算：{effect_all_value_list}")
+        return 0
 
     # 进行数值B的判别,A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
+    # 属性段的子编号（如 A|12 的 12），没有子编号的属性（好感、信赖等）用不到，先给 0 以免写漏了「|编号」时未赋值
+    type_son_id = 0
     if len(effect_all_value_list[1]) > 1:
         type_son_id = int(effect_all_value_list[1].split("|")[1])
 
