@@ -9,7 +9,7 @@
 1. ✅ Python 3.9+ 已安装
 2. ✅ VS Code 已安装
 3. ✅ GitHub Copilot 扩展已安装并激活
-4. ✅ MCP库已安装 (`pip install mcp>=1.0.0`)
+4. ✅ MCP库已安装 (`pip install "mcp>=1.0.0,<2"`)
 
 ## 🚀 集成步骤
 
@@ -131,7 +131,7 @@ Copilot：让我为您搜索银灰的立绘URL...
 **症状**：VS Code中找不到MCP相关功能或GitHub Copilot无法调用工具
 **解决方案**：
 1. 检查Python路径是否正确
-2. 确保MCP库已正确安装：`pip install mcp>=1.0.0`
+2. 确保MCP库已正确安装：`pip install "mcp>=1.0.0,<2"`
 3. 验证工作目录路径是否正确
 4. 重启VS Code
 

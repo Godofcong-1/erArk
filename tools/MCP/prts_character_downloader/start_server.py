@@ -38,7 +38,7 @@ def run_standalone_cli():
     print("PRTS角色立绘下载器 - 独立模式")
     print("=" * 50)
     print("注意：MCP库未安装，运行在独立模式")
-    print("要使用完整的MCP功能，请运行: pip install mcp")
+    print('要使用完整的MCP功能，请运行: pip install "mcp>=1.0.0,<2"')
     print("=" * 50)
     
     downloader = PRTSCharacterDownloader()
