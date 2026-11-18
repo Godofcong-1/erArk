@@ -103,7 +103,23 @@ def finish():
     for name in KNOWN:
         print("  ~", name)
     sys.stdout.flush()
+    remove_test_map_cache()
     os._exit(0 if not FAIL else 1)
+
+
+def remove_test_map_cache():
+    """
+    删掉指定语言启动时建在临时目录里的地图预处理文件（没有指定语言时什么都不做）
+    Keyword arguments:
+    无
+    Return arguments:
+    无
+    """
+    cache_dir = globals().get("_TEST_MAP_CACHE_DIR", "")
+    if cache_dir and os.path.isdir(cache_dir):
+        import shutil
+
+        shutil.rmtree(cache_dir, ignore_errors=True)
 
 
 # ==== 1. 初始化链（照 game.py 的顺序，顺序不能乱） ====
@@ -113,12 +129,30 @@ from Script.Core import game_type, cache_control  # noqa: E402
 
 cache_control.cache = game_type.Cache()  # 必须在 game_config.init() 之前
 normal_config.init_normal_config()
+TEST_LANGUAGE = os.environ.get("ERARK_TEST_LANGUAGE", "")
+""" 让本进程的游戏在指定语言下启动（en_US / ko_KR），空串表示照 config.ini。
+    测试文件在 `from _bootstrap import *` 之前写 `os.environ["ERARK_TEST_LANGUAGE"] = "en_US"`；
+    必须在导入 get_text 之前生效（它在导入时就按这个语言建好翻译链，配置表的名字随后在载入时被翻译） """
+if TEST_LANGUAGE:
+    normal_config.config_normal.language = TEST_LANGUAGE
 from Script.Config import game_config, character_config  # noqa: E402
 
 game_config.init()
 character_config.init_character_tem_data()
 from Script.Config import map_config  # noqa: E402
 
+_TEST_MAP_CACHE_DIR = ""
+""" 指定语言启动时地图预处理文件所在的临时目录，进程结束前删掉 """
+if TEST_LANGUAGE:
+    # 地图预处理文件（场景名、地图名）是按构建时的语言翻译好再存盘的：换语言启动时改到临时目录里重建，
+    #    既能得到这种语言下真实的场景数据，也不会改写仓库 data/ 下按当前语言建好的那几份
+    import tempfile  # noqa: E402
+    from Script.Design import map_handle as _map_handle_for_cache  # noqa: E402
+
+    _TEST_MAP_CACHE_DIR = tempfile.mkdtemp(prefix="erArk_test_map_")
+    for _path_name in ("scene_path_edge_path", "all_scene_data_path", "all_place_data_path", "all_map_data_path"):
+        setattr(map_config, _path_name, os.path.join(_TEST_MAP_CACHE_DIR, os.path.basename(getattr(map_config, _path_name))))
+    _map_handle_for_cache.scene_path_edge_path = map_config.scene_path_edge_path
 map_config.init_map_data()
 from Script.Design import (  # noqa: E402
     attr_calculation,
@@ -470,6 +504,7 @@ def _exit_on_exception(exc_type, exc_value, exc_traceback):
     traceback.print_exception(exc_type, exc_value, exc_traceback)
     print("\nPASS={0} FAIL={1} (crashed)".format(PASS, len(FAIL) + 1))
     sys.stdout.flush()
+    remove_test_map_cache()
     os._exit(2)
 
 
