@@ -19,7 +19,7 @@ description: 在不启动图形界面的情况下无头运行 erArk：加载游�
 ## 铁律（每条都是踩过的坑）
 
 1. **必须用 `./.conda/python.exe`**，裸 `python` 是 Windows 商店空壳别名（exit 49、无任何输出）。
-2. **外层必须加 `timeout N`**（bash 的 timeout 命令）。游戏导入链（Flask/SocketIO 等）会启动非守护线程，**测试跑完后进程也不会自行退出**——`EXIT=124` 且结果已全部打印 = 正常结束，不是测试失败。也可在脚本末尾 `os._exit(0)` 主动退出。
+2. **外层必须加 `timeout N`**（bash 的 timeout 命令）。面板循环、等待输入这类流程一旦退不出来，脚本会一直挂着；timeout 是兜底。脚本正常跑完时进程会自己退出（旧版在导入链里有一个永不结束的指令处理线程，跑完也不退，已删除）。`EXIT=124` 表示超时被杀：先看结果是否已全部打印，没打印完就是卡在了某个循环里。建议脚本末尾仍用 `os._exit(0 if not FAIL else 1)` 给出明确的退出码。
 3. **加 `-u` 取消缓冲**，且脚本开头 `sys.stdout.reconfigure(encoding='utf-8', errors='replace')`（Windows 控制台是 GBK，中文会乱码/报错）。
 4. **绝不用 `| tail` / `| head` 观察可能长时间运行的进程**。管道会攒住全部输出直到进程结束，看起来和「卡死」一模一样——包括 `buildconfig.py`、`tools/lint_target_csv.py` 这类跑几分钟的脚本，以及所有 harness。正确做法是**重定向到文件再读**：
    ```bash
@@ -428,7 +428,7 @@ timeout 300 ./.conda/python.exe -u "<scratchpad>/my_test.py" > "$LOG" 2>&1
 echo "EXIT=$?"; tail -40 "$LOG"
 ```
 
-`EXIT=124` 但结果已打印完整 = 正常（残留的 Flask 非守护线程被 timeout 回收）；想要干净的 0/1 退出码，就在脚本末尾 `os._exit(0 if not FAIL else 1)`。
+`EXIT=124` 表示被 timeout 杀掉：结果已打印完整说明是收尾阶段还有线程没结束，没打印完整说明卡在了某个循环里；想要明确的 0/1 退出码，就在脚本末尾 `os._exit(0 if not FAIL else 1)`。
 
 **读中文输出**：Git Bash 的 `cat`/`grep` 在 GBK 控制台下会把中文显示成乱码（文件本身没问题）。要看清楚就转一道：
 

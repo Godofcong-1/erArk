@@ -1,10 +1,7 @@
-import time
-import queue
 import datetime
 from functools import wraps
 from typing import Set, List, Optional, Union
 from types import FunctionType
-from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, flow_handle
 from Script.Design import handle_ability, update, map_handle, character_behavior, instuct_judege, handle_npc_ai_in_h, handle_premise, game_time
 from Script.UI.Panel import achievement_panel, normal_panel
@@ -17,23 +14,6 @@ _: FunctionType = get_text._
 """ 翻译api """
 width: int = normal_config.config_normal.text_width
 """ 屏幕宽度 """
-instruct_queue = queue.Queue()
-""" 待处理的指令队列 """
-
-
-def init_instruct_handle_thread():
-    """初始化指令处理线程"""
-    while 1:
-        if not instruct_queue.empty():
-            instruct_queue.get()
-            # 注释掉自动存档机制来解决卡顿问题
-            # save_handle.establish_save("auto")
-        time.sleep(1)
-
-
-instruct_handle_thread = Thread(target=init_instruct_handle_thread)
-""" 指令处理线程 """
-instruct_handle_thread.start()
 
 
 def handle_instruct(instruct: str):
@@ -42,7 +22,6 @@ def handle_instruct(instruct: str):
     Keyword arguments:
     instruct -- 指令id（字符串）
     """
-    instruct_queue.put(instruct)
     if instruct in constant.instruct_premise_data:
         constant.handle_instruct_data[instruct]()
 

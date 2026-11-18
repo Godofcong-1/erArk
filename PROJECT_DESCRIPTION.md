@@ -593,7 +593,7 @@ init_character_behavior()
 - 分类：`InstructCategory`（系统面板/角色交互/角色交互面板）、`InteractionMajorType` / `InteractionMinorType`（Web 新模式身体部位分类）
 - 显示与过滤：`Script/UI/Panel/instruct_filter_panel.py`、`Script/System/Instruct_System/see_instruct_panel.py`
 - 实行判定：`Script/Design/instuct_judege.py`；`InstructJudge.csv` 定义实行值判定
-- 调度：`handle_instruct()` 将指令放入 `instruct_queue`，若存在 `constant.instruct_premise_data` 映射则调用对应 `constant.handle_instruct_data` 函数
+- 调度：`handle_instruct()` 在 `constant.instruct_premise_data` 里有该指令时调用对应的 `constant.handle_instruct_data` 函数
 - 执行后行为写入 `character_data.behavior.behavior_id`，由主行为循环结算
 
 ---
