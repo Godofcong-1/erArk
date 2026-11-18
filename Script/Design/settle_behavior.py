@@ -719,13 +719,13 @@ def extra_exp_settle(
             base_chara_experience_common_settle(character_id, 35, target_flag=True, change_data=change_data)
 
 
-def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: list, change_data: game_type.CharacterStatusChange = game_type.CharacterStatusChange()) -> int:
+def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: list, change_data: game_type.CharacterStatusChange) -> int:
     """
     综合型基础数值结算
     Keyword arguments:
     character_id -- 角色id
     effect_all_value_list -- 结算的各项数值
-    change_data -- 结算信息记录对象
+    change_data -- 结算信息记录对象（必填：若给它一个默认值，那是定义函数时建好的同一个对象，没传的各次调用会把变化记进同一份记录）
     Return arguments:
     bool -- 是否结算成功
     """
