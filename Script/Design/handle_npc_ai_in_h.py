@@ -15,6 +15,7 @@ from Script.Design import (
     character_behavior,
     attr_calculation,
     map_handle,
+    game_time,
 )
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
@@ -161,9 +162,9 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
         character_data.behavior.start_time = pl_start_time
         character_data.behavior.duration = pl_character_data.behavior.duration
         character_data.target_character_id = character_id
-        # 防止行为的时间为0
+        # 防止行为的时间为0（按可游玩时间算，玩家这一步跨季末午夜时不把被跳过的月份算进去）
         if character_data.behavior.duration == 0:
-            past_time = int((cache.game_time.timestamp() - pl_start_time.timestamp()) / 60)
+            past_time = int(game_time.count_play_second(pl_start_time, cache.game_time) / 60)
             past_time = max(1, past_time)
             character_data.behavior.duration = past_time
 

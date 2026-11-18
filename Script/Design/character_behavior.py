@@ -308,11 +308,12 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
             end_time = now_time
     # print(f"debug {character_data.name}的end_time = {end_time}")
     time_judge = game_time.judge_date_big_or_small(now_time, end_time)
-    add_time = (end_time.timestamp() - start_time.timestamp()) / 60
+    add_time = game_time.count_play_second(start_time, end_time) / 60
     # if character_data.name == "阿米娅":
     #     print(f"debug {character_data.name}的time_judge = {time_judge}，add_time = {add_time}")
     # 如果本次行动的持续时间为0或负数（负数见于状态机算出的异常时长，需在此拦截以保证时间前进）
-    if add_time <= 0:
+    # 时长本身为负时要单独判：get_sub_date 在季月 1 日附近往回推会把结束时间归并到未来（12/1 00:05 减 10 分钟 → 12/30 23:55），算出的 add_time 反而是正的
+    if add_time <= 0 or character_data.behavior.duration < 0:
         # 如果是H状态，则直接可以跳出
         if handle_premise.handle_self_is_h(character_id):
             character_data.behavior.start_time = now_time

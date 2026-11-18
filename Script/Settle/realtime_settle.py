@@ -158,9 +158,9 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
 
         # 非H模式下结算玩家的射精值减少
         if not now_character_data.sp_flag.is_h:
-            # 上次射精时间距离现在超过30分钟则射精值减少
+            # 上次射精时间距离现在超过30分钟则射精值减少（按可游玩时间算，跨季末午夜时不把被跳过的月份算进去）
             last_time = now_character_data.action_info.last_eaj_add_time
-            if (cache.game_time - last_time) > datetime.timedelta(minutes=30):
+            if game_time.count_play_second(last_time, cache.game_time) > 30 * 60:
                 new_eja = max(now_character_data.eja_point - int(true_add_time * 10), 0)
                 now_character_data.eja_point = new_eja
 
@@ -259,7 +259,8 @@ def get_true_add_time(character_id: int, now_time: datetime.datetime, pl_start_t
     now_character_end_time = game_time.get_sub_date(minute=add_time, old_date=now_character_behavior_start_time)
     true_end_time = min(now_character_end_time, now_time)
     # 真实的行动时间是真实的结束时间减去真实的开始时间
-    true_add_time = int((true_end_time.timestamp() - true_start_time.timestamp()) / 60)
+    # 按可游玩时间算：两个时刻直接相减是公历时长，季末那一夜跨午夜的行为会多算被跳过的约两个月（睡 8 小时算成约 8.8 万分钟）
+    true_add_time = int(game_time.count_play_second(true_start_time, true_end_time) / 60)
     # 避免负数
     true_add_time = max(true_add_time, 0)
     return true_add_time

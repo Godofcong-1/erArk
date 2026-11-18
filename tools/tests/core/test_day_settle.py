@@ -405,6 +405,143 @@ pl.behavior.duration = 0
 pl.hit_point_max = pl.hit_point = 100
 pl.mana_point_max = pl.mana_point = 100
 
+# ==== 6.2 锁定修复：实时结算与等待类时长跨季末午夜 ====
+section("锁定修复：实时结算与等待类时长跨季末午夜时按时钟上实际经过的时间算")
+SEASON_LAST_NIGHT = datetime.datetime(2026, 9, 30, 22, 0)
+""" 秋季最后一天的 22:00 """
+SEASON_FIRST_MORNING = datetime.datetime(2026, 12, 1, 6, 0)
+""" 冬季第一天的 06:00：时钟上是 SEASON_LAST_NIGHT 的 8 小时之后 """
+check("fixture：季末 22:00 起的 8 小时，结束在下一个季月 1 日 06:00", game_time.get_sub_date(minute=480, old_date=SEASON_LAST_NIGHT) == SEASON_FIRST_MORNING)
+pl.behavior.behavior_id = constant.Behavior.SLEEP
+pl.behavior.start_time = SEASON_LAST_NIGHT
+pl.behavior.duration = 480
+check("实时结算的真实经过时间：季末那一夜睡 8 小时计 480 分钟，不是约 8.8 万分钟", realtime_settle.get_true_add_time(0, SEASON_FIRST_MORNING, SEASON_LAST_NIGHT) == 480,
+      realtime_settle.get_true_add_time(0, SEASON_FIRST_MORNING, SEASON_LAST_NIGHT))
+
+
+def eja_point_after(eja_time: datetime.datetime, now_time: datetime.datetime) -> int:
+    """
+    让玩家在 eja_time 射精后发呆到 now_time，做一次实时结算，返回结算后的射精值
+    Keyword arguments:
+    eja_time -- 上次射精的时间（同时是这段发呆的开始时间）
+    now_time -- 结算时的游戏时间
+    Return arguments:
+    int -- 结算后的射精值（结算前固定为 5000）
+    """
+    cache.game_time = now_time
+    pl.sp_flag.is_h = False
+    pl.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+    pl.behavior.start_time = eja_time
+    pl.behavior.duration = max(1, int(game_time.count_play_second(eja_time, now_time) / 60))
+    pl.action_info.last_eaj_add_time = eja_time
+    pl.eja_point = 5000
+    realtime_settle.character_aotu_change_value(0, now_time, eja_time)
+    return pl.eja_point
+
+
+check("对照：同一天内射精后 15 分钟仍在冷却、射精值不回落；45 分钟后回落",
+      eja_point_after(datetime.datetime(2026, 9, 15, 12, 0), datetime.datetime(2026, 9, 15, 12, 15)) == 5000
+      and eja_point_after(datetime.datetime(2026, 9, 15, 12, 0), datetime.datetime(2026, 9, 15, 12, 45)) == 5000 - 450)
+eja_cross_season = eja_point_after(datetime.datetime(2026, 9, 30, 23, 55), datetime.datetime(2026, 12, 1, 0, 10))
+check("季末 23:55 射精、下一个季月 00:10 结算（时钟上只过了 15 分钟）：仍在 30 分钟冷却内，射精值不回落", eja_cross_season == 5000, eja_cross_season)
+set_time(DEFAULT_TIME)
+pl.eja_point = 0
+pl.behavior = game_type.Behavior()
+pl.behavior.start_time = DEFAULT_TIME
+
+from Script.Design import character_behavior, handle_npc_ai_in_h, update as update_module  # noqa: E402
+from Script.Settle import default as settle_default  # noqa: E402
+
+WAIT_NPC_ID = 9301
+""" 本段用的干员 fixture：与玩家同处一室 """
+wait_npc = make_character(WAIT_NPC_ID, "换季等待测试干员", position=pl.position)
+
+# H 中 / 木头人的干员：行动锁成等待，时长补成「玩家这一步的长度」
+wait_npc.hypnosis.blockhead = True
+pl.behavior = game_type.Behavior()
+cache.game_time = datetime.datetime(2026, 12, 1, 0, 10)
+wait_npc.behavior = game_type.Behavior()
+handle_npc_ai_in_h.judge_character_h_obscenity_unconscious(WAIT_NPC_ID, datetime.datetime(2026, 9, 30, 23, 50))
+check("木头人干员的等待时长 = 玩家这一步的长度：季末 23:50 → 下一个季月 00:10 是 20 分钟",
+      wait_npc.behavior.behavior_id == constant.Behavior.WAIT and wait_npc.behavior.duration == 20, (wait_npc.behavior.behavior_id, wait_npc.behavior.duration))
+wait_npc.hypnosis.blockhead = False
+
+# 「等待至对方行动结束」两个结算效果（事件选项在用）
+flow_call_list = []
+""" 时间推进入口被调用时传入的分钟数 """
+_real_game_update_flow = update_module.game_update_flow
+update_module.game_update_flow = lambda add_time: flow_call_list.append(add_time)
+
+
+def player_wait_target(target_start: datetime.datetime, target_duration: int, now_time: datetime.datetime) -> tuple:
+    """
+    结算「玩家等待至交互对象行动结束」：交互对象从 target_start 起做 target_duration 分钟的事，玩家在 now_time 开始等
+    Keyword arguments:
+    target_start -- 交互对象行动的开始时间
+    target_duration -- 交互对象行动的时长（分钟）
+    now_time -- 结算时间
+    Return arguments:
+    tuple -- (玩家行为id, 玩家行为时长, 时间推进入口收到的分钟数列表)
+    """
+    flow_call_list.clear()
+    pl.behavior = game_type.Behavior()
+    pl.behavior.behavior_id = constant.Behavior.CHAT
+    pl.behavior.duration = 5
+    pl.target_character_id = WAIT_NPC_ID
+    wait_npc.behavior.start_time = target_start
+    wait_npc.behavior.duration = target_duration
+    settle_default.handle_wait_unitl_traget_action_end(0, 1, game_type.CharacterStatusChange(), now_time)
+    return pl.behavior.behavior_id, pl.behavior.duration, list(flow_call_list)
+
+
+def npc_wait_player(player_start: datetime.datetime, player_duration: int, now_time: datetime.datetime) -> int:
+    """
+    结算「自己等待至玩家行动结束」：玩家从 player_start 起做 player_duration 分钟的事，干员在 now_time 开始等
+    Keyword arguments:
+    player_start -- 玩家行动的开始时间
+    player_duration -- 玩家行动的时长（分钟）
+    now_time -- 结算时间
+    Return arguments:
+    int -- 干员的等待时长（分钟）
+    """
+    pl.behavior.start_time = player_start
+    pl.behavior.duration = player_duration
+    wait_npc.behavior = game_type.Behavior()
+    settle_default.handle_wait_unitl_player_action_end(WAIT_NPC_ID, 1, game_type.CharacterStatusChange(), now_time)
+    return wait_npc.behavior.duration
+
+
+try:
+    wait_result = player_wait_target(datetime.datetime(2026, 9, 15, 12, 0), 60, datetime.datetime(2026, 9, 15, 12, 10))
+    check("对照：对方 12:00 起做 60 分钟，玩家 12:10 开始等 → 等 50 分钟", wait_result == (constant.Behavior.WAIT, 50, [50]), wait_result)
+    wait_result = player_wait_target(datetime.datetime(2026, 9, 30, 23, 30), 60, datetime.datetime(2026, 9, 30, 23, 40))
+    check("对方的行动跨季末午夜（23:30 起 60 分钟），玩家 23:40 开始等 → 等 50 分钟", wait_result == (constant.Behavior.WAIT, 50, [50]), wait_result)
+    wait_result = player_wait_target(datetime.datetime(2026, 12, 1, 0, 0), 5, datetime.datetime(2026, 12, 1, 0, 10))
+    check("对方的行动已经结束时不等待：玩家的行为不变，也不拿负数去推进时间", wait_result == (constant.Behavior.CHAT, 5, []), wait_result)
+    check("对照：玩家 12:00 起做 60 分钟，干员 12:10 开始等 → 等 51 分钟", npc_wait_player(datetime.datetime(2026, 9, 15, 12, 0), 60, datetime.datetime(2026, 9, 15, 12, 10)) == 51)
+    npc_wait = npc_wait_player(datetime.datetime(2026, 9, 30, 23, 30), 60, datetime.datetime(2026, 9, 30, 23, 40))
+    check("玩家的行动跨季末午夜（23:30 起 60 分钟），干员 23:40 开始等 → 等 51 分钟", npc_wait == 51, npc_wait)
+    npc_wait = npc_wait_player(datetime.datetime(2026, 12, 1, 0, 0), 5, datetime.datetime(2026, 12, 1, 0, 10))
+    check("玩家的行动已经结束时，干员的等待时长至少 1 分钟（不出现 0 或负数时长）", npc_wait == 1, npc_wait)
+finally:
+    update_module.game_update_flow = _real_game_update_flow
+
+# 负时长的行为：必须被行为循环拦下并重置，否则在季月 1 日附近它的结束时间会被归并到月底
+wait_npc.behavior = game_type.Behavior()
+wait_npc.behavior.behavior_id = constant.Behavior.WAIT
+wait_npc.behavior.start_time = datetime.datetime(2026, 12, 1, 0, 5)
+wait_npc.behavior.duration = -10
+wait_npc.target_character_id = WAIT_NPC_ID
+wait_npc.sp_flag.is_h = False
+time_over_result = character_behavior.judge_character_status_time_over(WAIT_NPC_ID, datetime.datetime(2026, 12, 1, 0, 5))
+check("季月 1 日 00:05 开始、时长 -10 分钟的异常行为：被拦下并重置为从当前时间起的 1 分钟空闲",
+      time_over_result == 0 and wait_npc.behavior.duration == 1 and wait_npc.behavior.start_time == datetime.datetime(2026, 12, 1, 0, 5),
+      (time_over_result, wait_npc.behavior.duration, wait_npc.behavior.start_time))
+remove_character(WAIT_NPC_ID)
+pl.target_character_id = 0
+pl.behavior = game_type.Behavior()
+set_time(DEFAULT_TIME)
+
 # ==== 7. 写盘守卫 ====
 section("本文件没有写存档")
 check("自动存档之外没有任何 establish_save 调用", save_call_list == ["auto"], save_call_list)

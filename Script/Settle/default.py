@@ -2584,8 +2584,11 @@ def handle_wait_unitl_traget_action_end(
         return
     target_start_time = target_character_data.behavior.start_time
     target_end_time = game_time.get_sub_date(target_character_data.behavior.duration, old_date=target_start_time)
-    # 到结束时间还有多少分钟
-    add_time = int((target_end_time.timestamp() - now_time.timestamp()) / 60)
+    # 到结束时间还有多少分钟（按可游玩时间算，对方的行动跨季末午夜时不把被跳过的月份算进去）
+    add_time = int(game_time.count_play_second(now_time, target_end_time) / 60)
+    # 对方的行动已经结束时不必等待：负数时长传给时间推进会让时钟倒退，在季月 1 日附近倒退后还会被归并到约一个月之后
+    if add_time <= 0:
+        return
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.state = constant.CharacterStatus.STATUS_WAIT
@@ -2616,11 +2619,12 @@ def handle_wait_unitl_player_action_end(
         return
     player_action_start_time = pl_character_data.behavior.start_time
     player_action_end_time = game_time.get_sub_date(pl_character_data.behavior.duration, old_date=player_action_start_time)
-    # 到结束时间还有多少分钟
-    add_time = int((player_action_end_time.timestamp() - now_time.timestamp()) / 60)
+    # 到结束时间还有多少分钟（按可游玩时间算，玩家的行动跨季末午夜时不把被跳过的月份算进去）
+    add_time = int(game_time.count_play_second(now_time, player_action_end_time) / 60)
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.state = constant.CharacterStatus.STATUS_WAIT
-    character_data.behavior.duration = add_time + 1
+    # 玩家的行动已经结束时至少等 1 分钟，不留下 0 或负数的行为时长
+    character_data.behavior.duration = max(1, add_time + 1)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SET_TARGET_FOOD_FROM_BAG_LAST)
