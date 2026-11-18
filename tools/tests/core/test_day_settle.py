@@ -356,6 +356,45 @@ cost_1500 = settle_long_behavior(1500)
 check("一天以上（1500 分钟）：按完整的 1500 分钟结算，不是只算不满一天的 60 分钟", cost_1500[:2] == (4500, 9000), cost_1500)
 cost_neg = settle_long_behavior(-5)
 check("结算时刻早于开始时间：不结算（不会把 -5 分钟当成 1435 分钟）", cost_neg == (0, 0, 0), cost_neg)
+
+# ==== 6.1 锁定修复：行为跨季末午夜 ====
+section("锁定修复：行为跨季末午夜时，结算时长不把被时钟跳过的月份算进去")
+SEASON_END_START_LIST = [
+    datetime.datetime(2026, 9, 30, 23, 40),
+    datetime.datetime(2026, 12, 31, 23, 40),
+    datetime.datetime(2027, 3, 31, 23, 40),
+    datetime.datetime(2027, 6, 30, 23, 40),
+    datetime.datetime(2027, 12, 31, 23, 40),
+]
+""" 各季月最后一天的 23:40：从这里开始的 30 分钟行为会跨过季末午夜（最后一项跨的是含闰年二月的那次换季） """
+
+
+def settle_behavior_from(start_time: datetime.datetime, minute: int) -> tuple:
+    """
+    让玩家从 start_time 起做 minute 分钟的饭，按行为循环的算法（开始时间 + 时长，见 character_behavior.judge_character_status）取结算时刻并结算
+    Keyword arguments:
+    start_time -- 行为开始时间
+    minute -- 行为时长（分钟）
+    Return arguments:
+    tuple -- (结算时刻, 体力减少量, 气力减少量)
+    """
+    pl.hit_point_max = pl.hit_point = 10 ** 7
+    pl.mana_point_max = pl.mana_point = 10 ** 7
+    pl.target_character_id = 0
+    pl.behavior.behavior_id = LONG_BEHAVIOR_ID
+    pl.behavior.duration = minute
+    pl.behavior.start_time = start_time
+    pl.behavior.target_food = LONG_FOOD
+    end_time = game_time.get_sub_date(minute=minute, old_date=start_time)
+    settle_behavior.handle_settle_behavior(0, end_time)
+    return end_time, 10 ** 7 - pl.hit_point, 10 ** 7 - pl.mana_point
+
+
+season_cost_list = [settle_behavior_from(now_start, 30) for now_start in SEASON_END_START_LIST]
+check("fixture：这些行为的结束时刻都被季月归并到下一个季月 1 日 00:10", all(now_cost[0].day == 1 and now_cost[0].month in (3, 6, 9, 12) and (now_cost[0].hour, now_cost[0].minute) == (0, 10)
+      for now_cost in season_cost_list), [now_cost[0] for now_cost in season_cost_list])
+check("季末 23:40 起做 30 分钟饭：按 30 分钟结算（体力 90、气力 180），不是按公历差的约 8.8 万分钟", all(now_cost[1:] == (90, 180) for now_cost in season_cost_list),
+      [now_cost[1:] for now_cost in season_cost_list])
 settle_behavior.second_behavior.check_second_effect = _real_check_second_effect
 pl.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
 pl.behavior.duration = 1500

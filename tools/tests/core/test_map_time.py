@@ -798,6 +798,32 @@ bad = [k for k, now_time in enumerate(daily_walk) if game_time.count_play_day(da
 check("count_play_day：时钟每走一天计 1 天（被跳过的月份不算）", not bad, bad[:10])
 check("count_play_day：结束早于开始为 0", game_time.count_play_day(T(2026, 9, 8), T(2026, 9, 7)) == 0)
 check("count_day_for_datetime 按日历天数（含被跳过的月份）", game_time.count_day_for_datetime(T(2026, 9, 30), T(2026, 12, 1)) == 62)
+bad = [k for k, now_time in enumerate(daily_walk) if game_time.count_play_second(daily_walk[0], now_time) != k * 86400]
+check("count_play_second：时钟每走一天计 86400 秒（被跳过的月份不算）", not bad, bad[:10])
+SEASON_EDGE_LIST = [
+    (T(2026, 9, 30, 23, 50), T(2026, 12, 1, 0, 10)),
+    (T(2026, 12, 31, 23, 50), T(2027, 3, 1, 0, 10)),
+    (T(2027, 3, 31, 23, 50), T(2027, 6, 1, 0, 10)),
+    (T(2027, 6, 30, 23, 50), T(2027, 9, 1, 0, 10)),
+    (T(2027, 12, 31, 23, 50), T(2028, 3, 1, 0, 10)),
+]
+""" 时钟跨四个季末午夜的 20 分钟（季末 23:50 → 下一个季月 1 日 00:10），最后一组跨的是含闰年二月的那次换季 """
+check("fixture：这些时刻对就是时钟从季末 23:50 走 20 分钟的结果", all(game_time.get_sub_date(minute=20, old_date=edge[0]) == edge[1] for edge in SEASON_EDGE_LIST))
+check("count_play_second：跨季末午夜的 20 分钟计 1200 秒，不含被跳过的约两个月", [game_time.count_play_second(*edge) for edge in SEASON_EDGE_LIST] == [1200] * 5,
+      [game_time.count_play_second(*edge) for edge in SEASON_EDGE_LIST])
+check("count_play_second：有符号，结束早于开始时为负", [game_time.count_play_second(edge[1], edge[0]) for edge in SEASON_EDGE_LIST] == [-1200] * 5
+      and game_time.count_play_second(T(2026, 9, 8, 9, 0), T(2026, 9, 7, 9, 0)) == -86400)
+check("count_play_second：季月内与公历时长相同（含秒）", game_time.count_play_second(T(2026, 9, 7, 9, 0, 15), T(2026, 9, 9, 10, 30, 45)) == 2 * 86400 + 5430)
+check("count_play_second：落在被跳过月份里的时刻按其后第一个季月的 1 日 0 点算", game_time.count_play_second(T(2026, 10, 15, 8, 0), T(2026, 12, 1)) == 0
+      and game_time.count_play_second(T(2026, 9, 30), T(2026, 11, 3, 12, 0)) == 86400 and game_time.count_play_second(T(2026, 1, 20), T(2026, 3, 2)) == 86400)
+random.seed(20260930)
+bad = []
+for _sample in range(3000):
+    time_a = T(2025, 1, 1) + datetime.timedelta(minutes=random.randint(0, 6 * 365 * 1440))
+    time_b = T(2025, 1, 1) + datetime.timedelta(minutes=random.randint(0, 6 * 365 * 1440))
+    if game_time.count_play_day(time_a, time_b) != max(0, int(game_time.count_play_second(time_a, time_b) // 86400)):
+        bad.append((time_a, time_b, game_time.count_play_day(time_a, time_b), game_time.count_play_second(time_a, time_b)))
+check("count_play_second 与 count_play_day 口径一致：任意两个时刻（含落在被跳过月份里的）整天数相同", not bad, bad[:5])
 bad = []
 prev_date = None
 for day in range(0, 200):

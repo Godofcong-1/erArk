@@ -322,6 +322,49 @@ def count_play_day(
     return max(0, int((total_second - skip_second) // 86400))
 
 
+PLAY_DAY_PER_YEAR = 122
+""" 一个游戏年的可游玩天数：四个季月的公历天数之和（3月31 + 6月30 + 9月30 + 12月31） """
+SEASON_MONTH_PLAY_DAY_OFFSET = {3: 0, 6: 31, 9: 61, 12: 91}
+""" 各季月的 1 日是游戏年里的第几个可游玩日（从 0 起） """
+
+
+def get_play_second_stamp(date: datetime.datetime) -> float:
+    """
+    把一个时刻换算成游戏时钟上连续的秒数（只用于两个时刻相减）
+    Keyword arguments:
+    date -- 时刻
+    Return arguments:
+    float -- 自公元 0 年起、只数可游玩时间的秒数
+    功能: 游戏时钟只走 3 / 6 / 9 / 12 四个季月，季月最后一天的下一刻就是下一个季月的 1 日 0 点。
+          这里把时钟能走到的时刻排成一条连续的轴：年 × 122 天 + 季月起始日序 + 月内日序，再加当日已过的秒数；
+          落在被跳过月份里的时刻时钟永远走不到，按其后第一个季月的 1 日 0 点算
+    """
+    season_month = get_season_month(date.month)
+    play_day = date.year * PLAY_DAY_PER_YEAR + SEASON_MONTH_PLAY_DAY_OFFSET[season_month]
+    if season_month != date.month:
+        return play_day * 86400.0
+    play_day += date.day - 1
+    return play_day * 86400.0 + date.hour * 3600 + date.minute * 60 + date.second + date.microsecond / 1000000
+
+
+def count_play_second(
+        start_date: datetime.datetime,
+        end_date: datetime.datetime,
+) -> float:
+    """
+    计算两个时间之间经过的可游玩秒数（不含被时钟跳过的非季月）
+    Keyword arguments:
+    start_date -- 开始时间
+    end_date -- 结束时间
+    Return arguments:
+    float -- 经过的可游玩秒数，结束早于开始时为负数（要不要夹到 0 由调用方决定）
+    功能: 两个时刻直接相减得到的是公历时长，一次换季会多出约两个月（如 9/30 23:50 → 12/1 00:10 是 61 天零 20 分钟，时钟上只过了 20 分钟）。
+          凡是语义为「游戏里实际过了多久」的分钟级、小时级时长都应该用本函数；整天数用 count_play_day。
+          孕期、成长、孵化等有意按公历天设定的阈值不走这里（见 count_day_for_datetime）
+    """
+    return get_play_second_stamp(end_date) - get_play_second_stamp(start_date)
+
+
 def judge_date_big_or_small(time_a: datetime.datetime, time_b: datetime.datetime) -> int:
     """
     比较a时间是否大于或等于b时间\n
