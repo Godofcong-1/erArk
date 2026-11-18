@@ -7543,13 +7543,15 @@ def handle_read_add_adjust(
             character_data.entertainment.read_book_progress[book_id] = 100
             # 如果是技能书籍，则增加对应技能的经验
             if exp_id != 0:
-                if book_difficulty == 1:
+                # 读完奖励按难度：0 加 5、1 加 10、2 加 20、其余加 40
+                # （此前第一个分支把「难度 0」写成了「难度 1」，难度 1 的书只加 5，写着加 10 的分支永远走不到）
+                if book_difficulty == 0:
                     add_value = 5
                 elif book_difficulty == 1:
                     add_value = 10
                 elif book_difficulty == 2:
                     add_value = 20
-                elif book_difficulty == 3:
+                else:
                     add_value = 40
                 base_chara_experience_common_settle(character_id, exp_id, add_value, change_data = change_data)
             # 结算习得
