@@ -1764,7 +1764,7 @@ def handle_add_large_lead(
     change_data: game_type.CharacterStatusChange,
 ):
     """
-    增加大量先导（受虐补正）
+    增加大量先导（施虐补正）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -1773,7 +1773,8 @@ def handle_add_large_lead(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-    base_chara_state_common_settle(character_id, 0, 14, 1000, ability_level = character_data.ability[25], tenths_add = False, change_data = change_data)
+    # 35 为施虐能力
+    base_chara_state_common_settle(character_id, 0, 14, 1000, ability_level = character_data.ability[35], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_SUBMIT)
 def handle_add_large_submit(

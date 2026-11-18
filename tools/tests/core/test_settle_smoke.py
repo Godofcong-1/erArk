@@ -56,16 +56,10 @@ CHILD_ADV = {adv for adv, tem in character_config.character_tem_list.items() if 
 """ 规则一：模板带未成年 / 成长阶段素质的角色 adv_id """
 # 规则二：未被任何行为 / 事件引用的死代码结算器（真实游戏走不到），若在某个方向上抛异常，在下面逐条登记为「潜在缺陷」，
 #    只要它仍未被引用就汇成一条 known_issue（不算失败、但在 run_all 汇总里列出）；一旦数据里挂上了它，登记自动失效，照常断言。
-LATENT_UNREFERENCED = {
-    # 645 WEAR_CLOTH_OFF_MOST → clothing.get_cloth_wear_zero_except_need 没有其他换装函数都有的 `if character_id:` 守卫，
-    #    对玩家调用时走进 chara_special_wear_cloth(0)，后者只在 character_id 非 0 时定义 return_list → UnboundLocalError（clothing.py:650）
-    ("first", 645, "PL"): "未被引用；对玩家调用时 chara_special_wear_cloth(0) 的 return_list 未定义",
-    # 293 ADD_LARGE_LEAD（增加大量先导，受虐补正）读 ability[25]，Ability.csv 里没有 25 号能力 → KeyError（Second_effect.py:1776）
-    ("second", 293, "PL_SELF"): "未被引用；读取不存在的能力 ability[25]",
-    ("second", 293, "NPC_SELF"): "未被引用；读取不存在的能力 ability[25]",
-    ("second", 293, "NPC_TC"): "未被引用；读取不存在的能力 ability[25]",
-}
-""" (注册表名, 效果id, 方向) → 理由；注册表名为 first / second / cve """
+LATENT_UNREFERENCED = {}
+""" (注册表名, 效果id, 方向) → 理由；注册表名为 first / second / cve。
+本文件首轮扫出的 645 WEAR_CLOTH_OFF_MOST（对玩家调用时 chara_special_wear_cloth(0) 的 return_list 未定义）、
+二段 293 ADD_LARGE_LEAD（读取不存在的能力 ability[25]，已改为施虐 ability[35]）已于 2026-11-18 修好并移出 """
 LATENT_HITS = []
 """ 扫描中实际撞上的已登记潜在缺陷，最后汇成一条 known_issue """
 # 已确认、真实游戏可达的缺陷：按异常特征归组，每组单独一条断言（现在是失败的），扫描的总断言里不再重复计它们，
@@ -800,9 +794,9 @@ section("已确认的游戏缺陷与死代码里的潜在缺陷")
 for _title, _signature in CONFIRMED_BUGS:
     check(_title, not BUG_HITS[_title], f"撞上 {len(BUG_HITS[_title])} 次：" + " | ".join(BUG_HITS[_title][:20]))
 _latent_expected = sorted(f"{name}/{mode} {key}" for name, key, mode in LATENT_UNREFERENCED)
-known_issue("未被引用的死代码结算器在全部方向上都不抛异常", not LATENT_HITS,
-            "645 WEAR_CLOTH_OFF_MOST 对玩家调用时 chara_special_wear_cloth(0) 的 return_list 未定义；二段 293 ADD_LARGE_LEAD 读不存在的 ability[25]；"
-            "两者都没有任何行为 / 事件引用，修（补守卫 / 改能力id）还是删由维护者定", " | ".join(LATENT_HITS))
+if LATENT_UNREFERENCED:
+    known_issue("未被引用的死代码结算器在全部方向上都不抛异常", not LATENT_HITS,
+                "登记在 LATENT_UNREFERENCED 里的结算器没有任何行为 / 事件引用，修还是删由维护者定", " | ".join(LATENT_HITS))
 for _stale in [line for line in _latent_expected if not any(hit.startswith(line.split(" ")[0] + " " + line.split(" ")[1] + " ") for hit in LATENT_HITS)]:
     print(f"  （登记的潜在缺陷 {_stale} 已不再复现：把它从 LATENT_UNREFERENCED 里删掉，免得掩盖别的问题）")
 
