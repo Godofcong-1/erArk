@@ -785,9 +785,8 @@ for offset in range(7):
     if bool(workday) == bool(weekend):
         premise_bad.append(offset)
 check("工作日 / 周末两个前提互斥且互补", not premise_bad, premise_bad)
-known_issue("工作日判定：周一~周五为工作日、周六周日休息（见 judge_work_today 与两个前提的说明、体检日「周末即周六和周日」）", work_list == [1, 1, 1, 1, 1, 0, 0],
-            "judge_work_today 用 weekday() < 6，周六也算工作日；改成周五止会改变全体干员的周六排班，待定",
-            f"周一~周日实际为 {work_list}")
+check("工作日判定：周一~周五为工作日、周六周日休息（见 judge_work_today 与两个前提的说明、体检日「周末即周六和周日」）", work_list == [1, 1, 1, 1, 1, 0, 0],
+      f"周一~周日实际为 {work_list}")
 hour_case = [((8, 59), 0), ((9, 0), 1), ((11, 59), 1), ((12, 0), 0), ((14, 0), 2), ((17, 59), 2), ((18, 0), 0), ((19, 0), 3), ((21, 59), 3), ((22, 0), 0)]
 bad = []
 for (hour, minute), expect in hour_case:

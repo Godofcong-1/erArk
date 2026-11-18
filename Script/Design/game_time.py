@@ -523,7 +523,8 @@ def judge_work_today(character_id: int) -> bool:
     if now_time is None:
         now_time = cache.game_time
     now_week = now_time.weekday()
-    if now_week < 6:
+    # weekday() 周一为0、周日为6，周一到周五（0~4）为工作日
+    if now_week < 5:
         return 1
     else:
         return 0
