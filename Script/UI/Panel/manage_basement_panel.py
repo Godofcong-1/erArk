@@ -980,7 +980,8 @@ class Manage_Basement_Panel:
                     commision_chara_name_str = "、".join(commision_chara_name_list)
                     # 剩余返回天数
                     return_time = cache.rhodes_island.ongoing_field_commissions[commision_id][1]
-                    last_days = game_time.count_day_for_datetime(cache.game_time, return_time)
+                    # 按可游玩天数算：返回时间在下一个季月时，公历天数会把被时钟跳过的月份也算进去（多显示约 60 天）
+                    last_days = int(game_time.count_play_second(cache.game_time, return_time) // 86400)
                     if last_days <= 0:
                         last_days = _("不足一天")
                     else:

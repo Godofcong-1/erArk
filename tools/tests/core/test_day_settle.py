@@ -661,6 +661,48 @@ remove_character(DRUG_NPC_ID)
 pl.target_character_id = 0
 set_time(DEFAULT_TIME)
 
+# ==== 6.5 锁定修复：体外卵的受精判定延迟与被吵醒的剩余时间跨季 ====
+section("锁定修复：体外卵的受精判定延迟、被吵醒的剩余分钟数按时钟上实际经过的时间算")
+from Script.System.Pregnancy_System import pregnancy_constant, soft_egg_handle  # noqa: E402
+from Script.UI.Panel import character_info_head  # noqa: E402
+
+SOFT_EGG_DELAY_MINUTE = pregnancy_constant.SOFT_EGG_FERTILIZATION_DELAY_HOUR * 60
+""" 体外卵排出到受精判定的延迟（分钟） """
+
+
+def soft_egg_remain(lay_time: datetime.datetime, now_time: datetime.datetime) -> int:
+    """
+    求 lay_time 排出的体外卵在 now_time 距离受精判定还剩的分钟数
+    Keyword arguments:
+    lay_time -- 卵排出的时间
+    now_time -- 当前游戏时间
+    Return arguments:
+    int -- 剩余分钟数
+    """
+    saved_time = cache.game_time
+    try:
+        cache.game_time = now_time
+        return soft_egg_handle.get_soft_egg_remain_minute({"lay_time": lay_time})
+    finally:
+        cache.game_time = saved_time
+
+
+check("对照：同一天内排出 40 分钟后，离受精判定还剩（延迟 - 40）分钟", soft_egg_remain(datetime.datetime(2026, 9, 15, 12, 0), datetime.datetime(2026, 9, 15, 12, 40)) == SOFT_EGG_DELAY_MINUTE - 40)
+soft_egg_cross = soft_egg_remain(datetime.datetime(2026, 9, 30, 23, 30), datetime.datetime(2026, 12, 1, 0, 10))
+check("季末 23:30 排出、下一个季月 00:10（时钟上过了 40 分钟）：同样还剩（延迟 - 40）分钟，不会被当成已到期", soft_egg_cross == SOFT_EGG_DELAY_MINUTE - 40, soft_egg_cross)
+
+DISTURBED_NPC_ID = 9303
+""" 本段用的干员 fixture：睡觉中被吵醒 """
+disturbed_npc = make_character(DISTURBED_NPC_ID, "换季吵醒测试干员", position=pl.position)
+disturbed_npc.action_info.sleep_disturbed_end_time = datetime.datetime(2026, 12, 1, 0, 30)
+cache.game_time = datetime.datetime(2026, 9, 30, 23, 45)
+status_draw_list = character_info_head.get_character_status_list(DISTURBED_NPC_ID)[0]
+disturbed_tip_list = [getattr(now_draw, "tooltip", "") for now_draw in status_draw_list if _("刚被吵醒") in str(getattr(now_draw, "tooltip", ""))]
+check("季末 23:45 时，要到下一个季月 00:30 才重新想睡的干员：状态栏提示还需 45 分钟，不是约 8.8 万分钟",
+      disturbed_tip_list == [_("刚被吵醒，还需{0}分钟才会重新想睡").format(45)], disturbed_tip_list)
+remove_character(DISTURBED_NPC_ID)
+set_time(DEFAULT_TIME)
+
 # ==== 7. 写盘守卫 ====
 section("本文件没有写存档")
 check("自动存档之外没有任何 establish_save 调用", save_call_list == ["auto"], save_call_list)

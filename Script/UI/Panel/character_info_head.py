@@ -9,7 +9,7 @@ from Script.Core import (
     constant,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import attr_calculation
+from Script.Design import attr_calculation, game_time
 from Script.UI.Panel import hypnosis_panel
 
 cache: game_type.Cache = cache_control.cache
@@ -297,7 +297,8 @@ def get_character_status_list(character_id: int) -> Tuple[List[draw.LeftDraw], L
         # 如果处于睡觉中被吵醒状态则输出被吵醒，并附上剩余的无法入睡时间
         elif handle_premise.handle_sleep_disturbed_1(character_id):
             sleep_text = _(" <被吵醒>")
-            left_minute = int((character_data.action_info.sleep_disturbed_end_time - cache.game_time).total_seconds() // 60)
+            # 按可游玩时间算：结束时间在下一个季月时，公历时长会多出被时钟跳过的约两个月
+            left_minute = int(game_time.count_play_second(cache.game_time, character_data.action_info.sleep_disturbed_end_time) // 60)
             left_minute = max(1, left_minute)
             sleep_draw.tooltip = _("刚被吵醒，还需{0}分钟才会重新想睡").format(left_minute)
             sleep_draw.style = "warning"
