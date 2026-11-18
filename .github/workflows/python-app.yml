@@ -195,7 +195,7 @@ jobs:
             "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/releases/tags/$version" || true)
           case "$code" in
             200) release=false; note="版本 $version 已在 Releases 中：本次只运行检查，不打包发布" ;;
-            404) release=true;  note="版本 $version 尚未发布：检查通过后打包发布" ;;
+            404) release=true;  note="版本 $version 尚未发布：检查通过后打包发布（图片包版本 $image_version）" ;;
             *)   echo "::error::查询 Releases 失败（HTTP $code）"; exit 1 ;;
           esac
           if [ "$release" = true ]; then
@@ -447,5 +447,6 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ github.workspace }}/erArk_Images.zip
-          asset_name: erArk_Images_${{ needs.plan.outputs.version }}.zip
+          # 图片包用 image/package.json 的图片版本号，不是游戏版本号：图片没更新时文件名保持不变
+          asset_name: erArk_Images_${{ needs.plan.outputs.image_version }}.zip
           asset_content_type: application/zip
