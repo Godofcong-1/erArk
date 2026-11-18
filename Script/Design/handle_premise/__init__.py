@@ -223,7 +223,7 @@ def get_weight_from_premise_dict(talk_premise_dict: set, character_id: int, calc
     if unconscious_pass_flag == False and handle_unconscious_flag_ge_1(target_character_id) and not handle_unconscious_flag_4(target_character_id):
         # 有技艺tag的行为则直接通过
         behavior_data = game_config.config_behavior[behavior_id]
-        if _("技艺") in behavior_data.tag:
+        if "技艺" in behavior_data.tag:
             unconscious_pass_flag = True
         # 需要前提里有无意识的判定
         for now_premise in talk_premise_dict:

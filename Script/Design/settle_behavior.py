@@ -438,7 +438,7 @@ def handle_instruct_data(
         # 娱乐和工作类的指令则进行一次设施损坏检测
         if behavior_id in game_config.config_behavior:
             behavior_data = game_config.config_behavior[behavior_id]
-            if _('娱乐') in behavior_data.tag or _('工作') in behavior_data.tag:
+            if "娱乐" in behavior_data.tag or "工作" in behavior_data.tag:
                 constant.settle_behavior_effect_data[1751](character_id, add_time, change_data, now_time)
     # 进行二段结算
     second_behavior.check_second_effect(character_id, change_data)
@@ -706,7 +706,7 @@ def extra_exp_settle(
         behavior_data = game_config.config_behavior[now_behavior_id]
         # 猥亵或性爱指令
         add_flag = False
-        for tag in {_("猥亵"), _("性爱")}:
+        for tag in {"猥亵", "性爱"}:
             if tag in behavior_data.tag:
                 add_flag = True
                 break

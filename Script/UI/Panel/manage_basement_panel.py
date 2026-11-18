@@ -1247,7 +1247,7 @@ class Change_Npc_Work_Panel:
                 flag_open = True
                 reason_text = work_data.cant_reason
                 # 必要条件判断
-                if work_data.need != _("无"):
+                if work_data.need != "无":
                     need_data_all = work_data.need
                     # 整理需要的条件
                     if "&" not in need_data_all:
