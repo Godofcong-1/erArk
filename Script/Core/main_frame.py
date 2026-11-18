@@ -564,7 +564,8 @@ def _read_queue_drain():
             if cmd_nums == "all":
                 io_clear_cmd()
             else:
-                io_clear_cmd(tuple(cmd_nums))
+                # 编号逐个传给 io_clear_cmd（它按可变参数逐个清除）
+                io_clear_cmd(*cmd_nums)
         if "bgcolor" in json_data:
             set_background(json_data["bgcolor"])
         if "set_style" in json_data:
