@@ -246,6 +246,22 @@ pl.dirty.cloth_semen[5][1] = 25
 check("读档后：原本是同一个 dict 的两张表被拆开，往穿着的上衣上射精不改衣柜的表",
       pl.dirty.cloth_semen is not pl.dirty.cloth_locker_semen and shared_part_list(pl.dirty) == [] and pl.dirty.cloth_locker_semen[5][1] == 0,
       (pl.dirty.cloth_semen is pl.dirty.cloth_locker_semen, shared_part_list(pl.dirty)))
+# 读档：很旧的存档里两张表是按部位顺序排的列表（长度与服装部位数相同，不会被当成长度不符而重置）
+pl.dirty = attr_calculation.get_zero_dirty()
+old_format_list = [[game_config.config_clothing_type[now_type].name, now_type * 10, 0, now_type * 10] for now_type in sorted(game_config.config_clothing_type)]
+pl.dirty.cloth_semen = old_format_list
+pl.dirty.cloth_locker_semen = old_format_list
+old_format_error = ""
+try:
+    old_chara_to_new.update_chara_cloth(pl, None)
+except Exception as error:  # noqa: BLE001  要把异常类型写进断言的附带信息
+    old_format_error = repr(error)
+check("读档后：列表形式的两张旧表都换成以服装部位为键的 dict，数值不变、互不共用（此前读这种存档会直接报错）",
+      old_format_error == "" and isinstance(pl.dirty.cloth_semen, dict) and isinstance(pl.dirty.cloth_locker_semen, dict)
+      and sorted(pl.dirty.cloth_semen) == sorted(pl.dirty.cloth_locker_semen) == sorted(game_config.config_clothing_type)
+      and all(pl.dirty.cloth_semen[now_type][1] == pl.dirty.cloth_locker_semen[now_type][1] == now_type * 10 for now_type in game_config.config_clothing_type)
+      and shared_part_list(pl.dirty) == [],
+      (old_format_error, type(pl.dirty.cloth_semen).__name__, type(pl.dirty.cloth_locker_semen).__name__))
 pl.dirty = saved_pl_dirty
 remove_character(SHARE_NPC_ID)
 
@@ -275,6 +291,238 @@ for now_cid in (MOTHER_ID, HELPER_ID, MEDIC_ID):
     remove_character(now_cid)
 cache.npc_id_got.clear()
 cache.npc_id_got.update(saved_npc_id_got)
+
+# ==== 8.1 能力面板：被监禁干员的刻印降级 ====
+section("能力面板：被监禁的干员宝珠够用时，刻印照常判为可降级")
+from Script.UI.Panel import ability_up_panel, new_round, see_character_info_panel  # noqa: E402
+
+MARK_NPC_ID = 9411
+mark_npc = make_character(MARK_NPC_ID, "刻印测试干员")
+mark_ability_id = sorted(game_config.config_mark_down_data_by_ability)[0]
+""" 一个可以用宝珠降级的刻印 """
+mark_down_data = game_config.config_mark_down_data[game_config.config_mark_down_data_by_ability[mark_ability_id][1]]
+mark_npc.ability[mark_ability_id] = 1
+for now_juel_id in mark_npc.juel:
+    mark_npc.juel[now_juel_id] = mark_down_data.need_juel_all_value
+mark_panel = object.__new__(ability_up_panel.Characterabi_show_Text)
+mark_panel.character_id = MARK_NPC_ID
+mark_panel.character_data = mark_npc
+# debug 模式下判定出错时一律当作可降级，会把问题盖住；这里固定按非 debug 判
+saved_debug_mode = cache.debug_mode
+cache.debug_mode = False
+mark_npc.sp_flag.imprisonment = 0
+check("对照：没被监禁、宝珠够用时可以降级", mark_panel.check_ability_change_possible(mark_ability_id)[1] is True)
+mark_npc.sp_flag.imprisonment = 1
+mark_can_down = mark_panel.check_ability_change_possible(mark_ability_id)[1]
+check("被监禁（降级需求按关押区等级打折）、宝珠够用时同样可以降级", mark_can_down is True, mark_can_down)
+remove_character(MARK_NPC_ID)
+
+# ==== 8.2 技能书读完的奖励 ====
+section("读完技能书的经验奖励按难度：难度 1 加 10、难度 2 加 20、难度 3 加 40")
+from Script.Settle import default as settle_default  # noqa: E402
+
+
+def read_exp_delta(book_id: int, progress_before: int) -> int:
+    """
+    让博士读一次书，返回这次阅读让对应技能经验增加了多少
+    Keyword arguments:
+    book_id -- 书籍id
+    progress_before -- 读之前的阅读进度（99 时这一次必定读完，0 时读不完）
+    Return arguments:
+    int -- 对应技能经验的增量
+    """
+    exp_id = game_config.config_book_type[game_config.config_book[book_id].type].exp_id
+    pl.target_character_id = 0
+    pl.behavior.book_id = book_id
+    pl.entertainment.read_book_progress[book_id] = progress_before
+    exp_before = pl.experience.get(exp_id, 0)
+    settle_default.handle_read_add_adjust(0, 30, game_type.CharacterStatusChange(), cache.game_time)
+    return pl.experience.get(exp_id, 0) - exp_before
+
+
+finish_bonus = {}
+""" 难度 -> 读完时比没读完多得的经验 """
+# 桩：读完一本书会走成就结算（读最小世界里没有的仓库数据，且可能写文件），与本段无关
+_real_achievement_flow = settle_default.achievement_panel.achievement_flow
+settle_default.achievement_panel.achievement_flow = lambda *args, **kwargs: None
+try:
+    for now_difficulty in (1, 2, 3):
+        skill_book_id = next(now_cid for now_cid, now_book in sorted(game_config.config_book.items())
+                             if now_book.difficulty == now_difficulty and game_config.config_book_type[now_book.type].exp_id != 0)
+        finish_bonus[now_difficulty] = read_exp_delta(skill_book_id, 99) - read_exp_delta(skill_book_id, 0)
+finally:
+    settle_default.achievement_panel.achievement_flow = _real_achievement_flow
+check("读完技能书的额外经验：难度 1 / 2 / 3 分别是 10 / 20 / 40", finish_bonus == {1: 10, 2: 20, 3: 40}, finish_bonus)
+cache.debug_mode = saved_debug_mode
+
+# ==== 8.3 按性别过滤的经验与宝珠 ====
+section("女性角色的经验与宝珠列表不列男性专属项")
+MALE_ONLY_EXP_LIST = [3, 13, 21, 73]
+""" 男性专属经验：阴茎经验、阴茎绝顶经验、射精经验、无意识阴茎经验 """
+FEMALE_NPC_ID = 9412
+female_npc = make_character(FEMALE_NPC_ID, "性别过滤测试干员")
+female_npc.sex = 1
+for now_exp_id in MALE_ONLY_EXP_LIST:
+    female_npc.experience[now_exp_id] = 5
+female_npc.experience[0] = 5
+
+
+def panel_text(panel_object) -> str:
+    """
+    画出一个面板对象，返回它画出的全部文字
+    Keyword arguments:
+    panel_object -- 带 draw() 的面板对象
+    Return arguments:
+    str -- 画出的文字拼成的一串
+    """
+    drawn_text.clear()
+    panel_object.draw()
+    return "".join(str(text) for text in drawn_text)
+
+
+male_exp_label_list = [" %s:" % game_config.config_experience[now_exp_id].name for now_exp_id in MALE_ONLY_EXP_LIST]
+info_exp_text = panel_text(see_character_info_panel.CharacterExperienceText(FEMALE_NPC_ID, 100, 5))
+check("fixture：经验列表照常列出她有的普通经验", " %s:" % game_config.config_experience[0].name in info_exp_text, info_exp_text[:120])
+check("人物信息的经验列表：女性角色不列男性专属经验", not [label for label in male_exp_label_list if label in info_exp_text], [label for label in male_exp_label_list if label in info_exp_text])
+round_exp_text = panel_text(new_round.CharacterExperienceText(FEMALE_NPC_ID, 100, 5, 50))
+check("新周目继承面板的经验列表：女性角色不列男性专属经验", " %s:" % game_config.config_experience[0].name in round_exp_text
+      and not [label for label in male_exp_label_list if label in round_exp_text], [label for label in male_exp_label_list if label in round_exp_text])
+info_juel_text = panel_text(see_character_info_panel.CharacterJuelText(FEMALE_NPC_ID, 100, 5))
+check("人物信息的宝珠列表：女性角色不列阴茎快感珠", " %s:" % game_config.config_juel[3].name not in info_juel_text and " %s:" % game_config.config_juel[2].name in info_juel_text,
+      info_juel_text[:160])
+remove_character(FEMALE_NPC_ID)
+
+# ==== 8.4 指令类型过滤设置 ====
+section("交互对象是婴儿（或临盆、产后）时隐藏技艺 / 猥亵 / 性爱指令，但不改写玩家的指令类型过滤设置")
+from Script.System.Instruct_System import see_instruct_panel  # noqa: E402
+
+FILTER_BABY_ID, FILTER_ADULT_ID = 9413, 9414
+filter_baby = make_character(FILTER_BABY_ID, "过滤测试婴儿", daughter=True, stage=101, position=pl.position)
+filter_adult = make_character(FILTER_ADULT_ID, "过滤测试干员", position=pl.position)
+saved_instruct_filter = dict(cache.instruct_type_filter)
+cache.instruct_type_filter.clear()
+cache.instruct_type_filter.update({now_type: True for now_type in range(7)})
+pl.target_character_id = FILTER_BABY_ID
+check("交互对象是婴儿时：技艺、猥亵、性爱三类指令不显示，日常类照常显示",
+      [handle_premise.instruct_type_shown(now_type) for now_type in (constant.InstructType.DAILY, constant.InstructType.ARTS, constant.InstructType.OBSCENITY, constant.InstructType.SEX)]
+      == [True, False, False, False])
+check("对应的三个「指令面板可见」前提此时不成立", (handle_premise.handle_arts_panel_show(0), handle_premise.handle_obscenity_panel_show(0), handle_premise.handle_sex_panel_show(0)) == (0, 0, 0),
+      (handle_premise.handle_arts_panel_show(0), handle_premise.handle_obscenity_panel_show(0), handle_premise.handle_sex_panel_show(0)))
+instruct_panel_error = ""
+# 画指令面板会把每条指令的前提都算一遍，其中有的要读博士的道具数量；最小世界里博士的道具表是空的，先按 0 个补齐
+saved_pl_item = dict(pl.item)
+for now_item_id in game_config.config_item:
+    pl.item.setdefault(now_item_id, 0)
+try:
+    drawn_text.clear()
+    see_instruct_panel.SeeInstructPanel(100).draw()
+except Exception as error:  # noqa: BLE001  面板在最小世界里画不出来时要变成失败的断言
+    instruct_panel_error = repr(error)
+pl.item.clear()
+pl.item.update(saved_pl_item)
+check("对着婴儿画一次 Tk 指令面板后，玩家的技艺、猥亵类型过滤设置仍是开着的（此前会被面板直接写成关闭，换回别人也回不来）",
+      instruct_panel_error == "" and cache.instruct_type_filter[constant.InstructType.ARTS] is True and cache.instruct_type_filter[constant.InstructType.OBSCENITY] is True,
+      (instruct_panel_error, dict(cache.instruct_type_filter)))
+pl.target_character_id = FILTER_ADULT_ID
+check("换回成年的交互对象：三类指令恢复按玩家的设置显示", [handle_premise.instruct_type_shown(now_type) for now_type in (constant.InstructType.ARTS, constant.InstructType.OBSCENITY)] == [True, True]
+      and handle_premise.handle_obscenity_panel_show(0) == 1)
+cache.instruct_type_filter[constant.InstructType.OBSCENITY] = False
+check("玩家自己关掉的类型照常不显示", handle_premise.instruct_type_shown(constant.InstructType.OBSCENITY) is False and handle_premise.handle_obscenity_panel_show(0) == 0)
+cache.instruct_type_filter.clear()
+cache.instruct_type_filter.update(saved_instruct_filter)
+pl.target_character_id = 0
+remove_character(FILTER_BABY_ID)
+remove_character(FILTER_ADULT_ID)
+
+# ==== 8.5 指令的 H 模式显示类型与疲劳类型 ====
+section("指令配置的「H模式显示类型」「疲劳类型」两列对每条指令都生效（前提条件集为空的也一样）")
+from Script.Core import constant_promise  # noqa: E402
+from Script.System.Instruct_System import handle_instruct as instruct_module  # noqa: E402,F401  导入即注册全部指令
+
+P = constant_promise.Premise
+H_MODE_PREMISE = {1: {P.NOT_H, P.NOT_SHOW_NON_H_IN_HIDDEN_SEX}, 2: {P.TARGET_IS_H}}
+""" H模式显示类型 -> 应带的前提（1 非H显示 / 2 H显示） """
+TIRED_PREMISE = {1: {P.TIRED_LE_84, P.HP_G_1, P.DRUNK_LEVEL_NOT_3}, 2: {P.TIRED_LE_74, P.HP_G_1, P.DRUNK_LEVEL_NOT_3}}
+""" 疲劳类型 -> 应带的前提（1 轻度疲劳 / 2 重度疲劳） """
+bad = []
+empty_premise_checked = 0
+for now_instruct_id, now_premise_set in constant.instruct_premise_data.items():
+    now_config_cid = game_config.config_instruct_by_id.get(now_instruct_id)
+    if now_config_cid is None:
+        continue
+    now_config = game_config.config_instruct[now_config_cid]
+    need_set = H_MODE_PREMISE.get(getattr(now_config, "h_mode_show_type", None), set()) | TIRED_PREMISE.get(getattr(now_config, "tired_type", None), set())
+    if need_set and not getattr(now_config, "premise_set", None):
+        empty_premise_checked += 1
+    if not need_set <= set(now_premise_set):
+        bad.append((now_instruct_id, sorted(need_set - set(now_premise_set))))
+check("fixture：有前提条件集为空、但填了这两列的指令（读写存档、系统设置等）", empty_premise_checked > 0, empty_premise_checked)
+check("每条指令都带上了这两列对应的前提（否则 H 中仍会列出读写存档、系统设置等标了「非H显示」的指令）", not bad, bad[:10])
+
+# ==== 8.6 重新扫描模组 ====
+section("重新扫描模组文件夹后，各模组保留启动时的加载状态与错误信息")
+import inspect  # noqa: E402
+import json  # noqa: E402
+import tempfile  # noqa: E402
+
+from Script.Core import mod_manager  # noqa: E402
+
+with tempfile.TemporaryDirectory() as temp_mod_dir:
+    for now_mod_id in ("test_mod_ok", "test_mod_bad"):
+        os.makedirs(os.path.join(temp_mod_dir, now_mod_id))
+        with open(os.path.join(temp_mod_dir, now_mod_id, "mod_info.json"), "w", encoding="utf-8") as mod_info_file:
+            json.dump({"mod_id": now_mod_id, "name": now_mod_id}, mod_info_file)
+    # ModManager 是单例：这里另建一个不走单例的实例，指向临时文件夹，不碰游戏真正的模组管理器
+    temp_manager = object.__new__(mod_manager.ModManager)
+    temp_manager._initialized = True
+    temp_manager.mod_folder = temp_mod_dir
+    temp_manager.mods = {}
+    temp_manager.enabled_mods = []
+    temp_manager.load_order = []
+    temp_manager.get_mod_folder_path = lambda: temp_mod_dir
+    temp_manager.scan_mods()
+    check("fixture：扫描到两个模组，初始都是未加载", sorted(temp_manager.mods) == ["test_mod_bad", "test_mod_ok"] and not any(now_mod.loaded for now_mod in temp_manager.mods.values()))
+    # 模拟启动时的加载结果：一个加载成功，一个加载失败并记下了错误信息
+    temp_manager.mods["test_mod_ok"].loaded = True
+    temp_manager.mods["test_mod_bad"].error_message = "脚本加载失败"
+    temp_manager.scan_mods()
+    check("再扫描一次（打开或刷新模组面板）后：加载成功的仍显示已加载，加载失败的仍带着错误信息",
+          temp_manager.mods["test_mod_ok"].loaded is True and temp_manager.mods["test_mod_bad"].error_message == "脚本加载失败",
+          (temp_manager.mods["test_mod_ok"].loaded, temp_manager.mods["test_mod_bad"].error_message))
+
+# ==== 8.7 综合数值前提与结算的解析 ====
+section("综合数值前提 / 结算：结算记录对象必须由调用方传入，主体写错的数据不报错")
+change_data_default = inspect.signature(settle_behavior.handle_comprehensive_value_effect).parameters["change_data"].default
+check("综合数值结算的 change_data 没有默认值（默认值是定义函数时建好的同一个对象，各次调用会共用）", change_data_default is inspect.Parameter.empty, change_data_default)
+bad_subject_result = []
+for now_call in (lambda: handle_premise.handle_comprehensive_value_premise(0, ["A9", "F", "G", "0"]),
+                 lambda: settle_behavior.handle_comprehensive_value_effect(0, ["A9", "F", "G", "1"], game_type.CharacterStatusChange())):
+    try:
+        bad_subject_result.append(now_call())
+    except Exception as error:  # noqa: BLE001  要把异常类型写进断言的附带信息
+        bad_subject_result.append(repr(error))
+check("主体段写错（既不是 A1 / A2 也不是 A3|编号）的综合数值前提按不成立处理、结算按未结算处理，都不抛异常", bad_subject_result == [0, 0], bad_subject_result)
+favor_before = pl.favorability.get(0, 0)
+check("对照：格式正确的综合数值前提与结算照常工作", handle_premise.handle_comprehensive_value_premise(0, ["A1", "A|0", "GE", "0"]) == 1
+      and bool(settle_behavior.handle_comprehensive_value_effect(0, ["A1", "A|0", "G", "1"], game_type.CharacterStatusChange())) and pl.ability[0] >= 1,
+      (handle_premise.handle_comprehensive_value_premise(0, ["A1", "A|0", "GE", "0"]), pl.ability[0]))
+pl.ability[0] = 0
+del favor_before
+
+# ==== 8.8 角色扮演的口上编号 ====
+section("女仆惩罚调教（111）与女仆咖啡厅里菜单（112）的催眠地文各归各的编号")
+ROLEPLAY_TALK_PATH = os.path.join(ROOT, "data", "talk", "arts", "roleplay.csv")
+roleplay_name = {now_cid: game_config.config_roleplay[now_cid].name for now_cid in (111, 112)}
+bad = []
+with open(ROLEPLAY_TALK_PATH, encoding="utf-8") as talk_file:
+    for row in csv.reader(talk_file):
+        if len(row) < 5:
+            continue
+        for now_cid, wrong_word in ((111, "咖啡厅"), (112, "惩罚")):
+            if "Roleplay|%d_" % now_cid in row[3] and wrong_word in row[4]:
+                bad.append((row[0], now_cid))
+check("fixture：游戏表里 111 是惩罚调教、112 是咖啡厅", "惩罚" in roleplay_name[111] and "咖啡厅" in roleplay_name[112], roleplay_name)
+check("前提写 111 的地文不讲咖啡厅、写 112 的不讲惩罚（此前两者写反，选一个播的是另一个的地文）", not bad, bad)
 
 # ==== 9. 同名图片的取舍 ====
 section("同名图片：按固定规则取一个文件，并列出重名")
