@@ -72,8 +72,21 @@ def _calculate_unnormal_flag_mask(character_id: int) -> int:
     return mask
 
 
+# 异常位 1~7 一律在判定时现算，不缓存。
+# 原先各位的结果缓存在 sp_flag.unnormal_flag 里，只有各个状态修改点显式调用 settle_chara_unnormal_flag 时才更新，缓存会停在旧值上：
+#   位 3 的体检项随时刻变化，没有哪个修改点能在体检时段开始时去刷新它——午夜排了体检的干员到了时段仍被当作正常、继续工作；
+#   时停的开关只刷新位 6，平然催眠（位 5）的干员关掉时停后仍被当作意识模糊。
+# sp_flag.unnormal_flag 仍留在角色数据里（旧存档照常读取），只由 refresh_unnormal_flag 写入，各判定都不读它。
+
+
 def refresh_unnormal_flag(character_id: int) -> int:
-    """重新结算并返回角色的异常位掩码。"""
+    """
+    现算角色的全部异常位，把结果记进 sp_flag.unnormal_flag 并返回位掩码
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 异常位掩码
+    """
     character_data = cache.character_data[character_id]
     unnormal_flag = _ensure_unnormal_flag_storage(character_data)
     unnormal_flag.reset()
@@ -83,12 +96,15 @@ def refresh_unnormal_flag(character_id: int) -> int:
 
 
 def get_unnormal_flag_mask(character_id: int, refresh: bool = False) -> int:
-    """获取角色的异常位掩码，可选择是否同时刷新。"""
-    if refresh:
-        return refresh_unnormal_flag(character_id)
-    character_data = cache.character_data[character_id]
-    unnormal_flag = _ensure_unnormal_flag_storage(character_data)
-    return unnormal_flag.mask
+    """
+    获取角色的异常位掩码（每次现算）
+    Keyword arguments:
+    character_id -- 角色id
+    refresh -- 已不起作用，保留只为兼容旧调用
+    Return arguments:
+    int -- 异常位掩码
+    """
+    return refresh_unnormal_flag(character_id)
 
 
 def has_unnormal_flag(character_id: int, mask: int, *, require_all: bool = False, refresh: bool = False) -> bool:
@@ -99,63 +115,39 @@ def has_unnormal_flag(character_id: int, mask: int, *, require_all: bool = False
     return bool(current_mask & mask)
 
 
-def _quick_check_normal_by_mask(character_id: int, index: int) -> Optional[int]:
-    """若异常位掩码已知，则快速给出normal判定结果。"""
-    # 玩家直接反馈正常
-    if character_id == 0:
-        return 1
-    character_data = cache.character_data[character_id]
-    unnormal_flag = character_data.sp_flag.unnormal_flag
-    if isinstance(unnormal_flag, game_type.UnnormalFlagMask) and unnormal_flag.is_known(index):
-        return 0 if unnormal_flag[index] else 1
-    return None
-
-
-def _combine_unnormal_mask(indexes: Iterable[int]) -> int:
-    """根据索引集合构造异常位掩码。"""
-    mask = 0
-    for index in indexes:
-        mask |= UNNORMAL_FLAG_BITS[index]
-    return mask
-
-
-def _ensure_known_unnormal_bits(character_id: int, indexes: Iterable[int]) -> game_type.UnnormalFlagMask:
-    """确保指定异常位的判定结果已在掩码中记录。"""
-    index_tuple = tuple(indexes)
-    character_data = cache.character_data[character_id]
-    unnormal_flag = _ensure_unnormal_flag_storage(character_data)
-    unknown_indexes = [index for index in index_tuple if not unnormal_flag.is_known(index)]
-    if not unknown_indexes:
-        return unnormal_flag
-    handlers = _get_unnormal_flag_handlers()
-    for index in unknown_indexes:
-        handler = handlers.get(index)
-        if handler is None:
-            continue
-        result = handler(character_id)
-        if not unnormal_flag.is_known(index):
-            unnormal_flag.update(index, not bool(result))
-    return unnormal_flag
-
-
 def _check_normal_combo(character_id: int, indexes: Iterable[int]) -> int:
-    """判定指定多异常组合是否均为正常状态。"""
+    """
+    判定指定的几个异常位是否全部正常：逐位现算，遇到第一个异常即停
+    Keyword arguments:
+    character_id -- 角色id
+    indexes -- 异常位索引
+    Return arguments:
+    int -- 全部正常为1，否则为0
+    """
     # 玩家直接反馈正常
     if character_id == 0:
         return 1
-    index_tuple = tuple(indexes)
-    unnormal_flag = _ensure_known_unnormal_bits(character_id, index_tuple)
-    return 1 if not unnormal_flag.any(_combine_unnormal_mask(index_tuple)) else 0
+    handlers = _get_unnormal_flag_handlers()
+    for index in indexes:
+        if not handlers[index](character_id):
+            return 0
+    return 1
 
 
 def _check_unnormal_combo(character_id: int, indexes: Iterable[int]) -> int:
-    """判定指定多异常组合是否存在任意异常。"""
+    """
+    判定指定的几个异常位里是否存在任意异常
+    Keyword arguments:
+    character_id -- 角色id
+    indexes -- 异常位索引
+    Return arguments:
+    int -- 存在异常为1，否则为0
+    """
     # 玩家直接反馈无异常
     if character_id == 0:
         return 0
-    index_tuple = tuple(indexes)
-    unnormal_flag = _ensure_known_unnormal_bits(character_id, index_tuple)
-    return 1 if unnormal_flag.any(_combine_unnormal_mask(index_tuple)) else 0
+    return 0 if _check_normal_combo(character_id, indexes) else 1
+
 
 def add_premise(premise: str) -> FunctionType:
     """
@@ -721,24 +713,15 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
 
 def settle_chara_unnormal_flag(character_id: int, unnormal_flag_index: Optional[int]) -> None:
     """
-    结算角色异常状态标记并同步位掩码，索引为None或0时重新结算全部异常。
+    （已不需要）结算角色的异常状态标记
+    异常位改为每次判定时现算之后，不再有需要刷新的缓存；本函数保留为空操作，只为让各处原有的调用不用改，新代码不必再调用它
     Keyword arguments:
     character_id -- 角色id
     unnormal_flag_index -- 异常状态标记索引
     Return arguments:
-    None
+    无
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    unnormal_flag = _ensure_unnormal_flag_storage(character_data)
-    if not unnormal_flag_index:
-        unnormal_flag.set_mask(_calculate_unnormal_flag_mask(character_id))
-        return
-    handler = _get_unnormal_flag_handlers().get(unnormal_flag_index)
-    if handler is None:
-        return
-    unnormal_flag.mark_unknown(unnormal_flag_index)
-    is_normal = bool(handler(character_id))
-    unnormal_flag.update(unnormal_flag_index, not is_normal)
+    return
 
 
 @add_premise(constant_promise.Premise.HIGH_1)
@@ -1112,10 +1095,10 @@ def handle_normal_1(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    quick_result = _quick_check_normal_by_mask(character_id, 1)
-    if quick_result is not None:
-        return quick_result
-    if(
+    # 玩家直接反馈正常
+    if character_id == 0:
+        return 1
+    if (
         handle_rest_flag_1(character_id)
         or handle_sleep_flag_1(character_id)
         or handle_pee_flag_1(character_id)
@@ -1124,11 +1107,8 @@ def handle_normal_1(character_id: int) -> int:
         or handle_milk_flag_1(character_id)
         or handle_masturebate_flag_g_0(character_id)
     ):
-        result = 0
-    else:
-        result = 1
-    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(1, not bool(result))
-    return result
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.NORMAL_2)
@@ -1141,19 +1121,16 @@ def handle_normal_2(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    quick_result = _quick_check_normal_by_mask(character_id, 2)
-    if quick_result is not None:
-        return quick_result
-    if(
+    # 玩家直接反馈正常
+    if character_id == 0:
+        return 1
+    if (
         handle_parturient_1(character_id)
         or handle_postpartum_1(character_id)
         or handle_imprisonment_1(character_id)
     ):
-        result = 0
-    else:
-        result = 1
-    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(2, not bool(result))
-    return result
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.NORMAL_3)
@@ -1166,19 +1143,18 @@ def handle_normal_3(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    quick_result = _quick_check_normal_by_mask(character_id, 3)
-    if quick_result is not None:
-        return quick_result
-    if(
-        handle_is_assistant(character_id)
-        or handle_is_follow(character_id)
-        or handle_self_in_health_check_action_chain(character_id)
-    ):
-        result = 0
-    else:
-        result = 1
-    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(3, not bool(result))
-    return result
+    # 玩家直接反馈正常
+    if character_id == 0:
+        return 1
+    if handle_is_assistant(character_id) or handle_is_follow(character_id):
+        return 0
+    # 体检行动链：今天没排体检、也不在等待名单上时不可能在链中，不必去算时段
+    if (
+        cache.character_data[character_id].action_info.health_check_today
+        or character_id in cache.rhodes_island.waiting_for_exam_operator_ids
+    ) and handle_self_in_health_check_action_chain(character_id):
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.NORMAL_4)
@@ -1191,18 +1167,24 @@ def handle_normal_4(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    quick_result = _quick_check_normal_by_mask(character_id, 4)
-    if quick_result is not None:
-        return quick_result
-    if(
-        handle_cloth_off(character_id)
-        or handle_cloth_most_off(character_id)
-    ):
-        result = 0
-    else:
-        result = 1
-    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(4, not bool(result))
-    return result
+    # 玩家直接反馈正常
+    if character_id == 0:
+        return 1
+    # 全裸时上下外衣内衣（5/6/8/9 类）必然都没穿，即必然也是大致全裸，所以只查大致全裸
+    if handle_cloth_most_off(character_id):
+        return 0
+    return 1
+
+
+def _sleeping_or_sleep_unconscious(character_id: int) -> int:
+    """
+    异常位 5、6 的睡眠项的前置条件：角色正在睡觉，或处于睡眠无意识状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 是则为真
+    """
+    return handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id)
 
 
 @add_premise(constant_promise.Premise.NORMAL_5)
@@ -1215,19 +1197,19 @@ def handle_normal_5(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    quick_result = _quick_check_normal_by_mask(character_id, 5)
-    if quick_result is not None:
-        return quick_result
-    if(
-        (handle_sleep_level_0(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id))) or
-        handle_drunk_level_2(character_id) or
-        handle_unconscious_flag_4(character_id)
-    ):
-        result = 0
-    else:
-        result = 1
-    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(5, not bool(result))
-    return result
+    # 玩家直接反馈正常
+    if character_id == 0:
+        return 1
+    # 平然
+    if handle_unconscious_flag_4(character_id):
+        return 0
+    # 睡眠（半梦半醒）：只在正在睡觉或处于睡眠无意识时才去算睡眠等级
+    if _sleeping_or_sleep_unconscious(character_id) and handle_sleep_level_0(character_id):
+        return 0
+    # 醉酒：醉酒值为 0 时必为清醒，不必去算醉酒等级
+    if cache.character_data[character_id].drunk_point > 0 and handle_drunk_level_2(character_id):
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.NORMAL_6)
@@ -1240,20 +1222,19 @@ def handle_normal_6(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    quick_result = _quick_check_normal_by_mask(character_id, 6)
-    if quick_result is not None:
-        return quick_result
-    if(
-         (handle_sleep_level_ge_1(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id))) or
-        handle_unconscious_flag_5(character_id) or
-        handle_drunk_level_3(character_id) or
-        (handle_time_stop_on(character_id) or handle_unconscious_flag_3(character_id))
-    ):
-        result = 0
-    else:
-        result = 1
-    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(6, not bool(result))
-    return result
+    # 玩家直接反馈正常
+    if character_id == 0:
+        return 1
+    # 时停、空气
+    if handle_time_stop_on(character_id) or handle_unconscious_flag_3(character_id) or handle_unconscious_flag_5(character_id):
+        return 0
+    # 睡眠（浅睡或熟睡或完全深眠）：只在正在睡觉或处于睡眠无意识时才去算睡眠等级
+    if _sleeping_or_sleep_unconscious(character_id) and handle_sleep_level_ge_1(character_id):
+        return 0
+    # 烂醉：醉酒值为 0 时必为清醒，不必去算醉酒等级
+    if cache.character_data[character_id].drunk_point > 0 and handle_drunk_level_3(character_id):
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.NORMAL_7)
@@ -1266,21 +1247,18 @@ def handle_normal_7(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    quick_result = _quick_check_normal_by_mask(character_id, 7)
-    if quick_result is not None:
-        return quick_result
-    if(
+    # 玩家直接反馈正常
+    if character_id == 0:
+        return 1
+    if (
         handle_be_bagged_1(character_id)
         or handle_field_commission_1(character_id)
         or handle_self_is_baby(character_id)
         or handle_in_diplomatic_visit_1_and_other_country(character_id)
         or handle_escaping_1(character_id)
     ):
-        result = 0
-    else:
-        result = 1
-    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(7, not bool(result))
-    return result
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.NORMAL_2_4)
@@ -1521,7 +1499,7 @@ def handle_unnormal(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    return 1 if refresh_unnormal_flag(character_id) else 0
+    return _check_unnormal_combo(character_id, (1, 2, 3, 4, 5, 6, 7))
 
 
 @add_premise(constant_promise.Premise.UNNORMAL_2)

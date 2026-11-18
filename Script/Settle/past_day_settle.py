@@ -81,7 +81,7 @@ def update_new_day():
             #    class_ai 的三处清位一处都摸不着，标记会一直粘着
             growth_data.follow_mother_flag = False
         if character_id:
-            # 全量重算异常位掩码，兜底修复各状态修改点漏刷新导致的过期缓存位（每日一次，开销可忽略）
+            # 把异常位掩码整体算一遍记进 sp_flag.unnormal_flag（各判定已改为每次现算、不读这份记录，这里只让角色数据里留的值每日更新一次）
             handle_premise.refresh_unnormal_flag(character_id)
             # 排卵日结束仍未结算（玩家当天未睡觉）时的兜底：受精判定与排卵结算
             if character_data.pregnancy.ovulation_flag:
