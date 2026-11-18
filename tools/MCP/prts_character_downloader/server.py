@@ -44,11 +44,11 @@ if os.name == 'nt':  # Windows系统
     except Exception:
         pass  # 忽略编码设置错误
 
-# 配置日志记录
+# 配置日志记录：写到标准错误，标准输出只用来传 MCP 协议消息
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[logging.StreamHandler(sys.stdout)]
+    handlers=[logging.StreamHandler(sys.stderr)]
 )
 logger = logging.getLogger(__name__)
 
