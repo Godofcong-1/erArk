@@ -16,6 +16,7 @@ from Script.Design import (
     attr_calculation,
     map_handle,
     game_time,
+    virgin_break_gate,
 )
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
@@ -574,16 +575,8 @@ def npc_active_h():
             "非逆推" in behavior_tag_list
         ):
             continue
-        # 如果NPC为处，则跳过破处类
-        if part_id == 21 and target_character_data.talent[4] and "破处" in behavior_tag_list:
-            continue
-        if part_id == 4 and target_character_data.talent[0] and "破处" in behavior_tag_list:
-            continue
-        if part_id == 5 and target_character_data.talent[1] and "破处" in behavior_tag_list:
-            continue
-        if part_id == 6 and target_character_data.talent[2] and "破处" in behavior_tag_list:
-            continue
-        if part_id == 7 and target_character_data.talent[3] and "破处" in behavior_tag_list:
+        # 如果NPC为处，则跳过会夺走她还保有的处女的破处类（不论这次的部位喜好是哪个）
+        if virgin_break_gate.takes_kept_virginity(behavior_tag_list, target_character_data.talent):
             continue
 
         # 跳过非当前部位
@@ -758,6 +751,10 @@ def npc_ai_in_group_sex_type_3():
                 new_status_id_list = group_sex_panel.get_status_id_list_from_group_sex_body_part(body_part)
             finally:
                 pl_character_data.target_character_id = old_target_character_id
+            # 她在这个部位没有可用的状态（例如她还是处，而阴茎一栏只有破处类行为）：这个部位本轮空着，把她放回待选列表去抢别的部位
+            if len(new_status_id_list) == 0:
+                new_chara_id_list.append(character_id)
+                continue
             # 随机选择一个状态
             status_id = random.choice(new_status_id_list)
             # 如果是侍奉

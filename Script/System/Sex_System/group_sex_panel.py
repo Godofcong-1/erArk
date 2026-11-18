@@ -9,7 +9,7 @@ from Script.Core import (
     flow_handle
 )
 from Script.Config import game_config, normal_config
-from Script.Design import handle_premise, map_handle
+from Script.Design import handle_premise, map_handle, virgin_break_gate
 
 panel_info_data = {}
 
@@ -205,18 +205,11 @@ def get_status_id_list_from_group_sex_body_part(body_part: str):
                 status_tag_list = status_data.tag
                 status_tag_list = status_data.tag.split("|")
                 pl_character_data = cache.character_data[0]
-                if pl_character_data.target_character_id == 0:
+                # 玩家的交互对象是NPC时才过滤（调用方在取列表前会把玩家的交互对象临时换成该部位对应的角色）
+                if pl_character_data.target_character_id != 0:
                     target_character_data = cache.character_data[pl_character_data.target_character_id]
-                    # 如果NPC为处，则跳过破处类
-                    if target_character_data.talent[0] and "V" in status_tag_list and "破处" in status_tag_list:
-                        continue
-                    if target_character_data.talent[1] and "A" in status_tag_list and "破处" in status_tag_list:
-                        continue
-                    if target_character_data.talent[2] and "U" in status_tag_list and "破处" in status_tag_list:
-                        continue
-                    if target_character_data.talent[3] and "W" in status_tag_list and "破处" in status_tag_list:
-                        continue
-                    if target_character_data.talent[4] and "N" in status_tag_list and "破处" in status_tag_list:
+                    # 如果NPC为处，则跳过会夺走她还保有的处女的破处类
+                    if virgin_break_gate.takes_kept_virginity(status_tag_list, target_character_data.talent):
                         continue
 
                 # 加入到新列表中

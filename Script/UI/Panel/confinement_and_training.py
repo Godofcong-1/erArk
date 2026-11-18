@@ -2,7 +2,7 @@ import os
 from typing import List, Tuple
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import basement, handle_premise, attr_calculation, map_handle
+from Script.Design import basement, handle_premise, attr_calculation, map_handle, virgin_break_gate
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 import random
@@ -385,18 +385,11 @@ def get_all_can_use_behavior_id_for_sex_assistant(select_part: str = "", not_sel
                     if behavior_id in cache.rhodes_island.sex_assistant_ai_ban_behavior_id_list:
                         continue
                 pl_character_data = cache.character_data[0]
-                if pl_character_data.target_character_id == 0:
+                # 玩家的交互对象（调教对象）是NPC时才过滤
+                if pl_character_data.target_character_id != 0:
                     target_character_data = cache.character_data[pl_character_data.target_character_id]
-                    # 如果NPC为处，则跳过破处类
-                    if target_character_data.talent[0] and "V" in behavior_tag_list and "破处" in behavior_tag_list:
-                        continue
-                    if target_character_data.talent[1] and "A" in behavior_tag_list and "破处" in behavior_tag_list:
-                        continue
-                    if target_character_data.talent[2] and "U" in behavior_tag_list and "破处" in behavior_tag_list:
-                        continue
-                    if target_character_data.talent[3] and "W" in behavior_tag_list and "破处" in behavior_tag_list:
-                        continue
-                    if target_character_data.talent[4] and "N" in behavior_tag_list and "破处" in behavior_tag_list:
+                    # 如果NPC为处，则跳过会夺走她还保有的处女的破处类
+                    if virgin_break_gate.takes_kept_virginity(behavior_tag_list, target_character_data.talent):
                         continue
 
                 # 加入到新列表中
