@@ -376,22 +376,27 @@ CVP/CVE/CSE 系统设计为可扩展的：
 
 ## 配置文件说明
 
-编辑器依赖以下CSV配置文件：
+编辑器依赖两类CSV配置文件：
 
 ```
-csv/
-├── Ability.csv       # 能力定义
-├── Talent.csv        # 素质（天赋）定义
-├── Experience.csv    # 经验类型定义
-├── CharacterState.csv # 角色状态定义
-├── Behavior_Data.csv # 行为数据
-├── Premise.csv       # 前提条件定义
-├── Effect.csv        # 效果定义
-├── PremiseGroup.csv  # 前提组定义
-└── ...              # 其他配置文件
+tools/ArkEditor/csv/      # 编辑器专用的表，只存在于这里；新增前提 / 结算 / 行为时要同步改
+├── Premise.csv           # 前提条件定义
+├── PremiseGroup.csv      # 前提组定义
+├── Effect.csv            # 效果定义
+├── Behavior_Data.csv     # 行为数据
+└── Organ.csv             # 器官定义
+
+data/csv/                 # 游戏本体的表，编辑器直接读，不保留副本（共 16 张）
+├── Ability.csv / Talent.csv / Experience.csv / Juel.csv / CharacterState.csv
+├── Birthplace.csv / Nation.csv / Race.csv / Profession.csv
+├── BodyPart.csv / ClothingType.csv / Bondage.csv / Roleplay.csv
+└── Item.csv / Gift_Items.csv / Resource.csv
 ```
 
 这些文件定义了游戏的基础数据结构，编辑器通过读取这些文件来提供选项列表和数据验证。
+
+16 张游戏表的取法在 `load_csv.py` 的 `game_csv_path`：从源码运行时（运行目录是 `tools/ArkEditor`）读 `../../data/csv/`，与游戏用的是同一份；
+打包后的编辑器没有这个目录，读自带 `csv/` 里的那一份——由 CI 的 `Copy ArkEditor Files` 一步从 `data/csv/` 拷进去。所以给游戏表加行后不需要再同步编辑器。
 
 ## 与主游戏的集成
 

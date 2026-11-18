@@ -2,27 +2,49 @@ import os
 import csv
 import cache_control
 
+EDITOR_CSV_DIR = "csv"
+""" 编辑器自带的表所在的目录（相对编辑器的运行目录） """
+GAME_CSV_DIR = os.path.join("..", "..", "data", "csv")
+""" 从源码运行时（运行目录是 tools/ArkEditor）游戏本体的表所在的目录 """
+
+
+def game_csv_path(file_name: str) -> str:
+    """
+    取一张游戏表的路径
+    输入: file_name(str) - 表的文件名，如 Ability.csv
+    输出: str - 表的路径
+    功能: 从源码运行时直接读游戏本体的 data/csv（与游戏用的是同一份，不会过期）；
+          打包后的编辑器没有这个目录，读打包时从游戏表拷进自带 csv/ 目录的那一份
+    """
+    game_path = os.path.join(GAME_CSV_DIR, file_name)
+    if os.path.exists(game_path):
+        return game_path
+    return os.path.join(EDITOR_CSV_DIR, file_name)
+
+
+# ---- 编辑器专用的表：只存在于编辑器自带的 csv/ 目录，新增前提 / 结算 / 行为时要同步改这里 ----
 premise_path = "csv/Premise.csv"
 premise_group_path = "csv/PremiseGroup.csv"
 behavior_data_path = "csv/Behavior_Data.csv"
 effect_path = "csv/Effect.csv"
-ability_path = "csv/Ability.csv"
-state_path = "csv/CharacterState.csv"
-experience_path = "csv/Experience.csv"
-juel_path = "csv/Juel.csv"
-talent_path = "csv/Talent.csv"
-birthplace_path = "csv/Birthplace.csv"
-nation_path = "csv/Nation.csv"
-profession_path = "csv/Profession.csv"
-race_path = "csv/Race.csv"
-body_path = "csv/BodyPart.csv"
-clothing_path = "csv/ClothingType.csv"
 organ_path = "csv/Organ.csv"
-bondage_path = "csv/Bondage.csv"
-roleplay_path = "csv/Roleplay.csv"
-item_path = "csv/Item.csv"
-gift_items_path = "csv/Gift_Items.csv"
-resource_path = "csv/Resource.csv"
+# ---- 游戏本体的表：从源码运行时直接读 data/csv，仓库里不再保留副本 ----
+ability_path = game_csv_path("Ability.csv")
+state_path = game_csv_path("CharacterState.csv")
+experience_path = game_csv_path("Experience.csv")
+juel_path = game_csv_path("Juel.csv")
+talent_path = game_csv_path("Talent.csv")
+birthplace_path = game_csv_path("Birthplace.csv")
+nation_path = game_csv_path("Nation.csv")
+profession_path = game_csv_path("Profession.csv")
+race_path = game_csv_path("Race.csv")
+body_path = game_csv_path("BodyPart.csv")
+clothing_path = game_csv_path("ClothingType.csv")
+bondage_path = game_csv_path("Bondage.csv")
+roleplay_path = game_csv_path("Roleplay.csv")
+item_path = game_csv_path("Item.csv")
+gift_items_path = game_csv_path("Gift_Items.csv")
+resource_path = game_csv_path("Resource.csv")
 
 def load_config():
     """载入配置文件"""
