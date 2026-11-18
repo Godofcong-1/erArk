@@ -7,7 +7,7 @@ tools/tests/headless_base.py；基础系统套件暂无专属工具，各测试�
 
 铁律（详见 .github/skills/headless-game-test/SKILL.md）：
     1. 必须用 ./.conda/python.exe 跑，裸 python 是商店空壳
-    2. 导入链会起非守护线程，脚本末尾必须 finish() → os._exit()
+    2. 脚本末尾必须 finish() → os._exit()：汇总要打印、退出码只反映断言成败，也不等测试里可能还在跑的线程
     3. 含中文的脚本一律写成文件跑，不要走 heredoc / stdin（GBK 会把中文喂坏）
     4. 只读：绝不调用 save_handle.establish_save()，不 inline 调用 init_character_behavior()
 """

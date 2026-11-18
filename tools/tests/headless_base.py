@@ -9,7 +9,7 @@
 
 铁律（详见 .github/skills/headless-game-test/SKILL.md）：
     1. 必须用 ./.conda/python.exe 跑，裸 python 是商店空壳
-    2. 导入链会起非守护线程，脚本末尾必须 finish() → os._exit()
+    2. 脚本末尾必须 finish() → os._exit()：汇总要打印、退出码只反映断言成败，也不等测试里可能还在跑的线程
     3. 含中文的脚本一律写成文件跑，不要走 heredoc / stdin（GBK 会把中文喂坏）
     4. 只读：绝不调用 save_handle.establish_save()，不 inline 调用 init_character_behavior()
 """
@@ -89,7 +89,7 @@ def section(title: str):
 
 def finish():
     """
-    打印汇总并强制退出进程（导入链里的非守护线程会让进程不自行结束）
+    打印汇总并强制退出进程（退出码只反映断言成败；不等测试里可能还在跑的线程）
     Keyword arguments:
     无
     Return arguments:
@@ -491,7 +491,7 @@ pl = make_character(0, "博士")
 def _exit_on_exception(exc_type, exc_value, exc_traceback):
     """
     未捕获异常时打印回溯并强制退出
-    导入链起的非守护线程会让崩溃的测试进程挂住，直到 run_all 的超时才被杀掉
+    崩溃时若还有线程在跑，进程会一直挂到 run_all 的超时才被杀掉，所以这里直接强制退出
     Keyword arguments:
     exc_type -- 异常类型
     exc_value -- 异常对象

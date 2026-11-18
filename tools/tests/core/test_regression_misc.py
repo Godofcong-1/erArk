@@ -459,6 +459,13 @@ for now_instruct_id, now_premise_set in constant.instruct_premise_data.items():
 check("fixture：有前提条件集为空、但填了这两列的指令（读写存档、系统设置等）", empty_premise_checked > 0, empty_premise_checked)
 check("每条指令都带上了这两列对应的前提（否则 H 中仍会列出读写存档、系统设置等标了「非H显示」的指令）", not bad, bad[:10])
 
+# ==== 8.5.1 导入游戏模块不留下不会结束的线程 ====
+section("游戏模块导入完后没有留下不会结束的线程")
+import threading  # noqa: E402
+
+alive_thread_list = [thread.name for thread in threading.enumerate() if thread is not threading.main_thread() and not thread.daemon and thread.is_alive()]
+check("导入指令处理等模块后，除主线程外没有非守护线程在跑（否则 Web 模式要按两次 Ctrl+C 才退出、脚本跑完进程也不结束）", alive_thread_list == [], alive_thread_list)
+
 # ==== 8.6 重新扫描模组 ====
 section("重新扫描模组文件夹后，各模组保留启动时的加载状态与错误信息")
 import inspect  # noqa: E402
@@ -560,6 +567,52 @@ with tempfile.TemporaryDirectory() as temp_dir:
     image_index, image_duplicates = image_path_index.build_image_path_index(image_root)
 check("每个图片名只取一个文件：同层级重名取干员文件夹的，主文件夹与子文件夹重名取主文件夹的",
       image_index == {"电弧_半身": operator_half, "莱伊_全身": main_full, "莱伊_半身": single_half}, image_index)
+# ==== 8.9 按编号清除命令 ====
+section("按编号清除命令：逐个清除给出的编号，其余命令保留")
+from Script.Core import io_init, py_cmd  # noqa: E402
+
+saved_cmd_map = dict(flow_handle.cmd_map)
+flow_handle.cmd_map.clear()
+for cmd_number in (901, 902, 903):
+    flow_handle.bind_cmd(cmd_number, flow_handle.null_func)
+cleared_number_list = []
+clear_error = None
+with mock.patch.object(io_init, "io_clear_cmd", lambda *number_list: cleared_number_list.append(number_list)):
+    try:
+        py_cmd.clr_cmd(901, 902, clr_default_flow=False)
+    except Exception as error:  # noqa: BLE001  旧代码把整个元组当成一个编号去删，会报 KeyError
+        clear_error = repr(error)
+    left_after_some = sorted(flow_handle.cmd_map)
+    py_cmd.clr_cmd(clr_default_flow=False)
+    left_after_all = sorted(flow_handle.cmd_map)
+check("清除 901、902 两个命令：命令表里只剩 903，前端收到的是逐个编号", clear_error is None and left_after_some == [903] and cleared_number_list[:2] == [(901,), (902,)],
+      (clear_error, left_after_some, cleared_number_list))
+check("不给编号时清除全部命令", left_after_all == [] and cleared_number_list[-1] == (), (left_after_all, cleared_number_list))
+flow_handle.cmd_map.clear()
+flow_handle.cmd_map.update(saved_cmd_map)
+
+# ==== 8.10 字体配置里的加粗 / 下划线 / 斜体 ====
+section("字体配置里的加粗 / 下划线 / 斜体送到 Tk 前端时是布尔值，警告样式不带下划线")
+style_flag_data = {}
+warning_style = game_config.config_font[game_config.config_font_data["warning"]]
+# 表里留空的格子载入后没有对应的属性（init_style 会按默认样式补 0），所以用 getattr 取
+warning_flag = tuple(getattr(warning_style, flag_name, 0) for flag_name in ("bold", "underline", "italic"))
+check("警告样式不带下划线（字体修饰生效后保持原来的外观，维护者的决定）", not any(warning_flag), warning_flag)
+saved_warning_dict = dict(warning_style.__dict__)
+warning_style.bold, warning_style.underline, warning_style.italic = 1, 0, 1  # 临时给一个样式开上加粗与斜体，看它们会不会原样到达前端
+try:
+    with mock.patch.object(io_init, "frame_style_def", lambda style_name, _fg, _bg, _font, _size, bold, underline, italic: style_flag_data.__setitem__(style_name, (bold, underline, italic))):
+        io_init.init_style()
+finally:
+    warning_style.__dict__.clear()
+    warning_style.__dict__.update(saved_warning_dict)
+not_bool = [name for name, flag_tuple in style_flag_data.items() if not all(type(flag) is bool for flag in flag_tuple)]
+check("每个样式送给前端的三个开关都是布尔值（旧代码送的是整数或 \"0\"/\"1\" 字符串，前端只认字符串 \"1\"，配置里设的修饰从不生效）", len(style_flag_data) > 0 and not not_bool, not_bool[:8])
+check("配置里开了加粗与斜体的样式、三个通用修饰符、组合样式，开关都如实送到",
+      (style_flag_data.get("warning"), style_flag_data.get("standard"), style_flag_data.get("bold"), style_flag_data.get("underline"), style_flag_data.get("italic"), style_flag_data.get("standard_bold_italic"))
+      == ((True, False, True), (False, False, False), (True, False, False), (False, True, False), (False, False, True), (True, False, True)),
+      (style_flag_data.get("warning"), style_flag_data.get("standard"), style_flag_data.get("bold"), style_flag_data.get("underline"), style_flag_data.get("italic"), style_flag_data.get("standard_bold_italic")))
+
 check("重名的图片被列出来，第一个是取中的文件", image_duplicates == {"电弧_半身": [operator_half, npc_half], "莱伊_全身": [main_full, draft_full]}, image_duplicates)
 
 finish()

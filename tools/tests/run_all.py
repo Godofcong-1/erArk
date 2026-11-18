@@ -8,7 +8,7 @@
     .conda\\python.exe tools/tests/run_all.py core             # 只跑路径（套件/文件名）里含 core 的
     .conda\\python.exe tools/tests/run_all.py core/test_map    # 只跑某一个文件
 
-每个测试文件各起一个进程：游戏的导入链会起非守护线程且全局 cache 只能初始化一次，
+每个测试文件各起一个进程：游戏的全局 cache 只能初始化一次，
    同进程串跑会互相污染。单个文件超时 240 秒即判失败（正常一个文件 5~20 秒）。
 日志写在 %TEMP%/erArk_tests/<套件>/<文件名>.log，CI 失败时由 Show Test Logs 一步打出末尾。
 """
