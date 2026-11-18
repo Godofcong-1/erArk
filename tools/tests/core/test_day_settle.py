@@ -703,6 +703,75 @@ check("季末 23:45 时，要到下一个季月 00:30 才重新想睡的干员�
 remove_character(DISTURBED_NPC_ID)
 set_time(DEFAULT_TIME)
 
+# ==== 6.6 锁定修复：「距离行动结束还有至少 30 分钟」与淋浴时间的打断 ====
+section("锁定修复：前提「距离行动结束时间还有至少30分钟」按剩余时间判，到淋浴时间会打断还剩很久的工作或娱乐")
+from Script.Design import handle_npc_ai  # noqa: E402
+
+SHOWER_NPC_ID = 9304
+""" 本段用的干员 fixture：娱乐中、今天还没洗澡 """
+shower_npc = make_character(SHOWER_NPC_ID, "淋浴打断测试干员", position=pl.position)
+# 最小 fixture 是全裸的，过不了打断判定里的「正常状态」（normal_all 的服装异常位），给她穿一件上衣
+shower_npc.cloth.cloth_wear[5].append(next(now_cid for now_cid, now_tem in game_config.config_clothing_tem.items() if now_tem.clothing_type == 5))
+ENTERTAIN_BEHAVIOR_ID = "singing"
+""" 一个带「娱乐」标签的行为 """
+check("fixture：唱歌是娱乐类行为", "娱乐" in game_config.config_behavior[ENTERTAIN_BEHAVIOR_ID].tag, game_config.config_behavior[ENTERTAIN_BEHAVIOR_ID].tag)
+
+
+def still_30_minutes(start_time: datetime.datetime, duration: int, now_time: datetime.datetime) -> int:
+    """
+    让 fixture 干员从 start_time 起娱乐 duration 分钟，求 now_time 时「距离行动结束时间还有至少30分钟」的结果
+    Keyword arguments:
+    start_time -- 行动开始时间
+    duration -- 行动时长（分钟）
+    now_time -- 当前游戏时间
+    Return arguments:
+    int -- 前提的返回值
+    """
+    cache.game_time = now_time
+    shower_npc.behavior = game_type.Behavior()
+    shower_npc.behavior.behavior_id = ENTERTAIN_BEHAVIOR_ID
+    shower_npc.behavior.start_time = start_time
+    shower_npc.behavior.duration = duration
+    shower_npc.target_character_id = SHOWER_NPC_ID
+    return handle_premise.handle_still_30_minutes_before_end(SHOWER_NPC_ID)
+
+
+check("20:00 起娱乐 120 分钟，20:30 时还剩 90 分钟：成立", still_30_minutes(datetime.datetime(2026, 9, 15, 20, 0), 120, datetime.datetime(2026, 9, 15, 20, 30)) == 1)
+check("20:00 起娱乐 120 分钟，21:40 时只剩 20 分钟：不成立", still_30_minutes(datetime.datetime(2026, 9, 15, 20, 0), 120, datetime.datetime(2026, 9, 15, 21, 40)) == 0)
+check("行动已经结束 40 分钟（20:00 起 20 分钟，现在 21:00）：不成立（此前算反了，只有这种情况才成立）",
+      still_30_minutes(datetime.datetime(2026, 9, 15, 20, 0), 20, datetime.datetime(2026, 9, 15, 21, 0)) == 0)
+check("行动跨季末午夜（季末 23:00 起 120 分钟）：23:40 时还剩 80 分钟成立，下一个季月 00:50 时只剩 10 分钟不成立",
+      still_30_minutes(datetime.datetime(2026, 9, 30, 23, 0), 120, datetime.datetime(2026, 9, 30, 23, 40)) == 1
+      and still_30_minutes(datetime.datetime(2026, 9, 30, 23, 0), 120, datetime.datetime(2026, 12, 1, 0, 50)) == 0)
+
+
+def shower_interrupt(start_time: datetime.datetime, duration: int, now_time: datetime.datetime) -> tuple:
+    """
+    让今天还没洗澡的 fixture 干员从 start_time 起娱乐 duration 分钟，在 now_time 做一次打断判定
+    Keyword arguments:
+    start_time -- 行动开始时间
+    duration -- 行动时长（分钟）
+    now_time -- 当前游戏时间
+    Return arguments:
+    tuple -- (是否打断, 判定后的行为id)
+    """
+    still_30_minutes(start_time, duration, now_time)
+    shower_npc.sp_flag.shower = 0
+    handle_premise.refresh_unnormal_flag(SHOWER_NPC_ID)
+    result = handle_npc_ai.judge_interrupt_character_behavior(SHOWER_NPC_ID)
+    return result, shower_npc.behavior.behavior_id
+
+
+interrupt_result = shower_interrupt(datetime.datetime(2026, 9, 15, 20, 0), 120, datetime.datetime(2026, 9, 15, 20, 30))
+check("今天没洗澡的干员 20:00 起娱乐 120 分钟，20:30 判定时还剩 90 分钟：立刻结束娱乐（之后由 AI 重新选行动，去洗澡）",
+      interrupt_result == (1, constant.Behavior.SHARE_BLANKLY), interrupt_result)
+check("只剩 20 分钟时不打断，让她做完", shower_interrupt(datetime.datetime(2026, 9, 15, 20, 0), 120, datetime.datetime(2026, 9, 15, 21, 40)) == (0, ENTERTAIN_BEHAVIOR_ID))
+check("不在淋浴时间（下午 15:00 起的娱乐）不打断", shower_interrupt(datetime.datetime(2026, 9, 15, 15, 0), 120, datetime.datetime(2026, 9, 15, 15, 30)) == (0, ENTERTAIN_BEHAVIOR_ID))
+check("本轮刚开始的行为（开始时间 = 当前时间）不打断：保住「打断 → AI 重选同一行为 → 再打断」不会在同一轮里循环的守卫",
+      shower_interrupt(datetime.datetime(2026, 9, 15, 20, 30), 120, datetime.datetime(2026, 9, 15, 20, 30)) == (0, ENTERTAIN_BEHAVIOR_ID))
+remove_character(SHOWER_NPC_ID)
+set_time(DEFAULT_TIME)
+
 # ==== 7. 写盘守卫 ====
 section("本文件没有写存档")
 check("自动存档之外没有任何 establish_save 调用", save_call_list == ["auto"], save_call_list)

@@ -705,8 +705,10 @@ def handle_still_30_minutes_before_end(character_id: int) -> int:
     start_time = character_data.behavior.start_time
     end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
     now_time = cache.game_time
-    true_add_time = int((now_time.timestamp() - end_time.timestamp()) / 60)
-    if true_add_time >= 30:
+    # 距离行动结束还剩多少分钟 = 结束时间 - 当前时间（此前写成了「当前时间 - 结束时间」，只有行动已经结束 30 分钟以上才成立，与本前提的含义相反）
+    # 按可游玩时间算（game_time.count_play_second），行动跨季末午夜时不把被时钟跳过的月份算进去
+    left_minute = int(game_time.count_play_second(now_time, end_time) / 60)
+    if left_minute >= 30:
         return 1
     return 0
 
