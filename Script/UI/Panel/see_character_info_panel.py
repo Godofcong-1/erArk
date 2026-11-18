@@ -854,7 +854,7 @@ class CharacterExperienceText:
                                      103, 104, 105, 106}:
                     continue
             elif character_data.sex == 1:
-                if experience_id == {3, 13, 21, 73}:
+                if experience_id in {3, 13, 21, 73}:
                     continue
             experience_text = game_config.config_experience[experience_id].name
             experience_value = 0
@@ -1168,7 +1168,7 @@ class CharacterJuelText:
                 if juel_id in {2, 4, 7}:
                     continue
             elif character_data.sex == 1:
-                if juel_id == {3}:
+                if juel_id in {3}:
                     continue
             juel_text = game_config.config_juel[juel_id].name
             juel_value = 0
