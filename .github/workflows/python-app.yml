@@ -367,7 +367,7 @@ jobs:
         run: |
           Compress-Archive -Path dist_ArkEditor\* -DestinationPath erArkEditor.zip
 
-      # 发布页正文：四个包的说明 + 上一个版本标签以来的提交标题
+      # 发布页正文：四个包的说明 + 上一个版本标签以来的提交标题（按时间正序；超过 10 条时前 10 条露出，全部条目收在展开栏里）
       - name: Write Release Notes
         shell: bash  # 用 bash：PowerShell 捕获 git 输出时会把中文提交标题转坏
         run: |
@@ -385,12 +385,36 @@ jobs:
           EOF
           prev=$(git describe --tags --abbrev=0 HEAD 2>/dev/null || true)
           if [ -n "$prev" ]; then
-            {
-              echo ""
-              echo "—————— 自 $prev 以来的改动 ——————"
-              echo ""
-              git log --no-merges --format='- %s' -n 300 "$prev..HEAD"
-            } >> release_notes.md
+            # 按提交先后排列，最早的在前（-n 先取最近的 300 条，--reverse 再把它们按时间正序排）
+            log=$(git log --no-merges --reverse --format='- %s' -n 300 "$prev..HEAD")
+            if [ -n "$log" ]; then
+              mapfile -t commits <<< "$log"
+              total=${#commits[@]}
+              {
+                echo ""
+                echo "—————— 自 $prev 以来的改动 ——————"
+                echo ""
+                if [ "$total" -le 10 ]; then
+                  printf '%s\n' "${commits[@]}"
+                else
+                  # 超过 10 条：前 10 条默认展开，全部条目放在默认收起的展开栏里。
+                  # 两栏同名（name），浏览器让同名的展开栏同一时间只开一个：点开「全部」时前 10 条那一栏自动收起，前 10 条不会显示两遍。
+                  # 不支持此特性的旧浏览器上两栏会同时展开，前 10 条出现两次，内容不缺
+                  echo '<details name="changes" open>'
+                  echo "<summary>前 10 条改动（共 $total 条）</summary>"
+                  echo ""
+                  printf '%s\n' "${commits[@]:0:10}"
+                  echo ""
+                  echo '</details>'
+                  echo '<details name="changes">'
+                  echo "<summary>展开全部 $total 条改动</summary>"
+                  echo ""
+                  printf '%s\n' "${commits[@]}"
+                  echo ""
+                  echo '</details>'
+                fi
+              } >> release_notes.md
+            fi
           fi
           cat release_notes.md
 
