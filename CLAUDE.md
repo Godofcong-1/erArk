@@ -34,7 +34,12 @@ The game uses a debug mode (configured in config.ini) for testing. Set `debug = 
 
 Headless regression tests live under `tools/tests/`, one directory per suite: `core/` (foundational systems: config cross-references, premise and settlement registries, map/navigation and game clock, medical, resource exchange, food shop, day/sleep settlement, saves) and `education/` (child-raising system). Run everything with `.conda\python.exe tools/tests/run_all.py` (or pass a keyword such as `core` / `core/test_medical`); each `test_*.py` runs in its own process. Suites share `tools/tests/headless_base.py` (init chain, UI stubs, `check/section/finish`, `make_character`). Writing new ones: see `tools/tests/README.md` and the `headless-game-test` skill.
 
-CI runs these tests on every push and PR, together with a narrow static check. To reproduce the static check locally: `ruff check --config ruff.toml .` (`ruff` is not in `requirements.txt`; CI pins its own version). The rule set in `ruff.toml` only covers near-certain bugs — syntax errors, undefined names, format-string/argument mismatches, repeated dict keys — never style.
+CI runs these tests on every push and PR, together with a narrow static check. To reproduce the static check locally, install the version CI pins (see the `pip install ruff==...` line in `.github/workflows/python-app.yml`, currently 0.17.5) into the project env once, then run it from the repo root:
+```bash
+.conda\python.exe -m pip install ruff==0.17.5   # once; re-run with the new version whenever CI's pin changes
+.conda\python.exe -m ruff check --config ruff.toml .
+```
+`ruff` is deliberately not in `requirements.txt`. Always pass `--config ruff.toml`: by default ruff uses the config nearest to each file, so a config dropped into a subdirectory would otherwise override the root rules (CI forces the root one for the same reason). The rule set in `ruff.toml` only covers near-certain bugs — syntax errors, undefined names, format-string/argument mismatches, repeated dict keys — never style.
 
 ## High-Level Architecture
 
