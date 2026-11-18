@@ -13,7 +13,7 @@ dirname = os.path.dirname(PySide6.__file__)
 plugin_path = os.path.join(dirname, 'plugins', 'platforms')
 os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = plugin_path
 
-from PySide6.QtWidgets import QApplication, QFileDialog, QWidgetAction, QMenu, QPushButton
+from PySide6.QtWidgets import QApplication, QFileDialog, QWidgetAction, QMenu, QPushButton, QMessageBox
 from PySide6.QtGui import QActionGroup, QKeySequence, QShortcut
 from PySide6.QtCore import QModelIndex
 from PySide6.QtGui import QFont
@@ -149,19 +149,47 @@ def clear_item_lists():
     item_text_edit.toggle_preview(False)
 
 
+def show_load_error(file_path, error):
+    """
+    提示某个文件打不开
+    输入: file_path(str) - 文件路径；error(Exception) - 读取时的异常
+    输出: 无
+    功能: 弹窗说明是哪个文件、什么原因。此时编辑器里仍是之前打开的文件，磁盘上的文件没有被改动
+    """
+    QMessageBox.warning(
+        menu_bar,
+        "打开文件失败",
+        f"无法打开 {os.path.basename(file_path)}：\n{type(error).__name__}: {error}\n\n编辑器里仍是之前打开的内容，这个文件没有被改动。",
+    )
+
+
 def load_event_data():
     """载入事件文件"""
-    global last_open_dir, is_modified
+    global last_open_dir
     now_file = QFileDialog.getOpenFileName(menu_bar, "选择文件", last_open_dir, "*.json")
     file_path = now_file[0]
     if file_path:
         last_open_dir = os.path.dirname(file_path)
         save_editor_config()
+        load_event_file(file_path)
+
+
+def load_event_file(file_path):
+    """
+    读入一个事件文件并显示
+    输入: file_path(str) - 事件文件路径
+    输出: bool - 是否读入成功
+    功能: 整个文件读完、没有出错，才把它设为当前文件并刷新窗口；读不了时弹窗提示，当前文件与数据保持不变
+          （否则「当前文件」已经指向读了一半的文件，一按保存就把残缺的数据写回去）
+    """
+    global is_modified
+    try:
         # 读取前先备份
         backup_file(file_path)
-        cache_control.now_event_data = {}
-        cache_control.now_file_path = file_path
+        now_event_data = {}
         now_data = json_handle.load_json(file_path)
+        if not isinstance(now_data, dict):
+            raise ValueError("事件文件的最外层应当是一个 {…} 对象")
         for k in now_data:
             now_event: game_type.Event = game_type.Event()
             now_event.__dict__ = now_data[k]
@@ -186,19 +214,25 @@ def load_event_data():
                     delete_effect_list.append(effect)
             for effect in delete_effect_list:
                 del now_event.effect[effect]
-            cache_control.now_event_data[k] = now_event
-        cache_control.now_edit_type_flag = 1
-        clear_item_lists()
-        data_list.update()
-        main_window.add_grid_event_layout(data_list,item_premise_list,item_effect_list,item_text_edit)
-        main_window.completed_layout()
-        is_modified = False
-        update_window_title()
+            now_event_data[k] = now_event
+    except Exception as error:
+        show_load_error(file_path, error)
+        return False
+    cache_control.now_file_path = file_path
+    cache_control.now_event_data = now_event_data
+    cache_control.now_edit_type_flag = 1
+    clear_item_lists()
+    data_list.update()
+    main_window.add_grid_event_layout(data_list,item_premise_list,item_effect_list,item_text_edit)
+    main_window.completed_layout()
+    is_modified = False
+    update_window_title()
+    return True
 
 def create_event_data():
     """新建事件文件"""
-    global last_open_dir, is_modified
-    cache_control.now_edit_type_flag = 1
+    global last_open_dir
+    # 注意：选好路径之前不能改「当前编辑类型」——用户在对话框里点了取消的话，之后按保存会把正开着的口上按事件的格式写回口上文件
     now_file = QFileDialog.getSaveFileName(menu_bar, "选择文件", last_open_dir, "*.json")
     file_path = now_file[0]
     if file_path:
@@ -206,20 +240,18 @@ def create_event_data():
         save_editor_config()
         if not file_path.endswith(".json"):
             file_path += ".json"
-        cache_control.now_file_path = file_path
-        # 自动打开文件
-        function.save_data()
-        load_event_data()
-        is_modified = False
-        update_window_title()
+        # 新文件直接写成没有事件的 {}，不带入内存里上一个文件的条目
+        with open(file_path, "w", encoding="utf-8") as event_file:
+            event_file.write("{}")
+        # 直接打开刚建好的文件
+        load_event_file(file_path)
 
 def create_chara_data():
     """新建属性文件"""
-    cache_control.now_file_path = cache_control.CHARA_TEMPLATE_PATH
-    load_chara_data_to_cache()
     global is_modified
-    is_modified = False
-    update_window_title()
+    if load_chara_data_to_cache(cache_control.CHARA_TEMPLATE_PATH):
+        is_modified = False
+        update_window_title()
 
 def load_chara_data(path = ""):
     """载入属性文件"""
@@ -233,16 +265,41 @@ def load_chara_data(path = ""):
     else:
         file_path = path
     if file_path:
-        cache_control.now_file_path = file_path
-        load_chara_data_to_cache()
-        is_modified = False
-        update_window_title()
+        if load_chara_data_to_cache(file_path):
+            is_modified = False
+            update_window_title()
 
-def load_chara_data_to_cache():
-    """将属性数据传输到缓存中"""
-    file_path = cache_control.now_file_path
+def load_chara_data_to_cache(file_path):
+    """
+    读入一个属性文件并显示
+    输入: file_path(str) - 属性文件路径
+    输出: bool - 是否读入成功
+    功能: 整个文件读完、没有出错，才把它设为当前文件并刷新窗口；读不了时弹窗提示，当前文件与数据保持不变
+    """
+    try:
+        now_chara_data = read_chara_file(file_path)
+    except Exception as error:
+        show_load_error(file_path, error)
+        return False
+    cache_control.now_file_path = file_path
     cache_control.now_talk_data = {}
+    cache_control.now_chara_data = now_chara_data
+    # print(f"debug Cloth = {cache_control.now_chara_data.Cloth}")
+    cache_control.now_edit_type_flag = 2
+    clear_item_lists()
+    chara_list.update()
 
+    main_window.add_grid_chara_data_layout(chara_list)
+    main_window.completed_layout()
+    return True
+
+
+def read_chara_file(file_path):
+    """
+    把一个属性文件读成属性数据（只读文件，不动编辑器的状态）
+    输入: file_path(str) - 属性文件路径
+    输出: game_type.Chara_Data - 读出的属性数据
+    """
     # 读取文件路径中的数据
     with open(file_path, encoding="utf-8") as now_file:
         now_chara_data: game_type.Chara_Data = game_type.Chara_Data()
@@ -308,14 +365,7 @@ def load_chara_data_to_cache():
                 now_chara_data.Cloth.setdefault(sub_key,[])
                 now_chara_data.Cloth[sub_key].append(now_value)
             # print(f"debug now_key = {now_key}, sub_key = {sub_key}, now_value = {now_value}")
-    cache_control.now_chara_data = now_chara_data
-    # print(f"debug Cloth = {cache_control.now_chara_data.Cloth}")
-    cache_control.now_edit_type_flag = 2
-    clear_item_lists()
-    chara_list.update()
-
-    main_window.add_grid_chara_data_layout(chara_list)
-    main_window.completed_layout()
+    return now_chara_data
 
 
 def load_talk_data():
@@ -326,19 +376,59 @@ def load_talk_data():
     if file_path:
         last_open_dir = os.path.dirname(file_path)
         save_editor_config()
+        # data/talk_common 的通用口上组件文件是另一种格式（表头带 type_id 列），这里按口上文件读会读成一堆残缺的条目，保存后原文件就坏了
+        try:
+            with open(file_path, encoding="utf-8") as now_file:
+                is_talk_common = "type_id" in next(csv.reader(now_file), [])
+        except Exception as error:
+            show_load_error(file_path, error)
+            return
+        if is_talk_common:
+            QMessageBox.warning(
+                menu_bar,
+                "不能打开这个文件",
+                f"{os.path.basename(file_path)} 是 data/talk_common 的通用口上组件文件。\n编辑器只编辑 data/talk 的口上文件，不编辑这种格式。",
+            )
+            return
         # 读取前先备份
         backup_file(file_path)
-        cache_control.now_file_path = file_path
-        load_talk_data_to_cache()
-        is_modified = False
-        update_window_title()
+        if load_talk_data_to_cache(file_path):
+            is_modified = False
+            update_window_title()
 
 
-def load_talk_data_to_cache():
-    """将口上数据传输到缓存中"""
+def load_talk_data_to_cache(file_path):
+    """
+    读入一个口上文件并显示
+    输入: file_path(str) - 口上文件路径
+    输出: bool - 是否读入成功
+    功能: 整个文件读完、没有出错，才把它设为当前文件并刷新窗口；读不了时弹窗提示，当前文件与数据保持不变
+    """
+    try:
+        now_talk_data = read_talk_file(file_path)
+    except Exception as error:
+        show_load_error(file_path, error)
+        return False
+    cache_control.now_file_path = file_path
+    cache_control.now_talk_data = now_talk_data
+    cache_control.now_edit_type_flag = 0
+    clear_item_lists()
+    data_list.update()
 
-    file_path = cache_control.now_file_path
-    cache_control.now_talk_data = {}
+    main_window.add_grid_talk_layout(data_list,item_premise_list,item_text_edit)
+    main_window.completed_layout()
+
+    update_status_menu()
+    return True
+
+
+def read_talk_file(file_path):
+    """
+    把一个口上文件读成口上数据（只读文件，不动编辑器的状态）
+    输入: file_path(str) - 口上文件路径
+    输出: dict - 口上id: 口上数据
+    """
+    now_talk_data = {}
 
     # 读取文件路径中的数据
     with open(file_path, encoding="utf-8") as now_file:
@@ -404,15 +494,8 @@ def load_talk_data_to_cache():
                 delete_premise_list.append(premise)
         for premise in delete_premise_list:
             del now_talk.premise[premise]
-        cache_control.now_talk_data[now_talk.cid] = now_talk
-    cache_control.now_edit_type_flag = 0
-    clear_item_lists()
-    data_list.update()
-
-    main_window.add_grid_talk_layout(data_list,item_premise_list,item_text_edit)
-    main_window.completed_layout()
-
-    update_status_menu()
+        now_talk_data[now_talk.cid] = now_talk
+    return now_talk_data
 
 def create_talk_data():
     """新建口上文件"""
@@ -429,12 +512,14 @@ def create_talk_data():
             save_editor_config()
             if not file_path.endswith(".csv"):
                 file_path += ".csv"
+            # 新文件里不带入内存里上一个文件的口上条目
             cache_control.now_file_path = file_path
+            cache_control.now_talk_data = {}
             cache_control.now_edit_type_flag = 0
             function.save_talk_data()
-            load_talk_data_to_cache()
-            is_modified = False
-            update_window_title()
+            if load_talk_data_to_cache(file_path):
+                is_modified = False
+                update_window_title()
 
 def exit_editor():
     """关闭编辑器"""
@@ -762,17 +847,17 @@ item_effect_list.findChild(QPushButton, 'btn_reset_all').clicked.connect(mark_mo
 # 保存操作：保存时调用 mark_saved
 
 def save_data_and_mark():
-    function.save_data()
-    # 保存时同步备份
+    """保存当前文件：先把磁盘上的旧内容备份，再写入新内容（写完再备份的话，备份里存的就是刚写的新内容，旧内容找不回来）"""
     if hasattr(cache_control, 'now_file_path') and cache_control.now_file_path:
         backup_file(cache_control.now_file_path)
+    function.save_data()
     mark_saved()
 
 def save_talk_data_and_mark():
-    function.save_talk_data()
-    # 保存时同步备份
+    """保存当前口上文件：先备份磁盘上的旧内容，再写入新内容"""
     if hasattr(cache_control, 'now_file_path') and cache_control.now_file_path:
         backup_file(cache_control.now_file_path)
+    function.save_talk_data()
     mark_saved()
 
 menu_bar.save_event_action.triggered.connect(save_data_and_mark)
