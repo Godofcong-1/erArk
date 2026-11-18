@@ -136,6 +136,7 @@ class Field_Commission_Panel:
                     if commision_data.level > cache.rhodes_island.facility_level[14] + 1:
                         continue
                     # 跳过含有角色出场且还没有招募到该角色的角色类委托
+                    # 委托类型（type）是翻译列，载入时已翻译，所以用翻译后的「角色」去比；需求（demand）不翻译，直接看原文前缀
                     if "c_" in commision_data.demand and commision_data.type == _("角色"):
                         chara_adv = int(commision_data.demand.split("_")[1])
                         for character_id in cache.npc_id_got:

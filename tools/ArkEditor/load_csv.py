@@ -301,7 +301,8 @@ def save_commission_csv(file_path, commissions):
         将委托对象列表写回CSV文件
     """
     fieldnames = ["cid", "name", "country_id", "level", "type", "people", "time", "demand", "reward", "related_id", "special", "description"]
-    text = "委托id,委托名字,国家id(-1为通用),委托等级,委托类型,派遣人数,耗时天数,具体需求,具体奖励(a能力、e经验、j宝珠、t_素质编号_0为取消1为获得、r资源、c_角色adv编号_0不包含1包含、招募_adv编号_0未招募1已招募、攻略_adv编号_程度0~4、m_委托编号_-1不可完成0可以进行1已完成、声望_0为当地其他为对应势力id_加值为小数点后两位),关联的委托id,特殊委托,委托介绍\nint,str,int,int,str,int,int,str,str,int,int,str\n0,1,0,0,0,0,0,0,0,0,0,1\n委托任务表,,,,,,,,,,,"
+    # 下面写死的表头要与游戏表 data/csv/Commission.csv 的前几行保持一致，尤其是「是否翻译」那一行：委托类型（type）是翻译列，游戏里按翻译后的类型名比较
+    text = "委托id,委托名字,国家id(-1为通用),委托等级,委托类型,派遣人数,耗时天数,具体需求,具体奖励(a能力、e经验、j宝珠、t_素质编号_0为取消1为获得、r资源、c_角色adv编号_0不包含1包含、招募_adv编号_0未招募1已招募、攻略_adv编号_程度0~4、m_委托编号_-1不可完成0可以进行1已完成、声望_0为当地其他为对应势力id_加值为小数点后两位),关联的委托id,特殊委托,委托介绍\nint,str,int,int,str,int,int,str,str,int,int,str\n0,1,0,0,1,0,0,0,0,0,0,1\n委托任务表,,,,,,,,,,,"
     with open(file_path, "w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
