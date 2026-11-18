@@ -615,4 +615,35 @@ check("配置里开了加粗与斜体的样式、三个通用修饰符、组合�
 
 check("重名的图片被列出来，第一个是取中的文件", image_duplicates == {"电弧_半身": [operator_half, npc_half], "莱伊_全身": [main_full, draft_full]}, image_duplicates)
 
+# ==== 8.11 解手的结算 ====
+section("解手后清空记下的目标厕所，不会被派回自己的宿舍")
+PEE_NPC_ID = 9420
+""" 解手的干员 fixture """
+CLEAR_TOILET_EFFECT = constant_effect.BehaviorEffect.CLEAR_TARGET_TOILET_PATH
+GO_DORMITORY_EFFECT = constant_effect.BehaviorEffect.MOVE_TO_OWN_DORMITORY
+pee_effect_list = list(game_config.config_behavior_effect_data.get(constant.Behavior.PEE, []))
+check("解手行为的结算里有「清空记下的目标厕所」（1712），没有「前往自己的宿舍」（1721）——两个编号只差数字换位，表里曾把前者写成后者",
+      CLEAR_TOILET_EFFECT in pee_effect_list and GO_DORMITORY_EFFECT not in pee_effect_list, pee_effect_list)
+toilet_path = map_handle.get_map_system_path_for_str(constant.place_data["Toilet_Female"][0])
+pee_npc = make_character(PEE_NPC_ID, "解手测试干员", position=toilet_path)
+check("fixture：她的宿舍不是这间洗手间（被派回宿舍的话会动身）", pee_npc.dormitory != scene_str(toilet_path), pee_npc.dormitory)
+pee_npc.target_character_id = PEE_NPC_ID
+pee_npc.urinate_point = 240
+pee_npc.sp_flag.pee = True
+pee_npc.action_info.find_another_toilet = list(toilet_path)
+pee_npc.behavior.behavior_id = constant.Behavior.PEE
+pee_npc.behavior.duration = 5
+pee_npc.behavior.start_time = cache.game_time
+pee_npc.state = constant.CharacterStatus.STATUS_PEE
+pee_error = ""
+try:
+    settle_behavior.handle_settle_behavior(PEE_NPC_ID, cache.game_time + datetime.timedelta(minutes=5))
+except Exception as error:  # noqa: BLE001  报错作为断言失败的附加信息
+    pee_error = repr(error)
+check("解手结算不报错，尿意清零、解手需求撤掉", pee_error == "" and pee_npc.urinate_point == 0 and not pee_npc.sp_flag.pee, (pee_error, pee_npc.urinate_point, pee_npc.sp_flag.pee))
+check("解手后清空了记下的目标厕所（否则下次解手会直奔上次记下的那一间，而不是就近找）", pee_npc.action_info.find_another_toilet == [], pee_npc.action_info.find_another_toilet)
+check("解手后没有被设上移动终点、也没有动身（否则干员每次上完厕所都要走回宿舍，走到了才继续工作或上课）",
+      pee_npc.behavior.move_final_target == [] and pee_npc.behavior.behavior_id != constant.Behavior.MOVE, (pee_npc.behavior.move_final_target, pee_npc.behavior.behavior_id))
+remove_character(PEE_NPC_ID)
+
 finish()

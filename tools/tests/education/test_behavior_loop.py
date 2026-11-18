@@ -80,6 +80,9 @@ for cid in daughter_list + teacher_list:
     cd.sp_flag.imprisonment = False
     cd.hit_point = cd.hit_point_max
     cd.mana_point = cd.mana_point_max
+    # 体力回满了，体力见底时挂上的疲劳标记也要一起清：只回体力不清标记的话，存档里正好累倒的女儿（存档 18 的麦哲伦-01B）
+    #    一开场就被「疲劳 → 回宿舍睡 8 小时」带走，整个上午都不在课上
+    cd.sp_flag.tired = False
     cd.sp_flag.sleep = False
     cd.sp_flag.is_follow = 0
     cd.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
