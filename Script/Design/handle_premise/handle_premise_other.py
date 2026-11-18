@@ -216,7 +216,9 @@ def handle_have_trained(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     now_time = cache.game_time
     train_time = character_data.action_info.last_training_time
-    add_day = int((now_time - train_time).days)
+    # 天数按可游玩时间算：公历天数会把被时钟跳过的月份也算进去，一次换季就多出约 60 天
+    # （用秒级的 count_play_second 而不是 count_play_day：后者按月循环，遇到公元 1 年的缺省时间要转两万多圈，而前提是热路径）
+    add_day = int(game_time.count_play_second(train_time, now_time) // 86400)
     if add_day >= 2:
         return (add_day - 1) * 10
     return 0

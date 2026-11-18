@@ -542,6 +542,72 @@ pl.target_character_id = 0
 pl.behavior = game_type.Behavior()
 set_time(DEFAULT_TIME)
 
+# ==== 6.3 锁定修复：按天数累计的概率与权重跨季 ====
+section("锁定修复：访客来访率与训练欲望按时钟上实际经过的天数算")
+from Script.UI.Panel import invite_visitor_panel  # noqa: E402
+
+
+def visitor_arrive_count(last_visit: datetime.datetime, now_time: datetime.datetime, dice: int) -> int:
+    """
+    跑一次访客抵达与离开的每日结算，返回「按时间产生访客」被触发的次数
+    Keyword arguments:
+    last_visit -- 上次访客来访的时间
+    now_time -- 当前游戏时间
+    dice -- 让 1~100 的来访判定固定掷出的点数（来访率 >= 它才会来）
+    Return arguments:
+    int -- 访客抵达结算被调用的次数
+    """
+    arrive_list = []
+    saved = (invite_visitor_panel.settle_visitor_arrivals, random.randint, cache.rhodes_island.visitor_info, cache.rhodes_island.base_move_visitor_flag,
+             cache.rhodes_island.last_visitor_time, cache.game_time)
+    invite_visitor_panel.settle_visitor_arrivals = lambda *args, **kwargs: arrive_list.append(1)
+    random.randint = lambda low, high: dice
+    try:
+        cache.rhodes_island.visitor_info = {}
+        cache.rhodes_island.base_move_visitor_flag = False
+        cache.rhodes_island.last_visitor_time = last_visit
+        cache.game_time = now_time
+        invite_visitor_panel.settle_visitor_arrivals_and_departures()
+    finally:
+        (invite_visitor_panel.settle_visitor_arrivals, random.randint, cache.rhodes_island.visitor_info, cache.rhodes_island.base_move_visitor_flag,
+         cache.rhodes_island.last_visitor_time, cache.game_time) = saved
+    return len(arrive_list)
+
+
+check("对照：同一季月内距上次来访 24 天，来访率 72%，掷出 50 点时来访、掷出 80 点时不来",
+      visitor_arrive_count(datetime.datetime(2026, 9, 1, 8, 0), datetime.datetime(2026, 9, 25, 8, 0), 50) == 1
+      and visitor_arrive_count(datetime.datetime(2026, 9, 1, 8, 0), datetime.datetime(2026, 9, 25, 8, 0), 80) == 0)
+check("上次来访在 9/25，换季后第一天（12/1）时钟上只过了 6 天，来访率 18%：掷出 50 点不来访（按公历差是 67 天、201%，必定来访）",
+      visitor_arrive_count(datetime.datetime(2026, 9, 25, 8, 0), datetime.datetime(2026, 12, 1, 8, 0), 50) == 0
+      and visitor_arrive_count(datetime.datetime(2026, 9, 25, 8, 0), datetime.datetime(2026, 12, 1, 8, 0), 18) == 1)
+
+
+def train_weight(last_training: datetime.datetime, now_time: datetime.datetime) -> int:
+    """
+    求玩家「距离上次战斗训练已经超过两天」前提的权重
+    Keyword arguments:
+    last_training -- 上次战斗训练的时间
+    now_time -- 当前游戏时间
+    Return arguments:
+    int -- 前提权重
+    """
+    saved = (pl.action_info.last_training_time, cache.game_time)
+    try:
+        pl.action_info.last_training_time = last_training
+        cache.game_time = now_time
+        return handle_premise.handle_have_trained(0)
+    finally:
+        pl.action_info.last_training_time, cache.game_time = saved
+
+
+check("对照：同一季月内 3 天没训练权重 20，不满 2 天为 0，上次训练的记录晚于当前时间为 0",
+      train_weight(datetime.datetime(2026, 9, 7, 10, 0), datetime.datetime(2026, 9, 10, 10, 0)) == 20
+      and train_weight(datetime.datetime(2026, 9, 7, 10, 0), datetime.datetime(2026, 9, 8, 18, 0)) == 0
+      and train_weight(datetime.datetime(2026, 9, 7, 11, 0), datetime.datetime(2026, 9, 7, 10, 0)) == 0)
+season_train_weight = train_weight(datetime.datetime(2026, 9, 29, 10, 0), datetime.datetime(2026, 12, 1, 10, 0))
+check("9/29 训练、换季后第一天（12/1）时钟上只过了 2 天：权重 10，不是按公历 63 天算的 620", season_train_weight == 10, season_train_weight)
+check("从未训练过（记录是公元 1 年的缺省值）时照常给出权重，不报错", train_weight(datetime.datetime(1, 1, 1), datetime.datetime(2026, 9, 7, 10, 0)) > 0)
+
 # ==== 7. 写盘守卫 ====
 section("本文件没有写存档")
 check("自动存档之外没有任何 establish_save 调用", save_call_list == ["auto"], save_call_list)

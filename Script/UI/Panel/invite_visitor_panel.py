@@ -183,7 +183,8 @@ def settle_visitor_arrivals_and_departures():
         settle_visitor_arrivals()
 
     # 根据时间而产生的访客
-    add_day = game_time.count_day_for_datetime(cache.rhodes_island.last_visitor_time, cache.game_time)
+    # 天数按可游玩时间算：公历天数会把被时钟跳过的月份也算进去，一次换季就多出约 60 天，换季后第一天的来访率直接超过 100%
+    add_day = max(0, int(game_time.count_play_second(cache.rhodes_island.last_visitor_time, cache.game_time) // 86400))
     visitor_come_possibility = add_day * 3
     if random.randint(1, 100) <= visitor_come_possibility:
         # 刷新访客来访时间
