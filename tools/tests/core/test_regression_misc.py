@@ -205,6 +205,50 @@ check("泡完脚穿回鞋袜不报错，鞋袜回到身上、精液回到鞋上"
       and locker_npc.dirty.cloth_semen[11][1] == SHOE_SEMEN, (wear_back_error, locker_npc.cloth.cloth_wear[10], locker_npc.cloth.cloth_wear[11], locker_npc.dirty.cloth_semen[11][1]))
 remove_character(LOCKER_NPC_ID)
 
+section("穿着与衣柜两张服装精液表互不共用：往穿着的衣服上射精不会同时改衣柜的表")
+from Script.Core import old_chara_to_new  # noqa: E402
+
+
+def shared_part_list(dirty_data: game_type.DIRTY) -> list:
+    """
+    找出穿着表与衣柜表共用同一个列表对象的服装部位
+    Keyword arguments:
+    dirty_data -- 污浊数据
+    Return arguments:
+    list -- 共用列表的服装部位id
+    """
+    return [now_type for now_type in dirty_data.cloth_semen
+            if now_type in dirty_data.cloth_locker_semen and dirty_data.cloth_semen[now_type] is dirty_data.cloth_locker_semen[now_type]]
+
+
+zero_dirty = attr_calculation.get_zero_dirty()
+check("新建的空污浊数据：两张表各部位各有各的列表", zero_dirty.cloth_semen is not zero_dirty.cloth_locker_semen and shared_part_list(zero_dirty) == [], shared_part_list(zero_dirty))
+SHARE_NPC_ID = 9409
+share_npc = make_character(SHARE_NPC_ID, "精液表测试干员")
+upper_id = next(now_cid for now_cid, now_tem in game_config.config_clothing_tem.items() if now_tem.clothing_type == 5 and now_tem.tag != 6)
+# 两张表都缺某个部位时（旧存档、表被清空过的角色），转移衣服的结算会给两边各补一项
+for move_effect in (default_cloth.handle_wear_to_shower_locker, default_cloth.handle_wear_to_dormitory_locker):
+    share_npc.cloth = attr_calculation.get_cloth_zero()
+    share_npc.cloth.cloth_locker_in_dormitory = attr_calculation.get_cloth_locker_in_dormitory_zero()
+    share_npc.cloth.cloth_locker_in_shower = attr_calculation.get_shower_cloth_locker_zero()
+    share_npc.cloth.cloth_wear[5] = [upper_id]
+    share_npc.dirty.cloth_semen = {}
+    share_npc.dirty.cloth_locker_semen = {}
+    move_effect(SHARE_NPC_ID, 5, game_type.CharacterStatusChange(), cache.game_time)
+    check("两张表都缺部位时把衣服转移到衣柜（%s）：补出来的两边不共用列表" % move_effect.__name__,
+          sorted(share_npc.dirty.cloth_semen) == sorted(game_config.config_clothing_type) and shared_part_list(share_npc.dirty) == [], shared_part_list(share_npc.dirty))
+# 读档：存档里两张表可能已经是同一个 dict（旧版本「检查衣柜」造成），或各部位共用列表
+saved_pl_dirty = pl.dirty
+pl.dirty = attr_calculation.get_zero_dirty()
+pl.dirty.cloth_locker_semen = pl.dirty.cloth_semen
+old_chara_to_new.update_chara_cloth(pl, None)
+pl.dirty.cloth_semen[5][1] = 25
+check("读档后：原本是同一个 dict 的两张表被拆开，往穿着的上衣上射精不改衣柜的表",
+      pl.dirty.cloth_semen is not pl.dirty.cloth_locker_semen and shared_part_list(pl.dirty) == [] and pl.dirty.cloth_locker_semen[5][1] == 0,
+      (pl.dirty.cloth_semen is pl.dirty.cloth_locker_semen, shared_part_list(pl.dirty)))
+pl.dirty = saved_pl_dirty
+remove_character(SHARE_NPC_ID)
+
 # ==== 8. 生产事件的接生人选 ====
 section("生产事件：没有凯尔希也没有医疗干员时照常选出接生的人，且不会选到产妇本人")
 MOTHER_ID, HELPER_ID, MEDIC_ID = 9406, 9407, 9408

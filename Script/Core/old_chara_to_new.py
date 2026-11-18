@@ -1537,6 +1537,15 @@ def update_chara_cloth(value, tem_character):
         value.dirty.cloth_semen = empty_dirty_data.cloth_semen
     if len(value.dirty.cloth_locker_semen) != len(game_config.config_clothing_type):
         value.dirty.cloth_locker_semen = empty_dirty_data.cloth_locker_semen
+    # 两张服装精液表都规整成「服装部位 -> 列表」的 dict：
+    # 1. 很旧的存档里它们是按部位顺序排的列表。按下标取值时与 dict 一样能用，但「部位 in 表」对列表查的是值而不是下标，按 dict 写的代码会判错
+    # 2. 衣柜的表换成自己的 dict 与列表：旧存档里它可能与穿着的表是同一个对象（旧版本「检查衣柜」造成），或各部位共用同一个列表，
+    #    之后往穿着的衣服上射精会同时改衣柜的表、穿回时精液量翻倍
+    if isinstance(value.dirty.cloth_semen, list):
+        value.dirty.cloth_semen = dict(enumerate(value.dirty.cloth_semen))
+    locker_semen = value.dirty.cloth_locker_semen
+    locker_semen_item_list = enumerate(locker_semen) if isinstance(locker_semen, list) else locker_semen.items()
+    value.dirty.cloth_locker_semen = {clothing_type: list(semen_list) for clothing_type, semen_list in locker_semen_item_list}
 
     # 跳过玩家
     if value.cid == 0:

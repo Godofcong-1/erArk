@@ -257,9 +257,9 @@ def get_zero_dirty() -> game_type.DIRTY:
 
     for clothing_type in game_config.config_clothing_type:
         cloth_text = game_config.config_clothing_type[clothing_type].name
-        now_list = [cloth_text,0,0,0]
-        dirty_data.cloth_semen[clothing_type] = now_list
-        dirty_data.cloth_locker_semen[clothing_type] = now_list
+        # 穿着与衣柜两张表各建各的列表：共用同一个列表时，往穿着的衣服上射精会同时改衣柜的表，穿回时精液量翻倍
+        dirty_data.cloth_semen[clothing_type] = [cloth_text,0,0,0]
+        dirty_data.cloth_locker_semen[clothing_type] = [cloth_text,0,0,0]
 
     dirty_data.a_clean = 0
     dirty_data.enema_capacity = 0
