@@ -60,7 +60,8 @@ def load_rows():
     """
     rows = []
     raw = io.open(TARGET_PATH, encoding="utf-8", newline="").read()
-    for index, line in enumerate(raw.split("\r\n"), 1):
+    # 按任意行尾拆行：只按 CRLF 拆的话，文件是 LF 行尾（非 Windows 的检出）时整个文件算成一行，一条数据都读不到，检查却报全部通过
+    for index, line in enumerate(raw.splitlines(), 1):
         if index <= HEADER_LINES or not line.strip():
             continue
         parts = line.split(",", 4)
@@ -135,7 +136,7 @@ def check_effect(rows):
         return
     known = {row["cid"] for row in rows}
     raw = io.open(EFFECT_PATH, encoding="utf-8", newline="").read()
-    for index, line in enumerate(raw.split("\r\n"), 1):
+    for index, line in enumerate(raw.splitlines(), 1):
         if index <= HEADER_LINES or not line.strip():
             continue
         parts = line.split(",")
