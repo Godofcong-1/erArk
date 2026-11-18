@@ -672,6 +672,9 @@ def judge_scene_accessible(target_scene_str : str, character_id : int, draw_flag
         # 被博士召集到他当前位置的角色可以进博士所在的房间（博士为她开门）
         elif character_id and character_data.sp_flag.is_follow == 4 and get_map_system_path_str_for_list(pl_character_data.position) == target_scene_str:
             pass
+        # 被博士召集到博士办公室的角色可以进锁着的博士办公室（只对办公室放行，不能借此进别的锁着的房间）
+        elif character_id and character_data.sp_flag.is_follow == 3 and "Dr_Office" in now_scene_data.scene_tag:
+            pass
         # 博士可以无条件进博士房间和博士办公室
         elif character_id == 0 and ("Dr_room" in now_scene_data.scene_tag or "Dr_Office" in now_scene_data.scene_tag):
             pass
