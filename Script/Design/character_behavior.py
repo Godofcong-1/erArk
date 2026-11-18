@@ -35,9 +35,13 @@ line_feed.text = "\n"
 line_feed.width = 1
 
 
-def init_character_behavior():
+def init_character_behavior(time_stop_rollback_time: datetime.datetime = None):
     """
     角色行为树总控制
+    Keyword arguments:
+    time_stop_rollback_time -- 本次步进前的游戏时间，时停模式下玩家行动结束后还原到该时间；为None时按玩家行动时长倒退
+    Return arguments:
+    无
     """
     from Script.UI.Panel import achievement_panel
     from Script.System.Field_Commission_System import field_commission_function
@@ -58,7 +62,12 @@ def init_character_behavior():
         # 如果当前是时停模式，则回退时间，然后结束循环
         if cache.time_stop_mode:
             cache.achievement.time_stop_duration += pl_duration
-            game_time.sub_time_now(minute = pl_duration * -1)
+            # 直接还原到步进前的时间，不用 sub_time_now 倒退同样的分钟数：
+            # 步进跨过季月边界时（如 9/30 23:50 → 12/1 00:10），倒退会落进被跳过的月份、再被季月归并成更晚的日期，时钟反而前进约一个月
+            if time_stop_rollback_time is not None:
+                cache.game_time = time_stop_rollback_time
+            else:
+                game_time.sub_time_now(minute = pl_duration * -1)
             break
         field_commission_function.update_field_commission() # 刷新委托任务
         id_list = cache.npc_id_got.copy()

@@ -731,12 +731,66 @@ set_time(T(2026, 9, 7, 10, 0))
 game_time.sub_time_now(20)
 game_time.sub_time_now(-20)
 check("时停回退：前进再回退同样时长回到原时间", cache.game_time == T(2026, 9, 7, 10, 0), cache.game_time)
-set_time(T(2026, 9, 30, 23, 50))
-game_time.sub_time_now(20)
-game_time.sub_time_now(-20)
-known_issue("时停回退跨季月边界：9/30 23:50 前进 20 分钟再回退，仍回到 9/30 23:50", cache.game_time == T(2026, 9, 30, 23, 50),
-            "主循环时停回退用 sub_time_now(minute=-时长)，12/1 00:10 退回 11/30 23:50 后被季月归并成 12/30 23:50，时钟反而前进约一个月；待定是改回退方式还是改 get_sub_date 的倒退归并",
-            cache.game_time)
+
+# 时停模式下主循环结算完玩家行动即还原时间。让真实的 update.game_update_flow → init_character_behavior 跑一遍时停分支（铁律「不进真实主循环」的第二个例外，见 tools/tests/README.md）：
+# 逐角色结算 character_behavior.character_behavior 换成「玩家立即完成」的桩并设调用上限（防死循环卡住），成就结算（可能写文件）与输入框聚焦换成空函数；
+# 时停分支在玩家阶段之后即 break，不会进入 NPC 阶段、委托刷新与跨日结算
+from Script.Core import py_cmd
+from Script.Design import update
+from Script.Design import character_behavior as character_behavior_module
+from Script.UI.Panel import achievement_panel
+
+
+def run_time_stop_flow(start_time: datetime.datetime, duration: int) -> tuple:
+    """
+    在时停模式下按真实流程推进一次玩家行动
+    Keyword arguments:
+    start_time -- 行动开始时的游戏时间
+    duration -- 行动时长（分钟）
+    Return arguments:
+    tuple -- (流程结束后的游戏时间, 时停成就累计时长的增量, 结算玩家行动时的游戏时间列表)
+    """
+    behavior_time_list = []
+
+    def fake_character_behavior(character_id: int, now_time: datetime.datetime, pl_start_time: datetime.datetime):
+        """
+        逐角色结算的桩：记下结算时的游戏时间，并让该角色立即完成行动
+        Keyword arguments:
+        character_id -- 角色id
+        now_time -- 结算时的游戏时间
+        pl_start_time -- 玩家行动开始时间
+        Return arguments:
+        无
+        """
+        behavior_time_list.append(now_time)
+        if len(behavior_time_list) > 20:
+            raise RuntimeError("时停流程中逐角色结算被调用了 20 次以上，疑似死循环")
+        cache.over_behavior_character.add(character_id)
+
+    saved = (character_behavior_module.character_behavior, achievement_panel.achievement_flow, py_cmd.focus_cmd, cache.time_stop_mode, cache.game_update_flow_running)
+    character_behavior_module.character_behavior = fake_character_behavior
+    achievement_panel.achievement_flow = lambda *args, **kwargs: None
+    py_cmd.focus_cmd = lambda: None
+    try:
+        set_time(start_time)
+        cache.time_stop_mode = True
+        cache.game_update_flow_running = 0
+        pl.behavior.duration = duration
+        before_duration = cache.achievement.time_stop_duration
+        update.game_update_flow(duration)
+        return cache.game_time, cache.achievement.time_stop_duration - before_duration, behavior_time_list
+    finally:
+        character_behavior_module.character_behavior, achievement_panel.achievement_flow, py_cmd.focus_cmd, cache.time_stop_mode, cache.game_update_flow_running = saved
+
+
+end_time, add_duration, behavior_time_list = run_time_stop_flow(T(2026, 9, 7, 10, 0), 20)
+check("时停中的玩家行动：结算时时钟已前进，结束后还原到行动前、时停时长累计 20 分钟",
+      behavior_time_list == [T(2026, 9, 7, 10, 20)] and end_time == T(2026, 9, 7, 10, 0) and add_duration == 20, (behavior_time_list, end_time, add_duration))
+# 9/30 23:50 前进 20 分钟被季月归并到 12/1 00:10；曾用 sub_time_now(minute=-20) 倒退，落到 11/30 23:50 又被归并成 12/30 23:50，时钟反而前进约一个月
+end_time, add_duration, behavior_time_list = run_time_stop_flow(T(2026, 9, 30, 23, 50), 20)
+check("时停中的玩家行动跨季月边界：结算时已到 12/1 00:10，结束后仍还原到 9/30 23:50",
+      behavior_time_list == [T(2026, 12, 1, 0, 10)] and end_time == T(2026, 9, 30, 23, 50) and add_duration == 20, (behavior_time_list, end_time, add_duration))
+set_time(DEFAULT_TIME)
 
 # ==== 12. 游戏时钟：天数计数与预计日期 ====
 section("游戏时钟：天数计数与预计日期")

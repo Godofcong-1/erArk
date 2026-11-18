@@ -34,7 +34,7 @@
 | `test_config_integrity.py` | 静态的 id 解析检查（不执行任何前提 / 结算）：三张注册表可调用；Premise 常量都有处理函数且与编辑器前提表一一对应（标了弃用的除外）；行为 → 结算效果、二段行为 → 二段结算都已注册、CVE 格式完整；AI 目标 → 状态机、前提、目标类型都能解析；指令 → 前提（CSV 的 `premise_set` 写错会被静默丢弃）。只查运行时缺失时**静默跳过**或只打印报错的那类引用 |
 | `test_premise_smoke.py` | 全部已注册前提（养成系统除外）在日常 / H 中 / 深夜睡眠三种世界、玩家与 NPC 的四种主体-对象组合、一周全时段、全部场景下都可求值且返回合法权重；注册表与 `@add_premise` 装饰器一一对应、没有重复注册；核心前提语义抽查（权重、主体、时段、地点、好感阈值、H 状态等）。fixture 全部是成年角色 |
 | `test_settle_smoke.py` | 按新开局流程建的成年角色世界里，全部一段 / 二段结算器与效果串里的综合数值结算（CVE）按数据里可达的方向逐个执行不抛异常（每个用例前后快照还原、全程拦截写文件）；`handle_settle_behavior` 端到端跑常用行为；体力 / 气力 / 好感 / 信赖 / 状态通用结算的语义抽查。养成系统的结算器由 `education` 套件覆盖，不在此扫 |
-| `test_map_time.py` | 地图缓存与 `data/map` 源文件一致；场景 / 地图归属、通行表双向与连通、标签索引；地图内最短路与全场景寻路表（逐步相邻、每步耗时、总耗时等于最短距离）；`character_move` 的门锁 / 私密 / 钥匙、`judge_scene_accessible`、场景移动记账与移动状态机；季月时钟推进、日期工具与时段判定 |
+| `test_map_time.py` | 地图缓存与 `data/map` 源文件一致；场景 / 地图归属、通行表双向与连通、标签索引；地图内最短路与全场景寻路表（逐步相邻、每步耗时、总耗时等于最短距离）；`character_move` 的门锁 / 私密 / 钥匙、`judge_scene_accessible`、场景移动记账与移动状态机；季月时钟推进、时停结束后的时间还原（含跨季月）、日期工具、工作日与时段判定 |
 | `test_medical.py` | 医疗系统：检查目录覆盖全部并发症、菜单同一帧按钮返回文本不冲突；病人生成（并发症数量、追踪数据、不选女性限定部位）；执行检查的阳性 / 需再检 / 阴性判定与次数、记录上限；接诊策略、中止复原、结算发药与收入；诊疗面板检查菜单（#327：确诊后其后的系统不再消失）、提示高亮与灰显、已检查项；按钮驱动的完整诊疗流程（含二次确认与提前结束） |
 | `test_resource_exchange.py` | 资源交易所：特产只在产地按常规价买入、异地按 1.5 倍卖出，大地图移动后异地特产可手动卖出（#326），自动交易同样受限，交易员加成抬高特产卖价；买卖的资金 / 库存不变式与各种拒绝情形 |
 | `test_food_shop.py` | 食堂 / 餐馆 / 地摊的识别与购买（博士免费）；购买期间商店因跨日或补货刷新后继续购买、地摊与餐馆被买光的提示（含错字）、食堂补货不动餐馆；食物背包清理菜谱已不存在的食物；各商店的进货规则 |
@@ -47,7 +47,7 @@
 2. 第 2 行是一行模块说明，概括覆盖范围；开头 `from _bootstrap import *`，结尾 `finish()`。
 3. 用 `section()` 分节、`check(名称, 条件, 失败时附带的实际值)` 断言，名称写中文。对「注册表里每一项都……」这类扫一遍的检查，合成一条断言、把不合格的项放进第三个参数，不要每项一条。
 4. 断言写**设计意图**（设计文档、`update.log`、修复提交、代码注释），不写「现在代码返回什么」。锁定某个 BUG 修复时，确认这条断言在修复前的代码上会失败。
-5. 遵守 `.github/skills/headless-game-test/SKILL.md` 的铁律：不调 `save_handle.establish_save()`、不进真实主循环（`init_character_behavior`、`handle_instruct.*`、`chara_handle_instruct_common_settle`、`update.game_update_flow`）——代码会走到它们时在调用方模块上打桩；fixture 字段与置零函数照抄该 skill 的对照表。唯一的例外是 `core/test_save.py` 的存读档往返：存档目录与 save_info 都重定向到临时目录，并拦截临时目录以外的一切写入，要测存档就照它的做法。
+5. 遵守 `.github/skills/headless-game-test/SKILL.md` 的铁律：不调 `save_handle.establish_save()`、不进真实主循环（`init_character_behavior`、`handle_instruct.*`、`chara_handle_instruct_common_settle`、`update.game_update_flow`）——代码会走到它们时在调用方模块上打桩；fixture 字段与置零函数照抄该 skill 的对照表。例外只有两处：`core/test_save.py` 的存读档往返（存档目录与 save_info 都重定向到临时目录，并拦截临时目录以外的一切写入，要测存档就照它的做法）；`core/test_map_time.py` 的 `run_time_stop_flow`（让真实的 `update.game_update_flow` 只跑时停分支：逐角色结算换成带调用上限的桩，成就结算与输入框聚焦换成空函数，时停分支在玩家阶段后即退出）。
 6. 必须能在 CI 上跑：Windows、没有 `save/` 与 `image/` 目录、数据刚由 `buildconfig.py` 构建。依赖真实存档的段落要在没有存档时跳过（写法见 `education/test_behavior_loop.py` 开头）。
 7. 驱动面板：默认的 `askfor_all` 桩只返回第一个选项、**不执行按钮回调**，靠按钮回调改状态或退出循环的面板会死循环。先调 `enable_clickable_buttons()`（按钮绘制桩登记 `返回值 → (回调, 参数)`，脚本化的 `askfor_all` 选中后像真实的 `_cmd_deal` 一样执行回调），再用 `run_panel(入口函数, [返回值或谓词, ...])` 跑，之后看 `ask_log`（每次询问的选项与选中项）、`missed`（没找到的选择）与 `drawn_text`；用法见 `core/test_food_shop.py`、`core/test_resource_exchange.py`。还要断言按钮样式等更多信息时，自己记录按钮（见 `core/test_medical.py` 的 `ScriptedChoice`）。
 8. 确认是 BUG、但修法要维护者拍板时，用 `known_issue(名称, 修好后应成立的条件, 说明)` 代替 `check`：问题仍在时记为 `[KNOWN]`、不算失败，`run_all.py` 汇总里会列出；问题消失后它按通过计并提示改回 `check`。
