@@ -398,6 +398,15 @@ data/csv/                 # 游戏本体的表，编辑器直接读，不保留�
 16 张游戏表的取法在 `load_csv.py` 的 `game_csv_path`：从源码运行时（运行目录是 `tools/ArkEditor`）读 `../../data/csv/`，与游戏用的是同一份；
 打包后的编辑器没有这个目录，读自带 `csv/` 里的那一份——由 CI 的 `Copy ArkEditor Files` 一步从 `data/csv/` 拷进去。所以给游戏表加行后不需要再同步编辑器。
 
+### 打开与保存的约定（`main.py`）
+
+- **读完才算打开**：`load_event_file` / `load_talk_data_to_cache` / `load_chara_data_to_cache` 都是把整个文件读进局部变量、没有出错，才设为当前文件（`cache_control.now_file_path`）并刷新窗口。读不了时 `show_load_error` 弹窗说明是哪个文件、什么原因，编辑器里仍是之前打开的内容——不能先改「当前文件」再读，否则读到一半出错后按一次保存，就把残缺的数据写回那个文件。`json_handle.load_json` 也因此不吞 `JSONDecodeError`。
+- **换文件要清选中状态**：三个加载函数在成功后都调 `clear_item_lists()`，清空选中条目编号、前提 / 结算列表、文本框与注释框。两个列表控件读「当前选中的条目」一律走 `ItemPremiseList.selected_data()` / `ItemEffectList.selected_event()`，没有选中条目时返回 None、各操作什么也不做。
+- **口上菜单不开通用口上组件**：`data/talk_common` 的文件是另一种格式（表头带 `type_id`），`load_talk_data` 认出后提示并拒绝打开。
+- **新建文件不带旧内容**：新建事件文件直接写入 `{}` 再打开；新建口上文件先清空内存里的口上条目。选好路径之前不改「当前编辑类型」。
+- **保存先备份再写**：`save_data_and_mark` 先把磁盘上的旧内容拷到仓库根的 `备份/`（`文件名_日期`），再写入；一次保存只写一次文件。
+- **综合数值键不写残缺的**：三个综合数值窗口在属性未选、对象选了「角色id为」却没填 id、判定值框为空时不写入；`function.read_CVE` / `read_CSE` 只按固定的前几个下划线切分，判定值与行为 id 里可以带下划线。
+
 ## 与主游戏的集成
 
 ### 数据文件位置
