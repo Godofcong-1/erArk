@@ -295,14 +295,8 @@ for map_path_str, map_data in cache.map_data.items():
 check("通行边的终点都是本地图节点", not missing, missing[:20])
 check("通行耗时都是正整数", not not_positive, not_positive[:20])
 check("通行边都是双向的（新增场景要加双向边，见地图系统.md）", not one_way, one_way[:20])
-# 这两条边来回耗时不同，哪个方向的数值才对要由维护者定，先记为已知问题；其余边出现来回不一致仍判失败
-KNOWN_UNEVEN_EDGE = {("文职", "0", "外走廊"), ("泰拉", "无尽冰原", "萨米")}
-""" 已知来回耗时不一致的边 (地图, 节点, 节点)，节点按字符串升序 """
-new_uneven = [item for item in uneven if item[:3] not in KNOWN_UNEVEN_EDGE]
-known_uneven_left = [item for item in uneven if item[:3] in KNOWN_UNEVEN_EDGE]
-check("同一条边两个方向耗时相同（已知的两条除外）", not new_uneven, new_uneven[:20])
-known_issue("已知的两条边来回耗时不同", not known_uneven_left,
-            "文职区入口↔外走廊 去 2 回 1；大地图无尽冰原↔萨米 去 2 回 1（导航面板按它算燃料与天数，来回花费不同），待定哪个方向的数值为准", known_uneven_left)
+# 曾有文职区入口↔外走廊（去 2 回 1）、大地图无尽冰原↔萨米（去 2 回 1，导航面板按它算燃料与天数）两条来回不一致，已统一为 1 与 2
+check("同一条边两个方向耗时相同", not uneven, uneven[:20])
 bad = []
 for map_path_str, map_data in cache.map_data.items():
     node_set = set(map_data.path_edge)
