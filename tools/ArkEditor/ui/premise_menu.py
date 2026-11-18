@@ -176,10 +176,15 @@ class PremiseMenu(QDialog):
         if "cid" not in item.__dict__:
             return
 
+        # 没有选中的口上或事件（属性文件模式、或选中的条目已不在当前文件里）时不改数据
         if cache_control.now_edit_type_flag == 1:
-            data = cache_control.now_event_data[cache_control.now_select_id]
+            data = cache_control.now_event_data.get(cache_control.now_select_id)
         elif cache_control.now_edit_type_flag == 0:
-            data = cache_control.now_talk_data[cache_control.now_select_id]
+            data = cache_control.now_talk_data.get(cache_control.now_select_id)
+        else:
+            data = None
+        if data is None:
+            return
 
         if item.checkState(column) == Qt.Checked:
             item.setCheckState(0, Qt.Unchecked)

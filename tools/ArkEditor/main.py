@@ -128,6 +128,27 @@ def backup_file(file_path):
     backup_path = os.path.join(backup_dir, backup_name)
     shutil.copy2(file_path, backup_path)
 
+def clear_item_lists():
+    """
+    载入新文件后清掉上一个文件留下的选中状态
+    输入: 无
+    输出: 无
+    功能: 清空选中条目的编号、前提与结算列表、文本框与事件注释框，并退出文本预览。
+          不清的话，这些控件里显示的仍是上一个文件的条目，对它们的操作会按旧编号去新文件里找数据而报错，或把旧文本写进新文件的条目
+    """
+    cache_control.now_select_id = ""
+    item_premise_list.item_list.clear()
+    item_effect_list.item_list.clear()
+    # 清空文本框不算编辑，不能经 textChanged 把文件标记成已修改
+    item_text_edit.label_text.blockSignals(True)
+    item_text_edit.label_text.clear()
+    item_text_edit.label_text.blockSignals(False)
+    item_text_edit.comment_edit.clear()
+    # 预览里显示的是上一个文件的文本，回到编辑模式
+    item_text_edit.preview_button.setChecked(False)
+    item_text_edit.toggle_preview(False)
+
+
 def load_event_data():
     """载入事件文件"""
     global last_open_dir, is_modified
@@ -167,6 +188,7 @@ def load_event_data():
                 del now_event.effect[effect]
             cache_control.now_event_data[k] = now_event
         cache_control.now_edit_type_flag = 1
+        clear_item_lists()
         data_list.update()
         main_window.add_grid_event_layout(data_list,item_premise_list,item_effect_list,item_text_edit)
         main_window.completed_layout()
@@ -193,7 +215,7 @@ def create_event_data():
 
 def create_chara_data():
     """新建属性文件"""
-    cache_control.now_file_path = "0999_模板人物属性文件.csv"
+    cache_control.now_file_path = cache_control.CHARA_TEMPLATE_PATH
     load_chara_data_to_cache()
     global is_modified
     is_modified = False
@@ -289,6 +311,7 @@ def load_chara_data_to_cache():
     cache_control.now_chara_data = now_chara_data
     # print(f"debug Cloth = {cache_control.now_chara_data.Cloth}")
     cache_control.now_edit_type_flag = 2
+    clear_item_lists()
     chara_list.update()
 
     main_window.add_grid_chara_data_layout(chara_list)
@@ -383,6 +406,7 @@ def load_talk_data_to_cache():
             del now_talk.premise[premise]
         cache_control.now_talk_data[now_talk.cid] = now_talk
     cache_control.now_edit_type_flag = 0
+    clear_item_lists()
     data_list.update()
 
     main_window.add_grid_talk_layout(data_list,item_premise_list,item_text_edit)
@@ -450,13 +474,11 @@ def change_status_menu(action: QWidgetAction):
     cache_control.now_behavior = cid
     update_status_menu()
     # 如果有选中的条目，则更新该条目的状态
-    if cache_control.now_select_id != '':
+    now_select_data = item_premise_list.selected_data()
+    if now_select_data is not None:
         behavior_cid = cache_control.now_behavior
         # 更新状态id
-        if cache_control.now_edit_type_flag == 1:
-            cache_control.now_event_data[cache_control.now_select_id].behavior_id = behavior_cid
-        elif cache_control.now_edit_type_flag == 0:
-            cache_control.now_talk_data[cache_control.now_select_id].behavior_id = behavior_cid
+        now_select_data.behavior_id = behavior_cid
         # 更新状态的触发人和持续时间
         status_duration = int(cache_control.behavior_all_data[behavior_cid]["duration"])
         status_trigger = cache_control.behavior_all_data[behavior_cid]["trigger"]
@@ -506,7 +528,10 @@ def change_type_menu(action: QWidgetAction):
     data_list.type_menu.addActions(action_list)
     for i in range(len(type_list)):
         if type_list[i] == cache_control.now_type:
-            cache_control.now_event_data[cache_control.now_select_id].type = i
+            # 没有选中的事件时只改菜单上的显示
+            now_select_event = item_effect_list.selected_event()
+            if now_select_event is not None:
+                now_select_event.type = i
             break
 
 
