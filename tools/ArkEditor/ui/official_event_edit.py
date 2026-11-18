@@ -247,10 +247,14 @@ class OfficialEventEditWidget(QWidget):
             cache_control.now_edit_type_flag = old_flag
             cache_control.now_event_data = old_event_data
             cache_control.now_select_id = old_select_id
+            # 选择器可能改写了 cache_control.premise_data / effect_data 里共用的显示文字，而主窗口的两个列表是按这段文字反查条目 id 的，
+            # 所以换回列表后要重画，否则之后在主列表上右键、双击会按旧文字找不到 id 而报错
             if old_premise_list is not None:
                 cache_control.item_premise_list = old_premise_list
+                old_premise_list.update()
             if old_effect_list is not None:
                 cache_control.item_effect_list = old_effect_list
+                old_effect_list.update()
         edit.setText(dict_to_text(shim.premise if is_premise else shim.effect))
 
     def open_premise_menu(self, edit: QLineEdit):

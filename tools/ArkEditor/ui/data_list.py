@@ -336,6 +336,24 @@ class DataList(DataListIdEditMixin, QWidget):
             self.select_now_instruct_flag = 0
         self.update()
 
+    def show_selected_item(self):
+        """
+        重画条目列表，并让右侧的前提列表、结算列表与文本框显示当前选中的条目
+        输入: 无
+        输出: 无
+        功能: 新增 / 复制条目后选中的已经是新条目，右侧三个面板也要跟着换，否则面板上仍是上一条的内容，在上面的修改会落到新条目上
+        """
+        self.update()
+        for item_list in (cache_control.item_premise_list, cache_control.item_effect_list):
+            if item_list is not None:
+                item_list.update()
+        text_edit = cache_control.item_text_edit
+        if text_edit is not None:
+            # 显示条目自己的文本不算编辑，不能经 textChanged 把文件标记成已修改
+            text_edit.label_text.blockSignals(True)
+            text_edit.update()
+            text_edit.label_text.blockSignals(False)
+
     def create_event(self):
         """新增事件"""
         # 数据变更前保存快照（方法内部也会再次调用的可去重，但保证安全）
@@ -367,7 +385,7 @@ class DataList(DataListIdEditMixin, QWidget):
             'uid': event.uid,
             'row': row
         })
-        self.update()
+        self.show_selected_item()
 
     def event_delete(self):
         """
@@ -425,7 +443,7 @@ class DataList(DataListIdEditMixin, QWidget):
             'uid': event.uid,
             'row': insert_row
         })
-        self.update()
+        self.show_selected_item()
 
     def create_talk(self):
         """新增口上"""
@@ -454,7 +472,7 @@ class DataList(DataListIdEditMixin, QWidget):
             'uid': talk.cid,
             'row': row
         })
-        self.update()
+        self.show_selected_item()
 
     def talk_delete(self):
         """
@@ -533,7 +551,7 @@ class DataList(DataListIdEditMixin, QWidget):
             'uid': talk.cid,
             'row': insert_index
         })
-        self.update()
+        self.show_selected_item()
 
     def update_menu_min_width(self):
         """重新计算并设置菜单栏的最小宽度（在菜单标题变化后调用）。"""

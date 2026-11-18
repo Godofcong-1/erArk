@@ -3,6 +3,7 @@ from PySide6.QtGui import QFont
 from PySide6.QtCore import Qt
 import cache_control
 import function
+import load_csv
 from ui.premise_menu import PremiseMenu
 from ui.CVP_menu import CVPMenu
 import os
@@ -278,8 +279,9 @@ class ItemPremiseList(QWidget):
         premise_list.sort()
         # 添加前提组
         cache_control.premise_group_data[new_cid] = premise_list
-        # 保存前提组到文件
-        with open("PremiseGroup.csv", "a", encoding="utf-8") as now_file:
+        # 保存前提组到文件：要写进编辑器启动时读前提组的那个文件（load_csv.premise_group_path）。
+        # 原先写的是运行目录下的 PremiseGroup.csv，启动时没人读它，重开编辑器后新前提组就没了，用到它的口上也读不出这个前提
+        with open(load_csv.premise_group_path, "a", encoding="utf-8") as now_file:
             now_file.write(f"{new_cid},{'&'.join(premise_list)}\n")
         # 更新前提列表
         self.update()
