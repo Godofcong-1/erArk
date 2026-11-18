@@ -841,11 +841,14 @@ def frame_style_def(
     font_list = []
     font_list.append(font)
     font_list.append(font_size)
-    if bold == "1":
+    # 这三个开关由 io_init.init_style 送来，现在是 bool；也认 1 与 "1"（配置表里是 0/1 整数，旧的调用方传 "0"/"1" 字符串）。
+    # 原先只认字符串 "1"，配置表里设了加粗 / 下划线 / 斜体的样式因此从不生效
+    style_flag_on = (True, 1, "1")
+    if bold in style_flag_on:
         font_list.append("bold")
-    if under_line == "1":
+    if under_line in style_flag_on:
         font_list.append("underline")
-    if italic == "1":
+    if italic in style_flag_on:
         font_list.append("italic")
     textbox.tag_configure(
         style_name,
