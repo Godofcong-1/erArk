@@ -2356,6 +2356,18 @@ def _get_sub_panel_mode_data():
     
     return data
 
+def _copy_game_state():
+    """
+    取 game_state 的浅拷贝
+
+    参数：无
+
+    返回值类型：dict
+    功能描述：在锁内拷贝 game_state 的全部字段，常规更新与完整游戏状态都以它为底，之后不必长时间持有锁
+    """
+    with state_lock:
+        return game_state.copy()
+
 def send_full_game_state():
     """
     发送完整的游戏状态到前端（包含新UI所需的所有数据）
@@ -2370,15 +2382,10 @@ def send_full_game_state():
         from Script.Design import web_interaction_manager
         from Script.System.Instruct_System import instruct_meta
         
-        # 构建完整游戏状态
-        full_state = {}
-        
-        # 基础状态（旧API兼容）
-        with state_lock:
-            full_state["text_content"] = game_state.get("text_content", [])
-            full_state["buttons"] = game_state.get("buttons", [])
-            full_state["panel_id"] = game_state.get("panel_id")
-            full_state["skip_wait"] = game_state.get("skip_wait", False)
+        # 构建完整游戏状态：以 game_state 的全部字段为底，与常规更新相同。
+        # 这条状态是发给所有已连接页面的（不只是新连上的那个），前端每收到一条状态就按它整个重画：
+        # 少带了 input_request，各页面的输入框就不再提交文字；少带了 sub_panel_mode / sub_panel_data，子面板上方的场景信息栏与选项卡就没了
+        full_state = _copy_game_state()
         
         # 玩家信息
         if hasattr(cache, 'character_data') and 0 in cache.character_data:
@@ -2460,8 +2467,7 @@ def _emit_game_state_update():
     功能描述：通过WebSocket将游戏状态推送给所有连接的客户端
     """
     # 创建一个本地副本，避免长时间持有锁
-    with state_lock:
-        local_state = game_state.copy()
+    local_state = _copy_game_state()
     
     # 添加对话框状态
     try:
