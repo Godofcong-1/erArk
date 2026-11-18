@@ -522,15 +522,16 @@ class InScenePanel:
 
 ### 6.2 特殊状态处理
 
+交互对象是临盆、产后或婴儿时，技艺、猥亵、性爱三类指令不显示。这层隐藏由 `handle_premise.instruct_type_shown(指令类型)`（`handle_premise_other.py`）逐类判断，面板遍历指令类型时调用它：
+
 ```python
-# 临盆、产后、婴儿状态下隐藏特定类型
-if (handle_premise.handle_t_parturient_1(0) or 
-    handle_premise.handle_t_postpartum_1(0) or 
-    handle_premise.handle_t_baby_1(0)):
-    cache.instruct_type_filter[4] = False  # 技艺
-    cache.instruct_type_filter[5] = False  # 猥亵
-    cache.instruct_type_filter[6] = False  # 性爱
+for now_type in cache.instruct_type_filter:
+    # 玩家没开这一类，或交互对象处于上述状态而这一类属于技艺 / 猥亵 / 性爱 → 不显示
+    if not handle_premise.instruct_type_shown(now_type):
+        continue
 ```
+
+`instruct_type_shown` 只读 `cache.instruct_type_filter`，**不改写它**——这个设置是玩家自己选的、会随存档保存；此前面板在这种对象面前直接把三类写成 `False`，换回别的交互对象后玩家原来的设置也回不来。前提 `arts_panel_show` / `obscenity_panel_show` / `sex_panel_show` 用的是同一个函数。
 
 ---
 
