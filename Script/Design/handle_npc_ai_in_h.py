@@ -625,6 +625,21 @@ def npc_active_h():
     update.game_update_flow(10)
 
 
+def joining_takes_kept_virginity(character_id: int, status_id) -> bool:
+    """
+    判断让角色加入群交模板里某个部位已有的状态，会不会夺走她还保有的处女
+    Keyword arguments:
+    character_id -- 要加入的角色id
+    status_id -- 模板里该部位已有的状态id（没有时为 -1）
+    Return arguments:
+    bool -- 该状态是破处类、且会夺走她还保有的某项处女时为 True
+    """
+    if status_id not in game_config.config_behavior:
+        return False
+    status_tag_list = game_config.config_behavior[status_id].tag.split("|")
+    return virgin_break_gate.takes_kept_virginity(status_tag_list, cache.character_data[character_id].talent)
+
+
 def npc_ai_in_group_sex(character_id: int):
     """
     NPC在群交中的AI，不含抢占\n
@@ -670,6 +685,9 @@ def npc_ai_in_group_sex(character_id: int):
         body_part = random.choice(now_template_empty_part_list)
         # 如果是加入侍奉，则直接加入
         if body_part == _("加入侍奉"):
+            # 模板里已有的侍奉指令会夺走她还保有的处女时不加入
+            if joining_takes_kept_virginity(character_id, A_template_data[1][1]):
+                return
             A_template_data[1][0].append(character_id)
             # print(f"debug {character_data.name}加入侍奉{game_config.config_status[ A_template_data[1][1]].name}")
         else:
@@ -741,6 +759,10 @@ def npc_ai_in_group_sex_type_3():
         new_chara_id_list.remove(character_id)
         # 如果是加入侍奉，则直接加入
         if body_part == _("加入侍奉"):
+            # 模板里已有的侍奉指令会夺走她还保有的处女时不加入，把她放回待选列表去抢别的部位
+            if joining_takes_kept_virginity(character_id, A_template_data[1][1]):
+                new_chara_id_list.append(character_id)
+                continue
             A_template_data[1][0].append(character_id)
             # print(f"debug {character_data.name}加入侍奉{game_config.config_status[ A_template_data[1][1]].name}")
         else:
@@ -777,6 +799,11 @@ def npc_ai_in_group_sex_type_3():
         character_id = random.choice(new_chara_id_list)
         # 从列表中去掉该角色
         new_chara_id_list.remove(character_id)
+        # 顶替沿用的是该部位现有的指令：它会夺走她还保有的处女时不顶替，把她放回待选列表
+        now_status_id = A_template_data[1][1] if body_part == "侍奉" else A_template_data[0][body_part][1]
+        if joining_takes_kept_virginity(character_id, now_status_id):
+            new_chara_id_list.append(character_id)
+            continue
         # 如果是侍奉，则加入角色列表，并踢出列表中的第0个角色
         if body_part == "侍奉":
             A_template_data[1][0].append(character_id)
