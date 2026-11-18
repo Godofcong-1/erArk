@@ -78,7 +78,9 @@ def init(main_flow: object):
                 e.write(f"最近输入指令：{cache.input_cache}\n")
                 e.write(f"玩家最近状态：{instruct_cn_name_list}\n")
                 e.write(f"当前游戏内时间：{game_time.get_date_text(cache.game_time)}\n")
-            traceback.print_exc(file=open(error_path, "a"))
+                # 回溯写进同一个 UTF-8 句柄：此前另开一个不指定编码的句柄，回溯会按系统代码页写入，
+                # 与上面几行的 UTF-8 混在一个文件里（简中 Windows 上回溯里的中文成了乱码；别的代码页遇到编不了的字符时写回溯本身就会抛异常，后面的存档与报错面板都不执行）
+                traceback.print_exc(file=e)
             # 向游戏内写入错误信息
             error_text = "\n"
             error_text += _("版本信息：{0}\n").format(normal_config.config_normal.verson)
