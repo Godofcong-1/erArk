@@ -45,6 +45,9 @@ import sys
 import time
 from datetime import datetime
 
+# 导入即增量构建游戏数据（同 game.py 的第一步）：新克隆的仓库里还没有 data/data.json 等生成物，不先构建的话后面载入配置时直接报错退出
+import auto_build_config  # noqa: F401,E402
+
 PROFILE_DIR = "profiling_output"
 os.makedirs(PROFILE_DIR, exist_ok=True)
 
