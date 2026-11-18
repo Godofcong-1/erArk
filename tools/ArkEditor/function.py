@@ -34,6 +34,12 @@ def read_CVP(cvp_value_str: str):
     cvp_str_list[2] = cvp_str_list[2].replace("ShootPos", "射精位置")
     cvp_str_list[2] = cvp_str_list[2].replace("Relationship", "身份关系")
     cvp_str_list[2] = cvp_str_list[2].replace("Gift", "礼物")
+    # 这四个属性名要在下面的单字母替换之前换成中文，否则 Growth 的 G 会被换成「攻略程度」、CourseType 的 T 会被当成素质；
+    # CourseShowOff 与 CourseType 里都含 Course，所以排在 Course 前面
+    cvp_str_list[2] = cvp_str_list[2].replace("CourseShowOff", "待炫耀的已升级科目")
+    cvp_str_list[2] = cvp_str_list[2].replace("CourseType", "当前课型")
+    cvp_str_list[2] = cvp_str_list[2].replace("Course", "当前课程科目")
+    cvp_str_list[2] = cvp_str_list[2].replace("Growth", "养成数值")
     cvp_str_list[2] = cvp_str_list[2].replace("F", "好感")
     cvp_str_list[2] = cvp_str_list[2].replace("X", "信赖")
     cvp_str_list[2] = cvp_str_list[2].replace("G", "攻略程度")
@@ -117,6 +123,15 @@ def read_CVP(cvp_value_str: str):
         item_id = cache_control.gift_items_data[b2_value]
         b2_name = cache_control.item_data[item_id]
         cvp_str = cvp_str.replace(f"礼物|{b2_value}", f"礼物{b2_name}")
+    elif "当前课程科目" in cvp_str:
+        # 科目用的是能力编号（70~77）
+        b2_value = cvp_str_list[2].split("当前课程科目|")[1]
+        b2_name = cache_control.ability_data[b2_value]
+        cvp_str = cvp_str.replace(f"当前课程科目|{b2_value}", f"当前课程科目{b2_name}")
+    elif "待炫耀的已升级科目" in cvp_str:
+        b2_value = cvp_str_list[2].split("待炫耀的已升级科目|")[1]
+        b2_name = cache_control.ability_data[b2_value]
+        cvp_str = cvp_str.replace(f"待炫耀的已升级科目|{b2_value}", f"待炫耀的已升级科目{b2_name}")
     # 最后去掉所有的下划线
     cvp_str = cvp_str.replace("_", "")
     return cvp_str
