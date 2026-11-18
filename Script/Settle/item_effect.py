@@ -7,6 +7,7 @@ from Script.Design import (
     map_handle,
     attr_calculation,
     handle_premise,
+    game_time,
 )
 from Script.Core import cache_control, constant_effect, game_type, get_text
 from Script.Config import normal_config
@@ -1474,7 +1475,8 @@ def handle_target_diuretics_on(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    end_time = now_time + datetime.timedelta(hours=4)
+    # 失效时刻按游戏时钟推进（get_sub_date）：直接加公历时长会落进被时钟跳过的月份，换季后立刻被判为已过期
+    end_time = game_time.get_sub_date(hour=4, old_date=now_time)
     target_data.h_state.body_item[8][1] = True
     target_data.h_state.body_item[8][2] = end_time
 
@@ -1501,7 +1503,8 @@ def handle_target_add_tired_tosleep(
     target_data.tired_point = 160
     target_data.sleep_point = 100
     target_data.h_state.body_item[9][1] = True
-    target_data.h_state.body_item[9][2] = now_time + datetime.timedelta(hours=8)
+    # 失效时刻按游戏时钟推进（get_sub_date）：直接加公历时长会落进被时钟跳过的月份，换季后立刻被判为已过期
+    target_data.h_state.body_item[9][2] = game_time.get_sub_date(hour=8, old_date=now_time)
     handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 6)
 
 
@@ -1547,7 +1550,8 @@ def handle_target_no_pregnancy_next_day(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.body_item[11][1] = True
-    target_data.h_state.body_item[11][2] = now_time + datetime.timedelta(days=30)
+    # 一个月的量 = 30 个游戏日。按游戏时钟推进（get_sub_date）：直接加公历 30 天会落进被时钟跳过的月份，一换季就被判为已过期
+    target_data.h_state.body_item[11][2] = game_time.get_sub_date(day=30, old_date=now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_NO_PREGNANCY_FROM_LAST_H)

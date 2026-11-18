@@ -608,6 +608,59 @@ season_train_weight = train_weight(datetime.datetime(2026, 9, 29, 10, 0), dateti
 check("9/29 训练、换季后第一天（12/1）时钟上只过了 2 天：权重 10，不是按公历 63 天算的 620", season_train_weight == 10, season_train_weight)
 check("从未训练过（记录是公元 1 年的缺省值）时照常给出权重，不报错", train_weight(datetime.datetime(1, 1, 1), datetime.datetime(2026, 9, 7, 10, 0)) > 0)
 
+# ==== 6.4 锁定修复：药效的失效时刻跨季 ====
+section("锁定修复：利尿剂、安眠药、事前避孕药的失效时刻落在时钟能走到的时刻上")
+from Script.Settle import item_effect  # noqa: E402
+
+DRUG_NPC_ID = 9302
+""" 本段用的干员 fixture：被博士用药的对象 """
+drug_npc = make_character(DRUG_NPC_ID, "换季药效测试干员", position=pl.position)
+pl.target_character_id = DRUG_NPC_ID
+
+
+def drug_end_time(effect_func, item_index: int, use_time: datetime.datetime) -> datetime.datetime:
+    """
+    博士在 use_time 对 fixture 干员用一次药，返回记下的失效时刻
+    Keyword arguments:
+    effect_func -- 用药的结算函数
+    item_index -- 这种药在 h_state.body_item 里的下标（8 利尿剂 / 9 安眠药 / 11 事前避孕药）
+    use_time -- 用药时间
+    Return arguments:
+    datetime.datetime -- 记下的失效时刻
+    """
+    drug_npc.h_state.body_item[item_index][1] = False
+    drug_npc.h_state.body_item[item_index][2] = None
+    effect_func(0, 1, game_type.CharacterStatusChange(), use_time)
+    return drug_npc.h_state.body_item[item_index][2]
+
+
+check("对照：同一季月内利尿剂管 4 小时、安眠药管 8 小时",
+      drug_end_time(item_effect.handle_target_diuretics_on, 8, datetime.datetime(2026, 9, 15, 12, 0)) == datetime.datetime(2026, 9, 15, 16, 0)
+      and drug_end_time(item_effect.handle_target_add_tired_tosleep, 9, datetime.datetime(2026, 9, 15, 20, 0)) == datetime.datetime(2026, 9, 16, 4, 0))
+drug_end_list = [
+    drug_end_time(item_effect.handle_target_diuretics_on, 8, datetime.datetime(2026, 9, 30, 22, 30)),
+    drug_end_time(item_effect.handle_target_add_tired_tosleep, 9, datetime.datetime(2026, 9, 30, 20, 0)),
+    drug_end_time(item_effect.handle_target_no_pregnancy_next_day, 11, datetime.datetime(2026, 9, 15, 10, 0)),
+    drug_end_time(item_effect.handle_target_no_pregnancy_next_day, 11, datetime.datetime(2026, 9, 1, 10, 0)),
+]
+check("季末 22:30 用的利尿剂在下一个季月 1 日 02:30 失效；季末 20:00 的安眠药在 1 日 04:00 失效；9/15 服的事前避孕药管满 30 个游戏日到 12/15、9/1 服的到 12/1",
+      drug_end_list == [datetime.datetime(2026, 12, 1, 2, 30), datetime.datetime(2026, 12, 1, 4, 0), datetime.datetime(2026, 12, 15, 10, 0), datetime.datetime(2026, 12, 1, 10, 0)],
+      drug_end_list)
+check("失效时刻都落在季月里（时钟走不到的月份不会出现）", all(now_end.month in (3, 6, 9, 12) for now_end in drug_end_list), drug_end_list)
+# 端到端：季末 22:30 用的利尿剂，换季后的 00:10 还在生效，到 02:30 才失效
+drug_end_time(item_effect.handle_target_diuretics_on, 8, datetime.datetime(2026, 9, 30, 22, 30))
+drug_npc.sp_flag.is_h = False
+cache.game_time = datetime.datetime(2026, 12, 1, 0, 10)
+realtime_settle.change_character_persistent_state(DRUG_NPC_ID)
+diuretics_on_after_midnight = drug_npc.h_state.body_item[8][1]
+cache.game_time = datetime.datetime(2026, 12, 1, 2, 30)
+realtime_settle.change_character_persistent_state(DRUG_NPC_ID)
+check("季末 22:30 用的利尿剂：换季后 00:10 仍在生效，02:30 失效", diuretics_on_after_midnight and not drug_npc.h_state.body_item[8][1],
+      (diuretics_on_after_midnight, drug_npc.h_state.body_item[8][1]))
+remove_character(DRUG_NPC_ID)
+pl.target_character_id = 0
+set_time(DEFAULT_TIME)
+
 # ==== 7. 写盘守卫 ====
 section("本文件没有写存档")
 check("自动存档之外没有任何 establish_save 调用", save_call_list == ["auto"], save_call_list)
