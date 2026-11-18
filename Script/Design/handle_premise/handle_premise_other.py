@@ -2101,6 +2101,28 @@ def handle_work_panel_show(character_id: int) -> int:
     return 0
 
 
+TARGET_HIDDEN_INSTRUCT_TYPE_SET = {constant.InstructType.ARTS, constant.InstructType.OBSCENITY, constant.InstructType.SEX}
+""" 交互对象是临盆、产后或婴儿时不显示的指令类型：技艺、猥亵、性爱 """
+
+
+def instruct_type_shown(instruct_type: int) -> bool:
+    """
+    某一类指令当前是否显示在指令面板里
+    Keyword arguments:
+    instruct_type -- 指令类型id（constant.InstructType）
+    Return arguments:
+    bool -- 是否显示
+    功能: 玩家没有开启这一类时不显示；玩家的交互对象是临盆、产后或婴儿时，技艺、猥亵、性爱三类不显示。
+          只读玩家的指令类型过滤设置（cache.instruct_type_filter），不改写它：此前由指令面板在这种对象面前直接把三类的设置写成关闭，
+          换回别的交互对象后玩家原来的设置也回不来（设置会随存档保存）
+    """
+    if not cache.instruct_type_filter.get(instruct_type, False):
+        return False
+    if instruct_type in TARGET_HIDDEN_INSTRUCT_TYPE_SET and (handle_t_parturient_1(0) or handle_t_postpartum_1(0) or handle_t_baby_1(0)):
+        return False
+    return True
+
+
 @add_premise(constant_promise.Premise.ARTS_PANEL_SHOW)
 def handle_arts_panel_show(character_id: int) -> int:
     """
@@ -2110,7 +2132,7 @@ def handle_arts_panel_show(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if cache.instruct_type_filter[4]:
+    if instruct_type_shown(constant.InstructType.ARTS):
         return 1
     return 0
 
@@ -2124,7 +2146,7 @@ def handle_obscenity_panel_show(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if cache.instruct_type_filter[5]:
+    if instruct_type_shown(constant.InstructType.OBSCENITY):
         return 1
     return 0
 
@@ -2138,7 +2160,7 @@ def handle_sex_panel_show(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if cache.instruct_type_filter[6]:
+    if instruct_type_shown(constant.InstructType.SEX):
         return 1
     return 0
 
