@@ -311,8 +311,10 @@ class CommissionEditWidget(QWidget):
 
     def save_commission(self):
         """
-        保存属性到对象并发出信号
+        保存属性到对象并发出信号，没有选中委托时什么也不做
         """
+        if self.commission is None:
+            return
         c = self.commission
         c.cid = int(self.cid_edit.text())
         c.name = self.name_edit.text()
