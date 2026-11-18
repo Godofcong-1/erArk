@@ -2158,11 +2158,11 @@
     T_FINGER_TEC_L_7 = "t_finger_tec_l_7"
     """ 属性_能力 交互对象指技<7 """
 
-    KISS_0 = "kiss_0"
+    KISS_0 = "kiss_exp_0"
     """ 属性_经验 自身亲吻经验==0 """
     KISS_GE_10 = "kiss_ge_10"
     """ 属性_经验 自身亲吻经验>=10 """
-    TARGET_KISS_0 = "t_kiss_0"
+    TARGET_KISS_0 = "t_kiss_exp_0"
     """ 属性_经验 交互对象亲吻经验==0 """
     TARGET_KISS_GE_10 = "t_kiss_ge_10"
     """ 属性_经验 交互对象亲吻经验>=10 """

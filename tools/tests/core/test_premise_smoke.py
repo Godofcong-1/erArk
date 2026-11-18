@@ -41,8 +41,6 @@ KNOWN_BROKEN_PREMISE = {}
 """ 已确认的前提 BUG：前提id → 问题说明（证据见各自专门断言的附带信息）。
 本文件首轮扫出的 t_not_wear_hat（自己调自己无限递归）、t_turn_m_orgasm_g_3（读了不存在的 orgasm_count[8]）、
 ask_hands_flexibility_exercises（Body_Manage_Requirement.csv 手部一行误写成 cid 35）已于 2026-11-18 修好并移出 """
-KNOWN_DUPLICATE_PREMISE = {"kiss_0", "t_kiss_0"}
-""" 已知的重复注册前提id：KISS_0 与 NO_FIRST_KISS、TARGET_KISS_0 与 TARGET_NO_FIRST_KISS 取了同一个id，含义相反，待维护者定 """
 assert scene_str(OFFICE) in cache.scene_data
 
 
@@ -388,14 +386,12 @@ check("注册的处理函数都能按 handler(character_id) 调用（可调用�
 # 两个常量取了同一个id、或同一个id被装饰两次时，后导入的模块静默顶替先导入的，先注册的那个实现永远调不到
 duplicate_premise = {premise_id: entry_list for premise_id, entry_list in decorated_premise.items() if len(entry_list) > 1}
 duplicate_text = {premise_id: (entry_list, "生效：" + registry[premise_id].__name__) for premise_id, entry_list in duplicate_premise.items() if premise_id in registry}
-new_duplicate_text = {premise_id: text for premise_id, text in duplicate_text.items() if premise_id not in KNOWN_DUPLICATE_PREMISE}
-new_duplicate_premise = [premise_id for premise_id in duplicate_premise if premise_id not in KNOWN_DUPLICATE_PREMISE]
-check("每个前提id只由一个处理函数注册（重复注册时后导入者静默顶替先导入者；已知的两个除外）", not new_duplicate_premise, new_duplicate_text)
-known_duplicate_text = {premise_id: text for premise_id, text in duplicate_text.items() if premise_id in KNOWN_DUPLICATE_PREMISE}
-known_issue("kiss_0 / t_kiss_0 各只由一个处理函数注册", not [premise_id for premise_id in duplicate_premise if premise_id in KNOWN_DUPLICATE_PREMISE],
-            "KISS_0（自己无接吻经验，handle_premise_other）与 NO_FIRST_KISS（博士已没有初吻，handle_premise_first）同取 kiss_0，t_kiss_0 同理；"
-            "后导入的 handle_premise_first 生效，含义与前者相反，口上 / 事件里共 223 处引用，待定以哪个含义为准并给另一个换id",
-            known_duplicate_text)
+check("每个前提id只由一个处理函数注册（重复注册时后导入者静默顶替先导入者）", not duplicate_premise, duplicate_text)
+# KISS_0（自身亲吻经验==0）曾与 NO_FIRST_KISS（玩家未保有初吻）同取 kiss_0、含义相反，t_kiss_0 同理；口上与事件里的引用一直按后者生效，
+# 因此 kiss_0 / t_kiss_0 保留初次素质的含义（与 kiss_1 / t_kiss_1 成对），亲吻经验的两个改用 kiss_exp_0 / t_kiss_exp_0
+kiss_resolve = {premise_id: getattr(registry.get(premise_id), "__name__", None) for premise_id in ("kiss_0", "t_kiss_0", "kiss_exp_0", "t_kiss_exp_0")}
+check("kiss_0 / t_kiss_0 为初次素质（是否保有初吻），kiss_exp_0 / t_kiss_exp_0 为亲吻经验==0",
+      kiss_resolve == {"kiss_0": "handle_no_first_kiss", "t_kiss_0": "handle_target_no_first_kiss", "kiss_exp_0": "handle_kiss_0", "t_kiss_exp_0": "handle_t_kiss_0"}, kiss_resolve)
 
 # ==== 3. 三种世界状态 × 主体-对象组合：全部前提可求值且返回合法权重 ====
 WORLD_LIST = [
