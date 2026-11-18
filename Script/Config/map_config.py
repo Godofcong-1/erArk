@@ -50,7 +50,9 @@ def load_dir_now(data_path: str):
     Keyword arguments:
     data_path -- 地图路径
     """
-    for i in os.listdir(data_path):
+    # 按文件名（不分大小写）排序后再载入：os.listdir 的顺序取决于文件系统，NTFS 恰好是这个顺序，Linux / macOS 上则不固定，
+    # 而场景与地点标签的载入顺序会影响按顺序分配宿舍等逻辑。键与构建脚本的 sorted_listdir 相同
+    for i in sorted(os.listdir(data_path), key=str.upper):
         now_path = os.path.join(data_path, i)
         if os.path.isfile(now_path):
             now_file = i.split(".")

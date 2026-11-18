@@ -81,7 +81,8 @@ class ModManager:
         previous_mods = dict(self.mods)
         self.mods. clear()
 
-        for item in os.listdir(mod_path):
+        # 按文件夹名排序，使模组列表的顺序、以及 mod_id 重复时采用哪个文件夹，都不随文件系统列出文件的顺序变化
+        for item in sorted(os.listdir(mod_path), key=str.upper):
             item_path = os.path. join(mod_path, item)
             if not os.path.isdir(item_path):
                 continue

@@ -88,7 +88,8 @@ def find_files_and_get_size(directory, character):
     # 构造文件路径
     path = os.path.join(directory, '*')
     # 查找文件名包含特定字符的文件
-    files = glob.glob(path)
+    # 排序后再找：glob 的顺序取决于文件系统，同一角色有多个文件时取到哪一个不应随系统变化
+    files = sorted(glob.glob(path), key=str.upper)
     # print(f"debug files = {files}")
     # 全角色名为，文件名的.之前的部分
     all_chara_name = []
@@ -116,7 +117,7 @@ def find_files_and_get_size(directory, character):
     # 同理获得查找事件文件的大小
     event_directory = 'data/event/chara'
     event_path = os.path.join(event_directory, '*')
-    event_files = glob.glob(event_path)
+    event_files = sorted(glob.glob(event_path), key=str.upper)
     all_event_chara_name = [os.path.basename(file).split(".")[0].split("_")[1] for file in event_files]
     target_event_files = []
     for i in range(len(all_event_chara_name)):
