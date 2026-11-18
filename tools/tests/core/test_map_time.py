@@ -536,6 +536,58 @@ small_room.character_list.difference_update(range(9001, 9011))
 big_room_list = sorted(s for s, d in cache.scene_data.items() if d.room_area == 3)
 check("面积 3 的房间不设人数上限", len(big_room_list) > 0 and all(not map_handle.judge_scene_is_full(s) for s in big_room_list))
 
+section("锁定修复：锁门后谁能进门（博士、助理、被召集的干员）")
+dr_office_str = constant.place_data["Dr_Office"][0]
+dr_office = cache.scene_data[dr_office_str]
+dr_office.close_flag = 1
+check("博士办公室锁着时，门外的博士也能进自己的办公室", map_handle.judge_scene_accessible(dr_office_str, 0, False) == "open", map_handle.judge_scene_accessible(dr_office_str, 0, False))
+pl.assistant_character_id = 301
+check("助理可以进锁着的博士办公室", map_handle.judge_scene_accessible(dr_office_str, 301, False) == "open")
+small_room.close_flag = 1
+npc.sp_flag.is_follow = 0
+check("助理不能进别的锁着的房间（既不是博士房间 / 办公室，也没跟着博士）", map_handle.judge_scene_accessible(small_room_str, 301, False) == "door_lock",
+      map_handle.judge_scene_accessible(small_room_str, 301, False))
+move_to(0, path_list(small_room_str))
+npc.sp_flag.is_follow = 1
+check("跟随中的助理可以跟着博士进他所在的锁门房间", map_handle.judge_scene_accessible(small_room_str, 301, False) == "open")
+pl.assistant_character_id = 0
+npc.sp_flag.is_follow = 4
+check("被博士召集到当前位置的干员，可以进博士所在的锁门房间", map_handle.judge_scene_accessible(small_room_str, 301, False) == "open",
+      map_handle.judge_scene_accessible(small_room_str, 301, False))
+npc.sp_flag.is_follow = 0
+check("没被召集的干员仍进不了博士所在的锁门房间", map_handle.judge_scene_accessible(small_room_str, 301, False) == "door_lock")
+npc.sp_flag.is_follow = 3
+check("被博士召集到博士办公室的干员，可以进锁着的博士办公室", map_handle.judge_scene_accessible(dr_office_str, 301, False) == "open",
+      map_handle.judge_scene_accessible(dr_office_str, 301, False))
+check("召集到博士办公室不等于能进别的锁着的房间", map_handle.judge_scene_accessible(small_room_str, 301, False) == "door_lock")
+npc.sp_flag.is_follow = 0
+small_room.close_flag = 0
+dr_office.close_flag = 0
+
+section("锁定修复：跟着博士走进满员房间")
+small_room.character_list.update(range(9001, 9010))
+check("fixture：博士在场时房间正好满员（9 名干员 + 博士）", map_handle.judge_scene_is_full(small_room_str))
+npc.sp_flag.is_follow = 1
+check("智能跟随中的干员可以跟着博士进他所在的满员房间", map_handle.judge_scene_accessible(small_room_str, 301, False) == "open",
+      map_handle.judge_scene_accessible(small_room_str, 301, False))
+npc.sp_flag.is_follow = 0
+check("没在跟随的干员仍被满员挡住", map_handle.judge_scene_accessible(small_room_str, 301, False) == "full")
+move_to(0, SCENE_DORM)
+small_room.character_list.add(9010)
+saved_pl_behavior = pl.behavior
+pl.behavior = game_type.Behavior()
+pl.behavior.behavior_id = constant.Behavior.MOVE
+pl.behavior.move_target = path_list(small_room_str)
+npc.sp_flag.is_follow = 1
+check("博士正走向满员房间（本段移动的目标就是它）时，跟随的干员同步进门不被挡", map_handle.judge_scene_accessible(small_room_str, 301, False) == "open",
+      map_handle.judge_scene_accessible(small_room_str, 301, False))
+pl.behavior.move_target = list(SCENE_DORM_102)
+check("跟随中的干员去博士不在、也不是博士要去的满员房间：照常被挡", map_handle.judge_scene_accessible(small_room_str, 301, False) == "full",
+      map_handle.judge_scene_accessible(small_room_str, 301, False))
+pl.behavior = saved_pl_behavior
+npc.sp_flag.is_follow = 0
+small_room.character_list.difference_update(range(9001, 9011))
+
 # ==== 8. 场景移动记账 character_move_scene ====
 section("场景移动记账 character_move_scene")
 walker = make_npc(302, "记账员", SCENE_OUT_CORRIDOR)
@@ -566,6 +618,18 @@ check("移动历史最多保留 10 条", len(walker.action_info.past_move_positi
 room_103.character_list.add(302)
 map_handle.character_move_scene(list(SCENE_DORM_102), list(SCENE_DORM_103), 302)
 check("已在新场景名单里但 position 没跟上时，补上 position", walker.position == SCENE_DORM_103 and 302 not in dorm_102.character_list and 302 in room_103.character_list)
+
+section("锁定修复：博士锁门后，屋里其他角色离开不解锁")
+leaver = make_npc(9311, "离屋者", SCENE_DORM_102)
+player_position_before = list(pl.position)
+move_to(0, SCENE_DORM_102)
+dorm_102.close_flag = 1
+map_handle.character_move_scene(list(SCENE_DORM_102), list(SCENE_OUT_CORRIDOR), 9311)
+check("博士在锁着的房间里时，屋里其他角色离开不会把门解锁", dorm_102.close_flag == 1 and leaver.position == SCENE_OUT_CORRIDOR, (dorm_102.close_flag, leaver.position))
+map_handle.character_move_scene(list(SCENE_DORM_102), list(SCENE_OUT_CORRIDOR), 0)
+check("博士自己离开锁着的房间时把锁解开", dorm_102.close_flag == 0 and pl.position == SCENE_OUT_CORRIDOR, (dorm_102.close_flag, pl.position))
+move_to(0, player_position_before)
+remove_character(9311)
 
 section("沿寻路表逐步走到目的地")
 traveler = make_npc(303, "旅行者", SCENE_DORM)
