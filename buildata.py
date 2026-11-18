@@ -1,3 +1,5 @@
+import os
+
 from Script.Config import game_config
 
 '''
@@ -14,13 +16,38 @@ datetype = "T"
 premise_type_diy = "自定义内容"
 premise_type_dict = {"A":"属性_能力","S":"属性_状态","T":"属性_素质","X":premise_type_diy}
 premise_type = premise_type_dict[datetype]
+premise_module_dict = {"A":"handle_premise_ability.py","S":"handle_premise_other.py","T":"handle_premise_talent.py","X":"handle_premise_other.py"}
+""" 各类前提的处理函数写进 handle_premise 包里的哪个模块：能力进能力模块，素质进素质模块，状态与自定义内容进其他通用前提模块 """
+premise_module = premise_module_dict[datetype]
 
 # 数据初始化
 game_config.init()
 
+def class_end_index(line_list: list, class_name: str) -> int:
+    """
+    找到一个类的最后一行代码之后的位置，插在这里的代码仍属于这个类
+    Keyword arguments:
+    line_list -- 代码文件的全部行（readlines() 的结果，每行带换行符）
+    class_name -- 类名
+    Return arguments:
+    int -- 类体最后一个非空行的下一行的下标
+    """
+    start_index = line_list.index(f"class {class_name}:\n")
+    end_index = len(line_list)
+    # 类体到下一个顶格的语句为止
+    for index in range(start_index + 1, len(line_list)):
+        if line_list[index].strip() and line_list[index][0] not in " \t":
+            end_index = index
+            break
+    # 退过类体末尾的空行
+    while not line_list[end_index - 1].strip():
+        end_index -= 1
+    return end_index
+
+
 def constand_2_handle():
     '''
-    输出constand_promise里的标准格式，以及自动填入handle_premise.py里
+    输出constand_promise里的标准格式，以及把前提处理函数接到 handle_premise 包里 premise_module 模块的末尾
     '''
 
     # 判断数据编号
@@ -85,7 +112,7 @@ def constand_2_handle():
     # 输出到constant_promise里，还没写出来
     '''
     break_flag = 0
-    with open("Script\\Core\\constant_promise.py", "r+",encoding="utf-8") as f:
+    with open(os.path.join("Script", "Core", "constant_promise.py"), "r+",encoding="utf-8") as f:
         while 1:
             a=f.readline() # 逐行读取
             if len(a) >= 3 and a[-3] == "\"": # 锁定到文字行
@@ -126,10 +153,12 @@ def constand_2_handle():
     out_str += f"    return 0\n"
 
     # 开始保存
-    with open("Script\\Design\\handle_premise.py", "a",encoding="utf-8") as f:
+    # 前提处理函数早已拆成 handle_premise 包（原先的单文件 Script/Design/handle_premise.py 不存在了，往它追加只会新建一个没人导入的文件）
+    premise_path = os.path.join("Script", "Design", "handle_premise", premise_module)
+    with open(premise_path, "a",encoding="utf-8") as f:
         f.write(out_str)
         f.close()
-    print(f"已写入前提文件末尾")
+    print(f"已写入{premise_path}末尾")
 
     return out_str
 
@@ -175,19 +204,19 @@ def constand_promise_2_csv():
     Return arguments:
     str -- 写入的前提表文本
     """
-    with open("Script\\Core\\constant_promise.py", "r", encoding="utf-8") as f:
+    with open(os.path.join("Script", "Core", "constant_promise.py"), "r", encoding="utf-8") as f:
         line_list = f.readlines()
     out_str = build_promise_csv_text(line_list)
 
-    # 开始保存
-    with open("tools\\ArkEditor\\csv\\premise.csv", "w", encoding="utf-8") as f:
+    # 开始保存（文件名是 Premise.csv，大小写要写对：在区分大小写的系统上写成 premise.csv 会另建一个文件）
+    with open(os.path.join("tools", "ArkEditor", "csv", "Premise.csv"), "w", encoding="utf-8") as f:
         f.write(out_str)
     print("已写入csv文件末尾")
 
     return out_str
 
 def csv_2_constand():
-    with open("tools\\csv\\premise.csv", "r",encoding="utf-8") as f:
+    with open(os.path.join("tools", "csv", "premise.csv"), "r",encoding="utf-8") as f:
         a=f.readlines()
         # print(a)
         f.close()
@@ -204,7 +233,7 @@ def csv_2_constand():
 
 
     # 开始保存
-    with open("Script\\Core\\constant_promise.py", "a",encoding="utf-8") as f:
+    with open(os.path.join("Script", "Core", "constant_promise.py"), "a",encoding="utf-8") as f:
         f.write(out_str)
         f.close()
     print(f"已写入前提文件末尾")
@@ -212,7 +241,7 @@ def csv_2_constand():
     return out_str
 
 def constand_effect_2_csv():
-    with open("Script\\Core\\constant_effect.py", "r",encoding="utf-8") as f:
+    with open(os.path.join("Script", "Core", "constant_effect.py"), "r",encoding="utf-8") as f:
         a=f.readlines()
         f.close()
     out_str = "cid,effect_name,effect_type,effect\n"
@@ -238,7 +267,7 @@ def constand_effect_2_csv():
             out_str += "\n"
 
     # 开始保存
-    with open("tools\\ArkEditor\\csv\\Effect.csv", "w",encoding="utf-8") as f:
+    with open(os.path.join("tools", "ArkEditor", "csv", "Effect.csv"), "w",encoding="utf-8") as f:
         f.write(out_str)
         f.close()
     print(f"已写入csv文件末尾")
@@ -246,7 +275,7 @@ def constand_effect_2_csv():
     return out_str
 
 def csv_2_constand_effect():
-    with open("tools\\csv\\Effect.csv", "r",encoding="utf-8") as f:
+    with open(os.path.join("tools", "csv", "Effect.csv"), "r",encoding="utf-8") as f:
         a=f.readlines()
         # print(a)
         f.close()
@@ -262,11 +291,16 @@ def csv_2_constand_effect():
             out_str += f"    \"\"\" {effect_text[2]} {effect_text[3]} \"\"\"\n"
 
 
-    # 开始保存
-    with open("Script\\Core\\constant_effect.py", "a",encoding="utf-8") as f:
-        f.write(out_str)
-        f.close()
-    print(f"已写入结算文件末尾")
+    # 开始保存：插到 BehaviorEffect 类的末尾，类后面的内容原样保留。
+    # 不能追加到文件末尾：文件最后一个类是 SecondEffect（二段结算），追加上去的行为结算常量会变成它的成员
+    effect_path = os.path.join("Script", "Core", "constant_effect.py")
+    with open(effect_path, "r", encoding="utf-8") as f:
+        line_list = f.readlines()
+    insert_index = class_end_index(line_list, "BehaviorEffect")
+    line_list.insert(insert_index, out_str)
+    with open(effect_path, "w", encoding="utf-8") as f:
+        f.writelines(line_list)
+    print(f"已写入结算文件 BehaviorEffect 类末尾")
 
     return out_str
 
