@@ -124,8 +124,8 @@ def read_CVP(cvp_value_str: str):
 
 def read_CVE(cve_value_str: str):
     """读取CVE字符串 A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖"""
-    # 用下划线分割字符串
-    cve_str_list = cve_value_str.split("_")
+    # 用下划线分割字符串：判定值（如移动的地点标签 Dr_Office）自己可以带下划线，所以只按前四个下划线切成五段
+    cve_str_list = cve_value_str.split("_", 4)
     # print(f"cve_str_list = {cve_str_list}")
     # 对基本的字符串进行替换
     cve_str_list[0] = cve_str_list[0].replace("CVE", "综合数值结算  ")
@@ -145,50 +145,48 @@ def read_CVE(cve_value_str: str):
     for i in cve_str_list:
         cve_str += i
     # print(f"debug cve_str = {cve_str}, cve_str_list = {cve_str_list}")
-    # 处理A3部分
-    if "A3" in cve_str:
-        a3_value = cve_str.split("A3|")[1].split("_")[0]
+    # 处理A3部分：只看对象段，不在整串里找（判定值里也可能出现 A3 这样的字样）
+    if cve_str_list[1].startswith("A3|"):
+        a3_value = cve_str_list[1].split("A3|")[1]
         cve_str = cve_str.replace(f"A3|{a3_value}", f"角色id为{a3_value}")
-    # 然后处理B属性部分
-    if "A" in cve_str:
+    # 然后处理B属性部分：只按属性段开头的类型标记（A|、T| 等）选分支。
+    # 原先是在整串里找单个大写字母，判定值是带大写字母的地点标签（如 Toilet_Female）时会走错分支而报错，整个事件文件就打不开
+    if cve_str_list[2].startswith("A|"):
         b2_value = cve_str_list[2].split("A|")[1]
         b2_name = cache_control.ability_data[b2_value]
         cve_str = cve_str.replace(f"A|{b2_value}", f"能力{b2_name}")
-    elif "T" in cve_str:
+    elif cve_str_list[2].startswith("T|"):
         b2_value = cve_str_list[2].split("T|")[1]
         b2_name = cache_control.talent_data[b2_value]
         cve_str = cve_str.replace(f"T|{b2_value}", f"素质{b2_name}")
-    elif "J" in cve_str:
+    elif cve_str_list[2].startswith("J|"):
         b2_value = cve_str_list[2].split("J|")[1]
         b2_name = cache_control.juel_data[b2_value]
         cve_str = cve_str.replace(f"J|{b2_value}", f"宝珠{b2_name}")
-    elif "E" in cve_str:
+    elif cve_str_list[2].startswith("E|"):
         b2_value = cve_str_list[2].split("E|")[1]
         b2_name = cache_control.experience_data[b2_value]
         cve_str = cve_str.replace(f"E|{b2_value}", f"经验{b2_name}")
-    elif "S" in cve_str:
+    elif cve_str_list[2].startswith("S|"):
         b2_value = cve_str_list[2].split("S|")[1]
         b2_name = cache_control.state_data[b2_value]
         cve_str = cve_str.replace(f"S|{b2_value}", f"状态{b2_name}")
-    elif "Climax" in cve_str:
+    elif cve_str_list[2].startswith("Climax|"):
         b2_value = cve_str_list[2].split("Climax|")[1]
         b2_name = cache_control.organ_data[b2_value]
         cve_str = cve_str.replace(f"Climax|{b2_value}", f"绝顶{b2_name}")
-    elif "指定角色id为交互对象" in cve_str:
+    elif cve_str_list[2].startswith("指定角色id为交互对象|"):
         b2_value = cve_str_list[2].split("指定角色id为交互对象|")[1]
-        b2_name = cache_control.organ_data[b2_value]
         cve_str = cve_str.replace(f"指定角色id为交互对象|{b2_value}", f"指定角色id为交互对象")
-        # 去掉c和d的部分
-        cve_str = cve_str.replace(cve_str_list[3], "")
-        cve_str = cve_str.replace(cve_str_list[4], "")
-    # 最后去掉所有的下划线
-    cve_str = cve_str.replace("_", "")
+        # 只去掉文字末尾的运算段和判定值段（c 和 d）
+        cve_str = cve_str.removesuffix(cve_str_list[3] + cve_str_list[4])
     return cve_str
 
 
 def read_CSE(cse_value_str: str):
     """读取CSE字符串 """
-    cse_str_list = cse_value_str.split("_")
+    # 行为 id 自己可以带下划线（如 normal_sex），所以只按前两个下划线切成三段
+    cse_str_list = cse_value_str.split("_", 2)
     # print(f"cse_str_list = {cse_str_list}")
     cse_str_list[0] = cse_str_list[0].replace("CSE", "综合指令状态结算 玩家对")
     cse_str_list[1] = cse_str_list[1].replace("A1", "自己")
@@ -200,13 +198,12 @@ def read_CSE(cse_value_str: str):
         cse_str += i
     # print(f"debug cse_str = {cse_str}, cse_str_list = {cse_str_list}")
     # 处理A3部分
-    if "A3" in cse_str:
-        a3_value = cse_str.split("A3|")[1].split("_")[0]
+    if cse_str_list[1].startswith("A3|"):
+        a3_value = cse_str_list[1].split("A3|")[1]
         cse_str = cse_str.replace(f"A3|{a3_value}", f"角色id为{a3_value}")
     # 然后处理B属性部分，B是第二个下划线之后的所有内容
     # print(f"debug cse_str_list[2] = {cse_str_list[2]}")
-    b_str = cse_value_str.split("_", 2)[2]
-    cse_b_value = cache_control.behavior_data[b_str]
+    cse_b_value = cache_control.behavior_data[cse_str_list[2]]
     cse_str = cse_str.replace(f"{cse_str_list[2]}", f" 进行 {cse_b_value}")
     # print(f"debug cse_str = {cse_str}")
     return cse_str
