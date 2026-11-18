@@ -1297,8 +1297,8 @@ def update_tem_character(loaded_dict):
                 value.cid = 469
                 update_count += 1
                 continue
-            # 修正阿玛雅的序号错误
-            if value.name == _("阿玛雅") and value.adv != 448:
+            # 修正阿玛雅的序号错误（旧存档里她与死芒同为450号；只看450号，避免把别的语言里译名相同的角色也算进来）
+            if value.adv == 450 and value.name == _("阿玛雅"):
                 value.adv = 448
                 value.cid = 448
                 update_count += 1
@@ -1326,8 +1326,9 @@ def fix_wrong_character(loaded_dict):
 
     # 遍历角色属性，修正错误的adv编号
     for key, value in loaded_dict["character_data"].items():
-        # 阿玛雅
-        if value.name == _("阿玛雅") and value.adv != 448:
+        # 阿玛雅：旧存档里她与死芒同为450号，450号里名字是阿玛雅的才是她
+        #    只看450号：角色名随语言翻译，韩文里阿米娅与阿玛雅译名相同，只比名字会把编号正确的阿米娅搬到448号并重置1号
+        if value.adv == 450 and value.name == _("阿玛雅"):
             # 寻找adv为448的角色
             for key2, value2 in loaded_dict["character_data"].items():
                 if value2.adv == 448:

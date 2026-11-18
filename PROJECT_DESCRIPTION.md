@@ -964,7 +964,7 @@ GitHub Actions `.github/workflows/python-app.yml`（push/PR 到 master）分三�
 1. 添加 `data/character/{AdvNpc}_{名字}.csv`（复制模板改字段）
 2. 可选：添加 `data/talk/chara/` 口上、`data/event/chara/` 事件、`image/立绘/` 图片
 3. 重跑 `buildconfig.py`
-4. 确认 `constant.first_NPC_name_set` / `ban_NPC_name_set` 是否符合预期
+4. 确认 `constant.first_NPC_adv_set` / `ban_NPC_adv_set`（存干员编号）是否符合预期
 
 ### 27.6 新增 UI 面板
 

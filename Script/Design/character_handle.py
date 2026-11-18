@@ -54,7 +54,7 @@ def init_character(character_id: int, character_tem: game_type.NpcTem, collect_r
     now_character.cid = character_id
     now_character.name = character_tem.Name
     # 检测基础干员并加入已有干员列表
-    if now_character.name in constant.first_NPC_name_set:
+    if character_tem.AdvNpc in constant.first_NPC_adv_set:
         cache.npc_id_got.add(character_id)
     cache.npc_name_data.add(now_character.name) # 加入到已有干员姓名中
     now_character.sex = character_tem.Sex
