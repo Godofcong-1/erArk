@@ -132,6 +132,12 @@ class InScenePanelWeb:
             
             # 绑定面板选项卡指令并等待用户选择
             ask_list = self._bind_panel_tabs_and_get_ask_list()
+            # 游戏状态自检（系统设置14号，默认关闭）：等待输入前检查一次游戏状态，发现异常只提示不中断
+            if cache.all_system_setting.base_setting.get(14, 0):
+                from Script.Test import Static_Check as static_check_system
+                if static_check_system.run_turn_check():
+                    from Script.Core import io_init
+                    io_init.era_print(_("警告：检测到游戏逻辑状态不自洽，请把 {0} 文件提交给开发者。\n").format(static_check_system.LOG_PATH), "warning")
             
             # 等待前端输入（通过按钮点击）
             flow_handle.askfor_all(ask_list)
