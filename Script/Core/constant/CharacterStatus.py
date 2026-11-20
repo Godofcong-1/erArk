@@ -69,7 +69,7 @@ class CharacterStatus:
     """ 换上浴帽和浴巾 """
     STATUS_PUT_SLEEP_CLOTH = 143
     """ 换上睡衣和内衣 """
-    STATUS_WAKE_UP_BY_NOISE = 947
+    STATUS_WAKE_UP_BY_NOISE = 820
     """ 睡觉中被吵醒 """
     STATUS_WEAR_TO_LOCKER = 144
     """ 身上衣服脱到衣柜 """
