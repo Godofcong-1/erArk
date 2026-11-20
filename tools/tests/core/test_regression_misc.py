@@ -658,32 +658,57 @@ WAKE_SLEEPER_ID = 9431
 """ 同屋睡觉、会被吵醒的干员 fixture """
 DORM_ENTRANCE = ["宿舍", "1区", "0"]
 """ 博士走进宿舍前所在的宿舍区入口，被推出房间时回到这里 """
+DORM_CORRIDOR = ["宿舍", "1区", "外走廊"]
+""" 宿舍房间相邻的外走廊，室友是从这里走进房间的 """
 
 
 def settle_pl_behavior(minute: int):
     """
-    update.game_update_flow 的替身：不进真实主循环，只结算一次博士当前的行为（主循环推进时间后对博士做的正是这一步）
+    update.game_update_flow 的替身：不进真实主循环，只结算一次博士当前的行为（主循环推进时间后对博士做的正是这一步；博士空闲时主循环不结算）
     Keyword arguments:
     minute -- 推进的分钟数（不使用）
     Return arguments:
     无
     """
-    character_behavior.judge_character_status(0)
+    if pl.behavior.behavior_id != constant.Behavior.SHARE_BLANKLY:
+        character_behavior.judge_character_status(0)
 
 
-def run_wake_case(in_h: bool, choice: str = "", judge_pass: bool = True, sleeping_pill: bool = False) -> tuple:
+pl_settled_log = []
+""" 吵醒过程中博士每次行为结算的 (行为id, 结算时博士是否仍在 H 中) """
+real_handle_settle_behavior = settle_behavior.handle_settle_behavior
+
+
+def record_settle_behavior(character_id: int, *args, **kwargs):
     """
-    在宿舍里摆好一场睡奸（或博士只是待在屋里），让同屋睡觉的室友被吵醒，按 choice 在目击 H 面板里选择应对
+    settle_behavior.handle_settle_behavior 的记录包装：记下博士每次结算的行为，再照常结算
+    Keyword arguments:
+    character_id -- 角色id
+    其余参数原样转交
+    Return arguments:
+    原函数的返回值
+    """
+    if character_id == 0:
+        pl_settled_log.append((pl.behavior.behavior_id, pl.sp_flag.is_h))
+    return real_handle_settle_behavior(character_id, *args, **kwargs)
+
+
+def run_wake_case(in_h: bool, choice: str = "", judge_pass: bool = True, sleeping_pill: bool = False, wake_id: int = WAKE_SLEEPER_ID, fall_level=None) -> tuple:
+    """
+    在宿舍里摆好一场睡奸（或博士只是待在屋里），让同屋睡觉的人被吵醒，按 choice 在目击 H 面板里选择应对
     Keyword arguments:
     in_h -- 博士是否正在睡奸
     choice -- 目击 H 面板里选的按钮（1 支开对方 / 5 尴尬地结束H）
     judge_pass -- 实行值判定是否一律通过（支开对方、睡奸对象醒来后的反应都看它）
     sleeping_pill -- 睡奸对象是否服用了安眠药（吵不醒）
+    wake_id -- 被吵醒的人：默认同屋室友，传睡奸对象时走睡奸对象本人中途醒来的流程
+    fall_level -- 睡奸对象醒来时按多少陷落等级裁决反应，None 为不干预
     Return arguments:
     tuple -- (睡奸对象, 被吵醒的室友, 吵醒前博士与睡奸对象是否都在 H 中, 面板运行时的异常)
     """
     h_target = make_character(WAKE_H_TARGET_ID, "睡奸对象")
     sleeper = make_character(WAKE_SLEEPER_ID, "同屋室友")
+    sleeper.action_info.past_move_position_list = [list(DORM_CORRIDOR)]
     move_to(0, SCENE_DORM)
     # 博士体力、气力回满：前面的结算会消耗体力，体力见底时结算中途会转去力竭结束 H（并进入真实主循环）
     pl.hit_point = pl.hit_point_max
@@ -711,18 +736,22 @@ def run_wake_case(in_h: bool, choice: str = "", judge_pass: bool = True, sleepin
 
     def wake():
         """
-        博士的一次动作吵醒了室友（randint 恒为 1：必定吵醒）
+        博士的一次动作吵醒了 wake_id（randint 恒为 1：必定吵醒）
         Keyword arguments:
         无
         Return arguments:
         无
         """
+        real_fall_level = attr_calculation.get_character_fall_level
         with mock.patch.object(handle_npc_ai_in_h, "random", mock.Mock(randint=lambda low, high: 1)), \
                 mock.patch.object(instuct_judege, "calculation_instuct_judege", lambda *args, **kwargs: [1 if judge_pass else 0, 1, 1.0]), \
+                mock.patch.object(attr_calculation, "get_character_fall_level", lambda *args, **kwargs: real_fall_level(*args, **kwargs) if fall_level is None else fall_level), \
+                mock.patch.object(settle_behavior, "handle_settle_behavior", record_settle_behavior), \
                 mock.patch.object(handle_instruct.update, "game_update_flow", settle_pl_behavior), \
                 mock.patch.object(handle_instruct.achievement_panel, "achievement_flow", lambda *args, **kwargs: None):
-            handle_npc_ai_in_h.judge_weak_up_in_sleep_h(0, WAKE_SLEEPER_ID)
+            handle_npc_ai_in_h.judge_weak_up_in_sleep_h(0, wake_id)
 
+    pl_settled_log.clear()
     panel_error = run_panel(wake, [choice] if choice else [])
     return h_target, sleeper, all_in_h, panel_error
 
@@ -765,6 +794,9 @@ check("醒来的室友记为已目击本次 H，一小时内不会再产生睡�
 check("成功支开室友后博士留在房间里，睡奸照常继续，睡奸对象仍在睡",
       pl.position == list(SCENE_DORM) and pl.sp_flag.is_h and h_target.sp_flag.is_h and h_target.behavior.behavior_id == constant.Behavior.SLEEP,
       (pl.position, pl.sp_flag.is_h, h_target.sp_flag.is_h, h_target.behavior.behavior_id))
+check("被支开的室友走出自己的房间、去她来时的外走廊（修复前「前往自己的宿舍」对已在宿舍里的人不移动，口上说她离开了，她却留在屋里）",
+      sleeper.behavior.behavior_id == constant.Behavior.MOVE and sleeper.behavior.move_final_target == DORM_CORRIDOR,
+      (sleeper.behavior.behavior_id, sleeper.behavior.move_final_target))
 clean_wake_case()
 
 h_target, sleeper, all_in_h, panel_error = run_wake_case(in_h=True, choice="5")
@@ -781,6 +813,27 @@ h_target, sleeper, all_in_h, panel_error = run_wake_case(in_h=True, choice="5", 
 check("服用安眠药的睡奸对象吵不醒：H 照常结束，她继续睡",
       panel_error is None and not pl.sp_flag.is_h and not h_target.sp_flag.is_h and h_target.behavior.behavior_id == constant.Behavior.SLEEP,
       (repr(panel_error), pl.sp_flag.is_h, h_target.sp_flag.is_h, h_target.behavior.behavior_id))
+clean_wake_case()
+
+h_target, sleeper, all_in_h, panel_error = run_wake_case(in_h=True, choice="5", fall_level=3)
+check("结束 H 时睡奸对象已陷落、本可继续 H：博士的「被打断」赶在双方 H 数据重置前结算一次（修复前在重置之后才结算，本次 H 的绝顶奖励被清零）",
+      panel_error is None and pl_settled_log == [(constant.Behavior.H_INTERRUPT, True)] and not pl.sp_flag.is_h and not h_target.sp_flag.is_h,
+      (repr(panel_error), pl_settled_log, pl.sp_flag.is_h, h_target.sp_flag.is_h))
+clean_wake_case()
+
+# 睡奸对象本人被动静吵醒（原有流程）：不继续 H 时收尾的两段行为当场成对结算，之后推进时间不再结算一遍
+h_target, sleeper, all_in_h, panel_error = run_wake_case(in_h=True, judge_pass=False, wake_id=WAKE_H_TARGET_ID)
+check("睡奸对象醒来、H 失败：H 失败与「结束无意识H」各结算一次（修复前推进时间时又结算了一遍「结束无意识H」，口上与消耗重复）",
+      panel_error is None and [behavior_id for behavior_id, is_h in pl_settled_log] == [constant.Behavior.DO_H_FAIL, constant.Behavior.NO_CONSCIOUS_H_END]
+      and not pl.sp_flag.is_h and h_target.sp_flag.unconscious_h == 0,
+      (repr(panel_error), pl_settled_log, pl.sp_flag.is_h, h_target.sp_flag.unconscious_h))
+clean_wake_case()
+
+h_target, sleeper, all_in_h, panel_error = run_wake_case(in_h=True, wake_id=WAKE_H_TARGET_ID, fall_level=-1)
+check("睡奸对象醒来时愤怒：按 H 失败收尾，不再把博士刚结算过的指令对已醒的她再结算一遍",
+      panel_error is None and [behavior_id for behavior_id, is_h in pl_settled_log] == [constant.Behavior.DO_H_FAIL, constant.Behavior.NO_CONSCIOUS_H_END]
+      and h_target.sp_flag.angry_with_player,
+      (repr(panel_error), pl_settled_log, h_target.sp_flag.angry_with_player))
 clean_wake_case()
 
 # 「等待五分钟」在场景里已没有 H 对象时会转去结束 H；此时交互对象是博士自己
