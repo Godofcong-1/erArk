@@ -119,6 +119,10 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
         if handle_premise.handle_unconscious_flag_1(character_id):
             character_data.sp_flag.unconscious_h = 0
             state_reset_flag = True
+        # 结束醉酒无意识状态（醉奸结束后残留的标记）
+        if handle_premise.handle_unconscious_flag_2(character_id):
+            character_data.sp_flag.unconscious_h = 0
+            state_reset_flag = True
         # 结束空气催眠
         if handle_premise.handle_unconscious_flag_5(character_id) and character_data.position != pl_character_data.pl_ability.air_hypnosis_position:
             character_data.sp_flag.unconscious_h = 0
@@ -140,6 +144,10 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
     # 睡眠无意识标记只在还在睡、或仍在H中（睡奸中醒来装睡）时有意义；
     # 装睡的H结束后博士仍留在身边时，不清掉的话她会一直被当作在睡、原地发呆
     if character_data.sp_flag.unconscious_h == 1 and not character_data.sp_flag.is_h and character_data.behavior.behavior_id != constant.Behavior.SLEEP:
+        character_data.sp_flag.unconscious_h = 0
+    # 醉酒无意识标记：醉奸结束后（结束H只清 is_h）她酒醒到清醒（醉酒等级0，即不再满足醉奸的「醉酒等级>=1」）时清掉，
+    # 否则她会一直被当作醉得不省人事：对她的普通口上被无意识过滤挡掉，反感等负面状态也不结算
+    if character_data.sp_flag.unconscious_h == 2 and not character_data.sp_flag.is_h and handle_premise.handle_drunk_level_0(character_id):
         character_data.sp_flag.unconscious_h = 0
 
     # H状态或木头人时，行动锁死为等待不动
