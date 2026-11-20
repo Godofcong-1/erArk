@@ -1118,4 +1118,86 @@ check("H 中恢复意识时只结束搬运，不执行「被搬运时醒来」",
       (pl.action_info.carry_chara_id, npc.behavior.behavior_id))
 clean_carry_case()
 
+# ==== 8.14 睡奸中醒来的装睡、醉奸结束后的残留标记 ====
+section("睡奸中醒来裁决继续 H 时装睡；醉奸结束后的醉酒无意识标记在博士离开或酒醒时清掉")
+
+# 已陷落的睡奸对象被吵醒、裁决继续 H：结束她的睡眠之前先记下她在睡，装睡与睡奸醒来状态才会生效
+h_target, sleeper, all_in_h, panel_error = run_wake_case(in_h=True, wake_id=WAKE_H_TARGET_ID, fall_level=3)
+check("已陷落的睡奸对象被吵醒、继续 H：装睡、仍为睡眠无意识、获得睡奸醒来状态，H 照常继续（修复前睡眠先被结束，两处「是否在睡」永远不成立）",
+      panel_error is None and h_target.h_state.pretend_sleep and h_target.sp_flag.unconscious_h == 1 and h_target.sp_flag.sleep_h_awake
+      and h_target.sp_flag.is_h and handle_premise.handle_self_sleep_h_awake_but_pretend_sleep(WAKE_H_TARGET_ID),
+      (repr(panel_error), h_target.h_state.pretend_sleep, h_target.sp_flag.unconscious_h, h_target.sp_flag.sleep_h_awake, h_target.sp_flag.is_h))
+handle_npc_ai.run_npc_pre_behavior_checks(WAKE_H_TARGET_ID, cache.game_time)
+check("装睡的 H 进行中，行动前检查不动她的睡眠无意识标记", h_target.sp_flag.unconscious_h == 1, h_target.sp_flag.unconscious_h)
+settle_default.handle_both_h_state_reset(0, 1, game_type.CharacterStatusChange(), cache.game_time)
+handle_npc_ai.run_npc_pre_behavior_checks(WAKE_H_TARGET_ID, cache.game_time)
+check("装睡的 H 结束、博士仍在场：睡眠无意识标记清掉，不再一直被当作在睡",
+      not h_target.sp_flag.is_h and h_target.sp_flag.unconscious_h == 0 and not handle_premise.handle_unconscious_flag_1(WAKE_H_TARGET_ID),
+      (h_target.sp_flag.is_h, h_target.sp_flag.unconscious_h))
+clean_wake_case()
+
+DRUNK_NPC_ID = 9450
+""" 被醉奸的干员 fixture """
+
+
+def make_drunk_h_ended(drunk_point: int) -> game_type.Character:
+    """
+    摆好一场刚结束的醉奸：博士与她在同一房间，她身上留着醉酒无意识标记，双方 H 状态已归零
+    Keyword arguments:
+    drunk_point -- 结束时她的醉酒值
+    Return arguments:
+    game_type.Character -- 被醉奸的干员
+    """
+    now_npc = make_character(DRUNK_NPC_ID, "醉奸对象")
+    move_to(0, SCENE_DORM)
+    pl.target_character_id = DRUNK_NPC_ID
+    now_npc.drunk_point = drunk_point
+    settle_default.handle_unconscious_flag_to_2(DRUNK_NPC_ID, 1, game_type.CharacterStatusChange(), cache.game_time)
+    now_npc.sp_flag.is_h = True
+    pl.sp_flag.is_h = True
+    settle_default.handle_both_h_state_reset(0, 1, game_type.CharacterStatusChange(), cache.game_time)
+    return now_npc
+
+
+def clean_drunk_case():
+    """
+    撤掉醉奸 fixture，复原博士
+    Keyword arguments:
+    无
+    Return arguments:
+    无
+    """
+    remove_character(DRUNK_NPC_ID)
+    pl.sp_flag.is_h = False
+    pl.target_character_id = 0
+    move_to(0, SCENE_DORM)
+
+
+npc = make_drunk_h_ended(70)
+handle_npc_ai.run_npc_pre_behavior_checks(DRUNK_NPC_ID, cache.game_time)
+still_flag_when_drunk = npc.sp_flag.unconscious_h == 2
+npc.drunk_point = 0
+handle_npc_ai.run_npc_pre_behavior_checks(DRUNK_NPC_ID, cache.game_time)
+pl.behavior.behavior_id = constant.Behavior.CHAT
+chat_weight, _unused = handle_premise.get_weight_from_premise_dict({"high_1"}, 0, {})
+pl.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+check("醉奸结束后博士在场：还醉着时保留醉酒无意识标记，酒醒到清醒时清掉，普通口上恢复显示（修复前一直留着，普通口上权重为 0）",
+      still_flag_when_drunk and npc.sp_flag.unconscious_h == 0 and chat_weight > 0, (still_flag_when_drunk, npc.sp_flag.unconscious_h, chat_weight))
+before_disgust = npc.status_data[disgust_state_id]
+settle_default.handle_self_add_middle_disgust(DRUNK_NPC_ID, 1, game_type.CharacterStatusChange(), cache.game_time)
+check("酒醒后反感等负面状态照常结算", npc.status_data[disgust_state_id] > before_disgust, (before_disgust, npc.status_data[disgust_state_id]))
+clean_drunk_case()
+
+npc = make_drunk_h_ended(70)
+move_to(0, DORM_CORRIDOR)
+handle_npc_ai.run_npc_pre_behavior_checks(DRUNK_NPC_ID, cache.game_time)
+check("醉奸结束后博士离开她所在的地点：即使还醉着也清掉醉酒无意识标记", npc.sp_flag.unconscious_h == 0, npc.sp_flag.unconscious_h)
+clean_drunk_case()
+
+npc = make_drunk_h_ended(0)
+npc.sp_flag.is_h = True
+handle_npc_ai.run_npc_pre_behavior_checks(DRUNK_NPC_ID, cache.game_time)
+check("醉奸进行中（在 H 中）不动醉酒无意识标记", npc.sp_flag.unconscious_h == 2, npc.sp_flag.unconscious_h)
+clean_drunk_case()
+
 finish()
