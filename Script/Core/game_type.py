@@ -759,6 +759,8 @@ class ACTION_INFO:
         """ 角色是否需要找一个非当前区块的厕所，需要的话则记录在这里 """
         self.carry_chara_id: int = 0
         """ 正在搬运的角色id """
+        self.awake_when_carried: bool = False
+        """ 被搬运时醒来、默许后继续被博士搬运中（每次开始被搬运时归零，再次失去意识时也归零） """
 
 
 class AUTHOR_FLAG:

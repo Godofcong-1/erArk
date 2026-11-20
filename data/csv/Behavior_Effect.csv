@@ -412,6 +412,7 @@ int,str,str
 808,wear_to_locker_and_get_shower_cloth,353 - 642 - 633
 809,clean_wear_and_locker_to_wear,632 - 643
 810,wake_up_by_noise,89 - 1726 - 321 - 762 - 752
+811,wake_up_when_carried,1727
 
 840,remote_turn_off_sex_toy,1055
 841,remote_turn_on_sex_toy,1056

@@ -2737,6 +2737,8 @@ def handle_target_be_carried(
     if character_data.target_character_id == character_id:
         return
     character_data.action_info.carry_chara_id = character_data.target_character_id
+    # 新的一次搬运：对方还没在被搬运时醒来过
+    cache.character_data[character_data.target_character_id].action_info.awake_when_carried = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_NOT_BE_CARRIED)
@@ -2781,6 +2783,47 @@ def handle_get_sleep_disturbed_state(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.action_info.sleep_disturbed_end_time = game_time.get_sub_date(minute=60, old_date=cache.game_time)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.WAKE_UP_WHEN_CARRIED_ADJUST)
+def handle_wake_up_when_carried_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （被搬运时醒来用）结算无意识期间的部位精液与服装失窃二段行为，再按监禁与陷落状态裁决反应
+    裁决参照睡奸醒来的裁决（handle_npc_ai_in_h.handle_unconscious_h_response），去掉H的部分、不查实行值：
+    被监禁或陷落等级>=3时默许，不加惩罚，博士继续搬运自己；
+    否则博士放下自己，隶属系陷落（陷落等级记为负数）时愤怒，其余增加中量反感
+    Keyword arguments:
+    character_id -- 角色id（恢复意识的被搬运者）
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
+    # 恢复意识后发现无意识期间被射上的精液与被偷走的衣物
+    handle_npc_ai_in_h.settle_unconscious_semen_and_cloth(character_id)
+    # 被监禁或陷落等级在3及以上时默许，博士继续搬运自己
+    if handle_premise.handle_imprisonment_1(character_id) or attr_calculation.get_character_fall_level(character_id, minus_flag=True) >= 3:
+        character_data.action_info.awake_when_carried = True
+        return
+    # 不默许：博士把自己放下，不再带着走
+    if pl_character_data.action_info.carry_chara_id == character_id:
+        pl_character_data.action_info.carry_chara_id = 0
+    fall_level = attr_calculation.get_character_fall_level(character_id, minus_flag=True)
+    # 隶属系陷落时愤怒
+    if fall_level < 0:
+        character_data.angry_point += 100
+        character_data.sp_flag.angry_with_player = True
+        return
+    # 其余增加中量反感
+    handle_self_add_middle_disgust(character_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FACILITY_DAMAGE_CHECK)

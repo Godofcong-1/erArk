@@ -1021,6 +1021,8 @@ class BehaviorEffect:
     """ 行动 清零自己的当前搬运对象 """
     GET_SLEEP_DISTURBED_STATE = 1726
     """ 行动 自身获得睡觉中被吵醒状态（一小时内不会产生睡觉需求） """
+    WAKE_UP_WHEN_CARRIED_ADJUST = 1727
+    """ 行动 （被搬运时醒来用）结算无意识期间的部位精液与服装失窃二段行为，按监禁与陷落状态裁决反应，默许时博士继续搬运，否则放下自己 """
 
     FACILITY_DAMAGE_CHECK = 1751
     """ 设施 几率判定自己所在地点是否造成损坏 """

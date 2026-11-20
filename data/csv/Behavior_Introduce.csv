@@ -404,3 +404,4 @@ int,str,str,str
 945,target_free_in_time_stop,在时停中正常行动,使特定目标在时间停止状态下能够活动。
 946,target_stop_in_time_stop,在时停中再次停止,使已获自由的目标重新回到时间停止状态。
 820,wake_up_by_noise,睡觉中被吵醒,睡眠被外界的动静打断，从睡梦中惊醒过来。
+821,wake_up_when_carried,被搬运时醒来,在被人搬运的途中恢复了意识，发现自己正被抱着带往别处。

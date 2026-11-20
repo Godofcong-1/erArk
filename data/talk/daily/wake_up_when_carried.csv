@@ -1,0 +1,16 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1001,wake_up_when_carried,0,imprisonment_0&self_not_fall,{Name}迷迷糊糊地恢复了意识，发现自己正被{PlayerName}抱在怀里，脸色顿时沉了下来，「……放我下来。」她从{PlayerName}怀里挣了下来，不悦地整理着衣服。
+1002,wake_up_when_carried,0,imprisonment_0&self_not_fall,回过神来的{Name}察觉到自己正被{PlayerName}扛在肩上，愣了一瞬，随即用力推着{PlayerName}的肩膀跳了下来，「博士，你到底想把我带到哪里去？」
+1003,wake_up_when_carried,0,imprisonment_0&self_not_fall,{Name}睁开眼，映入眼帘的是陌生的景物和{PlayerName}的侧脸。她皱起眉头挣脱了{PlayerName}的手，警惕地退开一步，「……我怎么会在这里？」
+1004,wake_up_when_carried,0,imprisonment_0&self_fall_love&self_fall_1,在{PlayerName}怀里醒来的{Name}吓了一跳，手忙脚乱地从{PlayerName}身上下来，红着脸瞪了{PlayerName}一眼，「博、博士！就算是你，也不能随便把人抱走啊……」
+1005,wake_up_when_carried,0,imprisonment_0&self_fall_love&self_fall_2,{Name}恢复意识时发现自己正被{PlayerName}抱着走，先是一怔，随后小声抱怨着「至少先叫醒我嘛……」，有些别扭地让{PlayerName}把她放了下来。
+1006,wake_up_when_carried,0,imprisonment_0&self_fall_obey,{Name}恢复意识时发现自己被{PlayerName}抱在怀里，眼神瞬间冷了下来，「……又想对我做什么？」她挣开{PlayerName}的手，咬着嘴唇别过了脸。
+1007,wake_up_when_carried,0,imprisonment_0&self_fall_obey,被{PlayerName}抱着走的{Name}忽然回过神来，狠狠地瞪了{PlayerName}一眼，一言不发地挣脱下地，压抑着怒气站在一旁。
+1008,wake_up_when_carried,0,imprisonment_0&self_fall_love&self_fall_3_or_4,{Name}在{PlayerName}的怀里醒了过来，眨了眨眼，非但没有生气，反而往{PlayerName}的胸口蹭了蹭，安心地任由{PlayerName}继续抱着她走。
+1009,wake_up_when_carried,0,imprisonment_0&self_fall_love&self_fall_3_or_4,恢复意识的{Name}发现自己正被{PlayerName}抱着，先是一愣，随即红着脸小声嘟囔，「……博士想抱我的话，叫醒我不就好了。」说着却把手环上了{PlayerName}的脖子。
+1010,wake_up_when_carried,0,imprisonment_1,{Name}恢复意识时发现自己被{PlayerName}抱着，身体僵了一下，却没有挣扎，只是垂着眼任由{PlayerName}继续抱着她走。
+1011,wake_up_when_carried,0,imprisonment_1,回过神来的{Name}意识到自己又落在了{PlayerName}手里，她认命似的闭了闭眼，不再挣扎，任由{PlayerName}带着她走。
