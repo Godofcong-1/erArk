@@ -137,6 +137,11 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
             handle_premise.settle_chara_unnormal_flag(character_id, 5)
             handle_premise.settle_chara_unnormal_flag(character_id, 6)
 
+    # 睡眠无意识标记只在还在睡、或仍在H中（睡奸中醒来装睡）时有意义；
+    # 装睡的H结束后博士仍留在身边时，不清掉的话她会一直被当作在睡、原地发呆
+    if character_data.sp_flag.unconscious_h == 1 and not character_data.sp_flag.is_h and character_data.behavior.behavior_id != constant.Behavior.SLEEP:
+        character_data.sp_flag.unconscious_h = 0
+
     # H状态或木头人时，行动锁死为等待不动
     if character_data.sp_flag.is_h or character_data.hypnosis.blockhead:
         # 睡奸时例外
@@ -208,10 +213,12 @@ def recover_from_unconscious_h(character_id: int, info_text: str = "", can_conti
         now_draw.text = info_text
     now_draw.draw()
 
+    # 先记下对方是否在睡：终止行动后睡眠行为已被重置为空闲，之后再查就永远不在睡了（睡奸醒来状态与装睡都看它）
+    target_was_sleeping = handle_premise.handle_action_sleep(target_data.cid)
     # 终止对方的行动
     character_behavior.judge_character_status_time_over(character_data.target_character_id, cache.game_time, end_now = 2)
     # 睡眠中，则对方获得睡奸醒来状态
-    if handle_premise.handle_action_sleep(character_data.target_character_id):
+    if target_was_sleeping:
         target_data.sp_flag.sleep_h_awake = True
     # 同步玩家的行动开始时间
     instuct_judege.init_character_behavior_start_time(character_id, cache.game_time)
@@ -260,11 +267,11 @@ def recover_from_unconscious_h(character_id: int, info_text: str = "", can_conti
         # 对方的行为时间设为10分钟
         target_data.behavior.duration = 10
         # 睡眠中，则对方获得装睡状态，仍继续无意识H
-        if handle_premise.handle_action_sleep(character_data.target_character_id):
+        if target_was_sleeping:
             target_data.h_state.pretend_sleep = True
             target_data.sp_flag.unconscious_h = 1
             handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 5)
-            handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 5)
+            handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 6)
             # 成就刷新
             cache.achievement.sleep_sex_record[1] = 1
     # 否则
