@@ -1499,8 +1499,10 @@ def handle_h_end():
         character_data.behavior.behavior_id = constant.Behavior.END_H
         character_data.state = constant.CharacterStatus.STATUS_END_H
         # 异常126正常，则进入跟随
+        # 交互对象是自己时（「等待五分钟」在场景里已没有H对象时也走到这里）跳过，否则会把博士自己设为跟随状态
         if (
-            handle_premise.handle_normal_1(character_data.target_character_id) and 
+            character_data.target_character_id != 0 and
+            handle_premise.handle_normal_1(character_data.target_character_id) and
             handle_premise.handle_normal_2(character_data.target_character_id) and
             handle_premise.handle_normal_6(character_data.target_character_id)
             ):

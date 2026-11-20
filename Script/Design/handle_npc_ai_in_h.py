@@ -172,11 +172,13 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
     return 1
 
 
-def recover_from_unconscious_h(character_id: int, info_text: str = ""):
+def recover_from_unconscious_h(character_id: int, info_text: str = "", can_continue: bool = True):
     """
     交互对象从无意识H中恢复意识的结算\n
     Keyword arguments:\n
     character_id -- 角色id\n
+    info_text -- 提示文本，为空时使用默认的“从无意识状态中恢复过来”\n
+    can_continue -- 是否允许交互对象醒来后继续H，默认为True；为False时（如H已被目击者打断）即使裁决为继续H也照常结束这场H\n
     """
     from Script.Settle import default
     character_data: game_type.Character = cache.character_data[character_id]
@@ -238,15 +240,15 @@ def recover_from_unconscious_h(character_id: int, info_text: str = ""):
         character_data.behavior.behavior_id = tem_behavior_id
         character_data.state = tem_state
 
-    # 结算交互对象的响应
-    response = handle_unconscious_h_response(character_id, character_data.target_character_id)
+    # 结算交互对象的响应（不允许继续时，裁决为继续H的交互对象在函数内直接做退出结算）
+    response = handle_unconscious_h_response(character_id, character_data.target_character_id, can_continue=can_continue)
 
     # 对方的行为改为等待
     target_data.behavior.behavior_id = constant.Behavior.WAIT
     target_data.state = constant.CharacterStatus.STATUS_WAIT
 
     # 如果继续H
-    if response == UnconsciousHResponse.CONTINUE_H:
+    if response == UnconsciousHResponse.CONTINUE_H and can_continue:
         default.handle_h_flag_to_1(target_data.cid, 1, game_type.CharacterStatusChange(), cache.game_time)
         character_data.behavior.behavior_id = constant.Behavior.WAIT
         character_data.state = constant.CharacterStatus.STATUS_WAIT
@@ -406,6 +408,10 @@ def judge_weak_up_in_sleep_h(character_id: int, target_character_id: int):
             character_behavior.judge_character_status_time_over(target_character_id, cache.game_time, end_now=2)
             handle_premise.settle_chara_unnormal_flag(target_character_id, 5)
             handle_premise.settle_chara_unnormal_flag(target_character_id, 6)
+            # 产生动静的角色正在H中时，醒来的人按目击H处理，由玩家在目击H面板里选择应对，不再一律把人推出房间（#328）
+            if handle_premise.handle_self_is_h(character_id):
+                witness_h_by_sleeper_awake(character_id, target_character_id)
+                return
             # 冗余但便宜的保险：行动起始时间若残留睡眠时的旧值，结算时的add_time会算出天文数字
             instuct_judege.init_character_behavior_start_time(target_character_id, cache.game_time)
             target_data.behavior.duration = 1
@@ -427,6 +433,69 @@ def judge_weak_up_in_sleep_h(character_id: int, target_character_id: int):
             handle_premise.settle_chara_unnormal_flag(target_character_id, 5)
             handle_premise.settle_chara_unnormal_flag(target_character_id, 6)
             character_behavior.judge_character_status_time_over(target_character_id, cache.game_time, end_now=2)
+
+
+def witness_h_by_sleeper_awake(character_id: int, awake_character_id: int) -> None:
+    """
+    H中吵醒了同一场景里另一名睡觉的角色时，醒来的人按目击H处理
+    参数:
+        character_id: int -- 正在H中、发出动静的角色id（玩家）
+        awake_character_id: int -- 被吵醒的角色id，调用前其睡眠行为已结束、异常位已刷新
+    返回:
+        None
+    功能描述:
+        不在H中时，被吵醒的人以“睡觉中被吵醒”行为把玩家推出房间；但H中若也这样做，玩家离场后留在房间里的H对象
+        会被NPC侧的离场兜底清掉H状态，玩家自己却仍在H中，结束H类指令因交互对象不在场全都不出现（#328）。
+        因此H中改为按目击H处理：照常结算被吵醒的后果（一小时内不再产生睡觉需求），再以醒来的人为发现者弹出目击H面板，
+        由玩家选择支开对方、转为隐奸或露出、邀请加入群交，或结束这场H。
+        H在关着门的内隔间里时醒来的人看不到，只是醒过来，与NPC目击H的状态机一致。
+    """
+    from Script.Settle import default
+    from Script.System.Sex_System import sex_be_discovered_panel
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    awake_data: game_type.Character = cache.character_data[awake_character_id]
+
+    # 提示有人被吵醒
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    now_draw.text = _("\n{0}被{1}的动静吵醒了\n").format(awake_data.name, character_data.name)
+    now_draw.draw()
+
+    # 被吵醒的后果照常结算：行动起始时间对齐到当前，一小时内不再产生睡觉需求，并清掉要睡觉的状态
+    instuct_judege.init_character_behavior_start_time(awake_character_id, cache.game_time)
+    default.handle_get_sleep_disturbed_state(awake_character_id, 1, game_type.CharacterStatusChange(), cache.game_time)
+    default.handle_sleep_flag_to_0(awake_character_id, 1, game_type.CharacterStatusChange(), cache.game_time)
+
+    # H在关着门的内隔间里时看不到
+    if handle_premise.handle_place_inside_door_close(awake_character_id):
+        return
+
+    # 以醒来的人为发现者弹出目击H面板
+    now_panel = sex_be_discovered_panel.Sex_Be_Discovered_Panel(window_width, awake_character_id)
+    now_panel.draw()
+
+
+def judge_sleep_h_target_can_be_woken(character_id: int) -> bool:
+    """
+    判断角色是否为正在睡觉的睡奸对象，且能被动静吵醒
+    参数:
+        character_id: int -- 角色id
+    返回:
+        bool -- 是睡奸中、正在睡觉且能被吵醒的角色时为True
+    功能描述:
+        豁免与熟睡程度结算（realtime_settle.settle_sleep_h）一致：服用安眠药或烂醉爆睡的深度昏睡不会被动静吵醒。
+    """
+    from Script.System.Sex_System import drunk_sex_common
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 需要是睡奸（无意识标记1）且正在睡觉
+    if not handle_premise.handle_unconscious_flag_1(character_id) or not handle_premise.handle_action_sleep(character_id):
+        return False
+    # 安眠药、烂醉爆睡吵不醒
+    if character_data.h_state.body_item[9][1] == 1 or drunk_sex_common.get_drunk_level(character_id)[0] >= 3:
+        return False
+    return True
 
 
 def settle_unconscious_semen_and_cloth(character_id: int) -> None:

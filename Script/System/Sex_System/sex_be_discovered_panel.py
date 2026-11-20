@@ -280,7 +280,7 @@ class Sex_Be_Discovered_Panel:
 
     def _end_current_h(self) -> None:
         """选择结束当前H"""
-        from Script.Design import character_behavior
+        from Script.Design import character_behavior, handle_npc_ai_in_h
         # 交互对象进入被打断状态
         self.target_chara_data.action_info.h_interrupt = 1
         # 发现者变为打断行为
@@ -293,6 +293,16 @@ class Sex_Be_Discovered_Panel:
         if handle_premise.handle_group_sex_mode_on(0):
             self.pl_chara_data.behavior.behavior_id = constant.Behavior.GROUP_SEX_END
             handle_instruct.handle_group_sex_end()
+        # 睡奸被打断：睡奸对象也被这场骚动吵醒，按睡奸中途醒来结算其反应；H 已被打断，即使对方愿意也不再继续
+        #    （此前照普通 H 结束，睡奸对象被改成原地等待、却仍挂着无意识标记，醒着却算无意识）
+        elif handle_npc_ai_in_h.judge_sleep_h_target_can_be_woken(self.target_chara_data.cid):
+            self.pl_chara_data.behavior.behavior_id = constant.Behavior.H_INTERRUPT
+            self.pl_chara_data.state = constant.CharacterStatus.STATUS_H_INTERRUPT
+            info_text = _("\n因为{0}的动作，{1}从梦中惊醒过来\n").format(self.find_chara_data.name, self.target_chara_data.name)
+            handle_npc_ai_in_h.recover_from_unconscious_h(0, info_text, can_continue=False)
+        # 服用安眠药、烂醉爆睡等吵不醒的睡奸对象：照结束无意识奸收尾，对方继续睡
+        elif handle_premise.handle_unconscious_flag_1(self.target_chara_data.cid) and handle_premise.handle_action_sleep(self.target_chara_data.cid):
+            handle_instruct.handle_unconscious_h_end()
         # 否则结束当前H
         else:
             # 玩家变为被打断行为
