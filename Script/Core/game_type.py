@@ -135,6 +135,10 @@ class Food:
         """ 调味类型 """
         self.special_seasoning_amount: int = 0
         """ 特殊调味的量 """
+        self.dish_special: int = 0
+        """ 本份食物**制作时**定下的自选特技槽位（1~4；0＝制作时没选）。
+        存槽位而不是候选名：候选名在 Dish_Special.csv 里是翻译列，切换语言/补译文后会静默失效 """
+
         self.milk_ml: int = 0
         """ 牛奶毫升数 """
         self.urine_ml: int = 0
@@ -1425,6 +1429,13 @@ class Rhodes_Island:
         """ 做饭记忆：烹饪模式（0标准模式，1精细模式），键为做饭类型（0普通做饭/1泡咖啡/2调酒） """
         self.makefood_make_count: Dict[int, int] = {0: 1, 1: 1, 2: 1}
         """ 做饭记忆：制作数量，键为做饭类型（0普通做饭/1泡咖啡/2调酒） """
+        self.recipe_favorites: Dict[int, List[Dict[str, int]]] = {}
+        """ 菜谱收藏制作方案：键为菜谱id，值为方案列表（seasoning/cook_mode/make_count），上限见cooking.MAX_FAVORITES_* """
+        self.recipe_proficiency: Dict[int, int] = {}
+        """ 菜谱熟练度：键为菜谱id，值为累计制作次数（放 Rhodes_Island 使其随新周目重建而重置） """
+        self.recipe_special: Dict[int, int] = {}
+        """ 菜谱自选特技：键为菜谱id，值为玩家选的槽位（1~4，每菜最多 1 个，见 cooking.DISH_SPECIAL_SLOTS）；
+        存槽位而不是候选名：候选名是翻译列，切换语言后会静默失效；庆典的固定效果不入档 """
 
         # 医疗部
         self.medical_patients_today: Dict[int, Any] = {}

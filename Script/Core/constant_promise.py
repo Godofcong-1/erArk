@@ -1,4 +1,4 @@
-﻿class Premise:
+class Premise:
     """前提id"""
 
     DEBUG_MODE_SETTING_ON = "debug_mode_setting_on"
@@ -3953,6 +3953,8 @@
     """ 食物_种类 加料咖啡 """
     FOOD_TYPE_9 = "food_type_9"
     """ 食物_种类 其他 """
+    FOOD_TYPE_10 = "food_type_10"
+    """ 食物_种类 庆典料理 """
 
     FIND_FOOD_WEIRD_FLAG_0 = "find_food_weird_flag_0"
     """ 食物_发现调味 自身没有发现食物有问题 """

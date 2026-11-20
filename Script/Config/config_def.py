@@ -530,6 +530,25 @@ class Diplomatic_Policy:
     """ 政策介绍 """
 
 
+class Dish_Special:
+    """ 自选特技候选 """
+
+    cid: int
+    """ 主键(菜谱id*10+槽位) """
+    recipe: int
+    """ 菜谱id """
+    slot: int
+    """ 槽位(1-4) """
+    name: str
+    """ 候选名 """
+    dim: str
+    """ 效果维度 """
+    base: str
+    """ 基础效果文案 """
+    ex: str
+    """ EX升级后效果文案 """
+
+
 class Drunk_Level:
     """ 醉酒等级 """
 
@@ -1320,7 +1339,7 @@ class Recipes:
     name: str
     """ 菜谱名字 """
     type: int
-    """ 菜的类型（0正餐1零食2饮品3酒类4乳制品5预制食物8加料咖啡9其他） """
+    """ 菜的类型（0正餐1零食2饮品3酒类4乳制品5预制食物8加料咖啡9其他10庆典） """
     time: int
     """ 烹饪时间 """
     difficulty: int

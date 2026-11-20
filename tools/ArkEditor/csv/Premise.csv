@@ -2003,6 +2003,7 @@ food_type_4,FOOD_TYPE_4,食物_种类,乳制品
 food_type_5,FOOD_TYPE_5,食物_种类,预制食物
 food_type_8,FOOD_TYPE_8,食物_种类,加料咖啡
 food_type_9,FOOD_TYPE_9,食物_种类,其他
+food_type_10,FOOD_TYPE_10,食物_种类,庆典料理
 
 find_food_weird_flag_0,FIND_FOOD_WEIRD_FLAG_0,食物_发现调味,自身没有发现食物有问题
 find_food_weird_flag_1,FIND_FOOD_WEIRD_FLAG_1,食物_发现调味,自身发现食物有问题

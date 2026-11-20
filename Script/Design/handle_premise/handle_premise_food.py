@@ -505,6 +505,24 @@ def handle_food_type_9(character_id: int) -> int:
         return 1
     return 0
 
+@add_premise(constant_promise.Premise.FOOD_TYPE_10)
+def handle_food_type_10(character_id: int) -> int:
+    """
+    食物种类庆典料理
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    recipe_id = character_data.behavior.target_food.recipe
+    if recipe_id == -1:
+        return 0
+    recipe_data = cache.recipe_data[recipe_id]
+    if recipe_data.type == 10:
+        return 1
+    return 0
+
 @add_premise(constant_promise.Premise.FIND_FOOD_WEIRD_FLAG_0)
 def handlefind_food_weird_flag_0(character_id: int) -> int:
     """
