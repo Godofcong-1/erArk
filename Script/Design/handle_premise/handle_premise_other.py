@@ -3629,6 +3629,22 @@ def handle_target_is_carried(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SELF_IS_CARRIED)
+def handle_self_is_carried(character_id: int) -> int:
+    """
+    自己是玩家正在搬运的干员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if character_id == 0:
+        return 0
+    if cache.character_data[0].action_info.carry_chara_id == character_id:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.T_BABY_1)
 def handle_t_baby_1(character_id: int) -> int:
     """

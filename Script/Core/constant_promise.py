@@ -3887,6 +3887,8 @@
     """ 行动 玩家正在搬运干员 """
     TARGET_IS_CARRIED = "target_is_carried"
     """ 行动 交互对象是自己正在搬运的干员 """
+    SELF_IS_CARRIED = "self_is_carried"
+    """ 行动 自己是玩家正在搬运的干员 """
 
     PL_ACTION_FOOD_NORMAL = "pl_action_food_normal"
     """ 食物_调味 正常 """

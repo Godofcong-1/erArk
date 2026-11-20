@@ -1968,6 +1968,7 @@ ai_not_eat_in_restaurant,AI_NOT_EAT_IN_RESTAURANT,行动,AI不在餐厅吃饭(�
 not_carry_anybody,NOT_CARRY_ANYBODY,行动,玩家没有在搬运干员
 carry_somebody,CARRY_SOMEBODY,行动,玩家正在搬运干员
 target_is_carried,TARGET_IS_CARRIED,行动,交互对象是自己正在搬运的干员
+self_is_carried,SELF_IS_CARRIED,行动,自己是玩家正在搬运的干员
 
 pl_action_food_normal,PL_ACTION_FOOD_NORMAL,食物_调味,正常
 pl_action_food_sour,PL_ACTION_FOOD_SOUR,食物_调味,酸(已废弃)
