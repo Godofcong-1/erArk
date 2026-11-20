@@ -8134,8 +8134,11 @@ def handle_eat_add_just(
         # 特殊调味是恶作剧：制作者自己不参与，只请（愿意接受的）同场景干员入席
         if food_seasoning == 0:
             eat_food_chara_id_list.append(character_id)
+        # 已经在食物背包面板里做过接受判定的交互对象不重复判定：
+        # 面板里她已按「接受」演完口上，这里再掷一次骰子会出现「开席！0 人共同参与」却又照吃的情况
+        _already_judged = character_data.target_character_id if food_seasoning != 0 else None
         for _cid in _cooking._get_feast_npcs():
-            if food_seasoning != 0 and _cid:
+            if food_seasoning != 0 and _cid and _cid != _already_judged:
                 if not _cooking.judge_accept_special_seasoning_food(_cid):
                     cache.character_data[_cid].angry_point += 40
                     cache.character_data[_cid].sp_flag.angry_with_player = True
@@ -8233,7 +8236,7 @@ def handle_eat_add_just(
         handle_add_small_mana_point(chara_id,add_time=mp_add,change_data=target_change,now_time=now_time)
         # 食物结算饥饿值，饮品结算尿意值
         if eat_flag:
-            # 维多利亚午后茶会「清茶淡点」：轻食，不把饥饿值清零，只吃个半饱，留出接着吃的余地
+            # 维多利亚午后茶会「清茶淡点」：轻食，不把饥饿值清零，只吃个半饱
             if feast_flag and feast_effect == "tea":
                 target_data.hunger_point = max(0, target_data.hunger_point // 2)
             else:
@@ -8278,11 +8281,6 @@ def handle_eat_add_just(
         #   见 handle_high_obscenity_failed_adjust 的 ×0.35/×0.2（不是扣已经攒下来的反感）
         if dish_special_dim:
             _special_gain = 23 if dish_special_ex else 15
-            # 「抚慰」要扣的负面状态（按 CSV 里的状态名取 id，别硬编码）
-            _NEG_STATE_IDS = [
-                _sid for _sid, _cfg in game_config.config_character_state.items()
-                if getattr(_cfg, "name", "") in ("苦痛", "恐怖", "抑郁", "反感")
-            ]
             if dish_special_dim == "疲劳":
                 target_data.tired_point = max(0, target_data.tired_point - _special_gain)
             elif dish_special_dim == "怒气":
@@ -8291,7 +8289,7 @@ def handle_eat_add_just(
                 # 扣除 = max(当前值 × 比例, 下限)，EX 比例 15%/下限 ×1.5；**不设上限**（比例项自带自限性）
                 _cheer_rate = 0.15 if dish_special_ex else 0.10
                 _cheer_min = int(_cooking.CHEER_MIN_DEDUCT * (1.5 if dish_special_ex else 1.0))
-                for _neg_state in _NEG_STATE_IDS:
+                for _neg_state in _cooking.CHEER_STATE_IDS:
                     _neg_now = target_data.status_data.get(_neg_state, 0)
                     if _neg_now <= 0:
                         continue
@@ -8355,27 +8353,29 @@ def handle_eat_add_just(
                 if _redirect_target:
                     character_data.target_character_id = _saved_target
 
-    # 庆典开席播报（只有博士发起的会食才算「开席」；NPC 自己吃庆典菜走单人进食路径）
-    if feast_flag and character_id == 0:
-        info = draw.WaitDraw()
-        info.text = _("\n○庆典开席！{0}人共同享用了{1}\n").format(len(eat_food_chara_id_list), recipe_data.name)
-        info.draw()
+    # 结算提示与播报都只给玩家看：NPC 自己在别处吃饭时不能把文字打到玩家屏幕上
+    if character_id == 0:
+        # 庆典开席播报（只有博士发起的会食才算「开席」；NPC 自己吃庆典菜走单人进食路径）
+        if feast_flag:
+            info = draw.WaitDraw()
+            info.text = _("\n○庆典开席！{0}人共同享用了{1}\n").format(len(eat_food_chara_id_list), recipe_data.name)
+            info.draw()
 
-    # 结算提示：把这道菜自带的固定效果与已装的自选特技亮出来
-    # （显示端不能只剩「未选择」；庆典固定效果 = 会食效果，自选特技 = 4 选 1）
-    effect_lines = []
-    feast_effect_text = _cooking.get_feast_effect_text(recipe_id) if feast_flag and character_id == 0 else ""
-    if feast_effect_text:
-        effect_lines.append(_("○本菜特殊效果：{0}").format(feast_effect_text))
-    chosen_name = _cooking.get_food_special_choice(now_food)
-    if chosen_name:
-        effect_lines.append(_("○本菜特技：{0}（{1}，{2}）").format(
-            chosen_name, _cooking.get_food_special_dim(now_food), _cooking.food_special_effect_text(now_food)
-        ))
-    if effect_lines:
-        effect_draw = draw.NormalDraw()
-        effect_draw.text = "\n" + "\n".join(effect_lines) + "\n"
-        effect_draw.draw()
+        # 结算提示：把这道菜自带的固定效果与已装的自选特技亮出来
+        # （显示端不能只剩「未选择」；庆典固定效果 = 会食效果，自选特技 = 4 选 1）
+        effect_lines = []
+        feast_effect_text = _cooking.get_feast_effect_text(recipe_id) if feast_flag else ""
+        if feast_effect_text:
+            effect_lines.append(_("○本菜特殊效果：{0}").format(feast_effect_text))
+        chosen_name = _cooking.get_food_special_choice(now_food)
+        if chosen_name:
+            effect_lines.append(_("○本菜特技：{0}（{1}，{2}）").format(
+                chosen_name, _cooking.get_food_special_dim(now_food), _cooking.food_special_effect_text(now_food)
+            ))
+        if effect_lines:
+            effect_draw = draw.NormalDraw()
+            effect_draw.text = "\n" + "\n".join(effect_lines) + "\n"
+            effect_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_HPMP_MAX)

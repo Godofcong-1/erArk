@@ -655,10 +655,10 @@ FEAST_EFFECT_TEXT = {
     "reunion": (_("团圆"), _("入席者疲劳 −50、怒气清零、解除对你的生气")),
     "hearty": (_("饱足"), _("入席者疲劳 −30")),
     "melody": (_("安眠曲"), _("入席者欲望 −30")),
-    "starlight": (_("星光助兴"), _("入席者疲劳 −20，且更兴奋")),
+    "starlight": (_("星光助兴"), _("入席者疲劳 −20，对你的好意增加")),
     "sakura": (_("花见之情"), _("入席者对你的好感 +25%")),
     "family": (_("家规约束"), _("你亲手做的这桌：信赖 +50%")),
-    "tea": (_("清茶淡点"), _("轻食：入席者不易吃饱（饥饿值只降到一半），可以接着吃")),
+    "tea": (_("清茶淡点"), _("轻食：入席者只吃个半饱（饥饿值减半，不会清零）")),
     "golden": (_("黄金满席"), _("进食收益 ×1.25")),
     "anniversary": (_("周年同庆"), _("进食收益 ×1.5")),
 }
@@ -768,7 +768,9 @@ PROF_GAIN_PER_MAKE = 1
 PROFICIENCY_ATTR = "recipe_proficiency"
 """ 菜谱熟练度的玩家属性名 """
 SPECIAL_EFFECTS_ATTR = "recipe_special"
-""" 菜谱自选特技的玩家属性名（Dict[菜谱id, 候选名]，每菜最多 1 个；庆典的固定效果不入档） """
+""" 菜谱自选特技的玩家属性名（Dict[菜谱id, 槽位1~4]，每菜最多 1 个；庆典的固定效果不入档） """
+DISH_SPECIAL_SLOTS = (1, 2, 3, 4)
+""" 每菜的自选特技槽位号；cid = 菜谱id * 10 + 槽位 """
 MASKED_REJECT_MULT = 0.35
 """ 「掩味」对"被喂特殊调味、判定失败"时反感增量的折扣（药剂类，调味 ≥100） """
 MASKED_REJECT_MULT_EX = 0.20
@@ -779,6 +781,10 @@ MASKED_REJECT_MULT_SEMEN_EX = 0.08
 """ 同上，EX 阶：实测连续 4 次喂食也涨不到反发刻印 1 级（第 6 次才到） """
 SEMEN_SEASONING_SET = (11, 12)
 """ 精液类特殊调味：11 射入精液（巧妙混入）/ 12 射入精液（不作掩饰直接射上去） """
+CHEER_STATE_IDS = (17, 18, 19, 20)
+""" 「抚慰」扣除的负面状态 id：苦痛 / 恐怖 / 抑郁 / 反感。
+**写死 id 而不是按 CSV 里的中文状态名反查**：状态名在加载时会被翻译（en/ko 下变成 Pain 等），
+按名字匹配在非中文环境会取到空列表，抚慰就静默变成空操作 """
 CHEER_MIN_DEDUCT = 1500
 """ 「抚慰」型自选特技的最低扣除量：扣除 = max(当前值 × 比例, 本值)，**不设上限**
 数值依据（真实存档状态存量 + 结算公式复算）：
@@ -979,7 +985,7 @@ def add_proficiency(food_cid: int) -> None:
     old_tier = get_prof_tier(fid)
     # 熟练度按"制作一次"结算，不随份数倍增（批量制作不再一次拉满）
     data[fid] = data.get(fid, 0) + PROF_GAIN_PER_MAKE
-    # 自选特技由玩家自己在确认页选择（见 set_dish_special_choice），跨阶不再自动写档
+    # 自选特技由玩家自己在确认页选择（见 set_dish_special_slot），跨阶不再自动写档
 
 
 def get_prof_time_mult(food_cid: int) -> float:
@@ -1003,24 +1009,22 @@ def get_prof_time_mult(food_cid: int) -> float:
 
 def get_food_special(food) -> tuple:
     """
-    取「某一份食物」自己带的特技候选元组（食物实例在制作时就定下了名字，之后换槽不影响已有成品）
+    取「某一份食物」自己带的特技条目（食物实例在制作时就定下了槽位，之后换槽不影响已有成品）
+
+    没有槽位就是没有特技：**不回落**到菜谱当前选择。否则食堂厨师/餐馆/地摊/助理做的同名菜，
+    以及博士选特技之前做出的存货，都会跟着博士当前的选择一起生效。
 
     Keyword arguments:
     food -- Food 实例（可为 None）
     Return arguments:
-    tuple -- (候选名, 维度, 基础效果, EX 效果)；没选时为 ()
+    tuple -- (候选名, 维度, 基础效果, EX 效果)；没装时为 ()
     """
     if food is None:
         return ()
-    name = getattr(food, "dish_special", "") or ""
-    recipe_id = getattr(food, "recipe", -1)
-    if not name:
-        # 老存档的食物没有该字段，回落到"菜谱当前选择"（与改动前行为一致）
-        return get_dish_special(recipe_id)
-    for item in get_dish_special_candidates(recipe_id):
-        if item[0] == name:
-            return item
-    return ()
+    slot = getattr(food, "dish_special", 0) or 0
+    if not slot:
+        return ()
+    return dish_special_row(getattr(food, "recipe", -1), slot)
 
 
 def get_food_special_choice(food) -> str:
@@ -1043,6 +1047,23 @@ def food_special_effect_text(food) -> str:
     return item[3] if is_dish_special_ex(getattr(food, "recipe", -1)) else item[2]
 
 
+def dish_special_row(food_cid, slot: int) -> tuple:
+    """
+    按「菜谱id + 槽位」查一条特技候选
+    Keyword arguments:
+    food_cid -- 菜谱id
+    slot -- 槽位 1~4（0 或越界视为没有）
+    Return arguments:
+    tuple -- (候选名, 效果维度, 基础效果, EX 升级后效果)；没有该槽时返回空元组
+    """
+    if slot not in DISH_SPECIAL_SLOTS:
+        return ()
+    row = game_config.config_dish_special.get(_fid(food_cid) * 10 + slot)
+    if row is None:
+        return ()
+    return (row.name, row.dim, row.base, row.ex)
+
+
 def get_dish_special_candidates(food_cid) -> list:
     """
     获取某道菜的自选特技候选（每菜 4 条，维度互不重复）
@@ -1051,14 +1072,29 @@ def get_dish_special_candidates(food_cid) -> list:
     Return arguments:
     list -- [(候选名, 效果维度, 基础效果, EX 升级后效果), ...]；无候选时为空列表
     """
-    fid = _fid(food_cid)
     out = []
-    for slot in range(1, 5):
-        row = game_config.config_dish_special.get(fid * 10 + slot)
-        if row is None:
-            continue
-        out.append((row.name, row.dim, row.base, row.ex))
+    for slot in DISH_SPECIAL_SLOTS:
+        item = dish_special_row(food_cid, slot)
+        if item:
+            out.append(item)
     return out
+
+
+def get_dish_special_slot(food_cid) -> int:
+    """
+    获取玩家为这道菜选定的槽位（未选择或该槽已失效时为 0）
+    Keyword arguments:
+    food_cid -- 菜谱id
+    Return arguments:
+    int -- 槽位 1~4，未选为 0
+    """
+    ri = getattr(cache, "rhodes_island", None)
+    if ri is None:
+        return 0
+    slot = getattr(ri, SPECIAL_EFFECTS_ATTR, {}).get(_fid(food_cid), 0)
+    if not isinstance(slot, int) or not dish_special_row(food_cid, slot):
+        return 0
+    return slot
 
 
 def get_dish_special_choice(food_cid) -> str:
@@ -1069,20 +1105,16 @@ def get_dish_special_choice(food_cid) -> str:
     Return arguments:
     str -- 候选名
     """
-    ri = getattr(cache, "rhodes_island", None)
-    if ri is None:
-        return ""
-    name = getattr(ri, SPECIAL_EFFECTS_ATTR, {}).get(_fid(food_cid), "")
-    names = [c[0] for c in get_dish_special_candidates(food_cid)]
-    return name if name in names else ""
+    item = get_dish_special(food_cid)
+    return item[0] if item else ""
 
 
-def set_dish_special_choice(food_cid, name: str) -> None:
+def set_dish_special_slot(food_cid, slot: int) -> None:
     """
-    设定/取消这道菜的自选特技（name 传空字符串表示取消）
+    设定/取消这道菜的自选特技（slot 传 0 表示取消）
     Keyword arguments:
     food_cid -- 菜谱id
-    name -- 候选名（必须在该菜候选表内，否则视为取消）
+    slot -- 槽位 1~4（必须在该菜候选表内，否则视为取消）
     """
     ri = getattr(cache, "rhodes_island", None)
     if ri is None:
@@ -1092,9 +1124,8 @@ def set_dish_special_choice(food_cid, name: str) -> None:
         data = {}
         setattr(ri, SPECIAL_EFFECTS_ATTR, data)
     fid = _fid(food_cid)
-    names = [c[0] for c in get_dish_special_candidates(fid)]
-    if name in names:
-        data[fid] = name
+    if slot in DISH_SPECIAL_SLOTS and dish_special_row(fid, slot):
+        data[fid] = int(slot)
     else:
         data.pop(fid, None)
 
@@ -1107,13 +1138,7 @@ def get_dish_special(food_cid) -> tuple:
     Return arguments:
     tuple -- (候选名, 效果维度, 基础效果, EX 升级后效果)；未装时返回空元组
     """
-    name = get_dish_special_choice(food_cid)
-    if not name:
-        return ()
-    for item in get_dish_special_candidates(food_cid):
-        if item[0] == name:
-            return item
-    return ()
+    return dish_special_row(food_cid, get_dish_special_slot(food_cid))
 
 
 def get_dish_special_dim(food_cid) -> str:
@@ -1156,33 +1181,22 @@ def dish_special_effect_text(food_cid) -> str:
 def get_helpers() -> list:
     """
     获取当前可协助烹饪的帮厨名单
-    优先使用玩家名单制助理（multi_assistant 风格），无名单时退回原版单助理；
-    只取智能跟随(1)且与博士同场景者，最多3名。
+    只取原版助理（Character.assistant_character_id）里，处于智能跟随(1)且与博士同场景者，最多3名。
     Return arguments:
     list -- 帮厨角色id列表
     """
     pl = cache.character_data[0]
-    ids = getattr(pl, "mod_assistant_ids", None)
-    if ids is None:
-        ids = [pl.assistant_character_id] if pl.assistant_character_id else []
-    helpers = []
-    try:
-        from Script.Design import map_handle as _mh
-        pl_scene = _mh.get_map_system_path_str_for_list(pl.position)
-        for aid in ids:
-            if aid == 0 or aid not in cache.character_data:
-                continue
-            a = cache.character_data[aid]
-            if a.sp_flag.is_follow != 1:
-                continue
-            if _mh.get_map_system_path_str_for_list(a.position) != pl_scene:
-                continue
-            helpers.append(aid)
-            if len(helpers) >= 3:
-                break
-    except Exception:
+    aid = getattr(pl, "assistant_character_id", 0)
+    if not aid or aid == 0 or aid == pl.cid or aid not in cache.character_data:
         return []
-    return helpers
+    helper = cache.character_data[aid]
+    # 智能跟随：只有跟随状态的助理才会跟到厨房来
+    if getattr(helper.sp_flag, "is_follow", 0) != 1:
+        return []
+    from Script.Design import map_handle as _mh
+    if _mh.get_map_system_path_str_for_list(helper.position) != _mh.get_map_system_path_str_for_list(pl.position):
+        return []
+    return [aid]
 
 
 def get_helper_time_mult() -> float:

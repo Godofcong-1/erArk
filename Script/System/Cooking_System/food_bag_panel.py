@@ -80,6 +80,30 @@ def calculate_food_effects(
     return state_add, hpmp_add
 
 
+def split_by_dish_special(group: dict) -> list:
+    """
+    把 (菜谱id, 调味类型) → [uid...] 的分组，按每份食物的自选特技槽位拆成显示行
+
+    只影响显示：分组键本身仍是上游的二元组（回归测试按二元组断言分组结果），
+    拆出来的每一行把槽位作为第三个元素带给 FoodGroupDraw 当标签用。
+
+    Keyword arguments:
+    group -- {(菜谱id, 调味类型): [uid...]}
+    Return arguments:
+    list -- [((菜谱id, 调味类型, 槽位), [uid...]), ...]
+    """
+    rows = []
+    for (recipe_id, seasoning), uid_list in group.items():
+        by_slot: dict = {}
+        for uid in uid_list:
+            food_data = cache.character_data[0].food_bag.get(uid)
+            slot = getattr(food_data, "dish_special", 0) or 0
+            by_slot.setdefault(slot, []).append(uid)
+        for slot, uids in by_slot.items():
+            rows.append(((recipe_id, seasoning, slot), uids))
+    return rows
+
+
 class FoodBagPanel:
     """
     用于查看食物背包界面面板对象
@@ -118,10 +142,11 @@ class FoodBagPanel:
             if cache.now_panel_id != constant.Panel.FOOD_BAG:
                 break
 
-            # 获取当前面板下的食物分组
+            # 获取当前面板下的食物分组（键与上游一致是二元组），再按「这一份食物自己的特技槽位」
+            # 拆成显示行：同一道菜装了不同特技就不并到一行，但分组键本身不变
             group_normal, group_special = self.get_food_group()
-            id_list_normal = list(group_normal.items())
-            id_list_special = list(group_special.items())
+            id_list_normal = split_by_dish_special(group_normal)
+            id_list_special = split_by_dish_special(group_special)
 
             self.handle_panel_normal.text_list = id_list_normal
             self.handle_panel_normal.update()
@@ -251,7 +276,9 @@ class FoodBagPanel:
             # 如果被限定为酒类食物，则跳过非酒类食物
             elif self.now_panel == _("酒类") and recipe_data is not None and recipe_data.type != 3:
                 continue
-            group_key = (food_data.recipe, food_data.special_seasoning, getattr(food_data, "dish_special", ""))
+            # 分组键与上游保持一致：(菜谱id, 调味类型)；自选特技是"这一份食物"的标签，
+            # 只在绘制时再按特技把同一堆拆开（见 draw 里的 split_food_group_by_special），不改分组键的结构
+            group_key = (food_data.recipe, food_data.special_seasoning)
             # 如果是正常调味食物，则加入group_normal，否则加入group_special
             if food_data.special_seasoning == 0:
                 group_normal.setdefault(group_key, [])
@@ -295,8 +322,14 @@ class FoodGroupDraw:
         """初始化绘制对象"""
         group_key, uid_list = text
         recipe_id, special_seasoning = group_key[0], group_key[1]
-        self.dish_special = group_key[2] if len(group_key) > 2 else ""
-        """ 本组食物制作时定下的自选特技名（不同特技的同一道菜不再并堆） """
+        dish_special_slot = group_key[2] if len(group_key) > 2 else 0
+        self.dish_special = ""
+        """ 本组食物制作时定下的自选特技名（不同特技的同一道菜不并到一行） """
+        if dish_special_slot:
+            from Script.System.Cooking_System import cooking as _cooking
+            _row = _cooking.dish_special_row(recipe_id, dish_special_slot)
+            if _row:
+                self.dish_special = _row[0]
 
         self.uid_list: List[UUID] = uid_list
         """ 该分组下的食物uid列表 """

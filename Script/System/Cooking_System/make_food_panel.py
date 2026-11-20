@@ -852,12 +852,16 @@ class SeeFoodListByFoodNameDraw:
         food_recipe = game_config.config_recipes[int(self.food_cid)]
         food_name = self.food_name
         food_diffucty = food_recipe.difficulty
-        seasoning_name = game_config.config_seasoning[self.special_seasoning].name
         facility_adjust = basement.calc_facility_efficiency(5)
         recipe_cid = int(self.food_cid)
 
-        # 预估消耗函数：对齐上游做饭行为链 DOWN_BOTH_MEDIUM（自/交互对象各扣 HP3/分、MP6/分）
+        # 预估消耗：按实际进入的行为结算 —— 加料咖啡走 MAKE_COFFEE_ADD(132)，
+        # 其 Behavior_Effect 是 1511(小量自扣体力) + 1512(小量自扣气力) + 544，
+        # 即**只扣自己**、degree=0 的每分钟 HP1 / MP3（common_default.dregree_dict[0]）；
+        # 普通做饭走 DOWN_BOTH_MEDIUM，自/交互对象各扣 HP3/MP3·2 每分钟
         def estimate_cost(total_time):
+            if self.add_coffee:
+                return int(total_time * 1), int(total_time * 3)
             hp_cost = int(total_time * 3)
             mp_cost = int(total_time * 6)
             return hp_cost, mp_cost
@@ -867,6 +871,7 @@ class SeeFoodListByFoodNameDraw:
             check_time = int(check_time * cooking.get_prof_time_mult(recipe_cid) * cooking.get_helper_time_mult())
             if facility_adjust != 1.0 and check_time > 0:
                 check_time = int(check_time / facility_adjust)
+            check_time = max(1, check_time)
             hp_cost, mp_cost = estimate_cost(check_time)
             return hp_cost <= character_data.hit_point - 1 and mp_cost <= character_data.mana_point
 
@@ -882,8 +887,8 @@ class SeeFoodListByFoodNameDraw:
             # 如果当前是酒类，且当前地点在酒吧，则品质额外+1
             if food_recipe.type == 3 and handle_premise.handle_in_bar(0):
                 base_quality += 1
-            # 标准模式上限为美味（绝珍只能靠精细答题或大师模式达到），这行同时兜住上面「酒类在酒吧 +1」
-            base_quality = min(base_quality, cooking.get_good_quality_cap())
+            # 标准模式上限由 cooking.get_base_food_quality 自己封顶，这里不能再封一次：
+            # 再封一次会把上面「酒类在酒吧 +1」抹掉（review 第 8 点）
             # 大师模式：全局模式2 + 料理技能达标
             global_master = cooking.is_master_unlocked()
             master_active = self.cook_mode == 2 and global_master
@@ -928,6 +933,12 @@ class SeeFoodListByFoodNameDraw:
                     facility_adjust_str = _("（+{0:.1f}%）").format(rate * 100)
                 elif rate < 0:
                     facility_adjust_str = _("（{0:.1f}%）").format(rate * 100)
+            # 取整后至少留 1 分钟：3 分钟的菜到 EX 阶再装「耗时」特技后只剩 0.9 分钟，
+            # 设施效率再一除就取整成 0，会变成不花时间也不扣体力
+            make_food_time = max(1, make_food_time)
+
+            # 当前调味每轮重取：载入收藏方案会改 self.special_seasoning，写在循环外会一直显示「正常」
+            seasoning_name = game_config.config_seasoning[self.special_seasoning].name
 
             # 输出食物的名字、菜谱难度、制作数量、预计耗时、调味
             confirm_text = ""
@@ -943,7 +954,8 @@ class SeeFoodListByFoodNameDraw:
             confirm_text += _("当前调味: {0}\n").format(seasoning_name)
             hp_cost, mp_cost = estimate_cost(make_food_time)
             cost_str = _("预计消耗: 体力 -{0} / 气力 -{1}").format(hp_cost, mp_cost)
-            if character_data.target_character_id != character_data.cid:
+            # 加料咖啡只扣自己（1511/1512 都是 self 自扣），普通做饭才是与交互对象同额（DOWN_BOTH_MEDIUM）
+            if character_data.target_character_id != character_data.cid and not self.add_coffee:
                 cost_str += _("（交互对象同额）")
             confirm_text += cost_str + _("\n")
             # 帮厨与熟练度信息行
@@ -1029,18 +1041,21 @@ class SeeFoodListByFoodNameDraw:
                     )
                 slot_title.draw()
                 line_feed.draw()
-                chosen_name = cooking.get_dish_special_choice(recipe_cid)
-                for slot_index, slot_item in enumerate(cooking.get_dish_special_candidates(recipe_cid)):
+                chosen_slot = cooking.get_dish_special_slot(recipe_cid)
+                for slot_index in cooking.DISH_SPECIAL_SLOTS:
+                    slot_item = cooking.dish_special_row(recipe_cid, slot_index)
+                    if not slot_item:
+                        continue
                     slot_effect = slot_item[3] if cooking.is_dish_special_ex(recipe_cid) else slot_item[2]
                     # 一行一条（前缀＋名字＋维度），效果文案单独一行完整显示：
                     # 按钮文本超宽会被截断成「本菜：制作 耗~」，玩家看不到完整效果
                     if _slot_tier >= cooking.PROF_SLOT_TIER:
-                        slot_prefix = _("[已选]") if slot_item[0] == chosen_name else _("[选择]")
+                        slot_prefix = _("[已选]") if slot_index == chosen_slot else _("[选择]")
                         slot_text = _("{0}{1}（{2}）").format(slot_prefix, slot_item[0], slot_item[1])
                         slot_draw = draw.LeftButton(slot_text, "feast_dish_special_" + str(slot_index), self.width)
                         slot_draw.draw()
                         return_list.append(slot_draw.return_text)
-                        self._dish_special_returns[slot_draw.return_text] = slot_item[0]
+                        self._dish_special_returns[slot_draw.return_text] = slot_index
                     else:
                         preview_draw = draw.NormalDraw()
                         preview_draw.text = _("　[预览]{0}（{1}）").format(slot_item[0], slot_item[1])
@@ -1108,8 +1123,10 @@ class SeeFoodListByFoodNameDraw:
                 make_count = max_count
             elif self._dish_special_returns and yrn in self._dish_special_returns:
                 # 4 选 1：再点已选项则取消（免费随时换）
-                picked = self._dish_special_returns[yrn]
-                cooking.set_dish_special_choice(recipe_cid, "" if picked == cooking.get_dish_special_choice(recipe_cid) else picked)
+                picked_slot = self._dish_special_returns[yrn]
+                cooking.set_dish_special_slot(
+                    recipe_cid, 0 if picked_slot == cooking.get_dish_special_slot(recipe_cid) else picked_slot
+                )
             elif yrn == "feast_fav_save":
                 result = cooking.save_favorite(recipe_cid, make_count, self.cook_mode, self.special_seasoning)
                 info_text = {
@@ -1163,12 +1180,12 @@ class SeeFoodListByFoodNameDraw:
         recipe_cid = int(self.food_cid)
 
         # 计算食物品质：基础品质只由料理技能决定（熟练度不提供任何品质加成），
-        # 之后封顶到标准模式上限「美味」（绝珍只能靠精细答题或大师模式达到）
+        # 标准模式上限「美味」已由 get_base_food_quality 封顶（绝珍只能靠精细答题或大师模式达到）
         base_quality = cooking.get_base_food_quality(0)
         # 如果当前是酒类，且当前地点在酒吧，则品质额外+1
+        # （标准模式上限已由 get_base_food_quality 封顶，这里不再二次封顶，否则这个 +1 会被抹掉）
         if food_recipe.type == 3 and handle_premise.handle_in_bar(0):
             base_quality += 1
-        base_quality = min(base_quality, cooking.get_good_quality_cap())
         food_quality = base_quality
         # 大师模式：全局模式2 + 料理技能达标
         global_master = cooking.is_master_unlocked()
@@ -1201,7 +1218,7 @@ class SeeFoodListByFoodNameDraw:
             # 创建食物对象并赋予名字、作者、品质、味道
             new_food = cooking.create_food("", recipe_cid, food_quality, character_data.name)
             # 制作时就把当前自选特技烙在这份食物上：之后换槽不影响已有成品，也不会与别的槽混堆
-            new_food.dish_special = cooking.get_dish_special_choice(recipe_cid)
+            new_food.dish_special = cooking.get_dish_special_slot(recipe_cid)
             new_food.special_seasoning = self.special_seasoning
             if self.special_seasoning in {11, 12}:
                 new_food.special_seasoning_amount = semen_count
