@@ -348,6 +348,11 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
         # 睡醒时刷新异常位掩码5/6：睡眠中位6被结算为异常，若醒来后不经过起床状态机
         # （仅宿舍内可触发），无其他修改点负责刷新，会导致角色因过期异常位卡死在原地
         if character_data.last_behavior_id_list[-1] == constant.Behavior.SLEEP:
+            # 睡醒时清掉残留的睡眠无意识标记：睡奸结束而对方仍在睡时，结束H只清 is_h、不清这个标记，
+            # 它平时靠博士离开她所在的场景才被清掉；博士一直在场（搬运着她、或待在她房间里）时她醒来后仍被当作在睡，原地发呆醒不来。
+            # H 中（含睡奸中醒来后装睡）的标记由无意识H的恢复意识流程负责，这里不动
+            if character_data.sp_flag.unconscious_h == 1 and not character_data.sp_flag.is_h:
+                character_data.sp_flag.unconscious_h = 0
             handle_premise.settle_chara_unnormal_flag(character_id, 5)
             handle_premise.settle_chara_unnormal_flag(character_id, 6)
         # 当前时间大于行动结束时间
