@@ -646,4 +646,151 @@ check("解手后没有被设上移动终点、也没有动身（否则干员每�
       pee_npc.behavior.move_final_target == [] and pee_npc.behavior.behavior_id != constant.Behavior.MOVE, (pee_npc.behavior.move_final_target, pee_npc.behavior.behavior_id))
 remove_character(PEE_NPC_ID)
 
+# ==== 8.12 H 中吵醒同屋睡觉的人 ====
+section("H 中吵醒了同屋另一个睡觉的人：醒来的人按目击 H 处理，不再一律把博士推出房间（#328）")
+from Script.Design import character_behavior, handle_npc_ai_in_h, instuct_judege  # noqa: E402
+from Script.Settle import default as settle_default  # noqa: E402
+from Script.System.Instruct_System import handle_instruct  # noqa: E402
+
+WAKE_H_TARGET_ID = 9430
+""" 被博士睡奸的干员 fixture """
+WAKE_SLEEPER_ID = 9431
+""" 同屋睡觉、会被吵醒的干员 fixture """
+DORM_ENTRANCE = ["宿舍", "1区", "0"]
+""" 博士走进宿舍前所在的宿舍区入口，被推出房间时回到这里 """
+
+
+def settle_pl_behavior(minute: int):
+    """
+    update.game_update_flow 的替身：不进真实主循环，只结算一次博士当前的行为（主循环推进时间后对博士做的正是这一步）
+    Keyword arguments:
+    minute -- 推进的分钟数（不使用）
+    Return arguments:
+    无
+    """
+    character_behavior.judge_character_status(0)
+
+
+def run_wake_case(in_h: bool, choice: str = "", judge_pass: bool = True, sleeping_pill: bool = False) -> tuple:
+    """
+    在宿舍里摆好一场睡奸（或博士只是待在屋里），让同屋睡觉的室友被吵醒，按 choice 在目击 H 面板里选择应对
+    Keyword arguments:
+    in_h -- 博士是否正在睡奸
+    choice -- 目击 H 面板里选的按钮（1 支开对方 / 5 尴尬地结束H）
+    judge_pass -- 实行值判定是否一律通过（支开对方、睡奸对象醒来后的反应都看它）
+    sleeping_pill -- 睡奸对象是否服用了安眠药（吵不醒）
+    Return arguments:
+    tuple -- (睡奸对象, 被吵醒的室友, 吵醒前博士与睡奸对象是否都在 H 中, 面板运行时的异常)
+    """
+    h_target = make_character(WAKE_H_TARGET_ID, "睡奸对象")
+    sleeper = make_character(WAKE_SLEEPER_ID, "同屋室友")
+    move_to(0, SCENE_DORM)
+    # 博士体力、气力回满：前面的结算会消耗体力，体力见底时结算中途会转去力竭结束 H（并进入真实主循环）
+    pl.hit_point = pl.hit_point_max
+    pl.mana_point = pl.mana_point_max
+    pl.action_info.past_move_position_list = [list(DORM_ENTRANCE), list(SCENE_DORM)]
+    pl.target_character_id = WAKE_H_TARGET_ID
+    for chara_data in (h_target, sleeper):
+        chara_data.behavior.behavior_id = constant.Behavior.SLEEP
+        chara_data.state = constant.CharacterStatus.STATUS_SLEEP
+        chara_data.behavior.duration = 480
+        chara_data.behavior.start_time = cache.game_time
+        chara_data.sleep_point = 10  # 浅睡，吵醒判定只看随机数
+        chara_data.tired_point = 100
+    # 进入睡奸：先给对象挂上无意识标记，再照真实的「进入H」行为结算（双方变为 H 中、关门）
+    if in_h:
+        settle_default.handle_unconscious_flag_to_1(WAKE_H_TARGET_ID, 1, game_type.CharacterStatusChange(), cache.game_time)
+        pl.behavior.behavior_id = constant.Behavior.H
+        pl.state = constant.CharacterStatus.STATUS_H
+        pl.behavior.duration = 5
+        pl.behavior.start_time = cache.game_time
+        settle_behavior.handle_settle_behavior(0, cache.game_time + datetime.timedelta(minutes=5))
+    if sleeping_pill:
+        h_target.h_state.body_item[9][1] = 1
+    all_in_h = pl.sp_flag.is_h and h_target.sp_flag.is_h
+
+    def wake():
+        """
+        博士的一次动作吵醒了室友（randint 恒为 1：必定吵醒）
+        Keyword arguments:
+        无
+        Return arguments:
+        无
+        """
+        with mock.patch.object(handle_npc_ai_in_h, "random", mock.Mock(randint=lambda low, high: 1)), \
+                mock.patch.object(instuct_judege, "calculation_instuct_judege", lambda *args, **kwargs: [1 if judge_pass else 0, 1, 1.0]), \
+                mock.patch.object(handle_instruct.update, "game_update_flow", settle_pl_behavior), \
+                mock.patch.object(handle_instruct.achievement_panel, "achievement_flow", lambda *args, **kwargs: None):
+            handle_npc_ai_in_h.judge_weak_up_in_sleep_h(0, WAKE_SLEEPER_ID)
+
+    panel_error = run_panel(wake, [choice] if choice else [])
+    return h_target, sleeper, all_in_h, panel_error
+
+
+def clean_wake_case():
+    """
+    撤掉本节的 fixture 角色，把博士与宿舍复原
+    Keyword arguments:
+    无
+    Return arguments:
+    无
+    """
+    for chara_id in (WAKE_H_TARGET_ID, WAKE_SLEEPER_ID):
+        remove_character(chara_id)
+    pl.sp_flag.is_h = False
+    pl.target_character_id = 0
+    pl.behavior = game_type.Behavior()
+    pl.behavior.start_time = cache.game_time
+    pl.action_info.past_move_position_list = []
+    cache.scene_data[scene_str(SCENE_DORM)].close_flag = 0
+    move_to(0, SCENE_DORM)
+
+
+enable_clickable_buttons()
+
+h_target, sleeper, all_in_h, panel_error = run_wake_case(in_h=False)
+check("不在 H 中时照旧：被吵醒的室友直接把博士推回宿舍区入口，不弹目击 H 面板",
+      panel_error is None and not ask_log and pl.position == DORM_ENTRANCE and sleeper.behavior.behavior_id == constant.Behavior.WAKE_UP_BY_NOISE,
+      (repr(panel_error), len(ask_log), pl.position, sleeper.behavior.behavior_id))
+clean_wake_case()
+
+h_target, sleeper, all_in_h, panel_error = run_wake_case(in_h=True, choice="1")
+check("fixture：睡奸开始后博士与睡奸对象都在 H 中", all_in_h)
+find_text = _("\n{0}发现了{1}，要怎么做？\n").format(sleeper.name, _("你正在无意识奸{0}").format(h_target.name))
+check("睡奸中吵醒室友：先提示谁被吵醒，再以她为发现者弹出目击 H 面板（修复前直接把博士推出房间，博士仍在 H 中、结束H类指令全都不出现）",
+      panel_error is None and len(ask_log) == 1 and _("\n{0}被{1}的动静吵醒了\n").format(sleeper.name, pl.name) in drawn_text and find_text in drawn_text,
+      (repr(panel_error), len(ask_log), drawn_text[:4]))
+check("醒来的室友记为已目击本次 H，一小时内不会再产生睡觉需求", sleeper.sp_flag.see_pl_h and sleeper.action_info.sleep_disturbed_end_time > cache.game_time,
+      (sleeper.sp_flag.see_pl_h, sleeper.action_info.sleep_disturbed_end_time))
+check("成功支开室友后博士留在房间里，睡奸照常继续，睡奸对象仍在睡",
+      pl.position == list(SCENE_DORM) and pl.sp_flag.is_h and h_target.sp_flag.is_h and h_target.behavior.behavior_id == constant.Behavior.SLEEP,
+      (pl.position, pl.sp_flag.is_h, h_target.sp_flag.is_h, h_target.behavior.behavior_id))
+clean_wake_case()
+
+h_target, sleeper, all_in_h, panel_error = run_wake_case(in_h=True, choice="5")
+check("选择结束 H：室友打断了这场 H，博士留在房间里、已不在 H 中",
+      panel_error is None and sleeper.behavior.behavior_id == constant.Behavior.SEE_H_AND_INTERRUPT and pl.position == list(SCENE_DORM) and not pl.sp_flag.is_h,
+      (repr(panel_error), sleeper.behavior.behavior_id, pl.position, pl.sp_flag.is_h))
+check("睡奸对象也被这场骚动吵醒：提示她惊醒，睡眠结束，无意识与 H 标记都已清掉（修复前被改成原地等待、却仍挂着无意识标记）",
+      _("\n因为{0}的动作，{1}从梦中惊醒过来\n").format(sleeper.name, h_target.name) in drawn_text
+      and h_target.behavior.behavior_id != constant.Behavior.SLEEP and h_target.sp_flag.unconscious_h == 0 and not h_target.sp_flag.is_h,
+      (h_target.behavior.behavior_id, h_target.sp_flag.unconscious_h, h_target.sp_flag.is_h))
+clean_wake_case()
+
+h_target, sleeper, all_in_h, panel_error = run_wake_case(in_h=True, choice="5", sleeping_pill=True)
+check("服用安眠药的睡奸对象吵不醒：H 照常结束，她继续睡",
+      panel_error is None and not pl.sp_flag.is_h and not h_target.sp_flag.is_h and h_target.behavior.behavior_id == constant.Behavior.SLEEP,
+      (repr(panel_error), pl.sp_flag.is_h, h_target.sp_flag.is_h, h_target.behavior.behavior_id))
+clean_wake_case()
+
+# 「等待五分钟」在场景里已没有 H 对象时会转去结束 H；此时交互对象是博士自己
+pl.sp_flag.is_h = True
+pl.sp_flag.is_follow = 0
+pl.target_character_id = 0
+with mock.patch.object(handle_instruct.update, "game_update_flow", lambda minute: None):
+    handle_instruct.handle_h_end()
+check("交互对象是博士自己时结束 H 不会把博士设为跟随状态", pl.sp_flag.is_follow == 0, pl.sp_flag.is_follow)
+clean_wake_case()
+pl.sp_flag.is_follow = 0
+
 finish()
