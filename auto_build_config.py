@@ -279,27 +279,21 @@ def build_config_def(class_name: str, value_type: dict, docstring: dict, class_t
         docstring (dict): 参数说明字典
         class_text (str): 类文档字符串
     返回：None
-    功能：构建配置定义字符串
+    功能：构建配置定义字符串。口上、通用地文、烹饪题库、公务事件、target 等由多个 csv 合并成同一个类，只在第一次遇到时写入
     """
     global config_def_str
-    if class_name not in class_data:
-        # 给talk/烹饪问题库补上一个头部空行
-        if class_name in {"Talk", "Cook_Question"}:
-            config_def_str += "\n\n"
-        config_def_str += "class " + class_name + ":"
-        config_def_str += '\n    """ ' + class_text + ' """\n'
-        for k in value_type:
-            config_def_str += "\n    " + k + ": " + value_type[k] + "\n"
-            config_def_str += "    " + '""" ' + docstring[k] + ' """'
-        class_data.add(class_name)
-    # 去掉因为talk的csv文件而多出的尾部空行
-    else:
-        count_flag = 0
-        for i in range(3):
-            if config_def_str[-i] == "\n":
-                count_flag += 1
-        if count_flag >= 2:
-            config_def_str = config_def_str[:-2]
+    if class_name in class_data:
+        return
+    # 类与类之间的空行只在这里、真正写入新类时添加，统一空两行
+    # 不能由调用方每读一个 csv 就追加换行再回头删：合并类的 csv 数一变，删剩的换行数就跟着变，多或少一个空行
+    if config_def_str:
+        config_def_str += "\n\n\n"
+    config_def_str += "class " + class_name + ":"
+    config_def_str += '\n    """ ' + class_text + ' """\n'
+    for k in value_type:
+        config_def_str += "\n    " + k + ": " + value_type[k] + "\n"
+        config_def_str += "    " + '""" ' + docstring[k] + ' """'
+    class_data.add(class_name)
 
 
 def build_config_po(message: str, file_path: str, now_index: int, talk: bool = False, common_talk: bool = False, cook_question: bool = False, event: bool = False):
@@ -466,7 +460,6 @@ if BUILD_PO:
     event_po_lines.append(header_text)
 
 file_list = sorted_listdir(config_dir)
-index = 0
 for i in file_list:
     now_file = os.path.join(config_dir, i)
     # 跳过子目录（如 cook_question 题库目录，稍后单独递归处理）
@@ -475,10 +468,7 @@ for i in file_list:
     # 跳过非csv文件
     if i.split(".")[1] != "csv":
         continue
-    if index:
-        config_def_str += "\n\n\n"
     build_csv_config(now_file, i, False, False)
-    index += 1
 
 # 构建烹饪问题库（data/csv/cook_question 子目录下每个食物的题库csv合并为 Cook_Question 表）
 cook_question_dir = os.path.join(config_dir, "cook_question")
@@ -488,7 +478,6 @@ if os.path.isdir(cook_question_dir):
         # 仅处理 csv 文件
         if not cq_file.endswith(".csv"):
             continue
-        config_def_str += "\n"
         count += 1
         build_csv_config(os.path.join(cook_question_dir, cq_file), cq_file, False, False, cook_question=True)
     # if count:
@@ -500,7 +489,6 @@ if BUILD_OFFICIAL_EVENT and os.path.isdir(official_event_dir):
         # 仅处理 csv 文件
         if not oe_file.endswith(".csv"):
             continue
-        config_def_str += "\n"
         build_csv_config(os.path.join(official_event_dir, oe_file), oe_file, False, False, official_event=True)
 
 # 在写入 talk 数据时根据 BUILD_TALK 判断是否覆盖
@@ -519,15 +507,12 @@ if BUILD_TALK:
                     # 跳过非 csv 文件
                     if not f.endswith(".csv"):
                         continue
-                    # 在配置定义字符串中添加空行
-                    config_def_str += "\n"
                     # 构建子目录下的 talk csv 配置
                     csv_path = os.path.join(root, f)
                     build_csv_config(csv_path, f, True, False)
         else:
             # 如果是单个 csv 文件，则直接构建
             if i.endswith(".csv"):
-                config_def_str += "\n"
                 build_csv_config(now_path, i, True, False)
     # 写入 talk 数据
     with open(character_talk_data_path, "w", encoding="utf-8") as talk_data_file:
@@ -548,15 +533,12 @@ if BUILD_TALK_COMMON:
                     # 跳过非 csv 文件
                     if not f.endswith(".csv"):
                         continue
-                    # 在配置定义字符串中添加空行
-                    config_def_str += "\n"
                     # 构建子目录下的 talk csv 配置
                     csv_path = os.path.join(root, f)
                     build_csv_config(csv_path, f, False, False, talk_common=True)
         else:
             # 如果是单个 csv 文件，则直接构建
             if i.endswith(".csv"):
-                config_def_str += "\n"
                 build_csv_config(now_path, i, False, False, talk_common=True)
     # 写入 talk_common 数据
     with open(talk_common_data_path, "w", encoding="utf-8") as talk_common_data_file:
@@ -568,7 +550,6 @@ if BUILD_TARGET:
     for i in target_file_list:
         now_dir = os.path.join(target_dir, i)
         for f in sorted_listdir(now_dir):
-            config_def_str += "\n\n\n"
             now_f = os.path.join(now_dir, f)
             build_csv_config(now_f, f, False, True)
 
