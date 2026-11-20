@@ -1,6 +1,6 @@
 ﻿# erArk Copilot / AI Agent 指南
 
-聚焦让智能代理“即插即用”：如何安全修改、构建、调试、扩展。本文件是最小必读速查；深度细节见 `CLAUDE*.md` 与 `.github/prompts/数据处理工作流/`。
+聚焦让智能代理“即插即用”：如何安全修改、构建、调试、扩展。本文件是最小必读速查；深度细节见 `CLAUDE.md` 与 `.github/prompts/数据处理工作流/`。
 
 ## 1. 总览（执行顺序视角）
 0. 终端调试：使用本地 conda 环境，如 `c:/code/erArk/.conda/python.exe`。
@@ -67,8 +67,8 @@
 - 行为不触发：前提脚本或事件条件文件是否存在 / 返回值正确？
 
 ## 11. 进一步阅读索引
-- 深度行为/结算：`CLAUDE*.md` 行为循环章节
-- CI/CD 打包结构：`CLAUDE.md` CI/CD Release Structure 章节
+- 深度行为/结算：`CLAUDE.md`「主行为循环」章节
+- CI/CD 打包结构：`CLAUDE.md`「CI/CD 发布结构」章节
 - 系统拆解：`.github/prompts/数据处理工作流/`
 - 图像/资源下载：`tools/MCP/`
 

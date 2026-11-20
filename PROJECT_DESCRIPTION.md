@@ -5,7 +5,7 @@
 > 用途：本文档是 erArk 仓库的一份自包含、可持续维护的完整项目描述，供后续 AI/开发者快速建立上下文。
 > 生成时间：2026-08-18；代码快照：`master @ b17d1b1ba`；游戏版本：`v0.66 / package.json = 2026.8.18`。
 > 若代码发生大版本变更，应先更新本文档，再基于本文档工作。
-> 更细的系统级文档索引见最后一节“文档导航”；仓库自带的 `CLAUDE.md` / `CLAUDE_cn.md` / `.github/copilot-instructions.md` 也需结合阅读。
+> 更细的系统级文档索引见最后一节“文档导航”；仓库自带的 `CLAUDE.md` / `.github/copilot-instructions.md` 也需结合阅读。
 
 ---
 
@@ -136,7 +136,7 @@ black --line-length 200 .
 | `error.log` | 运行时错误记录（BUG 反馈用） |
 | `package.json` | 游戏版本号（当前 `2026.8.18`） |
 | `image/package.json` | 图片包版本号（当前 `2026.7.31`） |
-| `CLAUDE.md` / `CLAUDE_cn.md` | 仓库 AI 指导文档（中英文） |
+| `CLAUDE.md` | 仓库 AI 指导文档（中文，唯一版本） |
 | `.github/copilot-instructions.md` | Copilot/AI 代理最小速查 |
 | `ai_chat_api_key.csv` | AI 文本生成密钥（敏感，已 gitignore，勿提交） |
 
@@ -1030,8 +1030,7 @@ GitHub Actions `.github/workflows/python-app.yml`（push/PR 到 master）分三�
 
 ### 30.1 仓库根文档
 
-- `CLAUDE_cn.md`：中文 AI 指导（最详细的一页式架构说明）
-- `CLAUDE.md`：英文 AI 指导
+- `CLAUDE.md`：中文 AI 指导（最详细的一页式架构说明；原英文版与 `CLAUDE_cn.md` 已合并为这一份）
 - `.github/copilot-instructions.md`：AI 代理最小必读速查
 - `README.md` / `README_en.md`：玩家向 README
 - `update.log`：版本更新日志
@@ -1088,4 +1087,4 @@ GitHub Actions `.github/workflows/python-app.yml`（push/PR 到 master）分三�
 - 本文件定位：仓库级“完整描述”，不是生成文件，可随代码更新持续修订。
 - 更新建议：每次大版本（如 0.66 -> 0.67）同步更新“当前版本/规模快照/新增子系统/关键文件索引”。
 - 数字统计口径：Python 代码行为含空行与注释；口上条数来自构建 JSON；如精确数字对任务重要，以实际文件为准。
-- 与 `CLAUDE_cn.md` 冲突时：优先相信代码与最近更新的本文档；本文档生成时间晚于 CLAUDE 文件时以本文档为准。
+- 与 `CLAUDE.md` 冲突时：优先相信代码与最近更新的本文档；本文档生成时间晚于 CLAUDE 文件时以本文档为准。

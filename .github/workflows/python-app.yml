@@ -7,7 +7,7 @@ name: Build Windows Game
 #              1. package.json 的版本号在 Releases 里查不到
 #              2. check 通过
 #              3. 推送者是仓库管理者，且版本号不是别人的 PR 带进来的
-# 说明文档：CLAUDE.md 的「CI/CD Release Structure」一节
+# 说明文档：CLAUDE.md 的「CI/CD 发布结构」一节
 
 on:
   push:
