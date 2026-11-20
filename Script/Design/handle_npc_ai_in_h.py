@@ -264,12 +264,19 @@ def recover_from_unconscious_h(character_id: int, info_text: str = "", can_conti
             cache.achievement.sleep_sex_record[1] = 1
     # 否则
     else:
+        # 裁决为继续H但本次不允许继续（H已被目击者打断）时，handle_unconscious_h_response只收尾了交互对象，
+        # 玩家身上由调用方设好的行为（如被打断）还没结算过：赶在下面重置双方H数据之前当场结算，否则玩家本次H的绝顶奖励会被清零
+        if response == UnconsciousHResponse.CONTINUE_H:
+            character_behavior.judge_character_status(character_id)
         # 对象行为时间改为1分钟
         target_data.behavior.duration = 1
         # 重置双方H结构体和相关数据
         default.handle_both_h_state_reset(0, 1, game_type.CharacterStatusChange(), datetime.datetime(1, 1, 1))
         # 地点开门
         scene_data.close_flag = 0
+        # 收尾的行为都已当场结算过，结束玩家的这次行动，
+        # 否则下面推进时间时主循环会把仍留在玩家身上的「结束无意识H」再结算一遍（口上与消耗重复）
+        character_behavior.judge_character_status_time_over(character_id, cache.game_time, end_now=2)
 
     # 时间推进5分钟
     update.game_update_flow(5)
@@ -303,7 +310,7 @@ def handle_unconscious_h_response(character_id: int, target_character_id: int, c
     功能描述:
         先解除目标角色的无意识H状态，再按目标角色自身的监禁状态与陷落状态得出裁决结果，
         并按裁决结果改写玩家的行为与状态。
-        裁决为继续H以外的结果时，借玩家的状态机成对结算这场H的收尾；
+        裁决为继续H以外的结果时，借玩家的状态机成对结算这场H的收尾（轻度/高级性骚扰或H失败，愤怒时也按H失败，再接结束无意识H）；
         裁决为继续H而can_continue为False时，改为直接对目标角色本人做退出结算。
         因此返回后，除〈裁决为CONTINUE_H且can_continue为True〉这一种情况外，
         目标角色的收尾都已经在本函数内完成。
@@ -336,11 +343,14 @@ def handle_unconscious_h_response(character_id: int, target_character_id: int, c
             response = UnconsciousHResponse.LOW_OBSCENITY
             character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
             character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
-        # 如果陷落状态小于0，则目标角色愤怒并增加愤怒值
+        # 如果陷落状态小于0，则目标角色愤怒并增加愤怒值，并按H失败收尾
+        #    （不改玩家的行为的话，下面成对结算时会把玩家刚结算过的那条指令对已醒的目标再结算一遍）
         elif character_fall_level < 0:
             response = UnconsciousHResponse.ANGRY
             target_data.angry_point += 100
             target_data.sp_flag.angry_with_player = True
+            character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
+            character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL
         # 如果没有陷落状态，则设置为高级性骚扰状态
         else:
             response = UnconsciousHResponse.HIGH_OBSCENITY
