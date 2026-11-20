@@ -958,11 +958,13 @@ class SeeFoodListByFoodNameDraw:
             if character_data.target_character_id != character_data.cid and not self.add_coffee:
                 cost_str += _("（交互对象同额）")
             confirm_text += cost_str + _("\n")
-            # 帮厨与熟练度信息行
+            # 帮厨与熟练度信息行：除了耗时，也要让玩家知道帮厨会一起拿到料理经验与习得
             helpers = cooking.get_helpers()
             if helpers:
                 helper_names = "、".join(cache.character_data[h].name for h in helpers)
-                confirm_text += _("帮厨: {0}（-{1:.0f}%）\n").format(helper_names, (1 - cooking.get_helper_time_mult()) * 100)
+                confirm_text += _("帮厨: {0}（本菜耗时 -{1:.0f}%，并一同获得料理经验与习得）\n").format(
+                    helper_names, (1 - cooking.get_helper_time_mult()) * 100
+                )
             feast_effect_text = cooking.get_feast_effect_text(recipe_cid)
             if feast_effect_text:
                 confirm_text += _("本菜特殊效果: {0}\n").format(feast_effect_text)
