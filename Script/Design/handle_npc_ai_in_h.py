@@ -203,7 +203,7 @@ def recover_from_unconscious_h(character_id: int, info_text: str = "", can_conti
     if target_data.sp_flag.unconscious_h == 0:
         return
 
-    # 正被博士搬运时（如被搬回房间后睡奸），恢复意识后博士不再带着她走；
+    # 搬运与H互斥，进入H时搬运已结束；H中仍被博士搬运的只会是旧存档：恢复意识后博士不再带着她走，
     # 醒来的反应由本流程结算，不再叠加「被搬运时醒来」
     if handle_premise.handle_self_is_carried(target_data.cid):
         cache.character_data[0].action_info.carry_chara_id = 0
@@ -550,8 +550,8 @@ def judge_carried_character_regain_consciousness(character_id: int, pl_start_tim
         裁决为默许时博士继续搬运她，此后只要还被搬运就不交给AI，行为锁为等待、时长跟博士本步一致（同H中的等待锁定），
         直到博士放下她；不默许时博士放下她。
         仍意识不清（还在睡，含半梦半醒；醉酒等级2及以上；时停中）时照旧被带着走；默许后又失去意识的，下次恢复意识时重新结算。
-        H中恢复意识的（被搬回房间后睡奸、醒来裁决为继续H）已由无意识H的恢复流程结算过反应，这里只结束搬运，不再叠加这条结算；
-        默许后继续被搬运时开始的H，由H中的等待锁定处理，搬运照旧。
+        搬运与H互斥：进入H时搬运已由 default.end_carry_when_enter_h 结束；H中仍被搬运的只会是旧存档，这里只结束搬运，
+        醒来的反应交给无意识H的恢复流程，不叠加这条结算。
         NPC行动前检查序列每轮都会调用，不是搬运对象的在第一行就返回。
     """
     if not handle_premise.handle_self_is_carried(character_id):
@@ -562,10 +562,9 @@ def judge_carried_character_regain_consciousness(character_id: int, pl_start_tim
     if not handle_premise.handle_normal_5(character_id) or not handle_premise.handle_normal_6(character_id):
         character_data.action_info.awake_when_carried = False
         return False
-    # H中恢复意识的只结束搬运（默许后继续被搬运时开始的H照旧搬运）
+    # 搬运与H互斥，H中仍被搬运的只会是旧存档：只结束搬运
     if character_data.sp_flag.is_h:
-        if not character_data.action_info.awake_when_carried:
-            pl_character_data.action_info.carry_chara_id = 0
+        pl_character_data.action_info.carry_chara_id = 0
         return False
     # 默许后继续被搬运中：「被搬运时醒来」结束后不交给AI，原地等待、跟着博士走
     if character_data.action_info.awake_when_carried:

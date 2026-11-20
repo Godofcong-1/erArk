@@ -2764,6 +2764,22 @@ def handle_target_not_be_carried(
     character_data.action_info.carry_chara_id = 0
 
 
+def end_carry_when_enter_h(character_id: int):
+    """
+    搬运与H互斥：博士自己、或被博士搬运着的干员进入H时，博士把被搬运的干员放下（她本来就在博士身边，原地放下即可）
+    Keyword arguments:
+    character_id -- 进入H的角色id
+    Return arguments:
+    无
+    """
+    pl_character_data: game_type.Character = cache.character_data[0]
+    carry_chara_id = pl_character_data.action_info.carry_chara_id
+    if carry_chara_id == 0:
+        return
+    if character_id in {0, carry_chara_id}:
+        pl_character_data.action_info.carry_chara_id = 0
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_SLEEP_DISTURBED_STATE)
 def handle_get_sleep_disturbed_state(
         character_id: int,
@@ -5340,6 +5356,8 @@ def handle_h_flag_to_1(
     # 此时is_h已为真而跳过，避免误删进入H后角色新下达的移动指令
     if not character_data.sp_flag.is_h:
         character_move.cancel_movement_plan(character_id)
+    # 搬运与H互斥：博士或被搬运的干员进入H，就放下被搬运的干员
+    end_carry_when_enter_h(character_id)
     character_data.sp_flag.is_h = True
     # 进入H即视为已目击本场H：即使之后合法离场(如力竭)清了is_h，回场也不会被当作新旁观者而重复触发"H中被发现"面板
     character_data.sp_flag.see_pl_h = True
@@ -5383,6 +5401,9 @@ def handle_t_h_flag_to_1(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    # 博士让交互对象进入H，也结束搬运（隐奸等玩法里博士自己不进入H状态，只有对方进入）
+    if character_id == 0:
+        end_carry_when_enter_h(0)
     handle_h_flag_to_1(character_data.target_character_id, add_time, change_data, now_time)
 
 

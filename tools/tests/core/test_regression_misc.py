@@ -846,7 +846,7 @@ check("交互对象是博士自己时结束 H 不会把博士设为跟随状态"
 clean_wake_case()
 pl.sp_flag.is_follow = 0
 
-# 睡奸对象正被博士搬运（被搬回房间后睡奸）时中途醒来：醒来的反应由睡奸的恢复流程结算，搬运随之结束，不再叠加「被搬运时醒来」
+# 睡奸对象在 H 中仍被博士搬运（搬运与 H 互斥，只会出现在旧存档里）时中途醒来：醒来的反应由睡奸的恢复流程结算，搬运随之结束，不再叠加「被搬运时醒来」
 from Script.Design import handle_npc_ai  # noqa: E402
 from Script.Settle import realtime_settle  # noqa: E402
 
@@ -1107,7 +1107,7 @@ check("烂醉、醉酒时照旧被搬运，酒醒到微醺时执行「被搬运�
       (carried_by_drunk_point, npc.behavior.behavior_id))
 clean_carry_case()
 
-# H 中恢复意识（睡奸中醒来裁决为继续 H）：只结束搬运，不叠加「被搬运时醒来」
+# H 中仍被搬运（旧存档）时恢复意识：只结束搬运，不叠加「被搬运时醒来」
 npc = make_carried_sleeper()
 npc.behavior = game_type.Behavior()
 npc.behavior.start_time = cache.game_time
@@ -1199,5 +1199,83 @@ npc.sp_flag.is_h = True
 handle_npc_ai.run_npc_pre_behavior_checks(DRUNK_NPC_ID, cache.game_time)
 check("醉奸进行中（在 H 中）不动醉酒无意识标记", npc.sp_flag.unconscious_h == 2, npc.sp_flag.unconscious_h)
 clean_drunk_case()
+
+# ==== 8.15 搬运与 H 互斥 ====
+section("搬运与 H 互斥：博士或被搬运的干员进入 H 时，博士把被搬运的干员放下")
+OTHER_NPC_ID = 9442
+""" 搬运期间同屋的另一名清醒干员 fixture """
+
+
+def settle_behavior_now(character_id: int, behavior_id: str):
+    """
+    让角色照真实的行为结算走一遍指定行为（5 分钟）
+    Keyword arguments:
+    character_id -- 角色id
+    behavior_id -- 行为id
+    Return arguments:
+    无
+    """
+    chara_data = cache.character_data[character_id]
+    chara_data.behavior.behavior_id = behavior_id
+    chara_data.behavior.duration = 5
+    chara_data.behavior.start_time = cache.game_time
+    settle_behavior.handle_settle_behavior(character_id, cache.game_time + datetime.timedelta(minutes=5))
+
+
+def clean_carry_h_case():
+    """
+    撤掉本节的 fixture 角色，复原博士的 H 状态、行为与宿舍门
+    Keyword arguments:
+    无
+    Return arguments:
+    无
+    """
+    remove_character(OTHER_NPC_ID)
+    pl.sp_flag.is_h = False
+    pl.behavior = game_type.Behavior()
+    pl.behavior.start_time = cache.game_time
+    cache.scene_data[scene_str(SCENE_DORM)].close_flag = 0
+    clean_carry_case()
+
+
+# 搬着睡着的她回房间后选睡奸：指令照旧可选，进入 H 时博士把她原地放下
+npc = make_carried_sleeper()
+pl.hit_point = pl.hit_point_max
+pl.mana_point = pl.mana_point_max
+sleep_h_selectable = see_instruct_panel.judge_single_instruct_filter(constant.Instruct.SLEEP_H, {}, constant.InstructType.OBSCENITY, use_type_filter_flag=False)[0]
+settle_default.handle_unconscious_flag_to_1(CARRY_NPC_ID, 1, game_type.CharacterStatusChange(), cache.game_time)
+settle_behavior_now(0, constant.Behavior.H)
+check("搬运着睡着的干员时选睡奸：照旧可选，进入 H 时博士把她原地放下（修复前搬运状态一直带进 H）",
+      sleep_h_selectable and pl.sp_flag.is_h and npc.sp_flag.is_h and pl.action_info.carry_chara_id == 0 and npc.position == pl.position,
+      (sleep_h_selectable, pl.sp_flag.is_h, npc.sp_flag.is_h, pl.action_info.carry_chara_id, npc.position, pl.position))
+clean_carry_h_case()
+
+# 搬运中被另一名干员逆推：博士进入 H，同样放下被搬运的干员
+npc = make_carried_sleeper()
+other = make_character(OTHER_NPC_ID, "另一名干员")
+other.target_character_id = 0
+settle_behavior_now(OTHER_NPC_ID, constant.Behavior.H_BY_ACTIVE)
+check("搬运中被另一名干员逆推：博士进入 H，放下被搬运的干员", pl.sp_flag.is_h and pl.action_info.carry_chara_id == 0,
+      (pl.sp_flag.is_h, pl.action_info.carry_chara_id))
+clean_carry_h_case()
+
+# 博士只让交互对象进入 H、自己不进入 H 状态（隐奸等）：同样放下被搬运的干员
+npc = make_carried_sleeper()
+other = make_character(OTHER_NPC_ID, "另一名干员")
+pl.target_character_id = OTHER_NPC_ID
+settle_default.handle_t_h_flag_to_1(0, 1, game_type.CharacterStatusChange(), cache.game_time)
+check("搬运中博士让另一名干员进入 H（博士自己不进入 H 状态）：同样放下被搬运的干员",
+      other.sp_flag.is_h and not pl.sp_flag.is_h and pl.action_info.carry_chara_id == 0, (other.sp_flag.is_h, pl.sp_flag.is_h, pl.action_info.carry_chara_id))
+clean_carry_h_case()
+
+# 被搬运的干员自己进入 H（如被拉进群交）：放下；与博士无关的干员进入 H：不动搬运
+npc = make_carried_sleeper()
+other = make_character(OTHER_NPC_ID, "另一名干员")
+settle_default.handle_h_flag_to_1(OTHER_NPC_ID, 1, game_type.CharacterStatusChange(), cache.game_time)
+carry_after_other_h = pl.action_info.carry_chara_id
+settle_default.handle_h_flag_to_1(CARRY_NPC_ID, 1, game_type.CharacterStatusChange(), cache.game_time)
+check("与博士无关的干员进入 H 不动搬运；被搬运的干员自己进入 H 时放下她",
+      carry_after_other_h == CARRY_NPC_ID and pl.action_info.carry_chara_id == 0, (carry_after_other_h, pl.action_info.carry_chara_id))
+clean_carry_h_case()
 
 finish()
