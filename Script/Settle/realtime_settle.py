@@ -481,10 +481,12 @@ def settle_sleep(character_id: int, true_add_time: int) -> None:
         if now_char.sleep_point <= 0 and character_id:
             pl_character_data: game_type.Character = cache.character_data[0]
             # 玩家与该角色在同一地点，且玩家正在对该角色睡奸中，则结算从无意识H中恢复意识
+            # 正被博士搬运且不在H中时除外：醒来的反应由NPC行动前检查里的「被搬运时醒来」结算
             if (
                 pl_character_data.position == now_char.position and
                 pl_character_data.target_character_id == character_id and
-                now_char.sp_flag.unconscious_h == 1
+                now_char.sp_flag.unconscious_h == 1 and
+                not (handle_premise.handle_self_is_carried(character_id) and not now_char.sp_flag.is_h)
             ):
                 info_text = _("\n{0}已经睡饱了，从睡梦中自然苏醒过来\n").format(now_char.name)
                 handle_npc_ai_in_h.recover_from_unconscious_h(0, info_text)

@@ -121,6 +121,7 @@ def run_npc_pre_behavior_checks(character_id: int, pl_start_time: datetime.datet
     依次执行NPC的行动前检查序列\n
     疲劳/睡眠检查判定为群交力竭退出时，由本序列提交这一次退出转换并跳过其余检查，\n
     避免随后的H状态检查把退出行为覆盖为原地等待。\n
+    被博士搬运的角色恢复意识而开始「被搬运时醒来」、或默许后继续被搬运时，同样跳过其余检查。\n
     Keyword arguments:\n
     character_id -- 角色id\n
     pl_start_time -- 玩家行动开始时间\n
@@ -135,6 +136,9 @@ def run_npc_pre_behavior_checks(character_id: int, pl_start_time: datetime.datet
     # 判断疲劳和睡眠；群交力竭退出时返回退出行为id，交由本序列提交转换
     if judge_character_tired_sleep(character_id) == constant.Behavior.GROUP_SEX_NPC_HP_0_END:
         commit_group_sex_tired_exit(character_id)
+        return
+    # 被博士搬运的角色恢复了意识：原地执行「被搬运时醒来」，赶在AI给她挑新行动之前；默许后继续被搬运时原地等待、跟着博士走；本轮不再做其余检查
+    if handle_npc_ai_in_h.judge_carried_character_regain_consciousness(character_id, pl_start_time):
         return
     judge_character_cant_move(character_id) # 无法自由移动的角色
     judge_assistant_character(character_id) # 助理

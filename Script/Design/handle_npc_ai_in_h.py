@@ -190,6 +190,11 @@ def recover_from_unconscious_h(character_id: int, info_text: str = "", can_conti
     if target_data.sp_flag.unconscious_h == 0:
         return
 
+    # 正被博士搬运时（如被搬回房间后睡奸），恢复意识后博士不再带着她走；
+    # 醒来的反应由本流程结算，不再叠加「被搬运时醒来」
+    if handle_premise.handle_self_is_carried(target_data.cid):
+        cache.character_data[0].action_info.carry_chara_id = 0
+
     # 输出提示信息
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
@@ -404,7 +409,14 @@ def judge_weak_up_in_sleep_h(character_id: int, target_character_id: int):
         # 清空疲劳和睡眠程度
         target_data.tired_point = 0
         target_data.sleep_point = 0
-        if target_data.sp_flag.unconscious_h == 1:
+        # 正被博士搬运且不在H中：不走睡奸的恢复流程，也不执行「睡觉中被吵醒」（那条会把博士推出房间，是为在她自己房间里被吵醒写的），
+        # 只结束睡眠（会一并清掉残留的睡眠无意识标记）并结算被吵醒的后果，醒来的反应由NPC行动前检查里的「被搬运时醒来」结算
+        if handle_premise.handle_self_is_carried(target_character_id) and not target_data.sp_flag.is_h:
+            from Script.Settle import default
+            character_behavior.judge_character_status_time_over(target_character_id, cache.game_time, end_now=2)
+            default.handle_get_sleep_disturbed_state(target_character_id, 1, game_type.CharacterStatusChange(), cache.game_time)
+            default.handle_sleep_flag_to_0(target_character_id, 1, game_type.CharacterStatusChange(), cache.game_time)
+        elif target_data.sp_flag.unconscious_h == 1:
             # 睡奸目标：走现有无意识H恢复流程
             handle_premise.settle_chara_unnormal_flag(target_character_id, 5)
             handle_premise.settle_chara_unnormal_flag(target_character_id, 6)
@@ -505,6 +517,66 @@ def judge_sleep_h_target_can_be_woken(character_id: int) -> bool:
     # 安眠药、烂醉爆睡吵不醒
     if character_data.h_state.body_item[9][1] == 1 or drunk_sex_common.get_drunk_level(character_id)[0] >= 3:
         return False
+    return True
+
+
+def judge_carried_character_regain_consciousness(character_id: int, pl_start_time: datetime.datetime) -> bool:
+    """
+    被博士搬运的角色恢复意识时，原地执行「被搬运时醒来」；默许后继续被搬运时，原地等待、跟着博士走
+    参数:
+        character_id: int -- 角色id
+        pl_start_time: datetime.datetime -- 玩家本次行动的开始时间（继续被搬运时的等待从这里开始）
+    返回:
+        bool -- 本次接管了她的行为（执行「被搬运时醒来」，或默许后继续被搬运中）时为True，调用方不再做其余检查
+    功能描述:
+        搬运指令只能对意识不清（异常位6）的对象使用，搬运中她每次都被瞬移到博士身边。
+        被搬运者自己睡醒、被博士的动静吵醒、酒醒到醉酒等级1及以下、时停解除后，异常位5、6都恢复正常：
+        她原地执行「被搬运时醒来」（结算无意识期间的二段行为与反应），这条行为持续期间不交给AI。
+        裁决为默许时博士继续搬运她，此后只要还被搬运就不交给AI，行为锁为等待、时长跟博士本步一致（同H中的等待锁定），
+        直到博士放下她；不默许时博士放下她。
+        仍意识不清（还在睡，含半梦半醒；醉酒等级2及以上；时停中）时照旧被带着走；默许后又失去意识的，下次恢复意识时重新结算。
+        H中恢复意识的（被搬回房间后睡奸、醒来裁决为继续H）已由无意识H的恢复流程结算过反应，这里只结束搬运，不再叠加这条结算；
+        默许后继续被搬运时开始的H，由H中的等待锁定处理，搬运照旧。
+        NPC行动前检查序列每轮都会调用，不是搬运对象的在第一行就返回。
+    """
+    if not handle_premise.handle_self_is_carried(character_id):
+        return False
+    pl_character_data: game_type.Character = cache.character_data[0]
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 仍意识不清时照旧带着走；默许后又失去意识的，下次恢复意识时重新结算
+    if not handle_premise.handle_normal_5(character_id) or not handle_premise.handle_normal_6(character_id):
+        character_data.action_info.awake_when_carried = False
+        return False
+    # H中恢复意识的只结束搬运（默许后继续被搬运时开始的H照旧搬运）
+    if character_data.sp_flag.is_h:
+        if not character_data.action_info.awake_when_carried:
+            pl_character_data.action_info.carry_chara_id = 0
+        return False
+    # 默许后继续被搬运中：「被搬运时醒来」结束后不交给AI，原地等待、跟着博士走
+    if character_data.action_info.awake_when_carried:
+        if character_data.behavior.behavior_id != constant.Behavior.WAKE_UP_WHEN_CARRIED:
+            character_data.behavior.behavior_id = constant.Behavior.WAIT
+            character_data.state = constant.CharacterStatus.STATUS_WAIT
+            character_data.behavior.start_time = pl_start_time
+            character_data.behavior.duration = pl_character_data.behavior.duration
+            character_data.target_character_id = character_id
+            # 防止行为的时间为0（按可游玩时间算，玩家这一步跨季末午夜时不把被跳过的月份算进去）
+            if character_data.behavior.duration == 0:
+                character_data.behavior.duration = max(1, int(game_time.count_play_second(pl_start_time, cache.game_time) / 60))
+        return True
+    # 已经恢复意识，残留的睡眠、醉酒无意识标记一并清掉（结束睡奸、醉奸时都只清 is_h，不清这个标记）
+    if character_data.sp_flag.unconscious_h in {1, 2}:
+        character_data.sp_flag.unconscious_h = 0
+    # 结束手头还没结束的行为（如时停中被冻结的行为）
+    if character_data.behavior.behavior_id != constant.Behavior.SHARE_BLANKLY:
+        character_behavior.judge_character_status_time_over(character_id, cache.game_time, end_now=2)
+    # 原地执行「被搬运时醒来」，交互对象是博士
+    instuct_judege.init_character_behavior_start_time(character_id, cache.game_time)
+    character_data.behavior.behavior_id = constant.Behavior.WAKE_UP_WHEN_CARRIED
+    character_data.state = constant.CharacterStatus.STATUS_WAKE_UP_WHEN_CARRIED
+    character_data.behavior.duration = game_config.config_behavior[constant.Behavior.WAKE_UP_WHEN_CARRIED].duration
+    character_data.target_character_id = 0
+    character_behavior.judge_character_status(character_id)
     return True
 
 
