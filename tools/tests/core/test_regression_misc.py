@@ -846,4 +846,276 @@ check("交互对象是博士自己时结束 H 不会把博士设为跟随状态"
 clean_wake_case()
 pl.sp_flag.is_follow = 0
 
+# 睡奸对象正被博士搬运（被搬回房间后睡奸）时中途醒来：醒来的反应由睡奸的恢复流程结算，搬运随之结束，不再叠加「被搬运时醒来」
+from Script.Design import handle_npc_ai  # noqa: E402
+from Script.Settle import realtime_settle  # noqa: E402
+
+pl.action_info.carry_chara_id = WAKE_H_TARGET_ID
+h_target, sleeper, all_in_h, panel_error = run_wake_case(in_h=True, judge_pass=False, wake_id=WAKE_H_TARGET_ID)
+carry_after_recover = pl.action_info.carry_chara_id
+handle_npc_ai.run_npc_pre_behavior_checks(WAKE_H_TARGET_ID, cache.game_time)
+check("被搬运的睡奸对象醒来：睡奸的恢复流程结束搬运，之后的行动前检查不再让她执行「被搬运时醒来」（否则同一次醒来结算两遍反应）",
+      panel_error is None and carry_after_recover == 0 and h_target.behavior.behavior_id != constant.Behavior.WAKE_UP_WHEN_CARRIED,
+      (repr(panel_error), carry_after_recover, h_target.behavior.behavior_id))
+clean_wake_case()
+pl.action_info.carry_chara_id = 0
+
+# ==== 8.13 被搬运的干员醒不来 ====
+section("干员睡着后被博士搬运：醒来时清掉残留的睡眠无意识标记，恢复意识就执行「被搬运时醒来」、博士放下她")
+CARRY_NPC_ID = 9440
+""" 被博士搬运的干员 fixture """
+disgust_state_id = 20
+""" 反感状态id """
+
+
+def make_carried_sleeper(stale_unconscious: bool = False) -> game_type.Character:
+    """
+    在宿舍里摆好一名正在睡觉、被博士搬运着的干员，博士在同一房间、交互对象是她
+    Keyword arguments:
+    stale_unconscious -- 是否带着睡奸结束后残留的睡眠无意识标记（unconscious_h=1，不在 H 中）
+    Return arguments:
+    game_type.Character -- 被搬运的干员
+    """
+    npc = make_character(CARRY_NPC_ID, "被搬运的干员")
+    move_to(0, SCENE_DORM)
+    pl.target_character_id = CARRY_NPC_ID
+    pl.action_info.carry_chara_id = CARRY_NPC_ID
+    npc.behavior.behavior_id = constant.Behavior.SLEEP
+    npc.state = constant.CharacterStatus.STATUS_SLEEP
+    npc.behavior.duration = 480
+    npc.behavior.start_time = cache.game_time
+    npc.target_character_id = CARRY_NPC_ID
+    npc.sleep_point = 70  # 熟睡
+    npc.tired_point = 0
+    if stale_unconscious:
+        npc.sp_flag.unconscious_h = 1
+    return npc
+
+
+def end_sleep(character_id: int):
+    """
+    让角色的睡眠按时长到点结束（主循环里睡够了、或睡饱提前醒走的都是这一步）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    character_behavior.judge_character_status_time_over(character_id, cache.game_time, end_now=2)
+
+
+def clean_carry_case():
+    """
+    撤掉本节的 fixture 角色，复原博士与时停、醉酒等全局状态
+    Keyword arguments:
+    无
+    Return arguments:
+    无
+    """
+    remove_character(CARRY_NPC_ID)
+    pl.action_info.carry_chara_id = 0
+    pl.target_character_id = 0
+    cache.time_stop_mode = False
+    move_to(0, SCENE_DORM)
+
+
+carry_behavior = game_config.config_behavior.get(constant.Behavior.WAKE_UP_WHEN_CARRIED)
+carry_talk_count = sum(1 for talk_data in game_config.config_talk.values() if getattr(talk_data, "behavior_id", "") == constant.Behavior.WAKE_UP_WHEN_CARRIED)
+check("「被搬运时醒来」已注册：NPC 行为、时长 10 分钟、挂着结算 1727，有通用口上",
+      carry_behavior is not None and carry_behavior.duration == 10
+      and constant_effect.BehaviorEffect.WAKE_UP_WHEN_CARRIED_ADJUST in game_config.config_behavior_effect_data.get(constant.Behavior.WAKE_UP_WHEN_CARRIED, [])
+      and carry_talk_count >= 1,
+      (carry_behavior, game_config.config_behavior_effect_data.get(constant.Behavior.WAKE_UP_WHEN_CARRIED), carry_talk_count))
+
+# 残留标记：睡奸结束而对方仍在睡时，结束 H 只清 is_h；她之后睡醒，这个标记必须随之清掉
+npc = make_carried_sleeper(stale_unconscious=True)
+pl.action_info.carry_chara_id = 0
+end_sleep(CARRY_NPC_ID)
+check("不在 H 中时睡醒：残留的睡眠无意识标记被清掉，不再显示睡眠、异常位 6 恢复正常（修复前一直留着，博士在场时她被当作在睡、原地发呆醒不来）",
+      npc.sp_flag.unconscious_h == 0 and not handle_premise.handle_unconscious_flag_1(CARRY_NPC_ID) and handle_premise.handle_normal_6(CARRY_NPC_ID),
+      (npc.sp_flag.unconscious_h, handle_premise.handle_normal_6(CARRY_NPC_ID)))
+clean_carry_case()
+npc = make_carried_sleeper(stale_unconscious=True)
+npc.sp_flag.is_h = True
+end_sleep(CARRY_NPC_ID)
+check("H 中睡醒时不动这个标记（睡奸中的醒来由无意识H的恢复流程处理）", npc.sp_flag.unconscious_h == 1, npc.sp_flag.unconscious_h)
+clean_carry_case()
+
+# 仍在睡时照旧被带着走
+npc = make_carried_sleeper()
+handle_npc_ai.run_npc_pre_behavior_checks(CARRY_NPC_ID, cache.game_time)
+check("仍在睡时照旧被搬运，行为不变", pl.action_info.carry_chara_id == CARRY_NPC_ID and npc.behavior.behavior_id == constant.Behavior.SLEEP,
+      (pl.action_info.carry_chara_id, npc.behavior.behavior_id))
+clean_carry_case()
+
+
+def wake_carried(stale_unconscious: bool = False, setup=None) -> game_type.Character:
+    """
+    被搬运的干员按时睡醒，再跑一遍NPC行动前检查（AI 给她挑新行动之前的那一步）
+    Keyword arguments:
+    stale_unconscious -- 是否带着残留的睡眠无意识标记
+    setup -- 睡醒前对她做的额外设置，参数为角色对象
+    Return arguments:
+    game_type.Character -- 被搬运的干员
+    """
+    now_npc = make_carried_sleeper(stale_unconscious)
+    if setup is not None:
+        setup(now_npc)
+    end_sleep(CARRY_NPC_ID)
+    drawn_text.clear()
+    handle_npc_ai.run_npc_pre_behavior_checks(CARRY_NPC_ID, cache.game_time)
+    return now_npc
+
+
+# 二段行为在同一次结算里就被结算并归零，所以记下触发了哪些，而不是事后去看标记
+from Script.Design import second_behavior as second_behavior_module  # noqa: E402
+
+second_behavior_calls = []
+real_get_second_behavior = second_behavior_module.character_get_second_behavior
+
+
+def record_get_second_behavior(character_id: int, second_behavior_id: str, *args, **kwargs):
+    """
+    second_behavior.character_get_second_behavior 的记录包装：记下被搬运者获得的二段行为，再照常处理
+    Keyword arguments:
+    character_id -- 角色id
+    second_behavior_id -- 二段行为id
+    其余参数原样转交
+    Return arguments:
+    原函数的返回值
+    """
+    if character_id == CARRY_NPC_ID:
+        second_behavior_calls.append(second_behavior_id)
+    return real_get_second_behavior(character_id, second_behavior_id, *args, **kwargs)
+
+
+with mock.patch.object(second_behavior_module, "character_get_second_behavior", record_get_second_behavior):
+    npc = wake_carried(stale_unconscious=True, setup=lambda now_npc: setattr(now_npc.dirty, "body_semen_in_unconscious", [2]))
+check("被搬运的干员睡醒：原地执行「被搬运时醒来」10 分钟、交互对象是博士，博士放下她（修复前搬运一直不结束，醒来后每一步都被瞬移回博士身边）",
+      npc.behavior.behavior_id == constant.Behavior.WAKE_UP_WHEN_CARRIED and npc.behavior.duration == 10 and npc.target_character_id == 0
+      and pl.action_info.carry_chara_id == 0,
+      (npc.behavior.behavior_id, npc.behavior.duration, npc.target_character_id, pl.action_info.carry_chara_id))
+check("醒来时出口上，并结算无意识期间被射上的精液（二段行为）",
+      any(npc.name in text and pl.name in text for text in drawn_text)
+      and npc.dirty.body_semen_in_unconscious == [] and "in_unconscious_cum_on_body_2" in second_behavior_calls,
+      (drawn_text[:3], npc.dirty.body_semen_in_unconscious, second_behavior_calls))
+check("无陷落时醒来增加反感，不生气", npc.status_data[disgust_state_id] > 0 and not npc.sp_flag.angry_with_player,
+      (npc.status_data[disgust_state_id], npc.sp_flag.angry_with_player))
+clean_carry_case()
+
+npc = wake_carried(setup=lambda now_npc: now_npc.talent.__setitem__(203, 1))
+check("爱情系陷落 3 级时默许：不加反感、不生气，博士继续搬运她", npc.behavior.behavior_id == constant.Behavior.WAKE_UP_WHEN_CARRIED
+      and npc.status_data[disgust_state_id] == 0 and not npc.sp_flag.angry_with_player
+      and pl.action_info.carry_chara_id == CARRY_NPC_ID and npc.action_info.awake_when_carried,
+      (npc.behavior.behavior_id, npc.status_data[disgust_state_id], pl.action_info.carry_chara_id, npc.action_info.awake_when_carried))
+# 「被搬运时醒来」结束后仍被搬运：不再结算一遍，也不交给 AI，原地等待、时长跟博士本步一致
+character_behavior.judge_character_status_time_over(CARRY_NPC_ID, cache.game_time, end_now=2)
+pl.behavior.duration = 30
+drawn_text.clear()
+handle_npc_ai.run_npc_pre_behavior_checks(CARRY_NPC_ID, cache.game_time)
+check("默许后继续被搬运：醒来的行为结束后不再结算一遍，行为锁为等待、时长跟博士本步一致（不交给 AI）",
+      npc.behavior.behavior_id == constant.Behavior.WAIT and npc.behavior.duration == 30 and pl.action_info.carry_chara_id == CARRY_NPC_ID
+      and not any(npc.name in text for text in drawn_text),
+      (npc.behavior.behavior_id, npc.behavior.duration, pl.action_info.carry_chara_id, drawn_text[:2]))
+# 博士放下她之后照常交给 AI
+pl.target_character_id = CARRY_NPC_ID
+settle_default.handle_target_not_be_carried(0, 1, game_type.CharacterStatusChange(), cache.game_time)
+npc.behavior = game_type.Behavior()
+npc.behavior.start_time = cache.game_time
+check("博士放下她之后，行动前检查不再接管她", not handle_npc_ai_in_h.judge_carried_character_regain_consciousness(CARRY_NPC_ID, cache.game_time)
+      and npc.behavior.behavior_id == constant.Behavior.SHARE_BLANKLY, npc.behavior.behavior_id)
+# 再次搬运时从头算（搬运的结算 1723 把标记归零）
+settle_default.handle_target_be_carried(0, 1, game_type.CharacterStatusChange(), cache.game_time)
+check("再次开始搬运时，「已在被搬运时醒来并默许」的标记归零", pl.action_info.carry_chara_id == CARRY_NPC_ID and not npc.action_info.awake_when_carried,
+      (pl.action_info.carry_chara_id, npc.action_info.awake_when_carried))
+clean_carry_case()
+pl.behavior = game_type.Behavior()
+pl.behavior.start_time = cache.game_time
+
+npc = wake_carried(setup=lambda now_npc: setattr(now_npc.sp_flag, "imprisonment", 1))
+check("被监禁时默许：不加反感、不生气，博士继续搬运她", npc.behavior.behavior_id == constant.Behavior.WAKE_UP_WHEN_CARRIED
+      and npc.status_data[disgust_state_id] == 0 and not npc.sp_flag.angry_with_player and pl.action_info.carry_chara_id == CARRY_NPC_ID,
+      (npc.behavior.behavior_id, npc.status_data[disgust_state_id], pl.action_info.carry_chara_id))
+# 默许后又失去意识（如被灌到烂醉）：照旧被搬运，下次恢复意识时重新结算
+npc.drunk_point = 90
+handle_npc_ai.run_npc_pre_behavior_checks(CARRY_NPC_ID, cache.game_time)
+check("默许后又失去意识：照旧被搬运，标记归零，下次恢复意识时重新结算",
+      pl.action_info.carry_chara_id == CARRY_NPC_ID and not npc.action_info.awake_when_carried, (pl.action_info.carry_chara_id, npc.action_info.awake_when_carried))
+clean_carry_case()
+
+npc = wake_carried(setup=lambda now_npc: now_npc.talent.__setitem__(211, 1))
+check("隶属系陷落时愤怒：怒气 +100、生博士的气，博士放下她", npc.behavior.behavior_id == constant.Behavior.WAKE_UP_WHEN_CARRIED
+      and npc.angry_point >= 100 and npc.sp_flag.angry_with_player and pl.action_info.carry_chara_id == 0,
+      (npc.behavior.behavior_id, npc.angry_point, npc.sp_flag.angry_with_player, pl.action_info.carry_chara_id))
+clean_carry_case()
+
+# 被博士的动静吵醒：不执行「睡觉中被吵醒」（那条会把博士推出房间），结算被吵醒的后果，醒来的反应交给行动前检查
+npc = make_carried_sleeper()
+npc.sleep_point = 10
+pl.action_info.past_move_position_list = [list(DORM_ENTRANCE), list(SCENE_DORM)]
+with mock.patch.object(handle_npc_ai_in_h, "random", mock.Mock(randint=lambda low, high: 1)):
+    handle_npc_ai_in_h.judge_weak_up_in_sleep_h(0, CARRY_NPC_ID)
+check("被搬运时被博士吵醒：不执行「睡觉中被吵醒」、博士没被推出房间，一小时内不会再产生睡觉需求",
+      npc.behavior.behavior_id not in (constant.Behavior.SLEEP, constant.Behavior.WAKE_UP_BY_NOISE) and pl.position == list(SCENE_DORM)
+      and npc.action_info.sleep_disturbed_end_time > cache.game_time,
+      (npc.behavior.behavior_id, pl.position, npc.action_info.sleep_disturbed_end_time))
+handle_npc_ai.run_npc_pre_behavior_checks(CARRY_NPC_ID, cache.game_time)
+check("被吵醒后在行动前检查里执行「被搬运时醒来」", npc.behavior.behavior_id == constant.Behavior.WAKE_UP_WHEN_CARRIED and pl.action_info.carry_chara_id == 0,
+      (npc.behavior.behavior_id, pl.action_info.carry_chara_id))
+pl.action_info.past_move_position_list = []
+clean_carry_case()
+
+# 睡饱自然醒（熟睡值降到 0）：带着残留标记、博士在场且交互对象是她时，不走睡奸的恢复流程
+recover_calls = []
+npc = make_carried_sleeper(stale_unconscious=True)
+npc.sleep_point = 5
+with mock.patch.object(handle_npc_ai_in_h, "recover_from_unconscious_h", lambda *args, **kwargs: recover_calls.append(args)):
+    realtime_settle.settle_sleep(CARRY_NPC_ID, 10)
+check("被搬运时睡饱自然醒：不走睡奸的恢复流程（H 已结束，按 H 失败收尾不合适），睡眠结束、残留标记清掉",
+      recover_calls == [] and npc.behavior.behavior_id != constant.Behavior.SLEEP and npc.sp_flag.unconscious_h == 0,
+      (recover_calls, npc.behavior.behavior_id, npc.sp_flag.unconscious_h))
+handle_npc_ai.run_npc_pre_behavior_checks(CARRY_NPC_ID, cache.game_time)
+check("自然醒后在行动前检查里执行「被搬运时醒来」", npc.behavior.behavior_id == constant.Behavior.WAKE_UP_WHEN_CARRIED, npc.behavior.behavior_id)
+clean_carry_case()
+
+# 时停中被搬运：时停解除前一直带着走，解除后恢复意识
+npc = make_carried_sleeper()
+npc.behavior = game_type.Behavior()
+npc.behavior.behavior_id = constant.Behavior.WAIT
+npc.behavior.duration = 30
+npc.behavior.start_time = cache.game_time
+cache.time_stop_mode = True
+handle_npc_ai.run_npc_pre_behavior_checks(CARRY_NPC_ID, cache.game_time)
+still_carried_in_time_stop = pl.action_info.carry_chara_id == CARRY_NPC_ID
+cache.time_stop_mode = False
+handle_npc_ai.run_npc_pre_behavior_checks(CARRY_NPC_ID, cache.game_time)
+check("时停中照旧被搬运，时停解除后执行「被搬运时醒来」（修复前时停解除也不会放下她）",
+      still_carried_in_time_stop and npc.behavior.behavior_id == constant.Behavior.WAKE_UP_WHEN_CARRIED and pl.action_info.carry_chara_id == 0,
+      (still_carried_in_time_stop, npc.behavior.behavior_id, pl.action_info.carry_chara_id))
+clean_carry_case()
+
+# 烂醉时被搬运：醉酒等级 2 及以上照旧带着走，酒醒到 1 级以下才恢复意识
+npc = make_carried_sleeper()
+npc.behavior = game_type.Behavior()
+npc.behavior.start_time = cache.game_time
+carried_by_drunk_point = {}
+for drunk_point in (90, 70, 40):
+    npc.drunk_point = drunk_point
+    handle_npc_ai.run_npc_pre_behavior_checks(CARRY_NPC_ID, cache.game_time)
+    carried_by_drunk_point[drunk_point] = pl.action_info.carry_chara_id == CARRY_NPC_ID
+check("烂醉、醉酒时照旧被搬运，酒醒到微醺时执行「被搬运时醒来」",
+      carried_by_drunk_point == {90: True, 70: True, 40: False} and npc.behavior.behavior_id == constant.Behavior.WAKE_UP_WHEN_CARRIED,
+      (carried_by_drunk_point, npc.behavior.behavior_id))
+clean_carry_case()
+
+# H 中恢复意识（睡奸中醒来裁决为继续 H）：只结束搬运，不叠加「被搬运时醒来」
+npc = make_carried_sleeper()
+npc.behavior = game_type.Behavior()
+npc.behavior.start_time = cache.game_time
+npc.sp_flag.is_h = True
+handle_npc_ai.run_npc_pre_behavior_checks(CARRY_NPC_ID, cache.game_time)
+check("H 中恢复意识时只结束搬运，不执行「被搬运时醒来」",
+      pl.action_info.carry_chara_id == 0 and npc.behavior.behavior_id != constant.Behavior.WAKE_UP_WHEN_CARRIED,
+      (pl.action_info.carry_chara_id, npc.behavior.behavior_id))
+clean_carry_case()
+
 finish()
