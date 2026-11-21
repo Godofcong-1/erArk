@@ -209,13 +209,14 @@ pl.behavior.behavior_id = "squeeze_condom_semen"
 set_virgin(target, False)
 
 
-def pick_candidate(part_type: int, part_cid: int, unconscious: int) -> list:
+def pick_candidate(part_type: int, part_cid: int, unconscious: int, behavior_id: str = "squeeze_condom_semen") -> list:
     """
-    记下目标部位与对方意识状态后，取挤出避孕套精液此刻可被选中的全部地文
+    记下目标部位与对方意识状态后，取该避孕套行为此刻可被选中的全部地文
     Keyword arguments:
     part_type -- 部位类型，0=身体，1=服装
     part_cid -- 部位cid
     unconscious -- 对方的无意识H模式编号，0为有意识
+    behavior_id -- 行为id，默认为挤出避孕套精液
     Return arguments:
     list -- [(地文cid, 前提集合)]
     """
@@ -223,22 +224,42 @@ def pick_candidate(part_type: int, part_cid: int, unconscious: int) -> list:
     target.sp_flag.unconscious_h = unconscious
     from Script.Design import talk
 
-    now_talk_data, _calculated = talk.handle_talk_sub(0, "squeeze_condom_semen", {})
+    pl.behavior.behavior_id = behavior_id
+    now_talk_data, _calculated = talk.handle_talk_sub(0, behavior_id, {})
     return [(talk_cid, game_config.config_talk_premise_data[talk_cid]) for talk_set in now_talk_data.values() for talk_cid in talk_set]
 
 
-wrong_list = []
-for part_type, cid_list in ((0, SQUEEZE_BODY_LIST), (1, sorted(game_config.config_clothing_type))):
-    for part_cid in cid_list:
-        position_token = f"CVP_A2_CondomPos|{'B' if part_type == 0 else 'C'}{part_cid}_E_1"
-        for unconscious, state in ((0, "t_unconscious_flag_0"), (1, "t_unconscious_flag")):
-            candidate_list = pick_candidate(part_type, part_cid, unconscious)
-            part_line_list = [talk_cid for talk_cid, premise_set in candidate_list if any(premise.startswith("CVP_A2_CondomPos") for premise in premise_set)]
-            other_part_list = [talk_cid for talk_cid, premise_set in candidate_list if any(premise.startswith("CVP_A2_CondomPos") and premise != position_token for premise in premise_set)]
-            conscious_leak_list = [talk_cid for talk_cid, premise_set in candidate_list if unconscious and not any("unconscious" in premise for premise in premise_set)]
-            if len(part_line_list) < 10 or other_part_list or conscious_leak_list:
-                wrong_list.append((position_token, state, len(part_line_list), other_part_list[:3], conscious_leak_list[:3]))
-check("16 个可选身体部位与全部服装部位、有意识与无意识两种状态：都至少选得出 10 条本部位的差分，不混入其他部位的，对方无意识时也不混入清醒反应的文本",
+def collect_wrong_selection(behavior_id: str, body_cid_list: list) -> list:
+    """
+    逐个身体部位与全部服装部位、有意识与无意识两种状态取候选地文，收集不合要求的组合
+    Keyword arguments:
+    behavior_id -- 行为id
+    body_cid_list -- 要检查的身体部位cid列表
+    Return arguments:
+    list -- [(部位前提, 意识状态, 本部位差分条数, 混入的其他部位地文, 无意识时混入的清醒文本)]，全部合格时为空
+    """
+    wrong_list = []
+    for part_type, cid_list in ((0, body_cid_list), (1, sorted(game_config.config_clothing_type))):
+        for part_cid in cid_list:
+            position_token = f"CVP_A2_CondomPos|{'B' if part_type == 0 else 'C'}{part_cid}_E_1"
+            for unconscious, state in ((0, "t_unconscious_flag_0"), (1, "t_unconscious_flag")):
+                candidate_list = pick_candidate(part_type, part_cid, unconscious, behavior_id)
+                part_line_list = [talk_cid for talk_cid, premise_set in candidate_list if any(premise.startswith("CVP_A2_CondomPos") for premise in premise_set)]
+                other_part_list = [talk_cid for talk_cid, premise_set in candidate_list if any(premise.startswith("CVP_A2_CondomPos") and premise != position_token for premise in premise_set)]
+                conscious_leak_list = [talk_cid for talk_cid, premise_set in candidate_list if unconscious and not any("unconscious" in premise for premise in premise_set)]
+                if len(part_line_list) < 10 or other_part_list or conscious_leak_list:
+                    wrong_list.append((position_token, state, len(part_line_list), other_part_list[:3], conscious_leak_list[:3]))
+    return wrong_list
+
+
+wrong_list = collect_wrong_selection("squeeze_condom_semen", SQUEEZE_BODY_LIST)
+check("挤出：16 个可选身体部位与全部服装部位、有意识与无意识两种状态：都至少选得出 10 条本部位的差分，不混入其他部位的，对方无意识时也不混入清醒反应的文本",
+      wrong_list == [], wrong_list[:5])
+wrong_list = collect_wrong_selection("hang_condom_decoration", [0, 3])
+check("挂装饰：头发、胸部（系在乳头上）与全部服装部位、有意识与无意识两种状态：同样各自选得出 10 条以上本部位的差分，不串部位、无意识时不混入清醒文本",
+      wrong_list == [], wrong_list[:5])
+wrong_list = collect_wrong_selection("take_back_condom_decoration", [0, 3])
+check("取回装饰：头发、胸部与全部服装部位、有意识与无意识两种状态：同样各自选得出 10 条以上本部位的差分，不串部位、无意识时不混入清醒文本",
       wrong_list == [], wrong_list[:5])
 set_virgin(target, True)
 pl.item[condom_handle.SYRINGE_ITEM_ID] = 1
@@ -264,7 +285,7 @@ for clothing_type in game_config.config_clothing_type:
 render_error_list = []
 leftover_list = []
 for talk_cid, talk_data in game_config.config_talk.items():
-    if talk_data.behavior_id != "squeeze_condom_semen":
+    if talk_data.behavior_id not in ("squeeze_condom_semen", "hang_condom_decoration", "take_back_condom_decoration"):
         continue
     try:
         render_text = talk.code_text_to_draw_text(talk_data.context, 0)
@@ -273,7 +294,7 @@ for talk_cid, talk_data in game_config.config_talk.items():
         continue
     if "{" in render_text or "}" in render_text:
         leftover_list.append(talk_cid)
-check("对方各部位都穿戴着衣物时，挤出避孕套精液的全部文本都能显示、不残留占位符", render_error_list == [] and leftover_list == [], (render_error_list[:3], leftover_list[:3]))
+check("对方各部位都穿戴着衣物时，挤出避孕套精液、挂避孕套装饰与取回避孕套装饰的全部文本都能显示、不残留占位符", render_error_list == [] and leftover_list == [], (render_error_list[:3], leftover_list[:3]))
 glasses_name = game_config.config_clothing_tem[target.cloth.cloth_wear[1][0]].name
 weapon_name = game_config.config_clothing_tem[target.cloth.cloth_wear[12][0]].name
 render_text = talk.code_text_to_draw_text("{TargetGlassesName}|{TargetWeaponName}", 0)
