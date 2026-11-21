@@ -303,7 +303,7 @@ class DIRTY:
         """ 累计吸收的精液总量，int类 """
         self.condom_decoration: Dict[tuple, List[int]] = {}
         """ 挂在本角色身上作装饰的用过的避孕套
-        键为(部位类型, 部位cid)元组：部位类型 0=身体（仅头发0可用），1=服装部位
+        键为(部位类型, 部位cid)元组：部位类型 0=身体（头发0、胸部3可用，见 condom_handle.BODY_DECORATION_PART_LIST），1=服装部位
         值为列表，每个元素为该避孕套内的精液量(ml) """
 
 

@@ -190,9 +190,10 @@ class Condom_Select_Panel:
             info_draw.draw()
 
             part_list = []
-            # 挂装饰模式：仅头发 + 已穿着的服装部位
+            # 挂装饰模式：可挂装饰的身体部位（头发、胸部） + 已穿着的服装部位
             if self.mode == "hang":
-                part_list.append((0, 0))
+                for part_cid in condom_handle.BODY_DECORATION_PART_LIST:
+                    part_list.append((0, part_cid))
             # 挤出模式：全部可及身体部位（口腔/子宫/胃部走饮用，兽类部位需对应素质）
             else:
                 for part_cid in game_config.config_body_part:

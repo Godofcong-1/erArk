@@ -215,10 +215,10 @@ class SeeCharacterBodyPanel:
                     now_part_text = f" {part_name}{dirty_text_context}"
                 all_part_text_list.append(now_part_text)
 
-            # 头发上挂着的避孕套装饰
-            if i == 0:
-                from Script.System.Item_System import condom_handle
-                decoration_count = condom_handle.get_decoration_count(character_data.target_character_id, 0, 0)
+            # 头发、胸部（乳头）上挂着的避孕套装饰
+            from Script.System.Item_System import condom_handle
+            if i in condom_handle.BODY_DECORATION_PART_LIST:
+                decoration_count = condom_handle.get_decoration_count(character_data.target_character_id, 0, i)
                 if decoration_count:
                     # 开启详细污浊信息时显示等级描述文本，否则显示个数
                     if cache.all_system_setting.draw_setting[10]:

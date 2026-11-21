@@ -98,7 +98,51 @@ now_set = selectable_parts()
 check("三处都不是处女：不需要针筒就都能选，面板上没有任何标注",
       {(0, part_cid) for part_cid in VIRGIN_PART_SET} <= now_set and "(处女)]" not in panel_text() and "(针筒)]" not in panel_text(), sorted(now_set))
 set_virgin(target, True)
-check("挂装饰模式不受影响：只有头发与已穿着的服装部位", (0, 6) not in selectable_parts("hang") and (0, 0) in selectable_parts("hang"))
+hang_part_set = selectable_parts("hang")
+check("挂装饰模式：身体部位只有头发与胸部（系在乳头上）可选，不受处女限制影响，另加已穿着的服装部位",
+      {(0, 0), (0, 3)} <= hang_part_set and not [part for part in hang_part_set if part[0] == 0 and part[1] not in (0, 3)], sorted(hang_part_set))
+pl.pl_collection.used_condoms = [15, 25]
+saved_decoration = dict(condom_handle.get_decoration_dict(TARGET_ID))
+condom_handle.settle_hang(TARGET_ID, 0, 3, [0, 1])
+check("挂到胸部：两个套子记在对方的胸部装饰上，存量池里移走", condom_handle.get_decoration_count(TARGET_ID, 0, 3) == 2 and pl.pl_collection.used_condoms == [],
+      (condom_handle.get_decoration_dict(TARGET_ID), pl.pl_collection.used_condoms))
+
+
+def body_panel_text() -> str:
+    """
+    构造 Tk 的身体污浊面板，取其中拼好的全部文本
+    Keyword arguments:
+    无
+    Return arguments:
+    str -- 面板文本
+    """
+    from Script.UI.Panel import dirty_panel
+
+    now_panel = dirty_panel.SeeCharacterBodyPanel(0, 200, 6, 0)
+    return "".join(str(getattr(now_draw, "text", "")) for now_draw in now_panel.draw_list)
+
+
+saved_wear_dict = {clothing_type: list(cloth_list) for clothing_type, cloth_list in target.cloth.cloth_wear.items()}
+saved_detail_setting = cache.all_system_setting.draw_setting[10]
+for clothing_type in target.cloth.cloth_wear:
+    target.cloth.cloth_wear[clothing_type] = []
+cache.all_system_setting.draw_setting[10] = 1
+detail_text = body_panel_text()
+cache.all_system_setting.draw_setting[10] = 0
+brief_text = body_panel_text()
+check("Tk 身体污浊栏：胸部露出时，详细模式显示乳头挂了 2 个套子的 2 级描述，简略模式显示个数",
+      game_config.ui_text_data["condom_dirty"]["胸部避孕套装饰2"] in detail_text and _(" {0}上挂着{1}个用过的避孕套").format(_("胸部"), "2") in brief_text,
+      (detail_text[-200:], brief_text[-200:]))
+cache.all_system_setting.draw_setting[10] = saved_detail_setting
+target.cloth.cloth_wear = saved_wear_dict
+target.dirty.condom_decoration = saved_decoration
+missing_key_list = [
+    f"{name}避孕套装饰{level}"
+    for name in [game_config.config_body_part[cid].name for cid in condom_handle.BODY_DECORATION_PART_LIST] + [data.name for data in game_config.config_clothing_type.values()]
+    for level in range(1, 6)
+    if f"{name}避孕套装饰{level}" not in game_config.ui_text_data["condom_dirty"]
+]
+check("所有可挂装饰的部位（头发、胸部、全部服装部位）都有 1~5 级的装饰描述文本（Tk 污浊栏按键直接取，缺键会报错）", missing_key_list == [], missing_key_list)
 
 # ==== 3. 结算 ====
 section("针筒注入：精液进入部位并照常流动，不夺走处女，地文前提只认针筒注入")

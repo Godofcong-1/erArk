@@ -8,6 +8,9 @@ cache: game_type.Cache = cache_control.cache
 SYRINGE_ITEM_ID = 141
 """ 极细针筒注射器套装的道具id """
 
+BODY_DECORATION_PART_LIST = (0, 3)
+""" 可以挂避孕套装饰的身体部位cid：头发、胸部（系在乳头上），面板选部位与污浊显示都按此表 """
+
 VIRGIN_TALENT_OF_PART = {6: 0, 8: 1, 9: 2}
 """ 挤出精液时受处女限制的身体部位cid: 对应的处女素质id（小穴-阴道处女，后穴-肛门处女，尿道-尿道处女） """
 
@@ -86,7 +89,7 @@ def get_decoration_count(character_id: int, part_type: int, part_cid: int) -> in
     获取指定角色指定部位上挂着的装饰避孕套个数\n
     Keyword arguments:\n
     character_id -- 角色id\n
-    part_type -- 部位类型，0=身体（仅头发0），1=服装部位\n
+    part_type -- 部位类型，0=身体（cid 见 BODY_DECORATION_PART_LIST），1=服装部位\n
     part_cid -- 部位cid\n
     Return arguments:\n
     int -- 该部位上的装饰避孕套个数
@@ -134,7 +137,7 @@ def move_to_decoration(character_id: int, part_type: int, part_cid: int, condom_
     将存量池中指定编号的避孕套转移为指定角色指定部位的装饰\n
     Keyword arguments:\n
     character_id -- 角色id\n
-    part_type -- 部位类型，0=身体（仅头发0），1=服装部位\n
+    part_type -- 部位类型，0=身体（cid 见 BODY_DECORATION_PART_LIST），1=服装部位\n
     part_cid -- 部位cid\n
     condom_index_list -- 存量池中要转移的避孕套下标列表\n
     Return arguments:\n
@@ -267,7 +270,7 @@ def settle_hang(target_character_id: int, part_type: int, part_cid: int, condom_
     挂上避孕套装饰的结算（由选择面板在确认时直接调用）\n
     Keyword arguments:\n
     target_character_id -- 交互对象角色id\n
-    part_type -- 部位类型，0=身体（仅头发0），1=服装部位\n
+    part_type -- 部位类型，0=身体（cid 见 BODY_DECORATION_PART_LIST），1=服装部位\n
     part_cid -- 部位cid\n
     condom_index_list -- 存量池中要转移的避孕套下标列表\n
     Return arguments:\n
