@@ -250,6 +250,74 @@ target.sp_flag.unconscious_h = 0
 pl.behavior.behavior_id = saved_behavior_id
 pl.behavior.condom_position = -1
 
+# ==== 4c. 地文的显示 ====
+section("挤出地文的显示：每一行都能替换完占位符，服装名取对方正穿戴的衣物，没穿时给兜底文本")
+from Script.Design import talk  # noqa: E402
+
+saved_cloth_wear_dict = {clothing_type: list(cloth_list) for clothing_type, cloth_list in target.cloth.cloth_wear.items()}
+cloth_of_type = {}
+for cloth_id, cloth_config in game_config.config_clothing_tem.items():
+    cloth_of_type.setdefault(cloth_config.clothing_type, cloth_id)
+any_cloth_id = next(iter(game_config.config_clothing_tem))
+for clothing_type in game_config.config_clothing_type:
+    target.cloth.cloth_wear[clothing_type] = [cloth_of_type.get(clothing_type, any_cloth_id)]
+render_error_list = []
+leftover_list = []
+for talk_cid, talk_data in game_config.config_talk.items():
+    if talk_data.behavior_id != "squeeze_condom_semen":
+        continue
+    try:
+        render_text = talk.code_text_to_draw_text(talk_data.context, 0)
+    except Exception as error:  # noqa: BLE001  占位符缺失会抛 KeyError，要把它变成失败的断言
+        render_error_list.append((talk_cid, repr(error)))
+        continue
+    if "{" in render_text or "}" in render_text:
+        leftover_list.append(talk_cid)
+check("对方各部位都穿戴着衣物时，挤出避孕套精液的全部文本都能显示、不残留占位符", render_error_list == [] and leftover_list == [], (render_error_list[:3], leftover_list[:3]))
+glasses_name = game_config.config_clothing_tem[target.cloth.cloth_wear[1][0]].name
+weapon_name = game_config.config_clothing_tem[target.cloth.cloth_wear[12][0]].name
+render_text = talk.code_text_to_draw_text("{TargetGlassesName}|{TargetWeaponName}", 0)
+check("眼镜 / 武器占位符换成对方正穿戴的那件的名字", render_text == f"{glasses_name}|{weapon_name}", render_text)
+target.cloth.cloth_wear[13] = [any_cloth_id, cloth_of_type.get(13, any_cloth_id)]
+render_text = talk.code_text_to_draw_text("{TargetAttachmentName}", 0)
+check("同一部位穿戴两件时用顿号连接", render_text == "、".join(game_config.config_clothing_tem[cloth_id].name for cloth_id in target.cloth.cloth_wear[13]), render_text)
+target.cloth.cloth_wear[0] = []
+target.cloth.cloth_wear[11] = []
+render_text = talk.code_text_to_draw_text("{TargetHatName}|{TargetShoeName}", 0)
+check("没戴帽子、没穿鞋子时给兜底文本", render_text == _("没戴帽子的头顶") + "|" + _("没穿鞋子的双脚"), render_text)
+
+# 服装名占位符合并成统一循环后，原有各项的取值规则不变
+up_cloth_name = game_config.config_clothing_tem[target.cloth.cloth_wear[5][0]].name
+pan_cloth_name = game_config.config_clothing_tem[target.cloth.cloth_wear[9][0]].name
+render_text = talk.code_text_to_draw_text("{SelfUpClothName}|{SelfDownClothName}|{UpClothName}|{TargetUpClothName}", 0)
+check("玩家视角：自己的上衣 / 下衣固定为兜帽与长裤，「自己穿着的上衣」为兜底文本，对方的上衣取她正穿着的",
+      render_text == "|".join([_("兜帽"), _("长裤"), _("没有穿上衣的裸露身体"), up_cloth_name]), render_text)
+saved_pan_name, saved_socks_name = pl.behavior.pan_name, pl.behavior.socks_name
+target.cloth.cloth_wear[9] = []
+pl.behavior.pan_name = "测试用内裤"
+render_text = talk.code_text_to_draw_text("{TargetPanName}", 0)
+pl.behavior.pan_name = ""
+render_text += "|" + talk.code_text_to_draw_text("{TargetPanName}", 0)
+check("玩家视角：对方没穿内裤时先用行动记下的内裤名，没有再用兜底文本", render_text == "测试用内裤|" + _("没有穿内裤的阴部"), render_text)
+target.cloth.cloth_wear[9] = [cloth_of_type.get(9, any_cloth_id)]
+target.cloth.cloth_wear[10] = []
+pl.behavior.socks_name = "测试用袜子"
+saved_target_target = target.target_character_id
+target.target_character_id = 0
+render_text = talk.code_text_to_draw_text("{UpClothName}|{SelfUpClothName}|{PanName}|{SocName}|{TargetUpClothName}", TARGET_ID)
+check("NPC 视角：自己的上衣 / 内裤取她正穿着的，没穿袜子时用行动记下的袜子名，「对方的上衣」为兜底文本",
+      render_text == "|".join([up_cloth_name, up_cloth_name, pan_cloth_name, "测试用袜子", _("没有穿上衣的裸露身体")]), render_text)
+bra_cloth_name = game_config.config_clothing_tem[target.cloth.cloth_wear[6][0]].name
+render_text = talk.code_text_to_draw_text("{SelfWeaponName}|{SelfBraName}|{SelfHatName}|{SelfSocName}|{TargetWeaponName}", TARGET_ID)
+check("NPC 视角：Self 组取她自己正穿戴的（没戴帽子给兜底，没穿袜子用行动记下的名字），Target 组为兜底文本",
+      render_text == "|".join([weapon_name, bra_cloth_name, _("没戴帽子的头顶"), "测试用袜子", _("没拿武器的双手")]), render_text)
+pl.behavior.socks_name = ""
+render_text = talk.code_text_to_draw_text("{SelfWeaponName}|{SelfSocName}|{SocName}", 0)
+check("玩家视角：Self 组为兜底文本，与不带前缀的旧名一致", render_text == "|".join([_("没拿武器的双手"), _("没有穿袜子的双腿"), _("没有穿袜子的双腿")]), render_text)
+target.target_character_id = saved_target_target
+pl.behavior.pan_name, pl.behavior.socks_name = saved_pan_name, saved_socks_name
+target.cloth.cloth_wear = saved_cloth_wear_dict
+
 # ==== 5. 生产时破处 ====
 section("生产：仍是阴道处女的产妇胎生生产时失去阴道处女，卵生破壳不清")
 MOTHER_ID = 9502

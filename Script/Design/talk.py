@@ -801,6 +801,18 @@ def talk_common_judge_one_pass(now_talk: str, character_id: int) -> str:
                     now_talk = pattern.sub(_replacer, now_talk)
     return now_talk
 
+def get_wear_cloth_name(character_data: game_type.Character, clothing_type: int) -> str:
+    """
+    取角色某服装部位正穿着的衣物名，供文本占位符使用 \n
+    Keyword arguments: \n
+    character_data -- 角色数据 \n
+    clothing_type -- 服装部位cid（同 ClothingType.csv） \n
+    Return arguments:
+    str -- 衣物名，同一部位穿戴多件时用顿号连接；没有穿戴时为空字符串
+    """
+    return "、".join(game_config.config_clothing_tem[cloth_id].name for cloth_id in character_data.cloth.cloth_wear.get(clothing_type, []))
+
+
 def code_text_to_draw_text(talk_text: str, character_id: int, common_talk_flag: bool = False):
     """
     将文本中的代码转化为对应的文本 \n
@@ -926,91 +938,48 @@ def code_text_to_draw_text(talk_text: str, character_id: int, common_talk_flag: 
             random_chara_name = cache.character_data[chara_id].name
             break
 
-    # 服装，来自于NPC当前穿的衣服，或行动传入的变量
-    self_up_cloth_name = ""
-    if character_id != 0 and len(character_data.cloth.cloth_wear[5]):
-        for Up_cloth_Id in character_data.cloth.cloth_wear[5]:
-            self_up_cloth_name += game_config.config_clothing_tem[Up_cloth_Id].name
-    if self_up_cloth_name == "":
-        self_up_cloth_name = _("没有穿上衣的裸露身体")
-        if character_id == 0:
-            self_up_cloth_name = _("兜帽")
-    self_down_cloth_name = ""
-    if character_id != 0 and len(character_data.cloth.cloth_wear[8]):
-        for Down_cloth_Id in character_data.cloth.cloth_wear[8]:
-            self_down_cloth_name += game_config.config_clothing_tem[Down_cloth_Id].name
-    if self_down_cloth_name == "":
-        self_down_cloth_name = _("没有穿下衣的裸露身体")
-        if character_id == 0:
-            self_down_cloth_name = _("长裤")
-    target_up_cloth_name = ""
-    if character_id == 0 and len(target_data.cloth.cloth_wear[5]):
-        for Up_cloth_Id in target_data.cloth.cloth_wear[5]:
-            target_up_cloth_name += game_config.config_clothing_tem[Up_cloth_Id].name
-    if target_up_cloth_name == "":
-        target_up_cloth_name = _("没有穿上衣的裸露身体")
-    target_down_cloth_name = ""
-    if character_id == 0 and len(target_data.cloth.cloth_wear[8]):
-        for Down_cloth_Id in target_data.cloth.cloth_wear[8]:
-            target_down_cloth_name += game_config.config_clothing_tem[Down_cloth_Id].name
-    if target_down_cloth_name == "":
-        target_down_cloth_name = _("没有穿下衣的裸露身体")
-    target_bra_name = ""
-    if character_id == 0 and len(target_data.cloth.cloth_wear[6]):
-        for BraId in target_data.cloth.cloth_wear[6]:
-            target_bra_name += game_config.config_clothing_tem[BraId].name
-    if target_bra_name == "":
-        target_bra_name = _("没有穿胸罩的乳房")
-    target_ski_name = ""
-    if character_id == 0 and len(target_data.cloth.cloth_wear[8]):
-        for SkiId in target_data.cloth.cloth_wear[8]:
-            target_ski_name += game_config.config_clothing_tem[SkiId].name
-    if target_ski_name == "":
-        target_ski_name = _("没有穿裙子的胯部")
-    target_pan_name = ""
-    if character_id == 0 and len(target_data.cloth.cloth_wear[9]):
-        for PanId in target_data.cloth.cloth_wear[9]:
-            target_pan_name += game_config.config_clothing_tem[PanId].name
-    elif player_data.behavior.pan_name != "":
-        target_pan_name = player_data.behavior.pan_name
-    if target_pan_name == "":
-        target_pan_name = _("没有穿内裤的阴部")
-    target_soc_name = ""
-    if character_id == 0 and len(target_data.cloth.cloth_wear[10]):
-        for SocId in target_data.cloth.cloth_wear[10]:
-            target_soc_name += game_config.config_clothing_tem[SocId].name
-    elif player_data.behavior.socks_name != "":
-        target_soc_name = player_data.behavior.socks_name
-    if target_soc_name == "":
-        target_soc_name = _("没有穿袜子的双腿")
-    pan_name = ""
-    if character_id != 0 and len(character_data.cloth.cloth_wear[9]):
-        for PanId in character_data.cloth.cloth_wear[9]:
-            pan_name += game_config.config_clothing_tem[PanId].name
-    elif player_data.behavior.pan_name != "":
-        pan_name = player_data.behavior.pan_name
-    if pan_name == "":
-        pan_name = _("没有穿内裤的阴部")
-    socks_name = ""
-    if character_id != 0 and len(character_data.cloth.cloth_wear[10]):
-        for SocId in character_data.cloth.cloth_wear[10]:
-            socks_name += game_config.config_clothing_tem[SocId].name
-    elif player_data.behavior.socks_name != "":
-        socks_name = player_data.behavior.socks_name
-    if socks_name == "":
-        socks_name = _("没有穿袜子的双腿")
-    up_cloth_name = ""
-    if character_id != 0 and len(character_data.cloth.cloth_wear[5]):
-        for Up_cloth_Id in character_data.cloth.cloth_wear[5]:
-            up_cloth_name += game_config.config_clothing_tem[Up_cloth_Id].name
-    if up_cloth_name == "":
-        up_cloth_name = _("没有穿上衣的裸露身体")
-    down_cloth_name = ""
-    if character_id != 0 and len(character_data.cloth.cloth_wear[8]):
-        for Down_cloth_Id in character_data.cloth.cloth_wear[8]:
-            down_cloth_name += game_config.config_clothing_tem[Down_cloth_Id].name
-    if down_cloth_name == "":
-        down_cloth_name = _("没有穿下衣的裸露身体")
+    # 服装名占位符：来自说话者或交互对象当前穿戴的衣服，内裤和袜子还可能来自偷取/索要等行动记下的名字
+    #   逐项为 (占位符名去掉前缀的部分, 服装部位cid, 都取不到时的兜底文本)；每项生成两个占位符：
+    #   Target+名 为交互对象的，只在玩家视角（character_id 为 0）下取；Self+名 为说话者自己的，只在 NPC 视角下取
+    cloth_slot_list = (
+        ("HatName", 0, _("没戴帽子的头顶")),
+        ("GlassesName", 1, _("没戴眼镜的双眼")),
+        ("EarDecoName", 2, _("没戴耳饰的耳朵")),
+        ("NeckDecoName", 3, _("没戴脖饰的脖颈")),
+        ("MouthDecoName", 4, _("没戴口饰的嘴边")),
+        ("UpClothName", 5, _("没有穿上衣的裸露身体")),
+        ("BraName", 6, _("没有穿胸罩的乳房")),
+        ("GloveName", 7, _("没戴手套的双手")),
+        ("DownClothName", 8, _("没有穿下衣的裸露身体")),
+        ("SkiName", 8, _("没有穿裙子的胯部")),
+        ("PanName", 9, _("没有穿内裤的阴部")),
+        ("SocName", 10, _("没有穿袜子的双腿")),
+        ("ShoeName", 11, _("没穿鞋子的双脚")),
+        ("WeaponName", 12, _("没拿武器的双手")),
+        ("AttachmentName", 13, _("没戴附属物的身体")),
+    )
+    # 取不到正穿戴的内裤、袜子时，先用偷取/索要等行动记下的名字，再用兜底文本
+    behavior_cloth_name_dict = {9: player_data.behavior.pan_name, 10: player_data.behavior.socks_name}
+    owner_data_dict = {
+        "Target": target_data if character_id == 0 else None,
+        "Self": character_data if character_id != 0 else None,
+    }
+    cloth_name_dict = {}
+    for name_suffix, clothing_type, empty_text in cloth_slot_list:
+        for owner_prefix, owner_data in owner_data_dict.items():
+            cloth_name = get_wear_cloth_name(owner_data, clothing_type) if owner_data is not None else ""
+            if cloth_name == "":
+                cloth_name = behavior_cloth_name_dict.get(clothing_type, "")
+            if cloth_name == "":
+                cloth_name = empty_text
+            cloth_name_dict[owner_prefix + name_suffix] = cloth_name
+    # 不带前缀的旧占位符同为说话者自己的穿戴，保留给已有文本使用
+    for name_suffix in ("UpClothName", "DownClothName", "PanName", "SocName"):
+        cloth_name_dict[name_suffix] = cloth_name_dict["Self" + name_suffix]
+    # 玩家没有服装数据，玩家视角下「自己的上衣 / 下衣」固定写成兜帽与长裤（旧名 UpClothName / DownClothName 不受影响）
+    if character_id == 0:
+        cloth_name_dict["SelfUpClothName"] = _("兜帽")
+        cloth_name_dict["SelfDownClothName"] = _("长裤")
 
     # 最后总结转化
     now_talk_text = now_talk_text.format(
@@ -1039,18 +1008,7 @@ def code_text_to_draw_text(talk_text: str, character_id: int, common_talk_flag: 
         SrcSceneName=src_scene_name,
         SrcOneCharaName=src_random_chara_name,
 
-        SelfUpClothName=self_up_cloth_name,
-        SelfDownClothName=self_down_cloth_name,
-        TargetUpClothName=target_up_cloth_name,
-        TargetDownClothName=target_down_cloth_name,
-        TargetBraName=target_bra_name,
-        TargetSkiName=target_ski_name,
-        TargetPanName=target_pan_name,
-        TargetSocName=target_soc_name,
-        UpClothName=up_cloth_name,
-        DownClothName=down_cloth_name,
-        PanName=pan_name,
-        SocName=socks_name,
+        **cloth_name_dict,
     )
 
     return now_talk_text

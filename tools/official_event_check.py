@@ -87,7 +87,10 @@ TEXT_PLACEHOLDER = {
     "TargetNickNameToPl", "FoodName", "MakeFoodTime", "AllFoodName", "SceneName", "SceneOneCharaName", "TargetSceneName",
     "TargetOneCharaName", "SrcSceneName", "SrcOneCharaName", "SelfUpClothName", "SelfDownClothName", "TargetUpClothName",
     "TargetDownClothName", "TargetBraName", "TargetSkiName", "TargetPanName", "TargetSocName", "UpClothName", "DownClothName",
-    "PanName", "SocName",
+    "PanName", "SocName", "TargetHatName", "TargetGlassesName", "TargetEarDecoName", "TargetNeckDecoName", "TargetMouthDecoName",
+    "TargetGloveName", "TargetShoeName", "TargetWeaponName", "TargetAttachmentName", "SelfHatName", "SelfGlassesName",
+    "SelfEarDecoName", "SelfNeckDecoName", "SelfMouthDecoName", "SelfBraName", "SelfGloveName", "SelfSkiName", "SelfPanName",
+    "SelfSocName", "SelfShoeName", "SelfWeaponName", "SelfAttachmentName",
 }
 """ 事件正文允许使用的占位符：与 Script/Design/talk.py code_text_to_draw_text() 末尾 .format() 的关键字一致。
     事件正文在绘制前会经 official_event_panel.get_code_text() → code_text_to_draw_text() 替换这些占位符
