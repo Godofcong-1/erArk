@@ -5,6 +5,12 @@ from Script.Core import cache_control, game_type
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 
+SYRINGE_ITEM_ID = 141
+""" 极细针筒注射器套装的道具id """
+
+VIRGIN_TALENT_OF_PART = {6: 0, 8: 1, 9: 2}
+""" 挤出精液时受处女限制的身体部位cid: 对应的处女素质id（小穴-阴道处女，后穴-肛门处女，尿道-尿道处女） """
+
 
 def check_collection_data(character_id: int = 0):
     """
@@ -190,6 +196,30 @@ def consume_condoms(condom_index_list: List[int]) -> List[int]:
     return consumed_list
 
 
+def is_virgin_part(character_id: int, part_type: int, part_cid: int) -> bool:
+    """
+    判断指定部位是否为仍保有处女的受限部位（小穴/后穴/尿道），受限部位不能直接挤入精液\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    part_type -- 部位类型，0=身体，1=服装部位\n
+    part_cid -- 部位cid\n
+    Return arguments:\n
+    bool -- 是受限部位且对应处女素质仍在时为True
+    """
+    if part_type != 0 or part_cid not in VIRGIN_TALENT_OF_PART:
+        return False
+    return bool(cache.character_data[character_id].talent[VIRGIN_TALENT_OF_PART[part_cid]])
+
+
+def have_syringe() -> bool:
+    """
+    判断玩家是否持有极细针筒注射器套装（持有时可无视处女限制把精液注入受限部位）\n
+    Return arguments:\n
+    bool -- 持有时为True
+    """
+    return cache.character_data[0].item[SYRINGE_ITEM_ID] > 0
+
+
 def settle_hang(target_character_id: int, part_type: int, part_cid: int, condom_index_list: List[int]):
     """
     挂上避孕套装饰的结算（由选择面板在确认时直接调用）\n
@@ -265,6 +295,7 @@ def settle_squeeze(target_character_id: int, part_type: int, part_cid: int, cond
     """
     挤出避孕套精液的结算（由选择面板在确认时直接调用）\n
     消耗选中的避孕套，将其中精液全额转移到交互对象指定部位（身体部位追加自然流动）\n
+    仍是处女的小穴/后穴/尿道只有持有极细针筒注射器套装时才能选中（由选择面板拦截），注入不改变处女素质\n
     Keyword arguments:\n
     target_character_id -- 交互对象角色id\n
     part_type -- 部位类型，0=身体，1=服装部位\n
@@ -274,8 +305,11 @@ def settle_squeeze(target_character_id: int, part_type: int, part_cid: int, cond
     无
     """
     from Script.UI.Panel import ejaculation_panel
-    # 标记当前行为的目标是身体部位还是服装部位，用于口上前提区分
-    cache.character_data[0].sp_flag.condom_cloth_flag = 1 if part_type == 1 else 0
+    # 标记当前行为的目标类型（身体/服装/针筒注入处女部位），用于口上前提区分
+    if is_virgin_part(target_character_id, part_type, part_cid):
+        cache.character_data[0].sp_flag.condom_cloth_flag = 2
+    else:
+        cache.character_data[0].sp_flag.condom_cloth_flag = 1 if part_type == 1 else 0
     # 消耗选中的避孕套
     consumed_list = consume_condoms(condom_index_list)
     if not consumed_list:

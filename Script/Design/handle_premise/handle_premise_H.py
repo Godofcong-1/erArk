@@ -3315,6 +3315,20 @@ def handle_condom_operation_to_cloth(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.CONDOM_OPERATION_SYRINGE)
+def handle_condom_operation_syringe(character_id: int) -> int:
+    """
+    当前挤出避孕套精液是用极细针筒注射器注入仍是处女的小穴/后穴/尿道
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if getattr(cache.character_data[0].sp_flag, "condom_cloth_flag", 0) == 2:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.USE_CONDOM_IN_H_GE_1)
 def handle_use_condom_in_h_ge_1(character_id: int) -> int:
     """

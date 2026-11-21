@@ -278,6 +278,12 @@ class Born_Panel:
                 draw_text += _("\n{0}从[临盆]转变为[产后]\n").format(mom_character_data.name)
                 mom_character_data.talent[26] = 0
                 draw_text += _("\n{0}失去了[孕肚]\n").format(mom_character_data.name)
+                # 仍是阴道处女（如用极细针筒注射器注入精液受孕）时，胎儿经过产道会撑破处女膜
+                # 只清素质、不写部位交初体验记录：这不是性行为，履历里不应出现夺走处女的对象与体位
+                if mom_character_data.talent[0]:
+                    mom_character_data.talent[0] = 0
+                    draw_text += _("\n{0}从未被插入过的小穴里，那层处女膜在生产时被娩出的胎儿撑破了\n").format(mom_character_data.name)
+                    draw_text += _("\n{0}失去了[阴道处女]\n").format(mom_character_data.name)
                 # 生产完成，重置妊娠加速药的累计加速天数、本次胎数与同卵双胞胎标记
                 mom_character_data.pregnancy.acceleration_days = 0.0
                 mom_character_data.pregnancy.fetus_count = 0

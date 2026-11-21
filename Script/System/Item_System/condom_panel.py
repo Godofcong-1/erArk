@@ -1,7 +1,7 @@
 from typing import Dict, List, Tuple
 from types import FunctionType
 
-from Script.Core import cache_control, game_type, get_text, flow_handle
+from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle
 from Script.Config import game_config, normal_config
 from Script.Design import handle_premise
 from Script.UI.Moudle import draw
@@ -211,17 +211,46 @@ class Condom_Select_Panel:
                     part_list.append((1, clothing_type))
 
             # 每行绘制5个居中按钮，每个按钮宽度为行宽的五分之一
+            # 挤出模式下仍是处女的小穴/后穴/尿道：持有针筒时可选（标注针筒注入），否则灰显不可选
+            have_syringe = condom_handle.have_syringe()
+            virgin_part_flag = False
+            cell_width = self.width // 5
             for part_index in range(len(part_list)):
                 part_type, part_cid = part_list[part_index]
                 part_name = get_location_name(part_type, part_cid)
                 return_text = f"part_{part_index}"
-                now_button = draw.CenterButton(f"[{part_name}]", return_text, self.width // 5)
-                now_button.draw()
-                return_list.append(return_text)
+                if self.mode == "squeeze" and condom_handle.is_virgin_part(target_character_id, part_type, part_cid):
+                    virgin_part_flag = True
+                    if have_syringe:
+                        now_button = draw.CenterButton(_("[{0}(针筒)]").format(part_name), return_text, cell_width)
+                        now_button.draw()
+                        return_list.append(return_text)
+                    else:
+                        # 不可选的格子用同宽的灰色文本占位，保持一行5格对齐（补齐方式同CenterButton）
+                        cell_text = text_handle.align(_("[{0}(处女)]").format(part_name), "center", False, 1, cell_width)
+                        cell_text = " " * (cell_width - text_handle.get_text_index(cell_text)) + cell_text
+                        now_draw = draw.NormalDraw()
+                        now_draw.text = cell_text
+                        now_draw.style = "deep_gray"
+                        now_draw.draw()
+                else:
+                    now_button = draw.CenterButton(f"[{part_name}]", return_text, cell_width)
+                    now_button.draw()
+                    return_list.append(return_text)
                 if part_index % 5 == 4:
                     line_feed.draw()
             if len(part_list) % 5:
                 line_feed.draw()
+            # 有受限部位时说明原因与针筒的作用
+            if virgin_part_flag:
+                tip_draw = draw.NormalDraw()
+                if have_syringe:
+                    tip_draw.text = _("\n标有「针筒」的部位仍是处女，将用极细针筒注射器把精液注入，不会夺走对方的处女\n")
+                else:
+                    tip_draw.text = _("\n标有「处女」的部位仍是处女，无法直接挤入精液，持有极细针筒注射器套装时可以注入\n")
+                    tip_draw.style = "deep_gray"
+                tip_draw.width = self.width
+                tip_draw.draw()
 
             yrn = self.draw_confirm_and_cancel(return_list, confirm_flag=False)
             if yrn == "cancel":

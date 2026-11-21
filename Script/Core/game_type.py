@@ -885,7 +885,7 @@ class SPECIAL_FLAG:
         self.hidden_sex_mode: int = 0
         """ 隐奸H模式，int [0否,1双不隐,2女隐,3男隐,4双隐,5携带] """
         self.condom_cloth_flag: int = 0
-        """ 当前避孕套装饰相关行为的目标类型，int [0身体部位（头发）,1服装部位] """
+        """ 当前避孕套装饰相关行为的目标类型，int [0身体部位（头发）,1服装部位,2用极细针筒注射器注入仍是处女的小穴/后穴/尿道] """
         self.exhibitionism_sex_mode: int = 0
         """ 露出H模式，int [0否,1无人室内露出,2无人室外露出,3人前露出,4无意识人前露出] """
         self.sleep_h_awake: bool = False

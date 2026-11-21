@@ -3501,6 +3501,8 @@
     """ 道具_使用 当前避孕套装饰相关行为的目标是身体部位（头发） """
     CONDOM_OPERATION_TO_CLOTH = "condom_operation_to_cloth"
     """ 道具_使用 当前避孕套装饰相关行为的目标是服装部位 """
+    CONDOM_OPERATION_SYRINGE = "condom_operation_syringe"
+    """ 道具_使用 当前挤出避孕套精液是用极细针筒注射器注入仍是处女的小穴/后穴/尿道 """
     T_NORMAL_56_OR_H_OR_UNCONSCIOUS = "t_normal_56_or_h_or_unconscious"
     """ 属性_异常状态 交互对象56正常或H中或无意识 """
     NOT_USE_CONDOM_IN_H = "not_use_condom_in_h"
