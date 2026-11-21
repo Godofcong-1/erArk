@@ -3290,13 +3290,16 @@ def handle_t_condom_decoration_ge_1(character_id: int) -> int:
 @add_premise(constant_promise.Premise.CONDOM_OPERATION_TO_BODY)
 def handle_condom_operation_to_body(character_id: int) -> int:
     """
-    当前避孕套装饰相关行为的目标是身体部位（头发）
+    当前避孕套相关行为（挂装饰/取回装饰/挤出）的目标是身体部位（不含用针筒注入的处女部位）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    if getattr(cache.character_data[0].sp_flag, "condom_cloth_flag", 0) == 0:
+    from Script.System.Item_System import condom_handle
+
+    location = condom_handle.get_condom_location()
+    if location is not None and location[0] == 0 and not condom_handle.is_syringe_operation():
         return 1
     return 0
 
@@ -3304,15 +3307,35 @@ def handle_condom_operation_to_body(character_id: int) -> int:
 @add_premise(constant_promise.Premise.CONDOM_OPERATION_TO_CLOTH)
 def handle_condom_operation_to_cloth(character_id: int) -> int:
     """
-    当前避孕套装饰相关行为的目标是服装部位
+    当前避孕套相关行为（挂装饰/取回装饰/挤出）的目标是服装部位
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    if getattr(cache.character_data[0].sp_flag, "condom_cloth_flag", 0) == 1:
+    from Script.System.Item_System import condom_handle
+
+    location = condom_handle.get_condom_location()
+    if location is not None and location[0] == 1:
         return 1
     return 0
+
+
+def judge_condom_syringe_part(part_cid: int = -1) -> int:
+    """
+    判断当前挤出避孕套精液是否为用针筒注入仍是处女的指定部位（供以下四个针筒前提共用）
+    Keyword arguments:
+    part_cid -- 身体部位cid，-1为不限部位
+    Return arguments:
+    int -- 是则为1，否则为0
+    """
+    from Script.System.Item_System import condom_handle
+
+    if not condom_handle.is_syringe_operation():
+        return 0
+    if part_cid != -1 and condom_handle.get_condom_location() != (0, part_cid):
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.CONDOM_OPERATION_SYRINGE)
@@ -3324,9 +3347,43 @@ def handle_condom_operation_syringe(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if getattr(cache.character_data[0].sp_flag, "condom_cloth_flag", 0) == 2:
-        return 1
-    return 0
+    return judge_condom_syringe_part()
+
+
+@add_premise(constant_promise.Premise.CONDOM_OPERATION_SYRINGE_TO_VAGINA)
+def handle_condom_operation_syringe_to_vagina(character_id: int) -> int:
+    """
+    当前挤出避孕套精液是用极细针筒注射器注入仍是处女的小穴
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return judge_condom_syringe_part(6)
+
+
+@add_premise(constant_promise.Premise.CONDOM_OPERATION_SYRINGE_TO_ANAL)
+def handle_condom_operation_syringe_to_anal(character_id: int) -> int:
+    """
+    当前挤出避孕套精液是用极细针筒注射器注入仍是处女的后穴
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return judge_condom_syringe_part(8)
+
+
+@add_premise(constant_promise.Premise.CONDOM_OPERATION_SYRINGE_TO_URETHRA)
+def handle_condom_operation_syringe_to_urethra(character_id: int) -> int:
+    """
+    当前挤出避孕套精液是用极细针筒注射器注入仍是处女的尿道
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return judge_condom_syringe_part(9)
 
 
 @add_premise(constant_promise.Premise.USE_CONDOM_IN_H_GE_1)

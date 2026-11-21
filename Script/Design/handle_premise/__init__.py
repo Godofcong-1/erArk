@@ -493,13 +493,14 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
     type_son_id = 0
     # 取到的数值，先给 0 以免属性段是认不出的类型时未赋值
     final_value = 0
-    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场,Dirty污浊,Bondage绳子捆绑,Roleplay角色扮演,PenisPos阴茎位置,ShootPos射精位置,Relationship身份关系,Course当前课程科目,CourseType当前课型,CourseShowOff待炫耀的已升级科目,Growth养成数值
+    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场,Dirty污浊,Bondage绳子捆绑,Roleplay角色扮演,PenisPos阴茎位置,ShootPos射精位置,CondomPos避孕套位置,Relationship身份关系,Course当前课程科目,CourseType当前课型,CourseShowOff待炫耀的已升级科目,Growth养成数值
     if (
         len(premise_all_value_list[1]) > 1 and
         "Time" not in premise_all_value_list[1] and
         "Dirty" not in premise_all_value_list[1] and
         "PenisPos" not in premise_all_value_list[1] and
         "ShootPos" not in premise_all_value_list[1] and
+        "CondomPos" not in premise_all_value_list[1] and
         "Relationship" not in premise_all_value_list[1] and
         "Instruct" not in premise_all_value_list[1]
         ):
@@ -573,6 +574,15 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
             else:
                 final_value = 0
     elif premise_all_value_list[1][0] == "C":
+        # 避孕套位置：本次挂装饰/取回装饰/挤出避孕套精液的目标部位，B身体部位/C服装部位，写法同射精位置
+        # 读的是玩家行为数据里的 condom_position，与主体无关；命中返回1，不看判定方式与判定值
+        # 首字母同为 C，必须排在下面的上课前提之前判定
+        if "CondomPos" in premise_all_value_list[1]:
+            from Script.System.Item_System import condom_handle
+
+            b2_value = premise_all_value_list[1].split("CondomPos|")[1]
+            part_type = 0 if b2_value[0] == "B" else 1
+            return 1 if condom_handle.get_condom_location() == (part_type, int(b2_value[1:])) else 0
         # 上课前提（Plan 22 §3.17）：一条分支覆盖全部18门科目与6种课型，日后加科目零改动
         # 不新增字段，当前课程由课表现算——教师侧查全局课表、学生侧查个人课表，
         #    与 <课> 状态标识、上课结算读的是同一个入口，三处不会各说各话

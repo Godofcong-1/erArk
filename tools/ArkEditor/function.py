@@ -32,6 +32,7 @@ def read_CVP(cvp_value_str: str):
     cvp_str_list[2] = cvp_str_list[2].replace("Roleplay", "角色扮演")
     cvp_str_list[2] = cvp_str_list[2].replace("PenisPos", "阴茎位置")
     cvp_str_list[2] = cvp_str_list[2].replace("ShootPos", "射精位置")
+    cvp_str_list[2] = cvp_str_list[2].replace("CondomPos", "避孕套位置")
     cvp_str_list[2] = cvp_str_list[2].replace("Relationship", "身份关系")
     cvp_str_list[2] = cvp_str_list[2].replace("Gift", "礼物")
     # 这四个属性名要在下面的单字母替换之前换成中文，否则 Growth 的 G 会被换成「攻略程度」、CourseType 的 T 会被当成素质；
@@ -115,6 +116,14 @@ def read_CVP(cvp_value_str: str):
         else:
             b2_name = cache_control.clothing_data[b2_value[1:]]
         cvp_str = cvp_str.replace(f"射精位置|{b2_value}", f"射精位置{b2_name}")
+    elif "避孕套位置" in cvp_str:
+        b2_value = cvp_str_list[2].split("避孕套位置|")[1]
+        part_type = b2_value[0]
+        if part_type == "B":
+            b2_name = cache_control.body_data[b2_value[1:]]
+        else:
+            b2_name = cache_control.clothing_data[b2_value[1:]]
+        cvp_str = cvp_str.replace(f"避孕套位置|{b2_value}", f"避孕套位置{b2_name}")
     elif "身份关系" in cvp_str:
         b2_value = cvp_str_list[2].split("身份关系|")[1]
         cvp_str = cvp_str.replace(f"身份关系|{b2_value}", f"身份关系{b2_value}")

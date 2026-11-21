@@ -47,7 +47,7 @@ class CVPMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cvp_b1 = QComboBox()
-        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件", "其他角色在场", "部位污浊", "触发权重", "绳子捆绑", "角色扮演", "阴茎位置", "射精位置", "身份关系", "礼物"])
+        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件", "其他角色在场", "部位污浊", "触发权重", "绳子捆绑", "角色扮演", "阴茎位置", "射精位置", "身份关系", "礼物", "避孕套位置"])
         self.cvp_b1.setCurrentIndex(0)
         self.cvp_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cvp_b1)
@@ -154,6 +154,8 @@ class CVPMenu(QDialog):
             cvp_b_value = "PenisPos|" + self.cvp_b2.currentText().split("|")[0]
         elif cvp_b1 == "射精位置":
             cvp_b_value = "ShootPos|" + self.cvp_b2.currentText().split("|")[0]
+        elif cvp_b1 == "避孕套位置":
+            cvp_b_value = "CondomPos|" + self.cvp_b2.currentText().split("|")[0]
         elif cvp_b1 == "身份关系":
             cvp_b_value = "Relationship|" + self.cvp_b2.currentText()
         elif cvp_b1 == "礼物":
@@ -378,6 +380,19 @@ class CVPMenu(QDialog):
             self.cvp_c.setVisible(False)
             self.cvp_d.setVisible(False)
             self.cvp_text.setText("用于在赠送礼物指令中判断当前赠送的是哪个礼物，人物应选择礼物的赠送方\n如自己送给对方道歉礼物")
+        # 新属性只能追加在下拉框末尾：本函数按下拉框序号分发，插在中间会让后面各项错位
+        elif index == 22:
+            self.cvp_a.clear()
+            self.cvp_a.setVisible(False)
+            self.cvp_b2.clear()
+            for body_id, body_name in cache_control.body_data.items():
+                self.cvp_b2.addItem(f"B{body_id}|{body_name}")
+            for cloth_id, cloth_name in cache_control.clothing_data.items():
+                self.cvp_b2.addItem(f"C{cloth_id}|{cloth_name}")
+            self.cvp_c.clear()
+            self.cvp_c.addItems(["等于"])
+            self.cvp_d.setText("1")
+            self.cvp_text.setText("检测玩家本次挂避孕套装饰、取回避孕套装饰、挤出避孕套精液的目标部位，包括身体部位与服装部位\n等于1为目标是该部位\n取回多处装饰时按第一个选中的位置判定\n用针筒把精液注入仍是处女的小穴、后穴、尿道时也会命中对应部位，要区分是不是针筒注入，请再搭配[当前挤出避孕套精液是用极细针筒注射器注入…]一类的前提")
 
         self.cvp_b = self.cvp_b2
 

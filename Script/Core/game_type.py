@@ -884,8 +884,6 @@ class SPECIAL_FLAG:
         """ 在无意识H模式中，int [0否,1睡眠,2醉酒,3时停,4平然,5空气,6体控,7心控] """
         self.hidden_sex_mode: int = 0
         """ 隐奸H模式，int [0否,1双不隐,2女隐,3男隐,4双隐,5携带] """
-        self.condom_cloth_flag: int = 0
-        """ 当前避孕套装饰相关行为的目标类型，int [0身体部位（头发）,1服装部位,2用极细针筒注射器注入仍是处女的小穴/后穴/尿道] """
         self.exhibitionism_sex_mode: int = 0
         """ 露出H模式，int [0否,1无人室内露出,2无人室外露出,3人前露出,4无意识人前露出] """
         self.sleep_h_awake: bool = False
@@ -1174,6 +1172,8 @@ class Behavior:
         """ 前提结算用:孵化加速药选中的目标卵编号（-1为未选择，结算消费后重置） """
         self.gift_child_id: int = -1
         """ 前提结算用:成长加速药选中的目标婴儿角色id（-1为未选择，结算消费后重置） """
+        self.condom_position: int = -1
+        """ 前提结算用:避孕套行为（挂装饰/取回装饰/挤出）的目标部位，int，-1为无，0开始同身体部位，20开始同服装部位（编码同 h_state.insert_position） """
 
 
 class Chara_Event:

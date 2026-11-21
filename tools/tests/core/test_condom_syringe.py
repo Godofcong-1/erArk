@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-"""挤出避孕套精液的处女限制与极细针筒注射器：道具配置、部位面板的可选部位与标注、针筒注入不夺走处女且口上前提可区分、口上数据；胎生生产时清掉阴道处女，卵生破壳不清"""
+"""挤出避孕套精液的处女限制与极细针筒注射器：道具配置、部位面板的可选部位与标注、针筒注入不夺走处女且地文前提可区分、目标部位变量与综合数值前提「避孕套位置」、地文数据；胎生生产时清掉阴道处女，卵生破壳不清"""
 from _bootstrap import *  # noqa: F401,F403
 from unittest import mock
 
@@ -101,7 +101,7 @@ set_virgin(target, True)
 check("挂装饰模式不受影响：只有头发与已穿着的服装部位", (0, 6) not in selectable_parts("hang") and (0, 0) in selectable_parts("hang"))
 
 # ==== 3. 结算 ====
-section("针筒注入：精液进入部位并照常流动，不夺走处女，口上前提只认针筒注入")
+section("针筒注入：精液进入部位并照常流动，不夺走处女，地文前提只认针筒注入")
 set_virgin(target, True)
 pl.item[condom_handle.SYRINGE_ITEM_ID] = 1
 target.dirty = attr_calculation.get_zero_dirty()
@@ -115,24 +115,90 @@ check("注入小穴：两套共 50ml 进入小穴，并挂上流向子宫的自�
       pl.pl_collection.used_condoms == [] and target.dirty.body_semen[6][3] == 50 and len(flow_to_womb) == 1,
       (pl.pl_collection.used_condoms, target.dirty.body_semen[6], target.dirty.semen_flow))
 check("注入后阴道 / 肛门 / 尿道处女都还在", [target.talent[talent_id] for talent_id in (0, 1, 2)] == [1, 1, 1])
-check("行为目标标记为 2，口上前提只有「针筒注入」成立",
-      pl.sp_flag.condom_cloth_flag == 2 and handle_premise.handle_premise("condom_operation_syringe", 0) == 1
+check("玩家行为数据记下目标部位 6（编码同阴茎插入位置），地文前提只有「针筒注入」成立、不算普通身体部位",
+      pl.behavior.condom_position == 6 and handle_premise.handle_premise("condom_operation_syringe", 0) == 1
       and handle_premise.handle_premise("condom_operation_to_body", 0) == 0 and handle_premise.handle_premise("condom_operation_to_cloth", 0) == 0,
-      pl.sp_flag.condom_cloth_flag)
+      pl.behavior.condom_position)
+PART_PREMISE = {6: "condom_operation_syringe_to_vagina", 8: "condom_operation_syringe_to_anal", 9: "condom_operation_syringe_to_urethra"}
+""" 针筒注入部位 → 该部位的地文差分前提 """
+premise_result = {}
+for part_cid in PART_PREMISE:
+    pl.pl_collection.used_condoms = [10]
+    condom_handle.settle_squeeze(TARGET_ID, 0, part_cid, [0])
+    premise_result[part_cid] = {premise: handle_premise.handle_premise(premise, 0) for premise in list(PART_PREMISE.values()) + ["condom_operation_syringe"]}
+check("注入小穴 / 后穴 / 尿道：通用的「针筒注入」前提都成立，部位前提只有对应部位那一个成立",
+      all(now_result["condom_operation_syringe"] == 1 and all(now_result[premise] == (1 if premise == PART_PREMISE[part_cid] else 0) for premise in PART_PREMISE.values())
+          for part_cid, now_result in premise_result.items()),
+      premise_result)
+pl.pl_collection.used_condoms = [10]
+condom_handle.settle_squeeze(TARGET_ID, 0, 1, [0])
+check("挤到脸部：记下部位 1，按普通身体部位处理，三个部位前提都不成立",
+      pl.behavior.condom_position == 1 and handle_premise.handle_premise("condom_operation_to_body", 0) == 1
+      and all(handle_premise.handle_premise(premise, 0) == 0 for premise in PART_PREMISE.values()), pl.behavior.condom_position)
 target.talent[1] = 0
 pl.pl_collection.used_condoms = [10]
 condom_handle.settle_squeeze(TARGET_ID, 0, 8, [0])
-check("挤进已不是处女的后穴：按普通身体部位记标记 0，「针筒注入」前提不成立",
-      pl.sp_flag.condom_cloth_flag == 0 and handle_premise.handle_premise("condom_operation_syringe", 0) == 0, pl.sp_flag.condom_cloth_flag)
+check("挤进已不是处女的后穴：记下部位 8，按普通身体部位处理，「针筒注入」前提不成立",
+      pl.behavior.condom_position == 8 and handle_premise.handle_premise("condom_operation_to_body", 0) == 1
+      and handle_premise.handle_premise("condom_operation_syringe", 0) == 0, pl.behavior.condom_position)
 target.talent[1] = 1
 
-# ==== 4. 口上数据 ====
-section("口上：挤出避孕套精液有针筒注入专用的口上")
+# ==== 3b. 目标部位变量 ====
+section("避孕套行为的目标部位：挂装饰 / 取回 / 挤出共用一个变量，服装部位从 20 起编码，行为结束重建后清空")
+CLOTH_TYPE = next(iter(game_config.config_clothing_type))
+saved_cloth_wear = target.cloth.cloth_wear[CLOTH_TYPE]
+target.cloth.cloth_wear[CLOTH_TYPE] = [next(iter(game_config.config_clothing_tem))]
+pl.pl_collection.used_condoms = [10, 10]
+condom_handle.settle_hang(TARGET_ID, 1, CLOTH_TYPE, [0])
+check("挂到服装部位：记为 20 + 服装部位cid，「服装部位」前提成立、「身体部位」不成立",
+      pl.behavior.condom_position == 20 + CLOTH_TYPE and handle_premise.handle_premise("condom_operation_to_cloth", 0) == 1
+      and handle_premise.handle_premise("condom_operation_to_body", 0) == 0, pl.behavior.condom_position)
+condom_handle.settle_hang(TARGET_ID, 0, 0, [0])
+check("挂到头发：记为 0，「身体部位」前提成立", pl.behavior.condom_position == 0 and handle_premise.handle_premise("condom_operation_to_body", 0) == 1, pl.behavior.condom_position)
+condom_handle.settle_take_back(TARGET_ID, [((1, CLOTH_TYPE), 0), ((0, 0), 0)])
+check("取回多处装饰：按第一个选中的位置记录", pl.behavior.condom_position == 20 + CLOTH_TYPE, pl.behavior.condom_position)
+target.cloth.cloth_wear[CLOTH_TYPE] = saved_cloth_wear
+cvp_result = {
+    token: handle_premise.handle_premise(token, 0)
+    for token in (f"CVP_A2_CondomPos|C{CLOTH_TYPE}_E_1", f"CVP_A1_CondomPos|C{CLOTH_TYPE}_E_1", f"CVP_A2_CondomPos|B{CLOTH_TYPE}_E_1")
+}
+check("综合数值前提「避孕套位置」：服装部位写 C+编号时命中，主体写自己或交互对象都一样，同编号的身体部位 B 不命中",
+      list(cvp_result.values()) == [1, 1, 0], cvp_result)
+pl.pl_collection.used_condoms = [10]
+condom_handle.settle_squeeze(TARGET_ID, 0, 6, [0])
+cvp_result = {token: handle_premise.handle_premise(token, 0) for token in ("CVP_A2_CondomPos|B6_E_1", "CVP_A2_CondomPos|B8_E_1")}
+check("综合数值前提「避孕套位置」：针筒注入小穴时 B6 命中、B8 不命中", list(cvp_result.values()) == [1, 0], cvp_result)
+pl.behavior = game_type.Behavior()
+check("行为结束重建行为数据后为 -1，身体 / 服装 / 针筒前提都不成立（不会把上一次的部位带进下一个行为）",
+      pl.behavior.condom_position == -1 and all(handle_premise.handle_premise(premise, 0) == 0 for premise in ("condom_operation_to_body", "condom_operation_to_cloth", "condom_operation_syringe", "CVP_A2_CondomPos|B6_E_1")))
+del pl.behavior.condom_position
+check("旧存档里尚未重建过、没有该字段的行为数据：读取不报错，前提都不成立",
+      condom_handle.get_condom_location() is None and handle_premise.handle_premise("condom_operation_to_body", 0) == 0)
+pl.behavior = game_type.Behavior()
+
+# ==== 4. 地文数据 ====
+section("地文：挤出避孕套精液有针筒注入专用的地文")
 syringe_talk_list = [
     talk_cid for talk_cid, talk_data in game_config.config_talk.items()
     if talk_data.behavior_id == "squeeze_condom_semen" and "condom_operation_syringe" in game_config.config_talk_premise_data.get(talk_cid, set())
 ]
-check("构建后的口上里至少有一条挤出避孕套精液的针筒注入口上", len(syringe_talk_list) >= 1, syringe_talk_list)
+check("构建后的文本数据里至少有一条挤出避孕套精液的针筒注入地文", len(syringe_talk_list) >= 1, syringe_talk_list)
+missing_part_list = [
+    premise for premise in PART_PREMISE.values()
+    if not any(
+        talk_data.behavior_id == "squeeze_condom_semen" and premise in game_config.config_talk_premise_data.get(talk_cid, set())
+        for talk_cid, talk_data in game_config.config_talk.items()
+    )
+]
+check("小穴 / 后穴 / 尿道各有至少一条部位差分地文", missing_part_list == [], missing_part_list)
+missing_state_list = [
+    (premise, state) for premise in PART_PREMISE.values() for state in ("t_unconscious_flag_0", "t_unconscious_flag")
+    if not any(
+        talk_data.behavior_id == "squeeze_condom_semen" and {premise, state} <= game_config.config_talk_premise_data.get(talk_cid, set())
+        for talk_cid, talk_data in game_config.config_talk.items()
+    )
+]
+check("三个部位的差分地文都同时有对方有意识与对方无意识两种版本（对方无意识时只认前提名带 unconscious 的文本）", missing_state_list == [], missing_state_list)
 
 # ==== 5. 生产时破处 ====
 section("生产：仍是阴道处女的产妇胎生生产时失去阴道处女，卵生破壳不清")

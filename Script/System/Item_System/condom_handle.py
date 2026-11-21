@@ -11,7 +11,6 @@ SYRINGE_ITEM_ID = 141
 VIRGIN_TALENT_OF_PART = {6: 0, 8: 1, 9: 2}
 """ 挤出精液时受处女限制的身体部位cid: 对应的处女素质id（小穴-阴道处女，后穴-肛门处女，尿道-尿道处女） """
 
-
 def check_collection_data(character_id: int = 0):
     """
     校验玩家收藏品结构体中避孕套存量池字段是否存在（旧存档兼容），不存在则补上\n
@@ -211,6 +210,49 @@ def is_virgin_part(character_id: int, part_type: int, part_cid: int) -> bool:
     return bool(cache.character_data[character_id].talent[VIRGIN_TALENT_OF_PART[part_cid]])
 
 
+def set_condom_position(part_type: int, part_cid: int):
+    """
+    记录本次避孕套行为（挂装饰/取回装饰/挤出）的目标部位到玩家行为数据，供口上前提区分部位\n
+    放在 Behavior 而不是 sp_flag / dirty：它是单次行动的参数，行为结束时 Behavior 整体重建，值自然清空；
+    也不能借用 h_state.shoot_position_body：面板结算早于行为循环，循环在玩家行动前会把射精位置重置为-1\n
+    Keyword arguments:\n
+    part_type -- 部位类型，0=身体，1=服装部位\n
+    part_cid -- 部位cid\n
+    Return arguments:\n
+    无
+    """
+    # 编码同 h_state.insert_position：身体部位直接用cid，服装部位为cid+20
+    cache.character_data[0].behavior.condom_position = part_cid + 20 if part_type == 1 else part_cid
+
+
+def get_condom_location():
+    """
+    读取本次避孕套行为的目标部位\n
+    Return arguments:\n
+    tuple | None -- (部位类型, 部位cid)，部位类型 0=身体，1=服装部位；未记录时为None
+    """
+    # 旧存档里尚未重建过的 Behavior 没有该字段
+    position = getattr(cache.character_data[0].behavior, "condom_position", -1)
+    if position < 0:
+        return None
+    if position >= 20:
+        return (1, position - 20)
+    return (0, position)
+
+
+def is_syringe_operation() -> bool:
+    """
+    判断本次避孕套行为是否为用极细针筒注射器把精液注入仍是处女的小穴/后穴/尿道\n
+    不另记标记：处女部位只能用针筒注入（面板拦截），且注入不改处女素质，所以「目标部位是对方仍保有处女的受限部位」即等价于针筒注入\n
+    Return arguments:\n
+    bool -- 是针筒注入时为True
+    """
+    location = get_condom_location()
+    if location is None:
+        return False
+    return is_virgin_part(cache.character_data[0].target_character_id, location[0], location[1])
+
+
 def have_syringe() -> bool:
     """
     判断玩家是否持有极细针筒注射器套装（持有时可无视处女限制把精液注入受限部位）\n
@@ -232,8 +274,8 @@ def settle_hang(target_character_id: int, part_type: int, part_cid: int, condom_
     无
     """
     move_to_decoration(target_character_id, part_type, part_cid, condom_index_list)
-    # 标记当前行为的目标是身体部位还是服装部位，用于口上前提区分
-    cache.character_data[0].sp_flag.condom_cloth_flag = 1 if part_type == 1 else 0
+    # 记录本次行为的目标部位，用于口上前提区分
+    set_condom_position(part_type, part_cid)
 
 
 def settle_take_back(target_character_id: int, location_index_list: List[Tuple[tuple, int]]):
@@ -247,9 +289,9 @@ def settle_take_back(target_character_id: int, location_index_list: List[Tuple[t
     """
     if not location_index_list:
         return
-    # 标记当前行为的目标是身体部位还是服装部位（按第一个选中的装饰位置判定），用于口上前提区分
+    # 记录本次行为的目标部位（按第一个选中的装饰位置），用于口上前提区分
     first_location = location_index_list[0][0]
-    cache.character_data[0].sp_flag.condom_cloth_flag = 1 if first_location[0] == 1 else 0
+    set_condom_position(first_location[0], first_location[1])
     take_back_decoration(target_character_id, location_index_list)
 
 
@@ -305,11 +347,8 @@ def settle_squeeze(target_character_id: int, part_type: int, part_cid: int, cond
     无
     """
     from Script.UI.Panel import ejaculation_panel
-    # 标记当前行为的目标类型（身体/服装/针筒注入处女部位），用于口上前提区分
-    if is_virgin_part(target_character_id, part_type, part_cid):
-        cache.character_data[0].sp_flag.condom_cloth_flag = 2
-    else:
-        cache.character_data[0].sp_flag.condom_cloth_flag = 1 if part_type == 1 else 0
+    # 记录本次行为的目标部位，用于口上前提区分（是否针筒注入由部位与对方处女素质推出，见 is_syringe_operation）
+    set_condom_position(part_type, part_cid)
     # 消耗选中的避孕套
     consumed_list = consume_condoms(condom_index_list)
     if not consumed_list:
