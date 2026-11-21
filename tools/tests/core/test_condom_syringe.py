@@ -200,6 +200,56 @@ missing_state_list = [
 ]
 check("三个部位的差分地文都同时有对方有意识与对方无意识两种版本（对方无意识时只认前提名带 unconscious 的文本）", missing_state_list == [], missing_state_list)
 
+# ==== 4b. 各部位的地文选取 ====
+section("挤到每个身体 / 服装部位时，按部位与对方意识状态选出对应的差分地文")
+SQUEEZE_BODY_LIST = [0, 1, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18]
+""" 挤出面板可选的身体部位（口腔、子宫、胃部不可选） """
+saved_behavior_id = pl.behavior.behavior_id
+pl.behavior.behavior_id = "squeeze_condom_semen"
+set_virgin(target, False)
+
+
+def pick_candidate(part_type: int, part_cid: int, unconscious: int) -> list:
+    """
+    记下目标部位与对方意识状态后，取挤出避孕套精液此刻可被选中的全部地文
+    Keyword arguments:
+    part_type -- 部位类型，0=身体，1=服装
+    part_cid -- 部位cid
+    unconscious -- 对方的无意识H模式编号，0为有意识
+    Return arguments:
+    list -- [(地文cid, 前提集合)]
+    """
+    condom_handle.set_condom_position(part_type, part_cid)
+    target.sp_flag.unconscious_h = unconscious
+    from Script.Design import talk
+
+    now_talk_data, _calculated = talk.handle_talk_sub(0, "squeeze_condom_semen", {})
+    return [(talk_cid, game_config.config_talk_premise_data[talk_cid]) for talk_set in now_talk_data.values() for talk_cid in talk_set]
+
+
+wrong_list = []
+for part_type, cid_list in ((0, SQUEEZE_BODY_LIST), (1, sorted(game_config.config_clothing_type))):
+    for part_cid in cid_list:
+        position_token = f"CVP_A2_CondomPos|{'B' if part_type == 0 else 'C'}{part_cid}_E_1"
+        for unconscious, state in ((0, "t_unconscious_flag_0"), (1, "t_unconscious_flag")):
+            candidate_list = pick_candidate(part_type, part_cid, unconscious)
+            part_line_list = [talk_cid for talk_cid, premise_set in candidate_list if any(premise.startswith("CVP_A2_CondomPos") for premise in premise_set)]
+            other_part_list = [talk_cid for talk_cid, premise_set in candidate_list if any(premise.startswith("CVP_A2_CondomPos") and premise != position_token for premise in premise_set)]
+            conscious_leak_list = [talk_cid for talk_cid, premise_set in candidate_list if unconscious and not any("unconscious" in premise for premise in premise_set)]
+            if len(part_line_list) < 10 or other_part_list or conscious_leak_list:
+                wrong_list.append((position_token, state, len(part_line_list), other_part_list[:3], conscious_leak_list[:3]))
+check("16 个可选身体部位与全部服装部位、有意识与无意识两种状态：都至少选得出 10 条本部位的差分，不混入其他部位的，对方无意识时也不混入清醒反应的文本",
+      wrong_list == [], wrong_list[:5])
+set_virgin(target, True)
+pl.item[condom_handle.SYRINGE_ITEM_ID] = 1
+syringe_candidate = pick_candidate(0, 6, 0)
+check("对方仍是处女、用针筒注入小穴时，不会选到「直接挤进小穴」的差分（那些文本要求不是针筒注入）",
+      not [talk_cid for talk_cid, premise_set in syringe_candidate if "CVP_A2_CondomPos|B6_E_1" in premise_set]
+      and any("condom_operation_syringe_to_vagina" in premise_set for _talk_cid, premise_set in syringe_candidate))
+target.sp_flag.unconscious_h = 0
+pl.behavior.behavior_id = saved_behavior_id
+pl.behavior.condom_position = -1
+
 # ==== 5. 生产时破处 ====
 section("生产：仍是阴道处女的产妇胎生生产时失去阴道处女，卵生破壳不清")
 MOTHER_ID = 9502
