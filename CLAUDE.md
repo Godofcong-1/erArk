@@ -92,7 +92,8 @@ CI 在每次推送和每个 PR 上运行这些测试，外加一项范围很窄�
 
 #### 事件与口上系统
 - **事件数据**：`data/event/` 中的 JSON 文件，由 `Script/Design/event.py` 处理
-- **口上数据**：`data/talk/` 中按角色划分的对话 CSV；`data/talk_common/` 中按动作类型组织的通用口上（`action_A`、`action_B1/B2`、`action_C1/C2`、`body`、`body_part`）
+- **术语**：某个角色专属的文本叫**口上**，全角色都通用的文本叫**地文**。写文档、`update.log`、提交信息和回复时按这个区分；系统名、目录名、函数名里沿用的「口上」（口上系统、`data/talk/`、`talk.py`）不改
+- **文本数据**：`data/talk/` 按行为分类（`chara/` 下为各角色）存放对话 CSV，`adv_id` 不为 0 的行是该角色的口上，为 0 的行是全角色通用的地文；`data/talk_common/` 中按动作类型组织的是纸娃娃地文（`action_A`、`action_B1/B2`、`action_C1/C2`、`body`、`body_part`）
 - **行为目标**：`data/target/` 存放 NPC AI 使用的目标定义，改完用 `tools/lint_target_csv.py` 校验编号
 - **公务事件**：`data/official_event/*.csv`（通用、婴儿、幼女、萝莉、期末）构建成 `data/Official_Event.json`，由 `Script/System/Official_Event_System` 处理；事件表有不少静默失败的写法，每写完一批用 `tools/official_event_check.py` 校验
 
@@ -145,7 +146,7 @@ CI 在每次推送和每个 PR 上运行这些测试，外加一项范围很窄�
 - `config.ini`：主游戏配置（`debug`、`web_draw`、`perf_monitor`、`language`、字体、窗口尺寸、游戏内起始日期、存档槽位等）。`perf_monitor = 1` 时（仅 Tk 模式）启用渲染性能埋点，每屏耗时写成 JSONL
 - `data/data.json`：从 CSV 编译的游戏数据
 - `data/Character.json`：角色模板数据
-- `data/Character_Talk.json` / `data/Talk_Common.json`：角色口上与通用口上数据
+- `data/Character_Talk.json` / `data/Talk_Common.json`：`data/talk/` 的口上与地文数据 / 纸娃娃地文数据
 - `data/Character_Event.json` / `data/Official_Event.json`：角色事件数据与公务事件数据
 - `data/ui_text.json`：界面文本数据
 - `ai_chat_api_key.csv`：AI 文本生成 API 密钥（敏感文件）
