@@ -1547,6 +1547,7 @@ def handle_unconscious_h_end():
     character_data.state = constant.CharacterStatus.STATUS_NO_CONSCIOUS_H_END
     # 结算成就
     achievement_panel.achievement_flow(_("睡奸"))
+    achievement_panel.achievement_flow(_("醉奸"))
 
     # H结束时的其他处理完毕
     now_draw = draw.WaitDraw()

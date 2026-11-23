@@ -264,6 +264,11 @@ def orgasm_settle_in_second_behavior(
                 # 成就统计
                 cache.achievement.sleep_sex_record.setdefault(3, 0)
                 cache.achievement.sleep_sex_record[3] += 1
+            # 醉奸状态下
+            elif handle_premise.handle_unconscious_flag_2(character_id):
+                # 成就统计
+                cache.achievement.drunk_sex_record.setdefault(3, 0)
+                cache.achievement.drunk_sex_record[3] += 1
             # 该部位高潮计数+1
             part_count += 1
             # 加入高潮部位记录

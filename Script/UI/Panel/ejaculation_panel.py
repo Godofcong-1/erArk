@@ -426,6 +426,11 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
             # 成就统计
             cache.achievement.sleep_sex_record.setdefault(2, 0)
             cache.achievement.sleep_sex_record[2] += 1
+        # 醉奸状态下
+        elif handle_premise.handle_t_unconscious_flag_2(0):
+            # 成就统计
+            cache.achievement.drunk_sex_record.setdefault(2, 0)
+            cache.achievement.drunk_sex_record[2] += 1
         # 正常射精时
         if character_data.h_state.body_item[13][1] == False:
             # 射在体外无壳卵上

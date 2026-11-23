@@ -72,6 +72,8 @@ def achievement_flow(achievement_type: str, achievement_id: int = 0):
         func = settle_chara_exhibitionism_sex
     elif achievement_type == _("睡奸"):
         func = settle_chara_sleep_sex
+    elif achievement_type == _("醉奸"):
+        func = settle_chara_drunk_sex
     elif achievement_type == _("射精"):
         func = settle_semen_shoot
     elif achievement_type == _("避孕套"):
@@ -567,6 +569,37 @@ def settle_chara_sleep_sex():
         (ejaculation_count, 921),  # 期间至少射精1次
         (min(ejaculation_count, climax_count), 922),  # 期间至少射精3次，被睡奸的干员至少绝顶3次
         (flag_923, 923),  # 在对方中间醒来又继续装睡的情况下，完成一次睡奸，期间至少射精3次，被睡奸的干员至少绝顶3次
+    ]
+    # 统一调用settle_achievement进行批量结算
+    for judge_value, achievement_id in achievement_checks:
+        return_list.extend(settle_achievement(judge_value, achievement_id))
+    return return_list
+
+def settle_chara_drunk_sex():
+    """
+    结算醉奸类的成就（在结束无意识奸时调用，此时交互对象仍带着醉酒无意识标记）\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    from Script.System.Sex_System import drunk_sex_common
+    return_list = []
+    # 如果没有在醉奸中则返回
+    if not handle_premise.handle_t_unconscious_flag_2(0):
+        return return_list
+    # 射精次数与绝顶次数（醉奸开始时初始化；用get兜底尚未初始化过的旧存档）
+    ejaculation_count = cache.achievement.drunk_sex_record.get(2, 0)
+    climax_count = cache.achievement.drunk_sex_record.get(3, 0)
+    # 成就953的特殊标志：结束时对方仍是烂醉（最高醉酒等级）
+    flag_953 = 0
+    target_character_id = cache.character_data[0].target_character_id
+    if drunk_sex_common.get_drunk_level(target_character_id)[0] >= 3 and ejaculation_count >= 3 and climax_count >= 3:
+        flag_953 = 1
+    # 构建成就结算列表
+    achievement_checks = [
+        # (判断值, 成就ID)
+        (ejaculation_count, 951),  # 期间至少射精1次
+        (min(ejaculation_count, climax_count), 952),  # 期间至少射精3次，被醉奸的干员至少绝顶3次
+        (flag_953, 953),  # 对方喝得烂醉，醉奸结束时仍没有醒来，期间至少射精3次，对方至少绝顶3次
     ]
     # 统一调用settle_achievement进行批量结算
     for judge_value, achievement_id in achievement_checks:
