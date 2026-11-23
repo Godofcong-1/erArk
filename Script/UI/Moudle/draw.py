@@ -838,10 +838,12 @@ class LittleTitleLineDraw:
     line -- 用于绘制线条的文本
     style -- 线条样式
     title_style -- 标题样式
+    tooltip -- 鼠标悬停在标题上时显示的说明文本
+    center_title -- 是否将标题放在整条分隔线的中央
     count_title_width -- 是否把标题宽度算进总长
     """
 
-    def __init__(self, title: str, width: int, line: str = "=", style="standard", title_style="sontitle", count_title_width: bool = False):
+    def __init__(self, title: str, width: int, line: str = "=", style="standard", title_style="sontitle", count_title_width: bool = False, tooltip: str = "", center_title: bool = False):
         """初始化绘制对象"""
         self.title = title
         """ 标题 """
@@ -853,6 +855,10 @@ class LittleTitleLineDraw:
         """ 线条默认样式 """
         self.title_style = title_style
         """ 标题样式 """
+        self.tooltip = tooltip
+        """ 鼠标悬停在标题上时显示的说明文本 """
+        self.center_title = center_title
+        """ 是否将标题放在整条分隔线的中央 """
         self.line_feed: bool = True
         """ 线尾换行 """
         self.count_title_width: bool = count_title_width
@@ -868,12 +874,15 @@ class LittleTitleLineDraw:
         title_draw = NormalDraw()
         title_draw.text = self.title
         title_draw.style = self.title_style
-        # NormalDraw.__len__ 在 width 为默认的 0 时一律返回 0，标题于是不占宽度，这正是旧口径；
-        #    要把标题算进总长，就得先把宽度给上，len() 才会返回标题的真实宽度
-        if self.count_title_width:
+        title_draw.tooltip = self.tooltip
+        # 居中标题和定宽标题都需要计入标题宽度；其他标题沿用原有线条长度。
+        if self.center_title or self.count_title_width:
             title_draw.width = self.width
         title_width = len(title_draw)
-        line_a_width = int(self.width / 16) - title_width
+        if self.center_title:
+            line_a_width = int((self.width - title_width) / 2)
+        else:
+            line_a_width = int(self.width / 16) - title_width
         if line_a_width < 0:
             line_a_width = 0
         line_a = NormalDraw()
