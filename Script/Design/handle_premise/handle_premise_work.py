@@ -43,7 +43,7 @@ def handle_have_work(character_id: int) -> int:
 def handle_t_have_work(character_id: int) -> int:
     """
     交互对象有工作
-    ⚠️ have_work 判的是行为发起者自己，跟随母亲见学一类「按对方岗位分差分」的口上
+    have_work 判的是行为发起者自己，跟随母亲见学一类「按对方岗位分差分」的口上
        必须用本前提，否则读到的是孩子自己那个恒为真的152学生岗（Plan 22 二期）
     Keyword arguments:
     character_id -- 角色id
@@ -58,7 +58,7 @@ def handle_t_have_work(character_id: int) -> int:
 def handle_t_not_have_work(character_id: int) -> int:
     """
     交互对象没有工作
-    ⚠️ 与 t_have_work 成对，专供「对方没有工作」那一侧的口上做排他
+    与 t_have_work 成对，专供「对方没有工作」那一侧的口上做排他
        —— 口上是加权随机不是最具体独占，不写反向前提的那一档会在两种情形下都出场
     Keyword arguments:
     character_id -- 角色id
@@ -283,8 +283,10 @@ def handle_work_is_teacher(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    from Script.System.Education_System import education_constant
+
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.work.work_type == 151
+    return character_data.work.work_type == education_constant.TEACHER_WORK_TYPE
 
 
 @add_premise(constant_promise.Premise.TARGET_WORK_IS_TEACHER)
@@ -309,8 +311,10 @@ def handle_work_is_student(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    from Script.System.Education_System import education_constant
+
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.work.work_type == 152
+    return character_data.work.work_type == education_constant.STUDENT_WORK_TYPE
 
 
 @add_premise(constant_promise.Premise.TARGET_WORK_IS_STUDENT)
@@ -350,6 +354,353 @@ def handle_t_work_is_nursery_worker(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return handle_work_is_nursery_worker(character_data.target_character_id)
+
+
+# ---------------------------------------------------------------------------
+# 教师 / 学生的工作链前提（Plan 24，target.csv 组 07 教师 / 组 08 学生）
+# 状态一律从 class_ai.get_teacher_duty / get_course_stage 取，保证同组的行两两互斥；非本岗一律返回 0。
+# 同一个前提在一次决策里按名缓存、被多行共享，这里只读不写
+# ---------------------------------------------------------------------------
+
+
+@add_premise(constant_promise.Premise.TEACHER_HAVE_CLASS_NOW)
+def handle_teacher_have_class_now(character_id: int) -> int:
+    """
+    自己是教师且本节有课要教（全局课表反查，含当天临时课覆盖层，不看星期）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import class_ai, education_constant
+
+    return int(class_ai.get_teacher_duty(character_id)[0] == education_constant.TEACHER_DUTY_NOW)
+
+
+@add_premise(constant_promise.Premise.TEACHER_HAVE_UPCOMING_CLASS)
+def handle_teacher_have_upcoming_class(character_id: int) -> int:
+    """
+    自己是教师，本节没课但20分钟内开始的下一节有课
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import class_ai, education_constant
+
+    return int(class_ai.get_teacher_duty(character_id)[0] == education_constant.TEACHER_DUTY_UPCOMING)
+
+
+@add_premise(constant_promise.Premise.TEACHER_NO_CLASS_DUTY)
+def handle_teacher_no_class_duty(character_id: int) -> int:
+    """
+    自己是教师，本节与20分钟内都没课
+    get_teacher_duty 对非教师也返回 NONE，所以必须先判岗位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import class_ai, education_constant
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.work.work_type != education_constant.TEACHER_WORK_TYPE:
+        return 0
+    return int(class_ai.get_teacher_duty(character_id)[0] == education_constant.TEACHER_DUTY_NONE)
+
+
+@add_premise(constant_promise.Premise.TEACHER_IN_DUTY_CLASSROOM)
+def handle_teacher_in_duty_classroom(character_id: int) -> int:
+    """
+    自己是教师，本节或20分钟内有课，且人在该课的教室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import class_ai, education_constant
+
+    duty, classroom = class_ai.get_teacher_duty(character_id)
+    if duty == education_constant.TEACHER_DUTY_NONE:
+        return 0
+    return int(class_ai.judge_in_scene(character_id, classroom))
+
+
+@add_premise(constant_promise.Premise.TEACHER_NOT_IN_DUTY_CLASSROOM)
+def handle_teacher_not_in_duty_classroom(character_id: int) -> int:
+    """
+    自己是教师，本节或20分钟内有课，但人不在该课的教室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import class_ai, education_constant
+
+    duty, classroom = class_ai.get_teacher_duty(character_id)
+    if duty == education_constant.TEACHER_DUTY_NONE:
+        return 0
+    return int(not class_ai.judge_in_scene(character_id, classroom))
+
+
+@add_premise(constant_promise.Premise.SELF_SEX_CLASS_PENDING)
+def handle_self_sex_class_pending(character_id: int) -> int:
+    """
+    自己是学生，下一节是自己要上的性技实操课（必修或选修）且10分钟内开始
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import class_ai, education_constant
+
+    return int(class_ai.get_course_stage(character_id) == education_constant.COURSE_STAGE_SEX_PENDING)
+
+
+@add_premise(constant_promise.Premise.SELF_IN_PENDING_SEX_CLASS_ROOM)
+def handle_self_in_pending_sex_class_room(character_id: int) -> int:
+    """
+    自己是学生，有待赴的性技实操课且人已在那间教室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import class_ai
+
+    classroom = class_ai.get_pending_sex_classroom(character_id)
+    if not classroom:
+        return 0
+    return int(class_ai.judge_in_scene(character_id, classroom))
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_IN_PENDING_SEX_CLASS_ROOM)
+def handle_self_not_in_pending_sex_class_room(character_id: int) -> int:
+    """
+    自己是学生，有待赴的性技实操课但人不在那间教室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import class_ai
+
+    classroom = class_ai.get_pending_sex_classroom(character_id)
+    if not classroom:
+        return 0
+    return int(not class_ai.judge_in_scene(character_id, classroom))
+
+
+@add_premise(constant_promise.Premise.SELF_COURSE_ABSENT_BY_HP)
+def handle_self_course_absent_by_hp(character_id: int) -> int:
+    """
+    自己是学生，本节有课但体力低于30%且不是必修实操课（本节缺课）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import class_ai, education_constant
+
+    return int(class_ai.get_course_stage(character_id) == education_constant.COURSE_STAGE_ABSENT_HP)
+
+
+@add_premise(constant_promise.Premise.SELF_COURSE_SKIP)
+def handle_self_course_skip(character_id: int) -> int:
+    """
+    自己是学生，本节有课且不是必修实操课，今日已翘课或本节掷中翘课
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import class_ai, education_constant
+
+    return int(class_ai.get_course_stage(character_id) == education_constant.COURSE_STAGE_SKIP)
+
+
+@add_premise(constant_promise.Premise.SELF_COURSE_ATTEND)
+def handle_self_course_attend(character_id: int) -> int:
+    """
+    自己是学生，本节有课且照常上课
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import class_ai, education_constant
+
+    return int(class_ai.get_course_stage(character_id) == education_constant.COURSE_STAGE_ATTEND)
+
+
+@add_premise(constant_promise.Premise.SELF_COURSE_UPCOMING)
+def handle_self_course_upcoming(character_id: int) -> int:
+    """
+    自己是学生，本节没课（含不在节次内）且20分钟内开始的那一节有课
+    今天已翘课的不算（class_ai.judge_skip_class_today，Plan 31 §3.5）：她开课那一刻照样判翘课，
+       去上课地点门口等一趟再掉头走是白跑，这时判的是 COURSE_STAGE_NONE，工作 / 娱乐由截短规则截到开课那一刻
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import class_ai, education_constant
+
+    return int(class_ai.get_course_stage(character_id) == education_constant.COURSE_STAGE_UPCOMING)
+
+
+@add_premise(constant_promise.Premise.SELF_COURSE_IS_CLASSROOM)
+def handle_self_course_is_classroom(character_id: int) -> int:
+    """
+    自己是学生，本节的课是班级式教室课（理论/实践/公开）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import education_constant, schedule_handle
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
+        return 0
+    now_course = schedule_handle.get_now_course(character_id)
+    return int(now_course is not None and now_course["course_type"] in education_constant.CLASSROOM_COURSE_TYPE_SET)
+
+
+@add_premise(constant_promise.Premise.SELF_COURSE_IS_PERSONAL)
+def handle_self_course_is_personal(character_id: int) -> int:
+    """
+    自己是学生，本节的课是个人式课（体育/兴趣/实习）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import education_constant, schedule_handle
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
+        return 0
+    now_course = schedule_handle.get_now_course(character_id)
+    return int(now_course is not None and now_course["course_type"] not in education_constant.CLASSROOM_COURSE_TYPE_SET)
+
+
+@add_premise(constant_promise.Premise.SELF_IN_COURSE_PLACE)
+def handle_self_in_course_place(character_id: int) -> int:
+    """
+    自己是学生，人在本节（节次外为马上开始的那一节）的上课地点
+    地点解析不出时与 self_not_in_course_place 同为 0，没有行命中，交回既有 AI（Plan 24 §3.7）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.Design import map_handle
+    from Script.System.Education_System import class_ai, education_constant
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
+        return 0
+    to_place = class_ai.get_course_place_now_or_upcoming(character_id)
+    if not to_place:
+        return 0
+    return int(map_handle.get_map_system_path_str_for_list(character_data.position) == map_handle.get_map_system_path_str_for_list(to_place))
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_IN_COURSE_PLACE)
+def handle_self_not_in_course_place(character_id: int) -> int:
+    """
+    自己是学生，上课地点可解析但人不在那里
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.Design import map_handle
+    from Script.System.Education_System import class_ai, education_constant
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
+        return 0
+    to_place = class_ai.get_course_place_now_or_upcoming(character_id)
+    if not to_place:
+        return 0
+    return int(map_handle.get_map_system_path_str_for_list(character_data.position) != map_handle.get_map_system_path_str_for_list(to_place))
+
+
+@add_premise(constant_promise.Premise.SELF_COURSE_TEACHER_AVAILABLE)
+def handle_self_course_teacher_available(character_id: int) -> int:
+    """
+    自己是学生，本节是教室课且授课者能来给她上课
+    判据是 class_ai.judge_course_teacher_available（Plan 32 §3.8 L10）：NPC 教师传本节的教室判能不能到岗
+       （Plan 31 §3.4：空气催眠的教师只在人已在这间教室时算能到岗）；授课者是玩家（临时实操课）时另要她进得了课堂，
+       不够格的选修生无论玩家开没开课都判来不了、降级自习
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import class_ai, education_constant, schedule_handle
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
+        return 0
+    now_course = schedule_handle.get_now_course(character_id)
+    if now_course is None or now_course["course_type"] not in education_constant.CLASSROOM_COURSE_TYPE_SET:
+        return 0
+    return int(class_ai.judge_course_teacher_available(character_id, now_course))
+
+
+@add_premise(constant_promise.Premise.SELF_COURSE_TEACHER_UNAVAILABLE)
+def handle_self_course_teacher_unavailable(character_id: int) -> int:
+    """
+    自己是学生，本节是教室课但授课者来不了（或课表没排教师）
+    与 self_course_teacher_available 互补，同样走 class_ai.judge_course_teacher_available（Plan 32 §3.8 L10）：
+       人不在这间教室的空气催眠教师、木头人都算来不了（Plan 31 §3.4）；临时实操课上进不了课堂的选修生也算来不了
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import class_ai, education_constant, schedule_handle
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.work.work_type != education_constant.STUDENT_WORK_TYPE:
+        return 0
+    now_course = schedule_handle.get_now_course(character_id)
+    if now_course is None or now_course["course_type"] not in education_constant.CLASSROOM_COURSE_TYPE_SET:
+        return 0
+    return int(not class_ai.judge_course_teacher_available(character_id, now_course))
+
+
+@add_premise(constant_promise.Premise.SELF_COURSE_JOIN_SEX_CLASS)
+def handle_self_course_join_sex_class(character_id: int) -> int:
+    """
+    自己是学生，本节的课所在教室正在上性技实操课、人已在教室、可以参加但还没进 H（Plan 25 §3.2）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import class_ai, education_constant
+
+    return int(class_ai.get_course_stage(character_id) == education_constant.COURSE_STAGE_JOIN_SEX_CLASS)
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_ATTEND_SEX_CLASS_HERE)
+def handle_self_not_attend_sex_class_here(character_id: int) -> int:
+    """
+    自己不是来这里上正在进行的性技实操课的学生（Plan 32 §8.1，目击 H 的 target 500 用）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    功能: 课堂 H 里总有别的学生在 H 中，开课后才走进教室的学生不挂这条就会先命中高优先级的目击 H、画被撞见面板；
+             挂上之后她落到工作链：够格的 220835 加入课堂，够不上的判「教师来不了」、自习。非学生照旧目击
+    """
+    from Script.System.Education_System import class_ai
+
+    return int(not class_ai.judge_attend_running_sex_class_here(character_id))
 
 
 @add_premise(constant_promise.Premise.NURSERY_HAVE_WORK_TO_DO)
@@ -921,7 +1272,7 @@ def handle_prisoner_daily_management_set(character_id: int) -> int:
 def handle_have_intern_student(character_id: int) -> int:
     """
     校验此刻同场景有人正在自己这个岗位上实习（Plan 22 §3.21 的带教侧）
-    ⚠️ 这是 schedule_handle.get_intern_mentor() 的反向查询：学徒侧靠它找导师，
+    这是 schedule_handle.get_intern_mentor() 的反向查询：学徒侧靠它找导师，
        导师侧靠本前提知道自己身边有人在跟岗。两边读的是同一份判据，不会出现单向成立
     Keyword arguments:
     character_id -- 角色id

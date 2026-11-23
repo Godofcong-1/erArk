@@ -1,0 +1,2451 @@
+# -*- coding: UTF-8 -*-
+"""class_ai：翘课概率与定种子掷骰、教师可用性、上课状态函数、工作链里的师生目标行（Plan 24）、normal 门槛、外层闸、见学回落链"""
+from _bootstrap import *  # noqa: F401,F403
+from Script.Design import handle_npc_ai, clothing
+from Script.Settle import realtime_settle
+from Script.System.Medical_System import medical_constant
+
+open_all_classroom()
+clear_schedules()
+ROOM1 = _("理论教室一")
+ROOM_P = _("实践教室一")
+teacher = make_character(101, "教师甲", 151, position=classroom_path(ROOM1))
+mother = make_character(102, "母亲", 21)
+student = make_character(201, "女儿A", 152, daughter=True, stage=103, mother_id=102)
+child = make_character(202, "女儿B", 152, daughter=True, stage=102, mother_id=102)
+E = education_constant
+SM = constant.StateMachine
+CLASS_SM_SET = {SM.MOVE_TO_CLASS_ROOM, SM.MOVE_TO_TEACHER_OFFICE, SM.WORK_TEACH, SM.WORK_ATTENT_CLASS, SM.EDUCATION_SELF_STUDY, SM.EDUCATION_SKIP_CLASS,
+                SM.EDUCATION_MOVE_TO_COURSE_PLACE, SM.EDUCATION_DO_COURSE, SM.EDUCATION_WAIT_NEXT_PERIOD, SM.EDUCATION_ABSENT_REST, SM.EDUCATION_JOIN_SEX_CLASS}
+""" 师生目标行（target.csv 组 07 / 08）会派发的全部状态机：「没有上课行命中」的断言就是派发结果不落在这里面。
+    Plan 32 L29 补上 722（开课后到场加入课堂），并在下面「L29」一段断言它与 target 组 07 / 08 的实际状态机一致 """
+_orig_roll = class_ai.roll_skip_class
+_orig_rate = class_ai.get_skip_class_rate
+
+
+def prepare_ai(cid: int) -> None:
+    """
+    把最小 fixture 补成能跑通完整 AI 链的样子：已起床、穿好衣服、异常位刷新
+    Keyword arguments:
+    cid -- 角色id
+    Return arguments:
+    无
+    功能: 没起床会先被「起床」目标（target 205）接管；全裸则 normal_all 不成立，工作 / 娱乐的目标行根本不跑
+    """
+    cd = cache.character_data[cid]
+    cd.action_info.wake_time = cache.game_time
+    clothing.get_npc_cloth(cid)
+    handle_premise.refresh_unnormal_flag(cid)
+
+
+def dispatch(cid: int, now_time: datetime.datetime = None) -> int:
+    """
+    跑一遍 find_character_target，记下它派发的状态机id
+    Keyword arguments:
+    cid -- 角色id
+    now_time -- 派发时刻，缺省为 DEFAULT_TIME 那天第一节的开始
+    Return arguments:
+    int -- 派发的状态机id，没派发则为 0
+    功能: 每次先把上一轮留下的移动 / 行为清掉，否则会被「继续移动」目标接管；
+          起床时间拨到当前、全部 NPC 的异常位刷新——测试直接改状态位，不经过游戏里会同步异常位的结算点
+    """
+    cd = cache.character_data[cid]
+    cd.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+    cd.behavior.duration = 0
+    cd.behavior.move_target = []
+    cd.behavior.move_final_target = []
+    cd.state = constant.CharacterStatus.STATUS_ARDER
+    set_time(now_time if now_time is not None else period_time(0))
+    cd.action_info.wake_time = cache.game_time
+    for other_id in list(cache.npc_id_got):
+        handle_premise.refresh_unnormal_flag(other_id)
+    hit = []
+    origin = dict(constant.handle_state_machine_data)
+    for sid, func in origin.items():
+        constant.handle_state_machine_data[sid] = (lambda s, f: (lambda c: (hit.append(s), f(c))[1]))(sid, func)
+    try:
+        handle_npc_ai.find_character_target(cid, cache.game_time)
+    finally:
+        constant.handle_state_machine_data.clear()
+        constant.handle_state_machine_data.update(origin)
+    return hit[0] if hit else 0
+
+
+section("Plan 32 L29：CLASS_SM_SET 与 target.csv 组 07 / 08 的实际状态机一致")
+_CLASS_ROW_LIST = [t for t in list(game_config.config_target_type_index.get(21, [])) + list(game_config.config_target_type_index.get(22, []))
+                   if t.startswith("default") and t[-6:].isdigit() and t[-4:-2] in ("07", "08")]
+""" target.csv 组 07（教师）/ 08（学生）的全部目标行：cid 是「文件夹名 + 六位编号」（README 夹具陷阱），编号中间两位是组号 """
+_CLASS_ROW_SM_SET = {game_config.config_target[t].state_machine_id for t in _CLASS_ROW_LIST}
+check("L29 组 07 / 08 共 17 行（教师 6 行、学生 11 行），每行都挂着教师岗或学生岗前提",
+      len(_CLASS_ROW_LIST) == 17 and all({"work_is_teacher", "work_is_student"} & game_config.config_target_premise_data.get(t, set()) for t in _CLASS_ROW_LIST),
+      sorted(_CLASS_ROW_LIST))
+check("L29 CLASS_SM_SET 与组 07 / 08 实际派发的状态机完全一致（此前缺 722：9 处「没有上课行命中」的断言防不住开课后到场加入课堂）",
+      CLASS_SM_SET == _CLASS_ROW_SM_SET, (sorted(CLASS_SM_SET - _CLASS_ROW_SM_SET), sorted(_CLASS_ROW_SM_SET - CLASS_SM_SET)))
+
+section("翘课概率表")
+_orig_sum = class_ai.get_negative_status_level_sum
+for level_sum, rate in ((0, 0.0), (3, 0.0), (4, 0.10), (7, 0.10), (8, 0.25), (12, 0.45), (15, 0.45), (16, 0.70), (32, 0.70)):
+    class_ai.get_negative_status_level_sum = lambda cid, s=level_sum: s
+    check(f"等级和 {level_sum} → 概率 {rate}", abs(class_ai.get_skip_class_rate(201) - rate) < 1e-9, class_ai.get_skip_class_rate(201))
+class_ai.get_negative_status_level_sum = _orig_sum
+check("等级和按状态等级累加", class_ai.get_negative_status_level_sum(201) == 0)
+
+section("翘课每节只掷一次（Plan 24 §3.5）")
+set_time(period_time(0))
+class_ai.get_skip_class_rate = lambda cid: 0.5
+_first = class_ai.roll_skip_class(201)
+check("同一节连掷 20 次结果一致（前提在一次决策里被多行读取，读到的必须是同一个结果）", all(class_ai.roll_skip_class(201) == _first for _i in range(20)))
+_hits = 0
+for _day in range(20):
+    for _period in range(9):
+        set_time(period_time(_period, DEFAULT_TIME.date() + datetime.timedelta(days=_day)))
+        _hits += class_ai.roll_skip_class(201)
+check("概率 0.5 时 180 节里约一半掷中（每节一掷，与表值一致）", 60 <= _hits <= 120, _hits)
+class_ai.get_skip_class_rate = lambda cid: 0.0
+check("概率 0 恒不翘", not class_ai.roll_skip_class(201))
+class_ai.get_skip_class_rate = lambda cid: 1.0
+check("概率 1 恒翘", class_ai.roll_skip_class(201))
+class_ai.get_skip_class_rate = _orig_rate
+set_time(period_time(0))
+
+
+def teacher_available() -> bool:
+    """
+    刷新教师的异常位后判一次可用性（测试直接改状态位，不经过游戏里会同步异常位的结算点）
+    Return arguments:
+    bool -- 教师101是否可授课
+    """
+    handle_premise.refresh_unnormal_flag(101)
+    return class_ai.judge_teacher_available(101)
+
+
+section("教师可用性")
+check("-1 不可用", not class_ai.judge_teacher_available(-1))
+check("不存在的角色不可用", not class_ai.judge_teacher_available(999))
+check("正常教师可用", teacher_available())
+teacher.sp_flag.is_h = True
+check("H 中不可用", not teacher_available())
+teacher.sp_flag.is_h = False
+teacher.sp_flag.imprisonment = True
+check("监禁中不可用", not teacher_available())
+teacher.sp_flag.imprisonment = False
+teacher.sp_flag.field_commission = True
+check("外勤中不可用", not teacher_available())
+teacher.sp_flag.field_commission = False
+teacher.dead = True
+check("死亡不可用", not teacher_available())
+teacher.dead = False
+# 第五轮补全：这些情况下教师这节确定来不了，学生必须降级自习而不是空等一整节
+teacher.work.work_type = 21
+check("换了岗不可用", not teacher_available())
+teacher.work.work_type = 151
+teacher.sp_flag.is_follow = 1
+check("跟随玩家中不可用（normal_3）", not teacher_available())
+teacher.sp_flag.is_follow = 0
+teacher.sp_flag.sleep = True
+check("睡着不可用", not teacher_available())
+teacher.sp_flag.sleep = False
+# Plan 32 M4 改写：原先断言「住院不可用」，夹具按角色 id 作键建住院表，把错位掩盖了。
+#    住院表的键是医疗系统里抽象病人的编号（MedicalPatient.patient_id，每次启动从 1 自增），不关联任何角色，干员从不进这张表
+cache.rhodes_island.medical_hospitalized = {101: medical_constant.MedicalPatient(patient_id=101, state=medical_constant.MedicalPatientState.HOSPITALIZED)}
+check("M4 住院表里有编号恰为 101 的病人（病人编号与角色 id 无关）→ 教师 101 照常可用（此前判为住院、整天来不了）", teacher_available())
+cache.rhodes_island.medical_hospitalized = {}
+cache.npc_id_got.discard(101)
+check("不在岛上（不在 npc_id_got）不可用", not teacher_available())
+cache.npc_id_got.add(101)
+# Plan 24 §3.4：教师目标行挂着 normal 前提，这些状态下她不会去授课，这里必须同步判为不可用
+teacher.talent[22] = 1
+check("临盆不可用（normal_2）", not teacher_available())
+teacher.talent[22] = 0
+teacher.talent[23] = 1
+check("产后不可用（normal_2）", not teacher_available())
+teacher.talent[23] = 0
+pl.assistant_character_id = 101
+check("当助理不可用（normal_3）", not teacher_available())
+pl.assistant_character_id = 0
+cache.rhodes_island.waiting_for_exam_operator_ids.add(101)
+check("在体检链中不可用（normal_3）", not teacher_available())
+cache.rhodes_island.waiting_for_exam_operator_ids.discard(101)
+check("玩家（临时实操课的授课者）可用", class_ai.judge_teacher_available(0))
+check("恢复后正常教师可用", teacher_available())
+
+section("缺课去重")
+set_time(period_time(0))
+class_ai.settle_absent(201)
+class_ai.settle_absent(201)
+check("同一节只记一次", cache.character_data[201].child_growth.absent_count == 1)
+set_time(period_time(1))
+class_ai.settle_absent(201)
+check("换节次再记一次", cache.character_data[201].child_growth.absent_count == 2)
+cache.character_data[201].child_growth.absent_count = 0
+cache.character_data[201].child_growth.last_absent_period = []
+
+section("状态函数：教师职责（get_teacher_duty）")
+clear_schedules()
+set_time(period_time(0))
+schedule_handle.set_class_cell(ROOM_P, 0, 0, 43, 101)
+check("本节有课 → NOW + 课表上那间教室", class_ai.get_teacher_duty(101) == (E.TEACHER_DUTY_NOW, ROOM_P), class_ai.get_teacher_duty(101))
+schedule_handle.clear_class_cell(ROOM_P, 0, 0)
+schedule_handle.set_class_cell(ROOM_P, 0, 1, 43, 101)
+set_time(period_time(1) - datetime.timedelta(minutes=15))
+check("本节没课、15 分钟后下一节有课 → UPCOMING + 下一节的教室", class_ai.get_teacher_duty(101) == (E.TEACHER_DUTY_UPCOMING, ROOM_P), class_ai.get_teacher_duty(101))
+schedule_handle.clear_class_cell(ROOM_P, 0, 1)
+check("本节与 20 分钟内都没课 → NONE", class_ai.get_teacher_duty(101) == (E.TEACHER_DUTY_NONE, ""))
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 201)
+set_time(period_time(0))
+check("非教师岗恒为 NONE（即使课表上填了她）", class_ai.get_teacher_duty(201) == (E.TEACHER_DUTY_NONE, ""))
+sex_class_handle.set_temp_class(cache.game_time.date().toordinal(), 0, ROOM_P, 70, must_attend=[])
+check("玩家恒为 NONE（临时实操课由玩家自己决定来不来）", class_ai.get_teacher_duty(0) == (E.TEACHER_DUTY_NONE, ""))
+clear_schedules()
+schedule_handle.set_class_cell(ROOM1, 6, 0, 45, 101)
+set_time(period_time(0, DEFAULT_TIME.date() + datetime.timedelta(days=6)))
+check("周日排了课也是 NOW（不看星期）", class_ai.get_teacher_duty(101) == (E.TEACHER_DUTY_NOW, ROOM1))
+clear_schedules()
+
+section("状态函数：学生上课状态（get_course_stage）")
+set_time(period_time(0))
+check("本节没课、20 分钟内也没有 → NONE", class_ai.get_course_stage(201) == E.COURSE_STAGE_NONE)
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+check("本节有课 → ATTEND", class_ai.get_course_stage(201) == E.COURSE_STAGE_ATTEND)
+student.hit_point = 10
+check("体力 < 30% → ABSENT_HP", class_ai.get_course_stage(201) == E.COURSE_STAGE_ABSENT_HP)
+student.hit_point = 100
+growth_handle.get_child_growth(201).skip_class_flag = True
+growth_handle.get_child_growth(201).skip_class_day = cache.game_time.toordinal()
+check("今日已翘课 → SKIP（flag 认日期：今天挂上的，Plan 31 §3.6）", class_ai.get_course_stage(201) == E.COURSE_STAGE_SKIP)
+growth_handle.get_child_growth(201).skip_class_flag = False
+class_ai.roll_skip_class = lambda cid: True
+check("本节掷中翘课 → SKIP", class_ai.get_course_stage(201) == E.COURSE_STAGE_SKIP)
+class_ai.roll_skip_class = _orig_roll
+set_time(period_time(0) - datetime.timedelta(minutes=15))
+check("开课前 15 分钟 → UPCOMING", class_ai.get_course_stage(201) == E.COURSE_STAGE_UPCOMING)
+set_time(period_time(0) - datetime.timedelta(minutes=30))
+check("开课前 30 分钟 → NONE", class_ai.get_course_stage(201) == E.COURSE_STAGE_NONE)
+_today = DEFAULT_TIME.date().toordinal()
+sex_class_handle.set_temp_class(_today, 1, ROOM_P, 70, must_attend=[201])
+set_time(period_time(1) - datetime.timedelta(minutes=8))
+check("本节还有理论课、8 分钟后是必修实操课 → SEX_PENDING（优先于本节的一切）", class_ai.get_course_stage(201) == E.COURSE_STAGE_SEX_PENDING)
+check("待赴的实操课教室", class_ai.get_pending_sex_classroom(201) == ROOM_P and class_ai.get_pending_sex_classroom(202) == "")
+cache.rhodes_island.temp_sex_class = {}
+set_time(period_time(0))
+sex_class_handle.set_temp_class(_today, 0, ROOM_P, 70, must_attend=[201])
+student.hit_point = 10
+growth_handle.get_child_growth(201).skip_class_flag = True
+growth_handle.get_child_growth(201).skip_class_day = cache.game_time.toordinal()
+class_ai.roll_skip_class = lambda cid: True
+check("必修实操课：体力不足、翘课 flag、掷中翘课同时成立也是 ATTEND（口径 60 / 65）", class_ai.get_course_stage(201) == E.COURSE_STAGE_ATTEND)
+class_ai.roll_skip_class = _orig_roll
+growth_handle.get_child_growth(201).skip_class_flag = False
+student.hit_point = 100
+cache.rhodes_island.temp_sex_class = {}
+schedule_handle.set_selected_course(101, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+check("非学生岗恒为 NONE：教师身上挂着个人课表也不算", class_ai.get_course_stage(101) == E.COURSE_STAGE_NONE)
+schedule_handle.clear_selected_course(101, 0, 0)
+student.work.work_type = 21
+check("非学生岗恒为 NONE：改了岗的女儿课表还在也不算（口径 1）", class_ai.get_course_stage(201) == E.COURSE_STAGE_NONE)
+student.work.work_type = 152
+adult = make_character(301, "成年学生", 152)
+for _premise in [name for name in constant.handle_premise_data if name.startswith(("teacher_", "self_course_", "self_in_course", "self_not_in_course", "self_sex_class_pending", "self_in_pending", "self_not_in_pending"))]:
+    handle_premise.handle_premise(_premise, 301)
+check("前提只读：对没有养成数据的学生岗跑一遍师生前提，不会惰性创建养成数据", adult.child_growth is None)
+remove_character(301)
+clear_schedules()
+
+section("整链派发：教室课（210805 / 220815 / 220820）")
+set_time(period_time(0))
+for _cid in (101, 102, 201, 202):
+    prepare_ai(_cid)
+move_to(101, classroom_path(ROOM1))
+move_to(201, SCENE_DORM)
+student.entertainment.entertainment_type = [E.ENTERTAINMENT_FREE_PLAY] * 3
+# clear_schedules 只清全局课表与临时课，个人课表要自己清（上一段给 201 排的那节理论课还挂着）
+schedule_handle.clear_selected_course(201, 0, 0)
+sm = dispatch(201)
+check("没排课 → 没有上课行命中，交回娱乐链（日程排了自由玩耍 → 去育儿室）", sm == SM.MOVE_TO_NURSERY, sm)
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+check("人不在教室 → 715 去教室（目的地与原 561 相同）", dispatch(201) == SM.EDUCATION_MOVE_TO_COURSE_PLACE
+      and class_ai.get_course_place_now_or_upcoming(201) == classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+check("到了教室、教师可用 → 304 听课", dispatch(201) == SM.WORK_ATTENT_CLASS)
+teacher.sp_flag.is_h = True
+check("教师 H 中 → 713 自习", dispatch(201) == SM.EDUCATION_SELF_STUDY)
+teacher.sp_flag.is_h = False
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, -1)
+check("课表上没排教师 → 713 自习", dispatch(201) == SM.EDUCATION_SELF_STUDY)
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, "不存在的教室")
+move_to(201, SCENE_DORM)
+check("教室解析不出 → 没有上课行命中、交回娱乐链，不再在随机理论教室间打转（Plan 24 §3.7）", dispatch(201) == SM.MOVE_TO_NURSERY)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+
+section("整链派发：两道闸（220805 / 220810）")
+move_to(201, classroom_path(ROOM1))
+student.hit_point = 10
+_absent = growth_handle.get_child_growth(201).absent_count
+check("体力 < 30% → 721 记缺课并休息", dispatch(201) == SM.EDUCATION_ABSENT_REST and student.behavior.behavior_id == constant.Behavior.REST)
+check("体力缺课记了一节", growth_handle.get_child_growth(201).absent_count == _absent + 1)
+move_to(201, classroom_path(ROOM1))
+dispatch(201)
+check("同一节再派发一次不重复记", growth_handle.get_child_growth(201).absent_count == _absent + 1)
+check("体力缺课不置翘课 flag", not growth_handle.get_child_growth(201).skip_class_flag)
+student.hit_point = 100
+# 这一节已记了缺课的不再计出勤（Plan 30 §3.4）；后面各段仍在同一天的第 1 节里验出勤，清掉缺课标记
+growth_handle.get_child_growth(201).last_absent_period = []
+growth_handle.get_child_growth(201).skip_class_flag = True
+growth_handle.get_child_growth(201).skip_class_day = period_time(0).toordinal()
+move_to(201, classroom_path(ROOM1))
+check("翘课 flag 挂着（今天挂上的）→ 714 翘课", dispatch(201) == SM.EDUCATION_SKIP_CLASS)
+growth_handle.get_child_growth(201).skip_class_flag = False
+class_ai.roll_skip_class = lambda cid: True
+move_to(201, classroom_path(ROOM1))
+check("本节掷中翘课 → 714", dispatch(201) == SM.EDUCATION_SKIP_CLASS)
+class_ai.roll_skip_class = lambda cid: False
+move_to(201, classroom_path(ROOM1))
+check("没掷中 → 照常听课", dispatch(201) == SM.WORK_ATTENT_CLASS)
+class_ai.roll_skip_class = _orig_roll
+
+section("整链派发：必修实操课豁免与覆盖")
+today = cache.game_time.date().toordinal()
+sex_class_handle.set_temp_class(today, 0, ROOM_P, 70, must_attend=[201])
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_PRACTICE, ROOM_P)
+check("必修判定成立", class_ai.judge_must_attend_sex_class(201))
+check("非必修的人不成立", not class_ai.judge_must_attend_sex_class(202))
+move_to(201, classroom_path(ROOM_P))
+student.hit_point = 10
+_absent = growth_handle.get_child_growth(201).absent_count
+sm = dispatch(201)
+check("必修 + 体力不足：留在教室听课、不记缺课", sm == SM.WORK_ATTENT_CLASS and growth_handle.get_child_growth(201).absent_count == _absent, sm)
+student.hit_point = 100
+class_ai.roll_skip_class = lambda cid: True
+move_to(201, classroom_path(ROOM_P))
+check("必修 + 掷中翘课：不翘课", dispatch(201) == SM.WORK_ATTENT_CLASS)
+class_ai.roll_skip_class = _orig_roll
+# 第五轮：必修生自己这节排的是别的课，也要留在临时课的教室（口径 60）
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+now_course = schedule_handle.get_now_course(201)
+check("必修覆盖：本节的课改指临时课教室、授课者为玩家", now_course is not None and now_course["classroom"] == ROOM_P and now_course["teacher_id"] == 0
+      and now_course["ability_id"] == 70 and now_course["course_type"] == E.COURSE_TYPE_PRACTICE, now_course)
+move_to(201, classroom_path(ROOM1))
+check("必修覆盖：人在原来的教室 → 715 去临时课教室", dispatch(201) == SM.EDUCATION_MOVE_TO_COURSE_PLACE
+      and class_ai.get_course_place_now_or_upcoming(201) == classroom_path(ROOM_P))
+move_to(201, classroom_path(ROOM_P))
+check("必修覆盖：到了临时课教室 → 留下听课", dispatch(201) == SM.WORK_ATTENT_CLASS)
+schedule_handle.clear_selected_course(201, 0, 0)
+check("必修覆盖：本节自己没排课也照样来", schedule_handle.get_now_course(201) is not None and schedule_handle.get_now_course(201)["classroom"] == ROOM_P)
+check("非必修且没排课的人不受影响", schedule_handle.get_now_course(202) is None)
+cache.rhodes_island.temp_sex_class = {}
+
+section("整链派发：个人式课型（210805 / 220825）")
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_PE, _("木桩房"))
+move_to(201, SCENE_DORM)
+check("体育课：人不在场地 → 715 移动", dispatch(201) == SM.EDUCATION_MOVE_TO_COURSE_PLACE)
+pe_place = schedule_handle.get_course_place(schedule_handle.get_now_course(201))
+move_to(201, pe_place)
+_attend = growth_handle.get_child_growth(201).attend_class_count
+check("体育课：到场 → 716 执行该课行为", dispatch(201) == SM.EDUCATION_DO_COURSE)
+check("Plan 29 §3.1：体育课派出时记一节出勤（此前体育 / 兴趣课上完不计出勤，体力不足缺课却照记）",
+      growth_handle.get_child_growth(201).attend_class_count == _attend + 1)
+check("同一节再派 716（被打断后回去上）不重复记", dispatch(201) == SM.EDUCATION_DO_COURSE and growth_handle.get_child_growth(201).attend_class_count == _attend + 1)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_INTEREST, 99999)
+move_to(201, SCENE_DORM)
+check("地点解析不出 → 交回既有 AI（去育儿室自由玩耍）", dispatch(201) == SM.MOVE_TO_NURSERY)
+
+
+def course_start_place(place: list) -> list:
+    """
+    取派发「不在上课地点」时学生的起点：默认宿舍，上课地点恰好是那间宿舍时改用教育区入口
+    Keyword arguments:
+    place -- 上课地点的场景路径
+    Return arguments:
+    list -- 起点的场景路径
+    """
+    if scene_str(place) == scene_str(SCENE_DORM):
+        return SCENE_EDU_ENTRY
+    return SCENE_DORM
+
+
+section("整链派发：兴趣课逐项（Entertainment.csv 里 class_ok 的全部娱乐）")
+_interest_list = [cid for cid in game_config.config_entertainment if game_config.config_entertainment[cid].class_ok]
+check("可排兴趣课的娱乐有 16 项", len(_interest_list) == 16, len(_interest_list))
+_interest_bad = []
+for _cid in _interest_list:
+    _cfg = game_config.config_entertainment[_cid]
+    schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_INTEREST, _cid)
+    set_time(period_time(0))
+    _place = class_ai.get_course_place_now_or_upcoming(201)
+    if not _place:
+        _interest_bad.append((_cid, _cfg.name, "地点解析不出"))
+        continue
+    move_to(201, course_start_place(_place))
+    _move_sm = dispatch(201)
+    move_to(201, _place)
+    # 各项都在同一节里验，去重标记逐项清掉，出勤才验得到每一项（Plan 29）
+    growth_handle.get_child_growth(201).last_attend_period = []
+    _attend_before = growth_handle.get_child_growth(201).attend_class_count
+    _do_sm = dispatch(201)
+    _expect_behavior = schedule_handle.get_behavior_name_by_cid(_cfg.behavior_id)
+    if (_move_sm != SM.EDUCATION_MOVE_TO_COURSE_PLACE or _do_sm != SM.EDUCATION_DO_COURSE or not _expect_behavior
+            or student.behavior.behavior_id != _expect_behavior or student.state != _cfg.behavior_id or student.behavior.duration != 45
+            or growth_handle.get_child_growth(201).attend_class_count != _attend_before + 1):
+        _interest_bad.append((_cid, _cfg.name, scene_str(_place), _move_sm, _do_sm, student.behavior.behavior_id, _expect_behavior, student.behavior.duration,
+                              growth_handle.get_child_growth(201).attend_class_count - _attend_before))
+    # 读书：借到的那本要写进 behavior（Plan 29 §3.2）
+    if _expect_behavior == constant.Behavior.READ_BOOK and (student.behavior.book_id not in student.entertainment.borrow_book_id_set
+                                                             or student.behavior.book_name != game_config.config_book[student.behavior.book_id].name):
+        _interest_bad.append((_cid, _cfg.name, "读书没借书或 behavior 没写书", student.behavior.book_id, student.behavior.book_name))
+check("兴趣课逐项：不在地点 → 715，到场 → 716 执行该娱乐的行为、时长截到本节结束（45 分钟）、记一节出勤（Plan 29）、读书写入借到的书", not _interest_bad, _interest_bad)
+# 逐项时借的书还回去，别带进后面的用例
+for _book_id in list(student.entertainment.borrow_book_id_set):
+    cache.rhodes_island.book_borrow_dict[_book_id] = -1
+    student.entertainment.borrow_book_id_set.discard(_book_id)
+student.behavior.book_id = 0
+student.behavior.book_name = ""
+
+section("整链派发：实习课逐岗（WorkType.csv 里可排实习的全部岗位）")
+_intern_list = [cid for cid in game_config.config_work_type
+                if cid and not game_config.config_work_type[cid].tag and game_config.config_work_type[cid].ability_id
+                and cid not in E.EXCLUDE_INTERN_WORK_TYPE]
+check("可排实习的岗位取到了", len(_intern_list) > 0, _intern_list)
+_intern_bad = []
+for _wid in _intern_list:
+    _cfg = game_config.config_work_type[_wid]
+    schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_INTERN, _wid)
+    set_time(period_time(0))
+    _place = class_ai.get_course_place_now_or_upcoming(201)
+    if not _place:
+        _intern_bad.append((_wid, _cfg.name, "地点解析不出"))
+        continue
+    move_to(201, course_start_place(_place))
+    _move_sm = dispatch(201)
+    move_to(201, _place)
+    growth_handle.get_child_growth(201).last_attend_period = []
+    _attend_before = growth_handle.get_child_growth(201).attend_class_count
+    _do_sm = dispatch(201)
+    if (_move_sm != SM.EDUCATION_MOVE_TO_COURSE_PLACE or _do_sm != SM.EDUCATION_DO_COURSE or student.behavior.behavior_id != constant.Behavior.INTERN_CLASS
+            or student.state != constant.CharacterStatus.STATUS_INTERN_CLASS or student.behavior.duration != 45
+            or growth_handle.get_child_growth(201).attend_class_count != _attend_before):
+        _intern_bad.append((_wid, _cfg.name, scene_str(_place), _move_sm, _do_sm, student.behavior.behavior_id, student.behavior.duration))
+check(f"实习课逐岗（{len(_intern_list)} 个岗位，无人在岗）：不在地点 → 715，到场 → 716 执行实习、时长截到本节结束、716 不记出勤（由 552 记，Plan 29）", not _intern_bad, _intern_bad)
+# 实习的地点跟着人走（口径 53）：同一标签下有多间房的岗位，导师在哪间学徒就去哪间
+_multi_work = next((wid for wid in _intern_list if len(constant.place_data.get(game_config.config_work_type[wid].place_tag, [])) >= 2), None)
+check("有同一标签下多间房的实习岗位", _multi_work is not None, _intern_list)
+if _multi_work is not None:
+    schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_INTERN, _multi_work)
+    set_time(period_time(0))
+    _default_place = class_ai.get_course_place_now_or_upcoming(201)
+    _other_str = next(s for s in constant.place_data[game_config.config_work_type[_multi_work].place_tag] if s != scene_str(_default_place))
+    _other_place = map_handle.get_map_system_path_for_str(_other_str)
+    make_character(401, "带教", _multi_work, position=_other_place)
+    check("导师在另一间房 → 学徒的上课地点改指导师那间", class_ai.get_course_place_now_or_upcoming(201) == _other_place,
+          (game_config.config_work_type[_multi_work].name, scene_str(_default_place), _other_str))
+    move_to(201, _default_place)
+    check("学徒在默认那间、导师不在 → 715 去导师那间", dispatch(201) == SM.EDUCATION_MOVE_TO_COURSE_PLACE)
+    move_to(201, _other_place)
+    check("到了导师那间 → 716 实习，并找得到这位导师", dispatch(201) == SM.EDUCATION_DO_COURSE and student.behavior.behavior_id == constant.Behavior.INTERN_CLASS
+          and schedule_handle.get_intern_mentor(201, _multi_work) == 401)
+    remove_character(401)
+move_to(201, SCENE_DORM)
+schedule_handle.clear_selected_course(201, 0, 0)
+clear_schedules()
+
+section("见学：母亲有效性")
+check("有效母亲", class_ai.judge_mother_available(202) == 102)
+cache.rhodes_island.medical_hospitalized = {102: medical_constant.MedicalPatient(patient_id=102, state=medical_constant.MedicalPatientState.HOSPITALIZED)}
+check("M4 住院表里有编号恰为 102 的病人 → 母亲 102 照常有效、可跟随，公务事件前提 self_mother_available 照旧成立（此前判为住院：见学整段回落育儿室、带母亲的事件抽不到）",
+      class_ai.judge_mother_available(202) == 102 and class_ai.judge_mother_followable(202) == 102 and handle_premise.handle_premise("self_mother_available", 202) == 1)
+cache.rhodes_island.medical_hospitalized = {}
+mother.sp_flag.is_h = True
+check("母亲 H 中 → 无效", class_ai.judge_mother_available(202) == -1)
+mother.sp_flag.is_h = False
+mother.sp_flag.imprisonment = True
+check("母亲被监禁 → 无效", class_ai.judge_mother_available(202) == -1)
+mother.sp_flag.imprisonment = False
+mother.dead = True
+check("母亲死亡 → 无效", class_ai.judge_mother_available(202) == -1)
+mother.dead = False
+cache.character_data[202].relationship.mother_id = -1
+check("没有母亲 → 无效", class_ai.judge_mother_available(202) == -1)
+cache.character_data[202].relationship.mother_id = 102
+
+section("见学：触发与回落链")
+set_time(period_time(0))
+student.entertainment.entertainment_type = [0, 0, 0]
+check("幼女在节次内没课 → 该见学", class_ai.judge_should_follow_mother(202))
+# 2026-09-10 §9.2.9：该时段明确排了别的活动且已写进槽位 → 不见学，交给娱乐链去做那个活动
+_tpl = schedule_template_handle.create_template("幼女白天")
+schedule_template_handle.set_template_slot(_tpl, 0, E.ENTERTAINMENT_FREE_PLAY)
+schedule_template_handle.apply_template(202, _tpl)
+schedule_template_handle.apply_schedule_for_child(202)
+check("幼女上午明确排了自由玩耍且已写入 → 不见学", not class_ai.judge_should_follow_mother(202) and child.entertainment.entertainment_type[0] == E.ENTERTAINMENT_FREE_PLAY)
+schedule_template_handle.set_template_slot(_tpl, 0, E.ENTERTAINMENT_FOLLOW_MOTHER)
+schedule_template_handle.apply_schedule_for_child(202)
+check("幼女上午排了跟随母亲 → 见学", class_ai.judge_should_follow_mother(202))
+schedule_template_handle.set_template_slot(_tpl, 0, E.ENTERTAINMENT_FREE_PLAY)
+child.entertainment.entertainment_type[0] = E.ENTERTAINMENT_PLAY_HOUSE
+check("模板排了活动但没写进槽位（退回自由选择）→ 仍默认见学", class_ai.judge_should_follow_mother(202))
+schedule_template_handle.set_template_slot(_tpl, 0, 0)
+check("时段为自由选择 → 默认见学", class_ai.judge_should_follow_mother(202))
+schedule_template_handle.apply_template(202, 0)
+child.entertainment.entertainment_type = [0, 0, 0]
+check("萝莉不见学", not class_ai.judge_should_follow_mother(201))
+# 个人课表指向的格子要在全局课表上有课：空格子按「已停课」算没课（Plan 27 §3.3）
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(202, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+check("幼女本节有课 → 不见学", not class_ai.judge_should_follow_mother(202))
+schedule_handle.clear_selected_course(202, 0, 0)
+schedule_handle.clear_class_cell(ROOM1, 0, 0)
+set_time(DEFAULT_TIME.replace(hour=19, minute=30))
+cache.character_data[202].entertainment.entertainment_type = [0, 0, E.ENTERTAINMENT_FOLLOW_MOTHER]
+check("晚上日程排了跟随母亲 → 见学", class_ai.judge_should_follow_mother(202))
+cache.character_data[202].entertainment.entertainment_type = [0, 0, 0]
+check("晚上日程没排 → 不见学", not class_ai.judge_should_follow_mother(202))
+
+section("见学：萝莉按日程可见学（2026-09-09 放宽）")
+student.entertainment.entertainment_type = [0, 0, E.ENTERTAINMENT_FOLLOW_MOTHER]
+check("萝莉晚上日程排了跟随母亲 → 见学", class_ai.judge_should_follow_mother(201))
+student.entertainment.entertainment_type = [0, 0, 0]
+check("萝莉晚上日程没排 → 不见学", not class_ai.judge_should_follow_mother(201))
+set_time(period_time(0))
+student.entertainment.entertainment_type = [E.ENTERTAINMENT_FOLLOW_MOTHER, 0, 0]
+check("萝莉节次内没课、上午日程排了跟随母亲 → 见学", class_ai.judge_should_follow_mother(201))
+schedule_handle.set_class_cell(ROOM1, cache.game_time.weekday(), 0, 45, 101)
+schedule_handle.set_selected_course(201, cache.game_time.weekday(), 0, E.COURSE_TYPE_THEORY, ROOM1)
+check("萝莉本节有课 → 有课优先，不见学", not class_ai.judge_should_follow_mother(201))
+schedule_handle.clear_selected_course(201, cache.game_time.weekday(), 0)
+schedule_handle.clear_class_cell(ROOM1, cache.game_time.weekday(), 0)
+student.entertainment.entertainment_type = [0, 0, 0]
+check("萝莉节次内没课但日程没排 → 自由行动（口径 10 的默认不变）", not class_ai.judge_should_follow_mother(201))
+girl = make_character(203, "女儿C", 152, daughter=True, stage=104, mother_id=102, born_days=500)
+girl.entertainment.entertainment_type = [E.ENTERTAINMENT_FOLLOW_MOTHER] * 3
+check("少女日程排了跟随母亲也不见学", not class_ai.judge_should_follow_mother(203))
+set_time(period_time(0))
+move_to(102, SCENE_EDU_ENTRY)
+move_to(202, SCENE_DORM)
+check("母亲有效、不同场景 → 移动到母亲身边", class_ai.judge_follow_mother_state_machine(202) == SM.EDUCATION_MOVE_TO_MOTHER)
+move_to(202, SCENE_EDU_ENTRY)
+check("同场景 → 见学", class_ai.judge_follow_mother_state_machine(202) == SM.EDUCATION_FOLLOW_MOTHER)
+mother.sp_flag.is_h = True
+check("母亲无效 → 回落自由玩耍而不是交回 AI", class_ai.judge_follow_mother_state_machine(202) == SM.ENTERTAIN_FREE_PLAY)
+mother.sp_flag.is_h = False
+growth_handle.get_child_growth(202).follow_mother_flag = True
+check("见学标记读口", class_ai.judge_in_follow_mother(202) and not class_ai.judge_in_follow_mother(201) and not class_ai.judge_in_follow_mother(999))
+check("不该见学时顺手清标记", (class_ai.judge_follow_mother_state_machine(201), class_ai.judge_in_follow_mother(202))[0] == 0)
+class_ai.clear_follow_mother_flag(202)
+check("清标记", not class_ai.judge_in_follow_mother(202))
+class_ai.clear_follow_mother_flag(999)
+check("对不存在的角色清标记不报错", True)
+
+section("见学让路：学生与课表有关时不见学（Plan 24 §3.9）")
+clear_schedules()
+move_to(102, SCENE_EDU_ENTRY)
+move_to(202, SCENE_DORM)
+child.entertainment.entertainment_type = [0, 0, 0]
+_pending_time = period_time(1) - datetime.timedelta(minutes=8)
+set_time(_pending_time)
+check("幼女在节次内没课 → 默认见学", class_ai.judge_should_follow_mother(202))
+sex_class_handle.set_temp_class(_pending_time.date().toordinal(), 1, ROOM_P, 70, must_attend=[202])
+check("有待赴的必修实操课 → 不见学（原先预到岗排在见学之前）", not class_ai.judge_should_follow_mother(202))
+check("整条链：见学让路后派 561 提前去实操教室", dispatch(202, _pending_time) == SM.MOVE_TO_CLASS_ROOM)
+child.work.work_type = 21
+check("改了岗的幼女不上课，也就不必让路 → 照常见学（口径 1）", class_ai.judge_should_follow_mother(202))
+child.work.work_type = 152
+cache.rhodes_island.temp_sex_class = {}
+class_ai.clear_follow_mother_flag(202)
+
+section("没课节次的去向（2026-09-10 §9.2.9）")
+set_time(period_time(0))
+check("周一上午：学生岗算娱乐时间、教师岗与普通岗不算", handle_premise.handle_all_entertainment_time(201) > 0 and handle_premise.handle_all_entertainment_time(101) == 0
+      and handle_premise.handle_all_entertainment_time(102) == 0)
+check("非全娱乐时间前提与之互补", handle_premise.handle_not_all_entertainment_time(201) == 0 and handle_premise.handle_not_all_entertainment_time(102) > 0)
+set_time(period_time(0, DEFAULT_TIME.date() + datetime.timedelta(days=6)))
+check("周日上午：谁都算娱乐时间", handle_premise.handle_all_entertainment_time(201) > 0 and handle_premise.handle_all_entertainment_time(102) > 0)
+set_time(period_time(0))
+clear_schedules()
+move_to(201, SCENE_DORM)
+student.entertainment.entertainment_type = [E.ENTERTAINMENT_FREE_PLAY, 0, 0]
+check("萝莉周一上午没课、日程排了自由玩耍 → 工作链没有行命中，去育儿室", dispatch(201) == SM.MOVE_TO_NURSERY)
+move_to(201, SCENE_NURSERY)
+check("到了育儿室 → 自由玩耍", dispatch(201) == SM.ENTERTAIN_FREE_PLAY)
+move_to(201, SCENE_DORM)
+student.entertainment.entertainment_type = [E.ENTERTAINMENT_SELF_STUDY, 0, 0]
+check("排了上课（无课时自习）、人在宿舍 → 去教室", dispatch(201) == SM.MOVE_TO_CLASS_ROOM)
+move_to(201, classroom_path(ROOM1))
+check("到了教室 → 自习", dispatch(201) == SM.EDUCATION_SELF_STUDY)
+move_to(201, SCENE_DORM)
+student.entertainment.entertainment_type = [0, 0, 0]
+move_to(202, SCENE_DORM)
+move_to(102, SCENE_EDU_ENTRY)
+_tpl2 = schedule_template_handle.create_template("幼女白天2")
+schedule_template_handle.set_template_slot(_tpl2, 0, E.ENTERTAINMENT_FREE_PLAY)
+schedule_template_handle.apply_template(202, _tpl2)
+schedule_template_handle.apply_schedule_for_child(202)
+check("幼女周一上午没课、日程排了自由玩耍 → 去育儿室而不是见学", dispatch(202) == SM.MOVE_TO_NURSERY)
+schedule_template_handle.apply_template(202, 0)
+child.entertainment.entertainment_type = [0, 0, 0]
+check("幼女时段为自由选择 → 默认见学（移动到母亲身边）", dispatch(202) == SM.EDUCATION_MOVE_TO_MOTHER)
+class_ai.clear_follow_mother_flag(202)
+
+section("整链派发：教师按课表走班（210700 ~ 220710）")
+clear_schedules()
+office_path = map_handle.get_map_system_path_for_str(constant.place_data["Teacher_Office"][0])
+move_to(101, classroom_path(ROOM1))
+schedule_handle.set_class_cell(ROOM_P, 0, 0, 43, 101)
+check("本节课排在实践教室、人在理论教室 → 561 移动（不再原地开讲）", dispatch(101) == SM.MOVE_TO_CLASS_ROOM)
+move_to(101, classroom_path(ROOM_P))
+check("到了实践教室 → 303 授课", dispatch(101) == SM.WORK_TEACH)
+check("非教师不命中教师行", dispatch(201) not in (SM.WORK_TEACH, SM.MOVE_TO_TEACHER_OFFICE))
+today = cache.game_time.date().toordinal()
+sex_class_handle.set_temp_class(today, 0, ROOM_P, 70, must_attend=[])
+check("这一格今天被临时实操课顶掉 → 教师反查查不到", schedule_handle.get_teacher_cell(101, 0, 0) is None)
+check("被顶掉的教师 → 562 回办公室待命", dispatch(101) == SM.MOVE_TO_TEACHER_OFFICE)
+cache.rhodes_island.temp_sex_class = {}
+schedule_handle.clear_class_cell(ROOM_P, 0, 0)
+check("本节没课、工作时间 → 562 回教师办公室", dispatch(101) == SM.MOVE_TO_TEACHER_OFFICE)
+move_to(101, office_path)
+check("已在办公室 → 720 待命", dispatch(101) == SM.EDUCATION_WAIT_NEXT_PERIOD)
+check("午休（12:30）没课 → 没有教师行命中（不在到岗 / 工作时间）", dispatch(101, DEFAULT_TIME.replace(hour=12, minute=30)) not in CLASS_SM_SET)
+_arrive_time = period_time(0) - datetime.timedelta(minutes=15)
+schedule_handle.set_class_cell(ROOM_P, 0, 0, 43, 101)
+move_to(101, office_path)
+check("到岗时间、第一节在实践教室 → 561 先去实践教室", dispatch(101, _arrive_time) == SM.MOVE_TO_CLASS_ROOM
+      and schedule_handle.get_upcoming_teaching(101)["classroom"] == ROOM_P)
+move_to(101, classroom_path(ROOM_P))
+check("到岗时间已在教室 → 720 等开课", dispatch(101, _arrive_time) == SM.EDUCATION_WAIT_NEXT_PERIOD)
+check("等开课的时长截到开课那一刻（15 分钟）", teacher.behavior.behavior_id == constant.Behavior.WAIT and teacher.behavior.duration == 15, teacher.behavior.duration)
+sunday = DEFAULT_TIME.date() + datetime.timedelta(days=6)
+move_to(101, office_path)
+check("周日没课 → 没有教师行命中（休息日）", dispatch(101, period_time(0, sunday)) not in CLASS_SM_SET)
+schedule_handle.set_class_cell(ROOM_P, 6, 0, 43, 101)
+check("周日玩家特意排了课 → 561 照样去上（外层闸只判有工作）", dispatch(101, period_time(0, sunday)) == SM.MOVE_TO_CLASS_ROOM)
+move_to(101, classroom_path(ROOM_P))
+check("周日到了教室 → 303 授课", dispatch(101, period_time(0, sunday)) == SM.WORK_TEACH)
+clear_schedules()
+
+section("整链派发：学生到岗时间先去第一节课（210810 / 220830）")
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+student.entertainment.entertainment_type = [E.ENTERTAINMENT_FREE_PLAY] * 3
+move_to(201, SCENE_DORM)
+check("开课前 30 分钟 → 还不动身", dispatch(201, period_time(0) - datetime.timedelta(minutes=30)) not in CLASS_SM_SET)
+move_to(201, SCENE_DORM)
+check("开课前 15 分钟、人在宿舍 → 715 去第一节课的教室", dispatch(201, _arrive_time) == SM.EDUCATION_MOVE_TO_COURSE_PLACE
+      and class_ai.get_course_place_now_or_upcoming(201) == classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+check("已在教室 → 720 原地等开课", dispatch(201, _arrive_time) == SM.EDUCATION_WAIT_NEXT_PERIOD)
+check("节次开始时离下一节还有 45 分钟 → 不在「马上开课」窗口里", (set_time(period_time(0)), schedule_handle.get_upcoming_course(201))[1] is None)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_PE, _("木桩房"))
+move_to(201, SCENE_DORM)
+check("第一节是体育课 → 715 去训练场", dispatch(201, _arrive_time) == SM.EDUCATION_MOVE_TO_COURSE_PLACE
+      and class_ai.get_course_place_now_or_upcoming(201) == schedule_handle.get_course_place({"course_type": E.COURSE_TYPE_PE, "target": _("木桩房")}))
+schedule_handle.clear_selected_course(201, 0, 0)
+clear_schedules()
+
+section("整链派发：性技实操课预到岗（210800 / 220800）")
+today = DEFAULT_TIME.date().toordinal()
+sex_class_handle.set_temp_class(today, 1, ROOM_P, 70, must_attend=[201])
+_pending_time = period_time(1) - datetime.timedelta(minutes=8)
+set_time(_pending_time)
+move_to(201, SCENE_DORM)
+temp_class, classroom = class_ai.get_next_sex_class(201, cache.game_time)
+check("距开始 8 分钟：必修者要动身", temp_class is not None and classroom == ROOM_P)
+check("整条链：派 561 去实操教室", dispatch(201, _pending_time) == SM.MOVE_TO_CLASS_ROOM)
+set_time(period_time(1) - datetime.timedelta(minutes=15))
+check("距开始 15 分钟：还不动身", class_ai.get_next_sex_class(201, cache.game_time)[0] is None)
+set_time(_pending_time)
+check("非必修且没选修的人不动身", class_ai.get_next_sex_class(202, cache.game_time)[0] is None)
+schedule_handle.set_selected_course(202, cache.game_time.weekday(), 1, E.COURSE_TYPE_PRACTICE, ROOM_P)
+check("选修了这间教室的人也动身", class_ai.get_next_sex_class(202, cache.game_time)[0] is not None)
+schedule_handle.clear_selected_course(202, cache.game_time.weekday(), 1)
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+move_to(201, classroom_path(ROOM1))
+check("本节还在上理论课 → 提前退场去实操教室（口径 62）", dispatch(201, _pending_time) == SM.MOVE_TO_CLASS_ROOM)
+move_to(201, classroom_path(ROOM_P))
+_absent = growth_handle.get_child_growth(201).absent_count
+check("已在实操教室 → 720 原地等开课（Plan 24 §3.6，原先原地零距离移动空转）", dispatch(201, _pending_time) == SM.EDUCATION_WAIT_NEXT_PERIOD
+      and student.behavior.duration == 8, student.behavior.duration)
+check("预到岗不记缺课", growth_handle.get_child_growth(201).absent_count == _absent)
+clear_schedules()
+
+section("normal 门槛：跟随 / 临盆 / 产后 / 助理 / 体检中（Plan 24 §3.4）")
+set_time(period_time(0))
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+for _cid, _name in ((101, "教师"), (201, "学生")):
+    _cd = cache.character_data[_cid]
+    move_to(0, SCENE_EDU_ENTRY)
+    move_to(_cid, SCENE_EDU_ENTRY)
+    _cd.sp_flag.is_follow = 1
+    _first = dispatch(_cid)
+    move_to(_cid, classroom_path(ROOM1))
+    _second = dispatch(_cid)
+    _cd.sp_flag.is_follow = 0
+    check(f"跟随中的{_name}：在玩家身边不被派去教室、在教室被拉回玩家身边（不再来回走）", _first not in CLASS_SM_SET and _second not in CLASS_SM_SET, (_first, _second))
+move_to(101, classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+_waiting = cache.rhodes_island.waiting_for_exam_operator_ids
+for _name, _toggle in (
+    ("临盆", lambda on: teacher.talent.__setitem__(22, 1 if on else 0)),
+    ("产后", lambda on: teacher.talent.__setitem__(23, 1 if on else 0)),
+    ("当助理", lambda on: setattr(pl, "assistant_character_id", 101 if on else 0)),
+    ("体检中", lambda on: _waiting.add(101) if on else _waiting.discard(101)),
+):
+    _toggle(True)
+    _available = teacher_available()
+    _teacher_sm = dispatch(101)
+    move_to(101, classroom_path(ROOM1))
+    _student_sm = dispatch(201)
+    _toggle(False)
+    check(f"{_name}的教师：判为不可用、自己不授课，学生在教室派 713 自习", not _available and _teacher_sm not in CLASS_SM_SET and _student_sm == SM.EDUCATION_SELF_STUDY,
+          (_available, _teacher_sm, _student_sm))
+move_to(101, classroom_path(ROOM1))
+check("状态解除后教师照常授课", dispatch(101) == SM.WORK_TEACH)
+check("状态解除后学生照常听课", dispatch(201) == SM.WORK_ATTENT_CLASS)
+clear_schedules()
+
+section("外层闸只判有工作（Plan 24 §3.1，与改动前基线一致）")
+libm = make_character(301, "图书管理员", 101)
+cook = make_character(302, "厨师", 51)
+for _cid in (301, 302):
+    prepare_ai(_cid)
+_work_rows = list(game_config.config_target_type_index[21]) + list(game_config.config_target_type_index[22])
+LIBRARY_SM_SET = {game_config.config_target[t].state_machine_id for t in _work_rows if "work_is_library_manager" in game_config.config_target_premise_data.get(t, set())}
+COOK_SM_SET = {int(game_config.config_work_type[51].auto_ai_move), int(str(game_config.config_work_type[51].auto_ai_work).split("|")[0])}
+check("岗位状态机集合取到了", LIBRARY_SM_SET and len(COOK_SM_SET) == 2, (LIBRARY_SM_SET, COOK_SM_SET))
+_times = (("工作日 10:00", DEFAULT_TIME.replace(hour=10)), ("工作日 19:30", DEFAULT_TIME.replace(hour=19, minute=30)),
+          ("周日 10:00", DEFAULT_TIME.replace(hour=10) + datetime.timedelta(days=6)))
+_result = {}
+for _cid in (301, 302):
+    for _label, _now in _times:
+        move_to(_cid, SCENE_DORM)
+        _result[(_cid, _label)] = dispatch(_cid, _now)
+check("工作日 10:00：图书馆管理员（auto_ai=0）去图书馆办公室、厨师（auto_ai=1）去厨房", _result[(301, "工作日 10:00")] == 551 and _result[(302, "工作日 10:00")] == 521, _result)
+check("下班与周日：工作链没有行命中，与改动前一样落到娱乐链", all(_result[(301, label)] not in LIBRARY_SM_SET and _result[(302, label)] not in COOK_SM_SET
+                                                        for label in ("工作日 19:30", "周日 10:00")), _result)
+remove_character(301)
+remove_character(302)
+
+section("口径收窄：课表只对学生岗（Plan 24 口径 1）")
+set_time(period_time(0))
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+move_to(101, classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+student.work.work_type = 21
+sm = dispatch(201)
+check("女儿改成 21 岗：有课表也不派任何上课行，按新岗位上班", sm not in CLASS_SM_SET, sm)
+check("改岗后不在个人课表名单", 201 not in growth_handle.get_course_candidate_list())
+student.work.work_type = 152
+move_to(201, classroom_path(ROOM1))
+check("改回学生岗：课表恢复生效、回到名单", dispatch(201) == SM.WORK_ATTENT_CLASS and 201 in growth_handle.get_course_candidate_list())
+clear_schedules()
+
+section("Plan 25 §3.3：教师可用性对齐授课行（醉酒 / 催眠）")
+set_time(period_time(0))
+teacher.drunk_point = 99999
+check("醉到烂醉的教师不可用（授课行的 normal 前提不成立）", not teacher_available())
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+move_to(101, classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+_student_sm = dispatch(201)
+_teacher_sm = dispatch(101)
+check("醉酒教师：学生在教室派 713 自习、教师自己不授课（原先学生对着她空坐一整节）", _student_sm == SM.EDUCATION_SELF_STUDY and _teacher_sm != SM.WORK_TEACH,
+      (_student_sm, _teacher_sm))
+teacher.drunk_point = 0
+# 醉酒时派发的是睡觉：先把她叫起来，下面只验催眠与恢复
+teacher.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+teacher.sp_flag.sleep = False
+teacher.sp_flag.unconscious_h = 5
+move_to(101, classroom_path(ROOM1))
+handle_premise.refresh_unnormal_flag(101)
+# Plan 31 §3.4 改写：原先断言「空气催眠中的教师仍可用」。空气催眠只在人已在本节教室时豁免（授课行 220700 照样成立），
+#    去教室的移动行 210700 挂的是 normal_all、人不在教室就走不过去；不知道本节在哪间教室（classroom 为空）时按来不了判
+check("M3 空气催眠、不知道本节在哪间教室 → 按来不了判（此前一律可用）", not class_ai.judge_teacher_available(101))
+check("M3 空气催眠、人已在本节教室 → 仍可用（授课行挂的是 normal_all_except_special_hypnosis）", class_ai.judge_teacher_available(101, ROOM1))
+teacher.sp_flag.unconscious_h = 0
+check("恢复后可用", teacher_available(), (teacher.sp_flag.sleep, teacher.sp_flag.is_h, teacher.behavior.behavior_id, teacher.drunk_point,
+                                     [handle_premise.handle_premise(f"normal_{n}", 101) for n in range(1, 8)]))
+schedule_handle.clear_selected_course(201, 0, 0)
+clear_schedules()
+
+
+def begin(cid: int, behavior_id: str, start: datetime.datetime, now: datetime.datetime, duration: int = 60) -> None:
+    """
+    让角色从 start 起在做某个行为，再把游戏时间拨到 now（打断判定读的是「现在」，不是行为的开始时刻）
+    Keyword arguments:
+    cid -- 角色id
+    behavior_id -- 行为id
+    start -- 行为开始时刻
+    now -- 当前游戏时间
+    duration -- 行为时长
+    Return arguments:
+    无
+    """
+    set_time(start)
+    cd = cache.character_data[cid]
+    cd.behavior.behavior_id = behavior_id
+    cd.behavior.duration = duration
+    cd.behavior.move_target = []
+    cd.behavior.move_final_target = []
+    cd.action_info.wake_time = start
+    cache.game_time = now
+    handle_premise.refresh_unnormal_flag(cid)
+
+
+section("Plan 25 §3.1：学生赶去上课——把当前行为截到应离开的时刻（A 待赴实操课 / B 马上开课）")
+move_to(0, SCENE_DORM)
+# 玩家这一步走到了开课之后：「现在」已越过开课时刻，规则按 NPC 自己的行为时间轴截短，不看「现在」
+_round_end = period_time(1) + datetime.timedelta(minutes=5)
+_leave_a = period_time(1) - datetime.timedelta(minutes=E.PRE_ARRIVE_MINUTE)
+_leave_b = period_time(1) - datetime.timedelta(minutes=E.UPCOMING_MINUTE)
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+sex_class_handle.set_temp_class(DEFAULT_TIME.date().toordinal(), 1, ROOM_P, 70, must_attend=[201])
+move_to(201, classroom_path(ROOM1))
+begin(201, constant.Behavior.ATTENT_CLASS, period_time(0), _round_end, 45)
+_absent = growth_handle.get_child_growth(201).absent_count
+check("A 听课中、下一节是必修实操课 → 截到开课前 10 分钟（口径 62 提前退场；玩家一步跨过开课时刻也照截）",
+      handle_npc_ai.judge_student_leave_truncate(201) == 1 and student.behavior.behavior_id == constant.Behavior.ATTENT_CLASS and student.behavior.duration == 35,
+      student.behavior.duration)
+check("A 提前退场不记缺课（口径 66）", growth_handle.get_child_growth(201).absent_count == _absent)
+check("A 在离开的那一刻重新决策 → 派 561 去实操教室", dispatch(201, _leave_a) == SM.MOVE_TO_CLASS_ROOM)
+move_to(201, classroom_path(ROOM1))
+begin(201, constant.Behavior.ATTENT_CLASS, period_time(0), _round_end, 35)
+check("A 已截过的行为不再截（离开时刻恰是行为结束）", handle_npc_ai.judge_student_leave_truncate(201) == 0 and student.behavior.duration == 35)
+cache.rhodes_island.temp_sex_class = {}
+sex_class_handle.set_temp_class(DEFAULT_TIME.date().toordinal(), 2, ROOM_P, 70, must_attend=[201])
+begin(201, constant.Behavior.ATTENT_CLASS, period_time(0), _round_end, 45)
+check("A 实操课在再后面一节 → 离开时刻不在本行为之内，不截", handle_npc_ai.judge_student_leave_truncate(201) == 0 and student.behavior.duration == 45)
+cache.rhodes_island.temp_sex_class = {}
+sex_class_handle.set_temp_class(DEFAULT_TIME.date().toordinal(), 1, ROOM_P, 70, must_attend=[201])
+move_to(201, SCENE_DORM)
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), _round_end)
+check("A 娱乐中 → 同样截到开课前 10 分钟", handle_npc_ai.judge_student_leave_truncate(201) == 1 and student.behavior.duration == 35, student.behavior.duration)
+move_to(201, classroom_path(ROOM_P))
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), _round_end)
+check("A 人已在实操教室 → 不截", handle_npc_ai.judge_student_leave_truncate(201) == 0)
+move_to(201, SCENE_DORM)
+begin(201, constant.Behavior.WAIT, period_time(0), _round_end)
+check("A 在做日常类行为（等待）→ 不截：只截工作 / 娱乐类", handle_npc_ai.judge_student_leave_truncate(201) == 0)
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), _round_end)
+student.sp_flag.is_follow = 1
+handle_premise.refresh_unnormal_flag(201)
+check("A 跟随玩家中（normal_all 不成立）→ 不截，截了 AI 也派不出上课行", handle_npc_ai.judge_student_leave_truncate(201) == 0)
+student.sp_flag.is_follow = 0
+handle_premise.refresh_unnormal_flag(201)
+begin(101, constant.Behavior.FREE_PLAY, period_time(0), _round_end)
+check("非学生岗不截", handle_npc_ai.judge_student_leave_truncate(101) == 0)
+begin(201, constant.Behavior.FREE_PLAY, _round_end, _round_end)
+check("本轮刚开始的行为不截（既有守卫）", handle_npc_ai.judge_student_leave_truncate(201) == 0)
+clear_schedules()
+schedule_handle.clear_selected_course(201, 0, 0)
+schedule_handle.set_class_cell(ROOM1, 0, 1, 45, 101)
+schedule_handle.set_selected_course(201, 0, 1, E.COURSE_TYPE_THEORY, ROOM1)
+set_time(period_time(1) - datetime.timedelta(minutes=15))
+check("B 节次内也看下一节：本节没课、15 分钟后有课 → UPCOMING（与教师同口径）", class_ai.get_course_stage(201) == E.COURSE_STAGE_UPCOMING)
+move_to(201, SCENE_DORM)
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), _round_end)
+check("B 没课的节次在娱乐、下一节有课 → 截到开课前 20 分钟", handle_npc_ai.judge_student_leave_truncate(201) == 1 and student.behavior.duration == 25,
+      student.behavior.duration)
+check("B 在离开的那一刻重新决策 → 715 去上课地点", dispatch(201, _leave_b) == SM.EDUCATION_MOVE_TO_COURSE_PLACE)
+move_to(201, classroom_path(ROOM1))
+check("B 到了教室 → 720 原地等开课", dispatch(201, _leave_b) == SM.EDUCATION_WAIT_NEXT_PERIOD)
+move_to(201, SCENE_DORM)
+begin(201, constant.Behavior.FREE_PLAY, period_time(1) - datetime.timedelta(minutes=10), _round_end)
+check("B 行为开始时已进窗口 → 至少别拖过开课：截到开课那一刻", handle_npc_ai.judge_student_leave_truncate(201) == 1 and student.behavior.duration == 10,
+      student.behavior.duration)
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), _round_end, 10)
+check("B 行为在离开时刻之前就结束 → 不截", handle_npc_ai.judge_student_leave_truncate(201) == 0 and student.behavior.duration == 10)
+# Plan 31 §3.5 改写：原先断言「B 今天已翘课 → 不截」（整段豁免），空节里的长娱乐会盖过下一节、这一节缺课整节漏记
+growth_handle.get_child_growth(201).skip_class_flag = True
+growth_handle.get_child_growth(201).skip_class_day = period_time(0).toordinal()
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), _round_end)
+check("L1 B 今天已翘课 → 截到开课那一刻（45 分钟），她在那一刻当场判翘课（此前不截）",
+      handle_npc_ai.judge_student_leave_truncate(201) == 1 and student.behavior.duration == 45, student.behavior.duration)
+growth_handle.get_child_growth(201).skip_class_day = period_time(0).toordinal() - 1
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), _round_end)
+check("L2 B 前一天挂上、跨天没清掉的 flag 不算今天翘课 → 照常截到开课前 20 分钟",
+      handle_npc_ai.judge_student_leave_truncate(201) == 1 and student.behavior.duration == 25, student.behavior.duration)
+growth_handle.get_child_growth(201).skip_class_flag = False
+growth_handle.get_child_growth(201).skip_class_day = 0
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_INTEREST, _interest_list[0])
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), _round_end)
+check("B 离开的那一刻本节还有课（个人式课）→ 不截，本节的课由节末自然结束", handle_npc_ai.judge_student_leave_truncate(201) == 0)
+schedule_handle.clear_selected_course(201, 0, 0)
+schedule_handle.clear_selected_course(201, 0, 1)
+clear_schedules()
+
+section("Plan 25 §3.2：开课后才到场的学生直接加入课堂")
+set_time(period_time(5))
+move_to(0, classroom_path(ROOM_P))
+schedule_handle.set_class_cell(ROOM_P, 0, 5, 74, -1)
+schedule_handle.set_selected_course(202, 0, 5, E.COURSE_TYPE_PRACTICE, ROOM_P)
+sex_class_handle.start_sex_class(70, [])
+cache.sex_class_mode = True
+cache.group_sex_mode = True
+pl.sp_flag.is_h = True
+_late = period_time(5) + datetime.timedelta(minutes=10)
+move_to(202, SCENE_DORM)
+check("还没到教室 → 715 先过去（仍是 ATTEND）", dispatch(202, _late) == SM.EDUCATION_MOVE_TO_COURSE_PLACE)
+move_to(202, classroom_path(ROOM_P))
+_attend = growth_handle.get_child_growth(202).attend_class_count
+check("走进正在上实操课的教室 → JOIN_SEX_CLASS", (set_time(_late), class_ai.get_course_stage(202))[1] == E.COURSE_STAGE_JOIN_SEX_CLASS)
+sm = dispatch(202, _late)
+check("派 722：进 H、看见玩家的 H、到场二段口上（原先 713 在一边自习）", sm == SM.EDUCATION_JOIN_SEX_CLASS and child.sp_flag.is_h and child.sp_flag.see_pl_h
+      and child.second_behavior.get(constant.Behavior.JOIN_SEX_CLASS, 0) > 0, sm)
+check("晚到的人补记一节出勤", growth_handle.get_child_growth(202).attend_class_count == _attend + 1)
+child.sp_flag.is_h = False
+child.sp_flag.see_pl_h = False
+make_character(301, "成年学生", 152)
+prepare_ai(301)
+schedule_handle.set_selected_course(301, 0, 5, E.COURSE_TYPE_PRACTICE, ROOM_P)
+move_to(301, classroom_path(ROOM_P))
+set_time(_late)
+check("不满足 H 模式实行值的成年学生 → 仍是 ATTEND，进不了课堂（口径 63 第二层）", class_ai.get_course_stage(301) == E.COURSE_STAGE_ATTEND)
+remove_character(301)
+pl.sp_flag.is_h = False
+sex_class_handle.end_sex_class()
+cache.sex_class_mode = False
+set_time(_late)
+check("下课后不再 JOIN", class_ai.get_course_stage(202) != E.COURSE_STAGE_JOIN_SEX_CLASS)
+schedule_handle.clear_selected_course(202, 0, 5)
+clear_schedules()
+move_to(0, SCENE_DORM)
+move_to(202, SCENE_DORM)
+
+section("Plan 25 §3.5：教师开讲时拉人过两道闸")
+set_time(period_time(0))
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+move_to(101, classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+
+
+def teach_pull(cid: int) -> bool:
+    """
+    教师在节次开始时开讲（直接跑 303），看 cid 有没有被拉成听课
+    Keyword arguments:
+    cid -- 角色id
+    Return arguments:
+    bool -- 是否被拉成听课
+    功能: 303 拉人要过听课行的 normal 门槛（Plan 31 §3.9），测试直接改状态位，先刷新她的异常位
+    """
+    set_time(period_time(0))
+    cache.character_data[cid].behavior.behavior_id = constant.Behavior.WAIT
+    handle_premise.refresh_unnormal_flag(cid)
+    constant.handle_state_machine_data[SM.WORK_TEACH](101)
+    return cache.character_data[cid].behavior.behavior_id == constant.Behavior.ATTENT_CLASS
+
+
+check("正常学生被拉进听课", teach_pull(201))
+student.hit_point = 10
+check("体力 < 30% 的学生不拉（她自己决策时走 721 缺课）", not teach_pull(201))
+student.hit_point = 100
+class_ai.roll_skip_class = lambda cid, now_time=None: True
+check("本节掷中翘课的学生不拉", not teach_pull(201))
+class_ai.roll_skip_class = _orig_roll
+student.work.work_type = 21
+check("课表有残留、已改岗的人不拉（口径 1）", not teach_pull(201))
+student.work.work_type = 152
+sex_class_handle.set_temp_class(period_time(0).date().toordinal(), 0, ROOM1, 70, must_attend=[201])
+student.hit_point = 10
+check("必修生体力不足也该来（豁免两道闸）", class_ai.judge_student_join_class(201, ROOM1, period_time(0)))
+student.hit_point = 100
+check("这一节课表指向别的教室的不算", not class_ai.judge_student_join_class(201, _("理论教室二"), period_time(0)))
+schedule_handle.clear_selected_course(201, 0, 0)
+clear_schedules()
+
+section("Plan 25 §3.6：561 预到岗只认学生岗")
+from Script.StateMachine import default as sm_default  # noqa: E402
+
+_pending_time = period_time(1) - datetime.timedelta(minutes=8)
+schedule_handle.set_class_cell(ROOM1, 0, 1, 45, 101)
+schedule_handle.set_selected_course(101, 0, 1, E.COURSE_TYPE_PRACTICE, ROOM_P)
+sex_class_handle.set_temp_class(_pending_time.date().toordinal(), 1, ROOM_P, 70, must_attend=[])
+move_to(101, SCENE_DORM)
+set_time(_pending_time)
+_moves = []
+_orig_move = sm_default.general_movement_module
+sm_default.general_movement_module = lambda cid, target: _moves.append(list(target))
+constant.handle_state_machine_data[SM.MOVE_TO_CLASS_ROOM](101)
+sm_default.general_movement_module = _orig_move
+check("课表有残留的教师：去自己下一节授课的教室，不被带去实操教室", _moves == [classroom_path(ROOM1)], _moves)
+schedule_handle.clear_selected_course(101, 0, 1)
+clear_schedules()
+
+section("Plan 25 §3.7：点名必修的成年学生岗")
+make_character(301, "成年学生", 152)
+prepare_ai(301)
+schedule_handle.set_class_cell(ROOM1, 0, 1, 45, 101)
+schedule_handle.set_selected_course(301, 0, 1, E.COURSE_TYPE_THEORY, ROOM1)
+sex_class_handle.set_temp_class(_pending_time.date().toordinal(), 1, ROOM_P, 70, must_attend=[301])
+move_to(301, SCENE_DORM)
+check("成年必修生：开课前 8 分钟动身去实操教室", class_ai.get_next_sex_class(301, _pending_time)[0] is not None and dispatch(301, _pending_time) == SM.MOVE_TO_CLASS_ROOM)
+set_time(period_time(1))
+_course = schedule_handle.get_now_course(301)
+check("成年必修生：本节的课被覆盖成临时课的教室", _course is not None and _course["classroom"] == ROOM_P and _course["teacher_id"] == 0, _course)
+remove_character(301)
+clear_schedules()
+
+section("Plan 26 §3.8：未开放的场所、条件不符的兴趣课交回既有 AI")
+set_time(period_time(0))
+pool = _("游泳池")
+pool_open_cid = game_config.config_facility_open_name_to_cid[pool]
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_PE, pool)
+student.entertainment.entertainment_type = [E.ENTERTAINMENT_FREE_PLAY] * 3
+move_to(201, SCENE_DORM)
+cache.rhodes_island.facility_open[pool_open_cid] = False
+check("体育课排在未解锁的游泳池：在 / 不在上课地点同为 0", handle_premise.handle_premise("self_in_course_place", 201) == 0
+      and handle_premise.handle_premise("self_not_in_course_place", 201) == 0)
+check("整条链：没有上课行命中，交回娱乐链（去育儿室），不再走到门口空转", dispatch(201) == SM.MOVE_TO_NURSERY)
+cache.rhodes_island.facility_open[pool_open_cid] = True
+move_to(201, SCENE_DORM)
+check("解锁后恢复：715 去游泳池", dispatch(201) == SM.EDUCATION_MOVE_TO_COURSE_PLACE)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_INTEREST, E.ENTERTAINMENT_PLAY_HOUSE)
+student.talent[103] = 0
+student.talent[104] = 1
+set_time(period_time(0))
+check("少女排着过家家兴趣课（need 限幼女 / 萝莉）：上课地点解析不出", class_ai.get_course_place_now_or_upcoming(201) == [])
+move_to(201, SCENE_DORM)
+check("整条链：不派 715 / 716", dispatch(201) not in (SM.EDUCATION_MOVE_TO_COURSE_PLACE, SM.EDUCATION_DO_COURSE))
+student.talent[104] = 0
+student.talent[103] = 1
+set_time(period_time(0))
+check("回到萝莉：照常解析", bool(class_ai.get_course_place_now_or_upcoming(201)))
+schedule_handle.clear_selected_course(201, 0, 0)
+clear_schedules()
+
+section("Plan 26 §3.5：待赴的那节被玩家提前开讲、人已在教室 → 直接 JOIN（722）")
+today = DEFAULT_TIME.date().toordinal()
+sex_class_handle.set_temp_class(today, 1, ROOM_P, 70, must_attend=[201])
+_early = period_time(1) - datetime.timedelta(minutes=5)
+move_to(0, classroom_path(ROOM_P))
+move_to(201, classroom_path(ROOM_P))
+set_time(_early)
+check("开讲前：SEX_PENDING 原地等", class_ai.get_course_stage(201) == E.COURSE_STAGE_SEX_PENDING)
+sex_class_handle.start_sex_class(70, [])
+cache.sex_class_mode = True
+cache.group_sex_mode = True
+pl.sp_flag.is_h = True
+set_time(_early)
+check("玩家提前开讲了那节：人已在教室 → JOIN", class_ai.get_course_stage(201) == E.COURSE_STAGE_JOIN_SEX_CLASS)
+_attend = growth_handle.get_child_growth(201).attend_class_count
+sm = dispatch(201, _early)
+check("整条链：派 722 入课并补记出勤", sm == SM.EDUCATION_JOIN_SEX_CLASS and student.sp_flag.is_h and growth_handle.get_child_growth(201).attend_class_count == _attend + 1, sm)
+student.sp_flag.is_h = False
+student.sp_flag.see_pl_h = False
+move_to(201, SCENE_DORM)
+set_time(_early)
+check("人还没到教室：仍是 SEX_PENDING，先过去", class_ai.get_course_stage(201) == E.COURSE_STAGE_SEX_PENDING)
+
+section("Plan 26 §3.3：课堂模式下受邀到场走 515 → 722，普通群交走 505 → 96")
+_T505, _T515 = "default505", "default515"
+""" 构建时 target 的 cid 会带上所在文件夹名（buildconfig：path_list[-2] + cid），target.csv 在 data/target/default 下 """
+check("505 挂 sex_class_mode_off、515 挂 sex_class_mode_on 且指向 722", "sex_class_mode_off" in game_config.config_target_premise_data.get(_T505, set())
+      and "sex_class_mode_on" in game_config.config_target_premise_data.get(_T515, set()) and game_config.config_target[_T515].state_machine_id == SM.EDUCATION_JOIN_SEX_CLASS)
+move_to(201, classroom_path(ROOM_P))
+student.sp_flag.go_to_join_group_sex = True
+sm = dispatch(201, _early)
+check("受邀的学生走到玩家身边 → 722 入课、清掉前往标记", sm == SM.EDUCATION_JOIN_SEX_CLASS and student.sp_flag.is_h and not student.sp_flag.go_to_join_group_sex, sm)
+student.sp_flag.is_h = False
+student.sp_flag.see_pl_h = False
+move_to(102, classroom_path(ROOM_P))
+prepare_ai(102)
+mother.sp_flag.go_to_join_group_sex = True
+sm = dispatch(102, _early)
+check("受邀的非学生干员到场 → 722 判不过门槛，原地收场、不进 H", sm == SM.EDUCATION_JOIN_SEX_CLASS and not mother.sp_flag.is_h and not mother.sp_flag.go_to_join_group_sex, sm)
+pl.sp_flag.is_h = False
+sex_class_handle.end_sex_class()
+cache.sex_class_mode = False
+mother.sp_flag.go_to_join_group_sex = True
+sm = dispatch(102, _early)
+check("普通群交（不是课堂）→ 505 → 96 加入群交", sm == 96, sm)
+mother.sp_flag.go_to_join_group_sex = False
+mother.sp_flag.is_h = False
+cache.group_sex_mode = False
+move_to(0, SCENE_DORM)
+move_to(102, SCENE_EDU_ENTRY)
+move_to(201, SCENE_DORM)
+clear_schedules()
+
+section("Plan 26 L7：母亲睡着时幼女的见学回落自由玩耍，公务事件的「母亲可见学」不受影响")
+set_time(period_time(0))
+child.entertainment.entertainment_type = [0, 0, 0]
+move_to(202, SCENE_DORM)
+check("母亲醒着：去找母亲", class_ai.judge_follow_mother_state_machine(202) == SM.EDUCATION_MOVE_TO_MOTHER)
+mother.sp_flag.sleep = True
+check("母亲要睡觉：回落育儿室自由玩耍", class_ai.judge_follow_mother_state_machine(202) == SM.ENTERTAIN_FREE_PLAY and class_ai.judge_mother_followable(202) == -1)
+check("公务事件前提 self_mother_available 照旧成立（事件在跨天时派发，那时母亲多半睡着）", class_ai.judge_mother_available(202) == 102
+      and handle_premise.handle_premise("self_mother_available", 202) == 1)
+mother.sp_flag.sleep = False
+mother.behavior.behavior_id = constant.Behavior.SLEEP
+check("没挂要睡觉标记、但行为是睡觉（吃药 / 爆睡）也算", class_ai.judge_mother_followable(202) == -1)
+mother.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+check("醒来后恢复", class_ai.judge_mother_followable(202) == 102)
+class_ai.clear_follow_mother_flag(202)
+
+section("Plan 27 §3.3：个人课表指向的教室这一节已停课，视为没课")
+clear_schedules()
+set_time(period_time(0))
+prepare_ai(201)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+student.entertainment.entertainment_type = [E.ENTERTAINMENT_FREE_PLAY] * 3
+move_to(201, classroom_path(ROOM1))
+check("全局课表那一格空着：当前课程为 None、上课状态 NONE", schedule_handle.get_now_course(201) is None and class_ai.get_course_stage(201) == E.COURSE_STAGE_NONE)
+_attend = growth_handle.get_child_growth(201).attend_class_count
+sm = dispatch(201)
+check("整条链：不派 713 自习，交回娱乐链（日程排了自由玩耍 → 去育儿室），也不记出勤", sm == SM.MOVE_TO_NURSERY and growth_handle.get_child_growth(201).attend_class_count == _attend, sm)
+set_time(period_time(0) - datetime.timedelta(minutes=15))
+check("不会为一节已停的课提前动身（到岗时间不算 UPCOMING）", class_ai.get_course_stage(201) == E.COURSE_STAGE_NONE)
+set_time(period_time(0))
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, -1)
+check("格子在、只是没排教师：仍是一节课 → ATTEND（到了教室降级自习并计出勤）", class_ai.get_course_stage(201) == E.COURSE_STAGE_ATTEND)
+schedule_handle.clear_class_cell(ROOM1, 0, 0)
+sex_class_handle.set_temp_class(DEFAULT_TIME.date().toordinal(), 0, ROOM_P, 70, must_attend=[201])
+check("被点名必修到每周课表空着的实践教室：覆盖层给出格子，照样 ATTEND 并指向那间教室", class_ai.get_course_stage(201) == E.COURSE_STAGE_ATTEND
+      and schedule_handle.get_now_course(201)["classroom"] == ROOM_P)
+cache.rhodes_island.temp_sex_class = {}
+schedule_handle.set_selected_course(201, 0, 1, E.COURSE_TYPE_PRACTICE, ROOM_P)
+sex_class_handle.set_temp_class(DEFAULT_TIME.date().toordinal(), 1, ROOM_P, 70, must_attend=[])
+set_time(period_time(1) - datetime.timedelta(minutes=8))
+check("预约在每周课表空着的实践教室、这一节选修了它：照样 SEX_PENDING（选修读的是个人课表本身）", class_ai.get_course_stage(201) == E.COURSE_STAGE_SEX_PENDING)
+set_time(period_time(1))
+check("开课那一刻：覆盖层给出格子，照样 ATTEND", class_ai.get_course_stage(201) == E.COURSE_STAGE_ATTEND)
+schedule_handle.clear_selected_course(201, 0, 0)
+schedule_handle.clear_selected_course(201, 0, 1)
+clear_schedules()
+
+section("Plan 27 §3.2：自习的去处只挑已开放的理论教室")
+LOCKED_THEORY = [_("理论教室二"), _("理论教室三"), _("理论教室四"), _("理论教室五"), _("理论教室六")]
+for _room in LOCKED_THEORY:
+    cache.rhodes_island.facility_open[game_config.config_facility_open_name_to_cid[_room]] = False
+set_time(period_time(1) + datetime.timedelta(minutes=15))
+move_to(201, SCENE_DORM)
+_moves = []
+sm_default.general_movement_module = lambda cid, target: _moves.append(list(target))
+for _seed in range(12):
+    random.seed(_seed)
+    constant.handle_state_machine_data[SM.MOVE_TO_CLASS_ROOM](201)
+check("只开了理论教室一：12 个种子下没课学生的 561 回落都去理论教室一（此前在全部 6 间里随机，会走向锁着的教室）",
+      len(_moves) == 12 and all(one == classroom_path(ROOM1) for one in _moves), [scene_str(one) for one in _moves])
+open_all_classroom()
+_moves.clear()
+for _seed in range(12):
+    random.seed(_seed)
+    constant.handle_state_machine_data[SM.MOVE_TO_CLASS_ROOM](201)
+sm_default.general_movement_module = _orig_move
+random.seed()
+check("全开时回落在已开放的 6 间里随机", len({scene_str(one) for one in _moves}) > 1
+      and all(cache.scene_data[scene_str(one)].scene_name in schedule_handle.get_classroom_list(E.COURSE_TYPE_THEORY) for one in _moves),
+      [scene_str(one) for one in _moves])
+
+section("Plan 27 §3.7：当场爆睡（行为是睡觉、没挂要睡觉标记）的学生不被拉去听课")
+set_time(period_time(0))
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+move_to(101, classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+student.sp_flag.sleep = False
+student.behavior.behavior_id = constant.Behavior.SLEEP
+student.behavior.duration = 120
+check("行为是睡觉：判为不可拉", not class_ai.judge_student_pullable(201))
+constant.handle_state_machine_data[SM.WORK_TEACH](101)
+check("教师开讲（303）：她继续睡，不被改成听课", student.behavior.behavior_id == constant.Behavior.SLEEP, student.behavior.behavior_id)
+check("醒着的照旧被拉进听课", teach_pull(201))
+schedule_handle.clear_selected_course(201, 0, 0)
+clear_schedules()
+
+section("Plan 28 §3.2：个人式课这一节上不成视为没课（两道闸不判、不为它提前动身，幼女照常见学）")
+set_time(period_time(0))
+prepare_ai(201)
+prepare_ai(202)
+student.talent[103] = 0
+student.talent[104] = 1
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_INTEREST, E.ENTERTAINMENT_PLAY_HOUSE)
+student.entertainment.entertainment_type = [E.ENTERTAINMENT_FREE_PLAY] * 3
+growth_handle.get_child_growth(201).skip_class_flag = False
+check("少女排着过家家兴趣课：当前课程为 None、上课状态 NONE（此前是 ATTEND，两道闸照样按有课判）",
+      schedule_handle.get_now_course(201) is None and class_ai.get_course_stage(201) == E.COURSE_STAGE_NONE)
+student.hit_point = 10
+_absent = growth_handle.get_child_growth(201).absent_count
+move_to(201, SCENE_DORM)
+sm = dispatch(201)
+check("体力低：不派 721、不记缺课，交回娱乐链（此前记一节缺课去休息）", sm not in CLASS_SM_SET and growth_handle.get_child_growth(201).absent_count == _absent, sm)
+student.hit_point = 100
+class_ai.get_skip_class_rate = lambda cid: 1.0
+move_to(201, SCENE_DORM)
+sm = dispatch(201)
+check("心情闸必中：不派 714、不挂翘课 flag（此前翘课，还可能被抓）", sm not in CLASS_SM_SET and not growth_handle.get_child_growth(201).skip_class_flag, sm)
+class_ai.get_skip_class_rate = _orig_rate
+set_time(period_time(0) - datetime.timedelta(minutes=15))
+check("也不为它提前动身（到岗时间不算 UPCOMING）", class_ai.get_course_stage(201) == E.COURSE_STAGE_NONE)
+student.talent[104] = 0
+student.talent[103] = 1
+set_time(period_time(0))
+check("回到萝莉（条件恢复）：照常 ATTEND", class_ai.get_course_stage(201) == E.COURSE_STAGE_ATTEND)
+move_to(201, SCENE_DORM)
+check("整条链：715 去上课地点", dispatch(201) == SM.EDUCATION_MOVE_TO_COURSE_PLACE)
+schedule_handle.clear_selected_course(201, 0, 0)
+student.talent[103] = 0
+student.talent[104] = 1
+schedule_handle.set_selected_course(201, 0, 1, E.COURSE_TYPE_INTEREST, E.ENTERTAINMENT_PLAY_HOUSE)
+move_to(201, SCENE_DORM)
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), period_time(1) + datetime.timedelta(minutes=5))
+check("截短规则 B：下一节是上不成的兴趣课 → 不截（取数口已视为没课，class_ai 里删掉的重复判定不影响）", handle_npc_ai.judge_student_leave_truncate(201) == 0)
+student.talent[104] = 0
+student.talent[103] = 1
+begin(201, constant.Behavior.FREE_PLAY, period_time(0), period_time(1) + datetime.timedelta(minutes=5))
+check("对照：萝莉的同一节照截到开课前 20 分钟", handle_npc_ai.judge_student_leave_truncate(201) == 1 and student.behavior.duration == 25, student.behavior.duration)
+schedule_handle.clear_selected_course(201, 0, 1)
+child.entertainment.entertainment_type = [0, 0, 0]
+schedule_handle.set_selected_course(202, 0, 0, E.COURSE_TYPE_PE, pool)
+cache.rhodes_island.facility_open[pool_open_cid] = False
+set_time(period_time(0))
+check("幼女的体育课排在未解锁的游泳池：上课状态 NONE，照常默认见学（此前这一节不见学）",
+      class_ai.get_course_stage(202) == E.COURSE_STAGE_NONE and class_ai.judge_should_follow_mother(202) and class_ai.judge_mother_followable(202) == 102)
+cache.rhodes_island.facility_open[pool_open_cid] = True
+check("游泳池解锁后照常上课、不见学", class_ai.get_course_stage(202) == E.COURSE_STAGE_ATTEND and not class_ai.judge_should_follow_mother(202))
+schedule_handle.clear_selected_course(202, 0, 0)
+clear_schedules()
+
+section("Plan 29 §3.2：兴趣课「读书」先借书，借不到书的这一节视为没课；娱乐读书（401）的行为不变")
+from Script.UI.Panel import borrow_book_panel  # noqa: E402
+
+set_time(period_time(0))
+prepare_ai(201)
+_read_cid = next(cid for cid in game_config.config_entertainment if game_config.config_entertainment[cid].class_ok
+                 and schedule_handle.get_behavior_name_by_cid(game_config.config_entertainment[cid].behavior_id) == constant.Behavior.READ_BOOK)
+check("读书是可排的兴趣课，按行为判得出是读书课（不写死娱乐编号）",
+      schedule_handle.judge_interest_course_is_read_book({"course_type": E.COURSE_TYPE_INTEREST, "target": _read_cid})
+      and not schedule_handle.judge_interest_course_is_read_book({"course_type": E.COURSE_TYPE_INTEREST, "target": E.ENTERTAINMENT_PLAY_HOUSE}))
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_INTEREST, _read_cid)
+_read_place = class_ai.get_course_place_now_or_upcoming(201)
+move_to(201, _read_place)
+# 先把 0 号书标成被别人借走：改后随机借到 0 号书会让「不再读 0 号书」偶然失真
+cache.rhodes_island.book_borrow_dict[0] = 999
+student.behavior.book_id = 0
+student.behavior.book_name = ""
+growth_handle.get_child_growth(201).last_attend_period = []
+_attend = growth_handle.get_child_growth(201).attend_class_count
+sm = dispatch(201)
+check("到场 → 716 派读书、先借了一本、behavior 写的是借到的那本（此前不借书、一律读 0 号书《天灾详解》、书名为空）",
+      sm == SM.EDUCATION_DO_COURSE and student.behavior.behavior_id == constant.Behavior.READ_BOOK and len(student.entertainment.borrow_book_id_set) == 1
+      and student.behavior.book_id in student.entertainment.borrow_book_id_set and student.behavior.book_id != 0
+      and student.behavior.book_name == game_config.config_book[student.behavior.book_id].name
+      and cache.rhodes_island.book_borrow_dict[student.behavior.book_id] == 201,
+      (sm, student.behavior.book_id, student.behavior.book_name, student.entertainment.borrow_book_id_set))
+check("记一节出勤", growth_handle.get_child_growth(201).attend_class_count == _attend + 1)
+_held_book = student.behavior.book_id
+growth_handle.get_child_growth(201).last_attend_period = []
+dispatch(201)
+check("手上已有书：再派不另借，读的还是那本", student.entertainment.borrow_book_id_set == {_held_book} and student.behavior.book_id == _held_book)
+cache.rhodes_island.book_borrow_dict[_held_book] = -1
+student.entertainment.borrow_book_id_set.discard(_held_book)
+_saved_borrow = dict(cache.rhodes_island.book_borrow_dict)
+for _book_id in cache.rhodes_island.book_borrow_dict:
+    cache.rhodes_island.book_borrow_dict[_book_id] = 999
+check("书库里借不到书：这一节视为没课（get_now_course 为 None、上课状态 NONE，判定只读）",
+      schedule_handle.get_now_course(201) is None and class_ai.get_course_stage(201) == E.COURSE_STAGE_NONE and not student.entertainment.borrow_book_id_set)
+_attend = growth_handle.get_child_growth(201).attend_class_count
+sm = dispatch(201)
+check("整条链：不派 715 / 716、不记出勤，交回娱乐链", sm not in (SM.EDUCATION_MOVE_TO_COURSE_PLACE, SM.EDUCATION_DO_COURSE)
+      and growth_handle.get_child_growth(201).attend_class_count == _attend, sm)
+cache.rhodes_island.book_borrow_dict.update(_saved_borrow)
+# 判定与执行之间书被别人借走：716 等 1 分钟、不记出勤
+_orig_borrow = borrow_book_panel.check_random_borrow_book
+borrow_book_panel.check_random_borrow_book = lambda cid: 0
+growth_handle.get_child_growth(201).last_attend_period = []
+_attend = growth_handle.get_child_growth(201).attend_class_count
+constant.handle_state_machine_data[SM.EDUCATION_DO_COURSE](201)
+check("判定与执行之间书被别人借走：716 等 1 分钟、不记出勤", student.behavior.behavior_id == constant.Behavior.WAIT and student.behavior.duration == 1
+      and growth_handle.get_child_growth(201).attend_class_count == _attend, (student.behavior.behavior_id, student.behavior.duration))
+borrow_book_panel.check_random_borrow_book = _orig_borrow
+# 401 对照：娱乐读书抽出的装配函数，行为与改前一致
+reader = make_character(402, "读书的干员", 21, position=_read_place)
+constant.handle_state_machine_data[SM.ENTERTAIN_READ](402)
+check("对照：娱乐读书（401）借到书、写入 book_id 与书名、行为 read_book、时长 30",
+      reader.behavior.behavior_id == constant.Behavior.READ_BOOK and reader.behavior.duration == 30 and len(reader.entertainment.borrow_book_id_set) == 1
+      and reader.behavior.book_id in reader.entertainment.borrow_book_id_set
+      and reader.behavior.book_name == game_config.config_book[reader.behavior.book_id].name and reader.state == constant.CharacterStatus.STATUS_READ_BOOK,
+      (reader.behavior.behavior_id, reader.behavior.duration, reader.behavior.book_id))
+for _book_id in list(reader.entertainment.borrow_book_id_set):
+    cache.rhodes_island.book_borrow_dict[_book_id] = -1
+    reader.entertainment.borrow_book_id_set.discard(_book_id)
+for _book_id in cache.rhodes_island.book_borrow_dict:
+    cache.rhodes_island.book_borrow_dict[_book_id] = 999
+constant.handle_state_machine_data[SM.ENTERTAIN_READ](402)
+check("对照：401 借不到书仍等 1 分钟", reader.behavior.behavior_id == constant.Behavior.WAIT and reader.behavior.duration == 1)
+cache.rhodes_island.book_borrow_dict.update(_saved_borrow)
+cache.rhodes_island.book_borrow_dict[0] = -1
+remove_character(402)
+move_to(201, SCENE_DORM)
+schedule_handle.clear_selected_course(201, 0, 0)
+clear_schedules()
+
+section("Plan 30 §3.1 / §3.4 / §3.5：翘课记缺课、同一节只落一种记录、被抓当天剩余节次不再翘")
+from Script.Settle import Second_effect  # noqa: E402,F401  注册二段结算 623
+
+_rate_before = class_ai.get_skip_class_rate
+set_time(period_time(0))
+prepare_ai(201)
+student.hit_point_max = 100
+student.hit_point = 100
+_g = growth_handle.get_child_growth(201)
+_g.selected_course = {}
+for _p in range(8):
+    schedule_handle.set_selected_course(201, 0, _p, E.COURSE_TYPE_PE, _("木桩房"))
+schedule_handle.set_class_cell(ROOM1, 0, 8, 45, 101)
+schedule_handle.set_selected_course(201, 0, 8, E.COURSE_TYPE_THEORY, ROOM1)
+_pe_place = schedule_handle.get_course_place(schedule_handle.get_now_course(201))
+_g.skip_class_flag = False
+_g.skip_caught_day = 0
+_g.last_absent_period = []
+_g.last_attend_period = []
+_absent, _skip = _g.absent_count, _g.skip_count
+class_ai.get_skip_class_rate = lambda cid: 1.0
+move_to(201, classroom_path(ROOM1))
+sm = dispatch(201)
+check("心情闸必中、人还在教室：714 先离开教室，这一步不记缺课", sm == SM.EDUCATION_SKIP_CLASS and _g.absent_count == _absent and _g.skip_count == _skip,
+      (sm, _g.absent_count - _absent))
+move_to(201, SCENE_DORM)
+sm = dispatch(201)
+check("人已不在教室：714 开始摸鱼，记一节缺课、累计翘课 +1（此前翘课不计缺课，常翘课的孩子出勤率照样 100%）",
+      sm == SM.EDUCATION_SKIP_CLASS and student.behavior.behavior_id == constant.Behavior.SKIP_CLASS and _g.absent_count == _absent + 1 and _g.skip_count == _skip + 1,
+      (sm, _g.absent_count - _absent, _g.skip_count - _skip))
+move_to(201, SCENE_DORM)
+dispatch(201)
+check("同一节再派 714 不重复记", _g.absent_count == _absent + 1 and _g.skip_count == _skip + 1)
+class_ai.get_skip_class_rate = lambda cid: 0.0
+_g.skip_class_flag = True
+# 翘课 flag 认日期（Plan 31 §3.6）：今天挂上的才算
+_g.skip_class_day = DEFAULT_TIME.date().toordinal()
+for _p in (1, 2):
+    move_to(201, SCENE_DORM)
+    dispatch(201, period_time(_p))
+check("翘课 flag 挂着：之后的第 2、3 节各记一节", _g.absent_count == _absent + 3 and _g.skip_count == _skip + 3, (_g.absent_count - _absent, _g.skip_count - _skip))
+_g.skip_class_flag = False
+student.hit_point = 10
+move_to(201, _pe_place)
+sm = dispatch(201, period_time(3))
+check("第 4 节体力不足 → 721 记缺课（体力缺课不加翘课数）", sm == SM.EDUCATION_ABSENT_REST and _g.absent_count == _absent + 4 and _g.skip_count == _skip + 3)
+student.hit_point = 100
+class_ai.get_skip_class_rate = lambda cid: 1.0
+move_to(201, SCENE_DORM)
+sm = dispatch(201, period_time(3) + datetime.timedelta(minutes=30))
+check("同一节休完又掷中翘课：派 714，缺课不再加、累计翘课也不加（与体力缺课共用这一节的标记）",
+      sm == SM.EDUCATION_SKIP_CLASS and _g.absent_count == _absent + 4 and _g.skip_count == _skip + 3, (sm, _g.absent_count - _absent, _g.skip_count - _skip))
+class_ai.get_skip_class_rate = lambda cid: 0.0
+student.hit_point = 10
+move_to(201, _pe_place)
+dispatch(201, period_time(4))
+_attend = _g.attend_class_count
+student.hit_point = 100
+move_to(201, _pe_place)
+sm = dispatch(201, period_time(4) + datetime.timedelta(minutes=30))
+check("721 缺课后同一节休完回来上体育课：716 照派，出勤不记（此前一节算一次缺课、一次出勤）",
+      sm == SM.EDUCATION_DO_COURSE and _g.attend_class_count == _attend and _g.absent_count == _absent + 5, (sm, _g.attend_class_count - _attend))
+move_to(201, _pe_place)
+sm = dispatch(201, period_time(5))
+check("下一节照常记出勤", sm == SM.EDUCATION_DO_COURSE and _g.attend_class_count == _attend + 1)
+class_ai.get_skip_class_rate = lambda cid: 1.0
+set_time(period_time(6))
+_g.skip_class_flag = True
+constant.settle_second_behavior_effect_data[constant_effect.SecondEffect.CAUGHT_SKIP_CLASS](201, game_type.CharacterStatusChange())
+check("623 被抓：清 flag、记下当天的日期序数", not _g.skip_class_flag and _g.skip_caught_day == cache.game_time.toordinal())
+set_time(period_time(7))
+check("被抓当天：概率必中也掷不中，上课状态是 ATTEND 而不是 SKIP（此前之后每节照常掷，同一天里还会再翘）",
+      not class_ai.roll_skip_class(201) and class_ai.get_course_stage(201) == E.COURSE_STAGE_ATTEND, class_ai.get_course_stage(201))
+student.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+check("被抓当天教师开讲拉人（303）同样不再判她翘课", class_ai.judge_student_join_class(201, ROOM1, period_time(8)))
+_tomorrow = DEFAULT_TIME.date() + datetime.timedelta(days=1)
+schedule_handle.set_selected_course(201, 1, 0, E.COURSE_TYPE_PE, _("木桩房"))
+set_time(period_time(0, _tomorrow))
+check("次日自然失效：照常掷（必中 → SKIP）", class_ai.roll_skip_class(201) and class_ai.get_course_stage(201) == E.COURSE_STAGE_SKIP)
+class_ai.get_skip_class_rate = _rate_before
+_g.selected_course = {}
+_g.skip_caught_day = 0
+move_to(201, SCENE_DORM)
+clear_schedules()
+
+section("Plan 31 §3.4（M3）：空气催眠的教师只在人已在本节教室时能到岗，木头人一律来不了")
+# 本轮各段都把翘课概率钉成 0：上一段的 623 给她加了抑郁与恐怖，照原表会随机翘课
+class_ai.get_skip_class_rate = lambda cid: 0.0
+DAY31 = DEFAULT_TIME.date().toordinal()
+""" 本轮各段的「今天」：DEFAULT_TIME 那天的日期序数 """
+ROOM2 = _("理论教室二")
+ROOM3 = _("理论教室三")
+g31 = growth_handle.get_child_growth(201)
+set_time(period_time(0))
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+prepare_ai(101)
+prepare_ai(201)
+teacher.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+teacher.sp_flag.unconscious_h = 5
+move_to(101, SCENE_EDU_ENTRY)
+handle_premise.refresh_unnormal_flag(101)
+check("M3 空气催眠、人在教育区入口（不在本节教室）→ 来不了：去教室的移动行 210700 挂的是 normal_all，她走不过去（此前判能到岗）",
+      not class_ai.judge_teacher_available(101, ROOM1))
+move_to(101, classroom_path(ROOM1))
+check("M3 空气催眠、人已在本节教室 → 能到岗（授课行 220700 照样成立）", class_ai.judge_teacher_available(101, ROOM1))
+check("M3 空气催眠、人在教室但不是本节那间 → 来不了", not class_ai.judge_teacher_available(101, ROOM2))
+teacher.sp_flag.unconscious_h = 6
+teacher.hypnosis.blockhead = True
+handle_premise.refresh_unnormal_flag(101)
+check("M3 体控-木头人、人就在本节教室 → 也来不了（每轮被锁成原地等待，玩家离开也不解除；此前判能到岗）", not class_ai.judge_teacher_available(101, ROOM1))
+move_to(201, classroom_path(ROOM1))
+sm = dispatch(201)
+check("M3 木头人教师：学生在教室派 713 自习（此前按「能到岗」坐下听课、零收益）", sm == SM.EDUCATION_SELF_STUDY, sm)
+teacher.hypnosis.blockhead = False
+teacher.sp_flag.unconscious_h = 0
+handle_premise.refresh_unnormal_flag(101)
+check("M3 催眠解除后恢复能到岗", class_ai.judge_teacher_available(101, ROOM1))
+clear_schedules()
+
+section("Plan 31 §3.6（L2）：翘课 flag 只在挂上的那一天有效（漏清的两条路：一步跨过午夜、翘课当天离线）")
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+set_time(period_time(0))
+student.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+g31.skip_caught_day = 0
+g31.skip_class_flag = True
+g31.skip_class_day = DAY31
+check("L2 judge_skip_class_today：今天挂上的 flag → 真；参照时刻换到次日 → 假",
+      class_ai.judge_skip_class_today(201) and not class_ai.judge_skip_class_today(201, period_time(0, DEFAULT_TIME.date() + datetime.timedelta(days=1))))
+check("L2 今天挂上的 flag：本节 SKIP、不可被拉进听课", class_ai.get_course_stage(201) == E.COURSE_STAGE_SKIP and not class_ai.judge_student_pullable(201))
+g31.skip_class_day = DAY31 - 1
+check("L2 前一天挂上、跨天没清掉的 flag（一步跨过午夜：跨天结算在 NPC 阶段之后）→ 今天不算翘课", not class_ai.judge_skip_class_today(201))
+check("L2 前一天的 flag：今天第 1 节照常掷骰（概率 0 → ATTEND；此前直接 SKIP，还记缺课与翘课数）", class_ai.get_course_stage(201) == E.COURSE_STAGE_ATTEND,
+      class_ai.get_course_stage(201))
+check("L2 前一天的 flag：照样可被拉进听课（玩家授课与 303 共用的判据）", class_ai.judge_student_pullable(201))
+g31.skip_class_day = DAY31 - 2
+move_to(201, SCENE_DORM)
+sm = dispatch(201)
+check("L2 翘课当天被派外勤、两天后回岛（flag 还挂着、日期是离岛那天）：回岛当天照常上课，派 715 去教室（此前整天判翘课）",
+      sm == SM.EDUCATION_MOVE_TO_COURSE_PLACE, sm)
+g31.skip_class_day = 0
+check("L2 旧档回填的 flag（日期 0）读作不是今天", not class_ai.judge_skip_class_today(201))
+g31.skip_class_flag = False
+g31.skip_class_day = DAY31
+check("L2 flag 为假时日期对上也不算；不存在的角色不算", not class_ai.judge_skip_class_today(201) and not class_ai.judge_skip_class_today(999))
+g31.skip_class_day = 0
+clear_schedules()
+
+section("Plan 31 §3.5（L1）：今天已翘课——不去门口等开课；工作 / 娱乐截到开课那一刻，当场判翘课")
+schedule_handle.set_class_cell(ROOM1, 0, 4, 45, -1)
+schedule_handle.set_selected_course(201, 0, 4, E.COURSE_TYPE_THEORY, ROOM1)
+t1345 = DEFAULT_TIME.replace(hour=13, minute=45)
+g31.skip_class_flag = True
+g31.skip_class_day = DAY31
+move_to(201, SCENE_DORM)
+set_time(t1345)
+check("L1 今天已翘课、13:45 空下来、14:00 有课 → NONE（此前 UPCOMING：去教室门口等一趟，开课那一刻再掉头走）",
+      class_ai.get_course_stage(201) == E.COURSE_STAGE_NONE, class_ai.get_course_stage(201))
+sm = dispatch(201, t1345)
+check("L1 整链：不派 715 / 720 去教室门口等，交回娱乐链", sm not in CLASS_SM_SET, sm)
+g31.skip_class_day = DAY31 - 1
+set_time(t1345)
+check("L1 对照：前一天的 flag 不算，照常 UPCOMING", class_ai.get_course_stage(201) == E.COURSE_STAGE_UPCOMING, class_ai.get_course_stage(201))
+g31.skip_class_day = DAY31
+move_to(201, SCENE_DORM)
+begin(201, constant.Behavior.WATCH_MOVIE, DEFAULT_TIME.replace(hour=13, minute=30), DEFAULT_TIME.replace(hour=14, minute=40), 60)
+check("L1 今天已翘课、13:30 起看 60 分钟电影 → 截到 14:00 开课那一刻（此前不截）",
+      handle_npc_ai.judge_student_leave_truncate(201) == 1 and student.behavior.duration == 30, student.behavior.duration)
+move_to(201, classroom_path(ROOM1))
+begin(201, constant.Behavior.WATCH_MOVIE, DEFAULT_TIME.replace(hour=13, minute=30), DEFAULT_TIME.replace(hour=14, minute=40), 60)
+check("L1 人就在上课的教室里也截到开课那一刻（不要求上课地点：她要在那一刻当场判翘课离开）",
+      handle_npc_ai.judge_student_leave_truncate(201) == 1 and student.behavior.duration == 30, student.behavior.duration)
+move_to(201, SCENE_DORM)
+g31.last_absent_period = []
+absent31, skip31 = g31.absent_count, g31.skip_count
+sm = dispatch(201, period_time(4))
+check("L1 14:00 开课那一刻重新决策 → 714 翘课，记一节缺课与翘课数", sm == SM.EDUCATION_SKIP_CLASS and g31.absent_count == absent31 + 1 and g31.skip_count == skip31 + 1,
+      (sm, g31.absent_count - absent31, g31.skip_count - skip31))
+clear_schedules()
+g31.selected_course = {}
+# 空节里的长娱乐：第 1、3、4 节有课，第 2 节（9:45~10:30）没课
+for period31 in (0, 2, 3):
+    schedule_handle.set_class_cell(ROOM1, 0, period31, 45, -1)
+    schedule_handle.set_selected_course(201, 0, period31, E.COURSE_TYPE_THEORY, ROOM1)
+move_to(201, SCENE_DORM)
+t955 = period_time(1) + datetime.timedelta(minutes=10)
+begin(201, constant.Behavior.WATCH_MOVIE, t955, period_time(2) + datetime.timedelta(minutes=10), 120)
+check("L1 今天已翘课、空节 9:55 起看 120 分钟电影 → 截到下一节 10:30 开课那一刻（此前不截：盖过整个第 3 节，这一节没有决策、缺课漏记）",
+      handle_npc_ai.judge_student_leave_truncate(201) == 1 and student.behavior.duration == 35, student.behavior.duration)
+g31.skip_class_flag = False
+begin(201, constant.Behavior.WATCH_MOVIE, t955, period_time(2) + datetime.timedelta(minutes=10), 120)
+check("L1 对照：没挂 flag → 照旧截到开课前 20 分钟（10:10）",
+      handle_npc_ai.judge_student_leave_truncate(201) == 1 and student.behavior.duration == 15, student.behavior.duration)
+g31.skip_class_day = 0
+g31.selected_course = {}
+clear_schedules()
+
+section("Plan 31 §3.1 / §3.9（H1 / L5）：303 不把时间线已走到开讲之后的学生拉回来；拉人过听课行的 normal 门槛")
+schedule_handle.set_class_cell(ROOM1, 0, 1, 45, 101)
+schedule_handle.set_selected_course(201, 0, 1, E.COURSE_TYPE_THEORY, ROOM1)
+schedule_handle.set_class_cell(ROOM1, 0, 2, 45, -1)
+schedule_handle.set_selected_course(201, 0, 2, E.COURSE_TYPE_THEORY, ROOM1)
+move_to(101, classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+t_open = period_time(1) + datetime.timedelta(minutes=2)
+set_time(t_open)
+handle_premise.refresh_unnormal_flag(201)
+student.behavior.behavior_id = constant.Behavior.SELF_STUDY
+student.behavior.start_time = period_time(2)
+check("H1 学生的当前行为开始于 10:30（已在这间教室上起第 3 节）、教师 9:47 才开讲 → 不拉（此前拉回 9:47，第 3 节从头再走、再结算一次）",
+      not class_ai.judge_student_join_class(201, ROOM1, t_open))
+student.behavior.start_time = t_open
+check("H1 与教师同时开始当前行为 → 照拉", class_ai.judge_student_join_class(201, ROOM1, t_open))
+student.behavior.behavior_id = constant.Behavior.WAIT
+student.behavior.start_time = period_time(1) - datetime.timedelta(minutes=5)
+student.behavior.duration = 5
+teacher.behavior.start_time = t_open
+constant.handle_state_machine_data[SM.WORK_TEACH](101)
+check("H1 303 开讲：开课前就在教室里等候的学生照拉，开始时刻对齐到开讲时刻",
+      student.behavior.behavior_id == constant.Behavior.ATTENT_CLASS and student.behavior.start_time == t_open, (student.behavior.behavior_id, student.behavior.start_time))
+student.behavior.behavior_id = constant.Behavior.SELF_STUDY
+student.behavior.start_time = period_time(2)
+student.behavior.duration = 45
+teacher.behavior.start_time = t_open
+constant.handle_state_machine_data[SM.WORK_TEACH](101)
+check("H1 303 开讲：时间线在前的学生不被改动（行为与开始时刻都不变）",
+      student.behavior.behavior_id == constant.Behavior.SELF_STUDY and student.behavior.start_time == period_time(2), (student.behavior.behavior_id, student.behavior.start_time))
+student.behavior.behavior_id = constant.Behavior.WAIT
+student.behavior.start_time = t_open
+student.sp_flag.is_follow = 1
+handle_premise.refresh_unnormal_flag(201)
+check("L5 跟随玩家中的学生（normal_3 不成立）：303 不拉（她自己决策时也不命中听课行，此前被拉成听课）", not class_ai.judge_student_join_class(201, ROOM1, t_open))
+student.sp_flag.is_follow = 0
+student.sp_flag.eat_food = 1
+handle_premise.refresh_unnormal_flag(201)
+check("L5 有吃饭需求的学生（normal_1 不成立）：303 不拉（需求链排在工作链之前）", not class_ai.judge_student_join_class(201, ROOM1, t_open))
+student.sp_flag.eat_food = 0
+student.sp_flag.unconscious_h = 5
+handle_premise.refresh_unnormal_flag(201)
+check("L5 空气催眠中的学生照拉（与听课行 220815 的 normal_all_except_special_hypnosis 同口径）", class_ai.judge_student_join_class(201, ROOM1, t_open))
+student.sp_flag.unconscious_h = 0
+handle_premise.refresh_unnormal_flag(201)
+check("L5 对照：状态解除后照拉", class_ai.judge_student_join_class(201, ROOM1, t_open))
+g31.selected_course = {}
+clear_schedules()
+
+section("Plan 31 §3.1（H1）：教师换教室晚到、玩家一步跨满一整节（实施文档 §2.0 R1 的行为循环）")
+from Script.Design import character_behavior, instuct_judege  # noqa: E402
+
+H1_SM_LOG = []
+""" 行为循环里的状态机派发记录：(角色id, 状态机id, 派发后的行为开始时刻, 所在场景名) """
+H1_GAIN_LOG = []
+""" 教室课结算记录：(学生id, 结算时她的行为开始时刻, 节次, 是否真的结算了) """
+_orig_gain = growth_handle.settle_student_class_gain
+
+
+def h1_gain_spy(student_id: int, teacher_id: int, *args, **kwargs) -> bool:
+    """
+    教室课结算的记录包装（512 / 548 / 557 都经 growth_handle.settle_student_class_gain）
+    Keyword arguments:
+    student_id -- 学生id
+    teacher_id -- 教师id
+    Return arguments:
+    bool -- 原函数的返回值：是否真的结算了
+    """
+    start_time = cache.character_data[student_id].behavior.start_time
+    result = _orig_gain(student_id, teacher_id, *args, **kwargs)
+    H1_GAIN_LOG.append((student_id, start_time, game_time.get_class_period_by_time(start_time), bool(result)))
+    return result
+
+
+def h1_wrap_sm(sid: int, func):
+    """
+    给一个状态机套上派发记录
+    Keyword arguments:
+    sid -- 状态机id
+    func -- 原状态机函数
+    Return arguments:
+    function -- 包装后的函数
+    """
+
+    def wrapper(cid: int):
+        """
+        先照常执行状态机，再记下派发后的行为开始时刻与所在场景
+        Keyword arguments:
+        cid -- 角色id
+        Return arguments:
+        原状态机的返回值
+        """
+        result = func(cid)
+        cd = cache.character_data[cid]
+        now_scene_str = scene_str(cd.position)
+        scene_name = cache.scene_data[now_scene_str].scene_name if now_scene_str in cache.scene_data else ""
+        H1_SM_LOG.append((cid, sid, cd.behavior.start_time, scene_name))
+        return result
+
+    return wrapper
+
+
+def clear_need(cid: int) -> None:
+    """
+    夹具控制：清掉生理需求（饥饿 / 尿意 / 疲劳 / 困意与对应标记），体力气力回满，长循环里只看课表链
+    Keyword arguments:
+    cid -- 角色id
+    Return arguments:
+    无
+    功能: 夹具环境没有食谱数据，饿了去买饭会抛异常；改了需求标记要同步异常位掩码，否则 normal_1 按旧掩码判
+    """
+    cd = cache.character_data[cid]
+    for name in ("hunger_point", "urinate_point", "tired_point", "sleep_point"):
+        if hasattr(cd, name):
+            setattr(cd, name, 0)
+    for name in ("eat_food", "rest", "pee"):
+        if hasattr(cd.sp_flag, name):
+            setattr(cd.sp_flag, name, 0)
+    cd.sp_flag.sleep = False
+    cd.sp_flag.tired = False
+    cd.hit_point = cd.hit_point_max
+    cd.mana_point = cd.mana_point_max
+    handle_premise.refresh_unnormal_flag(cid)
+
+
+def run_loop_round(minute: int, npc_order: list) -> tuple:
+    """
+    复刻一次「玩家等待 minute 分钟」的行为循环（照 test_behavior_loop.run_one_round：先玩家阶段，再 NPC 阶段每一遍每人推进一个行为，护栏 60 遍）
+    Keyword arguments:
+    minute -- 玩家这一步的分钟数
+    npc_order -- 参加循环的 NPC 与处理顺序：只让师生两人参加（夹具里别的角色与本题无关），处理顺序两种都验
+    Return arguments:
+    tuple -- (玩家阶段轮数, NPC 阶段遍数, 没收敛的角色列表)
+    """
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
+    pl.state = constant.CharacterStatus.STATUS_WAIT
+    pl.behavior.behavior_id = constant.Behavior.WAIT
+    pl.behavior.duration = minute
+    game_time.sub_time_now(minute)
+    cache.over_behavior_character = set()
+    pl_round = 0
+    pl_start = pl.behavior.start_time
+    while 0 not in cache.over_behavior_character:
+        pl_round += 1
+        if pl_round > 30:
+            break
+        character_behavior.character_behavior(0, cache.game_time, pl_start)
+    npc_pass = 0
+    while any(cid not in cache.over_behavior_character for cid in npc_order):
+        npc_pass += 1
+        if npc_pass > 60:
+            break
+        for cid in npc_order:
+            if cid in cache.over_behavior_character:
+                continue
+            clear_need(cid)
+            character_behavior.character_behavior(cid, cache.game_time, pl_start)
+    return pl_round, npc_pass, [cid for cid in npc_order if cid not in cache.over_behavior_character]
+
+
+def run_h1(minute_list: tuple, npc_order: list) -> list:
+    """
+    装上派发与结算的记录，按 minute_list 连跑几轮行为循环，跑完还原
+    Keyword arguments:
+    minute_list -- 每一轮玩家走的分钟数
+    npc_order -- NPC 的处理顺序
+    Return arguments:
+    list -- 每一轮的 (玩家阶段轮数, NPC 阶段遍数, 没收敛的角色列表, 这一轮结束时学生的行为开始时刻)
+    """
+    origin = dict(constant.handle_state_machine_data)
+    for sid, func in origin.items():
+        constant.handle_state_machine_data[sid] = h1_wrap_sm(sid, func)
+    growth_handle.settle_student_class_gain = h1_gain_spy
+    result = []
+    try:
+        for minute in minute_list:
+            pl_round, npc_pass, stuck = run_loop_round(minute, npc_order)
+            result.append((pl_round, npc_pass, stuck, student.behavior.start_time))
+    finally:
+        constant.handle_state_machine_data.clear()
+        constant.handle_state_machine_data.update(origin)
+        growth_handle.settle_student_class_gain = _orig_gain
+    return result
+
+
+def setup_h1(third_room: str) -> None:
+    """
+    照实施文档 §2.0 R1 摆好 9:40 的现场：教师第 1 节在理论教室一、第 2 节在理论教室二（一键排课的常态，换教室要走两跳）；
+    学生第 1、2 节在理论教室二、第 3 节在 third_room（那一格没排教师，去了自习）；两人都在上第 1 节，9:45 同时下课
+    Keyword arguments:
+    third_room -- 学生第 3 节的教室
+    Return arguments:
+    无
+    功能: 两条夹具陷阱（方案 §2.5-3）：衣服用 test_class_ai 一直在用、穿得上的 101 / 201；体力 / 气力换成真实量级 2000，
+          夹具上限 100 时一节课就耗到见底、下一节去睡觉。前面各段派发留下的二段行为清掉，免得在循环里被结算
+    """
+    clear_schedules()
+    g31.selected_course = {}
+    g31.last_attend_period = [DAY31, 0]
+    g31.last_absent_period = []
+    g31.skip_class_flag = False
+    g31.skip_class_day = 0
+    g31.skip_caught_day = 0
+    schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+    schedule_handle.set_class_cell(ROOM2, 0, 0, 45, -1)
+    schedule_handle.set_class_cell(ROOM2, 0, 1, 45, 101)
+    schedule_handle.set_class_cell(third_room, 0, 2, 45, -1)
+    for period, room in ((0, ROOM2), (1, ROOM2), (2, third_room)):
+        schedule_handle.set_selected_course(201, 0, period, E.COURSE_TYPE_THEORY, room)
+    student.entertainment.entertainment_type = [E.ENTERTAINMENT_FREE_PLAY] * 3
+    move_to(0, SCENE_DORM)
+    move_to(101, classroom_path(ROOM1))
+    move_to(201, classroom_path(ROOM2))
+    set_time(period_time(0) + datetime.timedelta(minutes=40))
+    cache.pre_game_time = cache.game_time
+    for cid, behavior_id, state in ((101, constant.Behavior.TEACH, constant.CharacterStatus.STATUS_TEACH),
+                                    (201, constant.Behavior.ATTENT_CLASS, constant.CharacterStatus.STATUS_ATTENT_CLASS)):
+        cd = cache.character_data[cid]
+        prepare_ai(cid)
+        cd.hit_point_max = 2000
+        cd.mana_point_max = 2000
+        cd.sp_flag.is_h = False
+        cd.sp_flag.is_follow = 0
+        cd.sp_flag.unconscious_h = 0
+        cd.hypnosis.blockhead = False
+        for key in cd.second_behavior:
+            cd.second_behavior[key] = 0
+        for list_name in ("must_settle_second_behavior_id_list", "must_show_second_behavior_id_list"):
+            if hasattr(cd, list_name):
+                getattr(cd, list_name).clear()
+        cd.behavior.behavior_id = behavior_id
+        cd.behavior.start_time = period_time(0)
+        cd.behavior.duration = 45
+        cd.behavior.move_target = []
+        cd.behavior.move_final_target = []
+        cd.state = state
+        cd.target_character_id = cid
+        clear_need(cid)
+    H1_SM_LOG.clear()
+    H1_GAIN_LOG.clear()
+
+
+def h1_gains(period: int) -> list:
+    """
+    取学生某一节真的结算上的记录
+    Keyword arguments:
+    period -- 节次
+    Return arguments:
+    list -- H1_GAIN_LOG 里学生 201 在这一节结算成功的条目
+    """
+    return [one for one in H1_GAIN_LOG if one[0] == 201 and one[2] == period and one[3]]
+
+
+def h1_teach_in_room2() -> list:
+    """
+    取教师在理论教室二开讲（303）的派发记录
+    Return arguments:
+    list -- H1_SM_LOG 里的条目
+    """
+    return [one for one in H1_SM_LOG if one[0] == 101 and one[1] == SM.WORK_TEACH and one[3] == ROOM2]
+
+
+# 变体 A：学生第 3 节在别的教室——教师 9:47 开讲时她早已离开，此前第 2 节整节白上
+for order_name, npc_order in (("教师先处理", [101, 201]), ("学生先处理", [201, 101])):
+    setup_h1(ROOM3)
+    attend0 = g31.attend_class_count
+    rounds = run_h1((60,), npc_order)
+    teach = h1_teach_in_room2()
+    check(f"H1 变体A（{order_name}）前提：一步 60 分钟收敛，教师 9:45 之后才在理论教室二开讲，学生 9:45 已先坐下听课（304）",
+          not rounds[0][2] and teach and teach[0][2] > period_time(1)
+          and any(one[0] == 201 and one[1] == SM.WORK_ATTENT_CLASS and one[2] == period_time(1) for one in H1_SM_LOG),
+          (rounds, [(one[0], one[1], one[2].strftime("%H:%M"), one[3]) for one in H1_SM_LOG]))
+    check(f"H1 变体A（{order_name}）：第 2 节在学生 9:45 坐下时就结算、只结算一次（此前整节白上：出勤、缺课、收益都没有）",
+          len(h1_gains(1)) == 1 and h1_gains(1)[0][1] == period_time(1), H1_GAIN_LOG)
+    check(f"H1 变体A（{order_name}）：这一步出勤 +2（第 2 节听课、第 3 节去理论教室三自习；此前 +1）", g31.attend_class_count - attend0 == 2,
+          g31.attend_class_count - attend0)
+# 变体 B：学生第 3 节还在这间教室——此前 303 把她拉回 9:47，第 3 节从头再走、结算两次
+for order_name, npc_order in (("教师先处理", [101, 201]), ("学生先处理", [201, 101])):
+    setup_h1(ROOM2)
+    attend0 = g31.attend_class_count
+    rounds = run_h1((60, 40), npc_order)
+    check(f"H1 变体B（{order_name}）：两轮都收敛，第一轮结束时学生仍在自己的时间线上（行为开始不早于 10:30），没被 303 拉回教师开讲时刻",
+          not rounds[0][2] and not rounds[1][2] and rounds[0][3] >= period_time(2),
+          (rounds, [(one[0], one[1], one[2].strftime("%H:%M"), one[3]) for one in H1_SM_LOG]))
+    check(f"H1 变体B（{order_name}）：第 2、3 节各只结算一次（此前第 3 节结算两次）", len(h1_gains(1)) == 1 and len(h1_gains(2)) == 1, H1_GAIN_LOG)
+    check(f"H1 变体B（{order_name}）：两轮后出勤 +2（此前 +3）", g31.attend_class_count - attend0 == 2, g31.attend_class_count - attend0)
+# 对照：同样的课表，玩家一步只走 10 分钟
+setup_h1(ROOM3)
+rounds = run_h1((10, 10, 10, 10, 10, 10), [101, 201])
+teach = h1_teach_in_room2()
+check("H1 对照：玩家每步 10 分钟，第 2 节照常只结算一次（学生坐下时 557 先结算，教师到场开讲的 512 去重）",
+      all(not one[2] for one in rounds) and len(h1_gains(1)) == 1, H1_GAIN_LOG)
+check("H1 对照：教师开讲时 303 照拉在座等她的学生，开始时刻对齐到开讲时刻", bool(teach) and rounds[0][3] == teach[0][2],
+      (rounds[0][3], [(one[2], one[3]) for one in teach]))
+for cid in (101, 201):
+    cd = cache.character_data[cid]
+    cd.hit_point_max = cd.hit_point = 100
+    cd.mana_point_max = cd.mana_point = 100
+    cd.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+    cd.behavior.duration = 0
+g31.selected_course = {}
+g31.last_attend_period = []
+class_ai.get_skip_class_rate = _orig_rate
+move_to(101, classroom_path(ROOM1))
+move_to(201, SCENE_DORM)
+clear_schedules()
+set_time(DEFAULT_TIME)
+
+# ---------------------------------------------------------------------------
+# Plan 32（第十三轮复查）：见学（M5）、截短规则与行为循环（L3 / L4）、缺课去重（L7）、临时实操课的教师判据（L10）。
+#    M4（住院判定）的断言在前面的「教师可用性」「见学：母亲有效性」两段，L29（CLASS_SM_SET）在文件开头
+# ---------------------------------------------------------------------------
+# 本轮各段都把翘课概率钉成 0：前面 623 给 201 加了抑郁与恐怖，照原表会随机翘课
+class_ai.get_skip_class_rate = lambda cid: 0.0
+g32 = growth_handle.get_child_growth(201)
+""" 学生 201 的养成数据（与 g31 是同一个对象） """
+T_MON_10 = DEFAULT_TIME.replace(hour=10)
+""" 周一 10:00：第 2 节中段，学生这一节没课，工作岗在上班时间 """
+T830 = period_time(0) - datetime.timedelta(minutes=30)
+""" 8:30：第 1 节（9:00）开课前 30 分钟 """
+T930 = period_time(0) + datetime.timedelta(minutes=30)
+""" 9:30：第 1 节中段 """
+
+section("Plan 32 §3.6（M5）：改了岗的萝莉只在自己的休息时间见学，工作日白天按新岗位上班")
+COOK32 = 51
+""" 厨师岗：auto_ai=1 的岗位（与「外层闸只判有工作」一段同一个岗位） """
+COOK32_SM_SET = {int(game_config.config_work_type[COOK32].auto_ai_move), int(str(game_config.config_work_type[COOK32].auto_ai_work).split("|")[0])}
+""" 厨师自动工作链会派发的两个状态机（去厨房 / 在厨房干活） """
+FOLLOW32_SM_SET = {SM.EDUCATION_MOVE_TO_MOTHER, SM.EDUCATION_FOLLOW_MOTHER, SM.ENTERTAIN_FREE_PLAY, SM.MOVE_TO_NURSERY}
+""" 见学分支会派发的状态机（含母亲不可跟时回落的育儿室自由玩耍） """
+clear_schedules()
+g32.selected_course = {}
+prepare_ai(201)
+clear_need(201)
+move_to(102, SCENE_EDU_ENTRY)
+mother.sp_flag.is_h = False
+student.entertainment.entertainment_type = [E.ENTERTAINMENT_FOLLOW_MOTHER] * 3
+set_time(T_MON_10)
+check("M5 对照：学生岗的萝莉工作日 10:00 没课、日程排了跟随母亲 → 照旧见学", class_ai.judge_should_follow_mother(201))
+student.work.work_type = COOK32
+set_time(T_MON_10)
+check("M5 改任厨师的萝莉：工作日 10:00 不是她的休息时间 → 不见学（此前日程上午的「跟随母亲」把她整段从厨房叫走）",
+      not class_ai.judge_should_follow_mother(201) and handle_premise.handle_all_entertainment_time(201) == 0)
+move_to(201, SCENE_DORM)
+sm = dispatch(201, T_MON_10)
+check("M5 整条链：改任厨师的萝莉工作日上午走厨师的自动工作链去上班，不再去找母亲", sm in COOK32_SM_SET and sm not in FOLLOW32_SM_SET, (sm, COOK32_SM_SET))
+mother.sp_flag.is_h = True
+move_to(201, SCENE_DORM)
+sm = dispatch(201, T_MON_10)
+check("M5 母亲不可跟时也照常上班（此前见学回落育儿室自由玩耍）", sm in COOK32_SM_SET, sm)
+mother.sp_flag.is_h = False
+set_time(DEFAULT_TIME.replace(hour=19, minute=30))
+check("M5 改任厨师的萝莉：晚上 19:30 日程排了跟随母亲 → 照旧见学（晚上是她的休息时间）", class_ai.judge_should_follow_mother(201))
+set_time(DEFAULT_TIME.replace(hour=10) + datetime.timedelta(days=6))
+check("M5 改任厨师的萝莉：周日（休息日）白天日程排了跟随母亲 → 照旧见学", class_ai.judge_should_follow_mother(201))
+student.work.work_type = 0
+set_time(T_MON_10)
+check("M5 没有工作的萝莉：工作日白天也算她的休息时间 → 照旧见学", class_ai.judge_should_follow_mother(201))
+student.work.work_type = E.STUDENT_WORK_TYPE
+student.entertainment.entertainment_type = [E.ENTERTAINMENT_FREE_PLAY] * 3
+class_ai.clear_follow_mother_flag(201)
+move_to(201, SCENE_DORM)
+
+RT32_LOG = []
+""" 实时结算记录：(角色id, 行为id, 行为开始时刻, 行为时长, 这次结算的分钟数) """
+_orig_true_add = realtime_settle.get_true_add_time
+
+
+def rt32_spy(character_id: int, now_time: datetime.datetime, pl_start_time: datetime.datetime) -> int:
+    """
+    实时结算取「这次结算多少分钟」的记录包装（realtime_settle.character_aotu_change_value 经模块全局名调用它）
+    Keyword arguments:
+    character_id -- 角色id
+    now_time -- 当前时刻
+    pl_start_time -- 玩家这一步的开始时刻
+    Return arguments:
+    int -- 原函数的返回值：这次结算的分钟数
+    """
+    result = _orig_true_add(character_id, now_time, pl_start_time)
+    cd = cache.character_data[character_id]
+    RT32_LOG.append((character_id, cd.behavior.behavior_id, cd.behavior.start_time, cd.behavior.duration, result))
+    return result
+
+
+def run_rt32(minute: int, behavior_id: str, start: datetime.datetime, place: list) -> tuple:
+    """
+    让 201 从 start 起在 place 做 behavior_id（时长 minute），跑一步「玩家走 minute 分钟」的真实行为循环（只让 201 参加），记下她的实时结算
+    Keyword arguments:
+    minute -- 玩家这一步的分钟数，也是她这个行为的时长
+    behavior_id -- 她这一步开头在做的行为
+    start -- 这一步的开始时刻
+    place -- 她所在的场景路径
+    Return arguments:
+    tuple -- (run_h1 的每轮结果, 她的实时结算记录)
+    功能: 夹具设定照 setup_h1：体力 / 气力 2000、每次推进前清需求、二段行为清空；
+          交互对象设回自己，否则 judge_character_status_time_over 按「交互对象不在场」把行为的结束改写为这一步的结束
+    """
+    set_time(start)
+    cache.pre_game_time = start
+    move_to(0, SCENE_DORM)
+    move_to(201, place)
+    student.hit_point_max = 2000
+    student.mana_point_max = 2000
+    student.sp_flag.is_h = False
+    student.sp_flag.is_follow = 0
+    student.sp_flag.unconscious_h = 0
+    student.hypnosis.blockhead = False
+    for key in student.second_behavior:
+        student.second_behavior[key] = 0
+    for list_name in ("must_settle_second_behavior_id_list", "must_show_second_behavior_id_list"):
+        if hasattr(student, list_name):
+            getattr(student, list_name).clear()
+    student.behavior.behavior_id = behavior_id
+    student.behavior.start_time = start
+    student.behavior.duration = minute
+    student.behavior.move_target = []
+    student.behavior.move_final_target = []
+    student.state = constant.CharacterStatus.STATUS_ARDER
+    student.target_character_id = 201
+    student.action_info.wake_time = start
+    clear_need(201)
+    H1_SM_LOG.clear()
+    H1_GAIN_LOG.clear()
+    RT32_LOG.clear()
+    realtime_settle.get_true_add_time = rt32_spy
+    try:
+        rounds = run_h1((minute,), [201])
+    finally:
+        realtime_settle.get_true_add_time = _orig_true_add
+    return rounds, [one for one in RT32_LOG if one[0] == 201]
+
+
+def rt32_text(log: list) -> list:
+    """
+    把实时结算记录换成便于失败时阅读的简写
+    Keyword arguments:
+    log -- run_rt32 返回的实时结算记录
+    Return arguments:
+    list -- (行为id, 开始 时:分, 时长, 结算分钟数) 的列表
+    """
+    return [(one[1], one[2].strftime("%H:%M"), one[3], one[4]) for one in log]
+
+
+section("Plan 32 §3.7（L3）：人已在上课地点也截到开课那一刻（个人式课没有拉人的一方）")
+clear_schedules()
+g32.selected_course = {}
+g32.last_attend_period = []
+g32.last_absent_period = []
+g32.skip_class_flag = False
+g32.skip_class_day = 0
+_movie_cid = next((cid for cid in _interest_list if schedule_handle.get_behavior_name_by_cid(game_config.config_entertainment[cid].behavior_id) == constant.Behavior.WATCH_MOVIE), None)
+""" 兴趣课「看电影」的娱乐编号（按行为判，不写死编号）；取不到时为 None，由下面的「L3 前提」报出来，不让进程崩掉 """
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_INTEREST, _movie_cid)
+set_time(period_time(0))
+_movie_place = class_ai.get_course_place_now_or_upcoming(201)
+check("L3 前提：第 1 节排了兴趣课看电影、上课地点解析得出，第 2、3 节没课", bool(_movie_place) and schedule_handle.get_selected_course(201, 0, 1) is None
+      and schedule_handle.get_selected_course(201, 0, 2) is None, _movie_place)
+move_to(201, _movie_place)
+begin(201, constant.Behavior.WATCH_MOVIE, T830, T930, 120)
+check("L3 人已在上课地点、8:30 起看 120 分钟电影、第 1 节兴趣课就是看电影 → 截到 9:00 开课那一刻（此前不截：整节没有决策，出勤缺课都不记）",
+      handle_npc_ai.judge_student_leave_truncate(201) and student.behavior.duration == 30, student.behavior.duration)
+move_to(201, SCENE_NURSERY)
+begin(201, constant.Behavior.WATCH_MOVIE, T830, T930, 120)
+check("L3 对照：人在别处（育儿室）→ 照旧截到开课前 20 分钟（8:40）", handle_npc_ai.judge_student_leave_truncate(201) and student.behavior.duration == 10,
+      student.behavior.duration)
+schedule_handle.set_selected_course(201, 0, 1, E.COURSE_TYPE_INTEREST, _movie_cid)
+move_to(201, _movie_place)
+begin(201, constant.Behavior.WATCH_MOVIE, period_time(0) + datetime.timedelta(minutes=10), T930 + datetime.timedelta(minutes=40), 60)
+check("L3 人在上课地点、第 1、2 节都是看电影、离开的那一刻（9:25）本节还有课 → 仍不截，本节的课由节末自然结束",
+      not handle_npc_ai.judge_student_leave_truncate(201) and student.behavior.duration == 60, student.behavior.duration)
+schedule_handle.clear_selected_course(201, 0, 1)
+attend32, absent32 = g32.attend_class_count, g32.absent_count
+rounds, rt = run_rt32(120, constant.Behavior.WATCH_MOVIE, T830, _movie_place)
+check("L3 真实循环（8:30 起人在多媒体室看 120 分钟电影、玩家一步 120 分钟）：收敛，9:00 开课那一刻重新决策派 716，记一节出勤、不记缺课（此前出勤缺课都没记）",
+      not rounds[0][2] and any(one[0] == 201 and one[1] == SM.EDUCATION_DO_COURSE and one[2] == period_time(0) for one in H1_SM_LOG)
+      and g32.attend_class_count == attend32 + 1 and g32.absent_count == absent32,
+      (rounds, [(one[1], one[2].strftime("%H:%M"), one[3]) for one in H1_SM_LOG if one[0] == 201], g32.attend_class_count - attend32, g32.absent_count - absent32))
+check("L3 真实循环：开头那段电影在实时结算之前就截到了 9:00，只结算 30 分钟（L4）", bool(rt) and rt[0][1] == constant.Behavior.WATCH_MOVIE and rt[0][3] == 30
+      and rt[0][4] == 30, rt32_text(rt))
+
+section("Plan 32 §3.7（L4）：学生截短排在实时结算之前，截掉的那一段只算一遍（真实行为循环）")
+clear_schedules()
+g32.selected_course = {}
+rounds, rt = run_rt32(60, constant.Behavior.FREE_PLAY, T830, SCENE_NURSERY)
+check("L4 对照：这一步没课、8:30 起自由玩耍 60 分钟、玩家一步 60 分钟 → 不截，实时结算合计 60 分钟",
+      not rounds[0][2] and bool(rt) and rt[0][3] == 60 and sum(one[4] for one in rt) == 60, rt32_text(rt))
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, -1)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+rounds, rt = run_rt32(60, constant.Behavior.FREE_PLAY, T830, SCENE_NURSERY)
+check("L4 第 1 节有课：自由玩耍在实时结算之前就截到 8:40（开课前 20 分钟），这一段只结算 10 分钟（此前先按 60 分钟结算、再截短）",
+      bool(rt) and rt[0][1] == constant.Behavior.FREE_PLAY and rt[0][3] == 10 and rt[0][4] == 10, rt32_text(rt))
+check("L4 这一步收敛，她的实时结算合计 60 分钟、与玩家这一步等长（此前 110：8:40~9:30 那一段饥饿、尿意、疲劳算了两遍）",
+      not rounds[0][2] and sum(one[4] for one in rt) == 60, (rounds, rt32_text(rt)))
+# 循环跑完她已在理论教室一（第 1 节的上课地点），按 L3 会截到开课那一刻；挪回育儿室再验「截到开课前 20 分钟」
+move_to(201, SCENE_NURSERY)
+begin(201, constant.Behavior.FREE_PLAY, T830, T930, 60)
+check("L4 judge_interrupt_character_behavior 不再截学生（挪到了 judge_student_leave_truncate，由 NPC 分支在实时结算之前先调）",
+      handle_npc_ai.judge_interrupt_character_behavior(201) == 0 and student.behavior.duration == 60, student.behavior.duration)
+check("L4 同一情形 judge_student_leave_truncate 照截到 8:40", handle_npc_ai.judge_student_leave_truncate(201) and student.behavior.duration == 10,
+      student.behavior.duration)
+
+section("Plan 32 §3.8（L7）：同一节已记出勤，721 / 714 不再记缺课")
+clear_schedules()
+g32.selected_course = {}
+g32.last_attend_period = []
+g32.last_absent_period = []
+student.hit_point_max = student.hit_point = 100
+student.mana_point_max = student.mana_point = 100
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_PE, _("木桩房"))
+set_time(period_time(0))
+_pe32 = class_ai.get_course_place_now_or_upcoming(201)
+move_to(201, _pe32)
+clear_need(201)
+attend32, absent32, skip32 = g32.attend_class_count, g32.absent_count, g32.skip_count
+sm = dispatch(201)
+check("L7 前提：体育课到场派 716，记一节出勤并写下本节的出勤标记", sm == SM.EDUCATION_DO_COURSE and g32.attend_class_count == attend32 + 1
+      and g32.last_attend_period == [period_time(0).toordinal(), 0], (sm, g32.last_attend_period))
+student.hit_point = 10
+move_to(201, _pe32)
+sm = dispatch(201, period_time(0) + datetime.timedelta(minutes=20))
+check("L7 同一节后来体力跌破 30%：照派 721 去休息，但不再记缺课（此前同一节既算一次出勤又算一次缺课）",
+      sm == SM.EDUCATION_ABSENT_REST and g32.absent_count == absent32 and g32.last_absent_period == [], (sm, g32.absent_count - absent32, g32.last_absent_period))
+student.hit_point = 100
+set_time(period_time(0) + datetime.timedelta(minutes=30))
+check("L7 翘课（714 调 settle_absent 带 by_skip）同理：本节已记出勤 → 返回 False，缺课与累计翘课数都不加",
+      not class_ai.settle_absent(201, by_skip=True) and g32.absent_count == absent32 and g32.skip_count == skip32)
+set_time(period_time(1))
+check("L7 对照：下一节没记出勤，照常记缺课", class_ai.settle_absent(201) and g32.absent_count == absent32 + 1)
+g32.last_absent_period = []
+g32.last_attend_period = []
+schedule_handle.clear_selected_course(201, 0, 0)
+
+section("Plan 32 §3.8（L10）：临时实操课上不够格的选修生，玩家开课前后都判「教师来不了」、降级自习")
+clear_schedules()
+g32.selected_course = {}
+child_g32 = growth_handle.get_child_growth(202)
+""" 幼女 202 的养成数据 """
+child_g32.selected_course = {}
+T1030 = period_time(2)
+""" 10:30：第 3 节开始，这一节预约了临时实操课 """
+sex_class_handle.set_temp_class(DEFAULT_TIME.date().toordinal(), 2, ROOM_P, 70, must_attend=[201])
+schedule_handle.set_selected_course(202, 0, 2, E.COURSE_TYPE_PRACTICE, ROOM_P)
+prepare_ai(202)
+clear_need(201)
+clear_need(202)
+move_to(0, SCENE_DORM)
+move_to(201, classroom_path(ROOM_P))
+move_to(202, classroom_path(ROOM_P))
+set_time(T1030)
+_course202 = schedule_handle.get_now_course(202)
+check("L10 前提：幼女选修了这间实践教室（授课者是玩家）、没修过性技理论，进不了课堂；点名必修的萝莉豁免前置修习",
+      _course202 is not None and _course202["teacher_id"] == 0 and not sex_class_handle.judge_can_join_sex_class(202)
+      and sex_class_handle.judge_can_join_sex_class(201, check_course=False), _course202)
+check("L10 开课前（玩家还没开讲）：不够格的选修生判「教师来不了」（此前判能到岗、坐下听课，557 对授课者 0 直接返回，整节零收益、不计出勤）",
+      handle_premise.handle_premise("self_course_teacher_available", 202) == 0 and handle_premise.handle_premise("self_course_teacher_unavailable", 202) == 1
+      and not class_ai.judge_course_teacher_available(202, _course202))
+check("L10 对照：点名必修的学生开课前判能到岗", handle_premise.handle_premise("self_course_teacher_available", 201) == 1
+      and handle_premise.handle_premise("self_course_teacher_unavailable", 201) == 0)
+sm = dispatch(202, T1030)
+check("L10 整条链：不够格的选修生开课前在教室里派 713 自习（此前 304 坐下听课）", sm == SM.EDUCATION_SELF_STUDY, sm)
+sm = dispatch(201, T1030)
+check("L10 对照：点名必修的学生开课前照常 304 坐下等开课", sm == SM.WORK_ATTENT_CLASS, sm)
+move_to(0, classroom_path(ROOM_P))
+set_time(T1030)
+sex_class_handle.start_sex_class(70, [])
+cache.sex_class_mode = True
+cache.group_sex_mode = True
+pl.sp_flag.is_h = True
+move_to(202, classroom_path(ROOM_P))
+sm = dispatch(202, T1030 + datetime.timedelta(minutes=10))
+check("L10 开课后到场：不够格的选修生同样判来不了、派 713 自习（与开课前一致）",
+      sm == SM.EDUCATION_SELF_STUDY and handle_premise.handle_premise("self_course_teacher_unavailable", 202) == 1, sm)
+pl.sp_flag.is_h = False
+sex_class_handle.end_sex_class()
+cache.sex_class_mode = False
+cache.group_sex_mode = False
+child_g32.selected_course = {}
+
+section("Plan 32 实施复审补：M4 学生侧——住院表里有编号恰为教师角色 id 的病人时，教室里的学生照常听课（304）")
+clear_schedules()
+g32.selected_course = {}
+g32.last_attend_period = []
+g32.last_absent_period = []
+student.hit_point_max = student.hit_point = 100
+student.mana_point_max = student.mana_point = 100
+schedule_handle.set_class_cell(ROOM1, 0, 0, 45, 101)
+schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_THEORY, ROOM1)
+set_time(period_time(0))
+for _cid in (101, 201):
+    prepare_ai(_cid)
+    clear_need(_cid)
+move_to(101, classroom_path(ROOM1))
+move_to(201, classroom_path(ROOM1))
+teacher.sp_flag.is_h = False
+cache.rhodes_island.medical_hospitalized = {101: medical_constant.MedicalPatient(patient_id=101, state=medical_constant.MedicalPatientState.HOSPITALIZED)}
+sm = dispatch(201)
+check("M4 学生侧：住院表里有编号恰为 101 的病人（与教师甲无关），人在教室的学生派 304 坐下听课、「本节教师能到岗」成立（此前教师被判住院来不了，降级 713 自习）",
+      sm == SM.WORK_ATTENT_CLASS and handle_premise.handle_premise("self_course_teacher_available", 201) == 1, sm)
+teacher.sp_flag.is_h = True
+sm = dispatch(201)
+check("M4 学生侧对照：同一现场教师真的来不了（H 中）→ 713 自习（说明上一条走的是教师能否到岗的判定）", sm == SM.EDUCATION_SELF_STUDY, sm)
+teacher.sp_flag.is_h = False
+cache.rhodes_island.medical_hospitalized = {}
+schedule_handle.clear_selected_course(201, 0, 0)
+move_to(201, SCENE_DORM)
+clear_schedules()
+
+section("Plan 32 实施复审补：L10 降级自习跑完——不够格的选修生开课前在实践教室里 713 自习，行为循环里 548 结算：计一节出勤、拿自习档的科目经验")
+clear_schedules()
+g32.selected_course = {}
+child_g32.selected_course = {}
+child_g32.last_attend_period = []
+child_g32.last_absent_period = []
+sex_class_handle.set_temp_class(DEFAULT_TIME.date().toordinal(), 2, ROOM_P, 70, must_attend=[201])
+schedule_handle.set_selected_course(202, 0, 2, E.COURSE_TYPE_PRACTICE, ROOM_P)
+move_to(0, SCENE_DORM)
+move_to(201, SCENE_DORM)
+move_to(202, classroom_path(ROOM_P))
+pl.sp_flag.is_h = False
+set_time(T1030)
+cache.pre_game_time = cache.game_time
+prepare_ai(202)
+child.hit_point_max = 2000
+child.mana_point_max = 2000
+child.sp_flag.is_h = False
+child.sp_flag.is_follow = 0
+child.sp_flag.unconscious_h = 0
+for key in child.second_behavior:
+    child.second_behavior[key] = 0
+child.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+child.behavior.start_time = T1030
+child.behavior.duration = 0
+child.behavior.move_target = []
+child.behavior.move_final_target = []
+child.state = constant.CharacterStatus.STATUS_ARDER
+child.target_character_id = 202
+clear_need(202)
+_l10_exp_id = growth_handle.get_class_exp_id(70)
+""" 指技课堂只发的理论经验（Plan 26 §3.1） """
+_l10_real_exp_id = growth_handle.get_subject_exp_id(70)
+""" 指技的真实性交经验（手交） """
+_l10_expect = max(1, int(E.SELF_STUDY_EXP_BASE * growth_handle.get_class_adjust(70, 202, -1)))
+""" 自习档的科目经验：自习基础值 × 自习的总倍率（无教师，速度系数恒为 1） """
+_l10_attend = child_g32.attend_class_count
+_l10_exp = child.experience.get(_l10_exp_id, 0)
+_l10_real = child.experience.get(_l10_real_exp_id, 0)
+_l10_course = schedule_handle.get_now_course(202)
+check("L10 跑完前提：10:30 她本节是实践教室一的临时实操课（授课者玩家、还没开讲），没修过性技理论、进不了课堂；指技的理论经验与真实经验是两个 id",
+      _l10_course is not None and _l10_course["teacher_id"] == 0 and not sex_class_handle.judge_can_join_sex_class(202)
+      and _l10_exp_id > 0 and _l10_real_exp_id > 0 and _l10_exp_id != _l10_real_exp_id, _l10_course)
+H1_SM_LOG.clear()
+H1_GAIN_LOG.clear()
+rounds = run_h1((45,), [202])
+_l10_sm = [(one[1], one[2]) for one in H1_SM_LOG if one[0] == 202]
+check("L10 跑完：玩家一步 45 分钟（10:30 → 11:15）收敛，她 10:30 派 713 自习，没有坐下等玩家（304）、也没有进课堂（722）",
+      not rounds[0][2] and bool(_l10_sm) and _l10_sm[0] == (SM.EDUCATION_SELF_STUDY, T1030)
+      and not any(one[0] in (SM.WORK_ATTENT_CLASS, SM.EDUCATION_JOIN_SEX_CLASS) for one in _l10_sm), (rounds, _l10_sm))
+check("L10 跑完：自习在行为循环里经 548 结算这一节（第 3 节），计一节出勤（此前开课前坐下听课，557 对授课者 0 直接返回，整节零收益、不计出勤）",
+      child_g32.attend_class_count == _l10_attend + 1 and [(one[1], one[2]) for one in H1_GAIN_LOG if one[0] == 202 and one[3]] == [(T1030, 2)],
+      (child_g32.attend_class_count - _l10_attend, H1_GAIN_LOG))
+check("L10 跑完：拿到自习档的科目经验——指技的理论经验加上自习基础值（× 自习倍率），真实的手交经验不变",
+      child.experience.get(_l10_exp_id, 0) - _l10_exp == _l10_expect and child.experience.get(_l10_real_exp_id, 0) == _l10_real,
+      (child.experience.get(_l10_exp_id, 0) - _l10_exp, _l10_expect, child.experience.get(_l10_real_exp_id, 0) - _l10_real))
+child.hit_point_max = child.hit_point = 100
+child.mana_point_max = child.mana_point = 100
+child.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+child.behavior.duration = 0
+child_g32.selected_course = {}
+child_g32.last_attend_period = []
+move_to(202, SCENE_DORM)
+clear_schedules()
+
+section("Plan 32 实施复审补：H1 走真实玩家分支与行为循环——幽灵课堂在玩家这一步收掉，学生不再被拉进没有博士的课堂")
+from time import perf_counter  # noqa: E402
+
+from Script.Design import update  # noqa: E402
+
+GHOST_START = period_time(0) + datetime.timedelta(minutes=5)
+""" 9:05：第 1 节（9:00~9:45）刚开始，幽灵课堂与她的常规课都落在这一节 """
+GHOST_PROBE = []
+""" NPC 阶段第一次处理 NPC 时（玩家阶段刚走完）的现场：(课堂模式是否开着, 是否还有 running 的实操课) """
+GHOST_FLOW_CALL = []
+""" 行为循环里嵌套调到 update.game_update_flow 的记录：(步进分钟数, 当时玩家的行为id) """
+_orig_character_behavior = character_behavior.character_behavior
+_orig_game_update_flow = update.game_update_flow
+_ghost_pl_point = (pl.hit_point_max, pl.hit_point, pl.mana_point_max, pl.mana_point)
+""" 玩家原来的体力 / 气力（上限与当前值），本段跑完还原 """
+
+
+def ghost_flow_stub(add_time: int):
+    """
+    update.game_update_flow 的桩：只记下调用，不进真实主循环
+    Keyword arguments:
+    add_time -- 游戏步进的时间
+    Return arguments:
+    无
+    功能: 行为循环里嵌套的 game_update_flow 会再跑一遍 init_character_behavior，一路进到成就结算（夹具缺 materials_resouce）；
+          幽灵课堂的群交模式开着时，玩家体力落到 1 就会经 handle_group_sex_end（群交中玩家体力归零）走到这里
+    """
+    GHOST_FLOW_CALL.append((add_time, pl.behavior.behavior_id))
+
+
+def ghost_probe_spy(character_id: int, now_time: datetime.datetime, pl_start_time: datetime.datetime):
+    """
+    行为循环里 character_behavior 的记录包装：NPC 阶段第一次处理 NPC 时记下课堂模式与实操课的状态，再照常执行
+    Keyword arguments:
+    character_id -- 角色id
+    now_time -- 当前时刻
+    pl_start_time -- 玩家这一步的开始时刻
+    Return arguments:
+    原函数的返回值
+    功能: run_loop_round 先把玩家阶段跑完才进 NPC 阶段，第一次以 NPC 调进来的那一刻就是「玩家这一步刚走完」
+    """
+    if character_id and not GHOST_PROBE:
+        GHOST_PROBE.append((cache.sex_class_mode, sex_class_handle.get_running_class() is not None))
+    return _orig_character_behavior(character_id, now_time, pl_start_time)
+
+
+def setup_ghost() -> dict:
+    """
+    摆「幽灵课堂」的现场：课堂 H 已以别的方式结束（玩家不在 H、人在宿舍），课堂模式与群交模式却还开着，
+    实践教室一第 1 节挂着一条 running 的当场实操课；学生 201 本节是这间教室的常规课（膣技、没排教师）、人在教室里、正要决策
+    Keyword arguments:
+    无
+    Return arguments:
+    dict -- 那节 running 的临时实操课
+    功能: 夹具设定照 setup_h1：体力 / 气力 2000、二段行为清空、交互对象设回自己；翘课概率已在本轮开头钉成 0。
+          她的常规课格子排的是性技科目（膣技 74）：个人课表里有性技教室课，改前的 JOIN 判定（judge_can_join_sex_class）才过得去
+    """
+    clear_schedules()
+    g32.selected_course = {}
+    g32.last_attend_period = []
+    g32.last_absent_period = []
+    g32.skip_class_flag = False
+    g32.skip_class_day = 0
+    g32.skip_caught_day = 0
+    schedule_handle.set_class_cell(ROOM_P, 0, 0, 74, -1)
+    schedule_handle.set_selected_course(201, 0, 0, E.COURSE_TYPE_PRACTICE, ROOM_P)
+    student.entertainment.entertainment_type = [E.ENTERTAINMENT_FREE_PLAY] * 3
+    move_to(0, SCENE_DORM)
+    move_to(201, classroom_path(ROOM_P))
+    move_to(202, SCENE_DORM)
+    set_time(GHOST_START)
+    cache.pre_game_time = cache.game_time
+    ghost = sex_class_handle.set_temp_class(DEFAULT_TIME.date().toordinal(), 0, ROOM_P, 70, running=True)
+    cache.sex_class_mode = True
+    cache.group_sex_mode = True
+    # 群交模式开着时，玩家这一步的结算走群交分支（settle_behavior.handle_settle_behavior），要读监禁调教设置（性爱助手，键 12）；
+    #    夹具的罗德岛这张表是空的，照新建角色时的置零表补齐缺的键（不覆盖已有的值）
+    for key, value in attr_calculation.get_confinement_training_setting_zero().items():
+        cache.rhodes_island.confinement_training_setting.setdefault(key, value)
+    pl.sp_flag.is_h = False
+    # 玩家的体力 / 气力也换成 2000：体力落到 1 时玩家分支的疲劳判定按「群交中玩家体力归零」调结束群交（handle_group_sex_end），
+    #    幽灵课堂的群交模式开着，就会经 update.game_update_flow 嵌套一层真实主循环（夹具跑不了，前面各段已把玩家体力耗到 1）
+    pl.hit_point_max = pl.hit_point = 2000
+    pl.mana_point_max = pl.mana_point = 2000
+    child.sp_flag.is_h = False
+    prepare_ai(201)
+    student.hit_point_max = 2000
+    student.mana_point_max = 2000
+    student.sp_flag.is_h = False
+    student.sp_flag.see_pl_h = False
+    student.sp_flag.is_follow = 0
+    student.sp_flag.unconscious_h = 0
+    student.hypnosis.blockhead = False
+    for key in student.second_behavior:
+        student.second_behavior[key] = 0
+    for list_name in ("must_settle_second_behavior_id_list", "must_show_second_behavior_id_list"):
+        if hasattr(student, list_name):
+            getattr(student, list_name).clear()
+    student.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+    student.behavior.start_time = GHOST_START
+    student.behavior.duration = 0
+    student.behavior.move_target = []
+    student.behavior.move_final_target = []
+    student.state = constant.CharacterStatus.STATUS_ARDER
+    student.target_character_id = 201
+    clear_need(201)
+    H1_SM_LOG.clear()
+    H1_GAIN_LOG.clear()
+    GHOST_PROBE.clear()
+    GHOST_FLOW_CALL.clear()
+    return ghost
+
+
+_ghost = setup_ghost()
+check("H1 前提（幽灵课堂）：课堂模式与群交模式开着、实践教室一第 1 节的当场实操课 running，玩家不在 H、人在宿舍；"
+      "她本节是这间教室的常规课、人在教室，个人课表里有性技教室课（过得了改前的 JOIN 判定）",
+      cache.sex_class_mode and cache.group_sex_mode and sex_class_handle.get_running_class() is _ghost and not pl.sp_flag.is_h
+      and pl.position == SCENE_DORM and class_ai.judge_in_scene(201, ROOM_P) and sex_class_handle.judge_has_sex_skill_course(201)
+      and sex_class_handle.judge_can_join_sex_class(201))
+_ghost_attend, _ghost_sex = g32.attend_class_count, g32.sex_class_count
+character_behavior.character_behavior = ghost_probe_spy
+update.game_update_flow = ghost_flow_stub
+try:
+    rounds = run_h1((60,), [201])
+finally:
+    character_behavior.character_behavior = _orig_character_behavior
+    update.game_update_flow = _orig_game_update_flow
+_ghost_sm = [(one[1], one[2].strftime("%H:%M"), one[3]) for one in H1_SM_LOG if one[0] == 201]
+check("H1 真实循环（玩家一步 60 分钟）：玩家这一步走完时就下了课——NPC 阶段第一次处理 NPC 时课堂模式已关、没有 running 的实操课（此前一直开着）；"
+      "收掉它的是玩家实时结算里的 settle_orphan_class，这一步没有走别的收尾（没有嵌套的 game_update_flow）",
+      GHOST_PROBE == [(False, False)] and not GHOST_FLOW_CALL, (GHOST_PROBE, GHOST_FLOW_CALL))
+check("H1 真实循环：跑完仍没有进行中的课、课堂模式关着，那条当场开的实操课已删掉",
+      not cache.sex_class_mode and sex_class_handle.get_running_class() is None and not cache.rhodes_island.temp_sex_class,
+      (cache.sex_class_mode, cache.rhodes_island.temp_sex_class))
+check("H1 真实循环：收敛（没有撞护栏），状态机记录里没有 722，她没被拉进 H（此前判 JOIN、722 把她拉进没有博士的课堂）",
+      rounds[0][0] <= 30 and rounds[0][1] <= 60 and not rounds[0][2] and not any(one[0] == SM.EDUCATION_JOIN_SEX_CLASS for one in _ghost_sm)
+      and not student.sp_flag.is_h, (rounds, _ghost_sm))
+check("H1 真实循环：累计实操课次数不变，出勤最多 +1（只有常规课那一节；此前 722 每拉一次各 +1）",
+      g32.sex_class_count == _ghost_sex and 0 <= g32.attend_class_count - _ghost_attend <= 1,
+      (g32.sex_class_count - _ghost_sex, g32.attend_class_count - _ghost_attend, _ghost_sm))
+# 前提对照：把 settle_orphan_class 桩成什么都不做（改前的样子），同一现场重跑一步
+_ghost = setup_ghost()
+_orig_settle_orphan = sex_class_handle.settle_orphan_class
+sex_class_handle.settle_orphan_class = lambda: False
+update.game_update_flow = ghost_flow_stub
+_ghost_clock = perf_counter()
+try:
+    rounds = run_h1((60,), [201])
+finally:
+    sex_class_handle.settle_orphan_class = _orig_settle_orphan
+    update.game_update_flow = _orig_game_update_flow
+_ghost_second = perf_counter() - _ghost_clock
+_ghost_join = sum(1 for one in H1_SM_LOG if one[0] == 201 and one[1] == SM.EDUCATION_JOIN_SEX_CLASS)
+check("H1 前提对照：settle_orphan_class 桩成什么都不做时，同一现场课堂模式留着，她被 722 拉进没有博士的课堂或行为循环撞护栏（说明上面几条走到了要修的路径）",
+      _ghost_join > 0 or bool(rounds[0][2]), (rounds, _ghost_join, round(_ghost_second, 1), GHOST_FLOW_CALL))
+print(f"  （H1 前提对照：722 派了 {_ghost_join} 次，NPC 阶段 {rounds[0][1]} 遍，没收敛的 {rounds[0][2]}，"
+      f"嵌套 game_update_flow {len(GHOST_FLOW_CALL)} 次，耗时 {_ghost_second:.1f} 秒）")
+pl.hit_point_max, pl.hit_point, pl.mana_point_max, pl.mana_point = _ghost_pl_point
+cache.sex_class_mode = False
+cache.group_sex_mode = False
+cache.rhodes_island.temp_sex_class = {}
+for _cid in (0, 201, 202):
+    cache.character_data[_cid].sp_flag.is_h = False
+student.sp_flag.see_pl_h = False
+for key in student.second_behavior:
+    student.second_behavior[key] = 0
+student.hit_point_max = student.hit_point = 100
+student.mana_point_max = student.mana_point = 100
+student.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+student.behavior.duration = 0
+g32.selected_course = {}
+g32.last_attend_period = []
+g32.last_absent_period = []
+move_to(201, SCENE_DORM)
+clear_schedules()
+
+section("Plan 32 §8.1（追加调整）：课堂 H 里已有别的学生在 H 中，晚到的学生照常加入课堂，不再先触发目击 H（target 500）")
+# 目击 H 的状态机 40 会画「H中被发现」面板、等玩家选；这里只看派发了什么，把它临时换成空函数（本段末尾还原）
+_orig_see_h = constant.handle_state_machine_data[SM.SEE_H_AND_MOVE_TO_DORMITORY]
+constant.handle_state_machine_data[SM.SEE_H_AND_MOVE_TO_DORMITORY] = lambda character_id: None
+class_ai.get_skip_class_rate = lambda cid: 0.0
+_T500 = "default500"
+""" 目击 H 的目标行（type 0，排在工作链之前）；构建时 cid 带文件夹名前缀 """
+_NOT_HERE = "self_not_attend_sex_class_here"
+""" 本段要验的新前提：自己不是来这里上正在进行的性技实操课的学生（写成字面量，改前没有这个常量时本段照样能跑到派发那一步） """
+for _cid in (201, 202):
+    _cd = cache.character_data[_cid]
+    _cd.hit_point_max = _cd.hit_point = 100
+    _cd.mana_point_max = _cd.mana_point = 100
+    _cd.sp_flag.is_h = False
+    _cd.sp_flag.see_pl_h = False
+    _cd.sp_flag.go_to_join_group_sex = False
+clear_schedules()
+set_time(period_time(5))
+move_to(0, classroom_path(ROOM_P))
+schedule_handle.set_class_cell(ROOM_P, 0, 5, 74, -1)
+for _cid in (201, 202):
+    schedule_handle.set_selected_course(_cid, 0, 5, E.COURSE_TYPE_PRACTICE, ROOM_P)
+sex_class_handle.start_sex_class(70, [])
+cache.sex_class_mode = True
+cache.group_sex_mode = True
+pl.sp_flag.is_h = True
+# 开课时已在教室、被拉进课堂 H 的学生：她在 H 里，晚到的人一进门就满足「该地点有其他角色在和玩家进行非隐奸的 H」
+move_to(201, classroom_path(ROOM_P))
+student.sp_flag.is_h = True
+_late = period_time(5) + datetime.timedelta(minutes=10)
+move_to(202, classroom_path(ROOM_P))
+set_time(_late)
+check("§8.1 前提：她晚到、走进正在上实操课的教室、能参加 → JOIN_SEX_CLASS；教室里另有学生在课堂 H 里，目击 H 的其余前提对她都成立（改前正是这样先命中 target 500）",
+      class_ai.get_course_stage(202) == E.COURSE_STAGE_JOIN_SEX_CLASS and handle_premise.handle_premise("scene_someone_h_but_not_hidden_sex", 202) > 0
+      and handle_premise.handle_premise("not_witness_pl_h_with_others", 202) and handle_premise.handle_premise("self_not_go_to_join_group_sex", 202)
+      and handle_premise.handle_premise("not_in_dor", 202), class_ai.get_course_stage(202))
+_premise_500 = game_config.config_target_premise_data.get(_T500, set())
+check("§8.1 target 500 挂上「自己不是来这里上正在进行的实操课的学生」，对她判 0", _NOT_HERE in _premise_500 and handle_premise.handle_premise(_NOT_HERE, 202) == 0,
+      (sorted(_premise_500), handle_premise.handle_premise(_NOT_HERE, 202)))
+_attend = growth_handle.get_child_growth(202).attend_class_count
+sm = dispatch(202, _late)
+check("§8.1 晚到的学生派 722 加入课堂：进 H、看见玩家的 H、补记一节出勤（此前先命中 target 500、派 40 画「H中被发现」面板，220835 一次都走不到）",
+      sm == SM.EDUCATION_JOIN_SEX_CLASS and child.sp_flag.is_h and child.sp_flag.see_pl_h and growth_handle.get_child_growth(202).attend_class_count == _attend + 1, sm)
+# 对照一：走进来的非学生干员照旧目击 H
+prepare_ai(102)
+move_to(102, classroom_path(ROOM_P))
+mother.sp_flag.see_pl_h = False
+mother.sp_flag.go_to_join_group_sex = False
+sm = dispatch(102, _late)
+check("§8.1 对照：走进课堂的非学生干员照旧目击 H（派 40），新前提对她判 1", sm == SM.SEE_H_AND_MOVE_TO_DORMITORY and handle_premise.handle_premise(_NOT_HERE, 102) == 1, sm)
+mother.sp_flag.see_pl_h = False
+move_to(102, SCENE_DORM)
+# 对照二：选了这一节、却够不上课堂的学生（实行值不足的成年学生）
+make_character(301, "成年学生", 152)
+prepare_ai(301)
+schedule_handle.set_selected_course(301, 0, 5, E.COURSE_TYPE_PRACTICE, ROOM_P)
+move_to(301, classroom_path(ROOM_P))
+set_time(_late)
+sm = dispatch(301, _late)
+check("§8.1 够不上课堂的学生（实行值不足的成年学生）同样不触发目击 H：判「教师来不了」、派 713 在一边自习（L10 的口径），新前提对她判 0",
+      sm == SM.EDUCATION_SELF_STUDY and handle_premise.handle_premise(_NOT_HERE, 301) == 0, sm)
+check("§8.1 对照：同一名学生不在那间教室时新前提判 1（只认人已在课堂里的）",
+      (move_to(301, SCENE_DORM), set_time(_late), handle_premise.handle_premise(_NOT_HERE, 301))[2] == 1)
+remove_character(301)
+# 对照三：待赴的那节被玩家提前开讲（Plan 26 §3.5），教室里已有别的学生在课堂 H 里
+child.sp_flag.is_h = False
+child.sp_flag.see_pl_h = False
+for key in child.second_behavior:
+    child.second_behavior[key] = 0
+pl.sp_flag.is_h = False
+sex_class_handle.end_sex_class()
+cache.sex_class_mode = False
+cache.group_sex_mode = False
+clear_schedules()
+sex_class_handle.set_temp_class(DEFAULT_TIME.date().toordinal(), 1, ROOM_P, 70, must_attend=[202])
+_early_81 = period_time(1) - datetime.timedelta(minutes=5)
+set_time(_early_81)
+sex_class_handle.start_sex_class(70, [])
+cache.sex_class_mode = True
+cache.group_sex_mode = True
+pl.sp_flag.is_h = True
+student.sp_flag.is_h = True
+move_to(202, classroom_path(ROOM_P))
+set_time(_early_81)
+sm = dispatch(202, _early_81)
+check("§8.1 提前开讲的待赴课：点名必修的学生开讲前 5 分钟到场，教室里已有学生在课堂 H 里 → 照样派 722 加入（同样不先目击 H）", sm == SM.EDUCATION_JOIN_SEX_CLASS and child.sp_flag.is_h, sm)
+# 还原
+constant.handle_state_machine_data[SM.SEE_H_AND_MOVE_TO_DORMITORY] = _orig_see_h
+pl.sp_flag.is_h = False
+sex_class_handle.end_sex_class()
+cache.sex_class_mode = False
+cache.group_sex_mode = False
+cache.rhodes_island.temp_sex_class = {}
+for _cid in (0, 102, 201, 202):
+    cache.character_data[_cid].sp_flag.is_h = False
+    cache.character_data[_cid].sp_flag.see_pl_h = False
+for key in child.second_behavior:
+    child.second_behavior[key] = 0
+move_to(201, SCENE_DORM)
+move_to(202, SCENE_DORM)
+clear_schedules()
+
+# 收尾：还原本轮改过的夹具
+class_ai.get_skip_class_rate = _orig_rate
+student.hit_point_max = student.hit_point = 100
+student.mana_point_max = student.mana_point = 100
+student.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+student.behavior.duration = 0
+g32.selected_course = {}
+g32.last_attend_period = []
+g32.last_absent_period = []
+move_to(0, SCENE_DORM)
+move_to(201, SCENE_DORM)
+move_to(202, SCENE_DORM)
+clear_schedules()
+set_time(DEFAULT_TIME)
+
+finish()

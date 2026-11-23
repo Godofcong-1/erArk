@@ -30,6 +30,13 @@ line = draw.LineDraw("=", width)
 @handle_panel.add_panel(constant.Panel.CREATOR_CHARACTER)
 def creator_character_panel():
     """创建角色面板"""
+    # 清掉同一进程里上一局残留的角色与已获得集合，并从干净的全局配置池重新拷贝一份角色模板：
+    #    上一局生的女儿，其模板会随 born_new_character 留在运行时的 npc_tem_data 里、角色也留在
+    #    character_data 里，而标题画面开新游戏并不重置这些运行时数据。不清的话 init_character_list
+    #    会把上一局的女儿一并实例化进这一局，从而触发本局并不存在的女儿的相关事件（跨存档 / 跨局泄漏）
+    cache.character_data.clear()
+    cache.npc_id_got.clear()
+    character_handle.init_character_tem()
     cache.character_data[0] = game_type.Character()
     character_handle.init_character_list()
     while 1:
@@ -423,7 +430,7 @@ class Character_FirstNPC:
 
         # 去掉特殊干员
         for chara_id in self.id_list.copy():
-            if cache.character_data[chara_id].name in constant.ban_NPC_name_set:
+            if cache.character_data[chara_id].adv in constant.ban_NPC_adv_set:
                 self.id_list.remove(chara_id)
                 self.special_chara_list.append(chara_id)
 
@@ -440,12 +447,12 @@ class Character_FirstNPC:
         npc_id_got_list = sorted(cache.npc_id_got)
         for character_id in npc_id_got_list:
             npc_character_data = cache.character_data[character_id]
-            if npc_character_data.name in constant.first_NPC_name_set:
+            if npc_character_data.adv in constant.first_NPC_adv_set:
                 info_draw.text += f" ●{npc_character_data.name}"
         info_draw.text += _("\n   自选:")
         for character_id in cache.npc_id_got:
             npc_character_data = cache.character_data[character_id]
-            if npc_character_data.name not in constant.first_NPC_name_set:
+            if npc_character_data.adv not in constant.first_NPC_adv_set:
                 info_draw.text += f" ●{npc_character_data.name}"
 
         now_draw.draw_list.append(info_draw)
@@ -556,7 +563,7 @@ class Character_FirstNPC:
             now_npc_draw.text += _("\n 当前已选干员：")
             for character_id in cache.npc_id_got:
                 npc_character_data = cache.character_data[character_id]
-                if npc_character_data.name not in constant.first_NPC_name_set:
+                if npc_character_data.adv not in constant.first_NPC_adv_set:
                     now_npc_draw.text += f" ●{npc_character_data.name}"
             now_npc_draw.text += _("\n 当前剩余可选干员数量 = {0}\n").format(self.npc_select_now)
             now_npc_draw.draw()
@@ -784,7 +791,7 @@ class Character_FirstNPC:
             npc_name_filter_id = []
             for character_id in cache.character_data:
                 npc_character_data = cache.character_data[character_id]
-                if npc_character_data.name not in constant.first_NPC_name_set and user_input in npc_character_data.name:
+                if npc_character_data.adv not in constant.first_NPC_adv_set and user_input in npc_character_data.name:
                     npc_name_filter_id.append(character_id)
             self.id_list = npc_name_filter_id
             self.talk_character_list = []
@@ -849,7 +856,7 @@ class Character_FirstNPC:
     def reset_select(self):
         """重置选择"""
         # 获取当前已选择的NPC
-        now_select_npc_ld_list = [character_id for character_id in cache.npc_id_got if cache.character_data[character_id].name not in constant.first_NPC_name_set]
+        now_select_npc_ld_list = [character_id for character_id in cache.npc_id_got if cache.character_data[character_id].adv not in constant.first_NPC_adv_set]
         # 从列表中移除
         for character_id in now_select_npc_ld_list:
             cache.npc_id_got.remove(character_id)
@@ -862,7 +869,7 @@ class Character_FirstNPC:
         # 去掉特殊干员
         self.special_chara_list = []
         for chara_id in self.id_list.copy():
-            if cache.character_data[chara_id].name in constant.ban_NPC_name_set:
+            if cache.character_data[chara_id].adv in constant.ban_NPC_adv_set:
                 self.id_list.remove(chara_id)
                 self.special_chara_list.append(chara_id)
         self.prepare_filter()
@@ -950,7 +957,7 @@ class SelectFirstNPCButton:
 
         name_draw = draw.LeftDraw()
         if self.NPC_id in cache.npc_id_got:
-            if target_data.name in constant.first_NPC_name_set:
+            if target_data.adv in constant.first_NPC_adv_set:
                 button_text += _("(基础)")
                 # 查看属性模式下基础干员也可点击查看属性
                 if SelectFirstNPCButton.show_attributes_mode:

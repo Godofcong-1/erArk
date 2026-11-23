@@ -18,29 +18,49 @@ all_map_data_path = os.path.join("data", "MapData")
 """ 预处理的所有地图数据路径 """
 
 
+def load_map_cache_file(file_path: str) -> tuple:
+    """
+    读一个地图预处理文件
+    Keyword arguments:
+    file_path -- 预处理文件路径（pickle）
+    Return arguments:
+    tuple -- (文件里的数据, 写出这个文件时的游戏语言；没有语言标记的旧版本文件为空串)
+    """
+    with open(file_path, "rb") as now_file:
+        now_data = pickle.load(now_file)
+        try:
+            now_language = pickle.load(now_file)
+        except EOFError:
+            now_language = ""
+    return now_data, now_language
+
+
 def init_map_data():
-    """载入地图和场景数据"""
-    if (
-        os.path.exists(all_scene_data_path)
-        and os.path.exists(all_map_data_path)
-        and os.path.exists(all_place_data_path)
-        and os.path.exists(scene_path_edge_path)
-    ):
-        with open(all_scene_data_path, "rb") as all_scene_data_file:
-            cache.scene_data = pickle.load(all_scene_data_file)
-        with open(all_map_data_path, "rb") as all_map_data_file:
-            cache.map_data = pickle.load(all_map_data_file)
-        with open(all_place_data_path, "rb") as all_place_data_file:
-            constant.place_data = pickle.load(all_place_data_file)
+    """
+    载入地图和场景数据
+    场景名与地图名是按构建时的游戏语言翻译好再存进预处理文件的，所以三个 pickle 预处理文件在数据后面多记一个「写出时的语言」。
+    四个预处理文件齐全、且三个记的都是当前语言时直接读入；否则由 data/map 重建并重新写出
+    （换语言后第一次启动、或从没有语言标记的旧版本更新上来时会重建一次，不重建的话场景名、地图名会停留在旧语言）
+    """
+    pickle_path_list = [all_scene_data_path, all_map_data_path, all_place_data_path]
+    loaded_data = {}
+    if all(os.path.exists(now_path) for now_path in pickle_path_list + [scene_path_edge_path]):
+        for now_path in pickle_path_list:
+            now_data, now_language = load_map_cache_file(now_path)
+            if now_language == get_text.now_language:
+                loaded_data[now_path] = now_data
+    if len(loaded_data) == len(pickle_path_list):
+        cache.scene_data = loaded_data[all_scene_data_path]
+        cache.map_data = loaded_data[all_map_data_path]
+        constant.place_data = loaded_data[all_place_data_path]
         map_handle.scene_path_edge = json_handle.load_json(scene_path_edge_path)
     else:
         load_dir_now(map_data_path)
-        with open(all_map_data_path, "wb") as all_map_data_file:
-            pickle.dump(cache.map_data, all_map_data_file)
-        with open(all_scene_data_path, "wb") as all_scene_data_file:
-            pickle.dump(cache.scene_data, all_scene_data_file)
-        with open(all_place_data_path, "wb") as all_place_data_file:
-            pickle.dump(constant.place_data, all_place_data_file)
+        for now_path, now_data in ((all_map_data_path, cache.map_data), (all_scene_data_path, cache.scene_data), (all_place_data_path, constant.place_data)):
+            with open(now_path, "wb") as now_file:
+                pickle.dump(now_data, now_file)
+                # 数据后面再记一项写出时的语言；旧版本只读第一项，仍能读这个文件
+                pickle.dump(get_text.now_language, now_file)
         map_handle.init_scene_edge_path_data()
 
 
@@ -50,7 +70,9 @@ def load_dir_now(data_path: str):
     Keyword arguments:
     data_path -- 地图路径
     """
-    for i in os.listdir(data_path):
+    # 按文件名（不分大小写）排序后再载入：os.listdir 的顺序取决于文件系统，NTFS 恰好是这个顺序，Linux / macOS 上则不固定，
+    # 而场景与地点标签的载入顺序会影响按顺序分配宿舍等逻辑。键与构建脚本的 sorted_listdir 相同
+    for i in sorted(os.listdir(data_path), key=str.upper):
         now_path = os.path.join(data_path, i)
         if os.path.isfile(now_path):
             now_file = i.split(".")
@@ -108,12 +130,13 @@ def get_map_system_path_for_path(now_path: str) -> List[str]:
     List[str] -- 游戏地图路径
     """
     current_dir = os.path.dirname(os.path.abspath(now_path))
-    current_dir_str = str(current_dir)
-    map_start_list = current_dir_str.split("map")
-    current_dir_str = map_start_list[1]
-    map_system_path = current_dir_str.split(os.sep)
-    map_system_path = map_system_path[1:]
-    return map_system_path
+    part_list = os.path.normpath(current_dir).split(os.sep)
+    # 从后往前找 data\map 这两级目录，取其后的各级目录名；
+    # 不能按字符串 "map" 切分，否则安装目录里含 map 字样（如 C:\Users\maple）时会切在错误的位置
+    for index in range(len(part_list) - 1, 0, -1):
+        if part_list[index - 1] == "data" and part_list[index] == "map":
+            return part_list[index + 1:]
+    return []
 
 
 def get_map_system_path_str(now_path: List[str]) -> str:

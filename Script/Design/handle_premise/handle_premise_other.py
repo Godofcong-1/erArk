@@ -1,3 +1,4 @@
+import calendar
 import datetime
 from functools import wraps
 from types import FunctionType
@@ -215,7 +216,9 @@ def handle_have_trained(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     now_time = cache.game_time
     train_time = character_data.action_info.last_training_time
-    add_day = int((now_time - train_time).days)
+    # 天数按可游玩时间算：公历天数会把被时钟跳过的月份也算进去，一次换季就多出约 60 天
+    # （用秒级的 count_play_second 而不是 count_play_day：后者按月循环，遇到公元 1 年的缺省时间要转两万多圈，而前提是热路径）
+    add_day = int(game_time.count_play_second(train_time, now_time) // 86400)
     if add_day >= 2:
         return (add_day - 1) * 10
     return 0
@@ -1175,7 +1178,7 @@ def handle_self_not_player_daughter(character_id: int) -> int:
 def handle_self_have_sibling_child(character_id: int) -> int:
     """
     校验自己有同为孩子的兄弟姐妹（Plan 22 三期，孩子间互动事件用）
-    ⚠️ 兄弟姐妹关系直接读既有的 relationship，不新建亲缘结构（方案 §3.25）
+    兄弟姐妹关系直接读既有的 relationship，不新建亲缘结构（方案 §3.25）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1189,8 +1192,10 @@ def handle_self_have_sibling_child(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SELF_HAVE_CLASSMATE)
 def handle_self_have_classmate(character_id: int) -> int:
     """
-    校验自己的个人课表与别的孩子有重合节次（Plan 22 三期，同班同学事件用）
-    ⚠️ 同学关系由课表反查而非落成字段：课表一改同学就跟着变，存字段反而多一处同步点
+    校验自己有同班同学（Plan 22 三期，同班同学事件用）：双方都在学生岗、同一格上确有同一节课（Plan 30 §3.6），
+       对方是幼女或萝莉（Plan 31 §3.11，与同胞同口径）
+    同学关系由课表反查而非落成字段：课表一改同学就跟着变，存字段反而多一处同步点。
+       判据在 growth_event_handle.get_classmate_list，只读，不惰性创建养成数据
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1205,7 +1210,7 @@ def handle_self_have_classmate(character_id: int) -> int:
 def handle_self_mother_available(character_id: int) -> int:
     """
     校验自己的母亲仍在队中且当前可跟随（Plan 23，母亲相关的公务事件用）
-    ⚠️ 直接复用二期的 judge_mother_available：母亲正在H、被监禁、外出委托或住院时算不可跟随，
+    直接复用二期的 judge_mother_available：母亲正在H、被监禁、外出委托时算不可跟随（住院判定 Plan 32 删掉：医疗系统的住院表以抽象病人编号为键，干员从不进表），
        与幼女跟随见学的判定口径保持一致，免得事件里写「母亲带她去岗位」时母亲其实不在
     Keyword arguments:
     character_id -- 角色id
@@ -1221,7 +1226,7 @@ def handle_self_mother_available(character_id: int) -> int:
 def handle_self_follow_mother(character_id: int) -> int:
     """
     校验自己正处于跟随母亲见学的状态（Plan 22 二期）
-    ⚠️ 读的是 child_growth.follow_mother_flag 而不是当前行为id：
+    读的是 child_growth.follow_mother_flag 而不是当前行为id：
        玩家对见学中的女儿发起互动时，她的行为已经被换成被交互的那个了，
        只有这个跨行为保留的标记还能说明「她本来在跟着妈妈」
     Keyword arguments:
@@ -1237,19 +1242,136 @@ def handle_self_follow_mother(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SELF_HAVE_ANY_COURSE)
 def handle_self_have_any_course(character_id: int) -> int:
     """
-    校验自己的个人课表非空（Plan 23，上课相关的公务事件用）
+    校验自己有课可上：学生岗，且个人课表上至少有一格是每周确有的课（Plan 23，上课相关的公务事件用；Plan 30 §3.6 收窄）
+    改了岗的女儿课表残留（改回学生岗即恢复）、每周课表清空后全是「已停课」的格子、上不成的个人式课，都不算有课，
+       不再抽到写「在上课」的养成事件
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
+    from Script.System.Education_System import growth_handle
+
     growth_data = cache.character_data[character_id].child_growth
     if growth_data is None or not growth_data.selected_course:
         return 0
-    for day_data in growth_data.selected_course.values():
-        if day_data:
-            return 1
+    for week_day, day_data in growth_data.selected_course.items():
+        for period in day_data:
+            if growth_handle.judge_selected_cell_real(character_id, week_day, period):
+                return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_THEORY_COURSE)
+def handle_self_have_theory_course(character_id: int) -> int:
+    """
+    校验自己有理论课：学生岗，且个人课表上至少有一格是每周确有的理论课（Plan 31 §3.14 L11，幼女 1 等点名课型的养成事件用）
+    日常事件在 0 点推送，读「此刻这一节」的 CVP CourseType 恒为 -1，所以查整张个人课表（growth_handle.judge_have_course_type）；
+       只读 child_growth，不惰性创建养成数据
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import education_constant, growth_handle
+
+    return 1 if growth_handle.judge_have_course_type(character_id, education_constant.COURSE_TYPE_THEORY) else 0
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_PRACTICE_COURSE)
+def handle_self_have_practice_course(character_id: int) -> int:
+    """
+    校验自己有实践课：学生岗，且个人课表上至少有一格是每周确有的实践课（Plan 31 §3.14 L11，萝莉 16、幼女 22 用）
+    与 self_have_theory_course 同一个判据，只读，不惰性创建养成数据
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import education_constant, growth_handle
+
+    return 1 if growth_handle.judge_have_course_type(character_id, education_constant.COURSE_TYPE_PRACTICE) else 0
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_PE_COURSE)
+def handle_self_have_pe_course(character_id: int) -> int:
+    """
+    校验自己有体育课：学生岗，且个人课表上至少有一格是确有的体育课（Plan 31 §3.14 L11，萝莉 7 用）
+    个人式课看场地开放与活动条件，不看此刻上不上得成（growth_handle.judge_selected_cell_real）。只读，不惰性创建养成数据
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import education_constant, growth_handle
+
+    return 1 if growth_handle.judge_have_course_type(character_id, education_constant.COURSE_TYPE_PE) else 0
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_INTEREST_COURSE)
+def handle_self_have_interest_course(character_id: int) -> int:
+    """
+    校验自己有兴趣课：学生岗，且个人课表上至少有一格是确有的兴趣课（Plan 31 §3.14 L11，萝莉 9 用）
+    活动条件不符（孩子长大了）、场所未开放的不算；读书课不看书库此刻借没借空（那是一时的状态）。只读，不惰性创建养成数据
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import education_constant, growth_handle
+
+    return 1 if growth_handle.judge_have_course_type(character_id, education_constant.COURSE_TYPE_INTEREST) else 0
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_INTERN_COURSE)
+def handle_self_have_intern_course(character_id: int) -> int:
+    """
+    校验自己有实习课：学生岗，且个人课表上至少有一格是确有的实习课（Plan 31 §3.14 L11，萝莉 8「实习课第一次上岗」用）
+    实习课本节无人在岗时地点仍解析得出，照旧算有课（降级见习）。只读，不惰性创建养成数据
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import education_constant, growth_handle
+
+    return 1 if growth_handle.judge_have_course_type(character_id, education_constant.COURSE_TYPE_INTERN) else 0
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_PUBLIC_COURSE)
+def handle_self_have_public_course(character_id: int) -> int:
+    """
+    校验自己有公开课：学生岗，且个人课表上至少有一格是每周确有的公开课（Plan 32 §3.14 L26，萝莉 51、幼女 24「大礼堂的公开课」用）
+    与 self_have_theory_course 同一个判据（growth_handle.judge_have_course_type），只读，不惰性创建养成数据
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import education_constant, growth_handle
+
+    return 1 if growth_handle.judge_have_course_type(character_id, education_constant.COURSE_TYPE_PUBLIC) else 0
+
+
+@add_premise(constant_promise.Premise.SELF_BIRTHDAY_TODAY)
+def handle_self_birthday_today(character_id: int) -> int:
+    """
+    校验今天是自己的生日：出生日的月、日与今天相同（Plan 31 §3.14 L13，通用 3「今天是{Name}的生日」用）
+    读 pregnancy.born_time，与 cache.game_time 比月、日；2 月 29 日出生的，平年按 2 月 28 日过。
+       born_time 还是缺省值（公元 1 年）的角色不是在岛上出生的，没有可认的出生日，按不成立判。只读
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    born_time = cache.character_data[character_id].pregnancy.born_time
+    if born_time.year <= 1:
+        return 0
+    born_month, born_day = born_time.month, born_time.day
+    now_time = cache.game_time
+    if born_month == 2 and born_day == 29 and not calendar.isleap(now_time.year):
+        born_day = 28
+    return 1 if now_time.month == born_month and now_time.day == born_day else 0
 
 
 @add_premise(constant_promise.Premise.TARGET_IS_PLAYER_DAUGHTER)
@@ -1276,6 +1398,22 @@ def handle_target_not_player_daughter(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     return not handle_self_is_player_daughter(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_REPORT_CARD_CHECKABLE)
+def handle_target_report_card_checkable(character_id: int) -> int:
+    """
+    校验交互对象可以检查成绩单：不是成年后离开学生岗的女儿，她有待查看的成绩单时除外（Plan 30 §3.3 Q1，用户拍板）
+    是不是女儿、是不是婴儿不在这里判，指令 1036 的前提串里另有 target_is_player_daughter 与 t_baby_0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.Education_System import semester_handle
+
+    character_data = cache.character_data[character_id]
+    return 1 if semester_handle.judge_report_card_checkable(character_data.target_character_id) else 0
 
 
 @add_premise(constant_promise.Premise.SELF_BIRTH_TYPE_EGG)
@@ -1963,6 +2101,28 @@ def handle_work_panel_show(character_id: int) -> int:
     return 0
 
 
+TARGET_HIDDEN_INSTRUCT_TYPE_SET = {constant.InstructType.ARTS, constant.InstructType.OBSCENITY, constant.InstructType.SEX}
+""" 交互对象是临盆、产后或婴儿时不显示的指令类型：技艺、猥亵、性爱 """
+
+
+def instruct_type_shown(instruct_type: int) -> bool:
+    """
+    某一类指令当前是否显示在指令面板里
+    Keyword arguments:
+    instruct_type -- 指令类型id（constant.InstructType）
+    Return arguments:
+    bool -- 是否显示
+    功能: 玩家没有开启这一类时不显示；玩家的交互对象是临盆、产后或婴儿时，技艺、猥亵、性爱三类不显示。
+          只读玩家的指令类型过滤设置（cache.instruct_type_filter），不改写它：此前由指令面板在这种对象面前直接把三类的设置写成关闭，
+          换回别的交互对象后玩家原来的设置也回不来（设置会随存档保存）
+    """
+    if not cache.instruct_type_filter.get(instruct_type, False):
+        return False
+    if instruct_type in TARGET_HIDDEN_INSTRUCT_TYPE_SET and (handle_t_parturient_1(0) or handle_t_postpartum_1(0) or handle_t_baby_1(0)):
+        return False
+    return True
+
+
 @add_premise(constant_promise.Premise.ARTS_PANEL_SHOW)
 def handle_arts_panel_show(character_id: int) -> int:
     """
@@ -1972,7 +2132,7 @@ def handle_arts_panel_show(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if cache.instruct_type_filter[4]:
+    if instruct_type_shown(constant.InstructType.ARTS):
         return 1
     return 0
 
@@ -1986,7 +2146,7 @@ def handle_obscenity_panel_show(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if cache.instruct_type_filter[5]:
+    if instruct_type_shown(constant.InstructType.OBSCENITY):
         return 1
     return 0
 
@@ -2000,7 +2160,7 @@ def handle_sex_panel_show(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if cache.instruct_type_filter[6]:
+    if instruct_type_shown(constant.InstructType.SEX):
         return 1
     return 0
 
@@ -3469,6 +3629,22 @@ def handle_target_is_carried(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SELF_IS_CARRIED)
+def handle_self_is_carried(character_id: int) -> int:
+    """
+    自己是玩家正在搬运的干员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if character_id == 0:
+        return 0
+    if cache.character_data[0].action_info.carry_chara_id == character_id:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.T_BABY_1)
 def handle_t_baby_1(character_id: int) -> int:
     """
@@ -3483,6 +3659,23 @@ def handle_t_baby_1(character_id: int) -> int:
     if target_data.talent[101] == 1:
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.T_BABY_0)
+def handle_t_baby_0(character_id: int) -> int:
+    """
+    校验交互对象是否婴儿==0（Plan 26：检查成绩单这类只对上了学的孩子有意义的指令用）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[101] == 0:
+        return 1
+    return 0
+
 
 @add_premise(constant_promise.Premise.SELF_SEMEN_THICK_1)
 def handle_self_semen_thick_1(character_id: int) -> int:

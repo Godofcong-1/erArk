@@ -56,14 +56,16 @@ def get_path_and_times(previous_nodes: Dict[str, str], graph: Dict[str, Dict[str
     graph -- 表示加权图的字典。
     vertex -- 目标节点。
     Return arguments:
-    Tuple[List[str], List[str]]从起始节点到目标节点的路径和时间列表。
+    Tuple[List[str], List[int]]从起始节点到目标节点的路径和时间列表，path_times[i] 为走到 path[i] 这一步的耗时（起点为0）。
     """
     path = []
-    path_times = [0]
+    path_times = []
+    # 从终点沿前驱节点倒推，路径与每一步的耗时都是倒序收集的
     while vertex is not None:
         path.append(vertex)
         if previous_nodes[vertex] is not None:
             path_times.append(graph[previous_nodes[vertex]][vertex])
         vertex = previous_nodes[vertex]
-    return path[::-1], path_times
+    # 两个列表要一起翻转成从起点出发的顺序，否则 time[0] 取到的是最后一步的耗时
+    return path[::-1], [0] + path_times[::-1]
 

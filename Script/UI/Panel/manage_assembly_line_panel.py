@@ -118,8 +118,8 @@ def settle_assembly_line(newdayflag = False, draw_flag = True):
 
             # 遍历全部原料，判断是否足够
             for need_type in formula_data_now:
-                # 当前种类的原料最大生产数
-                now_type_max_produce_num = cache.rhodes_island.materials_resouce[need_type] // formula_data_now[need_type]
+                # 当前种类的原料最大生产数（取整，避免浮点库存的原料把产品与原料库存也变成浮点）
+                now_type_max_produce_num = int(cache.rhodes_island.materials_resouce[need_type] // formula_data_now[need_type])
                 # 不超过总最大生产数
                 produce_num = min(produce_num,now_type_max_produce_num)
             # print(f"debug 流水线{assembly_line_id}，实际生产数为{produce_num}")

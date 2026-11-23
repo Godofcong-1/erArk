@@ -288,11 +288,38 @@ settle_behavior_effect_data: Dict[int, FunctionType] = {}
 settle_second_behavior_effect_data: Dict[int, FunctionType] = {}
 """ 角色二段行为结算处理器 处理器id:处理器 """
 
-first_NPC_name_set = {_("阿米娅"),_("凯尔希"),_("可露希尔"),_("特蕾西娅"),_("华法琳"),_("杜宾")}
-""" 初始就有的NPC的名字 """
+# 这两个集合存干员编号（AdvNpc）而不是名字：角色名会随语言翻译，两个角色的译名可能相同（韩文里阿米娅与阿玛雅同名）
+first_NPC_adv_set: Set[int] = {
+    1,  # 阿米娅
+    3,  # 凯尔希
+    7,  # 可露希尔
+    56,  # 特蕾西娅
+    171,  # 华法琳
+    130,  # 杜宾
+}
+""" 初始就有的NPC的干员编号（AdvNpc） """
 
-ban_NPC_name_set = {_("普瑞赛斯"),_("炉芯终曲阿米娅"),_("老天师"),_("魔王"),_("菈玛莲"),_("塔露拉"),_("莉泽洛特"),_("希尔德加德"),_("坎黛拉"),_("克丽斯腾"),_("爱布拉娜"),_("温德米尔"),_("赫拉提娅"),_("文月"),_("年"),_("夕"),_("令"),_("黍")}
-""" 无法直接招募到的NPC的名字 """
+ban_NPC_adv_set: Set[int] = {
+    83,  # 普瑞赛斯
+    6666,  # 炉芯终曲阿米娅
+    1238,  # 老天师
+    4134,  # 魔王
+    1071,  # 菈玛莲
+    78,  # 塔露拉
+    487,  # 莉泽洛特
+    1115,  # 希尔德加德
+    198,  # 坎黛拉
+    537,  # 克丽斯腾
+    722,  # 爱布拉娜
+    868,  # 温德米尔
+    1384,  # 赫拉提娅
+    2006,  # 文月
+    2014,  # 年
+    2015,  # 夕
+    2023,  # 令
+    2025,  # 黍
+}
+""" 无法直接招募到的NPC的干员编号（AdvNpc） """
 
 special_end_H_list = [Behavior.H_INTERRUPT, Behavior.H_HP_0, Behavior.T_H_HP_0, Behavior.GROUP_SEX_PL_HP_0_END, Behavior.HYPNOSIS_CANCEL, Behavior.TIME_STOP_OFF]
 """ 意外中断H的行为id列表 """

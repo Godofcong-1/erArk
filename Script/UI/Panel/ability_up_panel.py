@@ -455,7 +455,8 @@ class Characterabi_show_Text:
                         mark_up_data_id = game_config.config_mark_up_data_by_ability[ability_id][now_level]
                         mark_up_data = game_config.config_mark_up_data[mark_up_data_id]
                         need_state_all_value = mark_up_data.need_state_all_value
-                        now_state_all_value, _ = second_behavior.get_now_state_all_value_and_text_from_mark_up_data(mark_up_data_id, self.character_id)
+                        # 用不到的返回值收进 __，不能写成 _：给 _ 赋值会让它成为本函数的局部变量，下面降级判断里的翻译函数 _("关押区") 就会抛 UnboundLocalError
+                        now_state_all_value, __ = second_behavior.get_now_state_all_value_and_text_from_mark_up_data(mark_up_data_id, self.character_id)
                         # 如果状态值足够，无需宝珠即可升级
                         if now_state_all_value >= need_state_all_value:
                             can_up = True

@@ -1,0 +1,23 @@
+# CI 的静态检查（.github/workflows/python-app.yml 的 Static Check 一步）
+# 本机复现：ruff check --config ruff.toml .
+#
+# 只开「几乎一定是 BUG」的规则：
+#   E9   语法错误
+#   F50  % 格式化的占位符与参数对不上
+#   F52  str.format 的占位符与参数对不上
+#   F60  字典字面量里重复的键
+#   F63  写错的比较（is 比较字面量、对元组做 assert 等）
+#   F7   语法层面的错误用法（循环外的 break、函数外的 return 等）
+#   F82  未定义的名字
+# 风格类规则一律不开，理由见 .github/skills/handle-pr/REVIEW.md「不报什么」。
+# 要新增规则：先在全仓库量一遍存量，存量清零或逐条豁免之后再加。
+target-version = "py312"
+extend-exclude = [".conda"]
+
+[lint]
+select = ["E9", "F50", "F52", "F60", "F63", "F7", "F82"]
+
+[lint.per-file-ignores]
+# Mod 脚本由 Script/Core/mod_manager.py 用 exec 执行，cache / game_config / _ / get_mod_asset
+# 等名字是执行前注入命名空间的，静态分析看不到
+"mod/**/*.py" = ["F821"]

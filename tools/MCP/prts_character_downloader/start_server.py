@@ -38,7 +38,7 @@ def run_standalone_cli():
     print("PRTS角色立绘下载器 - 独立模式")
     print("=" * 50)
     print("注意：MCP库未安装，运行在独立模式")
-    print("要使用完整的MCP功能，请运行: pip install mcp")
+    print('要使用完整的MCP功能，请运行: pip install "mcp>=1.0.0,<2"')
     print("=" * 50)
     
     downloader = PRTSCharacterDownloader()
@@ -134,7 +134,8 @@ def main():
     功能描述：根据MCP库可用性选择运行模式
     """
     if check_mcp_available():
-        print("启动 PRTS角色立绘下载器 MCP服务器...")
+        # 标准输出要留给 MCP 协议消息，提示写到标准错误
+        print("启动 PRTS角色立绘下载器 MCP服务器...", file=sys.stderr)
         asyncio.run(run_mcp_server())
     else:
         print("MCP库未安装，启动独立命令行界面...")

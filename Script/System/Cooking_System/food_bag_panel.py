@@ -236,6 +236,12 @@ class FoodBagPanel:
                 del cache.character_data[0].food_bag[i]
                 del_food_flag = True
                 continue
+            # 如果食物的菜谱在当前菜谱表里查不到（菜谱被移除、或读了更高版本的存档），则删除该食物
+            # 这种食物没有名字、类型与介绍，留在背包里会让下面的分组绘制报错
+            elif food_data.recipe not in cache.recipe_data:
+                del cache.character_data[0].food_bag[i]
+                del_food_flag = True
+                continue
             # 如果是食用类型的食物，则跳过饮用类型的食物
             if self.now_panel == _("食用") and recipe_data is not None and recipe_data.type in {2, 3, 4, 8}:
                 continue

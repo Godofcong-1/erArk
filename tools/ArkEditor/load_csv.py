@@ -2,27 +2,49 @@ import os
 import csv
 import cache_control
 
+EDITOR_CSV_DIR = "csv"
+""" 编辑器自带的表所在的目录（相对编辑器的运行目录） """
+GAME_CSV_DIR = os.path.join("..", "..", "data", "csv")
+""" 从源码运行时（运行目录是 tools/ArkEditor）游戏本体的表所在的目录 """
+
+
+def game_csv_path(file_name: str) -> str:
+    """
+    取一张游戏表的路径
+    输入: file_name(str) - 表的文件名，如 Ability.csv
+    输出: str - 表的路径
+    功能: 从源码运行时直接读游戏本体的 data/csv（与游戏用的是同一份，不会过期）；
+          打包后的编辑器没有这个目录，读打包时从游戏表拷进自带 csv/ 目录的那一份
+    """
+    game_path = os.path.join(GAME_CSV_DIR, file_name)
+    if os.path.exists(game_path):
+        return game_path
+    return os.path.join(EDITOR_CSV_DIR, file_name)
+
+
+# ---- 编辑器专用的表：只存在于编辑器自带的 csv/ 目录，新增前提 / 结算 / 行为时要同步改这里 ----
 premise_path = "csv/Premise.csv"
 premise_group_path = "csv/PremiseGroup.csv"
 behavior_data_path = "csv/Behavior_Data.csv"
 effect_path = "csv/Effect.csv"
-ability_path = "csv/Ability.csv"
-state_path = "csv/CharacterState.csv"
-experience_path = "csv/Experience.csv"
-juel_path = "csv/Juel.csv"
-talent_path = "csv/Talent.csv"
-birthplace_path = "csv/Birthplace.csv"
-nation_path = "csv/Nation.csv"
-profession_path = "csv/Profession.csv"
-race_path = "csv/Race.csv"
-body_path = "csv/BodyPart.csv"
-clothing_path = "csv/ClothingType.csv"
 organ_path = "csv/Organ.csv"
-bondage_path = "csv/Bondage.csv"
-roleplay_path = "csv/Roleplay.csv"
-item_path = "csv/Item.csv"
-gift_items_path = "csv/Gift_Items.csv"
-resource_path = "csv/Resource.csv"
+# ---- 游戏本体的表：从源码运行时直接读 data/csv，仓库里不再保留副本 ----
+ability_path = game_csv_path("Ability.csv")
+state_path = game_csv_path("CharacterState.csv")
+experience_path = game_csv_path("Experience.csv")
+juel_path = game_csv_path("Juel.csv")
+talent_path = game_csv_path("Talent.csv")
+birthplace_path = game_csv_path("Birthplace.csv")
+nation_path = game_csv_path("Nation.csv")
+profession_path = game_csv_path("Profession.csv")
+race_path = game_csv_path("Race.csv")
+body_path = game_csv_path("BodyPart.csv")
+clothing_path = game_csv_path("ClothingType.csv")
+bondage_path = game_csv_path("Bondage.csv")
+roleplay_path = game_csv_path("Roleplay.csv")
+item_path = game_csv_path("Item.csv")
+gift_items_path = game_csv_path("Gift_Items.csv")
+resource_path = game_csv_path("Resource.csv")
 
 def load_config():
     """载入配置文件"""
@@ -301,7 +323,8 @@ def save_commission_csv(file_path, commissions):
         将委托对象列表写回CSV文件
     """
     fieldnames = ["cid", "name", "country_id", "level", "type", "people", "time", "demand", "reward", "related_id", "special", "description"]
-    text = "委托id,委托名字,国家id(-1为通用),委托等级,委托类型,派遣人数,耗时天数,具体需求,具体奖励(a能力、e经验、j宝珠、t_素质编号_0为取消1为获得、r资源、c_角色adv编号_0不包含1包含、招募_adv编号_0未招募1已招募、攻略_adv编号_程度0~4、m_委托编号_-1不可完成0可以进行1已完成、声望_0为当地其他为对应势力id_加值为小数点后两位),关联的委托id,特殊委托,委托介绍\nint,str,int,int,str,int,int,str,str,int,int,str\n0,1,0,0,0,0,0,0,0,0,0,1\n委托任务表,,,,,,,,,,,"
+    # 下面写死的表头要与游戏表 data/csv/Commission.csv 的前几行保持一致，尤其是「是否翻译」那一行：委托类型（type）是翻译列，游戏里按翻译后的类型名比较
+    text = "委托id,委托名字,国家id(-1为通用),委托等级,委托类型,派遣人数,耗时天数,具体需求,具体奖励(a能力、e经验、j宝珠、t_素质编号_0为取消1为获得、r资源、c_角色adv编号_0不包含1包含、招募_adv编号_0未招募1已招募、攻略_adv编号_程度0~4、m_委托编号_-1不可完成0可以进行1已完成、声望_0为当地其他为对应势力id_加值为小数点后两位),关联的委托id,特殊委托,委托介绍\nint,str,int,int,str,int,int,str,str,int,int,str\n0,1,0,0,1,0,0,0,0,0,0,1\n委托任务表,,,,,,,,,,,"
     with open(file_path, "w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
@@ -329,7 +352,7 @@ def load_official_event_dir(dir_path):
     功能:
         目录下每个 csv 是一个部门的事件表，一次全读进来，
         左侧列表按文件分组显示，保存时只重写被改过的那个文件。
-        ⚠️ 跳表头按**行号**跳前5行，不能照抄外勤委托那种「找表名行」的写法——
+        跳表头按**行号**跳前5行，不能照抄外勤委托那种「找表名行」的写法——
            这里每个文件第5行的表名各不相同。
     """
     import os
@@ -365,7 +388,7 @@ def save_official_event_csv(dir_path, file_name, head_rows, event_list):
     返回:
         None
     功能:
-        整个文件重写。⚠️ 表头与数据行**一律走 csv.writer**，
+        整个文件重写。表头与数据行**一律走 csv.writer**，
         行尾统一 CRLF、编码 UTF-8 无 BOM——
         外勤委托那边表头用 f.write 数据行用 DictWriter，写出来是混合行尾，别照抄。
     """

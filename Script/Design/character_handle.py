@@ -1,6 +1,7 @@
 import copy
 import random
 from types import FunctionType
+from typing import Optional
 from Script.Core import (
     cache_control,
     value_handle,
@@ -53,7 +54,7 @@ def init_character(character_id: int, character_tem: game_type.NpcTem, collect_r
     now_character.cid = character_id
     now_character.name = character_tem.Name
     # 检测基础干员并加入已有干员列表
-    if now_character.name in constant.first_NPC_name_set:
+    if character_tem.AdvNpc in constant.first_NPC_adv_set:
         cache.npc_id_got.add(character_id)
     cache.npc_name_data.add(now_character.name) # 加入到已有干员姓名中
     now_character.sex = character_tem.Sex
@@ -115,13 +116,18 @@ def first_NPC_work():
     """
     for character_id in cache.npc_id_got:
         character_data = cache.character_data[character_id]
-        if character_data.name in {"可露希尔"}:
+        # 按干员编号认人：角色名会随语言翻译，不能拿中文名去比
+        # 可露希尔
+        if character_data.adv in {7}:
             character_data.work.work_type = 21
-        elif character_data.name in {"凯尔希","华法琳"}:
+        # 凯尔希、华法琳
+        elif character_data.adv in {3, 171}:
             character_data.work.work_type = 61
-        elif character_data.name in {"特蕾西娅"}:
+        # 特蕾西娅
+        elif character_data.adv in {56}:
             character_data.work.work_type = 71
-        elif character_data.name in {"杜宾"}:
+        # 杜宾
+        elif character_data.adv in {130}:
             character_data.work.work_type = 91
     basement.update_work_people()
 
@@ -134,7 +140,11 @@ def init_character_tem():
     #npc_data = cache.random_npc_list
     #numpy.random.shuffle(npc_data)
     # print("初始化角色模板数据")
-    cache.npc_tem_data = character_config.character_tem_list
+    # 必须浅拷贝而非直接引用 character_config.character_tem_list：后者是模块级全局配置池，
+    #    进程内持久且跨存档 / 跨周目共享，而 born_new_character 会往 cache.npc_tem_data 写运行时
+    #    生成的女儿模板（adv 9000~9999）。直接共享引用会把某一局的女儿写进全局池，使别的存档 /
+    #    新开的周目也能看到，进而触发本存档并不存在的女儿的相关事件（跨存档泄漏）
+    cache.npc_tem_data = dict(character_config.character_tem_list)
 
 
 def create_empty_character_tem():
@@ -354,8 +364,8 @@ def add_favorability(
     character_id: int,
     target_id: int,
     now_add_favorability: int,
-    change_data: game_type.CharacterStatusChange,
-    target_change: game_type.TargetChange,
+    change_data: Optional[game_type.CharacterStatusChange],
+    target_change: Optional[game_type.TargetChange],
 ):
     """
     增加目标角色对当前角色的好感
@@ -363,7 +373,11 @@ def add_favorability(
     character_id -- 当前角色id
     target_id -- 目标角色id
     now_add_favorability -- 增加的好感
-    target_change -- 角色状态改变对象
+    change_data -- 当前角色这一侧的状态变更记录对象，不需要记录时传None
+    target_change -- 目标角色这一侧的状态变更记录对象，不需要记录时传None
+    Return arguments:
+    无
+    功能: 两个记录对象在函数体里都判了None，母女见学好感一类不走玩家结算链的调用可以只传其中一个
     """
     target_data: game_type.Character = cache.character_data[target_id]
     target_data.favorability.setdefault(character_id, 0)

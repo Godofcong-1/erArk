@@ -95,7 +95,7 @@
 
 - 胎生：`PREGNANCY.acceleration_days`（[game_type.py:344-347](Script/Core/game_type.py#L344)）+ [get_pregnancy_past_day:41](Script/System/Pregnancy_System/pregnancy_handle.py#L41)（`(now − fertilization_time).days + int(acc)`）+ [get_acceleration_amount:54](Script/System/Pregnancy_System/pregnancy_handle.py#L54)（三重夹取剂量）+ [get_pregnancy_acceleration_amount:70](Script/System/Pregnancy_System/pregnancy_handle.py#L70)。
 - 卵：[get_hatch_day:126](Script/System/Pregnancy_System/egg_handle.py#L126) / [get_egg_acceleration_amount:138](Script/System/Pregnancy_System/egg_handle.py#L138) / [get_accelerable_hatching_eggs:151](Script/System/Pregnancy_System/egg_handle.py#L151)（供 is_drug_effective 与选卵列表共用的"可加速目标筛选"函数）。
-- ⚠️ 注意 `PREGNANCY.acceleration_days` 语义是"**本人怀孕**的加速"，并在本人受精时清零（plan_14 §3.3）——女儿长到少女后可以自己怀孕，因此**不能把成长加速复用到这个字段**，需要独立字段（§3.1）。
+- 注意 `PREGNANCY.acceleration_days` 语义是"**本人怀孕**的加速"，并在本人受精时清零（plan_14 §3.3）——女儿长到少女后可以自己怀孕，因此**不能把成长加速复用到这个字段**，需要独立字段（§3.1）。
 - 成长加速与孕期加速的差别：孕期加速是"剩余 30% 的可叠加剂量"，而本需求是"**一次到位加速到幼女前一天**"（剂量 = 89 − 当前有效天数，非公式量），因此不复用 `get_acceleration_amount`。
 
 ### 2.8 礼物口上机制与先例文件（已核实）
@@ -243,7 +243,7 @@ self.gift_child_id: int = -1
 
 ## 5. 详细改动步骤
 
-> ⚠️ 道具编号 39~41 实施时现场再核对一次空闲。
+> 道具编号 39~41 实施时现场再核对一次空闲。
 
 ### 5.1 CSV 数据（data/csv/Item.csv、Gift_Items.csv、Talent.csv）
 

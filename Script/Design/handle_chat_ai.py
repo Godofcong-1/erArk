@@ -7,7 +7,7 @@ import openai
 from google import genai
 from google.genai import types as genai_types
 import os
-import httpx
+import sys
 import re
 
 cache: game_type.Cache = cache_control.cache
@@ -483,6 +483,34 @@ def create_tem_sned_data_flags(npc_character_id: int) -> list:
 
     return tem_send_data_flags
 
+def create_openai_proxy_http_client(proxy_url: str, local_address: str = "") -> object:
+    """
+    按代理设置创建供 openai 客户端使用的 HTTP 客户端\n
+    Keyword arguments:
+    proxy_url -- 代理服务器地址，如 http://username:password@proxy_ip:proxy_port\n
+    local_address -- 本地绑定的 IP 地址，空字符串表示不绑定\n
+    Return arguments:
+    object -- openai.DefaultHttpxClient 的实例，传给 client.with_options(http_client=...) 使用；代理地址不合法时由底层库抛出异常
+    """
+    # 不绑定本地 IP：只设代理。参数名是 proxy：httpx 从 0.28 起移除了旧的 proxies，httpx2 也只有 proxy
+    if len(local_address) == 0:
+        return openai.DefaultHttpxClient(proxy=proxy_url)
+    # 绑定本地 IP 需要自己构造传输对象，而它必须出自 openai 当前所用的那个 HTTP 库：
+    # openai 2.47 之前用 httpx，之后改用 httpx2，两个库的对象不能混用。所以按 DefaultHttpxClient 的基类反查，不直接 import 其中某一个
+    http_lib = None
+    for base_class in openai.DefaultHttpxClient.__mro__:
+        root_name = base_class.__module__.split(".")[0]
+        if root_name in ("httpx", "httpx2"):
+            http_lib = sys.modules[root_name]
+            break
+    # 认不出 openai 用的是哪个库：放弃本地绑定，保证代理可用
+    if http_lib is None:
+        return openai.DefaultHttpxClient(proxy=proxy_url)
+    # 本地绑定只对不经过代理的直连生效：设了代理后全部请求都走代理，而 httpx / httpx2 在有代理时都不把本地地址传给连接。
+    # 这里仍按 openai 文档给出的写法把它带上，效果与改前一致
+    return openai.DefaultHttpxClient(proxy=proxy_url, transport=http_lib.HTTPTransport(local_address=local_address))
+
+
 def text_ai(character_id: int, behavior_id: str, original_text: str, translator: bool = False, direct_mode: bool = False) -> dict:
     """
     文本生成AI\n\n
@@ -571,13 +599,10 @@ def text_ai(character_id: int, behavior_id: str, original_text: str, translator:
         # 自定义base_url
         if cache.ai_setting.ai_chat_setting[10] == 1:
             client = client.with_options(base_url=cache.ai_setting.now_ai_chat_base_url)
-        # 自定义代理
-        if cache.ai_setting.ai_chat_setting[11] == 1:
-            if len(cache.ai_setting.now_ai_chat_proxy[1]) == 0:
-                client = client.with_options(http_client=openai.DefaultHttpxClient(proxies=cache.ai_setting.now_ai_chat_proxy[0]))
-            else:
-                client = client.with_options(http_client=openai.DefaultHttpxClient(proxies=cache.ai_setting.now_ai_chat_proxy[0], transport=httpx.HTTPTransport(local_address=cache.ai_setting.now_ai_chat_proxy[1])))
         try:
+            # 自定义代理。放在 try 里：代理地址写错时按生成失败处理、退回原文本，而不是让异常中断口上的显示
+            if cache.ai_setting.ai_chat_setting[11] == 1:
+                client = client.with_options(http_client=create_openai_proxy_http_client(cache.ai_setting.now_ai_chat_proxy[0], cache.ai_setting.now_ai_chat_proxy[1]))
             # 发送请求
             # 流式输出
             if cache.ai_setting.ai_chat_setting[14] == 1:

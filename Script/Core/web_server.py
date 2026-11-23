@@ -224,16 +224,23 @@ def string_input():
     参数：无（从request.json获取数据）
     
     返回值类型：JSON
-    功能描述：接收前端提交的字符串输入并返回处理结果
+    功能描述：游戏正在等文字输入时收下前端提交的字符串，否则不收并回复失败
     """
     global input_response
     
     data = request.json or {}
     value = data.get('value')
     
-    # 保存用户输入的字符串
+    # 只在游戏正在等文字输入（game_state 里有 input_request）时保存：
+    # 没人等的时候收下的文字会一直留着，被之后第一个等输入的地方当成答案直接读走
     with state_lock:
-        input_response = value
+        waiting = "input_request" in game_state
+        if waiting:
+            input_response = value
+
+    if not waiting:
+        logging.info(f"游戏没有在等文字输入，不收字符串输入: {value}")
+        return jsonify({"success": False, "error": "游戏没有在等文字输入"})
     
     logging.info(f"字符串输入: {value}")
     
@@ -247,22 +254,30 @@ def integer_input():
     参数：无（从request.json获取数据）
     
     返回值类型：JSON
-    功能描述：接收前端提交的整数输入并返回处理结果
+    功能描述：游戏正在等文字输入时收下前端提交的整数，否则不收并回复失败
     """
     global input_response
     
     data = request.json or {}
     value = data.get('value')
     
-    # 保存用户输入的整数
+    # 转不成整数的值记为0
     try:
-        with state_lock:
-            input_response = int(value) if value is not None else 0
+        number = int(value) if value is not None else 0
     except (ValueError, TypeError):
-        with state_lock:
-            input_response = 0
+        number = 0
     
-    logging.info(f"整数输入: {input_response}")
+    # 只在游戏正在等文字输入时保存，理由同字符串输入
+    with state_lock:
+        waiting = "input_request" in game_state
+        if waiting:
+            input_response = number
+
+    if not waiting:
+        logging.info(f"游戏没有在等文字输入，不收整数输入: {number}")
+        return jsonify({"success": False, "error": "游戏没有在等文字输入"})
+
+    logging.info(f"整数输入: {number}")
     
     return jsonify({"success": True})
 
@@ -2356,6 +2371,18 @@ def _get_sub_panel_mode_data():
     
     return data
 
+def _copy_game_state():
+    """
+    取 game_state 的浅拷贝
+
+    参数：无
+
+    返回值类型：dict
+    功能描述：在锁内拷贝 game_state 的全部字段，常规更新与完整游戏状态都以它为底，之后不必长时间持有锁
+    """
+    with state_lock:
+        return game_state.copy()
+
 def send_full_game_state():
     """
     发送完整的游戏状态到前端（包含新UI所需的所有数据）
@@ -2370,15 +2397,10 @@ def send_full_game_state():
         from Script.Design import web_interaction_manager
         from Script.System.Instruct_System import instruct_meta
         
-        # 构建完整游戏状态
-        full_state = {}
-        
-        # 基础状态（旧API兼容）
-        with state_lock:
-            full_state["text_content"] = game_state.get("text_content", [])
-            full_state["buttons"] = game_state.get("buttons", [])
-            full_state["panel_id"] = game_state.get("panel_id")
-            full_state["skip_wait"] = game_state.get("skip_wait", False)
+        # 构建完整游戏状态：以 game_state 的全部字段为底，与常规更新相同。
+        # 这条状态是发给所有已连接页面的（不只是新连上的那个），前端每收到一条状态就按它整个重画：
+        # 少带了 input_request，各页面的输入框就不再提交文字；少带了 sub_panel_mode / sub_panel_data，子面板上方的场景信息栏与选项卡就没了
+        full_state = _copy_game_state()
         
         # 玩家信息
         if hasattr(cache, 'character_data') and 0 in cache.character_data:
@@ -2460,8 +2482,7 @@ def _emit_game_state_update():
     功能描述：通过WebSocket将游戏状态推送给所有连接的客户端
     """
     # 创建一个本地副本，避免长时间持有锁
-    with state_lock:
-        local_state = game_state.copy()
+    local_state = _copy_game_state()
     
     # 添加对话框状态
     try:
@@ -2599,13 +2620,16 @@ def get_input_response():
     参数：无
     
     返回值类型：str、int或None
-    功能描述：返回用户输入的内容，获取后清空
+    功能描述：返回用户输入的内容，获取后清空；取到内容时这次输入请求已经答完，同时从 game_state 里去掉 input_request
     """
     global input_response
     
     with state_lock:
         response = input_response
         input_response = None
+        # 答完的输入请求不能留在状态里：前端只要看到 input_request 就会把输入框里的文字提交上来
+        if response is not None:
+            game_state.pop("input_request", None)
     
     return response
 

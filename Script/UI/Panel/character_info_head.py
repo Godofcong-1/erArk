@@ -9,7 +9,7 @@ from Script.Core import (
     constant,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import attr_calculation
+from Script.Design import attr_calculation, game_time
 from Script.UI.Panel import hypnosis_panel
 
 cache: game_type.Cache = cache_control.cache
@@ -27,27 +27,36 @@ window_width = normal_config.config_normal.text_width
 def get_now_class_tip(character_id: int):
     """
     取角色当前的上课信息，供 <课> / <翘> 状态标识使用（Plan 22）
-    ⚠️ 只在角色**此刻正在上课/授课**时返回内容，而不是"本节有排课"——状态标识描述的是此刻的状态，
+    只在角色**此刻正在上课/授课**时返回内容，而不是"本节有排课"——状态标识描述的是此刻的状态，
        与 <跟> <饿> 的口径一致。孩子因体力不足去休息、或被叫走跟随时不该显示 <课>
+    <翘> 与上课状态的 SKIP 同口径（Plan 32 §3.9 L1）：只在本节有课、不是点名必修的实操课、人不在 H 里时亮，没课的空节不亮
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     tuple or None -- 不在上课中则为None，否则为 (是否翘课bool, 悬停提示文本str)
     """
-    from Script.System.Education_System import education_constant, schedule_handle
-    from Script.Design import game_time
+    from Script.System.Education_System import class_ai, education_constant, growth_handle, schedule_handle
+    from Script.Design import game_time, handle_premise, map_handle
 
     character_data: game_type.Character = cache.character_data[character_id]
-    growth_data = character_data.child_growth
     period = game_time.get_class_period(character_id)
 
-    # 翘课中：本该上课的节次里挂着翘课flag
-    if growth_data is not None and growth_data.skip_class_flag and period != -1:
+    # 翘课中：本该上课的节次里挂着今天的翘课flag。
+    #    flag 只在挂上的那一天有效（Plan 31 §3.6）：跨天结算在 NPC 阶段之后才清 flag、离线的人跨天不清，
+    #    直接读 flag 会让前一天翘过课的女儿第二天整天挂着 <翘>。
+    #    只在上课状态判 SKIP 时亮（Plan 32 §3.9 L1）：本节有课、不是点名必修的实操课、体力够（不够是体力缺课）、也不是正要去上实操课。
+    #    此前不看这一节有没有课、在不在课上：没课的空节写「翘课中（第 N 节）」，被点名进了博士的实操课也写「本该上 实操课」。
+    #    人在 H 里（课堂 H、被玩家带进 H）同样不算在翘课。flag 挂着才调 get_course_stage，没翘课的人不多算一遍；
+    #    不亮时落到下面的 <课> 判定
+    if (
+        period != -1
+        and not character_data.sp_flag.is_h
+        and class_ai.judge_skip_class_today(character_id)
+        and class_ai.get_course_stage(character_id) == education_constant.COURSE_STAGE_SKIP
+    ):
         now_course = schedule_handle.get_now_course(character_id)
         if now_course is not None:
-            return True, _("翘课中：本该上 {0}（第{1}节）").format(
-                get_course_text(now_course), period + 1)
-        return True, _("翘课中（第{0}节）").format(period + 1)
+            return True, _("翘课中：本该上 {0}（第{1}节）").format(get_course_text(now_course), period + 1)
 
     behavior_id = character_data.behavior.behavior_id
     # 教师视角：正在授课
@@ -62,30 +71,53 @@ def get_now_class_tip(character_id: int):
 
     # 学生视角：正在听课或自习（自习是本节没有可用教师时的降级，仍然算在上课中）
     if behavior_id in {constant.Behavior.ATTENT_CLASS, constant.Behavior.SELF_STUDY}:
+        # 在听玩家的手动授课（Plan 32 §3.9 L13）：被「授课」拉来的学生按玩家这一节的课型（按所在教室判）与学识写，与 512 的结算同口径。
+        #    此前按她自己的课表取：节次外只写「上课中」，节次内写课表上的那门课与那位 NPC 教师，实际发的是学识
+        listen_course = handle_premise.get_listen_manual_teach_course(character_id)
+        if listen_course is not None:
+            scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+            classroom = cache.scene_data[scene_path_str].scene_name if scene_path_str in cache.scene_data else ""
+            listen_text = get_course_text({"course_type": listen_course[0], "ability_id": listen_course[1], "classroom": classroom, "target": classroom})
+            teacher_name = cache.character_data[0].name
+            # 节次外的手动授课没有「第几节」可写
+            if period == -1:
+                return False, _("{0}｜授课：{1}").format(listen_text, teacher_name)
+            return False, _("{0}｜授课：{1}｜第{2}节").format(listen_text, teacher_name, period + 1)
         now_course = schedule_handle.get_now_course(character_id)
         if now_course is None:
+            # 此刻没课的自习是日程活动「上课（无课时自习）」：第五轮起不计出勤，本来就不算一节课（Plan 28 §3.7）。
+            #    节次外也会有（节次外照旧自习 45 分钟）。听课而此刻没课、又不是在听玩家的手动授课的（被拉来后玩家已换了行为等），仍算上课中
+            if behavior_id == constant.Behavior.SELF_STUDY:
+                return False, _("自习中（日程安排，此刻没课）")
             return False, _("上课中")
         text = get_course_text(now_course)
-        # ⚠️ 只有班级式的教室课才有"教师缺席降级自习"的说法；
+        # 只有班级式的教室课才有"教师缺席降级自习"的说法；
         #    体育/兴趣/实习课本就没有指派教师（teacher_id 恒为 -1），不能误报成自习
         if now_course["course_type"] not in education_constant.CLASSROOM_COURSE_TYPE_SET:
             return False, _("{0}｜第{1}节").format(text, period + 1)
-        # 本节没有教师、或人已经在自习了，都按自习显示
+        # 本节没有教师、或人已经在自习了，都按自习显示。
+        #    悬停不写「经验减半」（Plan 32 §3.9 L15）：自习的科目经验是理论课的 1/3、实践课的 1/5、公开课不变
+        #    （education_constant.SELF_STUDY_EXP_BASE 对 COURSE_EXP_BASE），并不是一半
         if now_course["teacher_id"] == -1 or behavior_id == constant.Behavior.SELF_STUDY:
-            return False, _("自习·{0}｜本节无教师，经验减半｜第{1}节").format(text, period + 1)
+            return False, _("自习·{0}｜本节无教师，按自习收益｜第{1}节").format(text, period + 1)
         teacher_data: game_type.Character = cache.character_data[now_course["teacher_id"]]
         return False, _("{0}｜授课：{1}｜第{2}节").format(text, teacher_data.name, period + 1)
 
     # 个人式课型：人在该课的地点上，就算在上课
-    # ⚠️ 这三种课执行的是既有行为（打木桩、下棋、跟岗），没有专属的"上课"行为可认，
+    # 这三种课执行的是既有行为（打木桩、下棋、跟岗），没有专属的"上课"行为可认，
     #    只能靠"本节排了这门课 + 人确实在那个地点"来判定
     if period != -1:
         now_course = schedule_handle.get_now_course(character_id)
         if now_course is not None and now_course["course_type"] not in education_constant.CLASSROOM_COURSE_TYPE_SET:
-            from Script.Design import map_handle
-
+            # 体力不足缺这一节课（721 记缺课后原地休息）、或这一节已经记过缺课的不亮（Plan 32 §3.9 L14）：
+            #    此前只看「本节有这门课 + 人在地点」，她在体育课的地点缺课休息时照样显示在上课，与本函数开头的口径相反。
+            #    人在 H 里（在上课地点被玩家带进 H）同样不在上课（实施复审补）：<翘> 对在 H 里的人不亮，这里不挡就改亮 <课>
+            now_time = character_data.behavior.start_time or cache.game_time
+            if behavior_id == constant.Behavior.REST or character_data.sp_flag.is_h or growth_handle.judge_absent_this_period(character_id, now_time):
+                return None
             to_place = schedule_handle.get_course_place(now_course)
-            if to_place and map_handle.get_map_system_path_str_for_list(character_data.position) ==                     map_handle.get_map_system_path_str_for_list(to_place):
+            now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+            if to_place and now_scene_str == map_handle.get_map_system_path_str_for_list(to_place):
                 text = get_course_text(now_course)
                 # 实习课再补一句导师是谁：导师不预先指派，到点看现场谁在岗
                 if now_course["course_type"] == education_constant.COURSE_TYPE_INTERN:
@@ -172,10 +204,10 @@ def get_character_status_list(character_id: int) -> Tuple[List[draw.LeftDraw], L
     status_text_list.append(class_text)
 
     # 跟随母亲见学状态（Plan 22 二期）：与上面的 <课> 一样，一处改动同时覆盖 Tk 与 Web
-    # ⚠️ 函数内延迟 import：UI 层在 Core/UI，教育逻辑在 System，模块级 import 会启动即循环（口径16）
+    # 函数内延迟 import：UI 层在 Core/UI，教育逻辑在 System，模块级 import 会启动即循环（口径16）
     from Script.System.Education_System import class_ai
 
-    # ⚠️ 用 <学> 而不是 <跟>：<跟> 已经是「智能跟随玩家」的标识，两者语义完全不同
+    # 用 <学> 而不是 <跟>：<跟> 已经是「智能跟随玩家」的标识，两者语义完全不同
     follow_mother_draw = draw.LeftDraw()
     follow_mother_draw.style = "wheat"
     follow_mother_text = ""
@@ -265,7 +297,8 @@ def get_character_status_list(character_id: int) -> Tuple[List[draw.LeftDraw], L
         # 如果处于睡觉中被吵醒状态则输出被吵醒，并附上剩余的无法入睡时间
         elif handle_premise.handle_sleep_disturbed_1(character_id):
             sleep_text = _(" <被吵醒>")
-            left_minute = int((character_data.action_info.sleep_disturbed_end_time - cache.game_time).total_seconds() // 60)
+            # 按可游玩时间算：结束时间在下一个季月时，公历时长会多出被时钟跳过的约两个月
+            left_minute = int(game_time.count_play_second(cache.game_time, character_data.action_info.sleep_disturbed_end_time) // 60)
             left_minute = max(1, left_minute)
             sleep_draw.tooltip = _("刚被吵醒，还需{0}分钟才会重新想睡").format(left_minute)
             sleep_draw.style = "warning"

@@ -1297,8 +1297,8 @@ def update_tem_character(loaded_dict):
                 value.cid = 469
                 update_count += 1
                 continue
-            # 修正阿玛雅的序号错误
-            if value.name == _("阿玛雅") and value.adv != 448:
+            # 修正阿玛雅的序号错误（旧存档里她与死芒同为450号；只看450号，避免把别的语言里译名相同的角色也算进来）
+            if value.adv == 450 and value.name == _("阿玛雅"):
                 value.adv = 448
                 value.cid = 448
                 update_count += 1
@@ -1326,26 +1326,37 @@ def fix_wrong_character(loaded_dict):
 
     # 遍历角色属性，修正错误的adv编号
     for key, value in loaded_dict["character_data"].items():
-        # 阿玛雅
-        if value.name == _("阿玛雅") and value.adv != 448:
+        # 阿玛雅：旧存档里她与死芒同为450号，450号里名字是阿玛雅的才是她
+        #    只看450号：角色名随语言翻译，韩文里阿米娅与阿玛雅译名相同，只比名字会把编号正确的阿米娅搬到448号并重置1号
+        if value.adv == 450 and value.name == _("阿玛雅"):
             # 寻找adv为448的角色
             for key2, value2 in loaded_dict["character_data"].items():
                 if value2.adv == 448:
+                    # 先记下阿玛雅原来占用的编号与adv，下面要用它们给原位置重建模板角色
+                    old_cid = value.cid
+                    old_adv = value.adv
                     # 将阿玛雅的角色数据复制过去
                     loaded_dict["character_data"][key2] = loaded_dict["character_data"][key]
-                    # 将adv改为448
+                    # 将adv与cid一起改为448（只改adv会让cid仍指向原编号的角色，收藏品等以cid为键的数据会错位）
                     loaded_dict["character_data"][key2].adv = 448
+                    loaded_dict["character_data"][key2].cid = 448
                     # 将当前角色改为当前模板的角色
-                    now_tem_chara = loaded_dict["npc_tem_data"].get(value.cid, None)
+                    now_tem_chara = loaded_dict["npc_tem_data"].get(old_cid, None)
                     if now_tem_chara is None:
-                        now_tem_chara = loaded_dict["npc_tem_data"].get(value.adv, None)
+                        now_tem_chara = loaded_dict["npc_tem_data"].get(old_adv, None)
                     if now_tem_chara is not None:
                         # 创建一个新的角色数据
-                        new_character = character_handle.init_character(value.cid, now_tem_chara)
+                        new_character = character_handle.init_character(old_cid, now_tem_chara)
                         # 重新赋值角色数据
                         loaded_dict["character_data"][key] = new_character
                     update_count += 1
                     break
+
+    # 修正cid与存档键、adv都不一致的角色（旧版的阿玛雅修正只改了adv没改cid，留下了键与adv为448、cid却仍为死芒450的阿玛雅）
+    for key, value in loaded_dict["character_data"].items():
+        if key != 0 and value.adv == key and value.cid != key:
+            value.cid = key
+            update_count += 1
 
     return update_count
 
@@ -1527,6 +1538,15 @@ def update_chara_cloth(value, tem_character):
         value.dirty.cloth_semen = empty_dirty_data.cloth_semen
     if len(value.dirty.cloth_locker_semen) != len(game_config.config_clothing_type):
         value.dirty.cloth_locker_semen = empty_dirty_data.cloth_locker_semen
+    # 两张服装精液表都规整成「服装部位 -> 列表」的 dict：
+    # 1. 很旧的存档里它们是按部位顺序排的列表。按下标取值时与 dict 一样能用，但「部位 in 表」对列表查的是值而不是下标，按 dict 写的代码会判错
+    # 2. 衣柜的表换成自己的 dict 与列表：旧存档里它可能与穿着的表是同一个对象（旧版本「检查衣柜」造成），或各部位共用同一个列表，
+    #    之后往穿着的衣服上射精会同时改衣柜的表、穿回时精液量翻倍
+    if isinstance(value.dirty.cloth_semen, list):
+        value.dirty.cloth_semen = dict(enumerate(value.dirty.cloth_semen))
+    locker_semen = value.dirty.cloth_locker_semen
+    locker_semen_item_list = enumerate(locker_semen) if isinstance(locker_semen, list) else locker_semen.items()
+    value.dirty.cloth_locker_semen = {clothing_type: list(semen_list) for clothing_type, semen_list in locker_semen_item_list}
 
     # 跳过玩家
     if value.cid == 0:

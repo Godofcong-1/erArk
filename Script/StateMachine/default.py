@@ -119,7 +119,7 @@ def character_move_to_dormitory(character_id: int):
     from Script.System.Dormitory_System import common as dormitory_common
     character_data: game_type.Character = cache.character_data[character_id]
     # 增加一个对宿舍是否为无的判定
-    if character_data.dormitory == _("无"):
+    if character_data.dormitory == "无":
         dormitory_common.new_character_get_dormitory(character_id)
     target_scene = map_handle.get_map_system_path_for_str(character_data.dormitory)
     general_movement_module(character_id, target_scene)
@@ -243,7 +243,7 @@ def character_move_to_toilet(character_id: int):
         # 如果是助理，且开启了同居服务
         if handle_premise.handle_is_assistant(character_id) and handle_premise.handle_assistant_live_together_on(character_id):
             # 如果当前在控制中枢
-            if now_position == _("中枢") or now_position == _("控制中枢"):
+            if now_position == "中枢" or now_position == "控制中枢":
                 # 优先去博士房间
                 to_toilet = map_handle.get_map_system_path_for_str(
                     random.choice(constant.place_data["Dr_room"])
@@ -357,14 +357,31 @@ def character_move_to_clinic(character_id: int):
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_PHYSICAL_EXAMINATION)
 def character_move_to_physical_examination(character_id: int):
     """
-    移动至体检科
+    移动至体检科，体检科满员时放弃今天的体检
     Keyword arguments:
     character_id -- 角色id
     """
-    to_physical_examination = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["Physical_Examination"])
-    )
-    general_movement_module(character_id, to_physical_examination)
+    to_physical_examination_str = random.choice(constant.place_data["Physical_Examination"])
+    if map_handle.judge_scene_is_full(to_physical_examination_str):
+        give_up_today_health_check(character_id)
+        return
+    general_movement_module(character_id, map_handle.get_map_system_path_for_str(to_physical_examination_str))
+
+
+def give_up_today_health_check(character_id: int):
+    """
+    放弃今天的体检：清空今天的体检安排并退出等待体检名单，原地发呆1分钟后回到日常行动，下一个体检日照常抽选
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.action_info.health_check_today = 0
+    cache.rhodes_island.waiting_for_exam_operator_ids.discard(character_id)
+    handle_premise.settle_chara_unnormal_flag(character_id, 3)
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+    character_data.behavior.duration = 1
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_INPATIENT_DEPARTMENT)
@@ -434,41 +451,49 @@ def character_move_to_library(character_id: int):
 def character_move_to_class_room(character_id: int):
     """
     移动到教室
-    ⚠️ Plan 22 改造：目标教室改为由课表决定——教师去自己本节要授课的教室，学生去自己本节选的教室；
-       课表查不到（没排课、非师生、旧存档）时回落既有的"在全部理论教室里随机选一间"，不留死分支
+    Plan 22 改造：目标教室改为由课表决定。现在的调用方有三个（Plan 24 并入工作链后）：
+       教师的 210700 / 210705（去本节或马上那一节授课的教室）、学生的 210800（待赴实操课的教室）、
+       娱乐 155「上课（无课时自习）」的自动 AI（学生没课时去自习，走下面的学生分支，多半落到随机回落）。
+       课表查不到（没排课、非师生、旧存档）时回落"在已开放的理论教室里随机选一间"，不留死分支
+       （Plan 27 §3.2：此前在全部 6 间里随机，开局只开理论教室一，挑中锁着的会走到门口一分钟一分钟地空转）
     Keyword arguments:
     character_id -- 角色id
     """
-    from Script.System.Education_System import education_constant, schedule_handle
-
-    from Script.System.Education_System import class_ai
-
-    character_data: game_type.Character = cache.character_data[character_id]
-    now_time = character_data.behavior.start_time
-    if now_time is None:
-        now_time = cache.game_time
+    from Script.System.Education_System import class_ai, education_constant, schedule_handle
 
     target_room = ""
     # 预到岗：下一节是自己要上的性技实操课时，目标教室要查**下一节**而不是当前节次，
-    # 否则学生会走去上一节课的教室（Plan 22 四期 §3.28.5）
-    next_class, next_classroom = class_ai.get_next_sex_class(character_id, now_time)
-    if next_class is not None:
+    # 否则学生会走去上一节课的教室（Plan 22 四期 §3.28.5）。
+    #    只认学生岗（Plan 25 §3.6）：被任命为教师、课表还有残留的成年女儿不能被带去实操教室，和她自己的授课行来回拉扯
+    next_classroom = class_ai.get_pending_sex_classroom(character_id)
+    if next_classroom:
         target_room = next_classroom
-    # 教师视角：反查全局课表
+    # 教师视角：反查全局课表；本节没课时看马上要开始的那一节（到岗时间与课间，第五轮）
     teaching = schedule_handle.get_now_teaching(character_id)
+    if teaching is None:
+        teaching = schedule_handle.get_upcoming_teaching(character_id)
     if target_room:
         pass
     elif teaching is not None:
         target_room = teaching["classroom"]
     else:
-        # 学生视角：查个人课表，只有班级式课型才在教室里上
+        # 学生视角：查个人课表，只有班级式课型才在教室里上；到岗时间看马上要开始的那一节（第五轮）
         now_course = schedule_handle.get_now_course(character_id)
+        if now_course is None:
+            now_course = schedule_handle.get_upcoming_course(character_id)
         if now_course is not None and now_course["course_type"] in education_constant.CLASSROOM_COURSE_TYPE_SET:
             target_room = now_course["classroom"]
     to_class_room = []
     if target_room:
         to_class_room = schedule_handle.get_classroom_position(target_room)
-    # 回落：课表没排或教室已不存在时，仍按既有逻辑随机去一间理论教室
+    # 回落：课表没排或教室已不存在时（多是排了「上课（无课时自习）」的学生去自习），随机去一间**已开放**的理论教室（Plan 27 §3.2）。
+    #    Class_Room 标签装的是全部 6 间，理论教室二~六要教育区 2~5 级才解锁；挑中锁着的，寻路在门口返回 wait_open，
+    #    等 1 分钟后下一次决策又重新随机，在几间锁着的教室门口之间来回走
+    if not to_class_room:
+        open_room_list = schedule_handle.get_classroom_list(education_constant.COURSE_TYPE_THEORY)
+        if open_room_list:
+            to_class_room = schedule_handle.get_classroom_position(random.choice(open_room_list))
+    # 一间都没开时（理论教室一不在解锁表里、恒开放，实际不会发生）才退回在全部理论教室里随机
     if not to_class_room:
         to_class_room = map_handle.get_map_system_path_for_str(
             random.choice(constant.place_data["Class_Room"])
@@ -1421,21 +1446,14 @@ def character_entertain_read(character_id: int):
     """
     from Script.UI.Panel import borrow_book_panel
     character_data: game_type.Character = cache.character_data[character_id]
-    # 检查是否要借书
-    can_borrow = borrow_book_panel.check_random_borrow_book(character_id)
-    if not can_borrow:
+    # 没借书就先借一本，并把借着的那本写进 behavior（与兴趣课读书共用，Plan 29 §3.2）；借不到就等 1 分钟
+    if not borrow_book_panel.prepare_npc_read_book(character_id):
         character_data.behavior.behavior_id = constant.Behavior.WAIT
         character_data.behavior.duration = 1
         character_data.state = constant.CharacterStatus.STATUS_WAIT
         return
-
-    for book_id_all in character_data.entertainment.borrow_book_id_set:
-        book_id = book_id_all
-    book_data = game_config.config_book[book_id]
     character_data.behavior.behavior_id = constant.Behavior.READ_BOOK
     character_data.state = constant.CharacterStatus.STATUS_READ_BOOK
-    character_data.behavior.book_id = book_id
-    character_data.behavior.book_name = book_data.name
     character_data.behavior.duration = 30
 
 
@@ -2685,29 +2703,35 @@ def character_work_teach(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
+    from Script.System.Education_System import schedule_handle
+
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.TEACH
-    character_data.behavior.duration = 45
+    # 时长截到本节结束：迟到的教师照满45分钟讲，会压进她下一节在别的教室的课（Plan 22 第五轮）
+    character_data.behavior.duration = schedule_handle.get_period_left_minute(character_id)
     character_data.state = constant.CharacterStatus.STATUS_TEACH
-    # 将当前场景里所有工作是上学的角色变为学习状态
-    # 遍历当前场景的其他角色
+    # 把本节来上这间教室的学生变为听课状态
+    # 只拉自己的学生（本节个人课表指向这间教室的人），不再把场景里所有学生岗都拉过来：
+    #    跟着当教师的母亲来见学的幼女、路过的孩子不该被顺手记一节课（Plan 22 第五轮）。
+    #    判据与学生自己决策时同口径：只认学生岗，过体力闸与心情闸（必修生豁免）——开课前已在教室里等候的学生，
+    #    本节该体力缺课或掷中翘课的，不能因为教师先被处理就被拉进来（Plan 25 §3.5）
+    from Script.System.Education_System import class_ai
+
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-    # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 跳过自己
-            if chara_id == character_id:
-                continue
-            else:
-                other_character_data: game_type.Character = cache.character_data[chara_id]
-                # 让对方变成听课状态
-                if other_character_data.work.work_type == 152:
-                    other_character_data.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
-                    other_character_data.behavior.duration = 45
-                    other_character_data.state = constant.CharacterStatus.STATUS_ATTENT_CLASS
+    for chara_id in scene_data.character_list:
+        # 跳过自己
+        if chara_id == character_id:
+            continue
+        if not class_ai.judge_student_join_class(chara_id, scene_data.scene_name, character_data.behavior.start_time):
+            continue
+        other_character_data: game_type.Character = cache.character_data[chara_id]
+        # 让对方变成听课状态，开始时刻与教师对齐，节次判定才对得上
+        other_character_data.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+        other_character_data.behavior.start_time = character_data.behavior.start_time
+        other_character_data.behavior.duration = character_data.behavior.duration
+        other_character_data.state = constant.CharacterStatus.STATUS_ATTENT_CLASS
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_ATTENT_CLASS)
@@ -2717,10 +2741,13 @@ def character_attend_class(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
+    from Script.System.Education_System import schedule_handle
+
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
-    character_data.behavior.duration = 45
+    # 时长截到本节结束，晚到的学生下一节才能按时换教室（Plan 22 第五轮）
+    character_data.behavior.duration = schedule_handle.get_period_left_minute(character_id)
     character_data.state = constant.CharacterStatus.STATUS_ATTENT_CLASS
 
 
@@ -2728,14 +2755,17 @@ def character_attend_class(character_id: int):
 def character_education_self_study(character_id: int):
     """
     上课：本节无可用教师，降级为自习（Plan 22 §3.5）
-    ⚠️ 与听课的区别只在结算：自习走 548 效果，基础值降档且不吃师生等级差
+    与听课的区别只在结算：自习走 548 效果，基础值降档且不吃师生等级差
     Keyword arguments:
     character_id -- 角色id
     """
+    from Script.System.Education_System import schedule_handle
+
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SELF_STUDY
-    character_data.behavior.duration = 45
+    # 节次内截到本节结束；日程活动「上课（无课时自习）」在节次外照旧45分钟（Plan 22 第五轮）
+    character_data.behavior.duration = schedule_handle.get_period_left_minute(character_id)
     character_data.state = constant.CharacterStatus.STATUS_SELF_STUDY
 
 
@@ -2745,10 +2775,13 @@ def character_education_skip_class(character_id: int):
     上课：翘课（Plan 22 §3.19）
     还在教室里就先溜回自己宿舍，人已经不在教室了才开始摸鱼——
     翘课的可见表现就是"该在教室的人不在教室"，这一步不能省
+    开始摸鱼时记一节缺课（Plan 30）：翘掉的课原先不进出勤率，常翘课的孩子照评良好。
+       与 721 同理，前提不能有副作用，所以记在状态机里；settle_absent 与体力缺课共用同一节的去重标记，
+       翘课 flag 挂着时之后每一节派到这里各记一节。先离开教室的那一步不记，到了外面开始摸鱼时才记
     Keyword arguments:
     character_id -- 角色id
     """
-    from Script.System.Education_System import education_constant
+    from Script.System.Education_System import class_ai, education_constant
 
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
@@ -2761,6 +2794,7 @@ def character_education_skip_class(character_id: int):
         to_dormitory = map_handle.get_map_system_path_for_str(character_data.dormitory)
         general_movement_module(character_id, to_dormitory)
         return
+    class_ai.settle_absent(character_id, by_skip=True)
     character_data.behavior.behavior_id = constant.Behavior.SKIP_CLASS
     character_data.behavior.duration = 45
     character_data.state = constant.CharacterStatus.STATUS_SKIP_CLASS
@@ -2776,6 +2810,9 @@ def character_education_move_to_course_place(character_id: int):
     from Script.System.Education_System import schedule_handle
 
     now_course = schedule_handle.get_now_course(character_id)
+    # 到岗时间：本节还没开始，去马上要上的那一节的地点（第五轮）
+    if now_course is None:
+        now_course = schedule_handle.get_upcoming_course(character_id)
     if now_course is None:
         return
     to_place = schedule_handle.get_course_place(now_course)
@@ -2788,14 +2825,19 @@ def character_education_move_to_course_place(character_id: int):
 def character_education_do_course(character_id: int):
     """
     上课：在个人式课型的地点执行该课对应的既有行为（Plan 22 §3.21）
-    ⚠️ 体育课与兴趣课执行的是自带效果串的既有行为，学生侧无需另加结算；
-       实习课走新增的 intern_class，它的效果串里带一次学徒侧结算
-    ⚠️ 时长一律截到45分钟（一节课）：战斗训练本是120分钟、锻炼与游泳是60分钟，
+    体育课与兴趣课执行的是自带效果串的既有行为，学生侧的学习收益无需另加结算；
+       但这些行为全岛共用（成年干员娱乐时也走它们），效果串里加不了出勤，所以出勤在这里派出行为时记一节
+       （growth_handle.settle_course_attend，同一节只记一次，Plan 29 §3.1）；
+       实习课走新增的 intern_class，它的效果串里带一次学徒侧结算（552），出勤也由那里记，这里不另记
+    兴趣课「读书」要先借书：读书结算按 behavior.book_id 取书、口上按 behavior.book_name 写书名，
+       与娱乐读书（401）共用 prepare_npc_read_book 装配；借不到书（判定与执行之间被别人借走）就等 1 分钟、不记出勤，
+       下一次决策时 get_now_course 会按「借不到书视为没课」交回娱乐链（Plan 29 §3.2）
+    时长一律截到45分钟（一节课）：战斗训练本是120分钟、锻炼与游泳是60分钟，
        照原时长会让一节体育课吃掉整个上午。既有结算按 add_time 线性计算，截断天然成立
     Keyword arguments:
     character_id -- 角色id
     """
-    from Script.System.Education_System import education_constant, schedule_handle
+    from Script.System.Education_System import education_constant, growth_handle, schedule_handle
 
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
@@ -2815,6 +2857,15 @@ def character_education_do_course(character_id: int):
         if now_course["target"] in game_config.config_entertainment:
             state_id = game_config.config_entertainment[now_course["target"]].behavior_id
             behavior_name = schedule_handle.get_behavior_name_by_cid(state_id)
+            # 读书先借书并装配 behavior.book_id / book_name
+            if behavior_name == constant.Behavior.READ_BOOK:
+                from Script.UI.Panel import borrow_book_panel
+
+                if not borrow_book_panel.prepare_npc_read_book(character_id):
+                    character_data.behavior.behavior_id = constant.Behavior.WAIT
+                    character_data.behavior.duration = 1
+                    character_data.state = constant.CharacterStatus.STATUS_WAIT
+                    return
     # 实习课：本计划新增的行为
     elif course_type == education_constant.COURSE_TYPE_INTERN:
         behavior_name = constant.Behavior.INTERN_CLASS
@@ -2822,21 +2873,25 @@ def character_education_do_course(character_id: int):
     if not behavior_name or not state_id:
         return
     character_data.behavior.behavior_id = behavior_name
-    character_data.behavior.duration = 45
+    # 截到本节结束（Plan 22 第五轮），最多一节课45分钟
+    character_data.behavior.duration = schedule_handle.get_period_left_minute(character_id)
     character_data.state = state_id
+    # 体育课与兴趣课在派出行为时记一节出勤（实习课由 552 记）
+    if course_type in (education_constant.COURSE_TYPE_PE, education_constant.COURSE_TYPE_INTEREST):
+        growth_handle.settle_course_attend(character_id)
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.EDUCATION_MOVE_TO_MOTHER)
 def character_education_move_to_mother(character_id: int):
     """
     见学：移动到母亲当前所在的场景（Plan 22 二期 §3.24）
-    ⚠️ 每次都重新读母亲的位置：母亲自己也在走班/上下工，钉死一个目标点会追丢
+    每次都重新读母亲的位置：母亲自己也在走班/上下工，钉死一个目标点会追丢
     Keyword arguments:
     character_id -- 角色id
     """
     from Script.System.Education_System import class_ai
 
-    mother_id = class_ai.judge_mother_available(character_id)
+    mother_id = class_ai.judge_mother_followable(character_id)
     # 走到半路母亲失效了（下班进了H、被叫去外勤），本函数直接返回，
     # 下一轮 AI 会重新判定并改走育儿室分支
     if mother_id == -1:
@@ -2855,7 +2910,7 @@ def character_education_follow_mother(character_id: int):
     from Script.System.Education_System import class_ai
 
     character_data: game_type.Character = cache.character_data[character_id]
-    mother_id = class_ai.judge_mother_available(character_id)
+    mother_id = class_ai.judge_mother_followable(character_id)
     if mother_id == -1:
         return
     character_data.target_character_id = mother_id
@@ -2863,7 +2918,7 @@ def character_education_follow_mother(character_id: int):
     character_data.behavior.duration = 60
     character_data.state = constant.CharacterStatus.STATUS_FOLLOW_MOTHER
     # 见学期间置跟随标记，供口上前提与面板判定使用。
-    # ⚠️ 不复用 sp_flag.is_follow：那是"跟随玩家"的语义，且会被移动逻辑清零（方案 §2.3）
+    # 不复用 sp_flag.is_follow：那是"跟随玩家"的语义，且会被移动逻辑清零（方案 §2.3）
     from Script.System.Education_System import growth_handle
 
     growth_handle.get_child_growth(character_id).follow_mother_flag = True
@@ -2895,6 +2950,77 @@ def character_entertain_free_play(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.FREE_PLAY
     character_data.behavior.duration = 60
     character_data.state = constant.CharacterStatus.STATUS_FREE_PLAY
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.EDUCATION_WAIT_NEXT_PERIOD)
+def character_education_wait_next_period(character_id: int):
+    """
+    等到下一节开始（Plan 22 第五轮）：教师本节没课时在教师办公室待命，提前到了教室的师生原地等开课
+    时长截到下一节开始，最少1分钟、最多30分钟——不截会一分钟一分钟地空转，截太长又会误了下一节
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    import datetime
+
+    from Script.Design import game_time
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    now_time = character_data.behavior.start_time
+    if now_time is None:
+        now_time = cache.game_time
+    duration = 30
+    for hour, minute in game_time.CLASS_PERIOD_START:
+        start_time = now_time.replace(hour=hour, minute=minute, second=0, microsecond=0)
+        if start_time > now_time:
+            duration = int((start_time - now_time) / datetime.timedelta(minutes=1))
+            break
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
+    character_data.behavior.duration = max(1, min(30, duration))
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.EDUCATION_ABSENT_REST)
+def character_education_absent_rest(character_id: int):
+    """
+    上课：体力不足缺这一节课，记一节缺课后原地休息（Plan 24）
+    记缺课原先写在 AI 判定里，前提不能有副作用，所以挪进状态机；settle_absent 自带同一节只记一次的去重
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    from Script.System.Education_System import class_ai
+
+    class_ai.settle_absent(character_id)
+    character_rest(character_id)
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.EDUCATION_JOIN_SEX_CLASS)
+def character_education_join_sex_class(character_id: int):
+    """
+    上课：走进正在上性技实操课的教室，直接加入课堂 H 并记一节出勤（Plan 25 §3.2，Plan 26 §3.3 泛化）
+    两个调用方：
+        target 220835 —— 本节（或提前开讲的下一节）的课所在教室正在上实操课、自己可以参加
+        target 515    —— 课堂模式下受玩家「邀请」、已经走到玩家身边的人
+    与开课时拉人（效果 10014）走同一个 pull_student_into_class：进 H、看见玩家的 H、到场二段口上。
+       开课时拉进来的人出勤已由 start_sex_class 记过，晚到的人由这里补记；进了 H 之后她不再进 AI 链，不会重复记。
+    到场那一刻再判一次参加门槛：受邀的人走在路上时课可能已经下了、她可能换了岗，不满足就照状态机 97 的写法收场
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    from Script.System.Education_System import sex_class_handle
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 受邀前往的标记在这里一并清掉：不管进不进课堂，这趟邀请都已经走完了
+    character_data.sp_flag.go_to_join_group_sex = False
+    character_data.target_character_id = character_id
+    must_attend = character_id in sex_class_handle.get_must_attend_set()
+    if not cache.sex_class_mode or not sex_class_handle.judge_can_join_sex_class(character_id, check_course=not must_attend):
+        character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+        character_data.behavior.duration = 1
+        character_data.state = constant.CharacterStatus.STATUS_WAIT
+        return
+    sex_class_handle.pull_student_into_class(character_id)
+    sex_class_handle.settle_attend(character_id)
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_LIBRARY_1)

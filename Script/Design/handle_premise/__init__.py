@@ -72,8 +72,21 @@ def _calculate_unnormal_flag_mask(character_id: int) -> int:
     return mask
 
 
+# 异常位 1~7 一律在判定时现算，不缓存。
+# 原先各位的结果缓存在 sp_flag.unnormal_flag 里，只有各个状态修改点显式调用 settle_chara_unnormal_flag 时才更新，缓存会停在旧值上：
+#   位 3 的体检项随时刻变化，没有哪个修改点能在体检时段开始时去刷新它——午夜排了体检的干员到了时段仍被当作正常、继续工作；
+#   时停的开关只刷新位 6，平然催眠（位 5）的干员关掉时停后仍被当作意识模糊。
+# sp_flag.unnormal_flag 仍留在角色数据里（旧存档照常读取），只由 refresh_unnormal_flag 写入，各判定都不读它。
+
+
 def refresh_unnormal_flag(character_id: int) -> int:
-    """重新结算并返回角色的异常位掩码。"""
+    """
+    现算角色的全部异常位，把结果记进 sp_flag.unnormal_flag 并返回位掩码
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 异常位掩码
+    """
     character_data = cache.character_data[character_id]
     unnormal_flag = _ensure_unnormal_flag_storage(character_data)
     unnormal_flag.reset()
@@ -83,12 +96,15 @@ def refresh_unnormal_flag(character_id: int) -> int:
 
 
 def get_unnormal_flag_mask(character_id: int, refresh: bool = False) -> int:
-    """获取角色的异常位掩码，可选择是否同时刷新。"""
-    if refresh:
-        return refresh_unnormal_flag(character_id)
-    character_data = cache.character_data[character_id]
-    unnormal_flag = _ensure_unnormal_flag_storage(character_data)
-    return unnormal_flag.mask
+    """
+    获取角色的异常位掩码（每次现算）
+    Keyword arguments:
+    character_id -- 角色id
+    refresh -- 已不起作用，保留只为兼容旧调用
+    Return arguments:
+    int -- 异常位掩码
+    """
+    return refresh_unnormal_flag(character_id)
 
 
 def has_unnormal_flag(character_id: int, mask: int, *, require_all: bool = False, refresh: bool = False) -> bool:
@@ -99,63 +115,39 @@ def has_unnormal_flag(character_id: int, mask: int, *, require_all: bool = False
     return bool(current_mask & mask)
 
 
-def _quick_check_normal_by_mask(character_id: int, index: int) -> Optional[int]:
-    """若异常位掩码已知，则快速给出normal判定结果。"""
-    # 玩家直接反馈正常
-    if character_id == 0:
-        return 1
-    character_data = cache.character_data[character_id]
-    unnormal_flag = character_data.sp_flag.unnormal_flag
-    if isinstance(unnormal_flag, game_type.UnnormalFlagMask) and unnormal_flag.is_known(index):
-        return 0 if unnormal_flag[index] else 1
-    return None
-
-
-def _combine_unnormal_mask(indexes: Iterable[int]) -> int:
-    """根据索引集合构造异常位掩码。"""
-    mask = 0
-    for index in indexes:
-        mask |= UNNORMAL_FLAG_BITS[index]
-    return mask
-
-
-def _ensure_known_unnormal_bits(character_id: int, indexes: Iterable[int]) -> game_type.UnnormalFlagMask:
-    """确保指定异常位的判定结果已在掩码中记录。"""
-    index_tuple = tuple(indexes)
-    character_data = cache.character_data[character_id]
-    unnormal_flag = _ensure_unnormal_flag_storage(character_data)
-    unknown_indexes = [index for index in index_tuple if not unnormal_flag.is_known(index)]
-    if not unknown_indexes:
-        return unnormal_flag
-    handlers = _get_unnormal_flag_handlers()
-    for index in unknown_indexes:
-        handler = handlers.get(index)
-        if handler is None:
-            continue
-        result = handler(character_id)
-        if not unnormal_flag.is_known(index):
-            unnormal_flag.update(index, not bool(result))
-    return unnormal_flag
-
-
 def _check_normal_combo(character_id: int, indexes: Iterable[int]) -> int:
-    """判定指定多异常组合是否均为正常状态。"""
+    """
+    判定指定的几个异常位是否全部正常：逐位现算，遇到第一个异常即停
+    Keyword arguments:
+    character_id -- 角色id
+    indexes -- 异常位索引
+    Return arguments:
+    int -- 全部正常为1，否则为0
+    """
     # 玩家直接反馈正常
     if character_id == 0:
         return 1
-    index_tuple = tuple(indexes)
-    unnormal_flag = _ensure_known_unnormal_bits(character_id, index_tuple)
-    return 1 if not unnormal_flag.any(_combine_unnormal_mask(index_tuple)) else 0
+    handlers = _get_unnormal_flag_handlers()
+    for index in indexes:
+        if not handlers[index](character_id):
+            return 0
+    return 1
 
 
 def _check_unnormal_combo(character_id: int, indexes: Iterable[int]) -> int:
-    """判定指定多异常组合是否存在任意异常。"""
+    """
+    判定指定的几个异常位里是否存在任意异常
+    Keyword arguments:
+    character_id -- 角色id
+    indexes -- 异常位索引
+    Return arguments:
+    int -- 存在异常为1，否则为0
+    """
     # 玩家直接反馈无异常
     if character_id == 0:
         return 0
-    index_tuple = tuple(indexes)
-    unnormal_flag = _ensure_known_unnormal_bits(character_id, index_tuple)
-    return 1 if unnormal_flag.any(_combine_unnormal_mask(index_tuple)) else 0
+    return 0 if _check_normal_combo(character_id, indexes) else 1
+
 
 def add_premise(premise: str) -> FunctionType:
     """
@@ -223,7 +215,7 @@ def get_weight_from_premise_dict(talk_premise_dict: set, character_id: int, calc
     if unconscious_pass_flag == False and handle_unconscious_flag_ge_1(target_character_id) and not handle_unconscious_flag_4(target_character_id):
         # 有技艺tag的行为则直接通过
         behavior_data = game_config.config_behavior[behavior_id]
-        if _("技艺") in behavior_data.tag:
+        if "技艺" in behavior_data.tag:
             unconscious_pass_flag = True
         # 需要前提里有无意识的判定
         for now_premise in talk_premise_dict:
@@ -299,6 +291,56 @@ def get_weight_from_premise_dict(talk_premise_dict: set, character_id: int, calc
     return now_weight, now_premise_data
 
 
+def get_player_manual_teach_course(character_id: int) -> Optional[tuple]:
+    """
+    取玩家手动授课这一节的课型与科目（Plan 31 §3.13：CVP Course / CourseType 对玩家手动授课的回落）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    Optional[tuple] -- (课型编号int, 科目能力id int)；不是玩家、或此刻的行为不是授课时为None
+    功能: 玩家手动发起的授课不在课表上（他从不出现在全局课表的教师位上），教师反查只取得到他人就在那间教室里的当天临时实操课。
+             此前 CVP 两项都读成 -1，授课口上全判不过，只剩开发占位地文。
+          与结算 512（Settle/default.py 的授课结算）共用同两处定义：课型 schedule_handle.get_course_type_by_position（理论 / 实践教室、大礼堂，
+             不在这三类教室里按理论课），科目 education_constant.FALLBACK_SUBJECT_ABILITY（学识）。调用方只在 get_now_teaching 取不到时才问它。只读
+    """
+    from Script.System.Education_System import education_constant, schedule_handle
+
+    if character_id != 0:
+        return None
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.behavior.behavior_id != constant.Behavior.TEACH:
+        return None
+    return schedule_handle.get_course_type_by_position(character_data.position), education_constant.FALLBACK_SUBJECT_ABILITY
+
+
+def get_listen_manual_teach_course(character_id: int) -> Optional[tuple]:
+    """
+    取正在听玩家手动授课的学生这一节的课型与科目（Plan 32 §3.9 / §3.10 L13：学生侧与 512 同口径）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    Optional[tuple] -- (课型编号int, 科目能力id int)；她此刻不是在听玩家的手动授课时为None
+    功能: 玩家「授课」把在场的学生拉成听课、开始时刻对齐到玩家（handle_instruct.handle_teach），512 按学识与所在教室给她们结算；
+             此前学生侧的 CVP 与 <课> 仍按她自己的课表取，节次外一句听课口上都不出，节次内写的是课表上的另一门课。
+          判据：不是玩家、行为是听课、与玩家同场景、玩家此刻在授课且不是课表上的课（get_now_teaching(0) 取不到）、两人的行为开始时刻对齐。只读
+    """
+    from Script.System.Education_System import schedule_handle
+
+    if character_id == 0 or character_id not in cache.character_data:
+        return None
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.behavior.behavior_id != constant.Behavior.ATTENT_CLASS:
+        return None
+    pl_character_data: game_type.Character = cache.character_data[0]
+    if pl_character_data.behavior.behavior_id != constant.Behavior.TEACH:
+        return None
+    if character_data.position != pl_character_data.position or character_data.behavior.start_time != pl_character_data.behavior.start_time:
+        return None
+    if schedule_handle.get_now_teaching(0) is not None:
+        return None
+    return get_player_manual_teach_course(0)
+
+
 def get_now_course_type(character_id: int) -> int:
     """
     取角色当前这一节在上（或在教）的课型，供 CourseType 型 CVP token 使用
@@ -306,6 +348,8 @@ def get_now_course_type(character_id: int) -> int:
     character_id -- 角色id
     Return arguments:
     int -- 课型编号0~5，不在上课则为-1
+    功能: 教师反查优先，其次是玩家手动授课的回落（按所在教室判，Plan 31 §3.13），
+          再是被玩家「授课」拉来听课的学生（同样按所在教室判，Plan 32 §3.10 L13），最后查学生自己的课表
     """
     from Script.System.Education_System import schedule_handle
 
@@ -313,6 +357,15 @@ def get_now_course_type(character_id: int) -> int:
     teaching = schedule_handle.get_now_teaching(character_id)
     if teaching is not None:
         return teaching["course_type"]
+    # 玩家手动授课不在课表上，教师反查取不到：课型按所在教室判（Plan 31 §3.13，与 512 同口径）
+    manual_course = get_player_manual_teach_course(character_id)
+    if manual_course is not None:
+        return manual_course[0]
+    # 在听玩家手动授课的学生：课型同样按教室判，与 512 给她的结算同口径（Plan 32 §3.10 L13）。
+    #    此前读她自己的课表：节次外恒为 -1，听课口上一句不出；节次内读的是课表上的另一门课
+    listen_course = get_listen_manual_teach_course(character_id)
+    if listen_course is not None:
+        return listen_course[0]
     now_course = schedule_handle.get_now_course(character_id)
     if now_course is not None:
         return now_course["course_type"]
@@ -322,18 +375,35 @@ def get_now_course_type(character_id: int) -> int:
 def get_now_course_ability(character_id: int) -> int:
     """
     取角色当前这一节课的科目能力id，供 Course 型 CVP token 使用
-    ⚠️ 体育课与兴趣课没有"科目"这个概念（学的是该活动自带的东西），恒返回-1不成立；
+    体育课与兴趣课没有"科目"这个概念（学的是该活动自带的东西），恒返回-1不成立；
        实习课的科目取该岗位 WorkType.csv 的 ability_id 列
+    正在进行的性技实操课优先于课表（Plan 22 四期）：当场开课与拖堂都可能发生在节次之外，
+       此时下面那两条课表链一律取不到东西，所以先问 judge_in_running_class()。
+       （教师反查 get_teacher_cell() 自 2026-09-09 起也并入了临时课覆盖层，节次内查玩家同样取得到）
+    玩家手动授课不在课表上，教师反查取不到时科目回落学识（Plan 31 §3.13，与 512 同口径，见 get_player_manual_teach_course）；
+       被玩家「授课」拉来听课的学生同样回落学识，先于她自己的课表（Plan 32 §3.10 L13，见 get_listen_manual_teach_course）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 科目能力id，取不到则为-1
     """
-    from Script.System.Education_System import education_constant, schedule_handle
+    from Script.System.Education_System import education_constant, schedule_handle, sex_class_handle
 
+    if sex_class_handle.judge_in_running_class(character_id):
+        now_class_ability = sex_class_handle.get_now_class_ability()
+        if now_class_ability != -1:
+            return now_class_ability
     teaching = schedule_handle.get_now_teaching(character_id)
     if teaching is not None:
         return teaching["ability_id"]
+    # 玩家手动授课：科目回落学识（Plan 31 §3.13）
+    manual_course = get_player_manual_teach_course(character_id)
+    if manual_course is not None:
+        return manual_course[1]
+    # 在听玩家手动授课的学生：512 给她发的是学识，口上也按学识取（Plan 32 §3.10 L13），不读课表上的那门课
+    listen_course = get_listen_manual_teach_course(character_id)
+    if listen_course is not None:
+        return listen_course[1]
     now_course = schedule_handle.get_now_course(character_id)
     if now_course is None:
         return -1
@@ -390,7 +460,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
     # print(f"debug character_id = {character_id}, premise_all_value_list = {premise_all_value_list}")
 
     # 罗德岛全局数值的主体RI（Plan 23）：资源、声望、公务量这类不属于任何角色的数值
-    # ⚠️ 必须在角色主体的判别之前提前返回：下面那段数值B的判别是按「类型|子id」拆的，
+    # 必须在角色主体的判别之前提前返回：下面那段数值B的判别是按「类型|子id」拆的，
     #    而 RI 的类型可以不带子id（如 CVE_RI_Work_G_20），落进去会直接 IndexError
     if premise_all_value_list[0] == "RI":
         from Script.System.Official_Event_System import ri_value
@@ -414,7 +484,15 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
         # 如果还没拥有该角色，则返回0
         if final_character_id not in cache.npc_id_got:
             return 0
+    else:
+        # 主体段既不是 A1 / A2 也不是 A3|编号：数据写错了。按前提不成立处理并提示，否则下面用到主体角色时会抛 UnboundLocalError
+        print(f"综合数值前提的主体写错了，已按不成立处理：{premise_all_value_list}")
+        return 0
 
+    # 属性段的子编号（如 A|12 的 12），没有子编号的属性（好感、信赖等）用不到，先给 0 以免写漏了「|编号」时未赋值
+    type_son_id = 0
+    # 取到的数值，先给 0 以免属性段是认不出的类型时未赋值
+    final_value = 0
     # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场,Dirty污浊,Bondage绳子捆绑,Roleplay角色扮演,PenisPos阴茎位置,ShootPos射精位置,Relationship身份关系,Course当前课程科目,CourseType当前课型,CourseShowOff待炫耀的已升级科目,Growth养成数值
     if (
         len(premise_all_value_list[1]) > 1 and
@@ -474,7 +552,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
                 final_value = final_character_data.dirty.cloth_semen[part_cid][1]
     elif premise_all_value_list[1][0] == "G":
         # 养成数值前提（Plan 22 三期）：出勤、性格倾向、照料值等，编号见 education_constant.GROWTH_VALUE_*
-        # ⚠️ 必须排在攻略程度之前——"Growth" 与 "Gift" 的首字母都是 G，落到默认分支会被当成攻略程度
+        # 必须排在攻略程度之前——"Growth" 与 "Gift" 的首字母都是 G，落到默认分支会被当成攻略程度
         if "Growth" in premise_all_value_list[1]:
             from Script.System.Education_System import growth_handle
 
@@ -496,9 +574,9 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
                 final_value = 0
     elif premise_all_value_list[1][0] == "C":
         # 上课前提（Plan 22 §3.17）：一条分支覆盖全部18门科目与6种课型，日后加科目零改动
-        # ⚠️ 不新增字段，当前课程由课表现算——教师侧查全局课表、学生侧查个人课表，
+        # 不新增字段，当前课程由课表现算——教师侧查全局课表、学生侧查个人课表，
         #    与 <课> 状态标识、上课结算读的是同一个入口，三处不会各说各话
-        # ⚠️ 三者判序不能改：CourseShowOff 与 CourseType 的字符串里都含有 "Course"，
+        # 三者判序不能改：CourseShowOff 与 CourseType 的字符串里都含有 "Course"，
         #    长的必须先判，否则会被 Course 分支抢先吃掉（而且不报错，只是永远不成立）
         if "CourseShowOff" in premise_all_value_list[1]:
             growth_data = final_character_data.child_growth
@@ -530,6 +608,10 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
                 target_character_adv = int(premise_all_value_list[3])
                 target_character_id = character.get_character_id_from_adv(target_character_adv)
                 target_character_data = cache.character_data[target_character_id]
+            else:
+                # 关系对象写的不是上面四种之一：数据写错了。按前提不成立处理并提示，否则下面取关系对象时会抛 UnboundLocalError
+                print(f"综合数值前提的关系对象写错了，已按不成立处理：{premise_all_value_list}")
+                return 0
             relation_type = premise_all_value_list[2]
             if relation_type == "父亲":
                 return final_character_id == target_character_data.relationship.father_id
@@ -585,7 +667,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
     judge_value = int(premise_all_value_list[3])
     # print(f"debug final_value = {final_value}, judge_value = {judge_value}")
 
-    # 攻略程度的不过0处理。⚠️ 养成数值同样以G开头，但它是可正可负的普通数值，不能套这套夹逼
+    # 攻略程度的不过0处理。养成数值同样以G开头，但它是可正可负的普通数值，不能套这套夹逼
     if premise_all_value_list[1][0] == "G" and "Growth" not in premise_all_value_list[1]:
         # 如果当前值与判定值的正负号不同，则直接返回0
         if (final_value > 0 and judge_value < 0) or (final_value < 0 and judge_value > 0):
@@ -631,24 +713,15 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
 
 def settle_chara_unnormal_flag(character_id: int, unnormal_flag_index: Optional[int]) -> None:
     """
-    结算角色异常状态标记并同步位掩码，索引为None或0时重新结算全部异常。
+    （已不需要）结算角色的异常状态标记
+    异常位改为每次判定时现算之后，不再有需要刷新的缓存；本函数保留为空操作，只为让各处原有的调用不用改，新代码不必再调用它
     Keyword arguments:
     character_id -- 角色id
     unnormal_flag_index -- 异常状态标记索引
     Return arguments:
-    None
+    无
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    unnormal_flag = _ensure_unnormal_flag_storage(character_data)
-    if not unnormal_flag_index:
-        unnormal_flag.set_mask(_calculate_unnormal_flag_mask(character_id))
-        return
-    handler = _get_unnormal_flag_handlers().get(unnormal_flag_index)
-    if handler is None:
-        return
-    unnormal_flag.mark_unknown(unnormal_flag_index)
-    is_normal = bool(handler(character_id))
-    unnormal_flag.update(unnormal_flag_index, not is_normal)
+    return
 
 
 @add_premise(constant_promise.Premise.HIGH_1)
@@ -1022,10 +1095,10 @@ def handle_normal_1(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    quick_result = _quick_check_normal_by_mask(character_id, 1)
-    if quick_result is not None:
-        return quick_result
-    if(
+    # 玩家直接反馈正常
+    if character_id == 0:
+        return 1
+    if (
         handle_rest_flag_1(character_id)
         or handle_sleep_flag_1(character_id)
         or handle_pee_flag_1(character_id)
@@ -1034,11 +1107,8 @@ def handle_normal_1(character_id: int) -> int:
         or handle_milk_flag_1(character_id)
         or handle_masturebate_flag_g_0(character_id)
     ):
-        result = 0
-    else:
-        result = 1
-    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(1, not bool(result))
-    return result
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.NORMAL_2)
@@ -1051,19 +1121,16 @@ def handle_normal_2(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    quick_result = _quick_check_normal_by_mask(character_id, 2)
-    if quick_result is not None:
-        return quick_result
-    if(
+    # 玩家直接反馈正常
+    if character_id == 0:
+        return 1
+    if (
         handle_parturient_1(character_id)
         or handle_postpartum_1(character_id)
         or handle_imprisonment_1(character_id)
     ):
-        result = 0
-    else:
-        result = 1
-    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(2, not bool(result))
-    return result
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.NORMAL_3)
@@ -1076,19 +1143,18 @@ def handle_normal_3(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    quick_result = _quick_check_normal_by_mask(character_id, 3)
-    if quick_result is not None:
-        return quick_result
-    if(
-        handle_is_assistant(character_id)
-        or handle_is_follow(character_id)
-        or handle_self_in_health_check_action_chain(character_id)
-    ):
-        result = 0
-    else:
-        result = 1
-    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(3, not bool(result))
-    return result
+    # 玩家直接反馈正常
+    if character_id == 0:
+        return 1
+    if handle_is_assistant(character_id) or handle_is_follow(character_id):
+        return 0
+    # 体检行动链：今天没排体检、也不在等待名单上时不可能在链中，不必去算时段
+    if (
+        cache.character_data[character_id].action_info.health_check_today
+        or character_id in cache.rhodes_island.waiting_for_exam_operator_ids
+    ) and handle_self_in_health_check_action_chain(character_id):
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.NORMAL_4)
@@ -1101,18 +1167,24 @@ def handle_normal_4(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    quick_result = _quick_check_normal_by_mask(character_id, 4)
-    if quick_result is not None:
-        return quick_result
-    if(
-        handle_cloth_off(character_id)
-        or handle_cloth_most_off(character_id)
-    ):
-        result = 0
-    else:
-        result = 1
-    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(4, not bool(result))
-    return result
+    # 玩家直接反馈正常
+    if character_id == 0:
+        return 1
+    # 全裸时上下外衣内衣（5/6/8/9 类）必然都没穿，即必然也是大致全裸，所以只查大致全裸
+    if handle_cloth_most_off(character_id):
+        return 0
+    return 1
+
+
+def _sleeping_or_sleep_unconscious(character_id: int) -> int:
+    """
+    异常位 5、6 的睡眠项的前置条件：角色正在睡觉，或处于睡眠无意识状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 是则为真
+    """
+    return handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id)
 
 
 @add_premise(constant_promise.Premise.NORMAL_5)
@@ -1125,19 +1197,19 @@ def handle_normal_5(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    quick_result = _quick_check_normal_by_mask(character_id, 5)
-    if quick_result is not None:
-        return quick_result
-    if(
-        (handle_sleep_level_0(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id))) or
-        handle_drunk_level_2(character_id) or
-        handle_unconscious_flag_4(character_id)
-    ):
-        result = 0
-    else:
-        result = 1
-    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(5, not bool(result))
-    return result
+    # 玩家直接反馈正常
+    if character_id == 0:
+        return 1
+    # 平然
+    if handle_unconscious_flag_4(character_id):
+        return 0
+    # 睡眠（半梦半醒）：只在正在睡觉或处于睡眠无意识时才去算睡眠等级
+    if _sleeping_or_sleep_unconscious(character_id) and handle_sleep_level_0(character_id):
+        return 0
+    # 醉酒：醉酒值为 0 时必为清醒，不必去算醉酒等级
+    if cache.character_data[character_id].drunk_point > 0 and handle_drunk_level_2(character_id):
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.NORMAL_6)
@@ -1150,20 +1222,19 @@ def handle_normal_6(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    quick_result = _quick_check_normal_by_mask(character_id, 6)
-    if quick_result is not None:
-        return quick_result
-    if(
-         (handle_sleep_level_ge_1(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id))) or
-        handle_unconscious_flag_5(character_id) or
-        handle_drunk_level_3(character_id) or
-        (handle_time_stop_on(character_id) or handle_unconscious_flag_3(character_id))
-    ):
-        result = 0
-    else:
-        result = 1
-    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(6, not bool(result))
-    return result
+    # 玩家直接反馈正常
+    if character_id == 0:
+        return 1
+    # 时停、空气
+    if handle_time_stop_on(character_id) or handle_unconscious_flag_3(character_id) or handle_unconscious_flag_5(character_id):
+        return 0
+    # 睡眠（浅睡或熟睡或完全深眠）：只在正在睡觉或处于睡眠无意识时才去算睡眠等级
+    if _sleeping_or_sleep_unconscious(character_id) and handle_sleep_level_ge_1(character_id):
+        return 0
+    # 烂醉：醉酒值为 0 时必为清醒，不必去算醉酒等级
+    if cache.character_data[character_id].drunk_point > 0 and handle_drunk_level_3(character_id):
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.NORMAL_7)
@@ -1176,21 +1247,18 @@ def handle_normal_7(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    quick_result = _quick_check_normal_by_mask(character_id, 7)
-    if quick_result is not None:
-        return quick_result
-    if(
+    # 玩家直接反馈正常
+    if character_id == 0:
+        return 1
+    if (
         handle_be_bagged_1(character_id)
         or handle_field_commission_1(character_id)
-        or handle_t_baby_1(character_id)
+        or handle_self_is_baby(character_id)
         or handle_in_diplomatic_visit_1_and_other_country(character_id)
         or handle_escaping_1(character_id)
     ):
-        result = 0
-    else:
-        result = 1
-    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(7, not bool(result))
-    return result
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.NORMAL_2_4)
@@ -1431,7 +1499,7 @@ def handle_unnormal(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    return 1 if refresh_unnormal_flag(character_id) else 0
+    return _check_unnormal_combo(character_id, (1, 2, 3, 4, 5, 6, 7))
 
 
 @add_premise(constant_promise.Premise.UNNORMAL_2)

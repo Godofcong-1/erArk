@@ -8352,7 +8352,7 @@ msgstr ""
 #: .\Script\UI\Panel\food_shop_panel.py:103
 msgid ""
 "\n"
-"该商店已经没有没有可购买的食物了，请明天再来\n"
+"该商店已经没有可购买的食物了，请明天再来\n"
 msgstr ""
 
 #: .\Script\UI\Panel\food_shop_panel.py:250

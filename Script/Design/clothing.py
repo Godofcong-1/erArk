@@ -610,12 +610,13 @@ def chara_special_wear_cloth(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
-    无
+    list -- 必须穿着的服装id列表，玩家为空列表
     """
+    # 先初始化返回列表，玩家（character_id 为 0）不进入下面的分支时也能返回
+    return_list = []
     if character_id:
         character_data = cache.character_data[character_id]
         # print(f"debug name = {character_data.name}")
-        return_list = []
 
         # 阿米娅必须戴抑制戒指
         if character_data.adv == 1:

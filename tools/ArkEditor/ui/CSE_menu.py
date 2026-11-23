@@ -12,6 +12,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtGui import QFont, QActionGroup
 import cache_control
+import function
 
 font = QFont()
 font.setPointSize(cache_control.now_font_size)
@@ -142,18 +143,21 @@ class CSEMenu(QDialog):
             cse_a_value = "A2"
         elif cse_a == "角色id为":
             cse_a_value = "A3|" + self.cse_a2.toPlainText()
-            cse_a = "角色id为" + self.cse_a2.toPlainText()
 
         # cse_b为状态的名字，cse_b_value为状态的cid
         cse_b = self.status_menu.title()
+        cse_b_value = ""
         for cid in cache_control.behavior_data:
             if cache_control.behavior_data[cid] == cse_b:
                 cse_b_value = cid
                 break
+        # 还没选行为、或对象选了「角色id为」却没填 id 时不加结算，窗口留着
+        if not cse_b_value or cse_a_value == "A3|":
+            return
 
-        # 拼接结算字符串
-        cse_str = f"综合指令状态结算  玩家对{cse_a} 进行 {cse_b}"
+        # 拼接结算字符串：说明文字与载入文件时由同一个函数生成，两边才对得上（结算列表是按说明文字反查键的）
         cse_value_str = f"CSE_{cse_a_value}_{cse_b_value}"
+        cse_str = function.read_CSE(cse_value_str)
         # print(f"debug cse_str: {cse_str}, cse_value_str: {cse_value_str}")
 
         # 更新结算数据

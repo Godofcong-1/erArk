@@ -113,8 +113,11 @@ class CVEMenu(QDialog):
             cve_b2 = self.cve_b2.currentText().split("|")[0]
         else:
             cve_b2 = ""
-        if cve_b1 == "待选择":
-            cve_b_value = ""
+        cve_b_value = ""
+        if cve_b1 == "待选择" or cve_a_value == "A3|":
+            # 属性还没选、或对象选了「角色id为」却没填 id 时不加结算，窗口留着。
+            # 否则会写出缺段的键（CVE_A1__G_0 这类），游戏结算到它时报错
+            return
         elif cve_b1 == "好感":
             cve_b_value = "F"
         elif cve_b1 == "信赖":

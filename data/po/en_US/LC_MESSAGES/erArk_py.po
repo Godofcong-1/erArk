@@ -10387,9 +10387,6 @@ msgstr ""
 msgid " [指令过滤] "
 msgstr ""
 
-msgid " [指令过滤] "
-msgstr ""
-
 msgid "技巧"
 msgstr ""
 
@@ -11351,7 +11348,7 @@ msgstr ""
 
 msgid ""
 "\n"
-"该商店已经没有没有可购买的食物了，请明天再来\n"
+"该商店已经没有可购买的食物了，请明天再来\n"
 msgstr ""
 
 msgid ""

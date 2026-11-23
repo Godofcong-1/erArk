@@ -402,7 +402,9 @@ def handle_entertainment_is_play_house(character_id: int) -> int:
     else:
         return 0
 
-    return character_data.entertainment.entertainment_type[i] == 151
+    from Script.System.Education_System import education_constant
+
+    return character_data.entertainment.entertainment_type[i] == education_constant.ENTERTAINMENT_PLAY_HOUSE
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_STYLE_HAIR)
@@ -462,7 +464,7 @@ def handle_entertainment_is_bathhouse_type(character_id: int) -> int:
     else:
         return 0
 
-    for cid in {171,172,173,174,175,176}:
+    for cid in {171,172,173,174}:
         if character_data.entertainment.entertainment_type[i] == cid:
             return 1
 
@@ -497,7 +499,7 @@ def handle_scene_someone_entertainment_is_bathhouse_type(character_id: int) -> i
                 else:
                     continue
 
-                for cid in {171,172,173,174,175,176}:
+                for cid in {171,172,173,174}:
                     if other_character_data.entertainment.entertainment_type[i] == cid:
                         return 1
 

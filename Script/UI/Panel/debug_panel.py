@@ -84,11 +84,20 @@ def _debug_has_index(values, index: int) -> bool:
 
 
 def _debug_require_global_parts(page: int, parts: List[int]) -> None:
-    """输入：page (int) 全局项目、parts (List[int]) 编号；返回：None；功能：验证时间及干员操作格式。"""
+    """输入：page (int) 全局项目、parts (List[int]) 编号；返回：None；功能：验证全局变量及其子项。"""
     if len(parts) != 2 or (page == 0 and (parts[0] != 0 or parts[1] not in (0, 1, 2))) or (page == 1 and parts[1] not in (0, 1)):
         raise ValueError("请按页面说明输入两个有效编号")
     if page == 1 and (parts[0] == 0 or parts[0] not in cache.character_data):
         raise ValueError("请选择已有的非玩家角色编号")
+    if page == 7:
+        week_day, entertainment_id = parts
+        if week_day not in cache.rhodes_island.party_day_of_week or (entertainment_id != 0 and entertainment_id not in game_config.config_entertainment):
+            raise ValueError("星期或娱乐编号不存在；输入 0 可取消当天安排")
+    if page == 8:
+        line_id, progress = parts
+        line = cache.rhodes_island.recruit_line.get(line_id)
+        if not isinstance(line, list) or not line or not 0 <= progress <= 100:
+            raise ValueError("招募线编号不存在，或进度不在 0～100 之间")
 
 
 def _debug_validate_target_parts(page: int, parts: List[int], target: game_type.Character) -> None:
@@ -597,35 +606,39 @@ class TALK_QUICK_TEST:
                 draw_text += _("  交互对象：未填写，本测试中默认选择为博士\n")
                 end_chara_id = 0
         # 设置交互对象
-        cache.character_data[start_chara_id].target_character_id = end_chara_id
+        old_target_character_id = cache.character_data[start_chara_id].target_character_id
+        try:
+            cache.character_data[start_chara_id].target_character_id = end_chara_id
 
-        # 输出口上文本
-        talk_context = game_config.config_talk[full_talk_id].context
-        draw_text += _("\n口上原文本：\n  {0}\n").format(talk_context)
-        draw_text += _("口上输出文本：\n  {0}\n").format(talk.code_text_to_draw_text(talk_context, start_chara_id))
-        # 遍历前提条件
-        draw_text += _("\n前提条件：\n")
-        for premise in game_config.config_talk_premise_data[full_talk_id]:
-            # 综合数值前提判定
-            if "CVP" in premise:
-                premise_all_value_list = premise.split("_")[1:]
-                now_add_weight = handle_premise.handle_comprehensive_value_premise(start_chara_id, premise_all_value_list)
-            # 其他正常口上判定
+            # 输出口上文本
+            talk_context = game_config.config_talk[full_talk_id].context
+            draw_text += _("\n口上原文本：\n  {0}\n").format(talk_context)
+            draw_text += _("口上输出文本：\n  {0}\n").format(talk.code_text_to_draw_text(talk_context, start_chara_id))
+            # 遍历前提条件
+            draw_text += _("\n前提条件：\n")
+            for premise in game_config.config_talk_premise_data[full_talk_id]:
+                # 综合数值前提判定
+                if "CVP" in premise:
+                    premise_all_value_list = premise.split("_")[1:]
+                    now_add_weight = handle_premise.handle_comprehensive_value_premise(start_chara_id, premise_all_value_list)
+                # 其他正常口上判定
+                else:
+                    now_add_weight = constant.handle_premise_data[premise](start_chara_id)
+                if now_add_weight:
+                    draw_text += _("  {0}：满足(√)\n").format(premise)
+                else:
+                    draw_text += _("  {0}：不满足(X)\n").format(premise)
+                    pass_flag = False
+
+            # 输出测试结果
+            if pass_flag:
+                draw_text += _("\n最终结果：\n  测试通过，该口上可以触发\n")
             else:
-                now_add_weight = constant.handle_premise_data[premise](start_chara_id)
-            if now_add_weight:
-                draw_text += _("  {0}：满足(√)\n").format(premise)
-            else:
-                draw_text += _("  {0}：不满足(X)\n").format(premise)
-                pass_flag = False
+                draw_text += _("\n最终结果：\n  测试未通过，该口上无法触发\n")
 
-        # 输出测试结果
-        if pass_flag:
-            draw_text += _("\n最终结果：\n  测试通过，该口上可以触发\n")
-        else:
-            draw_text += _("\n最终结果：\n  测试未通过，该口上无法触发\n")
-
-        return draw_text, pass_flag
+            return draw_text, pass_flag
+        finally:
+            cache.character_data[start_chara_id].target_character_id = old_target_character_id
 
 
     def run_batch_talk_test_in_groups(self, target_chara_id: int, talk_id_list: List[int]):
@@ -1185,22 +1198,31 @@ class Debug_Panel:
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
-                    info_draw.text = _("\n此项目为字典，暂时只供查看。\n")
-                    info_draw.draw()
+                    # 保留上游的按星期编辑，并先校验星期键和娱乐编号，避免写入无效日程。
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入星期编号和娱乐编号，用逗号分隔；娱乐编号 0 表示取消当天安排"), 100)
+                    week_day, entertainment_id = _debug_read_parts(value_index_panel, lambda parts: _debug_require_global_parts(key_index, parts))
+                    cache.rhodes_island.party_day_of_week[week_day] = entertainment_id
                 elif key_index == 8:
                     info_text = f"[008]:当前招募进度：{cache.rhodes_island.recruit_line}"
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
-                    info_draw.text = _("\n此项目为字典，暂时只供查看。\n")
-                    info_draw.draw()
+                    # 只修改已有招募线的进度，不覆盖整条招募线的其他数据。
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入已有招募线编号和进度（0～100），用逗号分隔"), 100)
+                    line_id, progress = _debug_read_parts(value_index_panel, lambda parts: _debug_require_global_parts(key_index, parts))
+                    cache.rhodes_island.recruit_line[line_id][0] = progress
                 elif key_index == 9:
                     info_text = f"[009]:已招募待确认的干员id：{cache.rhodes_island.recruited_id}"
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
-                    info_draw.text = _("\n此项目为集合，暂时只供查看。\n")
-                    info_draw.draw()
+                    # 保留集合结构，且只允许写入已存在的非玩家干员编号。
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入要设为待确认的干员编号"), 100)
+                    new_value = _debug_read_int(change_value_panel, _debug_require_existing_npc)
+                    cache.rhodes_island.recruited_id = {new_value}
 
             elif self.now_panel == "常用更改":
 
@@ -1299,7 +1321,7 @@ class Debug_Panel:
                     for all_cid in cache.rhodes_island.facility_level:
                         cache.rhodes_island.facility_level[all_cid] = 5
                         for cid in cache.rhodes_island.facility_open:
-                            cache.rhodes_island.facility_open[cid] = 1
+                            cache.rhodes_island.facility_open[cid] = True
                         basement.get_base_updata()
                 # 重置全角色特殊flag
                 elif key_index == 11:
@@ -1775,7 +1797,8 @@ class Debug_Panel:
                     elif value_index[0] == 5:
                         target_data.h_state.orgasm_level[value_index[1]] = new_value
                     elif value_index[0] == 6:
-                        target_data.h_state.orgasm_count[value_index[1]] = new_value
+                        # 每个部位的计数是一个列表，按「6,部位,第几项」改其中一项（整个换成整数的话读它的前提会报错）
+                        target_data.h_state.orgasm_count[value_index[1]][value_index[2]] = new_value
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False

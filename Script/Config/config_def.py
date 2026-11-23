@@ -1774,6 +1774,7 @@ class Cook_Question:
     wrong_answer_3: str
     """ 错误答案3 """
 
+
 class Official_Event:
     """ 婴儿期养成事件 """
 
@@ -1849,6 +1850,7 @@ class Talk:
     context: str
     """ 口上内容 """
 
+
 class Talk_Common:
     """ 组件配置数据 """
 
@@ -1862,7 +1864,6 @@ class Talk_Common:
     """ 前提id """
     context: str
     """ 组件内容 """
-
 
 
 class TargetEffect:

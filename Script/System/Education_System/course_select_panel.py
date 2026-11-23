@@ -1,18 +1,20 @@
 """个人课表面板（Plan 22 一期 §5.3）
 
-一次展示一个孩子的周表（7 天 × 9 节），点格子先选课型、再选具体目标。
+一次展示一个学生的周表（7 天 × 9 节），点格子先选课型、再选具体目标。
+学生 = 职业为学生的全部干员，含成年（一期方案 §9.8.2；Plan 24 口径 1 起不再并入改了岗的女儿），
+由「选择学生」按钮走通用 NPC 选择面板挑人（2026-09-09，二期方案 §9.2.5；原来的人名页签栏已删）。
 
-⚠️ 「复制到其他孩子」是多孩场景下的关键操作（已确认口径 4）：不做这个，
-   操作量会随孩子数线性翻倍，三个孩子就得把同一张表排三遍。
+「复制到其他学生」是多人场景下的关键操作（已确认口径 4）：不做这个，
+   操作量会随学生数线性翻倍，三个学生就得把同一张表排三遍。
 """
 from types import FunctionType
 from typing import Dict, List
 
 from Script.Core import cache_control, game_type, get_text, flow_handle
-from Script.Config import game_config, normal_config
+from Script.Config import game_config
 from Script.Design import game_time
-from Script.System.Education_System import education_constant, schedule_handle, growth_handle, schedule_template_handle
-from Script.System.Education_System.class_schedule_panel import get_period_time_text
+from Script.System.Education_System import education_constant, schedule_handle, growth_handle, schedule_template_handle, student_select
+from Script.System.Education_System.class_schedule_panel import get_period_time_text, get_teacher_absent_mark
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -22,25 +24,6 @@ _: FunctionType = get_text._
 line_feed = draw.NormalDraw()
 line_feed.text = "\n"
 line_feed.width = 1
-window_width: int = normal_config.config_normal.text_width
-""" 窗体宽度 """
-
-
-def get_student_candidate_list() -> List[int]:
-    """
-    取可排个人课表的角色列表
-    Keyword arguments:
-    无
-    Return arguments:
-    List[int] -- 角色id列表，按id升序
-    功能: 口径统一收在数据层的 growth_handle.get_student_candidate_list()，
-          养成总览与「指定必修学生」用的是同一份名单。
-          ⚠️ 原实现只用 judge_is_child()（纯素质、不看血缘），世界设定「萝莉化」
-             会给全岛干员挂上萝莉素质103，于是页签栏里塞的是全岛的人；
-             原本还有一条「成年干员自选了课时也要能改」的分支（一期口径24），
-             随本轮口径收紧一并取消
-    """
-    return growth_handle.get_student_candidate_list()
 
 
 class Course_Select_Panel:
@@ -48,16 +31,16 @@ class Course_Select_Panel:
     个人课表面板（方案 §5.3）
     输入类型: width(int)
     输出类型: 无
-    功能: 按孩子展示与编辑个人课表
+    功能: 按学生展示与编辑个人课表
     """
 
     def __init__(self, width: int):
         """初始化绘制对象"""
         self.width: int = width
         self.now_student: int = -1
-        """ 当前展示的孩子角色id，-1表示尚未选择，由 draw_page 回落到第一个 """
+        """ 当前展示的学生角色id，-1表示尚未选择。不再回落到名单第一个：进面板先点「选择学生」挑人 """
         self.student_list: List[int] = []
-        """ 本轮可排课的孩子列表，每轮在 draw_page 里重算 """
+        """ 本轮可排课的学生列表，每轮在 draw_page 里重算 """
         self.cell_return: Dict[str, tuple] = {}
         """ 本轮课表格子按钮的返回值 → (星期, 节次)，由 draw_page 写、handle_yrn 读 """
 
@@ -66,38 +49,25 @@ class Course_Select_Panel:
         绘制本页内容
         输入类型: return_list(List[str])，容器的共享返回值列表，本页的按钮往里加
         输出类型: 无
-        功能: 孩子页签 + 周表 + 选课入口。
-              ⚠️ 只画不取输入，askfor_all 由容器 Education_Manage_Panel 统一调用
+        功能: 「选择学生」一行 + 周表 + 选课入口。
+              只画不取输入，askfor_all 由容器 Education_Manage_Panel 统一调用
         """
-        # 每轮重算：孩子会在游戏过程中出生与长大，不能在 __init__ 里快照
-        self.student_list = get_student_candidate_list()
-        # ⚠️ 先清空派发字典再早退，否则 handle_yrn 会拿上一轮的残留去匹配
+        # 每轮重算：孩子会在游戏过程中出生与长大、干员会换岗，不能在 __init__ 里快照。
+        # 口径是「职业为学生的全部干员」（Plan 24 口径 1：课表只对学生岗生效），与养成总览的「只看女儿」不同
+        self.student_list = growth_handle.get_course_candidate_list()
+        # 先清空派发字典再早退，否则 handle_yrn 会拿上一轮的残留去匹配
         self.cell_return = {}
         if not self.student_list:
             info_draw = draw.NormalDraw()
             info_draw.width = self.width
-            info_draw.text = _("\n  目前还没有需要排课的孩子\n")
+            info_draw.text = _("\n  目前还没有职业为学生的干员\n")
             info_draw.draw()
             return
-        # 选中态失效（首次进入，或原来那个孩子已不在列表里）时回落到第一个
+        # 选中态失效（首次进入，或原来那个学生已不在名单里）时清成未选择，由玩家点「选择学生」挑人（二期方案 §9.2.5）
         if self.now_student not in self.student_list:
-            self.now_student = self.student_list[0]
-
-        for student_id in self.student_list:
-            name = cache.character_data[student_id].name
-            tab_width = max(1, int(self.width / max(1, len(self.student_list))))
-            if student_id == self.now_student:
-                now_draw = draw.CenterDraw()
-                now_draw.text = f"[{name}]"
-                now_draw.style = "onbutton"
-                now_draw.width = tab_width
-                now_draw.draw()
-            else:
-                now_draw = draw.CenterButton(f"[{name}]", f"\nSTU_{student_id}", tab_width)
-                now_draw.draw()
-                return_list.append(now_draw.return_text)
-        line_feed.draw()
-        draw.LineDraw("-", self.width).draw()
+            self.now_student = -1
+        if not student_select.draw_select_student_line(self.width, self.now_student, return_list):
+            return
 
         self.cell_return = self._draw_week_table(self.now_student)
         return_list.extend(self.cell_return.keys())
@@ -116,7 +86,7 @@ class Course_Select_Panel:
         auto_draw = draw.CenterButton(_("[一键选课]"), _("一键选课"), int(self.width / 3))
         auto_draw.draw()
         return_list.append(auto_draw.return_text)
-        copy_draw = draw.CenterButton(_("[复制到其他孩子]"), _("复制"), int(self.width / 3))
+        copy_draw = draw.CenterButton(_("[复制到其他学生]"), _("复制"), int(self.width / 3))
         copy_draw.draw()
         return_list.append(copy_draw.return_text)
         clear_draw = draw.CenterButton(_("[清空]"), _("清空"), int(self.width / 3))
@@ -129,9 +99,16 @@ class Course_Select_Panel:
         处理本页按钮的选择结果
         输入类型: yrn(str)，容器 askfor_all 的返回值
         输出类型: 无
-        功能: 切换孩子 / 清空 / 复制 / 改日程 / 编辑某一格
+        功能: 选学生 / 清空 / 复制 / 改日程 / 编辑某一格
         """
         if not self.student_list:
+            return
+        # 选学生与当前选中者无关，先判掉：走通用 NPC 选择面板，名单已按「学生岗」预筛
+        if yrn == education_constant.SELECT_STUDENT_RETURN:
+            self.now_student = student_select.select_student(
+                self.student_list, _("选择学生"), _("请选择要查看或编辑个人课表的学生：\n"), self.now_student)
+            return
+        if self.now_student == -1:
             return
         if yrn == _("一键选课"):
             self._auto_fill_course(self.now_student)
@@ -148,15 +125,10 @@ class Course_Select_Panel:
         if yrn in self.cell_return:
             week_day, period = self.cell_return[yrn]
             self._edit_cell(self.now_student, week_day, period)
-            return
-        for student_id in self.student_list:
-            if yrn == f"\nSTU_{student_id}":
-                self.now_student = student_id
-                return
 
     def _draw_week_table(self, character_id: int) -> Dict[str, tuple]:
         """
-        绘制一个孩子的周表
+        绘制一个学生的周表
         输入类型: character_id(int)
         输出类型: Dict[str, tuple]，按钮返回值 → (星期, 节次)
         功能: 班级式课显示"科目名/教室名"，个人式课显示"[课型缩写]目标"
@@ -172,7 +144,7 @@ class Course_Select_Panel:
         for name in education_constant.WEEK_NAME:
             now_draw = draw.CenterDraw()
             now_draw.width = cell_width
-            now_draw.text = _(name)
+            now_draw.text = name
             now_draw.draw()
         line_feed.draw()
 
@@ -198,15 +170,16 @@ class Course_Select_Panel:
         功能: 未排课为 --。
               班级式课（理论/实践/公开）的目标是教室名，光看教室不知道这节上什么，
               所以回查全局课表把科目名一并写出来，成"学识技能/理论教室一"。
-              ⚠️ 班级式课**不加课型缩写**：「理论教室一」本身就说明了是理论课。
+              班级式课**不加课型缩写**：「理论教室一」本身就说明了是理论课。
                  个人式的三种课型才需要「[体]」「[兴]」「[实]」——它们的目标名看不出课型
+              上不成的格子照实标出：教室课「/已停课」（Plan 27），个人式课「/未开放」「/条件不符」（Plan 28）
         """
         course = schedule_handle.get_selected_course(character_id, week_day, period)
         if course is None:
             return "--"
         course_type, target = course[0], course[1]
         if course_type in education_constant.CLASSROOM_COURSE_TYPE_SET:
-            # ⚠️ 必须走 get_class_cell：它是全局课表的唯一读取入口，
+            # 必须走 get_class_cell：它是全局课表的唯一读取入口，
             #    直接读 class_schedule 会漏掉临时性技实操课的覆盖层
             cell = schedule_handle.get_class_cell(target, week_day, period)
             if cell is not None and cell[0] in game_config.config_ability:
@@ -214,19 +187,29 @@ class Course_Select_Panel:
             # 选了这间教室，但那节课后来被清掉了——照实显示，别让玩家以为还有课
             return _("{0}/已停课").format(target)
         short = education_constant.COURSE_TYPE_SHORT.get(course_type, "?")
+        target_name = target
         if course_type == education_constant.COURSE_TYPE_INTEREST:
-            target = game_config.config_entertainment[target].name
+            target_name = game_config.config_entertainment[target].name
         elif course_type == education_constant.COURSE_TYPE_INTERN:
-            target = game_config.config_work_type[target].name
-        return "[{0}]{1}".format(short, target)
+            target_name = game_config.config_work_type[target].name
+        text = "[{0}]{1}".format(short, target_name)
+        # 个人式课这一节上不成的照实标出，与教室课的「已停课」同一写法（Plan 28 §3.2）：上课判定起按没课处理，
+        #    不标的话玩家看着课表以为这节有课。地点先判、活动条件后判，与选课页 _select_target 的顺序一致；
+        #    最宽的「[兴]演奏传统乐器/条件不符」也恰好放得进一格（25列）
+        course_data = {"course_type": course_type, "target": target}
+        if not schedule_handle.get_course_place(course_data):
+            return _("{0}/未开放").format(text)
+        if not schedule_handle.judge_course_need_pass(character_id, course_data):
+            return _("{0}/条件不符").format(text)
+        return text
 
     def _auto_fill_course(self, character_id: int):
         """
-        一键把这个孩子个人课表上的空节次选满
+        一键把这个学生个人课表上的空节次选满
         输入类型: character_id(int)
         输出类型: 无
         功能: 有课就上。同一节有多间教室开课时选她该科等级最低的那门。
-              ⚠️ 只填空格，已有的选课一节不动
+              只填空格，已有的选课一节不动
         """
         from Script.System.Education_System import auto_schedule
 
@@ -248,7 +231,7 @@ class Course_Select_Panel:
 
     def _clear_student(self, character_id: int):
         """
-        清空一个孩子的全部选课
+        清空一个学生的全部选课
         输入类型: character_id(int)
         输出类型: 无
         功能: 逐格调用 clear_selected_course
@@ -282,12 +265,15 @@ class Course_Select_Panel:
             line_feed.draw()
             draw.LineDraw("-", self.width).draw()
             # 三个时段，点进去单独覆盖
+            # 单独指定里选「自由选择娱乐活动」等于取消这一格的单独指定、回到模板的安排（覆盖表存不了 0），先把话说在前面
+            tip_draw = draw.NormalDraw()
+            tip_draw.width = self.width
+            tip_draw.text = _("  点某个时段可单独指定活动；选「自由选择娱乐活动」即取消单独指定、回到模板的安排；不符合条件的活动会退回自由选择\n")
+            tip_draw.style = "deep_gray"
+            tip_draw.draw()
             for slot in range(education_constant.SLOT_COUNT):
-                entertainment_id = schedule_template_handle.get_child_slot_activity(character_id, slot)
-                if entertainment_id and entertainment_id in game_config.config_entertainment:
-                    now_name = game_config.config_entertainment[entertainment_id].name
-                else:
-                    now_name = _("未设置")
+                # 0 显示为「自由选择娱乐活动」；这个孩子不满足条件的活动标注「条件不符→自由选择」
+                now_name = schedule_template_handle.get_child_slot_activity_text(character_id, slot)
                 growth_data = cache.character_data[character_id].child_growth
                 override_mark = ""
                 if growth_data is not None and slot in growth_data.schedule_override:
@@ -321,23 +307,29 @@ class Course_Select_Panel:
 
     def _copy_to_others(self, character_id: int, student_list: List[int]):
         """
-        把当前孩子的课表整份复制给另一个孩子
+        把当前学生的课表整份复制给另一个学生
         输入类型: character_id(int), student_list(List[int])
         输出类型: 无
-        功能: 覆盖式复制；⚠️ 教室课复制过去后可能与对方已有的课冲突，所以先清空再写
+        功能: 覆盖式复制；教室课复制过去后可能与对方已有的课冲突，所以先清空再写。
+              名单每行6个（190/6=31列）：成年学生也进名单之后一行一个会拉得很长
         """
         draw.TitleLineDraw(_("复制课表到"), self.width).draw()
         return_list: List[str] = []
         id_by_return: Dict[str, int] = {}
+        count = 0
         for other_id in student_list:
             if other_id == character_id:
                 continue
             now_draw = draw.LeftButton(
                 _("[{0}]").format(cache.character_data[other_id].name),
-                f"COPY_{other_id}", int(self.width / 2))
+                f"COPY_{other_id}", int(self.width / 6))
             now_draw.draw()
             return_list.append(now_draw.return_text)
             id_by_return[now_draw.return_text] = other_id
+            count += 1
+            if count % 6 == 0:
+                line_feed.draw()
+        if count % 6:
             line_feed.draw()
         back_draw = draw.CenterButton(_("[取消]"), _("取消"), int(self.width / 2))
         back_draw.draw()
@@ -378,15 +370,16 @@ class Course_Select_Panel:
         选课第一屏：本节可上的教室课 + 三类个人式课型入口
         输入类型: character_id(int), week_day(int), period(int)
         输出类型: (课型int, 目标) 元组；"CLEAR"为清空该格；None为取消
-        功能: ⚠️ 班级式课不再让玩家「先猜课型、再看有没有课」——课型信息本就蕴含在教室名里
+        功能: 班级式课不再让玩家「先猜课型、再看有没有课」——课型信息本就蕴含在教室名里
                  （理论教室→理论课、实践教室→实践课、大礼堂→公开课），
-                 所以直接列出本节各教室实际排了什么，玩家选的是「去上哪节课」而不是「什么类型的课」
+                 所以直接列出本节各教室实际排了什么，玩家选的是「去上哪节课」而不是「什么类型的课」。
+              格子上的教师已离岗 / 不在岛上的，名字后加标注、整行灰字（Plan 31 §3.10），与全局课表同口径
         """
         draw.TitleLineDraw(_("选择课程"), self.width).draw()
         info_draw = draw.NormalDraw()
         info_draw.width = self.width
         info_draw.text = _("  {0}｜{1} 第{2}节 {3}\n\n").format(
-            cache.character_data[character_id].name, _(education_constant.WEEK_NAME[week_day]),
+            cache.character_data[character_id].name, education_constant.WEEK_NAME[week_day],
             period + 1, get_period_time_text(period))
         info_draw.draw()
 
@@ -400,10 +393,10 @@ class Course_Select_Panel:
         head_draw.text = _("  本节各教室的课（选中即去上这节课）：\n")
         head_draw.draw()
         class_count = 0
-        # ⚠️ 必须逐间走 get_class_cell：它是全局课表的唯一读取入口，
-        #    直接遍历 class_schedule 会漏掉临时性技实操课的覆盖层，也漏掉从没排过课的教室
+        # 逐间走 get_class_cell（全局课表的唯一读取入口），但不叠加临时实操课：这里选的是**每周循环**的个人课表，
+        #    一次性的临时课列出来让人选，下周同一节就变成「已停课」（2026-09-12 第五轮）
         for classroom in schedule_handle.get_classroom_list():
-            cell = schedule_handle.get_class_cell(classroom, week_day, period)
+            cell = schedule_handle.get_class_cell(classroom, week_day, period, include_temp=False)
             if cell is None:
                 now_draw = draw.LeftDraw()
                 now_draw.width = int(self.width / 2)
@@ -414,14 +407,17 @@ class Course_Select_Panel:
                 continue
             class_count += 1
             teacher_name = _("无教师（自习）")
+            # 教师已离岗 / 不在岛上时名字后加标注、整行灰字（Plan 31 §3.10）：这节课每周都会降级为自习，但仍可选，所以照旧是按钮
+            absent_mark = ""
             if cell[1] in cache.character_data:
-                teacher_name = cache.character_data[cell[1]].name
+                absent_mark = get_teacher_absent_mark(cell[1])
+                teacher_name = cache.character_data[cell[1]].name + absent_mark
             course_type = schedule_handle.get_course_type_by_classroom(classroom)
             now_draw = draw.LeftButton(
                 _("[{0}] {1}/{2}（{3}）").format(
                     classroom, game_config.config_ability[cell[0]].name, teacher_name,
                     education_constant.COURSE_TYPE_NAME.get(course_type, _("未知"))),
-                f"CLS_{classroom}", int(self.width / 2))
+                f"CLS_{classroom}", int(self.width / 2), normal_style="deep_gray" if absent_mark else "standard")
             now_draw.draw()
             return_list.append(now_draw.return_text)
             result_by_return[now_draw.return_text] = (course_type, classroom)
@@ -516,41 +512,64 @@ class Course_Select_Panel:
                 if index % 6 == 0:
                     line_feed.draw()
 
-        # 兴趣课：class_ok == 1 的娱乐项
+        # 兴趣课：class_ok == 1 的娱乐项；地点没开放、或这名学生不满足活动条件（need）的置灰（Plan 26 §3.8）
         elif course_type == education_constant.COURSE_TYPE_INTEREST:
             for cid in game_config.config_entertainment:
                 if not game_config.config_entertainment[cid].class_ok:
                     continue
-                empty_flag = False
-                now_draw = draw.LeftButton(
-                    _("[{0}]").format(game_config.config_entertainment[cid].name),
-                    f"TG_{cid}", cell_width)
-                now_draw.draw()
-                return_list.append(now_draw.return_text)
-                target_by_return[now_draw.return_text] = cid
+                entertainment_name = game_config.config_entertainment[cid].name
+                gray_text = ""
+                if not schedule_handle.get_course_place({"course_type": course_type, "target": cid}):
+                    gray_text = _(" {0}（未开放）").format(entertainment_name)
+                elif not schedule_template_handle.judge_activity_need_pass(character_id, cid):
+                    gray_text = _(" {0}（条件不符）").format(entertainment_name)
+                if gray_text:
+                    now_draw = draw.LeftDraw()
+                    now_draw.width = cell_width
+                    now_draw.style = "deep_gray"
+                    now_draw.text = gray_text
+                    now_draw.draw()
+                else:
+                    empty_flag = False
+                    now_draw = draw.LeftButton(
+                        _("[{0}]").format(entertainment_name), f"TG_{cid}", cell_width)
+                    now_draw.draw()
+                    return_list.append(now_draw.return_text)
+                    target_by_return[now_draw.return_text] = cid
                 index += 1
                 if index % 6 == 0:
                     line_feed.draw()
 
         # 实习课：tag == 0 且非教师/学生的岗位；周日无人在岗，整列不可选
         else:
-            if week_day == 6:
+            # 周日是一周的最后一天（WEEK_NAME 的下标即 weekday()）：按一周的天数推，不写死 6（Plan 32 L28）
+            if week_day == education_constant.WEEK_DAY_COUNT - 1:
                 now_draw = draw.NormalDraw()
                 now_draw.width = self.width
                 now_draw.style = "deep_gray"
                 now_draw.text = _("\n  周日全岛无人上班，实习课找不到带教干员，本日不可排\n")
                 now_draw.draw()
+                # 已经说明了为什么不可排，不再接着画「本节次没有可选的内容」（Plan 27 L5，此前两句重复）
+                empty_flag = False
             else:
                 for cid in game_config.config_work_type:
                     work_data = game_config.config_work_type[cid]
                     if work_data.tag or cid in education_constant.EXCLUDE_INTERN_WORK_TYPE or not work_data.ability_id:
                         continue
-                    empty_flag = False
-                    now_draw = draw.LeftButton(
-                        _("[{0}]").format(work_data.name), f"TG_{cid}", cell_width)
-                    now_draw.draw()
-                    return_list.append(now_draw.return_text)
-                    target_by_return[now_draw.return_text] = cid
+                    # 岗位的整组房间都还没开放：解析不出上课地点，置灰（Plan 26 §3.8）
+                    if not schedule_handle.get_course_place({"course_type": course_type, "target": cid}):
+                        now_draw = draw.LeftDraw()
+                        now_draw.width = cell_width
+                        now_draw.style = "deep_gray"
+                        now_draw.text = _(" {0}（未开放）").format(work_data.name)
+                        now_draw.draw()
+                    else:
+                        empty_flag = False
+                        now_draw = draw.LeftButton(
+                            _("[{0}]").format(work_data.name), f"TG_{cid}", cell_width)
+                        now_draw.draw()
+                        return_list.append(now_draw.return_text)
+                        target_by_return[now_draw.return_text] = cid
                     index += 1
                     if index % 6 == 0:
                         line_feed.draw()

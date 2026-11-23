@@ -1764,7 +1764,7 @@ def handle_add_large_lead(
     change_data: game_type.CharacterStatusChange,
 ):
     """
-    增加大量先导（受虐补正）
+    增加大量先导（施虐补正）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -1773,7 +1773,8 @@ def handle_add_large_lead(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-    base_chara_state_common_settle(character_id, 0, 14, 1000, ability_level = character_data.ability[25], tenths_add = False, change_data = change_data)
+    # 35 为施虐能力
+    base_chara_state_common_settle(character_id, 0, 14, 1000, ability_level = character_data.ability[35], tenths_add = False, change_data = change_data)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_SUBMIT)
 def handle_add_large_submit(
@@ -2968,9 +2969,12 @@ def handle_add_1_h_experience(
     """
     base_chara_experience_common_settle(character_id, 155, 1, change_data=change_data)
 
-
-
-
+
+
+
+
+
+
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.SHOW_OFF_STUDY)
 def handle_show_off_study(
     character_id: int,
@@ -2978,7 +2982,7 @@ def handle_show_off_study(
 ):
     """
     （炫耀用）女儿向博士炫耀最近升级的能力，加好感与亲密，并清空待炫耀记录
-    ⚠️ 能力升级发生在玩家睡觉时的睡眠结算里，当场没有观众；本二段行为把这份成就感延后到
+       能力升级发生在玩家睡觉时的睡眠结算里，当场没有观众；本二段行为把这份成就感延后到
        孩子下次与玩家同场景时兑现（方案 §3.15 的延迟炫耀）
     Keyword arguments:
     character_id -- 角色id
@@ -3003,7 +3007,7 @@ def handle_caught_skip_class(
     change_data: game_type.CharacterStatusChange,
 ):
     """
-    （翘课被抓用）翘课中的孩子与玩家同场景时被撞见，当场清掉翘课flag（本日剩余节次回去上课），
+    （翘课被抓用）翘课中的孩子与玩家同场景时被撞见，当场清掉翘课flag、记下被抓的日期（本日剩余节次回去上课、不再掷翘课，Plan 30），
     并按被抓的心虚加抑郁与恐怖
     Keyword arguments:
     character_id -- 角色id
@@ -3013,8 +3017,10 @@ def handle_caught_skip_class(
     growth_data = character_data.child_growth
     if growth_data is None or not growth_data.skip_class_flag:
         return
-    # 被抓个正着：翘课到此为止，本日剩余节次重新按课表走
+    # 被抓个正着：翘课到此为止，本日剩余节次重新按课表走。
+    #    只清 flag 的话之后每节照旧按概率掷，同一天里还会再翘；记下日期，class_ai.roll_skip_class 当天不再掷，次日自然失效
     growth_data.skip_class_flag = False
+    growth_data.skip_caught_day = cache.game_time.toordinal()
     # 心虚与害怕，数值取一节课的量级（45分钟），与翘课本身给的抑郁回落大致相抵
     base_chara_state_common_settle(character_id, 45, 19, change_data=change_data)
     base_chara_state_common_settle(character_id, 45, 18, change_data=change_data)

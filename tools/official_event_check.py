@@ -3,7 +3,8 @@
 
 事件表有一堆**静默失败**的坑：`department` 写成非数字会让事件永远抽不中且不报错、
 空着的选项列在构建时会被删掉、正文里的裸 `{}` 会在绘制时抛异常、
-所有选项都带前提的事件会反复弹出……手写两百多条时这些错误几乎必然发生，
+所有选项都带前提的事件会反复弹出、期末事件读推送时恒定的养成数值会恒成立或永远判不过、
+写进成年桶却不由成年结算推入的事件永远推不出来……手写两百多条时这些错误几乎必然发生，
 所以每写完一批就跑一次本工具。
 
 用法（仓库根目录）：
@@ -11,7 +12,7 @@
     .conda\\python.exe tools/official_event_check.py --full     # 额外校验条数下限（内容写完后用）
     .conda\\python.exe tools/official_event_check.py --quiet    # 只报错，不打统计
 
-⚠️ 本工具**不启动游戏**：前提名与结算id直接从 `Script/Core/constant_promise.py`、
+本工具**不启动游戏**：前提名与结算id直接从 `Script/Core/constant_promise.py`、
    `Script/Core/constant_effect.py`、`data/csv/*.csv` 里解析，跑一次不到一秒。
 """
 import csv
@@ -43,21 +44,57 @@ PARTNER_PREMISE = ("self_have_sibling_child", "self_have_classmate")
 GROWTH_DEPARTMENT = 15
 """ 教育区（养成事件） """
 
-CHILD_SUB_KEY = {0, 101, 102, 103}
-""" 未成年阶段的子桶键：这些事件不允许改能力与素质（选错不该掉能力） """
+SEMESTER_SUB_KEY = 200
+""" 期末桶的子桶键（与 education_constant.SEMESTER_EVENT_SUB_KEY 一致） """
 
-DORM_SUB_KEY = {102, 103, 104}
-""" 幼女期起孩子住自己的宿舍，正文不该再出现育儿室 """
+CHILD_SUB_KEY = {0, 101, 102, 103, SEMESTER_SUB_KEY}
+""" 未成年阶段的子桶键：这些事件不允许改能力与素质（选错不该掉能力）。
+    期末桶只推给幼女 / 萝莉（成年女儿不推期末事件），同样算未成年（Plan 31 §3.15） """
+
+SEMESTER_VALUE_ID = {4, 5, 6, 9, 23}
+""" 期末事件的前提不许读的养成数值：推送那一刻它们都是定值，写了不是恒成立就是永远判不过（Plan 30，Plan 31 §3.15 补 9 / 23）。
+    期末事件在跨天结算里、学期基线重置之后才推送：4 / 5 / 6 本学期听课 / 缺课 / 出勤率读的已是新学期（0/0，出勤率按 100），
+    9 学期进度推送当天恒为 0，23 成绩单待查看推送时恒为 1（推给的正是刚出成绩单的孩子）；
+    刚结束的学期只能从成绩单读（编号 7 档位、8 升级门数） """
+
+GROWTH_VALUE_RE = re.compile(r"CVP_A[12]_Growth\|(\d+)_")
+""" 从前提串里取养成数值编号 """
+
+DORM_SUB_KEY = {102, 103, 104, SEMESTER_SUB_KEY}
+""" 幼女期起孩子住自己的宿舍，正文不该再出现育儿室。期末桶只推给幼女 / 萝莉，同样算（Plan 31 §3.15） """
 
 DORM_TEXT_ALLOW = {"幼女": {"5"}}
 """ 上一条的例外：文件名 -> cid集合。
-    ⚠️ 只放「搬离育儿室」这类**本身就在讲这件事**的里程碑事件，别拿它当报错的消音器 """
+    只放「搬离育儿室」这类**本身就在讲这件事**的里程碑事件，别拿它当报错的消音器 """
 
-MIN_COUNT = {"婴儿": 50, "幼女": 70, "萝莉": 70, "通用": 56}
-""" --full 模式下的条数下限（通用只数跨阶段的那部分，成年后事件不计入） """
+ADULT_SUB_KEY = 104
+""" 成年桶的子桶键（少女期素质 104） """
+
+ADULT_EVENT_UID_SET = {"通用1", "通用2", "通用59", "通用60"}
+""" 成年桶里允许出现的事件uid：只有成年结算显式推入的那几条（Plan 31 §3.2）。
+    与 education_constant 的 GRADUATION_EVENT_UID / ADULT_MEMORIAL_EVENT_UID / ADULT_EXTRA_EVENT_UID_LIST 一致（本工具不 import 游戏模块，另抄一份）；
+    日常派发名单只收 101~103、默认提供者又跳过部门 15，写进成年桶的别的事件永远推不出来（通用 59 / 60 就这样漏过一次） """
+
+MIN_COUNT = {"婴儿": 50, "幼女": 70, "萝莉": 67, "通用": 56}
+""" --full 模式下的条数下限（通用只数跨阶段的那部分，成年后事件不计入）。
+    萝莉 Plan 32 起为 67：写成绩单的萝莉 1 / 20 / 26 挪进了期末桶（期末 17 / 18 / 19），免得学期切换那一夜与期末事件讲同一份成绩单 """
 
 TEXT_DUP_LEN = 15
 """ 查重时比对的正文前缀长度 """
+
+TEXT_PLACEHOLDER = {
+    "Name", "NickName", "NickNameToPl", "PlayerName", "PlayerNickName", "PlayerTargetName", "TargetName", "TargetNickName",
+    "TargetNickNameToPl", "FoodName", "MakeFoodTime", "AllFoodName", "SceneName", "SceneOneCharaName", "TargetSceneName",
+    "TargetOneCharaName", "SrcSceneName", "SrcOneCharaName", "SelfUpClothName", "SelfDownClothName", "TargetUpClothName",
+    "TargetDownClothName", "TargetBraName", "TargetSkiName", "TargetPanName", "TargetSocName", "UpClothName", "DownClothName",
+    "PanName", "SocName",
+}
+""" 事件正文允许使用的占位符：与 Script/Design/talk.py code_text_to_draw_text() 末尾 .format() 的关键字一致。
+    事件正文在绘制前会经 official_event_panel.get_code_text() → code_text_to_draw_text() 替换这些占位符
+       （Plan 22 三期 §9.1 的「事件点名」就靠 {Name} / {TargetName}），所以它们不是"裸花括号"；
+       除此之外的花括号才会在 .format() 时抛 KeyError """
+PLACEHOLDER_RE = re.compile(r"\{([A-Za-z_]+)\}")
+""" 匹配 {Xxx} 形式的占位符 """
 
 
 def load_premise_name_set() -> set:
@@ -158,10 +195,9 @@ class Checker:
             raw = f.read()
         if raw.startswith(b"\xef\xbb\xbf"):
             self.error(path, 1, "文件带BOM，构建时 cid 列名会变成 \\ufeffcid 并在载入配置时 KeyError")
-        if b"\r\n" not in raw:
-            self.error(path, 1, "文件不是CRLF换行")
-        elif raw.replace(b"\r\n", b"").count(b"\n"):
-            self.error(path, 1, "文件里混了裸LF换行")
+        # 仓库里存的是LF，Windows 上开了 core.autocrlf 的检出是CRLF：全LF或全CRLF都可以，两种混用才报错
+        if b"\r\n" in raw and raw.replace(b"\r\n", b"").count(b"\n"):
+            self.error(path, 1, "文件里CRLF与LF换行混用")
         with open(path, encoding="utf-8", newline="") as f:
             rows = list(csv.reader(f))
         if len(rows) < 5:
@@ -205,7 +241,7 @@ class Checker:
 
     def check_text(self, path: str, line: int, name: str, text: str):
         """
-        校验一段展示文本：不能有裸花括号与英文标点
+        校验一段展示文本：只允许 talk.py 认识的占位符，不能有裸花括号与英文标点
         Keyword arguments:
         path -- 文件路径
         line -- 行号
@@ -214,8 +250,12 @@ class Checker:
         Return arguments:
         无
         """
-        if "{" in text or "}" in text:
-            self.error(path, line, f"{name}里有花括号，绘制时会走 .format() 并抛异常")
+        for placeholder in PLACEHOLDER_RE.findall(text):
+            if placeholder not in TEXT_PLACEHOLDER:
+                self.error(path, line, f"{name}里的占位符 {{{placeholder}}} 不在 talk.py 的替换表里，绘制时会抛 KeyError")
+        stripped_text = PLACEHOLDER_RE.sub("", text)
+        if "{" in stripped_text or "}" in stripped_text:
+            self.error(path, line, f"{name}里有裸花括号，绘制时会走 .format() 并抛异常")
         if '"' in text:
             self.error(path, line, f"{name}里有英文双引号，构建时会被转义成 \\\" 并原样显示")
         if "," in text:
@@ -336,14 +376,25 @@ class Checker:
         if not text:
             self.error(path, line, "事件正文为空")
         self.check_text(path, line, "事件正文", text)
-        prefix = text[:TEXT_DUP_LEN]
+        # 去掉占位符再取前缀：点名之后一大半正文都以「{Name}和{TargetName}」开头，不去掉会全部误报重复
+        prefix = PLACEHOLDER_RE.sub("", text)[:TEXT_DUP_LEN]
         if prefix and prefix in text_set:
             self.error(path, line, f"事件正文的前{TEXT_DUP_LEN}字与本文件另一条重复：{prefix}")
         text_set.add(prefix)
         file_name = os.path.splitext(os.path.basename(path))[0]
         if department == GROWTH_DEPARTMENT and sub_key in DORM_SUB_KEY and "育儿室" in text and cid not in DORM_TEXT_ALLOW.get(file_name, set()):
             self.error(path, line, "幼女期起孩子住自己的宿舍，正文不该再出现育儿室（确实在写搬离育儿室的话，把 cid 加进 DORM_TEXT_ALLOW）")
+        # 成年桶只收成年结算显式推入的事件（Plan 31 §3.2）：事件uid是「文件名 + cid」，日常派发不收成年女儿，别的事件写进来永远推不出来
+        if department == GROWTH_DEPARTMENT and sub_key == ADULT_SUB_KEY and f"{file_name}{cid}" not in ADULT_EVENT_UID_SET:
+            self.error(
+                path,
+                line,
+                f"成年桶只有成年结算显式推入的事件会出现：{file_name}{cid} 不在 {sorted(ADULT_EVENT_UID_SET)} 里"
+                "（要加成年事件，先登记进 education_constant.ADULT_EXTRA_EVENT_UID_LIST 与本工具的 ADULT_EVENT_UID_SET）",
+            )
         self.check_premise_text(path, line, "事件前提", row.get("premise", "").strip())
+        if department == GROWTH_DEPARTMENT and sub_key == SEMESTER_SUB_KEY:
+            self.check_semester_premise(path, line, row)
         have_free_option = False
         option_count = 0
         for index in range(1, 5):
@@ -355,6 +406,26 @@ class Checker:
             self.error(path, line, f"只有 {option_count} 个选项，至少要有2个")
         if not have_free_option:
             self.error(path, line, "所有选项都带前提，全被挡住时事件会跳过且不写履历，于是第二天再被抽中反复弹出")
+
+    def check_semester_premise(self, path: str, line: int, row: dict):
+        """
+        期末事件的主前提与四个选项前提不许读推送时恒定的养成数值（Plan 30 禁 4 / 5 / 6，Plan 31 §3.15 补 9 / 23）
+        Keyword arguments:
+        path -- 文件路径
+        line -- 行号
+        row -- 该行的字段dict
+        Return arguments:
+        无
+        """
+        for field in ["premise"] + [f"option_{index}_premise" for index in range(1, 5)]:
+            for value_id in GROWTH_VALUE_RE.findall(row.get(field, "")):
+                if int(value_id) in SEMESTER_VALUE_ID:
+                    self.error(
+                        path,
+                        line,
+                        f"{field} 读了养成数值 {value_id}：期末事件在学期基线重置之后推送，养成数值 4 / 5 / 6 读的是新学期、9 推送当天恒为 0、23 推送时恒为 1；"
+                        "看刚结束的学期用编号 7 / 8",
+                    )
 
     def check_dir(self):
         """

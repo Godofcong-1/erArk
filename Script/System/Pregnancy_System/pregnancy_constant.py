@@ -47,8 +47,10 @@ GROW_TO_GIRL_DAY = 450
 # ==== 4. 卵生 ====
 HATCH_TOTAL_DAY = 265
 """ 孵化总天数（与胎生受精→标准生产时长一致，基准为卵的排出时间） """
-TEND_EGGS_ENTERTAINMENT_ID = 175
-""" 照料卵娱乐的模板id（Entertainment.csv） """
+TEND_EGGS_ENTERTAINMENT_ID = 152
+""" 照料卵娱乐的模板id（Entertainment.csv）。
+    2026-09-09 由 175 改为 152：娱乐编号按「区块id×10+序号」分段，照料卵的地点是教育区（15）的育儿室，
+       原编号却排在大浴场段（17x）；旧存档里的 175 由 save_handle 读档时换成新编号 """
 NURSERY_WORKER_WORK_ID = 153
 """ 保育员工作的模板id（WorkType.csv） """
 
@@ -105,7 +107,7 @@ EXTERNAL_OVULATION_V_MULT = 2
 """ 阴道绝顶的体外排卵概率倍率 """
 EXTERNAL_OVULATION_W_MULT = 4
 """ 子宫绝顶的体外排卵概率倍率（子宫超强绝顶固定100%） """
-EXTERNAL_OVULATION_DRUG_MULT = 2
+EXTERNAL_OVULATION_DRUG_MULT = 5
 """ 排卵促进药 / 催眠强制排卵各自对体外排卵概率的倍率（保留到当日排卵机会结束） """
 SOFT_EGG_SEMEN_TRANSFER_RATE = 0.8
 """ 体外排卵时，子宫与小穴中转移到卵上的精液比例 """

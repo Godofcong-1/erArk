@@ -50,8 +50,9 @@ def update_new_day():
     now_draw.draw()
 
     # 清理过期的临时性技实操课，避免字典随游戏天数无限膨胀并进存档（Plan 22 四期 §7-16）
-    # ⚠️ 该函数会跳过 running 为真的那条：下课时间由玩家决定，一节课可以从昨天一直上到今天，
-    #    把正在上的这节删掉，下课时就找不到课程数据了（§7-27）
+    # 课还在上（课堂模式开着、玩家在 H 里）时，该函数跳过 running 为真的那条：下课时间由玩家决定，一节课可以从昨天一直上到今天，
+    #    把正在上的这节删掉，下课时就找不到课程数据了（§7-27）；
+    #    课堂 H 已结束、课堂模式却留着的幽灵课堂先收尾（settle_orphan_class，Plan 32 §3.1），再按日期清
     sex_class_handle.clean_expired_temp_class()
 
     # 角色刷新
@@ -67,15 +68,20 @@ def update_new_day():
                 now_draw.draw()
         # 清零香薰疗愈的flag
         character_data.sp_flag.aromatherapy = 0
-        # 清零翘课flag：翘课只翘一天，次日重新按课表走（Plan 22 §3.19）
         if character_data.child_growth is not None:
-            character_data.child_growth.skip_class_flag = False
+            growth_data = character_data.child_growth
+            # 清翘课flag：翘课只翘一天，次日重新按课表走（Plan 22 §3.19）。
+            # 只清过期的（skip_class_day 早于今天，Plan 32 §3.7 L5）：跨天结算排在 NPC 阶段之后（character_behavior.init_character_behavior），
+            #    玩家一步跨过午夜走到次日上课时间时，NPC 已先跑完新一天的早上、549 挂上了新一天的 flag，
+            #    无条件清掉的话当天余下节次会重新掷翘课，<翘>、翘课被抓、截短规则的翘课日分支都失效
+            if growth_data.skip_class_flag and growth_data.skip_class_day < cache.game_time.toordinal():
+                growth_data.skip_class_flag = False
             # 清零见学flag（Plan 22 二期）：见学是「此刻」的状态，跨日一律重判。
-            # ⚠️ 这是兜底的第四处清位——AI 整天没跑到那个角色（睡着、H中、被抱走）时，
+            # 这是兜底的第四处清位——AI 整天没跑到那个角色（睡着、H中、被抱走）时，
             #    class_ai 的三处清位一处都摸不着，标记会一直粘着
-            character_data.child_growth.follow_mother_flag = False
+            growth_data.follow_mother_flag = False
         if character_id:
-            # 全量重算异常位掩码，兜底修复各状态修改点漏刷新导致的过期缓存位（每日一次，开销可忽略）
+            # 把异常位掩码整体算一遍记进 sp_flag.unnormal_flag（各判定已改为每次现算、不读这份记录，这里只让角色数据里留的值每日更新一次）
             handle_premise.refresh_unnormal_flag(character_id)
             # 排卵日结束仍未结算（玩家当天未睡觉）时的兜底：受精判定与排卵结算
             if character_data.pregnancy.ovulation_flag:
@@ -87,7 +93,7 @@ def update_new_day():
             # 持有需照料的卵的卵生角色，随机一个娱乐时段替换为照料卵
             egg_handle.replace_entertainment_for_eggs(character_id)
             # 孩子按日程模板改写今日的三个娱乐时段（Plan 22 二期）
-            # ⚠️ 必须在上面的 get_chara_entertainment 之后：顺序颠倒会被当天的随机值冲掉
+            # 必须在上面的 get_chara_entertainment 之后：顺序颠倒会被当天的随机值冲掉
             schedule_template_handle.apply_schedule_for_child(character_id)
             # 刷新生理周期
             pregnancy_handle.update_reproduction_period(character_id)
@@ -106,14 +112,14 @@ def update_new_day():
 
     # 非角色部分
     # 学期切换（Plan 22 一期 §3.13）：一个季月即一个学期，切季月即切学期，期末给每个在学的女儿出成绩单
-    # ⚠️ 必须排在上面的角色刷新之后：出勤数要等昨天的课全部结算完才算数
-    # ⚠️ settle_semester_change 靠逐孩比对学期号来判定，本身幂等，不需要额外的「今天是否已结算」标记
+    # 必须排在上面的角色刷新之后：出勤数要等昨天的课全部结算完才算数
+    # settle_semester_change 靠逐孩比对学期号来判定，本身幂等，不需要额外的「今天是否已结算」标记
     report_character_list = semester_handle.settle_semester_change()
     if report_character_list:
         growth_event_handle.push_semester_event_for_list(report_character_list)
         now_draw.text = _("\n【学期结束】{0}的成绩单出来了，可以用「检查成绩单」指令查看\n").format(
             "、".join(cache.character_data[one].name for one in report_character_list))
-        # ⚠️ now_draw 是本函数复用的同一个对象，改了 style 必须改回来，否则后面所有输出都变成金色
+        # now_draw 是本函数复用的同一个对象，改了 style 必须改回来，否则后面所有输出都变成金色
         now_draw.style = "gold_enrod"
         now_draw.draw()
         now_draw.style = "standard"
@@ -126,7 +132,10 @@ def update_new_day():
     # 每周一的助理轮换
     if cache.game_time.weekday() == 0 and handle_premise.handle_pl_assistant_change_every_week_on(0):
         assistant_panel.select_random_assistant()
-    # 按前提筛选并入队今日的公务事件（Plan 23）。⚠️ 必须在上面的角色刷新之后：
+    # 今天过生日的女儿把生日事件插到队首（Plan 32 §3.3）。必须在下面的日常派发之前：
+    #    推入之后它已在队列里，日常随机派发不会再抽到它；只靠日常派发的话，当天抽中的机会只有百分之一二
+    growth_event_handle.push_birthday_event()
+    # 按前提筛选并入队今日的公务事件（Plan 23）。必须在上面的角色刷新之后：
     # 事件前提要读当天刷新过的状态，顺序颠倒会拿到昨天的数据
     official_event_handle.check_new_day_official_event()
     # 清空今日触发事件记录

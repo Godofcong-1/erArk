@@ -78,8 +78,8 @@ def create_food(
     return food
 
 
-# 烹饪问题库的四个阶段（顺序固定：备料->烹饪->调味->装盘），值与 cook_question csv 中 stage 列一致
-COOK_QUESTION_STAGES = [_("备料"), _("烹饪"), _("调味"), _("装盘")]
+# 烹饪问题库的四个阶段（顺序固定：备料->烹饪->调味->装盘），值与 cook_question csv 中 stage 列一致（该列不随语言翻译，这里不能套翻译函数）
+COOK_QUESTION_STAGES = ["备料", "烹饪", "调味", "装盘"]
 """ 烹饪问题库阶段顺序 """
 
 
@@ -135,13 +135,13 @@ def get_special_seasoning_question_stage(special_seasoning: int):
     """
     # 射入精液（巧妙地混入食物中，cid11）：替换调味阶段为精液调味题
     if special_seasoning == 11:
-        return (_("调味"), _("调味_精液"))
+        return ("调味", "调味_精液")
     # 射入精液（不作掩饰直接射上去，cid12）：替换装盘阶段为精液装盘题
     if special_seasoning == 12:
-        return (_("装盘"), _("装盘_精液"))
+        return ("装盘", "装盘_精液")
     # 加入药物（所有药物cid均>100）：替换调味阶段为药物调味题
     if special_seasoning > 100:
-        return (_("调味"), _("调味_药物"))
+        return ("调味", "调味_药物")
     # 其他调味无替换规则（母乳暂未在游戏中实装）
     return None
 
@@ -219,8 +219,8 @@ def init_food_shop_data(update_restaurant_id: int = -2, new_day_flag: bool = Fal
                 break
     # 初始化餐馆内的食物
     for restaurant_id in game_config.config_restaurant:
-        # 仅刷新指定id的餐馆
-        if update_restaurant_id >= 0:
+        # 仅刷新指定id的餐馆；-1 为只刷新食堂，不动任何餐馆（餐馆id从0开始，不会等于-1）
+        if update_restaurant_id != -2:
             if restaurant_id != update_restaurant_id:
                 continue
         cook_index = 0

@@ -818,11 +818,12 @@ class Manage_Basement_Panel:
         from Script.System.Dormitory_System import manage_dormitory_panel
         from Script.System.Cooking_System import make_food_panel
 
-        if _("基建系统") in son_panel:
+        # son_panel 是按钮上的完整文字（已翻译），与同样整串翻译的按钮文字比较；不能拿去掉方括号的系统名去判包含，两者的译文未必互相包含
+        if son_panel == _("[基建系统]"):
             now_panel = building_panel.Building_Panel(self.width)
-        if _("能源系统") in son_panel:
+        elif son_panel == _("[能源系统]"):
             now_panel = manage_power_system_panel.Manage_Power_System_Panel(self.width)
-        elif _("装备维护系统") in son_panel:
+        elif son_panel == _("[装备维护系统]"):
             # 如果铁匠铺还没有开放，则不显示装备维护系统
             if not handle_premise.handle_blacksmith_shop_open(0):
                 info_draw = draw.WaitDraw()
@@ -833,27 +834,27 @@ class Manage_Basement_Panel:
                 return
             else:
                 now_panel = equipmen_panel.Equipment_Maintain_Panel(self.width)
-        elif _("生产系统") in son_panel:
+        elif son_panel == _("[生产系统]"):
             now_panel = manage_assembly_line_panel.Manage_Assembly_Line_Panel(self.width)
-        elif _("图书馆管理系统") in son_panel:
+        elif son_panel == _("[图书馆管理系统]"):
             now_panel = manage_library.Manage_Library_Panel(self.width)
-        elif _("资源交易系统") in son_panel:
+        elif son_panel == _("[资源交易系统]"):
             now_panel = resource_exchange_panel.Resource_Exchange_Line_Panel(self.width)
-        elif _("招募系统") in son_panel:
+        elif son_panel == _("[招募系统]"):
                 now_panel =recruit_panel.Recruit_Panel(self.width)
-        elif _("势力外交系统") in son_panel:
+        elif son_panel == _("[势力外交系统]"):
             now_panel = nation_diplomacy_panel.Nation_Diplomacy_Panel(self.width)
-        elif _("邀请访客系统") in son_panel:
+        elif son_panel == _("[邀请访客系统]"):
             now_panel = invite_visitor_panel.Invite_Visitor_Panel(self.width)
-        elif _("外勤委托系统") in son_panel:
+        elif son_panel == _("[外勤委托系统]"):
             now_panel = field_commission_panel.Field_Commission_Panel(self.width)
-        elif _("载具管理系统") in son_panel:
+        elif son_panel == _("[载具管理系统]"):
             now_panel = manage_vehicle_panel.Manage_Vehicle_Panel(self.width)
-        elif _("农业系统") in son_panel:
+        elif son_panel == _("[农业系统]"):
             now_panel = agriculture_production_panel.Agriculture_Production_Panel(self.width)
-        elif _("宿舍管理系统") in son_panel:
+        elif son_panel == _("[宿舍管理系统]"):
             now_panel = manage_dormitory_panel.Manage_Dormitory_Panel(self.width)
-        elif _("烹饪系统") in son_panel:
+        elif son_panel == _("[烹饪系统]"):
             # 输出提示
             info_draw = draw.WaitDraw()
             info_draw.text = _("\n○需要在生活娱乐区-厨房中进行烹饪\n")
@@ -861,7 +862,7 @@ class Manage_Basement_Panel:
             info_draw.width = self.width
             info_draw.draw()
             return
-        elif _("监禁调教系统") in son_panel:
+        elif son_panel == _("[监禁调教系统]"):
             # 如果没有监狱长，则不显示监禁调教系统
             if not handle_premise.handle_have_warden(0):
                 info_draw = draw.WaitDraw()
@@ -872,15 +873,15 @@ class Manage_Basement_Panel:
                 return
             else:
                 now_panel = confinement_and_training.Confinement_And_Training_Manage_Panel(self.width)
-        elif _("医疗经营系统") in son_panel:
+        elif son_panel == _("[医疗经营系统]"):
             now_panel = medical_department_panel.Medical_Department_Panel(self.width)
-        elif _("妊娠总览系统") in son_panel:
+        elif son_panel == _("[妊娠总览系统]"):
             from Script.System.Pregnancy_System import pregnancy_panel
             now_panel = pregnancy_panel.Pregnancy_Overview_Panel(self.width)
-        elif _("教育管理系统") in son_panel:
+        elif son_panel == _("[教育管理系统]"):
             from Script.System.Education_System import class_schedule_panel
             now_panel = class_schedule_panel.Education_Manage_Panel(self.width)
-        elif _("诊疗病人系统") in son_panel:
+        elif son_panel == _("[诊疗病人系统]"):
             # 输出提示
             info_draw = draw.WaitDraw()
             info_draw.text = _("\n○需要在医疗部-急诊室/门诊室中诊疗病人，无法在管理台直接诊疗病人\n")
@@ -980,7 +981,8 @@ class Manage_Basement_Panel:
                     commision_chara_name_str = "、".join(commision_chara_name_list)
                     # 剩余返回天数
                     return_time = cache.rhodes_island.ongoing_field_commissions[commision_id][1]
-                    last_days = game_time.count_day_for_datetime(cache.game_time, return_time)
+                    # 按可游玩天数算：返回时间在下一个季月时，公历天数会把被时钟跳过的月份也算进去（多显示约 60 天）
+                    last_days = int(game_time.count_play_second(cache.game_time, return_time) // 86400)
                     if last_days <= 0:
                         last_days = _("不足一天")
                     else:
@@ -1206,6 +1208,7 @@ class Change_Npc_Work_Panel:
 
     def button_0(self, character_id: int):
         """选项1"""
+        from Script.System.Education_System import education_constant
 
         while 1:
 
@@ -1245,7 +1248,7 @@ class Change_Npc_Work_Panel:
                 flag_open = True
                 reason_text = work_data.cant_reason
                 # 必要条件判断
-                if work_data.need != _("无"):
+                if work_data.need != "无":
                     need_data_all = work_data.need
                     # 整理需要的条件
                     if "&" not in need_data_all:
@@ -1263,8 +1266,8 @@ class Change_Npc_Work_Panel:
                         open_cid = game_config.config_facility_open_name_to_cid[work_place]
                         if not cache.rhodes_island.facility_open[open_cid]:
                             flag_open = False
-                # 幼女不能进行学生以外的工作
-                if handle_premise.handle_self_is_child(character_id) and work_cid != 152:
+                # 幼女不能进行学生以外的工作（岗位编号取教育系统的常量，不写死 152，Plan 29 §3.5）
+                if handle_premise.handle_self_is_child(character_id) and work_cid != education_constant.STUDENT_WORK_TYPE:
                     flag_open = False
                     reason_text += ' ' + _("幼女无法进行学生以外的工作")
                 # 特殊解锁的工作不直接开放

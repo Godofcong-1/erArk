@@ -149,7 +149,7 @@ def settle_hidden_value_by_action(character_id = 0, add_flag = None, now_duratio
     # 如果没有指定，则根据行为类型判断是否需要增加隐蔽值
     if add_flag == None:
         add_flag = False
-        for tag in {_("猥亵"), _("性爱")}:
+        for tag in {"猥亵", "性爱"}:
             if tag in behavior_data.tag:
                 add_flag = True
                 break
@@ -175,11 +175,11 @@ def settle_hidden_value_by_action(character_id = 0, add_flag = None, now_duratio
         now_intensity = 1
         tag_list = behavior_data.tag.split("|")
         for tag in tag_list:
-            if tag == _("道具"):
+            if tag == "道具":
                 now_intensity = max(4, now_intensity)
-            elif tag == _("插入"):
+            elif tag == "插入":
                 now_intensity = max(3, now_intensity)
-            elif tag == _("侍奉"):
+            elif tag == "侍奉":
                 now_intensity = max(2, now_intensity)
     # 隐蔽能力
     now_ability_lv = character_data.ability[90]

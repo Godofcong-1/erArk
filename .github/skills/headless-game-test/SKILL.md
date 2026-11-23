@@ -19,7 +19,7 @@ description: 在不启动图形界面的情况下无头运行 erArk：加载游�
 ## 铁律（每条都是踩过的坑）
 
 1. **必须用 `./.conda/python.exe`**，裸 `python` 是 Windows 商店空壳别名（exit 49、无任何输出）。
-2. **外层必须加 `timeout N`**（bash 的 timeout 命令）。游戏导入链（Flask/SocketIO 等）会启动非守护线程，**测试跑完后进程也不会自行退出**——`EXIT=124` 且结果已全部打印 = 正常结束，不是测试失败。也可在脚本末尾 `os._exit(0)` 主动退出。
+2. **外层必须加 `timeout N`**（bash 的 timeout 命令）。面板循环、等待输入这类流程一旦退不出来，脚本会一直挂着；timeout 是兜底。脚本正常跑完时进程会自己退出（旧版在导入链里有一个永不结束的指令处理线程，跑完也不退，已删除）。`EXIT=124` 表示超时被杀：先看结果是否已全部打印，没打印完就是卡在了某个循环里。建议脚本末尾仍用 `os._exit(0 if not FAIL else 1)` 给出明确的退出码。
 3. **加 `-u` 取消缓冲**，且脚本开头 `sys.stdout.reconfigure(encoding='utf-8', errors='replace')`（Windows 控制台是 GBK，中文会乱码/报错）。
 4. **绝不用 `| tail` / `| head` 观察可能长时间运行的进程**。管道会攒住全部输出直到进程结束，看起来和「卡死」一模一样——包括 `buildconfig.py`、`tools/lint_target_csv.py` 这类跑几分钟的脚本，以及所有 harness。正确做法是**重定向到文件再读**：
    ```bash
@@ -30,7 +30,7 @@ description: 在不启动图形界面的情况下无头运行 erArk：加载游�
 5. **绝不调用会进入真实主循环的函数**：`handle_instruct.handle_xxx()`、`chara_handle_instruct_common_settle()`、`update.game_update_flow()` 最终都会调 `init_character_behavior()`。如果要排查的 BUG 正是死循环，harness 自己就会卡死。必须用"复刻指令赋值 + 手动推进时间 + 带护栏的自建循环"代替（见下文）。
 6. **只读纪律**：读档只用 `save_handle.input_load_save(id)`（纯读入内存）；绝不调用 `establish_save()`；不 inline 调用 `init_character_behavior()`（其结尾的成就结算可能写文件）。所有修复先用 monkeypatch 在内存中模拟验证，确认收敛后再改源码。
 7. **含中文的脚本一律写成文件再跑，不要走 heredoc/stdin**。Git Bash 把 heredoc 以 GBK 喂给 Python，脚本里的中文字符串会被解码成乱码，直接 `SyntaxError: invalid syntax`（报错行里能看到 `��` 就是这个原因）。正确做法：用 Write 工具把脚本写到 scratchpad（UTF-8），开头 `os.chdir(r"c:\code\erArk")` + `sys.path.insert(0, r"c:\code\erArk")`，再 `timeout 300 ./.conda/python.exe -u "<scratchpad>/xxx.py" > "$LOG" 2>&1`。纯 ASCII 的一次性小脚本才可以用 heredoc（`./.conda/python.exe -u - <<'EOF'`，此时 sys.path[0] 为当前目录，可直接 `import auto_build_config`）。同理，需要批量改含中文的 CSV/文档时也用脚本文件而不是 stdin。
-8. **测试脚本是回归资产，改完一轮功能就重跑上一轮的测试**。同一子系统连续多个 plan 时（如 plan_14→17→18 的怀孕系统），每次实施后除了跑新测试，还要重跑前几轮留下的测试文件（scratchpad 会随会话丢失，长期要用的测试请在 plan 文档里记录其断言清单，或在用户同意后收进仓库）。
+8. **测试脚本是回归资产，改完一轮功能就重跑上一轮的测试**。仓库里已收录的回归套件在 `tools/tests/`（`core` 基础系统、`education` 养成系统，`tools/tests/run_all.py` 一次跑全部，CI 每次提交都跑）；套件共用 `tools/tests/headless_base.py`，里面已经是下文第一步、第二步与模式 A 两条全局前置的成品，往仓库里加测试时直接 `from _bootstrap import *`，写法见 `tools/tests/README.md`。同一子系统连续多个 plan 时（如 plan_14→17→18 的怀孕系统），每次实施后除了跑新测试，还要重跑前几轮留下的测试文件（scratchpad 会随会话丢失，长期要用的测试请在 plan 文档里记录其断言清单，或在用户同意后收进仓库）。
 
 ## 模式 A：函数级单元测试
 
@@ -93,7 +93,7 @@ any(t.behavior_id == "my_behavior" for t in game_config.config_talk.values())
 constant.settle_behavior_effect_data[<效果id>](<角色id>, add_time, change_data, now_time)
 ```
 
-⚠️ **`add_time` 不要传 0**：绝大多数结算器开头是 `if not add_time: return`，传 0 会静默什么都不做，断言变成假阴性。反过来，「`add_time=0` 时不生效」本身也值得单独断言一条。
+**`add_time` 不要传 0**：绝大多数结算器开头是 `if not add_time: return`，传 0 会静默什么都不做，断言变成假阴性。反过来，「`add_time=0` 时不生效」本身也值得单独断言一条。
 
 更多经实战验证的断言样式：
 
@@ -336,6 +336,18 @@ def wrap_int(cid):
     return r
 handle_npc_ai.judge_interrupt_character_behavior = wrap_int
 character_behavior.handle_npc_ai.judge_interrupt_character_behavior = wrap_int
+
+# 学生赶去上课的截短（Plan 32 起）不在 judge_interrupt_character_behavior 里：
+#    character_behavior 的 NPC 分支在实时结算之前调 judge_student_leave_truncate，要记截短就一并包它
+orig_trunc = handle_npc_ai.judge_student_leave_truncate
+def wrap_trunc(cid):
+    pre = cache.character_data[cid].behavior.duration
+    r = orig_trunc(cid)
+    if cid in WATCH and r:
+        print(f"    [学生截短] cid={cid} 时长 {pre} → {cache.character_data[cid].behavior.duration}")
+    return r
+handle_npc_ai.judge_student_leave_truncate = wrap_trunc
+character_behavior.handle_npc_ai.judge_student_leave_truncate = wrap_trunc
 ```
 
 同法可包装 `judge_character_status`、`realtime_settle.character_aotu_change_value` 等任意环节。
@@ -381,14 +393,14 @@ character_behavior.handle_npc_ai.judge_interrupt_character_behavior = patched
 2. **无效时长类**：状态机算出 duration ≤ 0（如"睡到玩家醒来时间"的减法）且 `add_time=0` 的结算会跳过全部 flag 效果（`if not add_time: return` 模式），前提永不失效。
 3. **start_time 回拨类**：B 路径或某处把 start_time 设回过去，且每轮被重新回拨。
 
-对应的结构性护栏（已在代码中，排查时先确认它们还在）：`judge_interrupt_character_behavior` 开头的"本轮刚赋予的行为不打断"；`find_character_target` 状态机执行后的 duration≥1 钳制；`judge_character_status_time_over` 的 `add_time <= 0` 拦截。
+对应的结构性护栏（已在代码中，排查时先确认它们还在）：`judge_interrupt_character_behavior` 开头的"本轮刚赋予的行为不打断"（学生截短 `judge_student_leave_truncate` 开头是同一道守卫，Plan 32）；`find_character_target` 状态机执行后的 duration≥1 钳制；`judge_character_status_time_over` 的 `add_time <= 0` 拦截。
 
 ## 快速查表
 
 | 要找什么 | 位置 |
 | --- | --- |
 | 主循环/时间结算 | `Script/Design/character_behavior.py`（`init_character_behavior`、`judge_character_status_time_over`） |
-| NPC AI 选择/打断 | `Script/Design/handle_npc_ai.py`（`find_character_target`、`judge_interrupt_character_behavior`） |
+| NPC AI 选择/打断 | `Script/Design/handle_npc_ai.py`（`find_character_target`、`judge_interrupt_character_behavior`、学生截短 `judge_student_leave_truncate`（Plan 32，排在实时结算之前）） |
 | 实时数值/睡眠/吵醒 | `Script/Settle/realtime_settle.py`（`settle_sleep`、`settle_sleep_h`） |
 | AI 目标配置 | `data/target/default/target.csv`（格式：id,状态机id,前提管道,类型,注释） |
 | 状态机 id ↔ 名称 | `Script/Core/constant/StateMachine.py`；实现在 `Script/StateMachine/default.py` |
@@ -416,7 +428,7 @@ timeout 300 ./.conda/python.exe -u "<scratchpad>/my_test.py" > "$LOG" 2>&1
 echo "EXIT=$?"; tail -40 "$LOG"
 ```
 
-`EXIT=124` 但结果已打印完整 = 正常（残留的 Flask 非守护线程被 timeout 回收）；想要干净的 0/1 退出码，就在脚本末尾 `os._exit(0 if not FAIL else 1)`。
+`EXIT=124` 表示被 timeout 杀掉：结果已打印完整说明是收尾阶段还有线程没结束，没打印完整说明卡在了某个循环里；想要明确的 0/1 退出码，就在脚本末尾 `os._exit(0 if not FAIL else 1)`。
 
 **读中文输出**：Git Bash 的 `cat`/`grep` 在 GBK 控制台下会把中文显示成乱码（文件本身没问题）。要看清楚就转一道：
 

@@ -7,6 +7,7 @@ from Script.Design import (
     map_handle,
     attr_calculation,
     handle_premise,
+    game_time,
 )
 from Script.Core import cache_control, constant_effect, game_type, get_text
 from Script.Config import normal_config
@@ -574,27 +575,31 @@ def handle_adjust_body_manage_day_item(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     # 这里把交互对象设为自己是因为下面的装备/取下道具函数都是让交互对象结算的
-    character_data.target_character_id = character_id
-    # 身体管理_乳头夹
-    if handle_premise.handle_ask_equp_nipple_clamp_in_day(character_id) and not handle_premise.handle_self_now_nipple_clamp(character_id):
-        handle_target_nipple_clamp_on(character_id, add_time, change_data, now_time)
-    elif not handle_premise.handle_ask_equp_nipple_clamp_in_day(character_id) and handle_premise.handle_self_now_nipple_clamp(character_id):
-        handle_target_nipple_clamp_off(character_id, add_time, change_data, now_time)
-    # 身体管理_阴蒂夹
-    if handle_premise.handle_ask_equp_clit_clamp_in_day(character_id) and not handle_premise.handle_self_now_clit_clamp(character_id):
-        handle_target_clit_clamp_on(character_id, add_time, change_data, now_time)
-    elif not handle_premise.handle_ask_equp_clit_clamp_in_day(character_id) and handle_premise.handle_self_now_clit_clamp(character_id):
-        handle_target_clit_clamp_off(character_id, add_time, change_data, now_time)
-    # 身体管理_V振动棒
-    if handle_premise.handle_ask_equp_v_bibrator_in_day(character_id) and not handle_premise.handle_self_now_vibrator_insertion(character_id):
-        handle_target_vibrator_on(character_id, add_time, change_data, now_time)
-    elif not handle_premise.handle_ask_equp_v_bibrator_in_day(character_id) and handle_premise.handle_self_now_vibrator_insertion(character_id):
-        handle_target_vibrator_off(character_id, add_time, change_data, now_time)
-    # 身体管理_A振动棒
-    if handle_premise.handle_ask_equp_a_bibrator_in_day(character_id) and not handle_premise.handle_self_now_vibrator_insertion_anal(character_id):
-        handle_target_anal_vibrator_on(character_id, add_time, change_data, now_time)
-    elif not handle_premise.handle_ask_equp_a_bibrator_in_day(character_id) and handle_premise.handle_self_now_vibrator_insertion_anal(character_id):
-        handle_target_anal_vibrator_off(character_id, add_time, change_data, now_time)
+    old_target_character_id = character_data.target_character_id
+    try:
+        character_data.target_character_id = character_id
+        # 身体管理_乳头夹
+        if handle_premise.handle_ask_equp_nipple_clamp_in_day(character_id) and not handle_premise.handle_self_now_nipple_clamp(character_id):
+            handle_target_nipple_clamp_on(character_id, add_time, change_data, now_time)
+        elif not handle_premise.handle_ask_equp_nipple_clamp_in_day(character_id) and handle_premise.handle_self_now_nipple_clamp(character_id):
+            handle_target_nipple_clamp_off(character_id, add_time, change_data, now_time)
+        # 身体管理_阴蒂夹
+        if handle_premise.handle_ask_equp_clit_clamp_in_day(character_id) and not handle_premise.handle_self_now_clit_clamp(character_id):
+            handle_target_clit_clamp_on(character_id, add_time, change_data, now_time)
+        elif not handle_premise.handle_ask_equp_clit_clamp_in_day(character_id) and handle_premise.handle_self_now_clit_clamp(character_id):
+            handle_target_clit_clamp_off(character_id, add_time, change_data, now_time)
+        # 身体管理_V振动棒
+        if handle_premise.handle_ask_equp_v_bibrator_in_day(character_id) and not handle_premise.handle_self_now_vibrator_insertion(character_id):
+            handle_target_vibrator_on(character_id, add_time, change_data, now_time)
+        elif not handle_premise.handle_ask_equp_v_bibrator_in_day(character_id) and handle_premise.handle_self_now_vibrator_insertion(character_id):
+            handle_target_vibrator_off(character_id, add_time, change_data, now_time)
+        # 身体管理_A振动棒
+        if handle_premise.handle_ask_equp_a_bibrator_in_day(character_id) and not handle_premise.handle_self_now_vibrator_insertion_anal(character_id):
+            handle_target_anal_vibrator_on(character_id, add_time, change_data, now_time)
+        elif not handle_premise.handle_ask_equp_a_bibrator_in_day(character_id) and handle_premise.handle_self_now_vibrator_insertion_anal(character_id):
+            handle_target_anal_vibrator_off(character_id, add_time, change_data, now_time)
+    finally:
+        character_data.target_character_id = old_target_character_id
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADJUST_BODY_MANAGE_SLEEP_ITEM)
@@ -618,27 +623,54 @@ def handle_adjust_body_manage_sleep_item(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     # 这里把交互对象设为自己是因为下面的装备/取下道具函数都是让交互对象结算的
-    character_data.target_character_id = character_id
-    # 身体管理_乳头夹
-    if handle_premise.handle_ask_equp_nipple_clamp_in_sleep(character_id) and not handle_premise.handle_self_now_nipple_clamp(character_id):
-        handle_target_nipple_clamp_on(character_id, add_time, change_data, now_time)
-    elif not handle_premise.handle_ask_equp_nipple_clamp_in_sleep(character_id) and handle_premise.handle_self_now_nipple_clamp(character_id):
-        handle_target_nipple_clamp_off(character_id, add_time, change_data, now_time)
-    # 身体管理_阴蒂夹
-    if handle_premise.handle_ask_equp_clit_clamp_in_sleep(character_id) and not handle_premise.handle_self_now_clit_clamp(character_id):
-        handle_target_clit_clamp_on(character_id, add_time, change_data, now_time)
-    elif not handle_premise.handle_ask_equp_clit_clamp_in_sleep(character_id) and handle_premise.handle_self_now_clit_clamp(character_id):
-        handle_target_clit_clamp_off(character_id, add_time, change_data, now_time)
-    # 身体管理_V振动棒
-    if handle_premise.handle_ask_equp_v_bibrator_in_sleep(character_id) and not handle_premise.handle_self_now_vibrator_insertion(character_id):
-        handle_target_vibrator_on(character_id, add_time, change_data, now_time)
-    elif not handle_premise.handle_ask_equp_v_bibrator_in_sleep(character_id) and handle_premise.handle_self_now_vibrator_insertion(character_id):
-        handle_target_vibrator_off(character_id, add_time, change_data, now_time)
-    # 身体管理_A振动棒
-    if handle_premise.handle_ask_equp_a_bibrator_in_sleep(character_id) and not handle_premise.handle_self_now_vibrator_insertion_anal(character_id):
-        handle_target_anal_vibrator_on(character_id, add_time, change_data, now_time)
-    elif not handle_premise.handle_ask_equp_a_bibrator_in_sleep(character_id) and handle_premise.handle_self_now_vibrator_insertion_anal(character_id):
-        handle_target_anal_vibrator_off(character_id, add_time, change_data, now_time)
+    old_target_character_id = character_data.target_character_id
+    try:
+        character_data.target_character_id = character_id
+        # 身体管理_乳头夹
+        if handle_premise.handle_ask_equp_nipple_clamp_in_sleep(character_id) and not handle_premise.handle_self_now_nipple_clamp(character_id):
+            handle_target_nipple_clamp_on(character_id, add_time, change_data, now_time)
+        elif not handle_premise.handle_ask_equp_nipple_clamp_in_sleep(character_id) and handle_premise.handle_self_now_nipple_clamp(character_id):
+            handle_target_nipple_clamp_off(character_id, add_time, change_data, now_time)
+        # 身体管理_阴蒂夹
+        if handle_premise.handle_ask_equp_clit_clamp_in_sleep(character_id) and not handle_premise.handle_self_now_clit_clamp(character_id):
+            handle_target_clit_clamp_on(character_id, add_time, change_data, now_time)
+        elif not handle_premise.handle_ask_equp_clit_clamp_in_sleep(character_id) and handle_premise.handle_self_now_clit_clamp(character_id):
+            handle_target_clit_clamp_off(character_id, add_time, change_data, now_time)
+        # 身体管理_V振动棒
+        if handle_premise.handle_ask_equp_v_bibrator_in_sleep(character_id) and not handle_premise.handle_self_now_vibrator_insertion(character_id):
+            handle_target_vibrator_on(character_id, add_time, change_data, now_time)
+        elif not handle_premise.handle_ask_equp_v_bibrator_in_sleep(character_id) and handle_premise.handle_self_now_vibrator_insertion(character_id):
+            handle_target_vibrator_off(character_id, add_time, change_data, now_time)
+        # 身体管理_A振动棒
+        if handle_premise.handle_ask_equp_a_bibrator_in_sleep(character_id) and not handle_premise.handle_self_now_vibrator_insertion_anal(character_id):
+            handle_target_anal_vibrator_on(character_id, add_time, change_data, now_time)
+        elif not handle_premise.handle_ask_equp_a_bibrator_in_sleep(character_id) and handle_premise.handle_self_now_vibrator_insertion_anal(character_id):
+            handle_target_anal_vibrator_off(character_id, add_time, change_data, now_time)
+    finally:
+        character_data.target_character_id = old_target_character_id
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CLEAR_USED_CONDOMS)
+def handle_clear_used_condoms(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    清理储存的避孕套
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 玩家清空用过的避孕套存量池（挂在角色身上的装饰保留）
+    if character_id == 0:
+        from Script.System.Item_System import condom_handle
+        condom_handle.clear_used_condoms()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_BODY_LUBRICANT)
@@ -1443,7 +1475,8 @@ def handle_target_diuretics_on(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    end_time = now_time + datetime.timedelta(hours=4)
+    # 失效时刻按游戏时钟推进（get_sub_date）：直接加公历时长会落进被时钟跳过的月份，换季后立刻被判为已过期
+    end_time = game_time.get_sub_date(hour=4, old_date=now_time)
     target_data.h_state.body_item[8][1] = True
     target_data.h_state.body_item[8][2] = end_time
 
@@ -1470,7 +1503,8 @@ def handle_target_add_tired_tosleep(
     target_data.tired_point = 160
     target_data.sleep_point = 100
     target_data.h_state.body_item[9][1] = True
-    target_data.h_state.body_item[9][2] = now_time + datetime.timedelta(hours=8)
+    # 失效时刻按游戏时钟推进（get_sub_date）：直接加公历时长会落进被时钟跳过的月份，换季后立刻被判为已过期
+    target_data.h_state.body_item[9][2] = game_time.get_sub_date(hour=8, old_date=now_time)
     handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 6)
 
 
@@ -1516,7 +1550,8 @@ def handle_target_no_pregnancy_next_day(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.body_item[11][1] = True
-    target_data.h_state.body_item[11][2] = now_time + datetime.timedelta(days=30)
+    # 一个月的量 = 30 个游戏日。按游戏时钟推进（get_sub_date）：直接加公历 30 天会落进被时钟跳过的月份，一换季就被判为已过期
+    target_data.h_state.body_item[11][2] = game_time.get_sub_date(day=30, old_date=now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_NO_PREGNANCY_FROM_LAST_H)

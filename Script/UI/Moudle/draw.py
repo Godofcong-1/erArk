@@ -838,9 +838,10 @@ class LittleTitleLineDraw:
     line -- 用于绘制线条的文本
     style -- 线条样式
     title_style -- 标题样式
+    count_title_width -- 是否把标题宽度算进总长
     """
 
-    def __init__(self, title: str, width: int, line: str = "=", style="standard", title_style="sontitle"):
+    def __init__(self, title: str, width: int, line: str = "=", style="standard", title_style="sontitle", count_title_width: bool = False):
         """初始化绘制对象"""
         self.title = title
         """ 标题 """
@@ -854,14 +855,25 @@ class LittleTitleLineDraw:
         """ 标题样式 """
         self.line_feed: bool = True
         """ 线尾换行 """
+        self.count_title_width: bool = count_title_width
+        """ 是否把标题宽度算进线条总长。
+            默认False是沿用已久的旧口径：标题不计宽，两段线条合起来就有 width，
+               整行实际画出 width + 标题宽度——全游戏几十处小标题都按这个样子摆着，故保持不变；
+            置True时线条 + 标题正好 width，与同宽的 LineDraw 对齐。给抬头很长、
+               旧口径会把行尾线条挤到第二行去的地方用（如公务事件的
+               「【公务事件】薇薇安 · 婴儿期第 8 天」，抬头本身就有 33 个半角宽） """
 
     def draw(self):
         """绘制线条"""
         title_draw = NormalDraw()
-        # title_draw.width = self.width
         title_draw.text = self.title
         title_draw.style = self.title_style
-        line_a_width = int(self.width / 16) - len(title_draw)
+        # NormalDraw.__len__ 在 width 为默认的 0 时一律返回 0，标题于是不占宽度，这正是旧口径；
+        #    要把标题算进总长，就得先把宽度给上，len() 才会返回标题的真实宽度
+        if self.count_title_width:
+            title_draw.width = self.width
+        title_width = len(title_draw)
+        line_a_width = int(self.width / 16) - title_width
         if line_a_width < 0:
             line_a_width = 0
         line_a = NormalDraw()
@@ -869,7 +881,9 @@ class LittleTitleLineDraw:
         line_a.style = self.style
         line_a.text = self.line * line_a_width
         line_b = NormalDraw()
-        line_b.width = self.width - len(title_draw) - len(line_a)
+        # 旧口径下 title_width 为 0，这里就是原来的 width - len(line_a)；
+        #    计入标题时线条 + 标题正好 width，标题长到占满整行时右侧不再画线
+        line_b.width = max(self.width - title_width - len(line_a), 0)
         line_b.style = self.style
         line_b.text = self.line * int(line_b.width)
         for value in [line_a, title_draw, line_b]:

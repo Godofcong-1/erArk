@@ -20,8 +20,10 @@ def game_update_flow(add_time: int):
     try:
         # 去掉了第一次结算
         # character_behavior.init_character_behavior()
+        # 记下步进前的时间，时停模式下玩家行动结束后直接还原到这里
+        before_time = cache_control.cache.game_time
         game_time.sub_time_now(add_time)
-        character_behavior.init_character_behavior()
+        character_behavior.init_character_behavior(before_time)
         py_cmd.focus_cmd()
     finally:
         # 无论是否发生异常，都恢复调用者进入前的深度

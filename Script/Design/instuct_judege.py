@@ -48,7 +48,7 @@ def init_character_behavior_start_time(character_id: int, now_time: datetime.dat
     character_data.behavior.start_time = start_time
 
 
-def calculation_instuct_judege(character_id: int, target_character_id: int, instruct_name: str, not_draw_flag = False):
+def calculation_instuct_judege(character_id: int, target_character_id: int, instruct_name: str, not_draw_flag=False, settle_hypnosis: bool = True):
     """
     根据角色和目标角色的各属性来计算总实行值\n
     Keyword arguments:\n
@@ -56,6 +56,8 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     target_character_id -- 目标角色id\n
     instruct_name -- 指令名字\n
     not_draw_flag -- 是否不输出文本\n
+    settle_hypnosis -- 是否结算催眠补正的代价，默认结算：扣理智、累加今日消耗，理智不足时解除目标的催眠。\n
+                       传 False 时补正照算（理智够就加补正），但不写任何数据，供前提、门槛、名单这类只判不做的调用方用（Plan 31 §3.3）\n
     Return arguments:\n
     int -- 1成功,0失败,-1无副作用返回\n
     int -- 实行值\n
@@ -383,16 +385,23 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
                     else:
                         sanity_point_cost = round(unenough / 10)
                 # 最后的总结算
+                # settle_hypnosis 为假时只判不扣（Plan 31 §3.3）：前提、面板、名单每刷新一次就求值一次，
+                #    在这里扣理智或解除催眠，同一个判定会越判越变，打开一次面板就改掉了存档数据
                 if sanity_point_cost <= character_data.sanity_point:
                     judge += judge_hypnosis
-                    calculation_text += _("+催眠(+{0},消耗{1}理智)").format(judge_hypnosis, sanity_point_cost)
-                    character_data.sanity_point -= sanity_point_cost
-                    character_data.pl_ability.today_sanity_point_cost += sanity_point_cost
-                else:
+                    if settle_hypnosis:
+                        calculation_text += _("+催眠(+{0},消耗{1}理智)").format(judge_hypnosis, sanity_point_cost)
+                        character_data.sanity_point -= sanity_point_cost
+                        character_data.pl_ability.today_sanity_point_cost += sanity_point_cost
+                    else:
+                        calculation_text += _("+催眠(+{0},需{1}理智)").format(judge_hypnosis, sanity_point_cost)
+                elif settle_hypnosis:
                     calculation_text += _("+催眠(+0,理智不足,催眠解除)")
                     target_data.sp_flag.unconscious_h = 0
                     handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 5)
                     handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 6)
+                else:
+                    calculation_text += _("+催眠(+0,理智不足)")
 
     # debug模式修正
     if cache.debug_mode == True:
