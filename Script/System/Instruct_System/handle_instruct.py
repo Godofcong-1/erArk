@@ -2874,7 +2874,14 @@ def handle_condom_instruct_common(mode: str, behavior_id: str):
     now_draw = condom_panel.Condom_Select_Panel(width, mode)
     if now_draw.draw() == -1:
         return
+    # 是否针筒注入仍是处女的小穴要在通用结算之前判定：目标部位记在玩家行为数据里，行为结束重建时会被清空
+    syringe_to_vagina_flag = mode == "squeeze" and handle_premise.handle_condom_operation_syringe_to_vagina(0)
     chara_handle_instruct_common_settle(behavior_id)
+    # 结算成就，放在通用结算之后，使获得提示显示在指令文本之后
+    if mode == "hang":
+        achievement_panel.achievement_flow(_("避孕套"))
+    elif syringe_to_vagina_flag:
+        achievement_panel.achievement_flow(_("避孕套"), 1241)
 
 
 @add_instruct(constant.Instruct.HANG_CONDOM_DECORATION)

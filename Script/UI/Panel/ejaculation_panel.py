@@ -399,6 +399,8 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
     target_data: game_type.Character = cache.character_data[target_character_id]
 
     semen_text, semen_count = common_ejaculation()
+    # 本次是否射在了避孕套里，用于结尾结算避孕套成就
+    condom_shoot_flag = False
 
     if semen_count > 0:
         # 记录射精量
@@ -464,6 +466,9 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
             # 存入用过的避孕套存量池
             from Script.System.Item_System import condom_handle
             condom_handle.add_used_condom(semen_count)
+            # 成就统计：累计用过的避孕套个数
+            cache.achievement.used_condom_count += 1
+            condom_shoot_flag = True
             # 去掉避孕套状态
             character_data.h_state.body_item[13][1] = False
             # 获取射精文本
@@ -490,6 +495,8 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
     # 结算成就
     achievement_panel.get_achievement_judge_by_value(1201, 1)
     achievement_panel.achievement_flow(_("射精"))
+    if condom_shoot_flag:
+        achievement_panel.achievement_flow(_("避孕套"))
 
 class Ejaculation_Panel:
     """

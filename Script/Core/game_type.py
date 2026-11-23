@@ -1082,6 +1082,8 @@ class ACHIEVEMENT:
         """ 醉奸记录，1为醉奸模式0正常1装醉，2为射精次数，3为被醉奸干员绝顶次数 """
         self.h_with_daughter_count: int = 0
         """ 与女儿乱伦H的次数 """
+        self.used_condom_count: int = 0
+        """ 累积用过的避孕套个数（每次戴着避孕套射精用掉一个） """
 
 
 class PLAYER_ABILITY:

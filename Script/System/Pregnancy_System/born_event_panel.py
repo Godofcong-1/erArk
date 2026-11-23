@@ -247,6 +247,8 @@ class Born_Panel:
                 baby_growth_handle.clear_prenatal_point(self.mother_character_id)
                 break
 
+            # 本次生产是否撑破了产妇的处女膜（仅胎生），用于结尾结算成就
+            virgin_birth_flag = False
             if self.egg_mode:
                 # 卵生破壳结算：删除本次孵化的全部卵、直接进入育儿与泌乳，不进入产后
                 draw_text = "\n※※※※※※※※※\n"
@@ -282,6 +284,7 @@ class Born_Panel:
                 # 只清素质、不写部位交初体验记录：这不是性行为，履历里不应出现夺走处女的对象与体位
                 if mom_character_data.talent[0]:
                     mom_character_data.talent[0] = 0
+                    virgin_birth_flag = True
                     draw_text += _("\n{0}从未被插入过的小穴里，那层处女膜在生产时被娩出的胎儿撑破了\n").format(mom_character_data.name)
                     draw_text += _("\n{0}失去了[阴道处女]\n").format(mom_character_data.name)
                 # 生产完成，重置妊娠加速药的累计加速天数、本次胎数与同卵双胞胎标记
@@ -315,6 +318,9 @@ class Born_Panel:
             # 与女儿生育了孩子
             if handle_premise.handle_self_is_player_daughter(self.mother_character_id):
                 achievement_panel.achievement_flow(_("生育"), 707)
+            # 仍是阴道处女的干员在生产时被胎儿撑破处女膜
+            if virgin_birth_flag:
+                achievement_panel.achievement_flow(_("生育"), 709)
 
             break
 

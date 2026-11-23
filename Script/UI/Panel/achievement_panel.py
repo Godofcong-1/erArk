@@ -4,6 +4,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle, constan
 from Script.Design import handle_premise, map_handle
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
+from Script.System.Item_System import condom_handle
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -73,6 +74,8 @@ def achievement_flow(achievement_type: str, achievement_id: int = 0):
         func = settle_chara_sleep_sex
     elif achievement_type == _("射精"):
         func = settle_semen_shoot
+    elif achievement_type == _("避孕套"):
+        func = settle_condom
     # 统计载具数量
     vehicles_count = 0
     read_book_count = 0
@@ -605,6 +608,27 @@ def settle_semen_shoot():
     # 统一调用settle_achievement进行批量结算
     for judge_value, achievement_id in achievement_checks:
         return_list.extend(settle_achievement(judge_value, achievement_id))
+    return return_list
+
+def settle_condom():
+    """
+    结算避孕套类的普通成就（隐藏成就 1241 由挤出避孕套精液指令强制结算）\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    # 单名角色身上（身体与服装部位合计）当前挂着的避孕套装饰个数的最大值
+    # 遍历全部角色而不是只看交互对象：刷新蚀刻章时没有指定角色，挂装饰时交互对象也必然在其中
+    max_decoration_count = 0
+    for chara_id in cache.character_data:
+        # 跳过玩家
+        if chara_id == 0:
+            continue
+        max_decoration_count = max(max_decoration_count, condom_handle.get_decoration_total_count(chara_id))
+    return_list = []
+    # 累计用过的避孕套个数
+    return_list.extend(settle_achievement(cache.achievement.used_condom_count, [1231, 1232, 1233]))
+    # 单名干员身上同时挂着的避孕套装饰个数
+    return_list.extend(settle_achievement(max_decoration_count, [1236, 1237, 1238]))
     return return_list
 
 

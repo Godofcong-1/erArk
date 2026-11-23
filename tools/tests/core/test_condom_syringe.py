@@ -1,11 +1,14 @@
 # -*- coding: UTF-8 -*-
-"""挤出避孕套精液的处女限制与极细针筒注射器：道具配置、部位面板的可选部位与标注、针筒注入不夺走处女且地文前提可区分、目标部位变量与综合数值前提「避孕套位置」、地文数据；胎生生产时清掉阴道处女，卵生破壳不清"""
+"""挤出避孕套精液的处女限制与极细针筒注射器：道具配置、部位面板的可选部位与标注、针筒注入不夺走处女且地文前提可区分、目标部位变量与综合数值前提「避孕套位置」、地文数据；胎生生产时清掉阴道处女，卵生破壳不清；避孕套相关的蚀刻章"""
 from _bootstrap import *  # noqa: F401,F403
 from unittest import mock
 
 from Script.Design import character as design_character
+from Script.Design import instuct_judege
+from Script.System.Instruct_System import handle_instruct
 from Script.System.Item_System import condom_handle, condom_panel
 from Script.System.Pregnancy_System import born_event_panel
+from Script.UI.Panel import achievement_panel, ejaculation_panel
 
 TARGET_ID = 9501
 VIRGIN_PART_SET = {6, 8, 9}
@@ -396,13 +399,13 @@ def run_born(mother_data: game_type.Character, egg_mode: bool = False) -> tuple:
     mother_data -- 产妇
     egg_mode -- 是否为卵生破壳
     Return arguments:
-    tuple -- (面板抛出的异常, 绘制文本)
+    tuple -- (面板抛出的异常, 绘制文本, 结算成就的调用参数列表)
     """
     before_set = set(cache.character_data)
     mother_data.talent[22] = 0 if egg_mode else 1
     mother_data.talent[26] = 0 if egg_mode else 1
     with mock.patch.object(design_character, "input_name_func", return_value="测试女儿"), \
-            mock.patch.object(born_event_panel.achievement_panel, "achievement_flow"), \
+            mock.patch.object(born_event_panel.achievement_panel, "achievement_flow") as flow_mock, \
             mock.patch.object(born_event_panel, "move_to_inpatient_department_for_born"):
         error = run_panel(lambda: born_event_panel.Born_Panel(MOTHER_ID, egg_mode=egg_mode, egg_id_list=[1] if egg_mode else None).draw(), [])
     now_text = "\n".join(drawn_text)
@@ -410,22 +413,157 @@ def run_born(mother_data: game_type.Character, egg_mode: bool = False) -> tuple:
         remove_character(child_id)
     mother_data.relationship.child_id_list = []
     pl.relationship.child_id_list = []
-    return error, now_text
+    return error, now_text, flow_mock.call_args_list
 
 
+VIRGIN_BIRTH_CALL = mock.call(_("生育"), 709)
+""" 生产时撑破处女膜的隐藏蚀刻章的结算调用 """
 mother = make_character(MOTHER_ID, "产妇测试干员")
 mother.talent[0] = 1
-error, now_text = run_born(mother)
+error, now_text, flow_call_list = run_born(mother)
 check("胎生生产：面板跑完不报错，阴道处女被清掉并提示", error is None and mother.talent[0] == 0 and _("失去了[阴道处女]") in now_text, (repr(error), mother.talent[0]))
+check("胎生生产撑破了处女膜：结算隐藏蚀刻章 709", VIRGIN_BIRTH_CALL in flow_call_list, flow_call_list)
 mother.talent[0] = 0
-error, now_text = run_born(mother)
-check("产妇本就不是处女：不再提示失去处女", error is None and _("失去了[阴道处女]") not in now_text, repr(error))
+error, now_text, flow_call_list = run_born(mother)
+check("产妇本就不是处女：不再提示失去处女，也不结算蚀刻章 709", error is None and _("失去了[阴道处女]") not in now_text and VIRGIN_BIRTH_CALL not in flow_call_list, (repr(error), flow_call_list))
 mother.talent[0] = 1
-error, now_text = run_born(mother, egg_mode=True)
-check("卵生破壳（卵在体外孵化）：阴道处女保留", error is None and mother.talent[0] == 1 and _("失去了[阴道处女]") not in now_text, (repr(error), mother.talent[0]))
+error, now_text, flow_call_list = run_born(mother, egg_mode=True)
+check("卵生破壳（卵在体外孵化）：阴道处女保留，不结算蚀刻章 709",
+      error is None and mother.talent[0] == 1 and _("失去了[阴道处女]") not in now_text and VIRGIN_BIRTH_CALL not in flow_call_list, (repr(error), mother.talent[0], flow_call_list))
 remove_character(MOTHER_ID)
 cache.npc_id_got.clear()
 cache.npc_id_got.update(saved_npc_id_got)
+
+# ==== 6. 蚀刻章 ====
+section("蚀刻章：累计用过的避孕套、单名干员身上的避孕套装饰是多级普通蚀刻章，针筒注入处女小穴是隐藏蚀刻章")
+USED_ID_LIST = [1231, 1232, 1233]
+""" 累计用过的避孕套个数，三级 """
+DECORATION_ID_LIST = [1236, 1237, 1238]
+""" 单名干员身上同时挂着的避孕套装饰个数，三级 """
+SYRINGE_ACHIEVEMENT_ID = 1241
+""" 用针筒把精液注入仍是处女的小穴 """
+CONDOM_ACHIEVEMENT_ID_LIST = USED_ID_LIST + DECORATION_ID_LIST + [SYRINGE_ACHIEVEMENT_ID]
+achievement_dict = cache.achievement.achievement_dict
+# achievement_flow 每次都会先算好全部数值类成就的判断值，其中要读龙门币，无头 fixture 的资源表是空的
+cache.rhodes_island.materials_resouce.setdefault(1, 0)
+
+
+def reset_condom_achievement():
+    """
+    把避孕套相关的蚀刻章都重置为未达成
+    Keyword arguments:
+    无
+    Return arguments:
+    无
+    """
+    for achievement_id in CONDOM_ACHIEVEMENT_ID_LIST:
+        achievement_dict[achievement_id] = False
+
+
+def got_list(id_list: list) -> list:
+    """
+    列出已达成的蚀刻章
+    Keyword arguments:
+    id_list -- 要查的蚀刻章id列表
+    Return arguments:
+    list -- 其中已达成的id
+    """
+    return [achievement_id for achievement_id in id_list if achievement_dict.get(achievement_id)]
+
+
+config_row = {achievement_id: game_config.config_achievement.get(achievement_id) for achievement_id in CONDOM_ACHIEVEMENT_ID_LIST + [709]}
+check("配置：两组多级蚀刻章类型为「避孕套」、逐级以上一级为前置、门槛递增、都不隐藏；针筒注入与生产时破处是隐藏蚀刻章",
+      all(config_row.values())
+      and all(config_row[achievement_id].type == _("避孕套") for achievement_id in CONDOM_ACHIEVEMENT_ID_LIST)
+      and [config_row[achievement_id].pre_id for achievement_id in USED_ID_LIST + DECORATION_ID_LIST] == [0, 1231, 1232, 0, 1236, 1237]
+      and all(config_row[id_list[i]].value < config_row[id_list[i + 1]].value for id_list in (USED_ID_LIST, DECORATION_ID_LIST) for i in range(2))
+      and not any(config_row[achievement_id].special for achievement_id in USED_ID_LIST + DECORATION_ID_LIST)
+      and config_row[SYRINGE_ACHIEVEMENT_ID].special and config_row[709].special and config_row[709].type == _("生育"),
+      {achievement_id: data and (data.type, data.value, data.pre_id, data.special) for achievement_id, data in config_row.items()})
+
+# 戴套射精
+reset_condom_achievement()
+cache.achievement.used_condom_count = 0
+target.dirty = attr_calculation.get_zero_dirty()
+pl.pl_collection.used_condoms = []
+pl.h_state.body_item[13][1] = True
+with mock.patch.object(ejaculation_panel, "common_ejaculation", return_value=("射精了", 15)):
+    ejaculation_panel.ejaculation_flow(1, 0, TARGET_ID, draw_flag=False)
+check("戴着避孕套射精：用过的避孕套计数 +1、存进存量池，获得第一级蚀刻章",
+      cache.achievement.used_condom_count == 1 and pl.pl_collection.used_condoms == [15] and got_list(USED_ID_LIST) == [1231],
+      (cache.achievement.used_condom_count, pl.pl_collection.used_condoms, got_list(USED_ID_LIST)))
+with mock.patch.object(ejaculation_panel, "common_ejaculation", return_value=("射精了", 15)):
+    ejaculation_panel.ejaculation_flow(1, 0, TARGET_ID, draw_flag=False)
+check("避孕套射精后已摘掉，再射精不戴套：计数不变", cache.achievement.used_condom_count == 1, cache.achievement.used_condom_count)
+second_value = config_row[1232].value
+cache.achievement.used_condom_count = second_value - 1
+check("累计用过的避孕套差一个到第二级门槛：不获得第二级", achievement_panel.settle_condom() == [] and got_list(USED_ID_LIST) == [1231], got_list(USED_ID_LIST))
+cache.achievement.used_condom_count = second_value
+check("累计用过的避孕套到第二级门槛：获得第二级", achievement_panel.settle_condom() == [1232], got_list(USED_ID_LIST))
+
+# 装饰个数按单名干员计
+OTHER_ID = 9503
+other = make_character(OTHER_ID, "装饰对照干员")
+third_value = config_row[1237].value
+reset_condom_achievement()
+cache.achievement.used_condom_count = 0
+target.dirty.condom_decoration = {(0, 0): [10] * (third_value // 2), (1, CLOTH_TYPE): [10] * (third_value - third_value // 2 - 1)}
+other.dirty.condom_decoration = {(0, 3): [10] * (third_value - 1)}
+check("两名干员身上各挂着差一个到第二级门槛的装饰：只获得第一级（按单名干员计，不把不同干员的加起来）",
+      achievement_panel.settle_condom() == [1236], got_list(DECORATION_ID_LIST))
+target.dirty.condom_decoration[(0, 3)] = [10]
+check("一名干员的身体与服装部位合计到第二级门槛：获得第二级", achievement_panel.settle_condom() == [1237], got_list(DECORATION_ID_LIST))
+remove_character(OTHER_ID)
+
+
+def run_condom_instruct(mode: str, part: tuple):
+    """
+    走一遍避孕套指令的公共流程：实行值判定通过，面板确认时按指定部位结算一个避孕套，通用结算以重建玩家行为数据代替（行为结束时目标部位随之清空）
+    Keyword arguments:
+    mode -- 面板操作类型，hang=挂装饰，squeeze=挤出
+    part -- 目标部位 (部位类型, 部位cid)
+    Return arguments:
+    无
+    """
+
+    def fake_panel_draw(panel_self) -> int:
+        """面板确认：直接结算选中的第一个避孕套"""
+        if panel_self.mode == "hang":
+            condom_handle.settle_hang(TARGET_ID, part[0], part[1], [0])
+        else:
+            condom_handle.settle_squeeze(TARGET_ID, part[0], part[1], [0])
+        return 1
+
+    def fake_common_settle(*args, **kwargs):
+        """通用结算：行为结束时重建玩家行为数据"""
+        pl.behavior = game_type.Behavior()
+
+    pl.pl_collection.used_condoms = [10]
+    behavior_id = constant.Behavior.HANG_CONDOM_DECORATION if mode == "hang" else constant.Behavior.SQUEEZE_CONDOM_SEMEN
+    with mock.patch.object(instuct_judege, "calculation_instuct_judege", lambda *args, **kwargs: [1, 1, 1.0]), \
+            mock.patch.object(condom_panel.Condom_Select_Panel, "draw", fake_panel_draw), \
+            mock.patch.object(handle_instruct, "chara_handle_instruct_common_settle", fake_common_settle):
+        handle_instruct.handle_condom_instruct_common(mode, behavior_id)
+
+
+set_virgin(target, True)
+target.dirty = attr_calculation.get_zero_dirty()
+reset_condom_achievement()
+run_condom_instruct("squeeze", (0, 6))
+check("用针筒把精液注入仍是处女的小穴：获得隐藏蚀刻章（行为结束、目标部位已清空也照样判定），对方仍是处女",
+      got_list([SYRINGE_ACHIEVEMENT_ID]) == [SYRINGE_ACHIEVEMENT_ID] and pl.behavior.condom_position == -1 and target.talent[0] == 1,
+      (got_list([SYRINGE_ACHIEVEMENT_ID]), pl.behavior.condom_position, target.talent[0]))
+reset_condom_achievement()
+run_condom_instruct("squeeze", (0, 8))
+check("用针筒注入仍是处女的后穴：不获得", got_list([SYRINGE_ACHIEVEMENT_ID]) == [])
+target.talent[0] = 0
+run_condom_instruct("squeeze", (0, 6))
+check("挤进已不是处女的小穴：不获得", got_list([SYRINGE_ACHIEVEMENT_ID]) == [])
+target.talent[0] = 1
+run_condom_instruct("hang", (0, 0))
+check("挂避孕套装饰的指令结算后：获得装饰的第一级蚀刻章", got_list(DECORATION_ID_LIST) == [1236], got_list(DECORATION_ID_LIST))
+reset_condom_achievement()
+cache.achievement.used_condom_count = 0
 
 remove_character(TARGET_ID)
 finish()
