@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-"""蚀刻章：各组成就的计数、触发点与结算——醉奸、医疗、体液收藏"""
+"""蚀刻章：各组成就的计数、触发点与结算——醉奸、医疗、体液收藏、信物"""
 from _bootstrap import *  # noqa: F401,F403
 from unittest import mock
 
@@ -261,5 +261,72 @@ RI.milk_in_fridge = {}
 RI.urine_in_fridge = {}
 remove_character(DAUGHTER_ID)
 remove_character(FLUID_TARGET_ID)
+
+# ==== 4. 信物 ====
+section("信物：告白成功或戴上项圈获得信物时结算，累计信物数三级，获得亲生女儿的信物为隐藏蚀刻章")
+from Script.Design import instuct_judege  # noqa: E402
+
+TOKEN_ID_LIST = [241, 242, 243]
+""" 累计获得的信物数，三级 """
+DAUGHTER_TOKEN_ID = 246
+""" 获得了亲生女儿的信物 """
+ALL_TOKEN_ID_LIST = TOKEN_ID_LIST + [DAUGHTER_TOKEN_ID]
+config_row = {achievement_id: game_config.config_achievement.get(achievement_id) for achievement_id in ALL_TOKEN_ID_LIST}
+check("配置：三级蚀刻章类型为「信物」、逐级以上一级为前置、门槛递增、都不隐藏；亲生女儿的信物为隐藏蚀刻章",
+      all(config_row.values()) and all(data.type == _("信物") for data in config_row.values())
+      and [config_row[achievement_id].pre_id for achievement_id in TOKEN_ID_LIST] == [0, 241, 242]
+      and config_row[241].value < config_row[242].value < config_row[243].value
+      and not any(config_row[achievement_id].special for achievement_id in TOKEN_ID_LIST) and config_row[DAUGHTER_TOKEN_ID].special,
+      {achievement_id: data and (data.type, data.value, data.pre_id, data.special) for achievement_id, data in config_row.items()})
+
+TOKEN_TARGET_ID, TOKEN_DAUGHTER_ID = 9621, 9622
+token_target = make_character(TOKEN_TARGET_ID, "信物测试干员")
+token_daughter = make_character(TOKEN_DAUGHTER_ID, "信物测试女儿", daughter=True)
+token_list = pl.pl_collection.token_list
+saved_token_list = dict(token_list)
+token_list.clear()
+token_list.update({TOKEN_TARGET_ID: False, TOKEN_DAUGHTER_ID: False})
+reset_achievement(ALL_TOKEN_ID_LIST)
+
+
+def run_token_instruct(target_id: int, handler):
+    """
+    让交互对象满足信赖度、实行值判定通过（推进时间打桩），执行告白或戴上项圈指令
+    Keyword arguments:
+    target_id -- 交互对象id
+    handler -- 指令处理函数
+    Return arguments:
+    无
+    """
+    pl.target_character_id = target_id
+    cache.character_data[target_id].trust = 200
+    with mock.patch.object(instuct_judege, "calculation_instuct_judege", lambda *args, **kwargs: [1, 1, 1.0]), \
+            mock.patch.object(handle_instruct.update, "game_update_flow", lambda *args, **kwargs: None):
+        handler()
+
+
+drawn_text.clear()
+run_token_instruct(TOKEN_TARGET_ID, handle_instruct.handle_confession)
+drawn_joined = "\n".join(drawn_text)
+check("告白成功获得非女儿干员的信物：获得第一级，不获得隐藏蚀刻章",
+      token_list[TOKEN_TARGET_ID] and got_list(ALL_TOKEN_ID_LIST) == [241], (token_list, got_list(ALL_TOKEN_ID_LIST)))
+check("成就提示显示在获得信物的文本之后",
+      _("获得蚀刻章") in drawn_joined and drawn_joined.index(_("的信物：")) < drawn_joined.index(_("获得蚀刻章")))
+run_token_instruct(TOKEN_DAUGHTER_ID, handle_instruct.handle_give_necklace)
+check("给亲生女儿戴上项圈获得她的信物：获得隐藏蚀刻章", token_list[TOKEN_DAUGHTER_ID] and DAUGHTER_TOKEN_ID in got_list(ALL_TOKEN_ID_LIST), got_list(ALL_TOKEN_ID_LIST))
+
+# 门槛：只数已获得（值为真）的信物
+second_value = config_row[242].value
+token_list.clear()
+token_list.update({90000 + index: True for index in range(second_value - 1)})
+token_list.update({91000 + index: False for index in range(5)})
+check("已获得的信物差一个到第二级（未获得的不计）：不获得", achievement_panel.settle_token() == [], got_list(ALL_TOKEN_ID_LIST))
+token_list[90000 + second_value] = True
+check("已获得的信物到第二级门槛：获得第二级", achievement_panel.settle_token() == [242], got_list(ALL_TOKEN_ID_LIST))
+reset_achievement(ALL_TOKEN_ID_LIST)
+token_list.clear()
+token_list.update(saved_token_list)
+remove_character(TOKEN_DAUGHTER_ID)
+remove_character(TOKEN_TARGET_ID)
 
 finish()

@@ -1163,6 +1163,8 @@ def handle_confession():
         now_draw.text += _("\n获得了{0}的信物：{1}\n").format(target_data.name, target_data.token_text)
         now_draw.text += _("\n可以在[角色属性]-[角色设置]修改对彼此的称呼了\n")
         now_draw.draw()
+        # 结算成就
+        achievement_panel.achievement_flow(_("信物"))
     else:
         character_data.behavior.behavior_id = constant.Behavior.CONFESSION_FAILED
         character_data.state = constant.CharacterStatus.STATUS_CONFESSION_FAILED
@@ -1198,6 +1200,8 @@ def handle_give_necklace():
         now_draw.text += _("\n获得了{0}的信物：{1}\n").format(target_data.name, target_data.token_text)
         now_draw.text += _("\n可以在[角色属性]-[角色设置]修改对彼此的称呼了\n")
         now_draw.draw()
+        # 结算成就
+        achievement_panel.achievement_flow(_("信物"))
     else:
         character_data.behavior.behavior_id = constant.Behavior.GIVE_NECKLACE_FAILED
         character_data.state = constant.CharacterStatus.STATUS_GIVE_NECKLACE_FAILED

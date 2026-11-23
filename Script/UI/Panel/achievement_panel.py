@@ -82,6 +82,8 @@ def achievement_flow(achievement_type: str, achievement_id: int = 0):
         func = settle_medical
     elif achievement_type == _("体液收藏"):
         func = settle_body_fluid_collection
+    elif achievement_type == _("信物"):
+        func = settle_token
     # 统计载具数量
     vehicles_count = 0
     read_book_count = 0
@@ -699,6 +701,27 @@ def settle_body_fluid_collection():
     return_list.extend(settle_achievement(sum(pl_collection.milk_total.values()), [226, 227, 228]))
     return_list.extend(settle_achievement(sum(pl_collection.urine_total.values()), [231, 232, 233]))
     return_list.extend(settle_achievement(daughter_milk_flag, 236))
+    return return_list
+
+def settle_token():
+    """
+    结算信物类的成就（告白成功、戴上项圈获得信物时调用）\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    token_list = cache.character_data[0].pl_collection.token_list
+    # 已获得的信物数，与成就246的特殊标志：获得了亲生女儿的信物
+    token_count = 0
+    daughter_token_flag = 0
+    for chara_id, got_flag in token_list.items():
+        if not got_flag:
+            continue
+        token_count += 1
+        if not daughter_token_flag and chara_id in cache.character_data and handle_premise.handle_self_is_player_daughter(chara_id):
+            daughter_token_flag = 1
+    return_list = []
+    return_list.extend(settle_achievement(token_count, [241, 242, 243]))
+    return_list.extend(settle_achievement(daughter_token_flag, 246))
     return return_list
 
 
