@@ -84,6 +84,12 @@ def judge_pl_real_time_data():
     from Script.System.Pregnancy_System import soft_egg_handle
     soft_egg_handle.check_soft_eggs_fertilization()
 
+    # 课堂 H 以别的方式结束时一并下课（Plan 32 §3.1）：结束群交、玩家体力归零、学生全部力竭、群交中被撞见、转单人 H 后再结束 H，
+    #    效果串都只关群交、清全场 H 状态（407 / 404），课堂模式留着；玩家这一步的收尾检查里按「玩家已不在 H」下课。
+    #    函数内导入：Script/System/* 在本模块顶层导入会循环导入
+    from Script.System.Education_System import sex_class_handle
+    sex_class_handle.settle_orphan_class()
+
 
 def character_aotu_change_value(character_id: int, now_time: datetime.datetime, pl_start_time: datetime.datetime):
     """
@@ -106,7 +112,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     true_add_time = get_true_add_time(character_id, now_time, pl_start_time)
 
     # 性技实操课的三次提醒（Plan 22 四期 §3.28.6）
-    # ⚠️ 一律用跨越判定（上次结算 < 提醒时刻 <= 当前）：游戏时间按行为时长跳跃，
+    # 一律用跨越判定（上次结算 < 提醒时刻 <= 当前）：游戏时间按行为时长跳跃，
     #    玩家13:00开始一个60分钟的行为直接跳到14:00，13:30这个时刻从来没有被"经过"过，
     #    用等于判定的话提醒永远不会触发
     if character_id == 0:
@@ -152,9 +158,9 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
 
         # 非H模式下结算玩家的射精值减少
         if not now_character_data.sp_flag.is_h:
-            # 上次射精时间距离现在超过30分钟则射精值减少
+            # 上次射精时间距离现在超过30分钟则射精值减少（按可游玩时间算，跨季末午夜时不把被跳过的月份算进去）
             last_time = now_character_data.action_info.last_eaj_add_time
-            if (cache.game_time - last_time) > datetime.timedelta(minutes=30):
+            if game_time.count_play_second(last_time, cache.game_time) > 30 * 60:
                 new_eja = max(now_character_data.eja_point - int(true_add_time * 10), 0)
                 now_character_data.eja_point = new_eja
 
@@ -202,11 +208,12 @@ def settle_sex_class_notify(pl_character_data: game_type.Character, now_behavior
     输出性技实操课的三次提醒（Plan 22 四期 §3.28.6、§3.28.9）
 
         1. 预约日当天玩家起床后 —— "今天几点在哪间教室有一节你安排的课"
-        2. 节次开始前30分钟 —— "学生们已经在往教室走了"
-        3. 预定的下课时刻 —— "可以就此结束，也可以继续下去"，⚠️ 只在课上着的时候才发
+        2. 节次开始前30分钟 —— "选修与点名必修的学生会在开课前 10 分钟动身赶来"
+        3. 预定的下课时刻 —— "可以就此结束，也可以继续下去"，只在课上着的时候才发
 
-    ⚠️ 第三次的措辞必须写明不强制，否则玩家会以为系统在催他下课——
-       下课时间一律由玩家手动决定（口径68），系统永不自动下课。
+    第三次的措辞必须写明不强制，否则玩家会以为系统在催他下课——
+       玩家还在课堂 H 里时，下课时间由玩家手动决定（口径68），系统不自动下课；
+       课堂 H 以别的方式结束（玩家已不在 H）时，由 settle_orphan_class 一并下课（Plan 32 §3.1）。
     Keyword arguments:
     pl_character_data -- 玩家角色数据
     now_behavior_id -- 玩家当前的行为id
@@ -252,7 +259,8 @@ def get_true_add_time(character_id: int, now_time: datetime.datetime, pl_start_t
     now_character_end_time = game_time.get_sub_date(minute=add_time, old_date=now_character_behavior_start_time)
     true_end_time = min(now_character_end_time, now_time)
     # 真实的行动时间是真实的结束时间减去真实的开始时间
-    true_add_time = int((true_end_time.timestamp() - true_start_time.timestamp()) / 60)
+    # 按可游玩时间算：两个时刻直接相减是公历时长，季末那一夜跨午夜的行为会多算被跳过的约两个月（睡 8 小时算成约 8.8 万分钟）
+    true_add_time = int(game_time.count_play_second(true_start_time, true_end_time) / 60)
     # 避免负数
     true_add_time = max(true_add_time, 0)
     return true_add_time
@@ -473,10 +481,12 @@ def settle_sleep(character_id: int, true_add_time: int) -> None:
         if now_char.sleep_point <= 0 and character_id:
             pl_character_data: game_type.Character = cache.character_data[0]
             # 玩家与该角色在同一地点，且玩家正在对该角色睡奸中，则结算从无意识H中恢复意识
+            # 正被博士搬运且不在H中时除外：醒来的反应由NPC行动前检查里的「被搬运时醒来」结算
             if (
                 pl_character_data.position == now_char.position and
                 pl_character_data.target_character_id == character_id and
-                now_char.sp_flag.unconscious_h == 1
+                now_char.sp_flag.unconscious_h == 1 and
+                not (handle_premise.handle_self_is_carried(character_id) and not now_char.sp_flag.is_h)
             ):
                 info_text = _("\n{0}已经睡饱了，从睡梦中自然苏醒过来\n").format(now_char.name)
                 handle_npc_ai_in_h.recover_from_unconscious_h(0, info_text)

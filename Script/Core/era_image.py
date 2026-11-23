@@ -1,7 +1,7 @@
 import os
 from PIL.ImageTk import PhotoImage
 from PIL import Image
-from Script.Core import game_type, cache_control
+from Script.Core import game_type, cache_control, image_path_index
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -119,12 +119,12 @@ def load_images_from_directory(directory):
     
     start_time = time.time()
     
-    # 先收集所有png文件路径
-    png_files = []
-    for root, dirs, files in os.walk(directory):
-        for file in files:
-            if file.endswith(".png"):
-                png_files.append((root, file))
+    # 先收集所有png文件路径，每个图片名只取一个文件
+    path_index, duplicates = image_path_index.build_image_path_index(directory)
+    for image_file_name in sorted(duplicates):
+        paths = duplicates[image_file_name]
+        print(f"图片重名：{image_file_name} 使用 {paths[0]}，忽略 {'、'.join(paths[1:])}")
+    png_files = [os.path.split(image_file_path) for image_file_path in path_index.values()]
     
     total_files = len(png_files)
     if total_files == 0:

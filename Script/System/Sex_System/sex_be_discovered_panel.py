@@ -198,9 +198,39 @@ class Sex_Be_Discovered_Panel:
             now_draw.draw()
             character_behavior.judge_character_status(self.character_id)
             self.discoverer_reaction_settled = True
+            self._find_chara_leave_own_dormitory()
         # 未通过
         else:
             self._end_current_h()
+
+    def _find_chara_leave_own_dormitory(self) -> None:
+        """
+        发现者在自己宿舍里目击H、选择离开时，走出房间到相邻的场景
+        功能描述:
+            支开、红着脸离开、拒绝加入群交这三种离开的反应都靠结算「自己前往自己的宿舍」让发现者走开，
+            但发现者本来就在自己宿舍里时（睡觉时被博士H的动静吵醒）该结算无处可去，她会留在屋里，与口上里的「离开了」不符。
+            此时改为走到房间相邻的场景，优先回到她来时的那一侧。
+            不改那条结算本身：事件等其他地方用它让角色回宿舍时，已经在宿舍里的角色不该反而离开。
+        """
+        from Script.Design import map_handle
+        from Script.StateMachine.default import general_movement_module
+        if not handle_premise.handle_in_dormitory(self.character_id):
+            return
+        # 当前房间在所在地图里的相邻场景
+        now_position = self.find_chara_data.position
+        map_path = map_handle.get_map_for_path(now_position)
+        map_data = map_handle.get_map_data_for_map_path(map_handle.get_map_system_path_str_for_list(map_path))
+        scene_id = map_handle.get_map_scene_id_for_scene_path(map_path, now_position)
+        neighbor_list = [map_handle.get_scene_path_for_map_scene_id(map_path, neighbor_id) for neighbor_id in map_data.path_edge.get(scene_id, {})]
+        if not neighbor_list:
+            return
+        # 移动记录里最近走过的相邻场景优先，没有时取第一个
+        leave_target = neighbor_list[0]
+        for past_position in reversed(self.find_chara_data.action_info.past_move_position_list):
+            if past_position in neighbor_list:
+                leave_target = past_position
+                break
+        general_movement_module(self.character_id, leave_target)
 
     def _switch_to_hidden_sex(self) -> None:
         """选择转为隐奸"""
@@ -233,6 +263,7 @@ class Sex_Be_Discovered_Panel:
                 self.find_chara_data.behavior.duration = game_config.config_behavior[self.find_chara_data.behavior.behavior_id].duration
                 character_behavior.judge_character_status(self.character_id)
                 self.discoverer_reaction_settled = True
+                self._find_chara_leave_own_dormitory()
             # 否则打断当前H
             else:
                 self._end_current_h()
@@ -274,13 +305,14 @@ class Sex_Be_Discovered_Panel:
                 self.find_chara_data.behavior.duration = game_config.config_behavior[self.find_chara_data.behavior.behavior_id].duration
                 character_behavior.judge_character_status(self.character_id)
                 self.discoverer_reaction_settled = True
+                self._find_chara_leave_own_dormitory()
             # 不在群交中则结束当前H
             else:
                 self._end_current_h()
 
     def _end_current_h(self) -> None:
         """选择结束当前H"""
-        from Script.Design import character_behavior
+        from Script.Design import character_behavior, handle_npc_ai_in_h
         # 交互对象进入被打断状态
         self.target_chara_data.action_info.h_interrupt = 1
         # 发现者变为打断行为
@@ -293,6 +325,16 @@ class Sex_Be_Discovered_Panel:
         if handle_premise.handle_group_sex_mode_on(0):
             self.pl_chara_data.behavior.behavior_id = constant.Behavior.GROUP_SEX_END
             handle_instruct.handle_group_sex_end()
+        # 睡奸被打断：睡奸对象也被这场骚动吵醒，按睡奸中途醒来结算其反应；H 已被打断，即使对方愿意也不再继续
+        #    （此前照普通 H 结束，睡奸对象被改成原地等待、却仍挂着无意识标记，醒着却算无意识）
+        elif handle_npc_ai_in_h.judge_sleep_h_target_can_be_woken(self.target_chara_data.cid):
+            self.pl_chara_data.behavior.behavior_id = constant.Behavior.H_INTERRUPT
+            self.pl_chara_data.state = constant.CharacterStatus.STATUS_H_INTERRUPT
+            info_text = _("\n因为{0}的动作，{1}从梦中惊醒过来\n").format(self.find_chara_data.name, self.target_chara_data.name)
+            handle_npc_ai_in_h.recover_from_unconscious_h(0, info_text, can_continue=False)
+        # 服用安眠药、烂醉爆睡等吵不醒的睡奸对象：照结束无意识奸收尾，对方继续睡
+        elif handle_premise.handle_unconscious_flag_1(self.target_chara_data.cid) and handle_premise.handle_action_sleep(self.target_chara_data.cid):
+            handle_instruct.handle_unconscious_h_end()
         # 否则结束当前H
         else:
             # 玩家变为被打断行为

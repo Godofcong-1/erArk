@@ -840,9 +840,10 @@ class LittleTitleLineDraw:
     title_style -- 标题样式
     tooltip -- 鼠标悬停在标题上时显示的说明文本
     center_title -- 是否将标题放在整条分隔线的中央
+    count_title_width -- 是否把标题宽度算进总长
     """
 
-    def __init__(self, title: str, width: int, line: str = "=", style="standard", title_style="sontitle", tooltip: str = "", center_title: bool = False):
+    def __init__(self, title: str, width: int, line: str = "=", style="standard", title_style="sontitle", count_title_width: bool = False, tooltip: str = "", center_title: bool = False):
         """初始化绘制对象"""
         self.title = title
         """ 标题 """
@@ -860,20 +861,28 @@ class LittleTitleLineDraw:
         """ 是否将标题放在整条分隔线的中央 """
         self.line_feed: bool = True
         """ 线尾换行 """
+        self.count_title_width: bool = count_title_width
+        """ 是否把标题宽度算进线条总长。
+            默认False是沿用已久的旧口径：标题不计宽，两段线条合起来就有 width，
+               整行实际画出 width + 标题宽度——全游戏几十处小标题都按这个样子摆着，故保持不变；
+            置True时线条 + 标题正好 width，与同宽的 LineDraw 对齐。给抬头很长、
+               旧口径会把行尾线条挤到第二行去的地方用（如公务事件的
+               「【公务事件】薇薇安 · 婴儿期第 8 天」，抬头本身就有 33 个半角宽） """
 
     def draw(self):
         """绘制线条"""
         title_draw = NormalDraw()
-        # title_draw.width = self.width
         title_draw.text = self.title
         title_draw.style = self.title_style
         title_draw.tooltip = self.tooltip
-        if self.center_title:
-            # 旧布局未设置标题宽度，len(title_draw) 会回传 0；居中时需先计入标题的实际宽度。
+        # 居中标题和定宽标题都需要计入标题宽度；其他标题沿用原有线条长度。
+        if self.center_title or self.count_title_width:
             title_draw.width = self.width
-            line_a_width = int((self.width - len(title_draw)) / 2)
+        title_width = len(title_draw)
+        if self.center_title:
+            line_a_width = int((self.width - title_width) / 2)
         else:
-            line_a_width = int(self.width / 16) - len(title_draw)
+            line_a_width = int(self.width / 16) - title_width
         if line_a_width < 0:
             line_a_width = 0
         line_a = NormalDraw()
@@ -881,7 +890,9 @@ class LittleTitleLineDraw:
         line_a.style = self.style
         line_a.text = self.line * line_a_width
         line_b = NormalDraw()
-        line_b.width = self.width - len(title_draw) - len(line_a)
+        # 旧口径下 title_width 为 0，这里就是原来的 width - len(line_a)；
+        #    计入标题时线条 + 标题正好 width，标题长到占满整行时右侧不再画线
+        line_b.width = max(self.width - title_width - len(line_a), 0)
         line_b.style = self.style
         line_b.text = self.line * int(line_b.width)
         for value in [line_a, title_draw, line_b]:

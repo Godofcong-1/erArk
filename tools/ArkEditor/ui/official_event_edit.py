@@ -3,10 +3,10 @@
 公务事件属性编辑UI组件（Plan 23）
 功能：
     - 右侧表单编辑一条公务事件的基本字段
-    - 四个选项块各自一个 QGroupBox，含文本、前提、置灰原因、后果提示、结算
+    - 四个选项块各自一个 QGroupBox，含文本、前提、置灰原因、后果提示（游戏里在玩家选定之后才显示，Plan 32 §8.2）、结算
     - 前提与结算复用编辑器既有的选择器（PremiseMenu / CVPMenu / EffectMenu / CVEMenu）
 
-⚠️ 那几个选择器都是直接往 `cache_control.now_event_data[now_select_id].premise/effect` 里写的，
+那几个选择器都是直接往 `cache_control.now_event_data[now_select_id].premise/effect` 里写的，
    本模块用一个**临时载体**顶上去（打开弹窗前换、关闭后换回），
    这样既不用改那6个文件，也不会污染正在编辑的口上/事件数据。
 """
@@ -36,7 +36,7 @@ SUBJECT_TEXT = {0: "0 无主体（部门事务）", 1: "1 角色"}
 """ 事件主体的下拉项 """
 
 ONCE_TEXT = {0: "0 普通", 1: "1 里程碑（仅标注）"}
-""" once 列的下拉项。⚠️ 它已经不影响触发：所有事件都对同一个角色只发生一次 """
+""" once 列的下拉项。它已经不影响触发：所有事件都对同一个角色只发生一次 """
 
 
 class SelectorShim:
@@ -173,7 +173,7 @@ class OfficialEventEditWidget(QWidget):
             box_layout.addRow("选项文本", option_text)
             box_layout.addRow("选项前提", self.make_token_row(option_premise, True))
             box_layout.addRow("置灰原因", option_reason)
-            box_layout.addRow("后果提示", option_tip)
+            box_layout.addRow("后果提示（选定后显示）", option_tip)
             box_layout.addRow("选项结算", self.make_token_row(option_effect, False))
             self.option_widget_list.append(
                 {"text": option_text, "premise": option_premise, "reason": option_reason, "tip": option_tip, "effect": option_effect}
@@ -224,7 +224,7 @@ class OfficialEventEditWidget(QWidget):
             dialog_maker: Callable 造弹窗的函数（在载体装好之后才调用）
         返回: 无
         功能:
-            ⚠️ 五个全局都要存下来再还原：选择器认的是
+            五个全局都要存下来再还原：选择器认的是
                now_edit_type_flag / now_event_data / now_select_id 与两个列表面板
         """
         old_flag = cache_control.now_edit_type_flag
@@ -247,10 +247,14 @@ class OfficialEventEditWidget(QWidget):
             cache_control.now_edit_type_flag = old_flag
             cache_control.now_event_data = old_event_data
             cache_control.now_select_id = old_select_id
+            # 选择器可能改写了 cache_control.premise_data / effect_data 里共用的显示文字，而主窗口的两个列表是按这段文字反查条目 id 的，
+            # 所以换回列表后要重画，否则之后在主列表上右键、双击会按旧文字找不到 id 而报错
             if old_premise_list is not None:
                 cache_control.item_premise_list = old_premise_list
+                old_premise_list.update()
             if old_effect_list is not None:
                 cache_control.item_effect_list = old_effect_list
+                old_effect_list.update()
         edit.setText(dict_to_text(shim.premise if is_premise else shim.effect))
 
     def open_premise_menu(self, edit: QLineEdit):

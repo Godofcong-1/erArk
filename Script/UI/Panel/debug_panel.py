@@ -405,35 +405,39 @@ class TALK_QUICK_TEST:
                 draw_text += _("  交互对象：未填写，本测试中默认选择为博士\n")
                 end_chara_id = 0
         # 设置交互对象
-        cache.character_data[start_chara_id].target_character_id = end_chara_id
+        old_target_character_id = cache.character_data[start_chara_id].target_character_id
+        try:
+            cache.character_data[start_chara_id].target_character_id = end_chara_id
 
-        # 输出口上文本
-        talk_context = game_config.config_talk[full_talk_id].context
-        draw_text += _("\n口上原文本：\n  {0}\n").format(talk_context)
-        draw_text += _("口上输出文本：\n  {0}\n").format(talk.code_text_to_draw_text(talk_context, start_chara_id))
-        # 遍历前提条件
-        draw_text += _("\n前提条件：\n")
-        for premise in game_config.config_talk_premise_data[full_talk_id]:
-            # 综合数值前提判定
-            if "CVP" in premise:
-                premise_all_value_list = premise.split("_")[1:]
-                now_add_weight = handle_premise.handle_comprehensive_value_premise(start_chara_id, premise_all_value_list)
-            # 其他正常口上判定
+            # 输出口上文本
+            talk_context = game_config.config_talk[full_talk_id].context
+            draw_text += _("\n口上原文本：\n  {0}\n").format(talk_context)
+            draw_text += _("口上输出文本：\n  {0}\n").format(talk.code_text_to_draw_text(talk_context, start_chara_id))
+            # 遍历前提条件
+            draw_text += _("\n前提条件：\n")
+            for premise in game_config.config_talk_premise_data[full_talk_id]:
+                # 综合数值前提判定
+                if "CVP" in premise:
+                    premise_all_value_list = premise.split("_")[1:]
+                    now_add_weight = handle_premise.handle_comprehensive_value_premise(start_chara_id, premise_all_value_list)
+                # 其他正常口上判定
+                else:
+                    now_add_weight = constant.handle_premise_data[premise](start_chara_id)
+                if now_add_weight:
+                    draw_text += _("  {0}：满足(√)\n").format(premise)
+                else:
+                    draw_text += _("  {0}：不满足(X)\n").format(premise)
+                    pass_flag = False
+
+            # 输出测试结果
+            if pass_flag:
+                draw_text += _("\n最终结果：\n  测试通过，该口上可以触发\n")
             else:
-                now_add_weight = constant.handle_premise_data[premise](start_chara_id)
-            if now_add_weight:
-                draw_text += _("  {0}：满足(√)\n").format(premise)
-            else:
-                draw_text += _("  {0}：不满足(X)\n").format(premise)
-                pass_flag = False
+                draw_text += _("\n最终结果：\n  测试未通过，该口上无法触发\n")
 
-        # 输出测试结果
-        if pass_flag:
-            draw_text += _("\n最终结果：\n  测试通过，该口上可以触发\n")
-        else:
-            draw_text += _("\n最终结果：\n  测试未通过，该口上无法触发\n")
-
-        return draw_text, pass_flag
+            return draw_text, pass_flag
+        finally:
+            cache.character_data[start_chara_id].target_character_id = old_target_character_id
 
 
     def run_batch_talk_test_in_groups(self, target_chara_id: int, talk_id_list: List[int]):
@@ -1012,19 +1016,21 @@ class Debug_Panel:
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
-                    change_value_panel = panel.AskForOneMessage()
-                    change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = int(change_value_panel.draw())
-                    cache.rhodes_island.party_day_of_week = new_value
+                    # 字段是「星期 -> 娱乐id」的字典，整个换成一个整数的话每日刷新娱乐时会报错；输入「星期,娱乐id」只改这一天
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入改变的项目，如果是列表则输入要改变第几号数据，以及这一项变成几，中间用英文小写逗号隔开"), 100)
+                    week_day, entertainment_id = map(int, value_index_panel.draw().split(","))
+                    cache.rhodes_island.party_day_of_week[week_day] = entertainment_id
                 elif key_index == 8:
                     info_text = f"[008]:当前招募进度：{cache.rhodes_island.recruit_line}"
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
-                    change_value_panel = panel.AskForOneMessage()
-                    change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = int(change_value_panel.draw())
-                    cache.rhodes_island.recruit_line = new_value
+                    # 字段是「招募线id -> [进度, ...]」的字典，整个换成一个整数的话刷新招募时会报错；输入「招募线id,进度」只改这条线的进度
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入改变的项目，如果是列表则输入要改变第几号数据，以及这一项变成几，中间用英文小写逗号隔开"), 100)
+                    line_id, progress = map(int, value_index_panel.draw().split(","))
+                    cache.rhodes_island.recruit_line[line_id][0] = progress
                 elif key_index == 9:
                     info_text = f"[009]:已招募待确认的干员id：{cache.rhodes_island.recruited_id}"
                     info_draw.text = info_text
@@ -1033,7 +1039,8 @@ class Debug_Panel:
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
-                    cache.rhodes_island.recruited_id = new_value
+                    # 字段是干员id的集合
+                    cache.rhodes_island.recruited_id = {new_value}
 
             elif self.now_panel == "常用更改":
 
@@ -1132,7 +1139,7 @@ class Debug_Panel:
                     for all_cid in cache.rhodes_island.facility_level:
                         cache.rhodes_island.facility_level[all_cid] = 5
                         for cid in cache.rhodes_island.facility_open:
-                            cache.rhodes_island.facility_open[cid] = 1
+                            cache.rhodes_island.facility_open[cid] = True
                         basement.get_base_updata()
                 # 重置全角色特殊flag
                 elif key_index == 11:
@@ -1634,7 +1641,8 @@ class Debug_Panel:
                     elif value_index[0] == 5:
                         target_data.h_state.orgasm_level[value_index[1]] = new_value
                     elif value_index[0] == 6:
-                        target_data.h_state.orgasm_count[value_index[1]] = new_value
+                        # 每个部位的计数是一个列表，按「6,部位,第几项」改其中一项（整个换成整数的话读它的前提会报错）
+                        target_data.h_state.orgasm_count[value_index[1]][value_index[2]] = new_value
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False

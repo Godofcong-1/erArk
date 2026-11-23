@@ -204,7 +204,7 @@ class CharaList(QWidget):
     def save_csv(self):
         """保存csv文件"""
         # 如果是使用的模板，那就新建一个文件
-        if cache_control.now_file_path == "999_模板人物属性文件.csv":
+        if cache_control.now_file_path == cache_control.CHARA_TEMPLATE_PATH:
             chara_id =  cache_control.now_chara_data.AdvNpc
             chara_name = cache_control.now_chara_data.Name
             cache_control.now_file_path = f"{chara_id}_{chara_name}.csv"

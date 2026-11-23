@@ -1,24 +1,257 @@
 name: Build Windows Game
 
+# 三个任务：
+#   check    每次推送、每个 PR 都跑：改动档案、构建配置、生成物比对、回归测试、静态检查。不需要任何密钥
+#   plan     只在 master 的推送上跑：判定这次要不要发布
+#   release  打包并发布。三个条件同时成立才跑：
+#              1. package.json 的版本号在 Releases 里查不到
+#              2. check 通过
+#              3. 推送者是仓库管理者，且版本号不是别人的 PR 带进来的
+# 说明文档：CLAUDE.md 的「CI/CD Release Structure」一节
+
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
 
+# 默认只读；只有发布任务单独申请写权限
+permissions:
+  contents: read
+
+# 同一个 PR 再推提交时取消它的旧运行。master 的推送各用各的分组（run_id），互不排队、互不取消：
+# 分组名在仓库内是共用的，master 的运行若用固定组名，外来 PR 改一下工作流就有机会取消正在进行的发布
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
-  build-windows:
+  # ==================== 检查 ====================
+  check:
+    name: Check
     runs-on: windows-latest
+    timeout-minutes: 20  # 这个任务会执行外来 PR 的代码，不给默认的 6 小时
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
         with:
-          fetch-depth: 0  # 确保获取完整的提交历史
+          fetch-depth: 0  # 改动档案要用到分叉点
+          persist-credentials: false  # 不把令牌留在 .git/config 里
+          # 检查用不到图片：不取 image/（约 670MB）。给了 sparse-checkout 后文件内容按需获取，
+          # 历史里的图片也不会被下载
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/image/
 
       - name: Install Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v7
         with:
-          python-version: 3.12
+          python-version: '3.12'
+
+      # 把 pr_triage.py 的档位、必须真人读的文件、危险信号写进运行摘要（只提示，不判失败）
+      - name: Change Dossier
+        shell: bash
+        continue-on-error: true
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          GIT_DIR: ${{ github.workspace }}/.git
+          GIT_WORK_TREE: ${{ github.workspace }}
+          # diff 的属性取自目标分支，PR 自带的 .gitattributes（如 *.py -diff）不能让扫描变瞎
+          GIT_ATTR_SOURCE: ${{ github.event.pull_request.base.sha || github.sha }}
+          PYTHONIOENCODING: utf-8
+        run: |
+          # PR 的工作区是外来代码：定级脚本取目标分支上的那一份，不用 PR 自己带的
+          script="$RUNNER_TEMP/pr_triage.py"
+          if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+            git show "$BASE_SHA:.github/skills/handle-pr/pr_triage.py" > "$script" || exit 0
+          else
+            cp .github/skills/handle-pr/pr_triage.py "$script"
+          fi
+          # Windows 找 git.exe 时先看当前目录，不让 PR 的工作区成为那个目录
+          cd "$RUNNER_TEMP"
+          {
+            echo "### 改动档案"
+            echo "仅供参考：PR 可以改写工作流本身，定级以本机运行 pr_triage.py triage 为准。"
+            echo '``````text'
+            python "$script" triage --range "$BASE_SHA..$HEAD_SHA" | tr -d '\r' || echo "（档案生成失败，不影响检查结果）"
+            echo '``````'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Install requirements
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install ruff==0.17.5 -r requirements.txt
+
+      - name: Build Game Config
+        id: build
+        run: |
+          $env:PYTHONIOENCODING="utf-8"
+          python buildconfig.py
+
+      # 改了配置表表头却没重建、或者手改了生成物，都会在这里红
+      - name: Check Generated Files
+        shell: bash
+        run: |
+          # buildconfig.py 在 Windows 上写出的是 CRLF，仓库里存的是 LF：两边都去掉 CR 再比，结果不受 git 的行尾设置影响
+          if ! diff -u --label "提交的 config_def.py" --label "CI 重建的 config_def.py" \
+              <(git show HEAD:Script/Config/config_def.py | tr -d '\r') <(tr -d '\r' < Script/Config/config_def.py) > "$RUNNER_TEMP/config_def.diff"; then
+            head -n 200 "$RUNNER_TEMP/config_def.diff"
+            echo "::error file=Script/Config/config_def.py::config_def.py 与 CI 重建的结果不一致。请运行 python buildconfig.py 后提交重建出的 config_def.py，或按上面打印的 diff 手动改成一致。分支早于 2026-11 的，先变基到最新 master：旧的构建脚本在 Linux / macOS 上生成的类顺序与 Windows 不同"
+            exit 1
+          fi
+
+      # 下面几步带 !cancelled()：前面某项检查红了也照样跑，一次运行把互不依赖的问题都报出来
+      # （首次贡献者每推一次提交都要维护者批准才会运行，轮次越少越好）
+      - name: Build Game Cache
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        run: |
+          $env:PYTHONIOENCODING="utf-8"
+          python init_data.py
+
+      # tools/tests/run_all.py 自动发现 tools/tests/ 下的全部套件目录，新增套件不用改这里
+      - name: Regression Tests
+        id: tests
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        run: |
+          $env:PYTHONIOENCODING="utf-8"
+          python tools/tests/run_all.py
+
+      # run_all.py 只带出含 [FAIL] / Error 的行，崩溃的完整回溯在日志文件里
+      - name: Show Test Logs
+        if: ${{ !cancelled() && steps.tests.outcome == 'failure' }}
+        run: |
+          $env:PYTHONIOENCODING="utf-8"
+          @'
+          import glob, os, tempfile
+          for path in sorted(glob.glob(os.path.join(tempfile.gettempdir(), "erArk_tests", "*", "*.log"))):
+              print("::group::" + os.path.relpath(path, os.path.join(tempfile.gettempdir(), "erArk_tests")))
+              print(open(path, encoding="utf-8", errors="replace").read()[-8000:])
+              print("::endgroup::")
+          '@ | python -
+
+      # 语法错误、未定义的名字、格式化参数对不上等；命中处直接标在 PR 的 diff 行上
+      # --config 强制用根目录这一份：ruff 默认按「离文件最近的配置」生效，PR 在子目录放一份就能绕过
+      - name: Static Check
+        if: ${{ !cancelled() }}
+        run: ruff check --config ruff.toml --output-format=github .
+
+      # 版本号只由仓库管理者修改：外部 PR 改了它，合并后就会触发发布
+      - name: Check Version Files
+        if: ${{ !cancelled() && github.event_name == 'pull_request' && github.event.pull_request.user.login != github.repository_owner }}
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          changed=$(git diff --name-only "$BASE_SHA...$HEAD_SHA" -- package.json image/package.json | paste -sd ' ' -)
+          if [ -n "$changed" ]; then
+            echo "::error::这个 PR 修改了版本号文件（$changed）。版本号只由仓库管理者修改，请把这处改动从 PR 里去掉"
+            exit 1
+          fi
+
+  # ==================== 版本判定 ====================
+  plan:
+    name: Release Plan
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read  # 查「这个提交是从哪个 PR 合入的」
+    outputs:
+      release: ${{ steps.decide.outputs.release }}
+      version: ${{ steps.decide.outputs.version }}
+      image_version: ${{ steps.decide.outputs.image_version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /package.json
+            /image/package.json
+
+      # 任何一步查询出错都判失败，而不是「当作可以发布」
+      - name: Decide
+        id: decide
+        shell: bash  # 显式写出才带 pipefail：curl 失败不能被后面的 jq 盖住
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          api() { curl -fsS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/$1"; }
+          version=$(jq -r .version package.json)
+          image_version=$(jq -r .version image/package.json)
+          # 版本号会被用作标签名和文件名，只接受 2026.9.28、2026.8.31-1 这类写法
+          pattern='^[0-9]+(\.[0-9]+){1,3}(-[0-9]+)?$'
+          for value in "$version" "$image_version"; do
+            [[ "$value" =~ $pattern ]] || { echo "::error::版本号写法不对：$value"; exit 1; }
+          done
+          # ---- 条件 1：版本号在 Releases 里查不到 ----
+          code=$(curl -s -o /dev/null -w '%{http_code}' \
+            -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+            "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/releases/tags/$version" || true)
+          case "$code" in
+            200) release=false; note="版本 $version 已在 Releases 中：本次只运行检查，不打包发布" ;;
+            404) release=true;  note="版本 $version 尚未发布：检查通过后打包发布（图片包版本 $image_version）" ;;
+            *)   echo "::error::查询 Releases 失败（HTTP $code）"; exit 1 ;;
+          esac
+          if [ "$release" = true ]; then
+            # 标签在而 Release 不在：多半是删了 Release 没删标签，继续发布会把新包挂到旧提交上
+            rc=0
+            git ls-remote --exit-code --tags "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" "refs/tags/$version" > /dev/null || rc=$?
+            case "$rc" in
+              2) ;;  # 标签不存在：正常
+              0) echo "::error::标签 $version 已存在但没有对应的 Release：请删除该标签，或换一个版本号"; exit 1 ;;
+              *) echo "::error::查询标签失败（git ls-remote 退出码 $rc）"; exit 1 ;;
+            esac
+            # ---- 条件 3 之一：只有仓库管理者的推送才发布（经网页合并 PR 时，推送者是点合并的人）----
+            if [ "$GITHUB_ACTOR" != "$GITHUB_REPOSITORY_OWNER" ]; then
+              echo "::error::版本 $version 尚未发布，但这次推送来自 $GITHUB_ACTOR，不是仓库管理者：不发布"
+              exit 1
+            fi
+            # ---- 条件 3 之二：版本号不能是别人的 PR 带进来的 ----
+            # 找到最后一次修改 package.json 的提交，看它是从谁的 PR 合入的
+            bump=$(api "commits?path=package.json&per_page=1&sha=$GITHUB_SHA" | jq -r '.[0].sha')
+            [[ "$bump" =~ ^[0-9a-f]{40}$ ]] || { echo "::error::查不到最后一次修改 package.json 的提交"; exit 1; }
+            outsiders=$(api "commits/$bump/pulls" | jq -r --arg owner "$GITHUB_REPOSITORY_OWNER" \
+              '[.[] | select(.merged_at != null and .user.login != $owner) | "#\(.number)（\(.user.login)）"] | join("、")')
+            if [ -n "$outsiders" ]; then
+              echo "::error::版本号 $version 是由外部 PR $outsiders 带进来的：不自动发布。请由管理者自己提交一次 package.json 的版本号改动"
+              exit 1
+            fi
+          fi
+          {
+            echo "release=$release"
+            echo "version=$version"
+            echo "image_version=$image_version"
+          } >> "$GITHUB_OUTPUT"
+          echo "$note" >> "$GITHUB_STEP_SUMMARY"
+
+  # ==================== 打包发布 ====================
+  release:
+    name: Build and Release
+    needs: [check, plan]
+    # 推送者的判断在 plan 里已经做过，这里再写一遍，不让发布只靠一处条件把关
+    if: github.event_name == 'push' && github.actor == github.repository_owner && needs.plan.outputs.release == 'true'
+    runs-on: windows-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0  # 发布说明要用到上一个版本的标签
+          fetch-tags: true
+          persist-credentials: false  # 这个任务有写权限，令牌只通过 env 交给发布步骤，不留在磁盘上
+
+      - name: Install Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
 
       - name: Install requirements
         run: |
@@ -130,54 +363,60 @@ jobs:
           Copy-Item example/富文本测试用例.csv dist_ArkEditor/例子/
           Copy-Item example/0999_外勤委托模板.csv dist_ArkEditor/例子/
 
-      - name: Get the last merged commit SHA from the master branch
-        run: |
-          $LAST_MERGED_SHA = git rev-parse origin/master
-          echo "Last merged commit SHA: $LAST_MERGED_SHA"
-          echo "LAST_MERGED_SHA=$LAST_MERGED_SHA" >> $env:GITHUB_ENV
-          $SECOND_LAST_MERGED_SHA = git rev-list --merges -n 2 origin/master | Select-Object -Last 1
-          echo "Second last merged commit SHA: $SECOND_LAST_MERGED_SHA"
-          echo "SECOND_LAST_MERGED_SHA=$SECOND_LAST_MERGED_SHA" >> $env:GITHUB_ENV
-        shell: pwsh
-
-      - name: Get current PR commit SHA
-        id: commits
-        run: |
-          $CURRENT_SHA = "${{ github.sha }}"
-          echo "Current PR commit SHA: $CURRENT_SHA"
-          echo "CURRENT_SHA=$CURRENT_SHA" >> $env:GITHUB_ENV
-        shell: pwsh
-
-      - name: Output commits for verification
-        id: get_commit_logs
-        run: |
-          echo "Commits between $env:LAST_MERGED_SHA and $env:CURRENT_SHA"
-          $COMMIT_LOGS = $(git log --oneline $env:LAST_MERGED_SHA..$env:CURRENT_SHA)
-          echo "COMMIT_LOGS : $COMMIT_LOGS"
-          echo "COMMIT_LOGS=$COMMIT_LOGS" >> $env:GITHUB_ENV
-        shell: pwsh
-
       - name: Pack ArkEditor Files
         run: |
           Compress-Archive -Path dist_ArkEditor\* -DestinationPath erArkEditor.zip
-      - uses: actions/upload-artifact@master
-        with:
-          name: Windows
-          path: erArk.zip
 
-      - name: Read Version
-        id: version
-        uses: ashley-taylor/read-json-property-action@v1.0
-        with:
-          path: package.json
-          property: version
+      # 发布页正文：四个包的说明 + 上一个版本标签以来的提交标题（按时间正序；超过 10 条时前 10 条露出，全部条目收在展开栏里）
+      - name: Write Release Notes
+        shell: bash  # 用 bash：PowerShell 捕获 git 输出时会把中文提交标题转坏
+        run: |
+          cat > release_notes.md <<'EOF'
+          游戏本体（完整版） - erArk_版本号.zip
+          游戏本体（轻量版，不含角色立绘与场景图的图片资源） - erArk_Lite_版本号.zip
+          图片资源包（角色立绘、场景图等，路径为游戏根目录下的image文件夹） - erArk_Images_版本号.zip
 
-      - name: Read Image Version
-        id: image_version
-        uses: ashley-taylor/read-json-property-action@v1.0
-        with:
-          path: image/package.json
-          property: version
+          —————— 轻量版+图片资源包 = 完整版 ——————
+          —————— 一般玩家下载完整版即可 ——————
+          —————— 以下为口上作者/魔改开发用 ——————
+
+          口上事件编辑器（无需写代码即可写口上和事件） - erArkEditor.zip
+          源代码 - Source code
+          EOF
+          prev=$(git describe --tags --abbrev=0 HEAD 2>/dev/null || true)
+          if [ -n "$prev" ]; then
+            # 按提交先后排列，最早的在前（-n 先取最近的 300 条，--reverse 再把它们按时间正序排）
+            log=$(git log --no-merges --reverse --format='- %s' -n 300 "$prev..HEAD")
+            if [ -n "$log" ]; then
+              mapfile -t commits <<< "$log"
+              total=${#commits[@]}
+              {
+                echo ""
+                echo "—————— 自 $prev 以来的改动 ——————"
+                echo ""
+                if [ "$total" -le 10 ]; then
+                  printf '%s\n' "${commits[@]}"
+                else
+                  # 超过 10 条：前 10 条默认展开，全部条目放在默认收起的展开栏里。
+                  # 两栏同名（name），浏览器让同名的展开栏同一时间只开一个：点开「全部」时前 10 条那一栏自动收起，前 10 条不会显示两遍。
+                  # 不支持此特性的旧浏览器上两栏会同时展开，前 10 条出现两次，内容不缺
+                  echo '<details name="changes" open>'
+                  echo "<summary>前 10 条改动（共 $total 条）</summary>"
+                  echo ""
+                  printf '%s\n' "${commits[@]:0:10}"
+                  echo ""
+                  echo '</details>'
+                  echo '<details name="changes">'
+                  echo "<summary>展开全部 $total 条改动</summary>"
+                  echo ""
+                  printf '%s\n' "${commits[@]}"
+                  echo ""
+                  echo '</details>'
+                fi
+              } >> release_notes.md
+            fi
+          fi
+          cat release_notes.md
 
       - name: Create Release
         id: create_release
@@ -185,21 +424,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{steps.version.outputs.value}}
-          release_name: ${{steps.version.outputs.value}}
-          body: |
-            游戏本体（完整版） - erArk_版本号.zip
-            游戏本体（轻量版，不含角色立绘与场景图的图片资源） - erArk_Lite_版本号.zip
-            图片资源包（角色立绘、场景图等，路径为游戏根目录下的image文件夹） - erArk_Images_版本号.zip
-
-            —————— 轻量版+图片资源包 = 完整版 ——————
-            —————— 一般玩家下载完整版即可 ——————
-            —————— 以下为口上作者/魔改开发用 ——————
-            
-            口上事件编辑器（无需写代码即可写口上和事件） - erArkEditor.zip
-            源代码 - Source code
-          
-            ${{ env.COMMIT_LOGS }}
+          tag_name: ${{ needs.plan.outputs.version }}
+          release_name: ${{ needs.plan.outputs.version }}
+          body_path: release_notes.md
           draft: false
           prerelease: false
 
@@ -211,7 +438,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ github.workspace }}/erArk.zip
-          asset_name: erArk_${{steps.version.outputs.value}}.zip
+          asset_name: erArk_${{ needs.plan.outputs.version }}.zip
           asset_content_type: application/zip
 
       - name: Upload ArkEditor Asset
@@ -233,7 +460,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ github.workspace }}/erArk_Lite.zip
-          asset_name: erArk_Lite_${{steps.version.outputs.value}}.zip
+          asset_name: erArk_Lite_${{ needs.plan.outputs.version }}.zip
           asset_content_type: application/zip
 
       - name: Upload Images Asset
@@ -244,6 +471,6 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ github.workspace }}/erArk_Images.zip
-          asset_name: erArk_Images_${{steps.image_version.outputs.value}}.zip
+          # 图片包用 image/package.json 的图片版本号，不是游戏版本号：图片没更新时文件名保持不变
+          asset_name: erArk_Images_${{ needs.plan.outputs.image_version }}.zip
           asset_content_type: application/zip
-  

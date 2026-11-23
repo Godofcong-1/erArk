@@ -259,15 +259,11 @@ class FindDraw:
             cloth_show_text = _("\n{0}的衣柜里放着刚脱下来的：\n").format(self.character_data.name)
             for clothing_type in game_config.config_clothing_type:
                 cloth_list = self.now_locker[clothing_type]
-                # 检查是否有该衣服的污浊信息，如果没有的话则补上
-                if len(self.character_data.dirty.cloth_locker_semen) <= clothing_type:
-                    # 首先先尝试看角色身上的服装污浊信息是否可以同步过去
-                    if len(self.character_data.dirty.cloth_semen[clothing_type]):
-                        self.character_data.dirty.cloth_locker_semen = self.character_data.dirty.cloth_semen
-                    # 如果角色身上的服装污浊信息为空，则补上
-                    else:
-                        part_name = game_config.config_clothing_type[clothing_type].name
-                        self.character_data.dirty.cloth_locker_semen.append([part_name,0,0,0])
+                # 检查是否有该衣服的污浊信息，如果没有的话则补上一项空的
+                # （衣柜精液表是以服装部位为键的 dict；此前按列表的写法判长度，并把整张表直接指向穿着的表，两张表从此变成同一个对象）
+                if clothing_type not in self.character_data.dirty.cloth_locker_semen:
+                    part_name = game_config.config_clothing_type[clothing_type].name
+                    self.character_data.dirty.cloth_locker_semen[clothing_type] = [part_name,0,0,0]
 
                 if len(cloth_list):
                     for cloth_id in cloth_list:

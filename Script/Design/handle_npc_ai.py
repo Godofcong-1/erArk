@@ -121,6 +121,7 @@ def run_npc_pre_behavior_checks(character_id: int, pl_start_time: datetime.datet
     依次执行NPC的行动前检查序列\n
     疲劳/睡眠检查判定为群交力竭退出时，由本序列提交这一次退出转换并跳过其余检查，\n
     避免随后的H状态检查把退出行为覆盖为原地等待。\n
+    被博士搬运的角色恢复意识而开始「被搬运时醒来」、或默许后继续被搬运时，同样跳过其余检查。\n
     Keyword arguments:\n
     character_id -- 角色id\n
     pl_start_time -- 玩家行动开始时间\n
@@ -135,6 +136,9 @@ def run_npc_pre_behavior_checks(character_id: int, pl_start_time: datetime.datet
     # 判断疲劳和睡眠；群交力竭退出时返回退出行为id，交由本序列提交转换
     if judge_character_tired_sleep(character_id) == constant.Behavior.GROUP_SEX_NPC_HP_0_END:
         commit_group_sex_tired_exit(character_id)
+        return
+    # 被博士搬运的角色恢复了意识：原地执行「被搬运时醒来」，赶在AI给她挑新行动之前；默许后继续被搬运时原地等待、跟着博士走；本轮不再做其余检查
+    if handle_npc_ai_in_h.judge_carried_character_regain_consciousness(character_id, pl_start_time):
         return
     judge_character_cant_move(character_id) # 无法自由移动的角色
     judge_assistant_character(character_id) # 助理
@@ -348,34 +352,17 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
             target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
             premise_data = new_premise_data
-    # 先判断性技实操课的预到岗：下一节是自己要上的实操课时，提前动身去教室（Plan 22 四期 §3.28.5）
-    # ⚠️ 必须排在上课判定之前：节次首尾相接没有课间，预到岗要能中止当前节次的课把人放走
-    if judge == 0:
-        from Script.System.Education_System import class_ai
-
-        judge = class_ai.judge_pre_arrive_sex_class(character_id)
-    # 然后判断上课，需要本节次在个人课表上排了课（Plan 22 §2.8）
-    # ⚠️ 排在工作之前：孩子的"工作"就是上学，走到下面的工作链只会随机挑一间教室；
-    #    成年干员自选了课时，本节同样以课优先
-    if judge == 0:
-        from Script.System.Education_System import class_ai
-
-        judge = class_ai.judge_class_state_machine(character_id)
-    # 然后判断见学：幼女本节没排课、且该时段没有明确排别的日程活动时默认见学，萝莉只在日程时段排了「跟随母亲」时见学，
-    # 且母亲要有效（Plan 22 二期 §3.24、§9.2.3、§9.2.9）
-    # ⚠️ 排在上课之后、娱乐之前：有课就上课，没课才跟母亲；不见学的孩子接着走下面的娱乐链做日程活动
+    # 然后判断见学：孩子的日程行为，不是工作，排在工作链之前（Plan 22 二期 §3.24、§9.2.3、§9.2.9）
+    #    幼女本节没排课、且该时段没有明确排别的日程活动时默认见学，萝莉只在日程时段排了「跟随母亲」时见学，且母亲要有效；
+    #    学生此刻与课表有关（本节有课、马上开课、待赴实操课）时见学判定不成立，让给下面工作链里的上课行（Plan 24 §3.9）
     if judge == 0:
         from Script.System.Education_System import class_ai
 
         judge = class_ai.judge_follow_mother_state_machine(character_id)
-    # 然后判断工作，需要有工作，且在工作时间或到岗时间
-    # ⚠️ 学生岗不走工作链（Plan 22 二期 §9.2.9）：学生的"工作"只有课表，有课的节次已被上面的上课判定接管，
-    #    没课的节次交给下面的娱乐链按日程 / 当天的随机娱乐自由行动。原来会被 WorkType 152 的自动 AI 送进随机一间
-    #    理论教室"上学"，没有教师在教就是零收益（上学的学习收益只由教师授课的结算发放）
-    from Script.System.Education_System import education_constant
-
-    student_flag = character_data.work.work_type == education_constant.STUDENT_WORK_TYPE
-    if judge == 0 and not student_flag and handle_premise.handle_have_work(character_id) and handle_premise.handle_to_work_time_or_work_time(character_id):
+    # 然后判断工作：只要有工作就进工作链，时间窗由各目标行自己的时间前提决定（Plan 24 §3.1）
+    #    既有的 21/22 行都带 to_work_time / work_time，自动 AI 路径自带 work_time；
+    #    教师 / 学生的课表行（target.csv 组 07 / 08）不看星期，周日排的课照常上；学生没课时没有行命中，照旧落到下面的娱乐链
+    if judge == 0 and handle_premise.handle_have_work(character_id):
         # 当前工作数据
         work_type_id = character_data.work.work_type
         work_type_data = game_config.config_work_type[work_type_id]
@@ -675,14 +662,45 @@ def npc_auto_work_or_entertainment(character_id: int, premise_data: Dict[int, in
     return 0, premise_data
 
 
+def judge_student_leave_truncate(character_id: int) -> bool:
+    """
+    学生岗赶去上课：把当前的工作 / 娱乐行为截到应离开的时刻（Plan 25 §3.1；Plan 32 §3.7 L4 自 judge_interrupt_character_behavior 抽出）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 是否截短了当前行为
+    功能: 待赴实操课提前退场（口径 62），没课的节次到了下一节开课前收手，人已在上课地点或今天已翘课的截到开课那一刻，判据见 class_ai.get_student_leave_time。
+          做法是把当前行为截到应离开的那一刻，而不是「现在就结束」：NPC 按自己的行为时刻推进，
+             这里的 cache.game_time 是玩家这一步的结束时刻，一步跨过开课时刻时拿它判会整个错过。
+          character_behavior 的 NPC 分支在实时结算（realtime_settle.character_aotu_change_value）之前调它：实时结算按行为的结束时刻封顶，
+             此前先结算、后截短，截掉的那一段饥饿、尿意、疲劳、醉酒回落会在下一个行为（从离开时刻开始）里再算一遍。
+             这是唯一会把时间线落回玩家这一步之内的打断；休息、睡醒与工作 / 娱乐中到了淋浴时间的打断（都用 end_now=2 立即结束，
+             下一个行为从 cache.game_time 开始）仍留在 judge_interrupt_character_behavior
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 本轮内刚赋予的行为（开始时间不早于当前游戏时间）不做判定（与 judge_interrupt_character_behavior 同一道守卫），
+    #    否则"截短→AI重选同一行为→再截短"会使NPC行为循环永不收敛
+    if game_time.judge_date_big_or_small(cache.game_time, character_data.behavior.start_time) != 1:
+        return False
+    from Script.System.Education_System import class_ai
+
+    leave_time = class_ai.get_student_leave_time(character_id)
+    if leave_time is None:
+        return False
+    character_data.behavior.duration = max(1, int((leave_time - character_data.behavior.start_time).total_seconds() // 60))
+    return True
+
+
 def judge_interrupt_character_behavior(character_id: int) -> int:
     """
     判断是否需要打断角色的当前行动\n
     Keyword arguments:
     character_id -- 角色id\n
-    interrupt_type -- 打断类型\n
     Return arguments:
-    bool -- 是否打断
+    int -- 是否打断，1为打断
+    功能: 休息、睡觉与工作 / 娱乐中到了淋浴时间的打断（都用 end_now=2 立即结束，下一个行为从 cache.game_time 开始）。
+          学生岗赶去上课的截短不在这里：它会把时间线落回玩家这一步之内，要排在实时结算之前，
+          由 character_behavior 的 NPC 分支先调 judge_student_leave_truncate（Plan 32 §3.7 L4）
     """
     character_data: game_type.Character = cache.character_data[character_id]
 
@@ -816,15 +834,20 @@ def get_chara_entertainment(character_id: int):
         # 否则随机当天的娱乐活动
         else:
             # 教育系统的常量从配置现算，必须在函数内延迟 import（与本文件里 class_ai 的延迟 import 同款）
-            from Script.System.Education_System import education_constant
+            from Script.System.Education_System import education_constant, schedule_template_handle
             from Script.System.Pregnancy_System import pregnancy_constant
 
             # 幼女没排日程时的默认池：每个时段在过家家 / 自由玩耍之间随机（Plan 22 二期 §9.2.9，此前固定写过家家）。
-            # ⚠️ 白天在课表节次内没课的时段，幼女默认仍是见学（class_ai.judge_should_follow_mother），
+            # 白天在课表节次内没课的时段，幼女默认仍是见学（class_ai.judge_should_follow_mother），
             #    这里的值只在晚上等不在节次内的时间生效；日程明确排了活动的时段会在 apply_schedule_for_child 里被改写
             if handle_premise.handle_self_is_child(character_id):
+                # 地点还没开放的不进池（Plan 27 §3.1），与下面成年干员的随机池同口径：黄澄澄游戏室要教育区 2 级才解锁，
+                #    开局抽到过家家的幼女会在门口一分钟一分钟地空转一整晚。育儿室恒开放，池子不会滤空；滤空了也只剩自由玩耍
+                child_pool = [cid for cid in education_constant.CHILD_DEFAULT_ENTERTAINMENT_LIST if schedule_template_handle.judge_activity_place_open(cid)]
+                if not child_pool:
+                    child_pool = [education_constant.ENTERTAINMENT_FREE_PLAY]
                 for i in range(3):
-                    character_data.entertainment.entertainment_type[i] = random.choice(education_constant.CHILD_DEFAULT_ENTERTAINMENT_LIST)
+                    character_data.entertainment.entertainment_type[i] = random.choice(child_pool)
                 return
             entertainment_list = [i for i in game_config.config_entertainment]
             entertainment_list.remove(0)

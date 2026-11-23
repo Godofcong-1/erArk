@@ -641,14 +641,40 @@ def special_code_judge(now_talk: str):
 
     return now_talk, special_code
 
+
+TALK_COMMON_MAX_PASS = 10
+""" 通用占位符最多替换的遍数：最坏顺序下嵌套几层就需要几遍，上限防止数据里出现循环嵌套时死循环 """
+
+
 def talk_common_judge(now_talk: str, character_id: int) -> str:
     """
     转换文本中的通用占位符为对应文本
+    通用文本里会嵌套其他通用占位符（例如 m_orgasm_* 插入 {mouth}），而替换一遍只按加载顺序把每个占位符看一次，
+    所以重复替换一遍，直到文本不再变化（最多 TALK_COMMON_MAX_PASS 遍）
+    文本中有占位符时，可能把玩家的交互对象改为 character_id（由调用方 code_text_to_draw_text 还原）
     参数:
         now_talk (str): 原始文本，包含 {key} 占位符
         character_id (int): 角色ID，用于获取相关配置
     返回:
         str: 转换后的文本
+    """
+    for _pass in range(TALK_COMMON_MAX_PASS):
+        new_talk = talk_common_judge_one_pass(now_talk, character_id)
+        if new_talk == now_talk:
+            break
+        now_talk = new_talk
+    return now_talk
+
+
+def talk_common_judge_one_pass(now_talk: str, character_id: int) -> str:
+    """
+    按 config_talk_common_cid_list_by_type 的顺序把每种通用占位符处理一遍：部位占位符总是替换（无候选时为空串），非部位占位符有候选文本时替换同种占位符的所有出现
+    文本中有占位符时，可能把玩家的交互对象改为 character_id（由调用方 code_text_to_draw_text 还原）
+    参数:
+        now_talk (str): 原始文本，包含 {key} 占位符
+        character_id (int): 角色ID，用于获取相关配置
+    返回:
+        str: 替换一遍后的文本
     """
     # 固定为玩家触发
     pl_character_id = 0

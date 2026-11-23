@@ -14,8 +14,7 @@ erArk 无头**函数级单元测试** harness 模板
 
 注意：
   - 必须用 ./.conda/python.exe（裸 python 是商店空壳别名，exit 49 无输出）
-  - 结尾的 os._exit() 会主动结束进程；若删掉它，需要外层 timeout 兜底
-    （游戏导入链的 Flask 非守护线程会让进程跑完后不退出）
+  - 结尾的 os._exit() 会主动结束进程并给出明确的退出码（不等测试里可能还在跑的线程）；外层仍建议加 timeout 兜底
 """
 import datetime
 import os
@@ -138,7 +137,7 @@ def new_chara(cid, name="测试干员", adv=0, race=0):
     功能描述:
         game_type.Character() 的多数容器字段初值是空 dict，代码里普遍用 xxx[key] 直接下标访问，
         不预填就会 KeyError。下面这份是实测跑通「结算器 + 前提 + talk.handle_talk」全链路的最小集合。
-        ⚠️ 置零函数的命名不规律，容易记错（见 SKILL.md「fixture 字段与置零函数对照表」）。
+        置零函数的命名不规律，容易记错（见 SKILL.md「fixture 字段与置零函数对照表」）。
     """
     cd = game_type.Character()
     cd.cid = cid
@@ -187,7 +186,7 @@ chain = [e for e in game_config.config_behavior_effect_data.get("sleep", []) if 
 print("  sleep 效果链:", chain)
 
 # 5.3 直接调用结算器：constant.settle_behavior_effect_data[效果id](角色id, add_time, change_data, now_time)
-#     ⚠️ add_time 传 0 会命中绝大多数结算器开头的 `if not add_time: return`，断言会假阴性
+#     add_time 传 0 会命中绝大多数结算器开头的 `if not add_time: return`，断言会假阴性
 target = new_chara(101, "样例干员")
 pl.target_character_id = 101
 change = game_type.CharacterStatusChange()
@@ -239,4 +238,4 @@ print(f"通过 {PASS} 项，失败 {len(FAIL)} 项")
 for f in FAIL:
     print("  失败:", f)
 print("=" * 50)
-os._exit(0 if not FAIL else 1)  # 主动退出，绕开残留的非守护线程
+os._exit(0 if not FAIL else 1)  # 主动退出：退出码只反映断言成败，不等可能还在跑的线程

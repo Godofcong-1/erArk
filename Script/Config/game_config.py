@@ -361,7 +361,7 @@ config_cook_question: Dict[int, Dict[str, list]] = {}
 """ 烹饪问题库 食物id:烹饪阶段:[问题dict列表] """
 config_official_event: Dict[str, dict] = {}
 """ 公务事件（Plan 23） 事件uid:事件原始dict。
-    ⚠️ 存的是原始dict不是config_def对象：CSV里空着的选项列在构建时会被整列删掉，
+    存的是原始dict不是config_def对象：CSV里空着的选项列在构建时会被整列删掉，
        用对象取属性会 AttributeError，用dict.get()才能安全地表达「这个选项不存在」 """
 config_official_event_by_department: Dict[int, list] = {}
 """ 公务事件按部门分桶 部门id(Facility.csv中type为-1的区块cid):[事件uid列表] """
@@ -1675,7 +1675,7 @@ def load_official_event():
     config_official_event_by_department.clear()
     config_official_event_by_sub_key.clear()
     for tem_data in now_data["data"]:
-        # ⚠️ 直接存原始dict：CSV里空着的选项列在构建时已被删掉，用get()判断选项是否存在
+        # 直接存原始dict：CSV里空着的选项列在构建时已被删掉，用get()判断选项是否存在
         uid = tem_data["cid"]
         config_official_event[uid] = tem_data
         department = tem_data.get("department", 0)

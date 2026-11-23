@@ -8,7 +8,6 @@ from google import genai
 import concurrent.futures
 import os
 import csv
-import httpx
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -619,10 +618,20 @@ class Chat_Ai_Setting_Panel:
                 client = client.with_options(base_url=cache.ai_setting.now_ai_chat_base_url)
             # 自定义代理
             if cache.ai_setting.ai_chat_setting[11] == 1:
-                if len(cache.ai_setting.now_ai_chat_proxy[1]) == 0:
-                    client = client.with_options(http_client=openai.DefaultHttpxClient(proxies=cache.ai_setting.now_ai_chat_proxy[0]))
-                else:
-                    client = client.with_options(http_client=openai.DefaultHttpxClient(proxies=cache.ai_setting.now_ai_chat_proxy[0], transport=httpx.HTTPTransport(local_address=cache.ai_setting.now_ai_chat_proxy[1])))
+                # 与实际生成文本时用同一个函数创建代理客户端，测试结果才代表实际效果
+                from Script.Design import handle_chat_ai
+
+                try:
+                    client = client.with_options(http_client=handle_chat_ai.create_openai_proxy_http_client(cache.ai_setting.now_ai_chat_proxy[0], cache.ai_setting.now_ai_chat_proxy[1]))
+                except Exception as e:
+                    # 代理地址写错等情况：按测试不通过处理，把原因显示给玩家，而不是让异常中断面板
+                    info_draw = draw.NormalDraw()
+                    info_draw.width = self.width
+                    info_draw.text = _(" \n  测试不通过，原因：{0}\n").format(e)
+                    info_draw.draw()
+                    self.test_flag = 2
+                    self.error_message = str(e)
+                    return
         elif now_key_type == "GEMINI_API_KEY":
             # 构建http_options参数
             api_version_val = 'v1alpha' if cache.ai_setting.ai_chat_setting[12] == 1 else None

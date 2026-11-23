@@ -125,6 +125,62 @@ def check_random_borrow_book(character_id):
         return 1
 
 
+def judge_can_get_read_book(character_id: int) -> bool:
+    """
+    只读判定：这个角色此刻能不能拿到一本可读的书（Plan 29 §3.2）
+    手上已经借着书即可；否则书库里得有一本没被借走、能力够读、没读完的书。
+       筛选条件与 check_random_borrow_book 完全同口径，但一行都不写——它在前提路径上
+       （schedule_handle.judge_personal_course_valid：兴趣课读书借不到书的这一节视为没课），前提必须是纯函数
+
+    参数:
+        character_id (int): 角色的ID
+
+    返回:
+        bool: 是否借得到书
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 手上有书就直接读那本，不用再扫书库
+    if len(character_data.entertainment.borrow_book_id_set):
+        return True
+    for book_id in cache.rhodes_island.book_borrow_dict:
+        # 已借出则跳过
+        if cache.rhodes_island.book_borrow_dict[book_id] != -1:
+            continue
+        # 能力不够则无法借出
+        if not can_read_book(character_id, book_id):
+            continue
+        # 已经看完的跳过
+        if character_data.entertainment.read_book_progress.get(book_id, 0) >= 100:
+            continue
+        return True
+    return False
+
+
+def prepare_npc_read_book(character_id: int) -> bool:
+    """
+    NPC 读书前的装配：没借书就先随机借一本，再把借着的那本写进 behavior.book_id / book_name（Plan 29 §3.2）
+    由状态机 401（娱乐读书）抽出，兴趣课读书（状态机 716）与它共用：读书结算（511）按 behavior.book_id 取书，
+       行为口上的 {BookName} 取 behavior.book_name，不装配就会一律读 0 号书、书名为空
+
+    参数:
+        character_id (int): 角色的ID
+
+    返回:
+        bool: 是否装配成功；借不到书时为 False，调用方自行决定等待
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if not check_random_borrow_book(character_id):
+        return False
+    book_id = -1
+    for book_id_all in character_data.entertainment.borrow_book_id_set:
+        book_id = book_id_all
+    if book_id not in game_config.config_book:
+        return False
+    character_data.behavior.book_id = book_id
+    character_data.behavior.book_name = game_config.config_book[book_id].name
+    return True
+
+
 def can_read_book(character_id: int, book_cid: int) -> bool:
     """
     检查角色是否能够阅读指定书籍

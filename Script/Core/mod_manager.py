@@ -76,9 +76,13 @@ class ModManager:
             os.makedirs(mod_path)
             return []
         
+        # 加载状态与错误信息是启动时 load_all_enabled_mods 写在 ModInfo 上的；重新扫描（打开或刷新模组面板）会新建 ModInfo，
+        # 所以同一 mod_id 的新记录要沿用旧记录的这两项，否则已加载的模组会显示成未加载、加载失败的原因也看不到了
+        previous_mods = dict(self.mods)
         self.mods. clear()
-        
-        for item in os.listdir(mod_path):
+
+        # 按文件夹名排序，使模组列表的顺序、以及 mod_id 重复时采用哪个文件夹，都不随文件系统列出文件的顺序变化
+        for item in sorted(os.listdir(mod_path), key=str.upper):
             item_path = os.path. join(mod_path, item)
             if not os.path.isdir(item_path):
                 continue
@@ -92,6 +96,9 @@ class ModManager:
                     info_dict = json. load(f)
                 mod_id = info_dict.get("mod_id", item)
                 mod_info = ModInfo(mod_id, info_dict, item_path)
+                if mod_id in previous_mods:
+                    mod_info.loaded = previous_mods[mod_id].loaded
+                    mod_info.error_message = previous_mods[mod_id].error_message
                 self. mods[mod_id] = mod_info
             except Exception as e:
                 print(f"[Mod] 读取mod信息失败: {item}, 错误: {e}")

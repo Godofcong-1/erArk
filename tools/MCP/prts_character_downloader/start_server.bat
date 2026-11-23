@@ -25,7 +25,7 @@ REM 尝试安装MCP依赖
 pip show mcp >nul 2>&1
 if %errorlevel% neq 0 (
     echo MCP库未安装，正在安装...
-    pip install mcp
+    pip install "mcp>=1.0.0,<2"
     if %errorlevel% neq 0 (
         echo 警告: MCP库安装失败，将使用独立模式
     )

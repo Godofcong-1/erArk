@@ -100,7 +100,7 @@ def find_recruitable_npc() -> List[int]:
         if chara_id in diplomat_id_set:
             continue
         # 跳过特殊NPC
-        if cache.character_data[chara_id].name in constant.ban_NPC_name_set:
+        if cache.character_data[chara_id].adv in constant.ban_NPC_adv_set:
             continue
         # 如果设置了禁止，则跳过禁止干员
         if cache.all_system_setting.base_setting[7]:

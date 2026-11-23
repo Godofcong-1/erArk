@@ -6,7 +6,7 @@ from Script.Config import normal_config
 from Script.Design import game_time
 from Script.Design import handle_premise
 from Script.System.Pregnancy_System import egg_handle, family_tree_draw
-from Script.System.Pregnancy_System import pregnancy_constant
+from Script.System.Pregnancy_System import pregnancy_constant, pregnancy_handle
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -159,6 +159,8 @@ class Pregnancy_Overview_Panel:
         """ 谱系图当前的中心角色id（初始为玩家） """
         self.tree_page: int = 0
         """ 谱系图当前的家族分页页码（0起） """
+        self.pending_remove_id: int = 0
+        """ 异常女儿排查页里待二次确认移除的角色id（0为无） """
 
     def draw(self):
         """绘制对象"""
@@ -168,8 +170,13 @@ class Pregnancy_Overview_Panel:
             py_cmd.clr_cmd()
             return_list = []
 
-            # 页签切换按钮
+            # 页签切换按钮（仅在检测到疑似误入的女儿时才追加排查页签，不打扰正常存档）
             page_name_list = [_("总览"), _("生育谱系图")]
+            if pregnancy_handle.get_suspected_abnormal_daughter_list():
+                page_name_list.append(_("异常女儿排查"))
+            if self.now_page >= len(page_name_list):
+                self.now_page = 0
+                self.pending_remove_id = 0
             for page_id in range(len(page_name_list)):
                 if page_id == self.now_page:
                     now_draw = draw.CenterDraw()
@@ -194,8 +201,10 @@ class Pregnancy_Overview_Panel:
             # 分页绘制
             if self.now_page == 0:
                 return_list.extend(self.draw_overview_page())
-            else:
+            elif self.now_page == 1:
                 return_list.extend(self.draw_family_tree_page())
+            else:
+                return_list.extend(self.draw_abnormal_daughter_page())
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -415,3 +424,91 @@ class Pregnancy_Overview_Panel:
         """谱系图中心重置回玩家"""
         self.tree_center_id = 0
         self.tree_page = 0
+
+    def draw_abnormal_daughter_page(self) -> list:
+        """
+        绘制异常女儿排查页：列出因旧版本存档BUG误入本存档的女儿（不在博士血缘名单、也不出现在谱系图里），
+        供玩家逐个确认后彻底移除
+        Return arguments:
+        list -- 监听的按钮返回文本列表
+        """
+        from Script.System.Education_System import education_constant
+        return_list = []
+
+        # 待确认移除的目标已失效时清掉
+        if self.pending_remove_id and self.pending_remove_id not in cache.character_data:
+            self.pending_remove_id = 0
+
+        # 二次确认态：只画确认区
+        if self.pending_remove_id:
+            character_data = cache.character_data[self.pending_remove_id]
+            confirm_draw = draw.NormalDraw()
+            confirm_draw.text = _("\n　确定要从本存档彻底移除女儿「{0}」（id:{1}）吗？\n　此操作不可撤销。\n").format(character_data.name, self.pending_remove_id)
+            confirm_draw.width = self.width
+            confirm_draw.draw()
+            line_feed.draw()
+            yes_draw = draw.CenterButton(_("[确认移除]"), _("确认移除"), int(self.width / 2), cmd_func=self.do_remove_abnormal)
+            yes_draw.draw()
+            return_list.append(yes_draw.return_text)
+            no_draw = draw.CenterButton(_("[取消]"), _("取消移除"), int(self.width / 2), cmd_func=self.cancel_remove_abnormal)
+            no_draw.draw()
+            return_list.append(no_draw.return_text)
+            return return_list
+
+        all_daughter = pregnancy_handle.get_all_player_daughter_id_list()
+        abnormal_list = pregnancy_handle.get_suspected_abnormal_daughter_list()
+        normal_count = len(all_daughter) - len(abnormal_list)
+
+        info_draw = draw.NormalDraw()
+        info_draw.text = _(
+            "　此处排查因旧版本存档BUG而误入本存档的女儿。\n"
+            "　博士亲生的每个女儿都会登记进血缘名单；被标记为博士女儿、却不在名单中的，即为其他周目/存档误入的女儿，她们也不会出现在生育谱系图里。\n"
+            "　请确认无误后再移除，移除不可撤销。\n"
+        )
+        info_draw.width = self.width
+        info_draw.draw()
+        line_feed.draw()
+
+        count_draw = draw.NormalDraw()
+        count_draw.text = _("　本存档共有 {0} 名博士女儿，其中 {1} 名在册（正常），{2} 名疑似误入：\n").format(len(all_daughter), normal_count, len(abnormal_list))
+        count_draw.width = self.width
+        count_draw.draw()
+        line_feed.draw()
+
+        for character_id in abnormal_list:
+            character_data = cache.character_data[character_id]
+            remove_draw = draw.LeftButton(_("[去除]"), f"abnormal_remove_{character_id}", 8, cmd_func=self.ask_remove_abnormal, args=(character_id,))
+            remove_draw.draw()
+            return_list.append(remove_draw.return_text)
+            mother_id = character_data.relationship.mother_id
+            mother_name = cache.character_data[mother_id].name if mother_id in cache.character_data else _("未知")
+            stage_name = _("成年")
+            for talent_id in (101, 102, 103, 104):
+                if character_data.talent.get(talent_id):
+                    stage_name = education_constant.STAGE_TALENT_NAME.get(talent_id, _("成年"))
+                    break
+            info_draw = draw.NormalDraw()
+            info_draw.text = _("　{0}（id:{1}）　母亲：{2}　成长阶段：{3}\n").format(character_data.name, character_id, mother_name, stage_name)
+            info_draw.width = self.width - 8
+            info_draw.draw()
+
+        return return_list
+
+    def ask_remove_abnormal(self, character_id: int):
+        """
+        点击[去除]：记下待确认移除的女儿id，下次重绘时弹出二次确认
+        Keyword arguments:
+        character_id -- 角色id
+        """
+        self.pending_remove_id = character_id
+
+    def do_remove_abnormal(self):
+        """确认移除待处理的疑似误入女儿"""
+        if self.pending_remove_id:
+            if pregnancy_handle.remove_abnormal_daughter(self.pending_remove_id) and self.tree_center_id == self.pending_remove_id:
+                self.tree_center_id = 0
+        self.pending_remove_id = 0
+
+    def cancel_remove_abnormal(self):
+        """取消移除"""
+        self.pending_remove_id = 0

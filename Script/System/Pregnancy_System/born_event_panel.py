@@ -52,6 +52,39 @@ def move_to_inpatient_department_for_born(mother_character_id: int) -> list:
     return target_scene_path
 
 
+def get_born_doctor_id(mother_character_id: int) -> int:
+    """
+    选出生产 / 破壳事件里接生的人
+    Keyword arguments:
+    mother_character_id -- 母亲（产妇）的角色id
+    Return arguments:
+    int -- 接生者的角色id；岛上除产妇外没有别的干员时为 0
+    功能: 凯尔希在岛上且不是产妇时由她接生；否则随机选一名医疗干员；再没有就随机选任何一名干员。
+          各步都不会选到产妇本人（她自己是医疗干员、或岛上只有她一名干员时，原先会选中她给自己接生）
+    """
+    doctor_id_list = []
+    other_id_list = []
+    dr_k_id = 0
+    for character_id in cache.npc_id_got:
+        if character_id == mother_character_id or character_id not in cache.character_data:
+            continue
+        character_data: game_type.Character = cache.character_data[character_id]
+        other_id_list.append(character_id)
+        if character_data.profession == 3:
+            doctor_id_list.append(character_id)
+        if character_data.name == _("凯尔希"):
+            dr_k_id = character_id
+    # 凯尔希优先（产妇是凯尔希时她已被排除，自然落到下面的医疗干员）
+    if dr_k_id:
+        return dr_k_id
+    if doctor_id_list:
+        return random.choice(doctor_id_list)
+    # 没有医疗干员时随机选取任何一位别的干员来接生
+    if other_id_list:
+        return random.choice(other_id_list)
+    return 0
+
+
 class Born_Panel:
     """
     生孩子事件的面板对象（胎生生产与卵生破壳共用）
@@ -91,24 +124,12 @@ class Born_Panel:
         # 事件舞台在医疗部住院区：母亲与玩家先移动到位（胎生兜底 AI 尚未传送的情况，卵生母亲无临盆状态需在此移动）
         move_to_inpatient_department_for_born(self.mother_character_id)
 
-        # 如果是凯尔希怀孕则随机选一名医疗干员作为大夫，否则大夫为凯尔希
-        doctor_id_list = []
-        dr_k_id = 0
-        doctor_id = 0
-        for character_id in cache.npc_id_got:
-            character_data: game_type.Character = cache.character_data[character_id]
-            if character_data.profession == 3:
-                doctor_id_list.append(character_id)
-            if character_data.name == _("凯尔希"):
-                dr_k_id = character_id
-        if mom_character_data.name == _("凯尔希") or dr_k_id == 0:
-            doctor_id = random.choice(doctor_id_list)
+        # 选出接生的人：岛上除了产妇再没有别的干员时，文本里写成医疗部的产科干员
+        doctor_id = get_born_doctor_id(self.mother_character_id)
+        if doctor_id:
+            doctor_name = cache.character_data[doctor_id].name
         else:
-            doctor_id = dr_k_id
-        # 如果还是没有的话，则随机选取任何一位干员来接生
-        if doctor_id == 0:
-            doctor_id = random.choice(list(cache.npc_id_got))
-        doctor_character_data: game_type.Character = cache.character_data[doctor_id]
+            doctor_name = _("医疗部的产科干员")
 
         # 最外层的大循环
         while 1:
@@ -158,22 +179,22 @@ class Born_Panel:
             while 1:
                 if self.soft_egg_mode:
                     if born_count >= 2:
-                        info_draw.text = _(" 在{0}的看护下，凝胶里的卵粒一颗颗地胀大、变得透亮，包裹着它们的胶质终于相继化开，{1}个小小的身影先后从凝胶中挣脱出来，此起彼伏地发出了响亮的啼哭\n").format(doctor_character_data.name, born_count)
+                        info_draw.text = _(" 在{0}的看护下，凝胶里的卵粒一颗颗地胀大、变得透亮，包裹着它们的胶质终于相继化开，{1}个小小的身影先后从凝胶中挣脱出来，此起彼伏地发出了响亮的啼哭\n").format(doctor_name, born_count)
                         info_draw.text += _(" {0}把刚刚脱出凝胶的{1}个婴儿一一擦拭干净抱在怀里，对着你微微一笑，催促你逐个给孩子起名\n").format(mom_character_data.name, born_count)
                     else:
-                        info_draw.text = _(" 在{0}的看护下，凝胶里那颗受精的卵粒一点点胀大、变得透亮，包裹着它的胶质终于化开，一个小小的身影从凝胶中挣脱出来，发出了响亮的啼哭\n").format(doctor_character_data.name)
+                        info_draw.text = _(" 在{0}的看护下，凝胶里那颗受精的卵粒一点点胀大、变得透亮，包裹着它的胶质终于化开，一个小小的身影从凝胶中挣脱出来，发出了响亮的啼哭\n").format(doctor_name)
                         info_draw.text += _(" {0}把刚刚脱出凝胶的婴儿擦拭干净抱在怀里，对着你微微一笑，催促你给孩子起名\n").format(mom_character_data.name)
                 elif self.egg_mode:
-                    info_draw.text = _(" 在{0}的看护下，蛋壳上的裂纹越来越多，终于随着一声清脆的破裂声，一个小小的身影从蛋壳中探出头来，发出了响亮的啼哭\n").format(doctor_character_data.name)
+                    info_draw.text = _(" 在{0}的看护下，蛋壳上的裂纹越来越多，终于随着一声清脆的破裂声，一个小小的身影从蛋壳中探出头来，发出了响亮的啼哭\n").format(doctor_name)
                     info_draw.text += _(" {0}轻轻抱起了刚刚破壳而出的婴儿，对着你微微一笑，催促你给孩子起名\n").format(mom_character_data.name)
                 elif identical_twins_flag:
-                    info_draw.text = _(" 经过了漫长的等待之后，随着响亮的哭声，{0}推开产房的门，告诉你{1}生了一对同卵双胞胎女儿，母女平安\n").format(doctor_character_data.name, mom_character_data.name)
+                    info_draw.text = _(" 经过了漫长的等待之后，随着响亮的哭声，{0}推开产房的门，告诉你{1}生了一对同卵双胞胎女儿，母女平安\n").format(doctor_name, mom_character_data.name)
                     info_draw.text += _(" {0}躺在床上，怀里抱着两个一模一样的婴儿，对着你微微一笑，催促你分别给她们起名\n").format(mom_character_data.name)
                 elif born_count >= 2:
-                    info_draw.text = _(" 经过了漫长的等待之后，随着此起彼伏的哭声，{0}推开产房的门，告诉你{1}生了{2}个可爱的女儿，母女平安\n").format(doctor_character_data.name, mom_character_data.name, born_count)
+                    info_draw.text = _(" 经过了漫长的等待之后，随着此起彼伏的哭声，{0}推开产房的门，告诉你{1}生了{2}个可爱的女儿，母女平安\n").format(doctor_name, mom_character_data.name, born_count)
                     info_draw.text += _(" {0}躺在床上，怀里抱着{1}个婴儿，对着你微微一笑，催促你逐个给孩子起名\n").format(mom_character_data.name, born_count)
                 else:
-                    info_draw.text = _(" 经过了漫长的等待之后，随着响亮的哭声，{0}推开产房的门，告诉你{1}生了一个可爱的女儿，母女平安\n").format(doctor_character_data.name, mom_character_data.name)
+                    info_draw.text = _(" 经过了漫长的等待之后，随着响亮的哭声，{0}推开产房的门，告诉你{1}生了一个可爱的女儿，母女平安\n").format(doctor_name, mom_character_data.name)
                     info_draw.text += _(" {0}躺在床上，怀里抱着婴儿，对着你微微一笑，催促你给孩子起名\n").format(mom_character_data.name)
                 info_draw.draw()
                 line_feed.draw()

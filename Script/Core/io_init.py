@@ -826,9 +826,10 @@ def init_style():
             style.background,
             style.font,
             normal_config.config_normal.font_size,
-            style.bold,
-            style.underline,
-            style.italic,
+            # 配置表里这三列是 0/1 整数，统一转成 bool 再送给前端
+            bool(style.bold),
+            bool(style.underline),
+            bool(style.italic),
         )
     # 额外注册三个通用修饰符 tag，便于在文本中单独使用或与基础样式组合：
     # 这些 tag 注册时不改变前景色/背景色/字体，只设置字体属性（bold/underline/italic）
@@ -836,11 +837,11 @@ def init_style():
     modifier_font = normal_config.config_normal.font
     modifier_size = normal_config.config_normal.font_size
     # bold
-    style_def("bold", "", "", modifier_font, modifier_size, "1", "0", "0")
+    style_def("bold", "", "", modifier_font, modifier_size, True, False, False)
     # underline
-    style_def("underline", "", "", modifier_font, modifier_size, "0", "1", "0")
+    style_def("underline", "", "", modifier_font, modifier_size, False, True, False)
     # italic
-    style_def("italic", "", "", modifier_font, modifier_size, "0", "0", "1")
+    style_def("italic", "", "", modifier_font, modifier_size, False, False, True)
     # 为了让修饰符与基础样式组合时也能生效，预先为每个基础样式注册所有修饰符的组合样式。
     # 组合名采用 base_mod1_mod2 形式，例如 "green_bold_italic"，不会包含空格，方便前端作为 tag 使用。
     modifier_names = ["bold", "underline", "italic"]
@@ -863,9 +864,9 @@ def init_style():
         for r in range(1, len(modifier_names) + 1):
             for combo in combinations(modifier_names, r):
                 combo_name = base + "_" + "_".join(combo)
-                bold_flag = "1" if "bold" in combo else "0"
-                underline_flag = "1" if "underline" in combo else "0"
-                italic_flag = "1" if "italic" in combo else "0"
+                bold_flag = "bold" in combo
+                underline_flag = "underline" in combo
+                italic_flag = "italic" in combo
                 style_def(
                     combo_name,
                     style_obj.foreground,

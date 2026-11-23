@@ -110,8 +110,12 @@ class CVPMenu(QDialog):
             cvp_b2 = self.cvp_b2.currentText().split('|')[0]
         else:
             cvp_b2 = ""
-        if cvp_b1 == "待选择":
-            cvp_b_value = ""
+        cvp_b_value = ""
+        value_missing = not self.cvp_d.isHidden() and not self.cvp_d.toPlainText()
+        if cvp_b1 == "待选择" or cvp_a_value == "A3|" or value_missing:
+            # 属性还没选、对象选了「角色id为」却没填 id、或显示着的判定值框是空的时不加前提，窗口留着。
+            # 否则会写出缺段的键，游戏判定到它时报错
+            return
         elif cvp_b1 == "好感":
             cvp_b_value = "F"
         elif cvp_b1 == "信赖":

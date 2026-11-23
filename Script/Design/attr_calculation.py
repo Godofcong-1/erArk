@@ -257,9 +257,9 @@ def get_zero_dirty() -> game_type.DIRTY:
 
     for clothing_type in game_config.config_clothing_type:
         cloth_text = game_config.config_clothing_type[clothing_type].name
-        now_list = [cloth_text,0,0,0]
-        dirty_data.cloth_semen[clothing_type] = now_list
-        dirty_data.cloth_locker_semen[clothing_type] = now_list
+        # 穿着与衣柜两张表各建各的列表：共用同一个列表时，往穿着的衣服上射精会同时改衣柜的表，穿回时精液量翻倍
+        dirty_data.cloth_semen[clothing_type] = [cloth_text,0,0,0]
+        dirty_data.cloth_locker_semen[clothing_type] = [cloth_text,0,0,0]
 
     dirty_data.a_clean = 0
     dirty_data.enema_capacity = 0
@@ -493,10 +493,10 @@ def get_country_reset(country: game_type.Country) -> game_type.Country:
     for country_cid in game_config.config_birthplace:
         if country_cid not in country_data.country_infection_rate:
             country_data.country_infection_rate[country_cid] = game_config.config_birthplace[country_cid].infect_rate
-            # 计算矿石病感染率对于病人数量的影响
-            cache.country.country_infection_patient_ratio[country_cid] = cache.country.country_infection_rate[country_cid] / 30
+            # 计算矿石病感染率对于病人数量的影响（写进传入的国家数据：读档时传入的是存档里的数据，不是全局的 cache.country）
+            country_data.country_infection_patient_ratio[country_cid] = country_data.country_infection_rate[country_cid] / 30
             # 限制在0.1~3.0之间
-            cache.country.country_infection_patient_ratio[country_cid] = min(max(cache.country.country_infection_patient_ratio[country_cid], 0.1), 3.0)
+            country_data.country_infection_patient_ratio[country_cid] = min(max(country_data.country_infection_patient_ratio[country_cid], 0.1), 3.0)
 
     return country_data
 
@@ -925,7 +925,7 @@ def judge_require(judge_text_list, character_id, hypnosis_replace_trust_flag = F
 
     for judge_text in judge_text_list:
         # 「或」条件：同一项内用 / 分开的子条件任一满足即可（2026-09-09 为日程活动的「限幼女或萝莉」加的）
-        # ⚠️ 子条件逐个递归交回本函数判定，所以每个子条件仍是标准的 X<id>|<值> 写法，不必另写一套解析
+        # 子条件逐个递归交回本函数判定，所以每个子条件仍是标准的 X<id>|<值> 写法，不必另写一套解析
         if "/" in judge_text:
             sub_reason_list = []
             sub_pass = False
@@ -951,7 +951,7 @@ def judge_require(judge_text_list, character_id, hypnosis_replace_trust_flag = F
                 break
         elif judge_type == "T":
             # 素质条件的写法是 T<素质id>|<要求值>，与上面的 A/J/E 一样，id 在竖线**前面**
-            # ⚠️ 原来这里读的是 talent[judge_value]，把竖线后的「要求值」当成了素质id：
+            # 原来这里读的是 talent[judge_value]，把竖线后的「要求值」当成了素质id：
             #    T7|0（要求非未成年）实际判成了素质0阴道处女、T102|1 与 T103|1 都判成了素质1肛门处女，
             #    于是品酒对未成年的处女角色照样开放，与总纲口径52写的正相反（Plan 22 二期第一轮追加）
             if character_data.talent[judge_type_id] != judge_value:

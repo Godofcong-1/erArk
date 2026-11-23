@@ -54,7 +54,8 @@ def init_character_tem_data():
                 if now_k in [5999, 8999]:
                     now_cloth_cid = now_k
                 else:
-                    cloth_list = [v, now_k]
+                    # 传未翻译的服装名：服装的分类要按中文原文判断
+                    cloth_list = [now_data[k], now_k]
                     # print(f"debug : cloth_list = {cloth_list}")
                     now_cloth_cid = add_cloth_data_to_config_data(cloth_list, now_data["AdvNpc"], cloth_count)
                     cloth_count += 1
@@ -87,7 +88,8 @@ def find_files_and_get_size(directory, character):
     # 构造文件路径
     path = os.path.join(directory, '*')
     # 查找文件名包含特定字符的文件
-    files = glob.glob(path)
+    # 排序后再找：glob 的顺序取决于文件系统，同一角色有多个文件时取到哪一个不应随系统变化
+    files = sorted(glob.glob(path), key=str.upper)
     # print(f"debug files = {files}")
     # 全角色名为，文件名的.之前的部分
     all_chara_name = []
@@ -115,7 +117,7 @@ def find_files_and_get_size(directory, character):
     # 同理获得查找事件文件的大小
     event_directory = 'data/event/chara'
     event_path = os.path.join(event_directory, '*')
-    event_files = glob.glob(event_path)
+    event_files = sorted(glob.glob(event_path), key=str.upper)
     all_event_chara_name = [os.path.basename(file).split(".")[0].split("_")[1] for file in event_files]
     target_event_files = []
     for i in range(len(all_event_chara_name)):
@@ -129,19 +131,31 @@ def find_files_and_get_size(directory, character):
     return file_sizes
 
 def add_cloth_data_to_config_data(cloth_list: List[int], AdvNpc: int, cloth_count: int):
-    """ 将服装数据加入服装模板数据 """
+    """
+    将服装数据加入服装模板数据
+    Keyword arguments:
+    cloth_list -- [角色模板里写的服装名（中文原文，未翻译）, 服装类型id]
+    AdvNpc -- 角色的干员编号
+    cloth_count -- 该角色已登记的专属服装数量（用来算服装cid）
+    Return arguments:
+    int -- 新登记的服装cid
+    """
     # print(f"debug cloth_list = {cloth_list}")
     # 新增服装数据到config_clothing_tem
-    name, type = cloth_list[0], cloth_list[1]
+    raw_name, type = cloth_list[0], cloth_list[1]
+    # 显示用的名字过翻译；下面的tag一律按中文原文判断，不能拿译名去找"必带""裤"这些字
+    name = get_text._(raw_name)
     # tag的修正
-    if "必带" in name:
+    if "必带" in raw_name:
         tag = 6
-        name = name.split(" ",1)[0]
+        # 有译文时译文里已不带"必带"记号；没有译文（含中文环境）时去掉原文里空格后面的记号
+        if name == raw_name:
+            name = raw_name.split(" ",1)[0]
     else:
         tag = 0
     # 裤子和裙子的tag修正
     if type == 8:
-        if "裤" in name:
+        if "裤" in raw_name:
             tag = 4
         else:
             tag = 5

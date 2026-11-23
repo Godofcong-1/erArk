@@ -5,7 +5,7 @@ Name,str,锡兰,1,姓名：锡兰
 Sex,int,1,0,性别：女
 Profession,int,3,0,职业：医疗
 Race,int,19,0,种族：黎博利
-Nation,int,503,0,势力：汐斯塔
+Nation,int,201,0,势力：汐斯塔
 Birthplace,int,20,0,出生地：汐斯塔
 Hp,int,1500,0,初始体力：1500
 Mp,int,1500,0,初始气力：1500

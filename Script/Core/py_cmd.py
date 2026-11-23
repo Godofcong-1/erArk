@@ -98,7 +98,8 @@ def clr_cmd(*number, clr_default_flow=True):
     if clr_default_flow:
         clear_default_flow()
     if number:
-        flow_handle.cmd_clear(number)
+        # 把编号逐个传下去（整个元组当成一个参数传的话，下游会拿这个元组本身当编号去找）
+        flow_handle.cmd_clear(*number)
     else:
         global unused_cmd_num
         unused_cmd_num = 500

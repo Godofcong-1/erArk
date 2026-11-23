@@ -996,7 +996,7 @@ class CharacterExperienceText:
                 if experience_id in {2, 4, 7, 12, 14, 17, 20, 22, 26, 51, 54, 55, 58, 72, 74, 77, 86, 100, 101, 102, 103, 104, 105, 106}:
                     continue
             elif character_data.sex == 1:
-                if experience_id == {3, 13, 21, 73}:
+                if experience_id in {3, 13, 21, 73}:
                     continue
             experience_text = game_config.config_experience[experience_id].name
             experience_value = 0

@@ -5,9 +5,12 @@
 PRTS角色立绘下载器核心功能模块
 
 从原始脚本重构而来，提供角色立绘下载的核心功能
+
+本模块里的日志与进度一律写到标准错误：作为 MCP 服务器运行时，标准输出是用来传协议消息的，往里写别的内容会让客户端解析失败
 """
 
 import os
+import sys
 import urllib.request
 import urllib.parse
 import json
@@ -42,7 +45,7 @@ class PRTSCharacterDownloader:
         """
         # 首先尝试使用MCP服务器的已知位置推断工作区根目录
         current_file = os.path.abspath(__file__)  # 当前downloader.py文件的路径
-        print(f"[DEBUG] 当前文件路径: {current_file}")
+        print(f"[DEBUG] 当前文件路径: {current_file}", file=sys.stderr)
         
         # 从当前文件路径推断工作区根目录
         # 当前文件在: workspaceroot/tools/MCP/prts_character_downloader/downloader.py
@@ -52,7 +55,7 @@ class PRTSCharacterDownloader:
         current_dir = os.path.dirname(current_dir)   # .../tools/
         workspace_root = os.path.dirname(current_dir)  # .../workspaceroot/
         
-        print(f"[DEBUG] 通过文件路径推断的工作区根目录: {workspace_root}")
+        print(f"[DEBUG] 通过文件路径推断的工作区根目录: {workspace_root}", file=sys.stderr)
         
         # 验证推断的路径是否包含工作区标识文件
         workspace_markers = [
@@ -70,18 +73,18 @@ class PRTSCharacterDownloader:
                 found_markers.append(marker)
         
         if found_markers:
-            print(f"[DEBUG] 验证成功，在 {workspace_root} 找到标识文件: {found_markers}")
+            print(f"[DEBUG] 验证成功，在 {workspace_root} 找到标识文件: {found_markers}", file=sys.stderr)
             return workspace_root
         
         # 如果推断失败，回退到原来的逻辑
-        print(f"[DEBUG] 推断失败，回退到目录遍历方式")
+        print(f"[DEBUG] 推断失败，回退到目录遍历方式", file=sys.stderr)
         current_dir = os.path.abspath(os.getcwd())
-        print(f"[DEBUG] 开始查找工作区根目录，当前目录: {current_dir}")
+        print(f"[DEBUG] 开始查找工作区根目录，当前目录: {current_dir}", file=sys.stderr)
         
         # 向上查找工作区根目录
         search_dir = current_dir
         while search_dir != os.path.dirname(search_dir):  # 直到根目录
-            print(f"[DEBUG] 检查目录: {search_dir}")
+            print(f"[DEBUG] 检查目录: {search_dir}", file=sys.stderr)
             # 检查是否包含工作区标识文件
             found_markers = []
             for marker in workspace_markers:
@@ -90,13 +93,13 @@ class PRTSCharacterDownloader:
                     found_markers.append(marker)
             
             if found_markers:
-                print(f"[DEBUG] 在 {search_dir} 找到标识文件: {found_markers}")
+                print(f"[DEBUG] 在 {search_dir} 找到标识文件: {found_markers}", file=sys.stderr)
                 return search_dir
             
             search_dir = os.path.dirname(search_dir)
         
         # 如果没找到，返回当前目录
-        print(f"[DEBUG] 未找到工作区根目录，返回当前目录: {current_dir}")
+        print(f"[DEBUG] 未找到工作区根目录，返回当前目录: {current_dir}", file=sys.stderr)
         return current_dir
     
     def _resolve_save_path(self, save_dir: str) -> str:
@@ -143,7 +146,7 @@ class PRTSCharacterDownloader:
         try:
             # 构建完整URL
             query_url = api_url + '?' + urllib.parse.urlencode(params)
-            print(f"查询API: {query_url}")
+            print(f"查询API: {query_url}", file=sys.stderr)
             
             headers = {
                 'User-Agent': self.user_agent
@@ -162,7 +165,7 @@ class PRTSCharacterDownloader:
                         return image.get('url')
                         
         except Exception as e:
-            print(f"API查询出错: {e}")
+            print(f"API查询出错: {e}", file=sys.stderr)
         
         return None
     
@@ -178,7 +181,7 @@ class PRTSCharacterDownloader:
         """
         try:
             url = "https://prts.wiki/w/%E5%89%A7%E6%83%85%E8%A7%92%E8%89%B2%E4%B8%80%E8%A7%88"
-            print(f"正在从剧情角色一览页面查找 {character_name}...")
+            print(f"正在从剧情角色一览页面查找 {character_name}...", file=sys.stderr)
             
             headers = {
                 'User-Agent': self.user_agent
@@ -192,7 +195,7 @@ class PRTSCharacterDownloader:
             row_pattern = r'<tr[^>]*>(.*?)</tr>'
             rows = re.findall(row_pattern, html_content, re.DOTALL)
             
-            print(f"找到 {len(rows)} 个表格行")
+            print(f"找到 {len(rows)} 个表格行", file=sys.stderr)
             
             # 遍历行查找匹配的角色
             for i, row_content in enumerate(rows):
@@ -207,7 +210,7 @@ class PRTSCharacterDownloader:
                     
                     # 如果第一个td包含角色名（部分匹配）
                     if character_name in first_td_text:
-                        print(f"找到匹配的角色: {first_td_text}")
+                        print(f"找到匹配的角色: {first_td_text}", file=sys.stderr)
                         
                         # 搜索范围：当前行和下一行
                         search_content = row_content
@@ -218,7 +221,7 @@ class PRTSCharacterDownloader:
                         img_pattern = r'<img[^>]+(?:data-src|src)=["\']([^"\']+)["\'][^>]*>'
                         img_urls = re.findall(img_pattern, search_content)
                         
-                        print(f"在搜索范围找到 {len(img_urls)} 个图片")
+                        print(f"在搜索范围找到 {len(img_urls)} 个图片", file=sys.stderr)
                         
                         for img_url in img_urls:
                             if ('Avg_avg_npc' in img_url or 'Avg_char' in img_url) and \
@@ -237,13 +240,13 @@ class PRTSCharacterDownloader:
                                     if orig_match:
                                         img_url = 'https://media.prts.wiki' + orig_match.group(1)
                                 
-                                print(f"找到匹配的图片URL: {img_url}")
+                                print(f"找到匹配的图片URL: {img_url}", file=sys.stderr)
                                 return img_url
             
-            print(f"未能在表格中找到包含 '{character_name}' 的角色")
+            print(f"未能在表格中找到包含 '{character_name}' 的角色", file=sys.stderr)
                     
         except Exception as e:
-            print(f"从剧情角色一览页面查找时出错: {e}")
+            print(f"从剧情角色一览页面查找时出错: {e}", file=sys.stderr)
         
         return None
     
@@ -290,13 +293,13 @@ class PRTSCharacterDownloader:
                 request = urllib.request.Request(url, headers=headers)
                 with urllib.request.urlopen(request) as response:
                     if response.getcode() == 200:
-                        print(f"找到立绘图片: {url}")
+                        print(f"找到立绘图片: {url}", file=sys.stderr)
                         return url
                         
             except urllib.error.HTTPError:
                 continue
             except Exception as e:
-                print(f"尝试URL {url} 时出错: {e}")
+                print(f"尝试URL {url} 时出错: {e}", file=sys.stderr)
                 break
         
         return None
@@ -311,12 +314,12 @@ class PRTSCharacterDownloader:
         返回值类型：Optional[str]
         功能描述：使用多种方法搜索角色立绘图片的URL
         """
-        print(f"正在搜索 {character_name} 的立绘图片URL...")
+        print(f"正在搜索 {character_name} 的立绘图片URL...", file=sys.stderr)
         
         # 方法1：检查是否是特殊角色
         image_url = self.get_special_character_url(character_name)
         if image_url:
-            print(f"使用预定义的特殊角色图片URL")
+            print(f"使用预定义的特殊角色图片URL", file=sys.stderr)
             return image_url
         
         # 方法2：从API获取图片URL
@@ -325,18 +328,18 @@ class PRTSCharacterDownloader:
             return image_url
         
         # 方法3：从剧情角色一览页面查找
-        print("API查询未找到图片，尝试从剧情角色一览页面查找...")
+        print("API查询未找到图片，尝试从剧情角色一览页面查找...", file=sys.stderr)
         image_url = self.get_image_from_story_page(character_name)
         if image_url:
             return image_url
         
         # 方法4：尝试直接构建URL
-        print("剧情角色页面也未找到，尝试直接构建URL...")
+        print("剧情角色页面也未找到，尝试直接构建URL...", file=sys.stderr)
         image_url = self.try_construct_direct_url(character_name)
         if image_url:
             return image_url
         
-        print(f"未能找到 {character_name} 的立绘图片URL")
+        print(f"未能找到 {character_name} 的立绘图片URL", file=sys.stderr)
         return None
     
     def download_image_from_url(self, image_url: str, save_path: str) -> bool:
@@ -355,7 +358,7 @@ class PRTSCharacterDownloader:
             save_dir = os.path.dirname(save_path)
             if save_dir and not os.path.exists(save_dir):
                 os.makedirs(save_dir)
-                print(f"创建目录: {save_dir}")
+                print(f"创建目录: {save_dir}", file=sys.stderr)
             
             headers = {
                 'User-Agent': self.user_agent
@@ -368,11 +371,11 @@ class PRTSCharacterDownloader:
             with open(save_path, 'wb') as f:
                 f.write(image_data)
             
-            print(f"图片已保存到: {save_path}")
+            print(f"图片已保存到: {save_path}", file=sys.stderr)
             return True
             
         except Exception as e:
-            print(f"下载图片时出错: {e}")
+            print(f"下载图片时出错: {e}", file=sys.stderr)
             return False
     def download_character_image(self, character_name: str, save_dir: str = "downloaded_images") -> bool:
         """
@@ -391,16 +394,16 @@ class PRTSCharacterDownloader:
         # 创建保存目录
         if not os.path.exists(resolved_save_dir):
             os.makedirs(resolved_save_dir)
-            print(f"创建下载目录: {resolved_save_dir}")
+            print(f"创建下载目录: {resolved_save_dir}", file=sys.stderr)
         
-        print(f"正在查询 {character_name} 的立绘图片...")
-        print(f"保存目录: {resolved_save_dir}")
+        print(f"正在查询 {character_name} 的立绘图片...", file=sys.stderr)
+        print(f"保存目录: {resolved_save_dir}", file=sys.stderr)
         
         # 搜索图片URL
         image_url = self.search_character_image_url(character_name)
         
         if image_url:
-            print(f"找到立绘图片: {image_url}")
+            print(f"找到立绘图片: {image_url}", file=sys.stderr)
             
             # 从URL获取文件扩展名
             file_ext = '.png'  # 默认扩展名
@@ -416,7 +419,7 @@ class PRTSCharacterDownloader:
             # 下载图片
             return self.download_image_from_url(image_url, save_path)
         else:
-            print(f"未能找到 {character_name} 的立绘图片")
+            print(f"未能找到 {character_name} 的立绘图片", file=sys.stderr)
             return False
     def batch_download_characters(self, character_names: List[str], save_dir: str = "downloaded_images", delay_seconds: float = 1) -> Dict[str, bool]:
         """
@@ -436,14 +439,14 @@ class PRTSCharacterDownloader:
         # 确保保存目录存在
         if not os.path.exists(resolved_save_dir):
             os.makedirs(resolved_save_dir)
-            print(f"创建下载目录: {resolved_save_dir}")
+            print(f"创建下载目录: {resolved_save_dir}", file=sys.stderr)
         
-        print(f"批量下载目标目录: {resolved_save_dir}")
+        print(f"批量下载目标目录: {resolved_save_dir}", file=sys.stderr)
         
         results = {}
         
         for i, character_name in enumerate(character_names):
-            print(f"\n[{i+1}/{len(character_names)}] 开始处理: {character_name}")
+            print(f"\n[{i+1}/{len(character_names)}] 开始处理: {character_name}", file=sys.stderr)
             
             # 使用已解析的目录路径
             success = self.download_character_image(character_name, resolved_save_dir)

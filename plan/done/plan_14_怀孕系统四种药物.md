@@ -76,7 +76,7 @@
 
 - [egg_handle.py:125-133](Script/System/Pregnancy_System/egg_handle.py#L125) `get_hatch_day(egg_data)`：`(cache.game_time - lay_time).days`——**唯一孵化天数换算函数**，消费方为破壳判定 [check_egg_born:292-300](Script/System/Pregnancy_System/egg_handle.py#L292)（`>= HATCH_TOTAL_DAY`，常量 265 在 [:22](Script/System/Pregnancy_System/egg_handle.py#L22)；同函数刷新 `hatch_stage` 展示值）与总览面板 [pregnancy_panel.py:97-102](Script/System/Pregnancy_System/pregnancy_panel.py#L97)（"孵化第 X 天"）。**在此函数内注入加速即全局生效**。
 - 面板预计破壳日 [pregnancy_panel.py:101](Script/System/Pregnancy_System/pregnancy_panel.py#L101)：`lay_time + timedelta(days=265)`——需要单独扣减加速天数。
-- ⚠️ [get_identifiable_eggs:104](Script/System/Pregnancy_System/egg_handle.py#L104) 也用 `lay_time` 判"排出日早于今天"（鉴定资格）——**与孵化进度无关，加速不得影响此处**（孵化加速药只对"已鉴定+受精"的孵化中卵可用，天然无交集，但实施时不要顺手改到）。
+- [get_identifiable_eggs:104](Script/System/Pregnancy_System/egg_handle.py#L104) 也用 `lay_time` 判"排出日早于今天"（鉴定资格）——**与孵化进度无关，加速不得影响此处**（孵化加速药只对"已鉴定+受精"的孵化中卵可用，天然无交集，但实施时不要顺手改到）。
 
 **推进时机**：`check_all_pregnancy` 全链挂玩家睡觉结算 + 每日 0 点兜底（plan_12 §2.4/§3.4）——加速后的阶段转换在**当晚睡觉或次日 0 点**生效，使用药物时不立即转换阶段。
 
@@ -293,7 +293,7 @@ self.gift_egg_id: int = -1
 
 ## 5. 详细改动步骤
 
-> ⚠️ 所有编号（道具 35~38、素质 25）实施时现场再核对一次空闲。
+> 所有编号（道具 35~38、素质 25）实施时现场再核对一次空闲。
 
 ### 5.1 CSV 数据（data/csv/Item.csv、Gift_Items.csv、Talent.csv）
 
@@ -416,7 +416,7 @@ self.gift_egg_id: int = -1
 | `data/talk/daily/gift/give_gift_fake_pregnancy_end.csv` | 新增 | v4：假孕终止药送礼口上（5 条） |
 | `tools/ArkEditor/csv/Item.csv` / `Gift_Items.csv` / `Talent.csv` / `Premise.csv` | 修改 | 副本同步（Premise 含 4 新行 + 4 行 info 改文案） |
 
-**未改动**（v4 起）：Behavior_Data / Behavior_Effect / constant 三常量文件 / second_pregnancy.csv / ArkEditor Behavior_Data.csv——v3 曾改动、v4 已全部回退至 plan_14 实施前状态；InstructConfig（复用送礼指令全链，无新指令）；送礼行为本体与 GIVE_GIFT_ADD_ADJUST 结算（新药沿用既有挂接）；h_item_shop_panel（商店自动收录）；egg_handle 的鉴定资格判定（§2.3 ⚠️）；common_default 的妊娠好感加成（§2.4，假孕不享受）；old_chara_to_new 多周目迁移（§2.9，自动兼容）。
+**未改动**（v4 起）：Behavior_Data / Behavior_Effect / constant 三常量文件 / second_pregnancy.csv / ArkEditor Behavior_Data.csv——v3 曾改动、v4 已全部回退至 plan_14 实施前状态；InstructConfig（复用送礼指令全链，无新指令）；送礼行为本体与 GIVE_GIFT_ADD_ADJUST 结算（新药沿用既有挂接）；h_item_shop_panel（商店自动收录）；egg_handle 的鉴定资格判定（§2.3）；common_default 的妊娠好感加成（§2.4，假孕不享受）；old_chara_to_new 多周目迁移（§2.9，自动兼容）。
 
 ## 10. 不在本 Plan 范围
 

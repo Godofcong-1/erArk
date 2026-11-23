@@ -273,7 +273,11 @@ x = root.winfo_screenwidth() // 2 - win_width // 2
 y = root.winfo_screenheight() // 2 - win_height // 2
 # 从窗口改为最大化
 #root.geometry("{}x{}+{}+{}".format(width, height, x, y))
-root.state('zoomed')
+# Tk 的 zoomed 窗口状态只在 Windows 与 macOS 上有效，X11（Linux）上要用 -zoomed 窗口属性请求最大化，否则这里直接报错、窗口打不开
+if root.tk.call("tk", "windowingsystem") == "x11":
+    root.attributes("-zoomed", True)
+else:
+    root.state('zoomed')
 #隐藏窗口
 root.deiconify()
 root.columnconfigure(0, weight=1)
@@ -564,7 +568,8 @@ def _read_queue_drain():
             if cmd_nums == "all":
                 io_clear_cmd()
             else:
-                io_clear_cmd(tuple(cmd_nums))
+                # 编号逐个传给 io_clear_cmd（它按可变参数逐个清除）
+                io_clear_cmd(*cmd_nums)
         if "bgcolor" in json_data:
             set_background(json_data["bgcolor"])
         if "set_style" in json_data:
@@ -836,11 +841,14 @@ def frame_style_def(
     font_list = []
     font_list.append(font)
     font_list.append(font_size)
-    if bold == "1":
+    # 这三个开关由 io_init.init_style 送来，现在是 bool；也认 1 与 "1"（配置表里是 0/1 整数，旧的调用方传 "0"/"1" 字符串）。
+    # 原先只认字符串 "1"，配置表里设了加粗 / 下划线 / 斜体的样式因此从不生效
+    style_flag_on = (True, 1, "1")
+    if bold in style_flag_on:
         font_list.append("bold")
-    if under_line == "1":
+    if under_line in style_flag_on:
         font_list.append("underline")
-    if italic == "1":
+    if italic in style_flag_on:
         font_list.append("italic")
     textbox.tag_configure(
         style_name,

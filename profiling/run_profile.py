@@ -45,6 +45,9 @@ import sys
 import time
 from datetime import datetime
 
+# 导入即增量构建游戏数据（同 game.py 的第一步）：新克隆的仓库里还没有 data/data.json 等生成物，不先构建的话后面载入配置时直接报错退出
+import auto_build_config  # noqa: F401,E402
+
 PROFILE_DIR = "profiling_output"
 os.makedirs(PROFILE_DIR, exist_ok=True)
 
@@ -196,9 +199,9 @@ def new_game_minimal_init():
     cache.rhodes_island.physical_examination_setting = attr_calculation.get_physical_exam_setting_zero()
 
     # 3. 自动选择所有“初始基础 NPC” (基础集合)
-    # constant.first_NPC_name_set 存基础干员名字。quick 选择策略：所有模板里符合的
+    # constant.first_NPC_adv_set 存基础干员的干员编号。quick 选择策略：所有模板里符合的
     from Script.Core import constant as core_constant
-    base_names = core_constant.first_NPC_name_set
+    base_adv_set = core_constant.first_NPC_adv_set
     # cache.npc_tem_data 在不同场景可能是 dict 或 list，兼容两者
     npc_tem_data = cache.npc_tem_data
     if isinstance(npc_tem_data, dict):
@@ -210,12 +213,12 @@ def new_game_minimal_init():
     for cid, npc_tem in iterator:
         # npc_tem 是模板；正式实例化后会进入 character_data?
         # character_handle.init_character_list() 已创建模板，下面实例化/加入?
-        # 简化：如果模板名字在基础集合里，就确保加入 npc_id_got
+        # 简化：如果模板的干员编号在基础集合里，就确保加入 npc_id_got
         try:
-            name = getattr(npc_tem, "name", None)
+            adv = getattr(npc_tem, "AdvNpc", None)
         except Exception:
-            name = None
-        if name in base_names:
+            adv = None
+        if adv in base_adv_set:
             cache.npc_id_got.add(cid)
 
     # 确保玩家自身加入集合

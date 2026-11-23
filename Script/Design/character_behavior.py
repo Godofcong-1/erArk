@@ -35,9 +35,13 @@ line_feed.text = "\n"
 line_feed.width = 1
 
 
-def init_character_behavior():
+def init_character_behavior(time_stop_rollback_time: datetime.datetime = None):
     """
     角色行为树总控制
+    Keyword arguments:
+    time_stop_rollback_time -- 本次步进前的游戏时间，时停模式下玩家行动结束后还原到该时间；为None时按玩家行动时长倒退
+    Return arguments:
+    无
     """
     from Script.UI.Panel import achievement_panel
     from Script.System.Field_Commission_System import field_commission_function
@@ -58,7 +62,12 @@ def init_character_behavior():
         # 如果当前是时停模式，则回退时间，然后结束循环
         if cache.time_stop_mode:
             cache.achievement.time_stop_duration += pl_duration
-            game_time.sub_time_now(minute = pl_duration * -1)
+            # 直接还原到步进前的时间，不用 sub_time_now 倒退同样的分钟数：
+            # 步进跨过季月边界时（如 9/30 23:50 → 12/1 00:10），倒退会落进被跳过的月份、再被季月归并成更晚的日期，时钟反而前进约一个月
+            if time_stop_rollback_time is not None:
+                cache.game_time = time_stop_rollback_time
+            else:
+                game_time.sub_time_now(minute = pl_duration * -1)
             break
         field_commission_function.update_field_commission() # 刷新委托任务
         id_list = cache.npc_id_got.copy()
@@ -173,6 +182,9 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
         elif character_data.behavior.behavior_id == constant.Behavior.MOVE:
             # 结算状态与事件
             judge_character_status(character_id)
+        # 学生赶去上课的截短排在实时结算之前（Plan 32 §3.7 L4）：实时结算按行为的结束时刻封顶，
+        #    先结算后截短的话，截掉的那一段饥饿、尿意、疲劳会在下一个行为（从离开时刻开始）里再算一遍
+        handle_npc_ai.judge_student_leave_truncate(character_id)
         # 刷新会根据时间即时增加的角色数值
         realtime_settle.character_aotu_change_value(character_id, now_time, pl_start_time)
         # 结算角色的状态是否会持续
@@ -296,11 +308,12 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
             end_time = now_time
     # print(f"debug {character_data.name}的end_time = {end_time}")
     time_judge = game_time.judge_date_big_or_small(now_time, end_time)
-    add_time = (end_time.timestamp() - start_time.timestamp()) / 60
+    add_time = game_time.count_play_second(start_time, end_time) / 60
     # if character_data.name == "阿米娅":
     #     print(f"debug {character_data.name}的time_judge = {time_judge}，add_time = {add_time}")
     # 如果本次行动的持续时间为0或负数（负数见于状态机算出的异常时长，需在此拦截以保证时间前进）
-    if add_time <= 0:
+    # 时长本身为负时要单独判：get_sub_date 在季月 1 日附近往回推会把结束时间归并到未来（12/1 00:05 减 10 分钟 → 12/30 23:55），算出的 add_time 反而是正的
+    if add_time <= 0 or character_data.behavior.duration < 0:
         # 如果是H状态，则直接可以跳出
         if handle_premise.handle_self_is_h(character_id):
             character_data.behavior.start_time = now_time
@@ -335,6 +348,11 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
         # 睡醒时刷新异常位掩码5/6：睡眠中位6被结算为异常，若醒来后不经过起床状态机
         # （仅宿舍内可触发），无其他修改点负责刷新，会导致角色因过期异常位卡死在原地
         if character_data.last_behavior_id_list[-1] == constant.Behavior.SLEEP:
+            # 睡醒时清掉残留的睡眠无意识标记：睡奸结束而对方仍在睡时，结束H只清 is_h、不清这个标记，
+            # 它平时靠博士离开她所在的场景才被清掉；博士一直在场（搬运着她、或待在她房间里）时她醒来后仍被当作在睡，原地发呆醒不来。
+            # H 中（含睡奸中醒来后装睡）的标记由无意识H的恢复意识流程负责，这里不动
+            if character_data.sp_flag.unconscious_h == 1 and not character_data.sp_flag.is_h:
+                character_data.sp_flag.unconscious_h = 0
             handle_premise.settle_chara_unnormal_flag(character_id, 5)
             handle_premise.settle_chara_unnormal_flag(character_id, 6)
         # 当前时间大于行动结束时间

@@ -18,7 +18,7 @@
 | `data/official_event/{婴儿,幼女,萝莉,通用}.csv` | 移动+改 | 由 `data/growth_event/` 迁入，表头加 3 列，事件扩到 250 条 |
 | ~~`data/official_event/{生产,医疗,人事,后勤,外勤,装备}.csv`~~ | 不做 | 部门事件的内容本轮不写，留到后续（架构已就位，加 csv 即可） |
 | `buildconfig.py` | 改 | `growth_event` 编译分支改为 `official_event`，产物改 `data/Official_Event.json` |
-| `auto_build_config.py` | 改 | 同上镜像一份（⚠️ 不改则跑 `game.py` 不会重建） |
+| `auto_build_config.py` | 改 | 同上镜像一份（不改则跑 `game.py` 不会重建） |
 | `Script/Config/config_def.py` | 生成 | 由 `buildconfig.py` 重生成，`Growth_Event` → `Official_Event` |
 | `Script/Config/game_config.py` | 改 | `load_official_event()` + 三个索引，替换原 `load_growth_event()` |
 | `Script/Core/game_type.py` | 改 | `Rhodes_Island.official_event_queue` / `official_event_history`（方案 §4.2） |
@@ -72,14 +72,14 @@
 6. `game_type.py` / `save_handle.py` 的队列改名与搬运；`past_day_settle.py`、`handle_instruct.py`、
    `pregnancy_handle.py`、`growth_panel.py` 的调用点跟着换
 
-⚠️ 这一步**不加任何新功能**，做完先跑一次构建 + 无头冒烟，确认 18 条事件仍能入队、弹出、结算。
+这一步**不加任何新功能**，做完先跑一次构建 + 无头冒烟，确认 18 条事件仍能入队、弹出、结算。
 
 ### 2.2 全局数值通道
 
 1. `ri_value.py` 写 `get_ri_value()` / `change_ri_value()`（编号表见方案 §4.3），只读项静默忽略
 2. `official_event_handle.handle_effect_text` 加 `CVE_RI_` 分支（在 `CVE_` 判断之内、`A1/A2` 之前）
 3. `handle_premise/__init__.py` 的 `handle_comprehensive_value_premise` 主体判别加 `RI` 分支
-   （不解析角色，直接取值比较），⚠️ 放在 `A1/A2/A3` 判断链的最前
+   （不解析角色，直接取值比较），放在 `A1/A2/A3` 判断链的最前
 4. 给部门样例事件写 2~3 个纯数字结算函数（照 `default.py:6119` 的形态）
 
 ### 2.3 触发规则
@@ -113,7 +113,7 @@ git checkout -- data/po/           # 本机无 xgettext/polib，buildconfig 重�
 `buildpo.py` / `buildmo.py` **不需要跑**：event 的 PO 写出被 `BUILD_TALK` 门控，
 `buildmo.py` 也不编译 `erArk_event`，中文环境直接显示 CSV 原文。
 本 Plan 不涉及地图改动，不需要删场景缓存。
-⚠️ `data/Official_Event.json` 是未纳入版本管理的构建产物（`.gitignore` 的 `data/*.json`）。
+`data/Official_Event.json` 是未纳入版本管理的构建产物（`.gitignore` 的 `data/*.json`）。
 
 ---
 

@@ -6,8 +6,20 @@
       "Bash(done)",
       "Bash",
       "Agent",
+      "Agent(*)",
+      "Task",
+      "Task(*)",
       "Bash(/c/code/erArk/.conda/python.exe -c ' *)",
-      "Bash(cat > *)"
+      "Bash(cat > *)",
+      "Bash(PYTHONIOENCODING=utf-8 python3 -c ' *)",
+      "Read(//tmp/**)",
+      "Bash(cd /tmp)",
+      "Bash(pwd -W)",
+      "Bash(echo \"exit:$?\")",
+      "Bash(python3 -c ' *)",
+      "Bash(python3 -c \"print\\(1+1\\)\")",
+      "Bash(powershell -Command)",
+      "PowerShell(New-Item -ItemType Directory -Force -Path *)"
     ]
   }
 }

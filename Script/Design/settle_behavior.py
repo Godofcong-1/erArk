@@ -32,7 +32,11 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
     player_character_data: game_type.Character = cache.character_data[0]
     change_data = game_type.CharacterStatusChange()
     start_time = now_character_data.behavior.start_time
-    add_time = int((now_time - start_time).seconds / 60)
+    # 行为已进行的分钟数。按可游玩时间算（game_time.count_play_second），不能把两个时刻直接相减：
+    # 1. timedelta.seconds 只是不足一天的那部分秒数，行为持续满 24 小时会回绕（1440 分钟算成 0，所有结算直接跳过；1500 分钟只算 60 分钟）
+    # 2. total_seconds() 是公历时长，行为跨季末午夜时结算时刻已被归并到下一个季月（9/30 23:40 起 30 分钟 → 12/1 00:10），会多算被跳过的约两个月（约 8.8 万分钟）
+    # 结算时间早于开始时间时按 0 处理（.seconds 会把 -5 分钟算成 1435 分钟）
+    add_time = max(0, int(game_time.count_play_second(start_time, now_time) / 60))
 
     # ——履历记录：H模式初体验中心判定（自己与交互对象各判一次，行为结算必经处，dict去重使重复判定零成本）——
     first_record_handle.check_first_h_mode(character_id)
@@ -94,7 +98,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
             change_data = handle_instruct_data(character_id, behavior_id, now_time, add_time, change_data)
 
         # 性技实操课：给没占到模板部位的旁观学生结算观摩收益（Plan 22 四期 §3.28.8）
-        # ⚠️ 判的是 sex_class_mode 而不是 group_sex_mode——课堂模式会同时置那个标志，
+        # 判的是 sex_class_mode 而不是 group_sex_mode——课堂模式会同时置那个标志，
         #    若判错，任何一场普通群交都会给全场围观干员发经验与状态
         if character_id == 0 and cache.sex_class_mode:
             from Script.System.Education_System import sex_class_handle
@@ -434,7 +438,7 @@ def handle_instruct_data(
         # 娱乐和工作类的指令则进行一次设施损坏检测
         if behavior_id in game_config.config_behavior:
             behavior_data = game_config.config_behavior[behavior_id]
-            if _('娱乐') in behavior_data.tag or _('工作') in behavior_data.tag:
+            if "娱乐" in behavior_data.tag or "工作" in behavior_data.tag:
                 constant.settle_behavior_effect_data[1751](character_id, add_time, change_data, now_time)
     # 进行二段结算
     second_behavior.check_second_effect(character_id, change_data)
@@ -702,7 +706,7 @@ def extra_exp_settle(
         behavior_data = game_config.config_behavior[now_behavior_id]
         # 猥亵或性爱指令
         add_flag = False
-        for tag in {_("猥亵"), _("性爱")}:
+        for tag in {"猥亵", "性爱"}:
             if tag in behavior_data.tag:
                 add_flag = True
                 break
@@ -715,13 +719,13 @@ def extra_exp_settle(
             base_chara_experience_common_settle(character_id, 35, target_flag=True, change_data=change_data)
 
 
-def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: list, change_data: game_type.CharacterStatusChange = game_type.CharacterStatusChange()) -> int:
+def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: list, change_data: game_type.CharacterStatusChange) -> int:
     """
     综合型基础数值结算
     Keyword arguments:
     character_id -- 角色id
     effect_all_value_list -- 结算的各项数值
-    change_data -- 结算信息记录对象
+    change_data -- 结算信息记录对象（必填：若给它一个默认值，那是定义函数时建好的同一个对象，没传的各次调用会把变化记进同一份记录）
     Return arguments:
     bool -- 是否结算成功
     """
@@ -754,8 +758,20 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         if final_character_id not in cache.npc_id_got:
             return 0
         final_character_data = cache.character_data[final_character_id]
+        # 结算记录：指定的就是自己时记在自己的变化里，否则与 A2 一样记进 target_change，缺了这一步后面记录结算时会 UnboundLocalError
+        if final_character_id == character_id:
+            final_change_data = change_data
+        else:
+            change_data.target_change.setdefault(final_character_id, game_type.TargetChange())
+            final_change_data = change_data.target_change[final_character_id]
+    else:
+        # 主体段既不是 A1 / A2 也不是 A3|编号：数据写错了。不结算并提示，否则下面用到主体角色时会抛 UnboundLocalError
+        print(f"综合数值结算的主体写错了，未结算：{effect_all_value_list}")
+        return 0
 
     # 进行数值B的判别,A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
+    # 属性段的子编号（如 A|12 的 12），没有子编号的属性（好感、信赖等）用不到，先给 0 以免写漏了「|编号」时未赋值
+    type_son_id = 0
     if len(effect_all_value_list[1]) > 1:
         type_son_id = int(effect_all_value_list[1].split("|")[1])
 
@@ -801,7 +817,7 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
     
         # 特殊处理
         # 养成数值（Plan 22 三期）：性格倾向与照料值，编号见 education_constant.GROWTH_VALUE_*
-        # ⚠️ 只走 growth_handle 的写口，不直接摸 child_growth——出勤数与胎教值不允许被事件改写
+        # 只走 growth_handle 的写口，不直接摸 child_growth——出勤数与胎教值不允许被事件改写
         if attribute_name == "child_growth":
             from Script.System.Education_System import growth_handle
 
@@ -882,8 +898,8 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
             # 将操作后的属性值重新设置到对象上
             setattr(final_character_data, attribute_name, attribute_value)
 
-            # 记录结算数据
-            if attribute_name not in ["flag", "talent"]:
+            # 记录结算数据（结算记录对象里没有的属性不记，如宝珠 juel，否则 AttributeError）
+            if attribute_name not in ["flag", "talent"] and hasattr(final_change_data, attribute_name):
                 change_data_attribute_value = getattr(final_change_data, attribute_name)
                 # 如果attribute_name没有type_son_id则创建一个
                 change_data_attribute_value.setdefault(type_son_id, 0)

@@ -1440,7 +1440,8 @@ def handle_t_turn_m_orgasm_g_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.h_state.orgasm_count[8][1] > 3:
+    # M（口喉）绝顶记在状态 21 口喉上，8 是润滑，不是绝顶部位
+    if target_data.h_state.orgasm_count[21][1] > 3:
         return 1
     return 0
 
@@ -2232,7 +2233,7 @@ def handle_sex_class_end_early(character_id: int) -> int:
     """
     性技实操课提前下课
 
-    ⚠️ 口上在效果结算之前就输出了（settle_behavior.py:407 早于 :410 的效果循环），
+    口上在效果结算之前就输出了（settle_behavior.handle_instruct_data 里先出口上、后跑效果循环），
        所以这三条前提判定时 running 还没被清，judge_end_type() 拿得到正确的档位。
     Keyword arguments:
     character_id -- 角色id
@@ -2312,6 +2313,9 @@ def handle_self_in_sex_class(character_id: int) -> int:
     character_id -- 角色id
     Return arguments:
     int -- 权重
+    功能: 按身份认已被拉进这节课的人（sex_class_handle.get_class_member_list：课堂模式下与玩家同场景、已在 H 中、学生岗或女儿），
+          不再重算入课门槛（Plan 32 §3.8 L9）：成年学生的实行值随苦痛、露出、玩家理智在课中变化，一跌破门槛，
+          她人还在课堂 H 里，在课的口上前提却判不过
     """
     from Script.System.Education_System import sex_class_handle
 
@@ -2320,7 +2324,7 @@ def handle_self_in_sex_class(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     if not character_data.sp_flag.is_h:
         return 0
-    return character_id in sex_class_handle.get_scene_student_list()
+    return character_id in sex_class_handle.get_class_member_list()
 
 
 @add_premise(constant_promise.Premise.SEX_CLASS_RESERVED)
@@ -2328,7 +2332,7 @@ def handle_sex_class_reserved(character_id: int) -> int:
     """
     正在进行的性技实操课是预约排进课表的那节（Plan 22 四期 §3.28.10 开课口上分档）
 
-    ⚠️ 开课口上在 start_sex_class() 把课标记为 running 之后才输出，所以这里读得到 reserved 标志；
+    开课口上在 start_sex_class() 把课标记为 running 之后才输出，所以这里读得到 reserved 标志；
        旧档里开课前就存在的条目没有这个键，按当场开课处理。
     Keyword arguments:
     character_id -- 角色id

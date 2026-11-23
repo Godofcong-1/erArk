@@ -413,7 +413,7 @@ def _judge_free_daytime(character_data: game_type.Character) -> bool:
     Return arguments:
     bool -- 非工作日、没有工作、或职业为学生时为True
     功能: 全娱乐时间 / 非全娱乐时间两个前提共用的判据。
-          ⚠️ 学生岗（Plan 22 二期 §9.2.9）：学生的"工作"只有课表，有课的节次由上课判定接管，
+          学生岗（Plan 22 二期 §9.2.9）：学生的"工作"只有课表，有课的节次由上课判定接管，
              没课的节次要能走到娱乐链按日程 / 随机娱乐自由行动，所以白天对学生也算娱乐时间；
              原来只有周日算，周一~周六没课的节次会被工作链送进空教室
     """
@@ -705,8 +705,10 @@ def handle_still_30_minutes_before_end(character_id: int) -> int:
     start_time = character_data.behavior.start_time
     end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
     now_time = cache.game_time
-    true_add_time = int((now_time.timestamp() - end_time.timestamp()) / 60)
-    if true_add_time >= 30:
+    # 距离行动结束还剩多少分钟 = 结束时间 - 当前时间（此前写成了「当前时间 - 结束时间」，只有行动已经结束 30 分钟以上才成立，与本前提的含义相反）
+    # 按可游玩时间算（game_time.count_play_second），行动跨季末午夜时不把被时钟跳过的月份算进去
+    left_minute = int(game_time.count_play_second(now_time, end_time) / 60)
+    if left_minute >= 30:
         return 1
     return 0
 

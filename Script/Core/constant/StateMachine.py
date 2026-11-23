@@ -338,7 +338,7 @@ class StateMachine:
     MOVE_TO_CLINIC = 661
     """ 随机移动到门诊室（含急诊室）（优先去当前没有人的） """
     MOVE_TO_PHYSICAL_EXAMINATION = 662
-    """ 移动至体检科 """
+    """ 移动至体检科，体检科满员时放弃今天的体检 """
     MOVE_TO_INPATIENT_DEPARTMENT = 663
     """ 移动至住院部 """
     MOVE_TO_SURGERY_ROOM = 664
@@ -383,6 +383,12 @@ class StateMachine:
     """ 见学：与母亲同场景，跟着她见学 """
     ENTERTAIN_FREE_PLAY = 719
     """ 娱乐：在育儿室自由玩耍（母亲无效时的见学回落） """
+    EDUCATION_WAIT_NEXT_PERIOD = 720
+    """ 教育：原地等到下一节课开始（最多30分钟）——教师没课时在办公室待命、提前到教室的师生等开课 """
+    EDUCATION_ABSENT_REST = 721
+    """ 上课：体力不足缺课，记一节缺课后休息 """
+    EDUCATION_JOIN_SEX_CLASS = 722
+    """ 上课：走进正在上性技实操课的教室，加入课堂 H 并记出勤 """
 
     SELF_NIPPLE_CLAMP_SWITCH_CHANEG = 751
     """ 切换自己是否装备道具_乳头夹 """

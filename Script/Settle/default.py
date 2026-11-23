@@ -2584,8 +2584,11 @@ def handle_wait_unitl_traget_action_end(
         return
     target_start_time = target_character_data.behavior.start_time
     target_end_time = game_time.get_sub_date(target_character_data.behavior.duration, old_date=target_start_time)
-    # 到结束时间还有多少分钟
-    add_time = int((target_end_time.timestamp() - now_time.timestamp()) / 60)
+    # 到结束时间还有多少分钟（按可游玩时间算，对方的行动跨季末午夜时不把被跳过的月份算进去）
+    add_time = int(game_time.count_play_second(now_time, target_end_time) / 60)
+    # 对方的行动已经结束时不必等待：负数时长传给时间推进会让时钟倒退，在季月 1 日附近倒退后还会被归并到约一个月之后
+    if add_time <= 0:
+        return
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.state = constant.CharacterStatus.STATUS_WAIT
@@ -2616,11 +2619,12 @@ def handle_wait_unitl_player_action_end(
         return
     player_action_start_time = pl_character_data.behavior.start_time
     player_action_end_time = game_time.get_sub_date(pl_character_data.behavior.duration, old_date=player_action_start_time)
-    # 到结束时间还有多少分钟
-    add_time = int((player_action_end_time.timestamp() - now_time.timestamp()) / 60)
+    # 到结束时间还有多少分钟（按可游玩时间算，玩家的行动跨季末午夜时不把被跳过的月份算进去）
+    add_time = int(game_time.count_play_second(now_time, player_action_end_time) / 60)
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.state = constant.CharacterStatus.STATUS_WAIT
-    character_data.behavior.duration = add_time + 1
+    # 玩家的行动已经结束时至少等 1 分钟，不留下 0 或负数的行为时长
+    character_data.behavior.duration = max(1, add_time + 1)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SET_TARGET_FOOD_FROM_BAG_LAST)
@@ -2733,6 +2737,8 @@ def handle_target_be_carried(
     if character_data.target_character_id == character_id:
         return
     character_data.action_info.carry_chara_id = character_data.target_character_id
+    # 新的一次搬运：对方还没在被搬运时醒来过
+    cache.character_data[character_data.target_character_id].action_info.awake_when_carried = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_NOT_BE_CARRIED)
@@ -2758,6 +2764,22 @@ def handle_target_not_be_carried(
     character_data.action_info.carry_chara_id = 0
 
 
+def end_carry_when_enter_h(character_id: int):
+    """
+    搬运与H互斥：博士自己、或被博士搬运着的干员进入H时，博士把被搬运的干员放下（她本来就在博士身边，原地放下即可）
+    Keyword arguments:
+    character_id -- 进入H的角色id
+    Return arguments:
+    无
+    """
+    pl_character_data: game_type.Character = cache.character_data[0]
+    carry_chara_id = pl_character_data.action_info.carry_chara_id
+    if carry_chara_id == 0:
+        return
+    if character_id in {0, carry_chara_id}:
+        pl_character_data.action_info.carry_chara_id = 0
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_SLEEP_DISTURBED_STATE)
 def handle_get_sleep_disturbed_state(
         character_id: int,
@@ -2777,6 +2799,47 @@ def handle_get_sleep_disturbed_state(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.action_info.sleep_disturbed_end_time = game_time.get_sub_date(minute=60, old_date=cache.game_time)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.WAKE_UP_WHEN_CARRIED_ADJUST)
+def handle_wake_up_when_carried_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （被搬运时醒来用）结算无意识期间的部位精液与服装失窃二段行为，再按监禁与陷落状态裁决反应
+    裁决参照睡奸醒来的裁决（handle_npc_ai_in_h.handle_unconscious_h_response），去掉H的部分、不查实行值：
+    被监禁或陷落等级>=3时默许，不加惩罚，博士继续搬运自己；
+    否则博士放下自己，隶属系陷落（陷落等级记为负数）时愤怒，其余增加中量反感
+    Keyword arguments:
+    character_id -- 角色id（恢复意识的被搬运者）
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
+    # 恢复意识后发现无意识期间被射上的精液与被偷走的衣物
+    handle_npc_ai_in_h.settle_unconscious_semen_and_cloth(character_id)
+    # 被监禁或陷落等级在3及以上时默许，博士继续搬运自己
+    if handle_premise.handle_imprisonment_1(character_id) or attr_calculation.get_character_fall_level(character_id, minus_flag=True) >= 3:
+        character_data.action_info.awake_when_carried = True
+        return
+    # 不默许：博士把自己放下，不再带着走
+    if pl_character_data.action_info.carry_chara_id == character_id:
+        pl_character_data.action_info.carry_chara_id = 0
+    fall_level = attr_calculation.get_character_fall_level(character_id, minus_flag=True)
+    # 隶属系陷落时愤怒
+    if fall_level < 0:
+        character_data.angry_point += 100
+        character_data.sp_flag.angry_with_player = True
+        return
+    # 其余增加中量反感
+    handle_self_add_middle_disgust(character_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FACILITY_DAMAGE_CHECK)
@@ -3100,21 +3163,16 @@ def handle_sex_class_mode_on(
     if cache.sex_class_mode:
         return
     cache.sex_class_mode = True
-    # ⚠️ 必须同时置群交模式：群交模板面板、射精面板、Web状态栏等十余处读取点判的都是那个标志，
+    # 必须同时置群交模式：群交模板面板、射精面板、Web状态栏等十余处读取点判的都是那个标志，
     #    只置 sex_class_mode 的话整个模板界面都不会出现。行为效果串里的10010已经置过，这里兜底
     cache.group_sex_mode = True
     # 把在场可参加的学生一并拉进H状态——效果串里的462/464只管玩家自己与当前交互对象，
     # 其余到场学生要在这里补上，否则她们会被NPC AI派去做别的事
     for student_id in sex_class_handle.get_scene_student_list():
-        student_data: game_type.Character = cache.character_data[student_id]
-        if not student_data.sp_flag.is_h:
-            character_move.cancel_movement_plan(student_id)
-        student_data.sp_flag.is_h = True
-        student_data.sp_flag.see_pl_h = True
-        # 到场的口上走二段行为：一段行为得靠NPC AI派发，而H中的NPC完全不进AI链（handle_npc_ai.py:290）
-        second_behavior.character_get_second_behavior(student_id, constant.Behavior.JOIN_SEX_CLASS)
-        # 出勤只在开课时记这一次；拖堂占用的后续节次既不记出勤也不记缺课
-        sex_class_handle.settle_attend(student_id)
+        # 与开课后才到场的学生（状态机 722）走同一个函数（Plan 25 §3.2）
+        sex_class_handle.pull_student_into_class(student_id)
+        # 出勤不在这里记：开课指令先调 sex_class_handle.start_sex_class() 记过一次了，
+        #    这里再记会让每个到场学生每节实操课 +2（2026-09-12 第五轮修正）
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SEX_CLASS_MODE_OFF)
@@ -3127,7 +3185,10 @@ def handle_sex_class_mode_off(
     """
     关闭性技实操课（课堂H）模式
 
-    ⚠️ 口上在效果结算之前就已经输出了（settle_behavior.py:407 早于 :410 的效果循环），
+    玩家点「结束性技实操课」（6021）走这里。课堂 H 以别的方式结束（结束群交、玩家体力归零、学生全部力竭、群交中被撞见、
+       转单人 H 后再结束 H）时，效果串里没有它，由 sex_class_handle.settle_orphan_class 在玩家这一步的实时数据结算里按「玩家已不在 H」
+       一并下课（Plan 32 §3.1）；两处都调 end_sex_class，它没有 running 的课时直接返回，重复调无妨。
+    口上在效果结算之前就已经输出了（settle_behavior.handle_instruct_data 里先出口上、后跑效果循环），
        所以这里清 running 不会影响"提前/按时/拖堂"三档下课口上的判定。
     Keyword arguments:
     character_id -- 角色id
@@ -4208,6 +4269,9 @@ def handle_move_to_pre_scene(
         handle_move_to_target_scene(character_id, add_time, change_data, now_time)
         # 删除掉前一场景的移动数据
         character_data.action_info.past_move_position_list.pop(-1)
+    # 博士被赶回前一场景后，原寻路目标已不可达，取消本次连续寻路以避免再次进入并触发循环。
+    if character_id == 0:
+        character_data.behavior.move_final_target = []
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_MOVE_TO_PRE_SCENE)
@@ -5292,10 +5356,8 @@ def handle_h_flag_to_1(
     # 此时is_h已为真而跳过，避免误删进入H后角色新下达的移动指令
     if not character_data.sp_flag.is_h:
         character_move.cancel_movement_plan(character_id)
-        # 玩家或玩家的交互对象首次进入H时，清空用过的避孕套存量池（挂在角色身上的装饰保留）
-        if character_id == 0 or cache.character_data[0].target_character_id == character_id:
-            from Script.System.Item_System import condom_handle
-            condom_handle.clear_used_condoms()
+    # 搬运与H互斥：博士或被搬运的干员进入H，就放下被搬运的干员
+    end_carry_when_enter_h(character_id)
     character_data.sp_flag.is_h = True
     # 进入H即视为已目击本场H：即使之后合法离场(如力竭)清了is_h，回场也不会被当作新旁观者而重复触发"H中被发现"面板
     character_data.sp_flag.see_pl_h = True
@@ -5339,6 +5401,9 @@ def handle_t_h_flag_to_1(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    # 博士让交互对象进入H，也结束搬运（隐奸等玩法里博士自己不进入H状态，只有对方进入）
+    if character_id == 0:
+        end_carry_when_enter_h(0)
     handle_h_flag_to_1(character_data.target_character_id, add_time, change_data, now_time)
 
 
@@ -7255,7 +7320,8 @@ def handle_train_prisoners_add_adjust(
         target_part_id = value_handle.get_random_for_weight(all_part_data)
         def now_tarin(now_prisoner_cid):
             base_chara_state_common_settle(now_prisoner_cid, add_time, target_part_id, 0, ability_level = character_data.ability[30], change_data_to_target_change = change_data)
-            exp_id = target_part_id
+            # 快感状态id与经验id不一一对应（口喉21、兽部22、心理23对应经验153、154、155），需查快感关系表
+            exp_id = game_config.config_pleasure_relations[target_part_id].experience_id
             base_chara_experience_common_settle(now_prisoner_cid, exp_id, change_data_to_target_change = change_data)
     # 部位扩张训练
     elif now_train_id == 2:
@@ -7541,13 +7607,15 @@ def handle_read_add_adjust(
             character_data.entertainment.read_book_progress[book_id] = 100
             # 如果是技能书籍，则增加对应技能的经验
             if exp_id != 0:
-                if book_difficulty == 1:
+                # 读完奖励按难度：0 加 5、1 加 10、2 加 20、其余加 40
+                # （此前第一个分支把「难度 0」写成了「难度 1」，难度 1 的书只加 5，写着加 10 的分支永远走不到）
+                if book_difficulty == 0:
                     add_value = 5
                 elif book_difficulty == 1:
                     add_value = 10
                 elif book_difficulty == 2:
                     add_value = 20
-                elif book_difficulty == 3:
+                else:
                     add_value = 40
                 base_chara_experience_common_settle(character_id, exp_id, add_value, change_data = change_data)
             # 结算习得
@@ -7581,7 +7649,7 @@ def handle_teach_add_just(
 ):
     """
     （教学用）按课表所排的科目结算：教师与场景内所有听课角色都获得该科目的习得与经验，如果玩家是老师则再加好感和信赖
-    ⚠️ Plan 22 改造：科目从写死的学识(45)改为查全局课表取当节所授科目；查不到课表时回落学识，保证既有干员学生链不被破坏
+    Plan 22 改造：科目从写死的学识(45)改为查全局课表取当节所授科目；查不到课表时回落学识，保证既有干员学生链不被破坏
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -7595,21 +7663,22 @@ def handle_teach_add_just(
     character_data: game_type.Character = cache.character_data[character_id]
 
     # 取本节所授科目与课型：教师视角反查全局课表
-    ability_id = 45
+    ability_id = education_constant.FALLBACK_SUBJECT_ABILITY
     course_type = education_constant.COURSE_TYPE_THEORY
     teaching = schedule_handle.get_now_teaching(character_id)
     if teaching is not None and teaching["ability_id"] > 0:
         ability_id = teaching["ability_id"]
         course_type = teaching["course_type"]
     else:
-        # 玩家手动发起的授课不在课表上，课型按所在教室的场景标签判定，科目回落学识
-        scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-        now_course_type = schedule_handle.get_course_type_by_classroom(cache.scene_data[scene_path_str].scene_name)
-        if now_course_type != -1:
-            course_type = now_course_type
+        # 玩家手动发起的授课不在课表上：课型按所在教室判定，科目回落学识。
+        #    与 CVP 对玩家手动授课的回落（handle_premise.get_player_manual_teach_course）共用这两处定义，口上读到的与实际结算不会分叉（Plan 31）
+        course_type = schedule_handle.get_course_type_by_position(character_data.position)
 
     # 教师自身的教学相长：加当节所授科目的习得与经验
     growth_handle.settle_teacher_class_gain(character_id, ability_id, add_time, change_data=change_data)
+
+    # 教师开讲的节次：按教师自己的行为开始时刻取（NPC 教师只发给听课节次与它相同的学生，Plan 32 §3.8 L6）
+    teacher_period = game_time.get_class_period(character_id)
 
     # 遍历当前场景的其他角色
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
@@ -7625,16 +7694,31 @@ def handle_teach_add_just(
                 other_character_data: game_type.Character = cache.character_data[chara_id]
                 # 如果对方在听课
                 if other_character_data.behavior.behavior_id == constant.Behavior.ATTENT_CLASS:
+                    # NPC 教师只给自己的学生发（本节个人课表指向这间教室的人）；玩家手动授课照旧发给全场（Plan 22 第五轮）。
+                    #    同一间教室里偶有两位教师时，别的教师的学生不会被重复记一节
+                    student_course = schedule_handle.get_now_course(chara_id)
+                    scheduled_here = student_course is not None and student_course["classroom"] == scene_data.scene_name
+                    if character_id != 0 and not scheduled_here:
+                        continue
+                    # 各人按自己的时间线推进：她的听课行为（按她的开始时刻）落在别的节次，就不是这节课的学生（Plan 32 §3.8 L6）。
+                    #    典型是她下一节是玩家的临时实操课（格子教师为 0，557 不结算、也不写去重标记）、已坐在这间教室等，
+                    #    上一节的 NPC 教师换教室晚到才开讲：按她下一节的节次记出勤、发上一节的科目收益，玩家开课时又记一次。
+                    #    玩家手动授课不受影响
+                    if character_id != 0 and student_course["period"] != teacher_period:
+                        continue
 
-                    # 按课表科目结算该学生的习得与科目经验，学习速度由师生等级差决定
-                    growth_handle.settle_student_class_gain(
+                    # 按课表科目结算该学生的习得与科目经验，学习速度由师生等级差决定；同一节只结算一次。
+                    #    玩家手动授课只在该生本节课表就排在这间教室时才计出勤，节次外 / 别处的课只给收益（Plan 25 §3.4）
+                    if not growth_handle.settle_student_class_gain(
                         chara_id,
                         character_id,
                         ability_id,
                         course_type,
                         add_time,
                         change_data_to_target_change=change_data,
-                    )
+                        count_attend=scheduled_here,
+                    ):
+                        continue
 
                     # 如果老师是玩家
                     if character_id == 0:
@@ -7668,13 +7752,62 @@ def handle_self_study_add_just(
     from Script.System.Education_System import education_constant, growth_handle, schedule_handle
 
     now_course = schedule_handle.get_now_course(character_id)
-    # 查不到课表就没有科目可自习，回落为学识
-    ability_id = 45
+    # 查不到课表就没有科目可自习，回落为学识（与玩家手动授课 512 共用 FALLBACK_SUBJECT_ABILITY，Plan 31）
+    ability_id = education_constant.FALLBACK_SUBJECT_ABILITY
     if now_course is not None and now_course["ability_id"] > 0:
         ability_id = now_course["ability_id"]
     # 教师id传-1即走自习分支：基础值降档、速度系数恒取1.0
+    # 只有课表排了课（教师缺席降级）的自习才计出勤；日程活动「上课（无课时自习）」照常给收益但不算上过课（Plan 22 第五轮）
     growth_handle.settle_student_class_gain(
-        character_id, -1, ability_id, education_constant.COURSE_TYPE_THEORY, add_time, change_data=change_data
+        character_id, -1, ability_id, education_constant.COURSE_TYPE_THEORY, add_time, change_data=change_data,
+        count_attend=now_course is not None,
+    )
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ATTENT_CLASS_ADD_ADJUST)
+def handle_attent_class_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （听课用）学生开始听课时，从学生这一侧结算本节课的收益与出勤（Plan 22 第五轮加，Plan 31 §3.1 放宽）
+    NPC 的行为结算发生在行为**开始**时，而且各按自己的时间线推进：玩家一步跨满一整节时，教师换教室（或先处理需求）晚到几分钟，
+       学生这一步里早已听完这一节、走去了下一节，教师开讲那一刻的广播（512）发不到她，303 也不再把时间线在前的她拉回来。
+       所以学生坐下听课时，本节授课教师判「能到岗」（class_ai.judge_teacher_available，学生当初就是按它坐下来等的）就按与广播完全相同的口径结算
+       （科目、课型取课表，速度系数按师生等级差），不再要求教师此刻已在同一间教室、正在授课；
+       settle_student_class_gain 按节次去重，教师随后开讲时的广播不会重复。
+    代价：教师判能到岗、这一节却被临时叫走（比如被玩家拉进 H）时，学生照样拿到这节课，与「能到岗」判据的既有含义一致。
+    不走这里的：课表上没排教师（那是自习，由 548 结算）、授课者是玩家（临时实操课，那是课堂 H，不是授课）、
+       学生不在本节的教室里（她是在那间教室坐下来等教师的；被玩家拉到别处听课的由玩家的广播结算）。
+    「这一节」按学生自己的行为开始时刻取；这一节已由实操课记过出勤的（sex_class_handle.settle_attend 也写去重标记，Plan 32 §3.8 L7），
+       settle_student_class_gain 按去重不再结算，同一节只落一种记录
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    from Script.System.Education_System import class_ai, growth_handle, schedule_handle
+
+    now_course = schedule_handle.get_now_course(character_id)
+    if now_course is None or now_course["ability_id"] <= 0:
+        return
+    teacher_id = now_course["teacher_id"]
+    # 没排教师（-1）与玩家的临时实操课（0）都不是这里的事
+    if teacher_id <= 0 or teacher_id not in cache.character_data:
+        return
+    classroom = now_course["classroom"]
+    if not class_ai.judge_in_scene(character_id, classroom):
+        return
+    # 教师这一节能不能到岗，与学生决定坐下听课 / 降级自习用的是同一个判据（传本节教室：空气催眠的教师只在人已在教室时算能到岗，Plan 31 §3.4）
+    if not class_ai.judge_teacher_available(teacher_id, classroom):
+        return
+    growth_handle.settle_student_class_gain(
+        character_id, teacher_id, now_course["ability_id"], now_course["course_type"], add_time, change_data=change_data
     )
 
 
@@ -7686,21 +7819,28 @@ def handle_skip_class_add_just(
         now_time: datetime.datetime,
 ):
     """
-    （翘课用）置翘课flag，小幅回复心情，本节不获得任何学习收益
+    （翘课用）置翘课flag并记下挂上的日期，小幅回复心情，本节不获得任何学习收益
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
     change_data -- 状态变更信息记录对象
-    now_time -- 结算的时间
+    now_time -- 结算的时间（结算传进来的是行为结束时刻）
     """
     if not add_time:
         return
     from Script.System.Education_System import growth_handle
 
     growth_data = growth_handle.get_child_growth(character_id)
-    growth_data.skip_class_flag = True
-    # 翘课换来的那点轻松：抑郁小幅回落。⚠️ 不给任何学习收益，这是翘课的代价
     character_data: game_type.Character = cache.character_data[character_id]
+    growth_data.skip_class_flag = True
+    # 翘课 flag 认日期（Plan 31 §3.6）：记下挂上 flag 的那一天，取行为开始时刻（now_time 是行为结束时刻）。
+    #    flag 只在这一天有效，读的地方一律走 class_ai.judge_skip_class_today：跨天结算在 NPC 阶段之后才清 flag、离线的人跨天不清，
+    #    认了日期就不会把翘课带进另一天
+    start_time = character_data.behavior.start_time
+    if start_time is None:
+        start_time = cache.game_time
+    growth_data.skip_class_day = start_time.toordinal()
+    # 翘课换来的那点轻松：抑郁小幅回落。不给任何学习收益，这是翘课的代价
     if 19 in character_data.status_data:
         character_data.status_data[19] = max(0, character_data.status_data[19] - add_time)
 
@@ -7714,7 +7854,7 @@ def handle_intern_class_add_just(
 ):
     """
     （实习课用）找同场景中该岗位的在岗干员当导师，按师徒等级差学该岗位的能力
-    ⚠️ 实习课是三种个人式课型里唯一需要自己结算的：体育课与兴趣课执行的是自带效果串的既有行为，
+    实习课是三种个人式课型里唯一需要自己结算的：体育课与兴趣课执行的是自带效果串的既有行为，
        而实习课的导师执行的是**他自己的工作行为**，那串效果只给他自己发工作产出，
        里面没有任何把经验分给身边学徒的部分（对比理论课：教师的 teach 行为里有512效果专门结算全场学生）
     Keyword arguments:
@@ -7753,7 +7893,7 @@ def handle_follow_mother_add_just(
 ):
     """
     （见学用）幼女跟着母亲，按母亲当前工作对应的科目获得习得与经验，并累加照料值与母女好感
-    ⚠️ 母亲没有工作时只加照料值与好感，不加学习收益（方案 §3.24）
+    母亲没有工作时只加照料值与好感，不加学习收益（方案 §3.24）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -7765,7 +7905,7 @@ def handle_follow_mother_add_just(
     from Script.System.Education_System import growth_handle, class_ai
 
     # 结算时再判一次母亲是否有效：从决策到结算之间母亲可能已经离场（进H、被调走）
-    mother_id = class_ai.judge_mother_available(character_id)
+    mother_id = class_ai.judge_mother_followable(character_id)
     if mother_id == -1:
         return
     growth_handle.settle_follow_mother_gain(character_id, mother_id, add_time, change_data=change_data)
@@ -7780,7 +7920,7 @@ def handle_free_play_add_just(
 ):
     """
     （自由玩耍用）在育儿室自己玩，小幅回复心情，不获得任何学习收益
-    ⚠️ 与翘课的区别只在语义：翘课是"该上课却没去"的代价性摸鱼，自由玩耍是日程安排里正当的休息
+    与翘课的区别只在语义：翘课是"该上课却没去"的代价性摸鱼，自由玩耍是日程安排里正当的休息
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -7807,7 +7947,7 @@ def handle_check_report_card_add_just(
         now_time: datetime.datetime,
 ):
     """
-    （检查成绩单用）输出该女儿本学期的各科成长与出勤，按成绩档位加好感与亲密，并清除成绩单flag
+    （检查成绩单用）有未查看的新成绩单时输出那一份并清除成绩单flag，否则输出该女儿本学期截至目前的各科成长与出勤；按成绩档位加好感与亲密
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -7825,31 +7965,36 @@ def handle_check_report_card_add_just(
     target_data: game_type.Character = cache.character_data[target_id]
     growth_data = growth_handle.get_child_growth(target_id)
 
-    # 两条路径：学期已经结束就发学期结算时**冻结**的那一份；还没结束就现算一份「截至目前」的
-    # ⚠️ 不能因为还没有成绩单就什么都不显示：指令本身没有「有成绩单」这条前提，
+    # 两条路径：有还没看过的新成绩单（学期结算时**冻结**的那一份，report_card_flag 置着）就发那份；
+    #    否则现算一份本学期「截至目前」的（Plan 27 §3.6，用户拍板）。此前以「有没有历史」判：有过一份成绩单之后，
+    #    学期中途再查永远只给上一份，看不到本学期的情况，分档口上夸的也是上学期。
+    # 不能因为还没有成绩单就什么都不显示：指令本身没有「有成绩单」这条前提，
     #    玩家学期中途照样能用，那时也该给他看到东西
     report_data = semester_handle.get_last_report_card(target_id)
-    finished = bool(report_data)
+    finished = growth_data.report_card_flag and bool(report_data)
     if not finished:
         report_data = semester_handle.build_report_card(target_id)
     now_draw = draw.NormalDraw()
     now_draw.width = normal_config.config_normal.text_width
     now_draw.text = semester_handle.get_report_card_text(target_id, report_data, finished)
-    # 更早的学期不在这里翻——指令是一段式的打印，翻页要有面板才做得了
+    # 更早的学期不在这里翻——指令是一段式的打印，翻页要有面板才做得了。
+    #    发的是冻结那一份时它自己就是历史里最新的一份；给的是本学期截至目前时，历史里的每一份都更早（Plan 27 §3.6）
     history_count = len(semester_handle.get_report_card_history(target_id))
-    if history_count > 1:
-        now_draw.text += _("（更早的 {0} 个学期可以在教育管理系统的养成总览里翻看）\n").format(history_count - 1)
+    earlier_count = history_count - 1 if finished else history_count
+    if earlier_count > 0:
+        now_draw.text += _("（更早的 {0} 个学期可以在教育管理系统的养成总览里翻看）\n").format(earlier_count)
     now_draw.draw()
 
     # 成绩档位越高，检查成绩单时的反馈越正面
-    # ⚠️ 档位已经把「出勤率 + 有没有真学出东西」并进一个口径了，
+    # 档位已经把「出勤率 + 有没有真学出东西」并进一个口径了，
     #    这里再单写一遍出勤率阈值，会与成绩单正文里的评定对不上
     base_chara_favorability_and_trust_common_settle(
         character_id, add_time, True, 0, target_data.ability[32], change_data, target_data.cid)
     if report_data.get("grade", education_constant.REPORT_GRADE_POOR) in {
             education_constant.REPORT_GRADE_EXCELLENT, education_constant.REPORT_GRADE_GOOD}:
         base_chara_state_common_settle(target_id, add_time, 13, change_data_to_target_change=change_data)
-    # 只有发的是冻结那一份才算「看过了」；学期中途看的是进行时数据，flag 不动
+    # 只有发的是冻结那一份才算「看过了」；学期中途看的是进行时数据，flag 不动。
+    #    口上在效果之前输出，按档位分的口上判「有待查看的成绩单」（养成数值 23）时 flag 还在（Plan 27 §3.6）
     if finished:
         growth_data.report_card_flag = False
 
@@ -11273,7 +11418,7 @@ def handle_official_event_accept_recruit(
     公务事件用：接收一名待确认的招募干员（Plan 23）
 
     这类效果没法用数值 token 表达（要建角色、分宿舍、发成就），所以走纯数字结算id这条路。
-    ⚠️ 直接复用招募面板的 recruit_new_chara：宿舍已满或没有待确认干员时它自己会给提示并返回，
+    直接复用招募面板的 recruit_new_chara：宿舍已满或没有待确认干员时它自己会给提示并返回，
        不要在这里另写一套判定，否则两处的门槛迟早会对不上
     Keyword arguments:
     character_id -- 角色id
@@ -11300,9 +11445,9 @@ def handle_official_event_temp_commission(
     """
     公务事件用：生成一条突发的临时外勤委托（Plan 23）
 
-    ⚠️ 复用外勤委托系统的 create_temp_commission：委托的需求与奖励用的是外勤自己的前缀语法
+    复用外勤委托系统的 create_temp_commission：委托的需求与奖励用的是外勤自己的前缀语法
        （r_资源id_数量、声望_势力id_值），与 CVE token 是两套，别混着写
-    ⚠️ 该函数会把新委托**追加写进 data/csv/Commission.csv**（不是只改内存），所以
+    该函数会把新委托**追加写进 data/csv/Commission.csv**（不是只改内存），所以
        描述里的换行必须写成两个字符的 \\n 转义、且不能出现英文逗号，
        否则写出去的那一行会把 CSV 撑断，下次构建直接报错
     Keyword arguments:
@@ -11339,7 +11484,7 @@ def handle_prenatal_add_adjust(
     """
     （胎教用）给交互对象（孕妇）的妊娠期胎教累积值 +0.5（Plan 22 四期 §3.27）
 
-    ⚠️ 只累积不转写：孩子此时还不存在，出生时由 born_event_panel 逐个全额转写给每个新生儿。
+    只累积不转写：孩子此时还不存在，出生时由 born_event_panel 逐个全额转写给每个新生儿。
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -11371,7 +11516,7 @@ def handle_nuirse_child_add_adjust(
 
     照料值本身走效果串里的 CVE_A2_Growth|20，这里只做 CVE 表达不了的两件事：
     体质（上限值不是养成数值）与"玩家亲自照料才有"的加成（CVE 没有发起者判定）。
-    ⚠️ 保育员喂奶同样给体质，只是没有玩家那份额外的好感——差异化对 NPC 照料同样生效（方案 §2.2）
+    保育员喂奶同样给体质，只是没有玩家那份额外的好感——差异化对 NPC 照料同样生效（方案 §2.2）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间

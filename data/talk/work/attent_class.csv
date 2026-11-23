@@ -3,4 +3,3 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,attent_class,0,high_1,{Name}触发了上课指令的地文

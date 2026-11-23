@@ -12,7 +12,7 @@ import random
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text
 from Script.Config import normal_config
-from Script.Design import attr_calculation, handle_premise, map_handle, second_behavior, talk
+from Script.Design import attr_calculation, game_time, handle_premise, map_handle, second_behavior, talk
 from Script.UI.Moudle import draw
 from Script.System.Pregnancy_System import pregnancy_constant, egg_handle
 
@@ -246,7 +246,8 @@ def get_soft_egg_remain_minute(egg_data: dict) -> int:
     Return arguments:
     int -- 剩余分钟
     """
-    passed_minute = (cache.game_time - egg_data["lay_time"]).total_seconds() / 60
+    # 按可游玩时间算：排出后跨季末午夜时，公历时长会多出被时钟跳过的约两个月，卵会被当成早已到期
+    passed_minute = game_time.count_play_second(egg_data["lay_time"], cache.game_time) / 60
     remain_minute = pregnancy_constant.SOFT_EGG_FERTILIZATION_DELAY_HOUR * 60 - passed_minute
     return max(int(remain_minute), 0)
 

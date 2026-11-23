@@ -115,6 +115,11 @@ AI处理并回复 → 流式或批量显示结果 → 记录对话历史
 
 ### 1. API集成
 - **OpenAI GPT**: 使用官方Python SDK，支持自定义base_url和代理
+  - 代理客户端统一由 `handle_chat_ai.create_openai_proxy_http_client(代理地址, 本地绑定IP)` 创建，实际生成（`text_ai`）与设置面板的「测试AI」共用它
+  - openai 的底层 HTTP 库随版本不同（2.47 之前是 `httpx`，之后是 `httpx2`），两个库的对象不能混用。该函数按 `openai.DefaultHttpxClient` 的基类反查当前用的是哪个库，游戏代码不直接 `import httpx`
+  - 代理地址写错时：生成路径按生成失败处理、退回原文本；「测试AI」显示测试不通过及原因
+  - 「本地绑定IP」只对不经过代理的直连生效：开启代理后全部请求都走代理，两个 HTTP 库在有代理时都不会把本地地址传给连接
+  - 代理设置只作用于 OpenAI 格式的接口（含 DeepSeek），Gemini 不使用它
 - **Google Gemini**: 使用官方SDK，支持REST传输协议切换
 - **DeepSeek**: 使用OpenAI兼容格式，自定义base_url到DeepSeek API
 

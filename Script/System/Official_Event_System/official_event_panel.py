@@ -2,10 +2,16 @@
 
 玩家在博士办公室「处理公务」时，待处理队列里的公务事件逐条弹出，每条给2~4个选项。
 
-⚠️ 两条界面口径：
-   1. 选项的后果提示**写方向不写数值**（"倾向：坚强"而不是"坚强+2"）——写了数值，决断就变成算数题了
+四条界面口径：
+   1. 后果提示**写方向不写数值**（"倾向：坚强"而不是"坚强+2"）——写了数值，决断就变成算数题了
    2. 前提不满足的选项**置灰并标明原因**而不是隐藏——让玩家看见"这里本来有更好的选择，但我没养到"
+   3. 后果提示**不写在选项上**（Plan 32 §8.2，用户要求）：选项只写选项本身，玩家选定、结算之后，
+      才用一个 WaitDraw 单独写出选了什么、结果如何（Official_Event_Draw.draw_result）
+   4. 选项的**出现顺序每次随机**（用户要求）：CSV 里的选项顺序是固定写死的（养成事件大多是
+      「严厉 / 温和 / 放任」这类同一组倾向），照原序画的话玩家几条之后就按位置选而不再读选项，
+      养成倾向于是变成按键顺序的产物。序号只是画面上的编号，结算与履历一律认 CSV 里的原序号
 """
+import random
 from types import FunctionType
 from typing import List
 
@@ -31,7 +37,7 @@ def get_code_text(raw_text: str, character_id: int, partner_id: int) -> str:
     """
     把事件文本里的口上代码转成可显示的文本
 
-    ⚠️ 转换期间把主体的交互对象指向本次事件的互动对象，使文本里的交互对象代码
+    转换期间把主体的交互对象指向本次事件的互动对象，使文本里的交互对象代码
        指向对的人（无互动对象时为博士）；转完立刻还原
     Keyword arguments:
     raw_text -- 原始文本
@@ -94,7 +100,11 @@ class Official_Event_Draw:
         self.width: int = width
         """ 绘制宽度 """
         self.option_list: List[dict] = official_event_handle.get_option_list(self.uid, self.character_id, self.partner_id)
-        """ 本条事件的选项列表 """
+        """ 本条事件的选项列表，按 CSV 原序（结算、履历与 draw_result 都认这个序） """
+        self.draw_option_list: List[dict] = list(self.option_list)
+        """ 本条事件的选项显示顺序，每次弹出时重新洗牌（界面口径 4）。
+            置灰的选项一起参与洗牌——只洗可选项的话，置灰项固定在原位，位置仍然泄露了原序 """
+        random.shuffle(self.draw_option_list)
 
     def draw(self) -> int:
         """
@@ -106,7 +116,9 @@ class Official_Event_Draw:
         """
         event_data = game_config.config_official_event[self.uid]
         line_feed.draw()
-        draw.LittleTitleLineDraw(_("【公务事件】{0}").format(get_event_title(self.queue_data)), self.width).draw()
+        # count_title_width：抬头（「【公务事件】薇薇安 · 婴儿期第 8 天」）本身就有三十多个半角宽，
+        #    按 LittleTitleLineDraw 的默认口径（标题不计宽）整行会画成 width + 抬头宽，行尾的线条被挤到第二行去
+        draw.LittleTitleLineDraw(_("【公务事件】{0}").format(get_event_title(self.queue_data)), self.width, count_title_width=True).draw()
         # 事件正文
         text_draw = draw.NormalDraw()
         text_draw.width = self.width
@@ -123,9 +135,8 @@ class Official_Event_Draw:
             return 0
         return_list = []
         button_index = 0
-        for option in self.option_list:
+        for option in self.draw_option_list:
             option_text = get_code_text(option["text"], self.character_id, self.partner_id)
-            tip_text = get_code_text(option["tip"], self.character_id, self.partner_id)
             # 前提不满足：置灰保留，并把原因写在后面
             if not option["can_use"]:
                 reason_text = get_code_text(option["reason"], self.character_id, self.partner_id)
@@ -139,9 +150,8 @@ class Official_Event_Draw:
                 gray_draw.draw()
                 continue
             button_index += 1
+            # 选项上只写选项本身，不写后果提示（Plan 32 §8.2）：后果在玩家选定之后由 draw_result 单独显示
             button_text = "{0}{1}".format(text_handle.id_index(button_index), option_text)
-            if tip_text:
-                button_text += _("（{0}）").format(tip_text)
             return_text = f"\nOEVENT_{option['index']}"
             now_draw = draw.LeftButton(button_text, return_text, self.width)
             now_draw.draw()
@@ -155,12 +165,35 @@ class Official_Event_Draw:
                 return option["index"]
         return 0
 
+    def draw_result(self, option_index: int):
+        """
+        玩家选定并结算之后，单独显示这个选项带来的后果（Plan 32 §8.2）
+        Keyword arguments:
+        option_index -- 玩家选定的选项序号（1~4）
+        Return arguments:
+        无
+        功能: 后果提示不写在选项上，选定之后才用一个 WaitDraw 写出选了什么、结果如何，等玩家按键再弹下一条；
+                 提示照旧写方向不写数值（界面口径 1）。这个选项没写提示、或序号对不上时什么都不画
+        """
+        for option in self.option_list:
+            if option["index"] != option_index:
+                continue
+            tip_text = get_code_text(option["tip"], self.character_id, self.partner_id)
+            if not tip_text:
+                return
+            option_text = get_code_text(option["text"], self.character_id, self.partner_id)
+            result_draw = draw.WaitDraw()
+            result_draw.width = self.width
+            result_draw.text = _("\n  你选择了「{0}」\n  结果：{1}\n").format(option_text, tip_text)
+            result_draw.draw()
+            return
+
 
 def handle_official_event_queue(width: int = 0):
     """
     逐条处理待决断的公务事件（处理公务指令的入口）
 
-    ⚠️ 出队在先、结算在后：无效项已由 pop_official_event 静默丢弃，
+    出队在先、结算在后：无效项已由 pop_official_event 静默丢弃，
        弹出的每一条都保证主体与配置都还在
     Keyword arguments:
     width -- 绘制宽度，默认取窗体宽度
@@ -177,10 +210,12 @@ def handle_official_event_queue(width: int = 0):
         now_draw = Official_Event_Draw(queue_data, width)
         option_index = now_draw.draw()
         # 一条选项都不可选而被跳过：不结算，但**必须记履历**。
-        # ⚠️ 只 continue 的话事件出了队却没进履历，judge_event_done 仍为假，
+        # 只 continue 的话事件出了队却没进履历，judge_event_done 仍为假，
         #    明天照样会被重新派下来，玩家于是反复看到同一条「已经不需要你来决定了」。
         #    记 0 号选项，养成履历里会显示为「（未作选择）」——那条兜底文案本就是为它写的
         if not option_index:
             official_event_handle.record_event_done(queue_data["uid"], queue_data.get("chara_id", 0), 0)
             continue
         official_event_handle.settle_official_event_option(queue_data["uid"], queue_data.get("chara_id", 0), queue_data.get("partner_id", 0), option_index)
+        # 结算之后再单独显示这个选择的后果（Plan 32 §8.2），玩家按键后才弹下一条
+        now_draw.draw_result(option_index)
