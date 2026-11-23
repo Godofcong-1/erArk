@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-"""蚀刻章：各组成就的计数、触发点与结算——醉奸"""
+"""蚀刻章：各组成就的计数、触发点与结算——醉奸、医疗"""
 from _bootstrap import *  # noqa: F401,F403
 from unittest import mock
 
@@ -97,5 +97,73 @@ reset_achievement(DRUNK_ID_LIST)
 cache.achievement.drunk_sex_record = {}
 cache.achievement.sleep_sex_record = {}
 remove_character(DRUNK_TARGET_ID)
+
+# ==== 2. 医疗 ====
+section("医疗：医疗部累计收入与博士亲自诊疗人数各三级，亲自诊疗危重病人结算隐藏蚀刻章")
+from Script.System.Medical_System import clinic_patient_management, medical_constant, medical_core, medical_player_diagnose_function, medical_service  # noqa: E402
+
+INCOME_ID_LIST = [1081, 1082, 1083]
+""" 医疗部累计收入，三级 """
+DIAGNOSE_ID_LIST = [1086, 1087, 1088]
+""" 博士累计亲自诊疗的病人数，三级 """
+CRITICAL_ID = 1091
+""" 博士亲自诊疗危重病人 """
+MEDICAL_ID_LIST = INCOME_ID_LIST + DIAGNOSE_ID_LIST + [CRITICAL_ID]
+RI = cache.rhodes_island
+medical_core._ensure_runtime_dict(RI)
+config_row = {achievement_id: game_config.config_achievement.get(achievement_id) for achievement_id in MEDICAL_ID_LIST}
+check("配置：两组三级蚀刻章类型为「医疗」、逐级以上一级为前置、门槛递增、都不隐藏；危重病人为隐藏蚀刻章",
+      all(config_row.values()) and all(data.type == _("医疗") for data in config_row.values())
+      and [config_row[achievement_id].pre_id for achievement_id in INCOME_ID_LIST + DIAGNOSE_ID_LIST] == [0, 1081, 1082, 0, 1086, 1087]
+      and all(config_row[id_list[i]].value < config_row[id_list[i + 1]].value for id_list in (INCOME_ID_LIST, DIAGNOSE_ID_LIST) for i in range(2))
+      and not any(config_row[achievement_id].special for achievement_id in INCOME_ID_LIST + DIAGNOSE_ID_LIST) and config_row[CRITICAL_ID].special,
+      {achievement_id: data and (data.type, data.value, data.pre_id, data.special) for achievement_id, data in config_row.items()})
+
+# 累计收入：门槛边界与每日医疗结算
+from Script.UI.Panel import achievement_panel  # noqa: E402
+
+reset_achievement(MEDICAL_ID_LIST)
+cache.achievement.player_diagnose_count = 0
+RI.medical_income_total = config_row[1081].value - 1
+check("累计收入差 1 龙门币到第一级：不获得", achievement_panel.settle_medical() == [], got_list(MEDICAL_ID_LIST))
+RI.medical_income_total = config_row[1081].value
+medical_service.settle_medical_department(target_base=RI, draw_flag=False)
+check("累计收入到第一级门槛后的每日医疗结算：获得第一级", got_list(INCOME_ID_LIST) == [1081], got_list(MEDICAL_ID_LIST))
+RI.medical_income_total = config_row[1082].value
+check("累计收入到第二级门槛：获得第二级", achievement_panel.settle_medical() == [1082], got_list(MEDICAL_ID_LIST))
+RI.medical_income_total = 0
+
+
+def player_diagnose(severity_level: int) -> dict:
+    """
+    让博士接诊并完成一名指定病情等级的门诊病人
+    Keyword arguments:
+    severity_level -- 病情等级
+    Return arguments:
+    dict -- 诊疗结算摘要
+    """
+    patient = clinic_patient_management.create_patient_stub(severity_level)
+    RI.medical_patients_today = {patient.patient_id: patient}
+    RI.medical_player_current_patient_id = 0
+    pl.work.medical_patient_id = 0
+    medical_player_diagnose_function.start_player_diagnose_session(pl, target_base=RI)
+    return medical_player_diagnose_function.commit_player_diagnose_session(pl, patient=patient, target_base=RI)
+
+
+reset_achievement(MEDICAL_ID_LIST)
+outcome = player_diagnose(0)
+check("博士亲自诊疗一名轻症病人：诊疗计数 +1，获得第一级，不获得危重的隐藏蚀刻章",
+      outcome.get("success") and cache.achievement.player_diagnose_count == 1 and got_list(MEDICAL_ID_LIST) == [1086],
+      (outcome, cache.achievement.player_diagnose_count, got_list(MEDICAL_ID_LIST)))
+outcome = player_diagnose(medical_constant.CRITICAL_SEVERITY_LEVEL)
+check("博士亲自诊疗一名危重病人：获得隐藏蚀刻章", outcome.get("success") and cache.achievement.player_diagnose_count == 2 and CRITICAL_ID in got_list(MEDICAL_ID_LIST),
+      (outcome, got_list(MEDICAL_ID_LIST)))
+cache.achievement.player_diagnose_count = config_row[1087].value - 1
+player_diagnose(0)
+check("累计亲自诊疗人数到第二级门槛：获得第二级", 1087 in got_list(DIAGNOSE_ID_LIST), (cache.achievement.player_diagnose_count, got_list(DIAGNOSE_ID_LIST)))
+reset_achievement(MEDICAL_ID_LIST)
+cache.achievement.player_diagnose_count = 0
+RI.medical_patients_today = {}
+RI.player_examined_patient_ids.clear()
 
 finish()

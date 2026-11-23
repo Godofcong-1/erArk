@@ -223,6 +223,13 @@ def commit_player_diagnose_session(
     # 记录病人id
     rhodes_island.player_examined_patient_ids.append(patient.patient_id)
 
+    # 结算成就：累计亲自诊疗人数，危重病人另结算隐藏成就
+    from Script.UI.Panel import achievement_panel
+    cache_control.cache.achievement.player_diagnose_count += 1
+    achievement_panel.achievement_flow(_("医疗"))
+    if patient.severity_level >= medical_constant.CRITICAL_SEVERITY_LEVEL:
+        achievement_panel.achievement_flow(_("医疗"), 1091)
+
     # 根据最近一次用药记录还原药费收益，用于界面提示
     medicine_success = patient.state == medical_constant.MedicalPatientState.MEDICINE_GRANTED
 

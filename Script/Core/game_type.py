@@ -1084,6 +1084,8 @@ class ACHIEVEMENT:
         """ 与女儿乱伦H的次数 """
         self.used_condom_count: int = 0
         """ 累积用过的避孕套个数（每次戴着避孕套射精用掉一个） """
+        self.player_diagnose_count: int = 0
+        """ 博士累积亲自诊疗的病人数 """
 
 
 class PLAYER_ABILITY:

@@ -78,6 +78,8 @@ def achievement_flow(achievement_type: str, achievement_id: int = 0):
         func = settle_semen_shoot
     elif achievement_type == _("避孕套"):
         func = settle_condom
+    elif achievement_type == _("医疗"):
+        func = settle_medical
     # 统计载具数量
     vehicles_count = 0
     read_book_count = 0
@@ -662,6 +664,19 @@ def settle_condom():
     return_list.extend(settle_achievement(cache.achievement.used_condom_count, [1231, 1232, 1233]))
     # 单名干员身上同时挂着的避孕套装饰个数
     return_list.extend(settle_achievement(max_decoration_count, [1236, 1237, 1238]))
+    return return_list
+
+def settle_medical():
+    """
+    结算医疗类的普通成就（隐藏成就 1091 由博士亲自诊疗危重病人时强制结算）\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    return_list = []
+    # 医疗部累计收入
+    return_list.extend(settle_achievement(cache.rhodes_island.medical_income_total, [1081, 1082, 1083]))
+    # 博士累计亲自诊疗的病人数
+    return_list.extend(settle_achievement(cache.achievement.player_diagnose_count, [1086, 1087, 1088]))
     return return_list
 
 
