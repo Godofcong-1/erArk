@@ -1278,4 +1278,60 @@ check("与博士无关的干员进入 H 不动搬运；被搬运的干员自己�
       carry_after_other_h == CARRY_NPC_ID and pl.action_info.carry_chara_id == 0, (carry_after_other_h, pl.action_info.carry_chara_id))
 clean_carry_h_case()
 
+# ==== 8.16 蚀刻章的结算 id 与数值 ====
+section("蚀刻章：母女一起群交结算「母女丼」906（不再误发 905），完全催眠 1 名干员即获得「安眠旋律」622，乱伦 H 100 次才获得「血脉相连」942")
+from Script.UI.Panel import achievement_panel  # noqa: E402
+
+GS_MOTHER_ID, GS_DAUGHTER_ID = 9451, 9452
+""" 群交中的母亲与女儿 fixture """
+saved_pl_position = list(pl.position)
+gs_mother = make_character(GS_MOTHER_ID, "群交母亲")
+gs_daughter = make_character(GS_DAUGHTER_ID, "群交女儿", daughter=True, mother_id=GS_MOTHER_ID)
+for chara_id in (0, GS_MOTHER_ID, GS_DAUGHTER_ID):
+    move_to(chara_id, SCENE_DORM)
+gs_mother.sp_flag.is_h = True
+gs_daughter.sp_flag.is_h = True
+# 群交开始时的记录初始化（同 settle default 的群交开始结算）
+cache.achievement.group_sex_record = {1: [], 2: []}
+for achievement_id in (905, 906, 622):
+    cache.achievement.achievement_dict[achievement_id] = False
+with mock.patch.object(achievement_panel.handle_premise, "handle_group_sex_mode_off", lambda character_id: 0):
+    got_list = achievement_panel.settle_chara_group_sex()
+check("母女同在场且都在 H 中：获得「母女丼」906，不误发「你来的正是时候」905（修复前写成 905，906 永远拿不到）",
+      906 in got_list and 905 not in got_list, got_list)
+gs_mother.sp_flag.is_h = False
+cache.achievement.achievement_dict[906] = False
+with mock.patch.object(achievement_panel.handle_premise, "handle_group_sex_mode_off", lambda character_id: 0):
+    got_list = achievement_panel.settle_chara_group_sex()
+check("母亲在场但不在 H 中：不获得 906", 906 not in got_list, got_list)
+remove_character(GS_MOTHER_ID)
+remove_character(GS_DAUGHTER_ID)
+move_to(0, saved_pl_position)
+cache.achievement.group_sex_record = {}
+
+# 完全催眠：只让一名角色算作完全催眠
+saved_npc_id_got = set(cache.npc_id_got)
+hypnosis_npc = make_character(GS_MOTHER_ID, "完全催眠干员")
+cache.npc_id_got.add(GS_MOTHER_ID)
+with mock.patch.object(achievement_panel.handle_premise, "handle_self_has_been_complete_hypnosis", lambda character_id: character_id == GS_MOTHER_ID):
+    got_list = achievement_panel.settle_chara_hypnosis()
+check("完全催眠 1 名干员：获得「安眠旋律」622（修复前数值需求是 5，与描述不符）", 622 in got_list, got_list)
+remove_character(GS_MOTHER_ID)
+cache.npc_id_got.clear()
+cache.npc_id_got.update(saved_npc_id_got)
+
+# 乱伦 H 的次数：描述是 100 次
+# achievement_flow 每次都会先算好全部数值类成就的判断值，其中要读龙门币，无头 fixture 的资源表可能是空的
+cache.rhodes_island.materials_resouce.setdefault(1, 0)
+saved_daughter_h_count = cache.achievement.h_with_daughter_count
+cache.achievement.achievement_dict[942] = False
+cache.achievement.h_with_daughter_count = 99
+achievement_panel.achievement_flow(_("乱伦"))
+got_942_at_99 = cache.achievement.achievement_dict.get(942, False)
+cache.achievement.h_with_daughter_count = 100
+achievement_panel.achievement_flow(_("乱伦"))
+check("与女儿乱伦 H 99 次不获得「血脉相连」942，100 次获得（修复前数值需求是 5，与描述的 100 次不符）",
+      not got_942_at_99 and cache.achievement.achievement_dict.get(942, False), (got_942_at_99, cache.achievement.achievement_dict.get(942)))
+cache.achievement.h_with_daughter_count = saved_daughter_h_count
+
 finish()

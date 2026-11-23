@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
-"""配置交叉引用：行为→结算效果、二段行为→二段结算、AI目标→状态机与前提、指令→前提，以及三张注册表本身（运行时缺失只会静默跳过或打印报错的那类引用）"""
+"""配置交叉引用：行为→结算效果、二段行为→二段结算、AI目标→状态机与前提、指令→前提、蚀刻章→前置，以及三张注册表本身（运行时缺失只会静默跳过或打印报错的那类引用）"""
+import collections
 import csv
 
 from _bootstrap import *  # noqa: F401,F403
@@ -119,5 +120,26 @@ handler_without_config = [instruct_id for instruct_id in constant.handle_instruc
 check("每个注册了处理函数的指令在指令表中都有配置", not handler_without_config, first(handler_without_config))
 bad_instruct_type = [(instruct.instruct_id, instruct.instruct_type) for instruct in game_config.config_instruct.values() if not hasattr(constant.InstructType, str(instruct.instruct_type))]
 check("指令表的指令类型都是 InstructType 里的类型", not bad_instruct_type, first(bad_instruct_type))
+
+section("蚀刻章 → 前置")
+# 面板按前置决定显示：前置未达成时不显示本条；game_config.config_achievement_id_relation 记「前置 → 后置」，后置达成后隐藏前置
+# 前置写错（不存在 / 指向自己）的那条在达成前永远不显示，指向自己时达成后也会被当作「后置已达成」隐藏掉
+ACHIEVEMENT = game_config.config_achievement
+bad_pre = [(cid, data.pre_id) for cid, data in ACHIEVEMENT.items() if data.pre_id and (data.pre_id not in ACHIEVEMENT or data.pre_id == cid)]
+check("蚀刻章的前置都是另一个存在的蚀刻章（不指向自己）", not bad_pre, first(bad_pre))
+shared_pre = collections.Counter(data.pre_id for data in ACHIEVEMENT.values() if data.pre_id)
+shared_pre = [(pre_id, [cid for cid, data in ACHIEVEMENT.items() if data.pre_id == pre_id]) for pre_id, count in shared_pre.items() if count > 1]
+check("每个蚀刻章至多是一个蚀刻章的前置（关系表一对一，共用时后载入的会覆盖前者）", not shared_pre, first(shared_pre))
+cross_type_pre = [(cid, data.pre_id) for cid, data in ACHIEVEMENT.items() if data.pre_id in ACHIEVEMENT and ACHIEVEMENT[data.pre_id].type != data.type]
+check("前置与本条是同一类型（同一条升级链）", not cross_type_pre, first(cross_type_pre))
+loop_pre = []
+for cid in ACHIEVEMENT:
+    seen_set, now_id = set(), cid
+    while now_id in ACHIEVEMENT and ACHIEVEMENT[now_id].pre_id and now_id not in seen_set:
+        seen_set.add(now_id)
+        now_id = ACHIEVEMENT[now_id].pre_id
+    if now_id in seen_set:
+        loop_pre.append(cid)
+check("前置链不成环", not loop_pre, first(loop_pre))
 
 finish()

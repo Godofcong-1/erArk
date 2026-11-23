@@ -462,7 +462,7 @@ def settle_chara_group_sex():
         (conscious_count, 901),  # 与至少2名角色一起群交
         (conscious_count, 902),  # 同时与至少50名有意识的角色一起群交
         (unconscious_count, 903),  # 同时与至少50名无意识的角色一起群交
-        (daughter_and_mother_flag, 905),  # 母女丼群交
+        (daughter_and_mother_flag, 906),  # 母女丼群交
     ]
     # 统一调用settle_achievement进行批量结算
     for judge_value, achievement_id in achievement_checks:
