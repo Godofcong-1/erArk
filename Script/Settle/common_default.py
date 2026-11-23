@@ -999,3 +999,32 @@ def base_chara_experience_common_settle(
     if final_change_data != None:
         final_change_data.experience.setdefault(experience_id, 0)
         final_change_data.experience[experience_id] += base_value
+
+
+def collect_milk_or_urine(character_id: int, amount: int, urine_flag: bool = False):
+    """
+    把角色的乳汁或圣水收集进冰箱，并计入玩家对该角色的累计收藏量（挤奶、搾乳机、采尿器、绝顶喷乳 / 漏尿被收集时共用）\n
+    收集量大于0时结算体液收藏类成就\n
+    Keyword arguments:\n
+    character_id -- 被收集的角色id\n
+    amount -- 收集量(ml)\n
+    urine_flag -- True为圣水，False为乳汁\n
+    Return arguments:\n
+    无
+    """
+    # 冰箱里的当日存量与玩家收藏的累计量，键都是被收集的角色id
+    if urine_flag:
+        fridge_dict = cache.rhodes_island.urine_in_fridge
+        total_dict = cache.character_data[0].pl_collection.urine_total
+    else:
+        fridge_dict = cache.rhodes_island.milk_in_fridge
+        total_dict = cache.character_data[0].pl_collection.milk_total
+    # 收集量为0时也登记键，与合并前各处的写法一致
+    fridge_dict.setdefault(character_id, 0)
+    fridge_dict[character_id] += amount
+    total_dict.setdefault(character_id, 0)
+    total_dict[character_id] += amount
+    # 结算成就
+    if amount > 0:
+        from Script.UI.Panel import achievement_panel
+        achievement_panel.achievement_flow(_("体液收藏"))

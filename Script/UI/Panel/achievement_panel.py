@@ -80,6 +80,8 @@ def achievement_flow(achievement_type: str, achievement_id: int = 0):
         func = settle_condom
     elif achievement_type == _("医疗"):
         func = settle_medical
+    elif achievement_type == _("体液收藏"):
+        func = settle_body_fluid_collection
     # 统计载具数量
     vehicles_count = 0
     read_book_count = 0
@@ -677,6 +679,26 @@ def settle_medical():
     return_list.extend(settle_achievement(cache.rhodes_island.medical_income_total, [1081, 1082, 1083]))
     # 博士累计亲自诊疗的病人数
     return_list.extend(settle_achievement(cache.achievement.player_diagnose_count, [1086, 1087, 1088]))
+    return return_list
+
+def settle_body_fluid_collection():
+    """
+    结算体液收藏类的成就（收集乳汁 / 圣水时由 common_default.collect_milk_or_urine 调用）\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    pl_collection = cache.character_data[0].pl_collection
+    # 成就236的特殊标志：收藏里有亲生女儿的母乳
+    daughter_milk_flag = 0
+    for chara_id, milk_ml in pl_collection.milk_total.items():
+        if milk_ml > 0 and chara_id in cache.character_data and handle_premise.handle_self_is_player_daughter(chara_id):
+            daughter_milk_flag = 1
+            break
+    return_list = []
+    # 全部干员合计的累计母乳量与圣水量(ml)
+    return_list.extend(settle_achievement(sum(pl_collection.milk_total.values()), [226, 227, 228]))
+    return_list.extend(settle_achievement(sum(pl_collection.urine_total.values()), [231, 232, 233]))
+    return_list.extend(settle_achievement(daughter_milk_flag, 236))
     return return_list
 
 

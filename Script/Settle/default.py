@@ -31,6 +31,7 @@ from Script.Settle.common_default import (
     base_chara_favorability_and_trust_common_settle,
     base_chara_climix_common_settle,
     base_chara_experience_common_settle,
+    collect_milk_or_urine,
 )
 
 from Script.Settle.item_effect import *
@@ -6709,14 +6710,10 @@ def handle_milk_add_adjust(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    pl_character_data: game_type.Character = cache.character_data[0]
 
     now_milk = int(target_data.pregnancy.milk)
     character_data.behavior.milk_ml += now_milk
-    cache.rhodes_island.milk_in_fridge.setdefault(character_data.target_character_id, 0)
-    cache.rhodes_island.milk_in_fridge[character_data.target_character_id] += now_milk
-    pl_character_data.pl_collection.milk_total.setdefault(character_data.target_character_id, 0)
-    pl_character_data.pl_collection.milk_total[character_data.target_character_id] += now_milk
+    collect_milk_or_urine(character_data.target_character_id, now_milk)
     target_data.pregnancy.milk = 0
 
 

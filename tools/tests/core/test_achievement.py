@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-"""蚀刻章：各组成就的计数、触发点与结算——醉奸、医疗"""
+"""蚀刻章：各组成就的计数、触发点与结算——醉奸、医疗、体液收藏"""
 from _bootstrap import *  # noqa: F401,F403
 from unittest import mock
 
@@ -165,5 +165,101 @@ reset_achievement(MEDICAL_ID_LIST)
 cache.achievement.player_diagnose_count = 0
 RI.medical_patients_today = {}
 RI.player_examined_patient_ids.clear()
+
+# ==== 3. 体液收藏 ====
+section("体液收藏：挤奶、搾乳机、采尿器、绝顶喷乳 / 漏尿被收集时存进冰箱并计入收藏，累计母乳与圣水各三级，收集了亲生女儿的母乳为隐藏蚀刻章")
+from Script.Settle import Second_effect, default as settle_default  # noqa: E402
+
+MILK_ID_LIST = [226, 227, 228]
+""" 累计收集的母乳，三级 """
+URINE_ID_LIST = [231, 232, 233]
+""" 累计收集的圣水，三级 """
+DAUGHTER_MILK_ID = 236
+""" 收集了亲生女儿的母乳 """
+FLUID_ID_LIST = MILK_ID_LIST + URINE_ID_LIST + [DAUGHTER_MILK_ID]
+config_row = {achievement_id: game_config.config_achievement.get(achievement_id) for achievement_id in FLUID_ID_LIST}
+check("配置：两组三级蚀刻章类型为「体液收藏」、逐级以上一级为前置、门槛递增、都不隐藏；亲生女儿的母乳为隐藏蚀刻章",
+      all(config_row.values()) and all(data.type == _("体液收藏") for data in config_row.values())
+      and [config_row[achievement_id].pre_id for achievement_id in MILK_ID_LIST + URINE_ID_LIST] == [0, 226, 227, 0, 231, 232]
+      and all(config_row[id_list[i]].value < config_row[id_list[i + 1]].value for id_list in (MILK_ID_LIST, URINE_ID_LIST) for i in range(2))
+      and not any(config_row[achievement_id].special for achievement_id in MILK_ID_LIST + URINE_ID_LIST) and config_row[DAUGHTER_MILK_ID].special,
+      {achievement_id: data and (data.type, data.value, data.pre_id, data.special) for achievement_id, data in config_row.items()})
+
+FLUID_TARGET_ID = 9611
+fluid_target = make_character(FLUID_TARGET_ID, "体液收藏测试干员")
+pl_collection = pl.pl_collection
+pl_collection.milk_total = {}
+pl_collection.urine_total = {}
+RI.milk_in_fridge = {}
+RI.urine_in_fridge = {}
+reset_achievement(FLUID_ID_LIST)
+
+# 搾乳机：50ml 进冰箱与收藏，获得第一级；提示先于成就
+fluid_target.h_state.body_item[4][1] = True
+fluid_target.pregnancy.milk = 50
+fluid_target.behavior.duration = 10
+drawn_text.clear()
+Second_effect.handle_milking_machine(FLUID_TARGET_ID, game_type.CharacterStatusChange())
+drawn_joined = "\n".join(drawn_text)
+check("搾乳机榨出 50ml：存进冰箱、计入收藏，获得母乳的第一级",
+      RI.milk_in_fridge.get(FLUID_TARGET_ID) == 50 and pl_collection.milk_total.get(FLUID_TARGET_ID) == 50 and got_list(FLUID_ID_LIST) == [226],
+      (RI.milk_in_fridge, pl_collection.milk_total, got_list(FLUID_ID_LIST)))
+check("成就提示显示在榨乳文本之后",
+      _("被搾乳机榨出了") in drawn_joined and _("获得蚀刻章") in drawn_joined and drawn_joined.index(_("被搾乳机榨出了")) < drawn_joined.index(_("获得蚀刻章")))
+fluid_target.h_state.body_item[4][1] = False
+
+# 绝顶喷乳：没戴搾乳机时不收集
+fluid_target.pregnancy.milk_max = 200
+fluid_target.pregnancy.milk = 200
+Second_effect.handle_b_orgasm_to_milk(FLUID_TARGET_ID, game_type.CharacterStatusChange())
+check("没戴搾乳机时绝顶喷乳：喷出的乳汁不进冰箱也不计入收藏", pl_collection.milk_total.get(FLUID_TARGET_ID) == 50, pl_collection.milk_total)
+# 绝顶喷乳：戴着搾乳机时收集
+fluid_target.h_state.body_item[4][1] = True
+fluid_target.pregnancy.milk = 200
+Second_effect.handle_b_orgasm_to_milk(FLUID_TARGET_ID, game_type.CharacterStatusChange())
+check("戴着搾乳机绝顶喷乳：喷出的 160ml 计入收藏（200 + 40 - 80）", pl_collection.milk_total.get(FLUID_TARGET_ID) == 210, pl_collection.milk_total)
+fluid_target.h_state.body_item[4][1] = False
+
+# 博士亲手挤奶（行为结算）
+pl.target_character_id = FLUID_TARGET_ID
+fluid_target.pregnancy.milk = 30
+settle_default.handle_milk_add_adjust(0, 1, game_type.CharacterStatusChange(), cache.game_time)
+check("博士亲手挤奶 30ml：计入收藏", pl_collection.milk_total.get(FLUID_TARGET_ID) == 240 and fluid_target.pregnancy.milk == 0, pl_collection.milk_total)
+
+# 采尿器与绝顶漏尿
+fluid_target.h_state.body_item[5][1] = True
+fluid_target.urinate_point = 30
+Second_effect.handle_urine_collector(FLUID_TARGET_ID, game_type.CharacterStatusChange())
+check("采尿器吸出 30ml：存进冰箱、计入收藏，获得圣水的第一级",
+      RI.urine_in_fridge.get(FLUID_TARGET_ID) == 30 and pl_collection.urine_total.get(FLUID_TARGET_ID) == 30 and got_list(URINE_ID_LIST) == [231],
+      (RI.urine_in_fridge, pl_collection.urine_total, got_list(URINE_ID_LIST)))
+fluid_target.urinate_point = 200
+Second_effect.handle_u_orgasm_to_pee(FLUID_TARGET_ID, game_type.CharacterStatusChange())
+check("戴着采尿器绝顶漏尿：漏出的 152ml 计入收藏（200 + 48 - 96）", pl_collection.urine_total.get(FLUID_TARGET_ID) == 182, pl_collection.urine_total)
+fluid_target.h_state.body_item[5][1] = False
+
+# 门槛按全部干员合计
+pl_collection.milk_total = {FLUID_TARGET_ID: config_row[227].value // 2, FLUID_TARGET_ID + 1: config_row[227].value // 2 - 1}
+check("两名干员合计差 1ml 到母乳第二级：不获得", achievement_panel.settle_body_fluid_collection() == [], got_list(FLUID_ID_LIST))
+pl_collection.milk_total[FLUID_TARGET_ID + 1] += 1
+check("两名干员合计到母乳第二级门槛：获得第二级（按全部干员合计）", achievement_panel.settle_body_fluid_collection() == [227], got_list(FLUID_ID_LIST))
+
+# 亲生女儿的母乳
+DAUGHTER_ID = 9612
+daughter = make_character(DAUGHTER_ID, "博士的女儿", daughter=True)
+pl_collection.milk_total = {FLUID_TARGET_ID: 10}
+check("收藏里只有非女儿干员的母乳：不获得隐藏蚀刻章", DAUGHTER_MILK_ID not in achievement_panel.settle_body_fluid_collection())
+daughter.h_state.body_item[4][1] = True
+daughter.pregnancy.milk = 20
+daughter.behavior.duration = 10
+Second_effect.handle_milking_machine(DAUGHTER_ID, game_type.CharacterStatusChange())
+check("用搾乳机收集到亲生女儿的母乳：获得隐藏蚀刻章", DAUGHTER_MILK_ID in got_list(FLUID_ID_LIST), got_list(FLUID_ID_LIST))
+reset_achievement(FLUID_ID_LIST)
+pl_collection.milk_total = {}
+pl_collection.urine_total = {}
+RI.milk_in_fridge = {}
+RI.urine_in_fridge = {}
+remove_character(DAUGHTER_ID)
+remove_character(FLUID_TARGET_ID)
 
 finish()

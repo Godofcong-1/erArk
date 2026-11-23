@@ -8,7 +8,7 @@ from Script.Design import (
 from Script.Core import cache_control, constant_effect, game_type, get_text
 from Script.Config import normal_config
 from Script.UI.Moudle import draw
-from Script.Settle.common_default import base_chara_experience_common_settle, base_chara_hp_mp_common_settle, base_chara_state_common_settle
+from Script.Settle.common_default import base_chara_experience_common_settle, base_chara_hp_mp_common_settle, base_chara_state_common_settle, collect_milk_or_urine
 
 
 _: FunctionType = get_text._
@@ -2176,7 +2176,6 @@ def handle_milking_machine(
     change_data -- 状态变更信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    pl_character_data: game_type.Character = cache.character_data[0]
     if character_data.dead:
         return
 
@@ -2185,10 +2184,6 @@ def handle_milking_machine(
         now_milk = 5 * character_data.behavior.duration
         now_milk = min(character_data.pregnancy.milk, now_milk)
         now_milk = int(now_milk)
-        cache.rhodes_island.milk_in_fridge.setdefault(character_id, 0)
-        cache.rhodes_island.milk_in_fridge[character_id] += now_milk
-        pl_character_data.pl_collection.milk_total.setdefault(character_id, 0)
-        pl_character_data.pl_collection.milk_total[character_id] += now_milk
         character_data.pregnancy.milk -= now_milk
         character_data.behavior.milk_ml += now_milk
 
@@ -2199,6 +2194,8 @@ def handle_milking_machine(
             now_draw.text = now_text
             now_draw.width = window_width
             now_draw.draw()
+        # 存进冰箱并计入收藏，放在提示之后，使成就提示显示在榨乳文本之后
+        collect_milk_or_urine(character_id, now_milk)
 
     """
     # 没有乳汁时停止榨乳
@@ -2228,7 +2225,6 @@ def handle_urine_collector(
     change_data -- 状态变更信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    pl_character_data: game_type.Character = cache.character_data[0]
     if character_data.dead:
         return
 
@@ -2236,10 +2232,6 @@ def handle_urine_collector(
 
         now_urine = 5 * character_data.behavior.duration
         now_urine = min(character_data.urinate_point, now_urine)
-        cache.rhodes_island.urine_in_fridge.setdefault(character_id, 0)
-        cache.rhodes_island.urine_in_fridge[character_id] += now_urine
-        pl_character_data.pl_collection.urine_total.setdefault(character_id, 0)
-        pl_character_data.pl_collection.urine_total[character_id] += now_urine
         character_data.urinate_point -= now_urine
         character_data.behavior.urine_ml += now_urine
 
@@ -2250,6 +2242,8 @@ def handle_urine_collector(
             now_draw.text = now_text
             now_draw.width = window_width
             now_draw.draw()
+        # 存进冰箱并计入收藏，放在提示之后，使成就提示显示在采尿文本之后
+        collect_milk_or_urine(character_id, now_urine, urine_flag=True)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.B_ORGASM_TO_MILK)
@@ -2264,7 +2258,6 @@ def handle_b_orgasm_to_milk(
     change_data -- 状态变更信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    pl_character_data: game_type.Character = cache.character_data[0]
     if character_data.dead:
         return
 
@@ -2278,11 +2271,8 @@ def handle_b_orgasm_to_milk(
         character_data.behavior.milk_ml += eject_milk
 
         # 如果已经装上搾乳机了，则收集至搾乳机中
-        if character_data.h_state.body_item[4][1]:
-            cache.rhodes_island.milk_in_fridge.setdefault(character_id, 0)
-            cache.rhodes_island.milk_in_fridge[character_id] += eject_milk
-            pl_character_data.pl_collection.milk_total.setdefault(character_id, 0)
-            pl_character_data.pl_collection.milk_total[character_id] += eject_milk
+        collect_flag = bool(character_data.h_state.body_item[4][1])
+        if collect_flag:
             now_text = _("\n{0}在绝顶的同时喷出了{1}ml的乳汁，喷出的乳汁被收集到搾乳机中\n").format(character_data.name, eject_milk)
         # 否则普通的喷出
         else:
@@ -2293,6 +2283,9 @@ def handle_b_orgasm_to_milk(
         now_draw.text = now_text
         now_draw.width = window_width
         now_draw.draw()
+        # 存进冰箱并计入收藏，放在提示之后，使成就提示显示在喷乳文本之后
+        if collect_flag:
+            collect_milk_or_urine(character_id, eject_milk)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.U_ORGASM_TO_PEE)
@@ -2307,7 +2300,6 @@ def handle_u_orgasm_to_pee(
     change_data -- 状态变更信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    pl_character_data: game_type.Character = cache.character_data[0]
     if character_data.dead:
         return
 
@@ -2320,11 +2312,8 @@ def handle_u_orgasm_to_pee(
         character_data.urinate_point = int(240 * 0.4)
 
         # 如果已经装上采尿器了，则收集至采尿器中
-        if character_data.h_state.body_item[5][1]:
-            cache.rhodes_island.urine_in_fridge.setdefault(character_id, 0)
-            cache.rhodes_island.urine_in_fridge[character_id] += eject_urine
-            pl_character_data.pl_collection.urine_total.setdefault(character_id, 0)
-            pl_character_data.pl_collection.urine_total[character_id] += eject_urine
+        collect_flag = bool(character_data.h_state.body_item[5][1])
+        if collect_flag:
             now_text = _("\n{0}在绝顶的同时漏出了{1}ml的尿液，漏出的尿液被收集到采尿器中\n").format(character_data.name, eject_urine)
         # 否则普通的喷出
         else:
@@ -2335,6 +2324,9 @@ def handle_u_orgasm_to_pee(
         now_draw.text = now_text
         now_draw.width = window_width
         now_draw.draw()
+        # 存进冰箱并计入收藏，放在提示之后，使成就提示显示在漏尿文本之后
+        if collect_flag:
+            collect_milk_or_urine(character_id, eject_urine, urine_flag=True)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.EXTRA_ORGASM)
