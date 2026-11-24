@@ -330,13 +330,13 @@ remove_character(TOKEN_DAUGHTER_ID)
 remove_character(TOKEN_TARGET_ID)
 
 # ==== 5. 卵生 ====
-section("卵生：破壳孵化的孩子数三级，往体外卵块上射精、卵块中有卵粒受精各一个，一团卵块中受精卵粒数达标为隐藏蚀刻章")
+section("卵生：从卵中孵化出的孩子数三级，往体外卵块上射精、卵块中有卵粒受精各一个，一团卵块中受精卵粒数达标为隐藏蚀刻章")
 import datetime as _datetime  # noqa: E402
 from Script.Design import character as design_character  # noqa: E402
 from Script.System.Pregnancy_System import born_event_panel, pregnancy_constant, soft_egg_handle  # noqa: E402
 
 HATCH_ID_LIST = [711, 712, 713]
-""" 累计破壳孵化的孩子数，三级 """
+""" 累计从卵中孵化出的孩子数，三级 """
 SHOOT_EGG_ID, FERTILIZED_ID, MANY_GRAIN_ID = 716, 717, 718
 """ 往卵块上射精、卵块中有卵粒受精、一团卵块中受精卵粒数达标（隐藏） """
 EGG_ID_LIST = HATCH_ID_LIST + [SHOOT_EGG_ID, FERTILIZED_ID, MANY_GRAIN_ID]
@@ -407,9 +407,9 @@ check(f"一团卵块中 {grain_value} 颗卵粒受精：获得隐藏蚀刻章", 
 
 def run_hatch(egg_count: int) -> int:
     """
-    跑一遍卵生破壳事件（取名、移动打桩），跑完撤掉孵出的孩子
+    跑一遍卵生孵化事件（取名、移动打桩），跑完撤掉孵出的孩子
     Keyword arguments:
-    egg_count -- 本次破壳的卵数
+    egg_count -- 本次孵化的卵数
     Return arguments:
     int -- 孵出的孩子数
     """
@@ -431,11 +431,11 @@ from Script.System.Pregnancy_System import egg_handle as egg_handle_module  # no
 
 reset_achievement(EGG_ID_LIST)
 born_count = run_hatch(1)
-check("一枚卵破壳孵化出一个孩子：累计孵化数 +1，获得孵化的第一级",
+check("一枚卵孵化出一个孩子：累计孵化数 +1，获得孵化的第一级",
       born_count == 1 and cache.achievement.hatched_egg_count == 1 and got_list(HATCH_ID_LIST) == [711], (born_count, cache.achievement.hatched_egg_count, got_list(HATCH_ID_LIST)))
 cache.achievement.hatched_egg_count = config_row[712].value - 2
 born_count = run_hatch(2)
-check("无壳卵同批两枚一起破壳：累计孵化数按孩子数 +2，到第二级门槛获得第二级",
+check("无壳卵同批两颗一起孵化：累计孵化数按孩子数 +2，到第二级门槛获得第二级",
       born_count == 2 and cache.achievement.hatched_egg_count == config_row[712].value and 712 in got_list(HATCH_ID_LIST), (born_count, cache.achievement.hatched_egg_count, got_list(HATCH_ID_LIST)))
 reset_achievement(EGG_ID_LIST)
 cache.achievement.hatched_egg_count = 0

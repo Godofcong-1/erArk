@@ -118,10 +118,10 @@ def get_stage_info_text(character_id: int, now_stage: int) -> str:
         hatching_eggs = egg_handle.get_hatching_eggs(character_id)
         first_egg = list(hatching_eggs.values())[0]
         hatch_day = egg_handle.get_hatch_day(first_egg)
-        # 预计破壳日扣除孵化加速药的加速天数，已到期则显示为当天
+        # 预计孵化日扣除孵化加速药的加速天数，已到期则显示为当天（带壳与无壳卵共用，措辞不用「破壳」）
         egg_acc_day = int(first_egg.get("acceleration_days", 0))
         born_time = max(game_time.get_predict_date(pregnancy_constant.HATCH_TOTAL_DAY - egg_acc_day, first_egg["lay_time"]), cache.game_time)
-        return _("孵化第{0}天，预计{1}破壳").format(hatch_day, get_date_text(born_time))
+        return _("孵化第{0}天，预计{1}孵化").format(hatch_day, get_date_text(born_time))
     if now_stage == pregnancy_constant.STAGE_PARTURIENT:
         return _("已在住院区待产，预计近日生产") + get_fetus_count_text(character_id)
     if now_stage == pregnancy_constant.STAGE_POSTPARTUM:

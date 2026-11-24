@@ -732,7 +732,7 @@ def settle_egg():
     返回：\n
     - return_list: 成就列表，包含已达成的成就ID
     """
-    # 累计从卵中破壳孵化出的孩子数
+    # 累计从卵中孵化出的孩子数（带壳与无壳卵生共用）
     return settle_achievement(cache.achievement.hatched_egg_count, [711, 712, 713])
 
 

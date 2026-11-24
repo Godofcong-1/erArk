@@ -92,7 +92,7 @@ def handle_drug_use_effect(character_id: int, drug_id: int):
                 egg_data["acceleration_days"] = egg_data.get("acceleration_days", 0) + add_day
                 now_acc = int(egg_data["acceleration_days"])
                 predict_time = game_time.get_predict_date(pregnancy_constant.HATCH_TOTAL_DAY - now_acc, egg_data["lay_time"])
-                now_draw.text += _("本次加速{0}天，累计加速{1}天，这枚卵的预计破壳日期提前到了{2}\n").format(int(add_day), now_acc, pregnancy_panel.get_date_text(predict_time))
+                now_draw.text += _("本次加速{0}天，累计加速{1}天，这枚卵的预计孵化日期提前到了{2}\n").format(int(add_day), now_acc, pregnancy_panel.get_date_text(predict_time))
             else:
                 now_draw.text += _("这枚卵已经加速到极限，药物没有产生效果\n")
     elif drug_id == 37:  # 假孕药
@@ -309,7 +309,8 @@ class Gift_Panel:
                 hatch_day = egg_handle.get_hatch_day(egg_data)
                 acc_day = int(egg_data.get("acceleration_days", 0))
                 born_time = game_time.get_predict_date(pregnancy_constant.HATCH_TOTAL_DAY - acc_day, egg_data["lay_time"])
-                egg_text = _("[{0}号卵] 孵化第{1}天（已加速{2}天，预计{3}破壳）").format(egg_id, hatch_day, acc_day, pregnancy_panel.get_date_text(born_time))
+                # 带壳与无壳卵共用，措辞不用「破壳」
+                egg_text = _("[{0}号卵] 孵化第{1}天（已加速{2}天，预计{3}孵化）").format(egg_id, hatch_day, acc_day, pregnancy_panel.get_date_text(born_time))
                 button_draw = draw.LeftButton(
                     egg_text,
                     str(egg_id),

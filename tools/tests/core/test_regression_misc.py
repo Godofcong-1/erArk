@@ -1334,4 +1334,37 @@ check("与女儿乱伦 H 99 次不获得「血脉相连」942，100 次获得（
       not got_942_at_99 and cache.achievement.achievement_dict.get(942, False), (got_942_at_99, cache.achievement.achievement_dict.get(942)))
 cache.achievement.h_with_daughter_count = saved_daughter_h_count
 
+# ==== 8.17 卵生文本按带壳 / 无壳区分 ====
+section("卵生文本：写了卵壳 / 巢座的照料卵与孵化加速药地文只给带壳卵生，无壳卵生另有差分；怀孕总览的预计孵化日不写「破壳」")
+from Script.System.Pregnancy_System import egg_handle, pregnancy_constant, pregnancy_panel  # noqa: E402
+
+EGG_SHELL_WORD_LIST = ("卵壳", "蛋壳", "破壳", "巢座")
+""" 只适用于带壳卵的措辞 """
+SHELL_PREMISE_SET = {"self_birth_type_egg", "t_birth_type_egg"}
+""" 带壳卵生的种族前提（自己 / 交互对象） """
+SOFT_PREMISE_SET = {"self_birth_type_egg_soft", "t_birth_type_egg_soft"}
+""" 无壳卵生的种族前提（自己 / 交互对象） """
+# 两种卵都会触发的两组地文：照料孵化中的卵（母亲本人或保育员）、送孵化加速药（交互对象是卵的母亲）
+egg_talk_group = {
+    "照料孵化中的卵": [talk_id for talk_id, talk_data in game_config.config_talk.items() if talk_data.behavior_id == "hatch_eggs"],
+    "孵化加速药": [talk_id for talk_id, talk_data in game_config.config_talk.items() if talk_data.behavior_id == "give_gift" and any("Gift|36_G_0" in premise_id for premise_id in game_config.config_talk_premise_data[talk_id])],
+}
+for group_name, talk_id_list in egg_talk_group.items():
+    shell_word_not_gated = [
+        talk_id for talk_id in talk_id_list
+        if any(word in game_config.config_talk[talk_id].context for word in EGG_SHELL_WORD_LIST) and not SHELL_PREMISE_SET & game_config.config_talk_premise_data[talk_id]
+    ]
+    soft_count = len([talk_id for talk_id in talk_id_list if SOFT_PREMISE_SET & game_config.config_talk_premise_data[talk_id]])
+    check(f"{group_name}：写了卵壳 / 巢座的地文都限定为带壳卵生，且有无壳卵生的差分（修复前全部不分种族，无壳卵生也会看到往卵壳上浇药）",
+          len(talk_id_list) > 0 and not shell_word_not_gated and soft_count > 0, (len(talk_id_list), shell_word_not_gated[:3], soft_count))
+
+SOFT_HATCH_MOTHER_ID = 9453
+""" 持有孵化中无壳卵的母亲 fixture """
+soft_hatch_mother = make_character(SOFT_HATCH_MOTHER_ID, "无壳卵孵化母亲")
+soft_hatch_egg_id = egg_handle.add_egg(SOFT_HATCH_MOTHER_ID, True, soft=True)
+soft_hatch_mother.pregnancy.eggs[soft_hatch_egg_id]["identified"] = True
+stage_text = pregnancy_panel.get_stage_info_text(SOFT_HATCH_MOTHER_ID, pregnancy_constant.STAGE_HATCHING)
+check("怀孕总览里孵化中的卵（带壳与无壳共用）写「预计某日孵化」，不写「破壳」", "破壳" not in stage_text and "孵化" in stage_text, stage_text)
+remove_character(SOFT_HATCH_MOTHER_ID)
+
 finish()

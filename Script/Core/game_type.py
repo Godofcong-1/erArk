@@ -1087,7 +1087,7 @@ class ACHIEVEMENT:
         self.player_diagnose_count: int = 0
         """ 博士累积亲自诊疗的病人数 """
         self.hatched_egg_count: int = 0
-        """ 累积从卵中破壳孵化出的孩子数 """
+        """ 累积从卵中孵化出的孩子数（带壳与无壳卵生共用） """
 
 
 class PLAYER_ABILITY:
