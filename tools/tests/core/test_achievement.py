@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-"""蚀刻章：各组成就的计数、触发点与结算——醉奸、医疗、体液收藏、信物"""
+"""蚀刻章：各组成就的计数、触发点与结算——醉奸、医疗、体液收藏、信物、卵生"""
 from _bootstrap import *  # noqa: F401,F403
 from unittest import mock
 
@@ -328,5 +328,118 @@ token_list.clear()
 token_list.update(saved_token_list)
 remove_character(TOKEN_DAUGHTER_ID)
 remove_character(TOKEN_TARGET_ID)
+
+# ==== 5. 卵生 ====
+section("卵生：破壳孵化的孩子数三级，往体外卵块上射精、卵块中有卵粒受精各一个，一团卵块中受精卵粒数达标为隐藏蚀刻章")
+import datetime as _datetime  # noqa: E402
+from Script.Design import character as design_character  # noqa: E402
+from Script.System.Pregnancy_System import born_event_panel, pregnancy_constant, soft_egg_handle  # noqa: E402
+
+HATCH_ID_LIST = [711, 712, 713]
+""" 累计破壳孵化的孩子数，三级 """
+SHOOT_EGG_ID, FERTILIZED_ID, MANY_GRAIN_ID = 716, 717, 718
+""" 往卵块上射精、卵块中有卵粒受精、一团卵块中受精卵粒数达标（隐藏） """
+EGG_ID_LIST = HATCH_ID_LIST + [SHOOT_EGG_ID, FERTILIZED_ID, MANY_GRAIN_ID]
+config_row = {achievement_id: game_config.config_achievement.get(achievement_id) for achievement_id in EGG_ID_LIST}
+check("配置：类型为「卵生」，孵化三级逐级前置、门槛递增；射精与受精互相独立（不设前置）、不隐藏；受精卵粒数为隐藏蚀刻章",
+      all(config_row.values()) and all(data.type == _("卵生") for data in config_row.values())
+      and [config_row[achievement_id].pre_id for achievement_id in EGG_ID_LIST] == [0, 711, 712, 0, 0, 0]
+      and config_row[711].value < config_row[712].value < config_row[713].value
+      and not any(config_row[achievement_id].special for achievement_id in HATCH_ID_LIST + [SHOOT_EGG_ID, FERTILIZED_ID]) and config_row[MANY_GRAIN_ID].special,
+      {achievement_id: data and (data.type, data.value, data.pre_id, data.special) for achievement_id, data in config_row.items()})
+
+EGG_MOTHER_ID = 9631
+egg_mother = make_character(EGG_MOTHER_ID, "卵生测试干员")
+pl.target_character_id = EGG_MOTHER_ID
+pl.h_state.body_item[13][1] = False
+pl.pl_collection.soft_eggs = {}
+reset_achievement(EGG_ID_LIST)
+cache.achievement.hatched_egg_count = 0
+
+# 往体外卵块上射精
+egg_id = soft_egg_handle.lay_soft_egg(EGG_MOTHER_ID)
+with mock.patch.object(ejaculation_panel, "common_ejaculation", return_value=("射精了", 100)):
+    ejaculation_panel.ejaculation_flow(-1, -1, EGG_MOTHER_ID, draw_flag=False, soft_egg_id=egg_id)
+check("往体外排出的卵块上射精：精液加到卵块上，获得「往卵块上射精」",
+      pl.pl_collection.soft_eggs[egg_id]["semen_count"] == 100 and got_list(EGG_ID_LIST) == [SHOOT_EGG_ID],
+      (pl.pl_collection.soft_eggs.get(egg_id), got_list(EGG_ID_LIST)))
+pl.pl_collection.soft_eggs = {}
+
+
+def semen_for_rounds(round_count: int) -> float:
+    """
+    受精判定每轮后精液衰减30%、低于下限即停：返回恰好能判定 round_count 轮的精液量
+    Keyword arguments:
+    round_count -- 判定轮数
+    Return arguments:
+    float -- 精液量(ml)
+    """
+    return pregnancy_constant.SOFT_EGG_MIN_SEMEN / (1 - pregnancy_constant.MULTIPLE_BIRTH_SEMEN_DECAY) ** (round_count - 1) + 0.01
+
+
+def run_fertilization(semen_count: float, rate: float) -> int:
+    """
+    放一团已排出满受精等待时长的卵块，以固定的每轮受精概率走一遍体外受精判定，返回母亲新增的受精卵数
+    Keyword arguments:
+    semen_count -- 卵块上的精液量(ml)
+    rate -- 每轮受精概率（100 为每轮必中，0 为必不中）
+    Return arguments:
+    int -- 新增的受精卵数
+    """
+    before_count = len(egg_mother.pregnancy.eggs)
+    lay_time = cache.game_time - _datetime.timedelta(hours=pregnancy_constant.SOFT_EGG_FERTILIZATION_DELAY_HOUR + 1)
+    pl.pl_collection.soft_eggs = {1: {"mother_id": EGG_MOTHER_ID, "lay_time": lay_time, "position": list(egg_mother.position), "semen_count": semen_count}}
+    with mock.patch.object(soft_egg_handle, "get_soft_egg_fertilization_rate", lambda *args, **kwargs: rate):
+        soft_egg_handle.check_soft_eggs_fertilization()
+    return len(egg_mother.pregnancy.eggs) - before_count
+
+
+grain_value = config_row[MANY_GRAIN_ID].value
+reset_achievement(EGG_ID_LIST)
+new_count = run_fertilization(semen_for_rounds(grain_value), 0)
+check("卵块中没有卵粒受精：不获得受精与隐藏蚀刻章", new_count == 0 and got_list(EGG_ID_LIST) == [], (new_count, got_list(EGG_ID_LIST)))
+new_count = run_fertilization(semen_for_rounds(grain_value - 1), 100)
+check(f"一团卵块中 {grain_value - 1} 颗卵粒受精：获得「卵块中有卵粒受精」，差一颗不获得隐藏蚀刻章",
+      new_count == grain_value - 1 and got_list(EGG_ID_LIST) == [FERTILIZED_ID], (new_count, got_list(EGG_ID_LIST)))
+new_count = run_fertilization(semen_for_rounds(grain_value), 100)
+check(f"一团卵块中 {grain_value} 颗卵粒受精：获得隐藏蚀刻章", new_count == grain_value and MANY_GRAIN_ID in got_list(EGG_ID_LIST), (new_count, got_list(EGG_ID_LIST)))
+
+
+def run_hatch(egg_count: int) -> int:
+    """
+    跑一遍卵生破壳事件（取名、移动打桩），跑完撤掉孵出的孩子
+    Keyword arguments:
+    egg_count -- 本次破壳的卵数
+    Return arguments:
+    int -- 孵出的孩子数
+    """
+    before_set = set(cache.character_data)
+    egg_mother.pregnancy.eggs = {}
+    egg_id_list = [egg_handle_module.add_egg(EGG_MOTHER_ID, True, soft=True) for _index in range(egg_count)]
+    with mock.patch.object(design_character, "input_name_func", return_value="测试孩子"), \
+            mock.patch.object(born_event_panel, "move_to_inpatient_department_for_born"):
+        run_panel(lambda: born_event_panel.Born_Panel(EGG_MOTHER_ID, egg_mode=True, egg_id_list=egg_id_list).draw(), [])
+    child_set = set(cache.character_data) - before_set
+    for child_id in child_set:
+        remove_character(child_id)
+    egg_mother.relationship.child_id_list = []
+    pl.relationship.child_id_list = []
+    return len(child_set)
+
+
+from Script.System.Pregnancy_System import egg_handle as egg_handle_module  # noqa: E402
+
+reset_achievement(EGG_ID_LIST)
+born_count = run_hatch(1)
+check("一枚卵破壳孵化出一个孩子：累计孵化数 +1，获得孵化的第一级",
+      born_count == 1 and cache.achievement.hatched_egg_count == 1 and got_list(HATCH_ID_LIST) == [711], (born_count, cache.achievement.hatched_egg_count, got_list(HATCH_ID_LIST)))
+cache.achievement.hatched_egg_count = config_row[712].value - 2
+born_count = run_hatch(2)
+check("无壳卵同批两枚一起破壳：累计孵化数按孩子数 +2，到第二级门槛获得第二级",
+      born_count == 2 and cache.achievement.hatched_egg_count == config_row[712].value and 712 in got_list(HATCH_ID_LIST), (born_count, cache.achievement.hatched_egg_count, got_list(HATCH_ID_LIST)))
+reset_achievement(EGG_ID_LIST)
+cache.achievement.hatched_egg_count = 0
+pl.pl_collection.soft_eggs = {}
+remove_character(EGG_MOTHER_ID)
 
 finish()

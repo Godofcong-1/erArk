@@ -292,7 +292,9 @@ def check_soft_eggs_fertilization():
         egg_name = get_soft_egg_name(egg_id)
         del soft_eggs[egg_id]
         draw_text = "\n※※※※※※※※※\n"
-        if success_count >= 1 and mother_id in cache.character_data:
+        # 母亲已不在时受精卵无处回写，按未受精处理
+        fertilized_flag = success_count >= 1 and mother_id in cache.character_data
+        if fertilized_flag:
             mother_character_data: game_type.Character = cache.character_data[mother_id]
             for _index in range(success_count):
                 new_egg_id = egg_handle.add_egg(mother_id, True, soft=True)
@@ -311,3 +313,8 @@ def check_soft_eggs_fertilization():
         now_draw.width = window_width
         now_draw.text = draw_text
         now_draw.draw()
+        # 结算成就：首次有卵粒受精，以及一团卵块中受精的卵粒数（门槛读成就表的数值需求）
+        if fertilized_flag:
+            from Script.UI.Panel import achievement_panel
+            achievement_panel.get_achievement_judge_by_value(717, success_count)
+            achievement_panel.get_achievement_judge_by_value(718, success_count)

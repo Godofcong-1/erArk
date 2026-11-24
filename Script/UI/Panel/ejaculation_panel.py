@@ -399,8 +399,9 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
     target_data: game_type.Character = cache.character_data[target_character_id]
 
     semen_text, semen_count = common_ejaculation()
-    # 本次是否射在了避孕套里，用于结尾结算避孕套成就
+    # 本次是否射在了避孕套里、体外排出的卵块上，用于结尾结算成就
     condom_shoot_flag = False
+    soft_egg_shoot_flag = False
 
     if semen_count > 0:
         # 记录射精量
@@ -437,6 +438,7 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
             if soft_egg_id >= 0:
                 from Script.System.Pregnancy_System import soft_egg_handle
                 soft_egg_handle.add_semen_to_soft_egg(soft_egg_id, semen_count)
+                soft_egg_shoot_flag = True
                 now_text = _("在{0}上{1}").format(soft_egg_handle.get_soft_egg_name(soft_egg_id), semen_text)
             # 在有目标对象时
             elif target_character_id > 0:
@@ -502,6 +504,8 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
     achievement_panel.achievement_flow(_("射精"))
     if condom_shoot_flag:
         achievement_panel.achievement_flow(_("避孕套"))
+    if soft_egg_shoot_flag:
+        achievement_panel.get_achievement_judge_by_value(716, 1)
 
 class Ejaculation_Panel:
     """

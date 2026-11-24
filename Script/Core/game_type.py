@@ -1086,6 +1086,8 @@ class ACHIEVEMENT:
         """ 累积用过的避孕套个数（每次戴着避孕套射精用掉一个） """
         self.player_diagnose_count: int = 0
         """ 博士累积亲自诊疗的病人数 """
+        self.hatched_egg_count: int = 0
+        """ 累积从卵中破壳孵化出的孩子数 """
 
 
 class PLAYER_ABILITY:

@@ -321,6 +321,10 @@ class Born_Panel:
             # 仍是阴道处女的干员在生产时被胎儿撑破处女膜
             if virgin_birth_flag:
                 achievement_panel.achievement_flow(_("生育"), 709)
+            # 卵生破壳：累计从卵中孵化出的孩子数
+            if self.egg_mode:
+                cache.achievement.hatched_egg_count += born_count
+                achievement_panel.achievement_flow(_("卵生"))
 
             break
 

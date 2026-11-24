@@ -84,6 +84,8 @@ def achievement_flow(achievement_type: str, achievement_id: int = 0):
         func = settle_body_fluid_collection
     elif achievement_type == _("信物"):
         func = settle_token
+    elif achievement_type == _("卵生"):
+        func = settle_egg
     # 统计载具数量
     vehicles_count = 0
     read_book_count = 0
@@ -723,6 +725,15 @@ def settle_token():
     return_list.extend(settle_achievement(token_count, [241, 242, 243]))
     return_list.extend(settle_achievement(daughter_token_flag, 246))
     return return_list
+
+def settle_egg():
+    """
+    结算卵生类的普通成就中可按累计值刷新的部分（716、717、718 在往卵块上射精与体外受精判定时按次结算）\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    # 累计从卵中破壳孵化出的孩子数
+    return settle_achievement(cache.achievement.hatched_egg_count, [711, 712, 713])
 
 
 class Achievement_Panel:
