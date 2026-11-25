@@ -6,9 +6,7 @@ from Script.Core.constant.CharacterStatus import CharacterStatus
 from Script.Core.constant.Behavior import Behavior
 from Script.Core.constant.StateMachine import StateMachine
 from Script.Core.constant.SecondBehavior import SecondBehavior
-from Script.Core.constant.SecondBehavior_Int import SecondBehavior_Int
 from Script.System.Instruct_System.Instruct import Instruct
-from Script.Core.constant.Behavior_Int import Behavior_Int
 from Script.System.Instruct_System.instruct_category import (
     InstructCategory,
     BodyPart,

@@ -27,7 +27,7 @@ description: 为 erArk 新增一个玩家指令及其行为、前提、结算、
 ### 第一步：选号核对（必须最先做）
 
 1. 指令 cid 按类型分段：系统1-99 / 日常1001 / 工作2001 / 娱乐3001 / 技艺4001 / 猥亵5001 / 性爱6001，在 `data/csv/InstructConfig.csv` 目标段落确认空闲号。
-2. 行为 cid 必须在**三处**都空闲：`data/csv/Behavior_Data.csv`、`Script/Core/constant/Behavior_Int.py`、`tools/ArkEditor/csv/Behavior_Data.csv`。这三处存在历史不同步（同一编号含义不同），不能只看一处。
+2. 行为 cid 必须在**两处**都空闲：`data/csv/Behavior_Data.csv`、`tools/ArkEditor/csv/Behavior_Data.csv`。这两处存在历史不同步（同一编号含义不同），不能只看一处。
 3. 若用行为结算器，效果 id 在 `Script/Core/constant_effect.py` 中确认空闲。
 
 ### 第二步：CSV 配置
@@ -40,7 +40,7 @@ description: 为 erArk 新增一个玩家指令及其行为、前提、结算、
 
 ### 第三步：常量（全部手工维护）
 
-照既有条目位置逐个添加：`Script/Core/constant/Behavior.py`、`BehaviorStr.py`、`Behavior_Int.py`、`CharacterStatus.py`（`STATUS_` 前缀）、`Script/System/Instruct_System/Instruct.py`（本文件定义顺序决定 Web 指令显示顺序）。
+照既有条目位置逐个添加：`Script/Core/constant/Behavior.py`、`BehaviorStr.py`、`CharacterStatus.py`（`STATUS_` 前缀）、`Script/System/Instruct_System/Instruct.py`（本文件定义顺序决定 Web 指令显示顺序）。
 
 ### 第四步：处理函数与面板
 
@@ -98,7 +98,7 @@ description: 为 erArk 新增一个玩家指令及其行为、前提、结算、
 选型确定为二段行为时，按此清单实施（替代上面第二~七步中的一段行为路线）：
 
 1. `data/csv/Behavior_Data.csv` 加行：cid 在 1300+ 段选空闲号，`duration=0`、`trigger=npc`、`tag=二段结算`。
-2. 常量三处照既有条目位置添加：`Script/Core/constant/SecondBehavior.py`、`SecondBehavior_Int.py`、`Behavior.py`。
+2. 常量两处照既有条目位置添加：`Script/Core/constant/SecondBehavior.py`、`Behavior.py`。
 3. 在结算代码的触发点调 `second_behavior.character_get_second_behavior(character_id, "en_name")`（可在 `Script/Settle/`、`second_behavior.py`、各子系统 handle 中，视反应来源而定）。
 4. `data/csv/Behavior_Effect.csv` 必须加行：有数值效果挂对应效果 id（`Script/Settle/Second_effect.py` 中 `@add_settle_second_behavior_effect` 注册）；无数值效果挂空结算 `999`（二段行为的空结算是 999，不是一段行为的 9999）；需跨场景生效改挂 `998`/`997`（见 7b）。
 5. 口上按第七步 7b 建 `data/talk/system/second_*.csv` 条目。

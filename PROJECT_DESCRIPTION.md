@@ -247,9 +247,9 @@ Script/
 
 ### 5.3 关键常量文件
 
-- `Script/Core/constant/Behavior.py` + `Behavior_Int.py` + `BehaviorStr.py`：行为常量及其整数/字符串映射
+- `Script/Core/constant/Behavior.py` + `BehaviorStr.py`：行为常量（字符串）
 - `Script/Core/constant/CharacterStatus.py`：角色状态属性常量
-- `Script/Core/constant/SecondBehavior.py` + `SecondBehavior_Int.py`：二段行为常量
+- `Script/Core/constant/SecondBehavior.py`：二段行为常量
 - `Script/Core/constant/StateMachine.py`：状态机动作常量
 - `Script/Core/constant/__init__.py`：`Panel`、`InstructType`、`SexInstructSubType`、注册表、初始/禁止 NPC 名单、特殊结束 H 列表等
 - `Script/Core/constant_promise.py`：前提 ID（`Premise` 类）

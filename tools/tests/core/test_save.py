@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-"""存档系统：只写临时目录的存读档往返与 save_info、旧存档读档时的跨版本补全、温室生产线与阿玛雅编号两处旧档修复、旧档缺国家、读档归一化（路径分隔符 / 履历平铺字段 / 无壳卵生孕程）"""
+"""存档系统：只写临时目录的存读档往返与 save_info、旧存档读档时的跨版本补全、温室生产线与阿玛雅编号两处旧档修复、旧档缺国家、读档归一化（路径分隔符 / 履历平铺字段 / 无壳卵生孕程）、2025.5.20 以前的整数行为 id"""
 from _bootstrap import *  # noqa: F401,F403
 import builtins
 import io
@@ -806,7 +806,33 @@ save_handle._normalize_loaded_save_paths(egg_cache)
 check("开关关闭：该种族按单胎胎生运行，孕程是正常妊娠，每次读档都不能清（plan_21）", soft_off.talent[21] == 1 and soft_off.pregnancy.fetus_count == 2,
       (soft_off.talent, soft_off.pregnancy.fetus_count))
 
-# ==== 8. 收尾 ====
+# ==== 8. 2025.5.20 以前的存档：整数形式的行为 id ====
+section("锁定修复：2025.5.20 以前的存档里整数形式的行为 id 回到发呆，二段行为的整数键删除")
+# 行为 id 在 2025.5.20 由整数改为字符串。原先按 Behavior_Int / SecondBehavior_Int 两张编号表逐个换算，
+#    但这两张表后来被当成活的编号表维护：137 原是买食物，后来让给了拒绝饮酒，旧档里买食物的角色读进来就成了拒绝饮酒；
+#    编号表里没有的整数则原样留在存档里，之后按 en_name 查行为配置时 KeyError
+KEEP_SECOND_BEHAVIOR = next(bid for bid, behavior_data in game_config.config_behavior.items() if "二段结算" in behavior_data.tag)
+""" 旧档里已是字符串键、待触发标记为 1 的二段行为 """
+ALL_SECOND_BEHAVIOR = {bid for bid, behavior_data in game_config.config_behavior.items() if "二段结算" in behavior_data.tag}
+""" 二段行为数据库里的全部二段行为 """
+old_int_chara = cache.character_data[1]
+for old_behavior_int in (137, 99999):
+    old_int_chara.behavior.behavior_id = old_behavior_int
+    old_int_chara.behavior.duration = 30
+    old_int_chara.second_behavior[1418] = 1
+    old_int_chara.second_behavior[99999] = 1
+    old_int_chara.second_behavior[KEEP_SECOND_BEHAVIOR] = 1
+    old_chara_to_new.update_character_config_data(old_int_chara)
+    check(f"整数行为 id {old_behavior_int} 回到发呆，持续 1 分钟",
+          old_int_chara.behavior.behavior_id == constant.Behavior.SHARE_BLANKLY and old_int_chara.behavior.duration == 1,
+          (old_int_chara.behavior.behavior_id, old_int_chara.behavior.duration))
+    check(f"（{old_behavior_int}）二段行为：整数键全部删除，字符串键的标记保留，全部二段行为都有键",
+          not [key for key in old_int_chara.second_behavior if isinstance(key, int)]
+          and old_int_chara.second_behavior[KEEP_SECOND_BEHAVIOR] == 1 and ALL_SECOND_BEHAVIOR <= set(old_int_chara.second_behavior),
+          [key for key in old_int_chara.second_behavior if isinstance(key, int)])
+old_int_chara.second_behavior[KEEP_SECOND_BEHAVIOR] = 0
+
+# ==== 9. 收尾 ====
 section("收尾：只写了临时目录")
 check("写盘守卫没有拦到任何越界写", not write_violation_list, write_violation_list[:5])
 check("临时目录里只有本测试写的东西", set(os.listdir(TMP_ROOT)) <= {"2", "3", "save_info.json"}, os.listdir(TMP_ROOT))

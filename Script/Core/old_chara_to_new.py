@@ -1466,40 +1466,17 @@ def update_character_config_data(value):
                 value.h_state.body_item[key] = [item_name,False,None]
                 update_count += 1
     # 行为
-    # 如果行为id是int的话
+    # 2025.5.20 以前的存档里行为 id 是整数，当时的编号表没有保留下来；
+    #    正在进行的行为只持续几分钟游戏时间，直接回到发呆，下一轮由 AI 重新选择行为
     if isinstance(value.behavior.behavior_id, int):
-        # 遍历Behavior，找到和当前行为id一致的行为键名
-        for key in vars(constant.Behavior_Int).keys():
-            # 跳过 Python 内置属性
-            if key.startswith('__'):
-                continue
-            # 如果当前行为 ID 与常量值匹配，则更新为常量名称
-            if value.behavior.behavior_id == getattr(constant.Behavior_Int, key):
-                value.behavior.behavior_id = getattr(constant.Behavior, key)
-                # update_count += 1
-                # print(f"debug 更新了行为id: {key} -> {value.behavior.behavior_id}")
-                break
-    second_behavior_copy = value.second_behavior.copy()
-    # 遍历原始的二级行为字典，处理整型键的更新或删除
-    for second_behavior_id, behavior_data in second_behavior_copy.items():
-        # 仅处理整型键
-        if isinstance(second_behavior_id, int):
-            # 查找匹配的常量名称
-            for key in vars(constant.SecondBehavior_Int).keys():
-                # 跳过 Python 内置属性
-                if key.startswith('__'):
-                    continue
-                # 如果当前行为 ID 与常量值匹配，则更新为常量名称
-                if second_behavior_id == getattr(constant.SecondBehavior_Int, key):
-                    new_behavior_id = getattr(constant.SecondBehavior, key)
-                    # 添加新的键值对，并删除旧的整型键
-                    value.second_behavior[new_behavior_id] = behavior_data
-                    del value.second_behavior[second_behavior_id]
-                    # 匹配成功后跳出查找
-                    break
-            else:
-                # 如果未找到匹配的常量，也删除该整型键
-                del value.second_behavior[second_behavior_id]
+        value.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+        value.behavior.duration = 1
+        update_count += 1
+    # 同一时期的二段行为字典以整数为键，值只是结算后即清零的待触发标记，整数键直接删除，
+    #    下面按二段行为数据库补齐全部字符串键
+    for second_behavior_id in [key for key in value.second_behavior if isinstance(key, int)]:
+        del value.second_behavior[second_behavior_id]
+        update_count += 1
     # 遍历二段行为数据库
     for behavior_id in game_config.config_behavior:
         if '二段结算' not in game_config.config_behavior[behavior_id].tag:
