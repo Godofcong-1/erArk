@@ -310,6 +310,21 @@ def handle_assistant_morning_salutation_3(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.ASSISTANT_MORIING_SALUTATION_4)
+def handle_assistant_morning_salutation_4(character_id: int) -> int:
+    """
+    自己的助理属性中的早安问候服务为-早安榨精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[5] == 4:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.ASSISTANT_NIGHT_SALUTATION_0)
 def handle_assistant_night_salutation_0(character_id: int) -> int:
     """
@@ -381,6 +396,21 @@ def handle_assistant_night_salutation_3(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.assistant_services[6] == 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_NIGHT_SALUTATION_4)
+def handle_assistant_night_salutation_4(character_id: int) -> int:
+    """
+    自己的助理属性中的晚安问候服务为-晚安榨精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[6] == 4:
         return 1
     return 0
 

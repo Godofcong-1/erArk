@@ -289,6 +289,10 @@ def judge_character_first_meet(character_id: int):
             character_data.first_record.first_meet = 0
             character_data.first_record.day_first_meet = 0
         elif character_data.first_record.day_first_meet and character_data.position == pl_character_data.position:
+            # 早安榨精选了今天要上交的内裤或袜子时，整个每日招呼留到早安榨精之后：要先用这件榨精再上交
+            from Script.Design import assistant_milking
+            if assistant_milking.judge_defer_day_first_meet(character_id):
+                return
             # 如果是要早安问候的助理，则不每日招呼
             if handle_premise.handle_assistant_morning_salutation_on(character_id):
                 pass

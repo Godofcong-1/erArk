@@ -6737,6 +6737,52 @@ def handle_salutation_3_add_adjust(
     ejaculation_panel.ejaculation_flow(2, 0, character_id)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SALUTATION_4_ADD_ADJUST)
+def handle_salutation_4_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （早安榨精与晚安榨精）按玩家选定的部位进行一次部位交或服装交，结算对应经验，并触发交互对象一次射精，射在该部位上
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    from Script.Design import assistant_milking
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    service_cid = assistant_milking.get_service_cid_by_behavior(character_data.behavior.behavior_id)
+    # 部位此刻能否使用，状态机已判过一次，这里兜底（如被别的行为结算借用）
+    job_behavior_id, _unable_reason = assistant_milking.get_job_behavior_and_unable_reason(character_id, service_cid)
+    if job_behavior_id == "":
+        return
+    # 经验照搬该部位的 H 部位交 / 服装交：那里博士是发起者、干员是交互对象，这里反过来，所以对调 A1 与 A2，只取经验项
+    swap_subject = {"A1": "A2", "A2": "A1"}
+    for effect_id in game_config.config_behavior_effect_data[job_behavior_id]:
+        if not (isinstance(effect_id, str) and "CVE" in effect_id):
+            continue
+        effect_all_value_list = effect_id.split("_")[1:]
+        if effect_all_value_list[0] not in swap_subject or not effect_all_value_list[1].startswith("E|"):
+            continue
+        effect_all_value_list[0] = swap_subject[effect_all_value_list[0]]
+        settle_behavior.handle_comprehensive_value_effect(character_id, effect_all_value_list, change_data)
+    position = assistant_milking.get_milking_position(character_id, service_cid)
+    # 射在口腔里时加饮精经验，与早安咬一致
+    if position == 2:
+        base_chara_experience_common_settle(character_id, 25, change_data=change_data)
+    # 射在选定的部位上
+    if position < assistant_milking.CLOTH_POSITION_OFFSET:
+        ejaculation_panel.ejaculation_flow(position, 0, character_id)
+    else:
+        ejaculation_panel.ejaculation_flow(position - assistant_milking.CLOTH_POSITION_OFFSET, 1, character_id)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.AROMATHERAPY_ADD_ADJUST)
 def handle_aromatherapy_add_adjust(
         character_id: int,

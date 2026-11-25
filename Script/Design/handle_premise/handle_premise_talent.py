@@ -282,6 +282,42 @@ def handle_self_not_underage(character_id: int) -> int:
     """
     return not handle_self_underage(character_id)
 
+
+@add_premise(constant_promise.Premise.SELF_ADULT)
+def handle_self_adult(character_id: int) -> int:
+    """
+    校验自己已成年：没有未成年素质，也不在成长链的婴儿、幼女、萝莉、少女阶段
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    功能: 上面的 self_not_underage 只看幼女素质，这里把未成年素质与成长链的四个年龄素质都排除
+    """
+    from Script.System.Education_System import education_constant
+
+    character_data = cache.character_data[character_id]
+    # 未成年素质
+    if character_data.talent.get(7, 0):
+        return 0
+    # 成长链的婴儿、幼女、萝莉、少女
+    if any(character_data.talent.get(talent_id, 0) for talent_id in education_constant.CHILD_TALENT_SET):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_ADULT)
+def handle_t_adult(character_id: int) -> int:
+    """
+    校验交互对象已成年：没有未成年素质，也不在成长链的婴儿、幼女、萝莉、少女阶段
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    功能: 纸娃娃地文的前提固定按玩家求值，要限定说话的干员已成年时用这一条（玩家的交互对象即该干员）
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_adult(character_data.target_character_id)
+
 @add_premise(constant_promise.Premise.SELF_CHEST_IS_CLIFF)
 def handle_self_chest_is_cliff(character_id: int) -> int:
     """

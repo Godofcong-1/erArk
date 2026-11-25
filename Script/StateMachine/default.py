@@ -3319,6 +3319,87 @@ def character_night_salutation_3(character_id: int):
     info_draw.draw()
 
 
+def milking_salutation_unable(character_id: int, unable_reason: str, salutation_text: str, service_name: str):
+    """
+    早安榨精 / 晚安榨精无法执行时作罢：原地发呆一分钟，并告知玩家原因
+    Keyword arguments:
+    character_id -- 角色id
+    unable_reason -- 无法执行的原因
+    salutation_text -- 问候名（早安问候 / 晚安问候）
+    service_name -- 服务名（早安榨精 / 晚安榨精）
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+    character_data.behavior.duration = 1
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
+    info_draw = draw.WaitDraw()
+    info_draw.text = _("\n{0}来进行{1}了，但{2}，无法进行{3}\n").format(character_data.name, salutation_text, unable_reason, service_name)
+    info_draw.style = "gold_enrod"
+    info_draw.draw()
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MORNING_SALUTATION_4)
+def character_morning_salutation_4(character_id: int):
+    """
+    早安问候：早安榨精
+    选定的部位此刻用不了（服装已不在身上等）时无法执行，今天的早安问候作罢
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    from Script.Design import assistant_milking
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 特殊flag进行对应更改，能否执行都算今天已早安问候
+    if character_data.sp_flag.morning_salutation == 1:
+        character_data.sp_flag.morning_salutation = 2
+    # 判断选定的部位此刻能否使用
+    job_behavior_id, unable_reason = assistant_milking.get_job_behavior_and_unable_reason(character_id, 5)
+    if job_behavior_id == "":
+        milking_salutation_unable(character_id, unable_reason, _("早安问候"), _("早安榨精"))
+        return
+
+    character_data.target_character_id = 0
+    character_data.behavior.behavior_id = constant.Behavior.MORNING_SALUTATION_4
+    character_data.behavior.duration = 10
+    character_data.state = constant.CharacterStatus.STATUS_MORNING_SALUTATION_4
+    info_draw = draw.WaitDraw()
+    info_draw.text = _("\n{0}来进行早安问候了\n").format(character_data.name)
+    info_draw.style = "gold_enrod"
+    info_draw.draw()
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.NIGHT_SALUTATION_4)
+def character_night_salutation_4(character_id: int):
+    """
+    晚安问候：晚安榨精
+    选定的部位此刻用不了（服装已不在身上等）时无法执行，今天的晚安问候作罢
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    from Script.Design import assistant_milking
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 特殊flag进行对应更改，能否执行都算今天已晚安问候
+    character_data.sp_flag.night_salutation = 2
+    # 如果此时还没有完成早安问候，则设为已早安问候
+    character_data.sp_flag.morning_salutation = 2
+    # 判断选定的部位此刻能否使用
+    job_behavior_id, unable_reason = assistant_milking.get_job_behavior_and_unable_reason(character_id, 6)
+    if job_behavior_id == "":
+        milking_salutation_unable(character_id, unable_reason, _("晚安问候"), _("晚安榨精"))
+        return
+
+    character_data.target_character_id = 0
+    character_data.behavior.behavior_id = constant.Behavior.NIGHT_SALUTATION_4
+    character_data.behavior.duration = 10
+    character_data.state = constant.CharacterStatus.STATUS_NIGHT_SALUTATION_4
+    info_draw = draw.WaitDraw()
+    info_draw.text = _("\n{0}来进行晚安问候了\n").format(character_data.name)
+    info_draw.style = "gold_enrod"
+    info_draw.draw()
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.NIGHT_SALUTATION_FLAG_2)
 def character_night_salutation_flag_2(character_id: int):
     """

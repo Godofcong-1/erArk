@@ -33,6 +33,7 @@ def read_CVP(cvp_value_str: str):
     cvp_str_list[2] = cvp_str_list[2].replace("PenisPos", "阴茎位置")
     cvp_str_list[2] = cvp_str_list[2].replace("ShootPos", "射精位置")
     cvp_str_list[2] = cvp_str_list[2].replace("CondomPos", "避孕套位置")
+    cvp_str_list[2] = cvp_str_list[2].replace("MilkPos", "榨精部位")
     cvp_str_list[2] = cvp_str_list[2].replace("Relationship", "身份关系")
     cvp_str_list[2] = cvp_str_list[2].replace("Gift", "礼物")
     # 这四个属性名要在下面的单字母替换之前换成中文，否则 Growth 的 G 会被换成「攻略程度」、CourseType 的 T 会被当成素质；

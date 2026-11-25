@@ -47,7 +47,7 @@ class CVPMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cvp_b1 = QComboBox()
-        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件", "其他角色在场", "部位污浊", "触发权重", "绳子捆绑", "角色扮演", "阴茎位置", "射精位置", "身份关系", "礼物", "避孕套位置"])
+        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件", "其他角色在场", "部位污浊", "触发权重", "绳子捆绑", "角色扮演", "阴茎位置", "射精位置", "身份关系", "礼物", "避孕套位置", "榨精部位"])
         self.cvp_b1.setCurrentIndex(0)
         self.cvp_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cvp_b1)
@@ -156,6 +156,8 @@ class CVPMenu(QDialog):
             cvp_b_value = "ShootPos|" + self.cvp_b2.currentText().split("|")[0]
         elif cvp_b1 == "避孕套位置":
             cvp_b_value = "CondomPos|" + self.cvp_b2.currentText().split("|")[0]
+        elif cvp_b1 == "榨精部位":
+            cvp_b_value = "MilkPos|" + self.cvp_b2.currentText().split("|")[0]
         elif cvp_b1 == "身份关系":
             cvp_b_value = "Relationship|" + self.cvp_b2.currentText()
         elif cvp_b1 == "礼物":
@@ -393,6 +395,16 @@ class CVPMenu(QDialog):
             self.cvp_c.addItems(["等于"])
             self.cvp_d.setText("1")
             self.cvp_text.setText("检测玩家本次挂避孕套装饰、取回避孕套装饰、挤出避孕套精液的目标部位，包括身体部位与服装部位\n等于1为目标是该部位\n取回多处装饰时按第一个选中的位置判定\n用针筒把精液注入仍是处女的小穴、后穴、尿道时也会命中对应部位，要区分是不是针筒注入，请再搭配[当前挤出避孕套精液是用极细针筒注射器注入…]一类的前提")
+        elif index == 23:
+            self.cvp_b2.clear()
+            for body_id, body_name in cache_control.body_data.items():
+                self.cvp_b2.addItem(f"B{body_id}|{body_name}")
+            for cloth_id, cloth_name in cache_control.clothing_data.items():
+                self.cvp_b2.addItem(f"C{cloth_id}|{cloth_name}")
+            self.cvp_c.clear()
+            self.cvp_c.addItems(["等于"])
+            self.cvp_d.setText("1")
+            self.cvp_text.setText("检测助理此刻进行的早安榨精或晚安榨精用的是哪个部位，包括身体部位与服装部位\n人物要选进行服务的助理：角色口上等常规文本里选[自己]，纸娃娃地文里选[交互对象]（纸娃娃地文的前提按玩家求值）\n等于1为用的是该部位\n部位由玩家开启服务时在助理面板选定，早安与晚安各选各的；不在进行早安榨精或晚安榨精时全部位为0\n\n可选的身体部位：头发、脸部、口腔、胸部、腋部、手部、小穴、子宫、后穴、尿道、腿部、脚部、尾巴、兽角、兽耳\n可选的服装部位：附属物以外的全部服装部位，下衣不区分裙子与裤子")
 
         self.cvp_b = self.cvp_b2
 

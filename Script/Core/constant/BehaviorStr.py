@@ -214,6 +214,10 @@ class BehaviorStr:
     """ 晚安问候：晚安吻 """
     NIGHT_SALUTATION_3 = "night_salutation_3"
     """ 晚安问候：晚安咬 """
+    MORNING_SALUTATION_4 = "morning_salutation_4"
+    """ 早安问候：早安榨精 """
+    NIGHT_SALUTATION_4 = "night_salutation_4"
+    """ 晚安问候：晚安榨精 """
     NPC_ASSISTANT_COOK = "npc_assistant_cook"
     """ 干员助理做饭 """
 

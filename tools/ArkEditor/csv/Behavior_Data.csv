@@ -116,6 +116,8 @@ int,str,str,int,str,str
 255,night_salutation_2,晚安问候：晚安吻,5,npc,工作_助理
 256,night_salutation_3,晚安问候：晚安咬,10,npc,工作_助理
 257,npc_assistant_cook,干员助理做饭,30,npc,工作_助理
+258,morning_salutation_4,早安问候：早安榨精,10,npc,工作_助理
+259,night_salutation_4,晚安问候：晚安榨精,10,npc,工作_助理
 
 261,hold_child,抱小孩,30,both,工作
 262,sing_children_song,哼唱儿歌,30,both,工作
@@ -737,10 +739,12 @@ int,str,str,int,str,str
 1415,morning_service_1,开启早上叫起床服务,0,npc,二段结算_助理
 1416,morning_service_2,开启早安吻服务,0,npc,二段结算_助理
 1417,morning_service_3,开启早安咬服务,0,npc,二段结算_助理
+1418,morning_service_4,开启早安榨精服务,0,npc,二段结算_助理
 1419,night_service_0,关闭晚安服务,0,npc,二段结算_助理
 1420,night_service_1,开启晚上催睡觉服务,0,npc,二段结算_助理
 1421,night_service_2,开启晚安吻服务,0,npc,二段结算_助理
 1422,night_service_3,开启晚安咬服务,0,npc,二段结算_助理
+1423,night_service_4,开启晚安榨精服务,0,npc,二段结算_助理
 1424,cohabitation_off,关闭同居服务,0,npc,二段结算_助理
 1425,cohabitation_on,开启同居服务,0,npc,二段结算_助理
 1426,love_support_off,关闭助攻服务,0,npc,二段结算_助理

@@ -223,6 +223,10 @@ class CharacterStatus:
     """ 晚安问候：晚安吻 """
     STATUS_NIGHT_SALUTATION_3 = 256
     """ 晚安问候：晚安咬 """
+    STATUS_MORNING_SALUTATION_4 = 258
+    """ 早安问候：早安榨精 """
+    STATUS_NIGHT_SALUTATION_4 = 259
+    """ 晚安问候：晚安榨精 """
     STATUS_NPC_ASSISTANT_COOK = 261
     """ 干员助理做饭 """
     STATUS_IDENTIFY_EGGS = 267

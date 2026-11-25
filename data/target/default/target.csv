@@ -186,11 +186,13 @@ ai的目标,,,,
 420305,705,place_0|morning_salutation_flag_1|assistant_morning_salutation_1,42,在玩家位置，自身要早安问候状态（动态权重），自己的助理属性中的早安问候服务为早上叫起床，则叫起床
 420310,706,place_0|morning_salutation_flag_1|assistant_morning_salutation_2,42,在玩家位置，自身要早安问候状态（动态权重），自己的助理属性中的早安问候服务为早安吻，则早安吻
 420315,707,place_0|morning_salutation_flag_1|assistant_morning_salutation_3,42,在玩家位置，自身要早安问候状态（动态权重），自己的助理属性中的早安问候服务为早安咬，则早安咬
+420318,723,place_0|morning_salutation_flag_1|assistant_morning_salutation_4,42,在玩家位置，自身要早安问候状态（动态权重），自己的助理属性中的早安问候服务为早安榨精，则早安榨精（选定的服装部位已不在身上等无法执行时作罢）
 420320,2,place_0|time_morning|morning_salutation_flag_2|pl_action_sleep,42,在玩家位置，清晨（4点~8点），自身已早安问候状态，玩家在睡觉，则等待十分钟
 420400,503,place_1|night_salutation_flag_1,42,不在玩家位置，自身要晚安问候状态（权重100），则移动到玩家位置
 420405,709,place_0|night_salutation_flag_1|pl_action_not_sleep,42,在玩家位置，自身要晚安问候状态（权重100），玩家没有在睡觉，则催睡觉
 420410,710,place_0|night_salutation_flag_1|assistant_night_salutation_2,42,在玩家位置，自身要晚安问候状态（权重100），自己的助理属性中的晚安问候服务为晚安吻，则晚安吻
 420415,711,place_0|night_salutation_flag_1|assistant_night_salutation_3,42,在玩家位置，自身要晚安问候状态（权重100），自己的助理属性中的晚安问候服务为晚安咬，则晚安咬
+420418,724,place_0|night_salutation_flag_1|assistant_night_salutation_4,42,在玩家位置，自身要晚安问候状态（权重100），自己的助理属性中的晚安问候服务为晚安榨精，则晚安榨精（选定的服装部位已不在身上等无法执行时作罢）
 420420,712,place_0|night_salutation_flag_1|pl_action_sleep|assistant_night_salutation_1,42,在玩家位置，自身要晚安问候状态（权重100），玩家正在睡觉，自己的助理属性中的晚安问候服务为催睡觉，则变为已晚安问候
 
 430100,571,normal_124567|assistant_help_work_1|have_office_work_need_to_do|not_follow|to_work_time|not_in_dr_off,43,124567正常（可能AI跟随），开启了助理辅佐服务，有需要处理的公务，没有在跟随，在到岗时间，如果不在博士办公室，则去博士办公室

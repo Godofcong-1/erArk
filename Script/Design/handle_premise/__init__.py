@@ -493,7 +493,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
     type_son_id = 0
     # 取到的数值，先给 0 以免属性段是认不出的类型时未赋值
     final_value = 0
-    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场,Dirty污浊,Bondage绳子捆绑,Roleplay角色扮演,PenisPos阴茎位置,ShootPos射精位置,CondomPos避孕套位置,Relationship身份关系,Course当前课程科目,CourseType当前课型,CourseShowOff待炫耀的已升级科目,Growth养成数值
+    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场,Dirty污浊,Bondage绳子捆绑,Roleplay角色扮演,PenisPos阴茎位置,ShootPos射精位置,CondomPos避孕套位置,MilkPos榨精部位,Relationship身份关系,Course当前课程科目,CourseType当前课型,CourseShowOff待炫耀的已升级科目,Growth养成数值
     if (
         len(premise_all_value_list[1]) > 1 and
         "Time" not in premise_all_value_list[1] and
@@ -501,6 +501,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
         "PenisPos" not in premise_all_value_list[1] and
         "ShootPos" not in premise_all_value_list[1] and
         "CondomPos" not in premise_all_value_list[1] and
+        "MilkPos" not in premise_all_value_list[1] and
         "Relationship" not in premise_all_value_list[1] and
         "Instruct" not in premise_all_value_list[1]
         ):
@@ -643,6 +644,17 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
                 if pl_target_character_data.h_state.insert_position - 20 == part_cid:
                     return 1
             return 0
+
+    elif premise_all_value_list[1][0] == "M":
+        # 榨精部位：主体此刻进行的早安榨精 / 晚安榨精用的部位，B身体部位/C服装部位，写法同射精位置
+        # 读的是主体自己选定的部位（assistant_milking_position），主体不在榨精时不成立；命中返回1，不看判定方式与判定值
+        if "MilkPos" in premise_all_value_list[1]:
+            from Script.Design import assistant_milking
+
+            b2_value = premise_all_value_list[1].split("MilkPos|")[1]
+            position = int(b2_value[1:]) + (0 if b2_value[0] == "B" else assistant_milking.CLOTH_POSITION_OFFSET)
+            return 1 if assistant_milking.judge_now_milking_position(final_character_id, position) else 0
+        return 0
 
     # 前指令的单独计算
     elif premise_all_value_list[1][0] == "I":

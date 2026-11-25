@@ -1,6 +1,6 @@
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import handle_premise, attr_calculation, map_handle, second_behavior
+from Script.Design import handle_premise, attr_calculation, map_handle, second_behavior, assistant_milking
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -239,6 +239,15 @@ class Assistant_Panel:
                         button_draw.draw()
                         return_list.append(button_draw.return_text)
                         line_feed.draw()
+                    # 早安榨精 / 晚安榨精的部位变更按钮
+                    if cid in assistant_milking.MILKING_SERVICE_BEHAVIOR and assistant_data.assistant_services[cid] == assistant_milking.MILKING_OPTION:
+                        now_position = assistant_milking.get_milking_position(character_data.assistant_character_id, cid)
+                        now_position_text = assistant_milking.get_position_name(now_position) if now_position != -1 else _("未选择")
+                        button_text = _("  [更改{0}部位]——当前部位：{1}").format(service_option_text_now, now_position_text)
+                        button_draw = draw.LeftButton(button_text, button_text, self.width, cmd_func=self.select_milking_position, args=(cid,))
+                        button_draw.draw()
+                        return_list.append(button_draw.return_text)
+                        line_feed.draw()
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -280,12 +289,16 @@ class Assistant_Panel:
                 service_option_text_next = service_option_text_all[assistant_data.assistant_services[service_cid]+1]
                 service_require_text_all = service_option_data[1]
                 service_require_text_next = service_require_text_all[assistant_data.assistant_services[service_cid]+1]
-                judge, reason = attr_calculation.judge_require([service_require_text_next], character_data.assistant_character_id, hypnosis_replace_trust_flag = True)
+                # 早安榨精 / 晚安榨精只认真实的信赖度，不能用催眠进度代替
+                milking_flag = service_cid in assistant_milking.MILKING_SERVICE_BEHAVIOR and assistant_data.assistant_services[service_cid] + 1 == assistant_milking.MILKING_OPTION
+                judge, reason = attr_calculation.judge_require([service_require_text_next], character_data.assistant_character_id, hypnosis_replace_trust_flag = not milking_flag)
 
-                if judge:
-                    assistant_data.assistant_services[service_cid] += 1
-                # debug模式下不判断解锁条件
-                elif cache.debug_mode:
+                # 符合解锁条件时切到下一项，debug模式下不判断解锁条件
+                if judge or cache.debug_mode:
+                    # 早安榨精 / 晚安榨精还要选定部位才开启，没选成时与不符合条件一样归零（选择面板已说明原因）
+                    if milking_flag and not self.select_milking_position(service_cid):
+                        assistant_data.assistant_services[service_cid] = 0
+                        return
                     assistant_data.assistant_services[service_cid] += 1
                 # 不符合解锁条件时输出提示信息并归零
                 else:
@@ -362,6 +375,83 @@ class Assistant_Panel:
                     from Script.System.Dormitory_System import common as dormitory_common
                     dormitory_common.restore_character_dormitory(character_data.assistant_character_id)
                 # print(f"debug target_data.dormitory = {target_data.dormitory}")
+
+    def select_milking_position(self, service_cid: int) -> bool:
+        """
+        选择早安榨精 / 晚安榨精用的部位
+        Keyword arguments:
+        service_cid -- 助理服务id（5早安 / 6晚安）
+        Return arguments:
+        bool -- 选定了部位时为True，无法开启或取消时为False（原来选定的部位不变）
+        """
+        character_data: game_type.Character = cache.character_data[0]
+        assistant_id = character_data.assistant_character_id
+        assistant_data: game_type.Character = cache.character_data[assistant_id]
+        service_name = game_config.config_assistant_services_option[service_cid][0][assistant_milking.MILKING_OPTION]
+
+        # 可选部位，有一项不满足就无法开启
+        position_list = assistant_milking.get_selectable_position_list(assistant_id)
+        if not position_list:
+            unable_reason = _("{0}身上没有可用的部位").format(assistant_data.name)
+            info_draw = draw.WaitDraw()
+            info_draw.text = _("\n  ○无法开启[{0}]，{1}\n").format(service_name, unable_reason)
+            info_draw.draw()
+            return False
+
+        while 1:
+            return_list = []
+            line_feed.draw()
+            line_draw = draw.LineDraw("-", self.width)
+            line_draw.draw()
+            line_feed.draw()
+            # 说明文本
+            now_position = assistant_milking.get_milking_position(assistant_id, service_cid)
+            now_position_text = assistant_milking.get_position_name(now_position) if now_position != -1 else _("未选择")
+            info_text = _("请选择{0}进行{1}时使用的部位，当前部位：{2}\n\n").format(assistant_data.name, service_name, now_position_text)
+            info_text += _("○身体部位只列出{0}身上有、且已经破处的部位\n").format(assistant_data.name)
+            info_text += _("○服装部位只列出{0}默认服装里有的部位，进行服务时身上已经没有穿着该部位的服装则无法执行\n").format(assistant_data.name)
+            # 上交内裤与袜子在早上，只有早安服务需要说明先后
+            if service_cid == 5:
+                info_text += _("○选择内裤或袜子时，若{0}被要求每天上交，会先进行{1}再上交\n").format(assistant_data.name, service_name)
+            info_text += "\n"
+            info_draw = draw.NormalDraw()
+            info_draw.text = info_text
+            info_draw.width = self.width
+            info_draw.draw()
+
+            # 身体部位与服装部位各一行按钮，返回值用部位编码区分，避免两类部位翻译后重名
+            position_return_dict = {}
+            for title_text, cloth_flag in ((_("身体部位："), False), (_("服装部位："), True)):
+                now_list = [position for position in position_list if (position >= assistant_milking.CLOTH_POSITION_OFFSET) == cloth_flag]
+                if not now_list:
+                    continue
+                title_draw = draw.NormalDraw()
+                title_draw.text = title_text
+                title_draw.draw()
+                for count, position in enumerate(now_list, start=1):
+                    draw_text = f"[{assistant_milking.get_position_name(position)}]"
+                    return_text = f"milking_position_{position}"
+                    button_draw = draw.CenterButton(draw_text, return_text, (len(draw_text) + 1) * 2)
+                    button_draw.draw()
+                    return_list.append(button_draw.return_text)
+                    position_return_dict[button_draw.return_text] = position
+                    if count % 16 == 0 and count != len(now_list):
+                        line_feed.draw()
+                line_feed.draw()
+            line_feed.draw()
+
+            # 取消按钮
+            back_button = draw.CenterButton(_("[取消]"), _("取消"), self.width)
+            back_button.draw()
+            line_feed.draw()
+            return_list.append(back_button.return_text)
+
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_button.return_text:
+                return False
+            if yrn in position_return_dict:
+                assistant_milking.set_milking_position(assistant_id, service_cid, position_return_dict[yrn])
+                return True
 
     def select_morning_salutation_time(self):
         """选择早安服务的时间"""

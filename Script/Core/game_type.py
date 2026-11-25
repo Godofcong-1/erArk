@@ -973,6 +973,8 @@ class CHARA_WORK:
         """ 宿舍管理员行动阶段，int [0到岗整理,1移动处理] """
         self.dormitory_admin_target_room: str = ""
         """ 宿舍管理员当前目标宿舍路径字符串 """
+        self.assistant_milking_position: Dict[int, int] = {5: -1, 6: -1}
+        """ 担任助理时早安榨精 / 晚安榨精选定的部位，键为助理服务id（5早安/6晚安），值与阴茎位置同一编码：身体部位id，服装部位为20+服装类型id，-1为未选 """
 
 
 class CHARA_ENTERTAINMENT:

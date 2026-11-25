@@ -368,6 +368,10 @@ class StateMachine:
     """ 晚安问候：晚安咬 """
     NIGHT_SALUTATION_FLAG_2 = 712
     """ 进入已晚安问候状态 """
+    MORNING_SALUTATION_4 = 723
+    """ 早安问候：早安榨精（713~722 已被教育占用，故从 723 起编） """
+    NIGHT_SALUTATION_4 = 724
+    """ 晚安问候：晚安榨精 """
 
     EDUCATION_SELF_STUDY = 713
     """ 上课：本节无可用教师，降级为自习 """
