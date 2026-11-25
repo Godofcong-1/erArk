@@ -1389,4 +1389,24 @@ check("被催眠者的无意识精液与失窃记录结算后清空，不会留�
 pl.target_character_id = 0
 remove_character(HYPNOSIS_NPC_ID)
 
+section("NPC 自慰时选中口喉 / 兽部 / 心理，增加的是对应部位的经验（此前把快感状态 id 当成经验 id，加成了射精 / 喷乳 / 放尿经验）")
+from Script.Design import handle_npc_ai_in_h as _masturbate_ai  # noqa: E402
+
+MASTURBATE_NPC_ID = 9461
+""" 自慰的干员 """
+masturbate_npc = make_character(MASTURBATE_NPC_ID, "自慰者")
+# 自慰结算会查是否持有阴茎倒模（道具 175），fixture 默认没有道具表
+masturbate_npc.item = attr_calculation.get_item_zero({})
+# 快感状态 id → 应增加的部位经验 id：口喉 21 → 153、兽部 22 → 154、心理 23 → 155；阴道 4 → 4 作对照
+masturbate_wrong = []
+for _state_id, _exp_id in ((21, 153), (22, 154), (23, 155), (4, 4)):
+    masturbate_npc.experience = attr_calculation.get_experience_zero({})
+    with mock.patch.object(_masturbate_ai, "evaluate_npc_body_part_prefs", return_value=_state_id):
+        settle_default.handle_masturebate_add_adjust(MASTURBATE_NPC_ID, 10, game_type.CharacterStatusChange(), cache.game_time)
+    _gained = {k: v for k, v in masturbate_npc.experience.items() if v}
+    if _gained != {_exp_id: 1}:
+        masturbate_wrong.append((_state_id, _gained))
+check("自慰选中的部位只增加该部位的 1 点经验：口喉 153、兽部 154、心理 155、阴道 4", not masturbate_wrong, masturbate_wrong)
+remove_character(MASTURBATE_NPC_ID)
+
 finish()
