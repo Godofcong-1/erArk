@@ -1409,4 +1409,51 @@ for _state_id, _exp_id in ((21, 153), (22, 154), (23, 155), (4, 4)):
 check("自慰选中的部位只增加该部位的 1 点经验：口喉 153、兽部 154、心理 155、阴道 4", not masturbate_wrong, masturbate_wrong)
 remove_character(MASTURBATE_NPC_ID)
 
+section("计入标题宽度的小标题线（公务事件抬头）在网页模式下仍只占一行：标题不再被设成整行宽")
+# 绘制类在 _bootstrap 里已被整体换成记录桩，这里另外加载一份干净的 draw.py（不进 sys.modules），
+#    把它的 NormalDraw.draw 换成记录 (文本, 宽度) 的桩：网页模式的适配器（web_draw_adapter.adapt_normal_draw）
+#    正是把 NormalDraw.width 原样作为前端元素宽度（非 0 时按该宽度占位、0 时按文字本身的宽度）
+import importlib.util as _title_importlib_util  # noqa: E402
+
+from Script.Core import io_init as _title_io_init, text_handle as _title_text_handle  # noqa: E402
+
+_title_spec = _title_importlib_util.spec_from_file_location("_raw_draw_for_title_web", os.path.join(ROOT, "Script", "UI", "Moudle", "draw.py"))
+_title_raw_draw = _title_importlib_util.module_from_spec(_title_spec)
+_title_spec.loader.exec_module(_title_raw_draw)
+_title_web_piece = []
+""" 小标题线画出的每一段 (文本, NormalDraw.width) """
+_title_raw_draw.NormalDraw.draw = lambda self: _title_web_piece.append((self.text, self.width))
+
+
+def title_line_web_width(title: str, width: int, count_title_width: bool) -> tuple:
+    """
+    画一条小标题线，按网页模式的占位规则量出整行宽度与标题那一段的元素宽度
+    Keyword arguments:
+    title -- 标题
+    width -- 绘制宽度
+    count_title_width -- 是否把标题宽度算进总长
+    Return arguments:
+    tuple -- (整行占位宽度, 标题段的 NormalDraw.width)
+    """
+    _title_web_piece.clear()
+    _orig_title_era_print = _title_io_init.era_print
+    _title_io_init.era_print = lambda *a, **k: None
+    try:
+        _title_raw_draw.LittleTitleLineDraw(title, width, count_title_width=count_title_width).draw()
+    finally:
+        _title_io_init.era_print = _orig_title_era_print
+    occupied = sum(piece_width if piece_width > 0 else _title_text_handle.get_text_index(text) for text, piece_width in _title_web_piece if text)
+    title_width = next(piece_width for text, piece_width in _title_web_piece if text == title)
+    return occupied, title_width
+
+
+_web_title_text = "【公务事件】AMA11 · 婴儿期第 8 天"
+""" 公务事件面板的抬头，本身就有 33 个半角宽 """
+_web_occupied, _web_title_element_width = title_line_web_width(_web_title_text, 190, True)
+check("网页模式下抬头 + 线条正好占 190 宽（此前标题元素被设成整行宽 190，加上右侧 157 宽的线条，尾巴被挤到第二行）",
+      _web_occupied == 190, (_web_occupied, _web_title_element_width, _title_web_piece))
+check("标题那一段不带整行宽度，按文字本身的宽度显示", _web_title_element_width == 0, _web_title_element_width)
+_web_occupied_old, _ = title_line_web_width("出勤", 190, False)
+check("不计标题宽度的旧口径不变：线条自己就有 190，整行为 190 + 标题宽", _web_occupied_old == 190 + _title_text_handle.get_text_index("出勤"), _web_occupied_old)
+
 finish()

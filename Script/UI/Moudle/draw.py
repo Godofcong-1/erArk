@@ -868,11 +868,12 @@ class LittleTitleLineDraw:
         title_draw = NormalDraw()
         title_draw.text = self.title
         title_draw.style = self.title_style
-        # NormalDraw.__len__ 在 width 为默认的 0 时一律返回 0，标题于是不占宽度，这正是旧口径；
-        #    要把标题算进总长，就得先把宽度给上，len() 才会返回标题的真实宽度
+        # 旧口径下标题不占宽度；要把标题算进总长时，直接按文字量出标题宽（最多 width）。
+        #    不能为此把 title_draw.width 设成 width：网页模式把 NormalDraw.width 原样当作元素宽度，
+        #    标题会占满整行，右侧线条被挤到第二行（Tk 下 width 只用来分段打印，看不出差别）
+        title_width = 0
         if self.count_title_width:
-            title_draw.width = self.width
-        title_width = len(title_draw)
+            title_width = min(text_handle.get_text_index(self.title), int(self.width))
         line_a_width = int(self.width / 16) - title_width
         if line_a_width < 0:
             line_a_width = 0
