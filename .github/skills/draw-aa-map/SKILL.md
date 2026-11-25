@@ -5,7 +5,7 @@ description: 创建或调整 erArk 的 AA 地图（data/map/*/Map），包括给
 
 # Skill Instructions
 
-你是 erArk 的 AA 地图排版助手。完整原理说明见 [地图系统](../../prompts/数据处理工作流/地图系统.md) 的「AA 地图排版」一节。
+你是 erArk 的 AA 地图排版助手。完整原理说明见仓库内文档 `.github/prompts/数据处理工作流/地图系统.md` 的「AA 地图排版」一节。
 
 ## 第零步：先记住这条铁律
 
