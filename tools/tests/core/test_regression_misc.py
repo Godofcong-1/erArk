@@ -1456,4 +1456,108 @@ check("标题那一段不带整行宽度，按文字本身的宽度显示", _web
 _web_occupied_old, _ = title_line_web_width("出勤", 190, False)
 check("不计标题宽度的旧口径不变：线条自己就有 190，整行为 190 + 标题宽", _web_occupied_old == 190 + _title_text_handle.get_text_index("出勤"), _web_occupied_old)
 
+section("ArkEditor 口上移动：编号不连续时移到选中条目上方 / 下方不丢条目，开着筛选拖拽不丢没显示的条目")
+# 编辑器的模块从编辑器目录导入：顶层的 cache_control / game_type 是编辑器自己的，与游戏的 Script.Core.* 不是同一个模块；导入完把路径撤掉
+from collections import OrderedDict as _EditorOrderedDict  # noqa: E402
+from types import SimpleNamespace as _EditorNamespace  # noqa: E402
+
+_editor_dir = os.path.join(ROOT, "tools", "ArkEditor")
+sys.path.insert(0, _editor_dir)
+try:
+    import cache_control as _editor_cache  # noqa: E402
+    import game_type as _editor_game_type  # noqa: E402
+    from ui import data_list_move_item as _editor_move  # noqa: E402
+finally:
+    sys.path.remove(_editor_dir)
+
+
+class _EditorItem:
+    """编辑器列表条目的桩：只带 uid"""
+
+    def __init__(self, uid):
+        self.uid = uid
+
+    def setBackground(self, _color):
+        pass
+
+
+class _EditorListWidget:
+    """编辑器列表控件的桩：按给定的 uid 顺序列出条目，current 是当前选中的行"""
+
+    def __init__(self, uid_list, current=0):
+        self.uid_list = list(uid_list)
+        self.current = current
+
+    def count(self):
+        return len(self.uid_list)
+
+    def item(self, i):
+        return _EditorItem(self.uid_list[i])
+
+    def currentItem(self):
+        return _EditorItem(self.uid_list[self.current])
+
+    def currentRow(self):
+        return self.current
+
+
+def editor_talk_data(cid_list):
+    """
+    按给定的编号顺序建一份编辑器口上数据
+    Keyword arguments:
+    cid_list -- 编号列表（按文件里的顺序）
+    Return arguments:
+    OrderedDict -- 编号: 口上，口上文本是「口上+原编号」，用来认出每一条
+    """
+    data = _EditorOrderedDict()
+    for cid in cid_list:
+        talk_data = _editor_game_type.Talk()
+        talk_data.cid = cid
+        talk_data.text = f"口上{cid}"
+        data[cid] = talk_data
+    return data
+
+
+def editor_move_talk(cid_list, move_cid, target_cid, move_func):
+    """
+    在编辑器里把 move_cid 这条口上右键移动到 target_cid 的上方或下方
+    Keyword arguments:
+    cid_list -- 移动前的编号顺序
+    move_cid -- 要移动的条目编号
+    target_cid -- 选中的目标条目编号
+    move_func -- _editor_move.move_to_up 或 move_to_down
+    Return arguments:
+    list -- 移动后按顺序的 (编号, 口上文本, 口上对象上记的编号)
+    """
+    _editor_cache.now_edit_type_flag = 0
+    _editor_cache.now_talk_data = editor_talk_data(cid_list)
+    fake_data_list = _EditorNamespace(list_widget=_EditorListWidget(cid_list, cid_list.index(target_cid)), edited_item=_EditorItem(move_cid),
+                                      undo_stack=[], update=lambda: None, now_in_moving_flag=True)
+    move_func(fake_data_list)
+    return [(cid, talk_data.text, talk_data.cid) for cid, talk_data in _editor_cache.now_talk_data.items()]
+
+
+# 新增条目取到的大编号 99 被拖到 3 与 4 之间（与口上模板里夹在 122 与 123 之间的 736 同样）
+_editor_gap_cid_list = ["1", "2", "3", "99", "4", "5", "6"]
+_editor_down = editor_move_talk(_editor_gap_cid_list, "99", "5", _editor_move.move_to_down)
+check("编号不连续时把 99 移到 5 的下方：99 这条还在、落在 5 之后，其余条目一条不少（此前区间按 4、5、6 重编号，与区间外的 6 撞号，99 这条被覆盖掉）",
+      [text for _, text, _ in _editor_down] == ["口上1", "口上2", "口上3", "口上4", "口上5", "口上99", "口上6"], _editor_down)
+_editor_up = editor_move_talk(_editor_gap_cid_list, "99", "2", _editor_move.move_to_up)
+check("编号不连续时把 99 移到 2 的上方：99 这条落在 1 之后，原来的 2、3 都还在（此前区间按 2、3、4 重编号，与区间外的 4 撞号，原来的 3 被覆盖掉）",
+      [text for _, text, _ in _editor_up] == ["口上1", "口上99", "口上2", "口上3", "口上4", "口上5", "口上6"], _editor_up)
+check("移动后编号仍是原来那一组、互不重复，字典的键与口上对象上记的编号一致，受影响区间内编号递增",
+      all(sorted(cid for cid, _, _ in result) == sorted(_editor_gap_cid_list) and all(cid == own_cid for cid, _, own_cid in result) for result in (_editor_down, _editor_up))
+      and [cid for cid, _, _ in _editor_up[1:4]] == ["2", "3", "99"], (_editor_down, _editor_up))
+_editor_plain = editor_move_talk(["1", "2", "3", "4", "5", "6"], "5", "2", _editor_move.move_to_up)
+check("编号连续时照旧：把 5 移到 2 的上方后它改编为 2，原来的 2~4 依次后移一号",
+      _editor_plain == [("1", "口上1", "1"), ("2", "口上5", "2"), ("3", "口上2", "3"), ("4", "口上3", "4"), ("5", "口上4", "5"), ("6", "口上6", "6")], _editor_plain)
+
+# 开着筛选时列表只显示 2 和 4，把 4 拖到 2 的上方
+_editor_cache.now_edit_type_flag = 0
+_editor_cache.now_talk_data = editor_talk_data(["1", "2", "3", "4", "5", "6"])
+_editor_move.on_rows_moved(_EditorNamespace(list_widget=_EditorListWidget(["4", "2"]), undo_stack=[], update=lambda: None), None, 1, 1, None, 0)
+_editor_drag = [talk_data.text for talk_data in _editor_cache.now_talk_data.values()]
+check("开着筛选拖拽：只对调显示出来的 2 和 4 的位置，没显示的 1、3、5、6 留在原位（此前按列表重建数据，没显示的条目全被删掉）",
+      _editor_drag == ["口上1", "口上4", "口上3", "口上2", "口上5", "口上6"], _editor_drag)
+
 finish()

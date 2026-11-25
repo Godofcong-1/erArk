@@ -9,6 +9,37 @@ from .data_list_undo_snapshot import undo_snapshot_manager  # 导入快照式撤
 
 # 以下函数为条目移动相关的功能，供DataList调用
 
+def renumber_talk_range(items, start, end):
+    """
+    把受影响区间内的口上编号按新顺序重新分配
+    输入参数：items（list[tuple[str, Talk]]，移动后的口上顺序，原地修改），start（int，区间起点下标），end（int，区间终点下标，含）
+    返回值：无
+    功能描述：把区间内原有的编号从小到大依次分给移动后的各条目，区间内编号递增。
+    只在区间原有的编号之间重新分配、不生成新编号：编号不连续时（例如新增条目取到的大编号被移到中间），
+    若从区间最小编号起逐个加一，会生成区间外已有的编号，重建字典时同号的后一条覆盖前一条，前一条就从数据里消失了。
+    """
+    cid_list = sorted((items[i][0] for i in range(start, end + 1)), key=int)
+    for idx, new_cid in zip(range(start, end + 1), cid_list):
+        talk = items[idx][1]
+        talk.cid = new_cid
+        items[idx] = (new_cid, talk)
+
+
+def merge_visible_order(data, list_widget):
+    """
+    把列表控件里拖拽后的条目顺序合回完整数据
+    输入参数：data（dict，当前全部条目，键为 uid），list_widget（QListWidget，拖拽后的列表）
+    返回值：dict，按新顺序排列的全部条目
+    功能描述：开着筛选或搜索时列表只显示部分条目，只重排显示出来的条目所占的那些位置，没显示的条目留在原位，不会因为没显示就从数据里丢掉。
+    """
+    visible_uid_list = [list_widget.item(i).uid for i in range(list_widget.count())]
+    visible_uid_set = set(visible_uid_list)
+    visible_uid_iter = iter(visible_uid_list)
+    # 原顺序里显示出来的位置依次换成拖拽后的显示顺序，其余位置不动
+    new_order = [next(visible_uid_iter) if uid in visible_uid_set else uid for uid in data]
+    return {uid: data[uid] for uid in new_order}
+
+
 def move_item(self):
     """
     移动条目
@@ -64,16 +95,8 @@ def move_to_up(self):
         if target_idx > move_idx:
             target_idx -= 1
         items.insert(target_idx, item)
-        # 只调整受影响区间的cid，区间内编号递增
-        affected_start = min(move_idx, target_idx)
-        affected_end = max(move_idx, target_idx)
-        # 获取区间内原编号的最小值
-        min_cid = min(int(items[i][0]) for i in range(affected_start, affected_end+1))
-        for offset, idx in enumerate(range(affected_start, affected_end+1)):
-            new_cid = str(min_cid + offset)
-            items[idx][1].cid = new_cid
-            items[idx] = (new_cid, items[idx][1])
-        # 其它区间编号不变
+        # 只调整受影响区间的cid，区间内编号递增，其它区间编号不变
+        renumber_talk_range(items, min(move_idx, target_idx), max(move_idx, target_idx))
         new_data = OrderedDict((cid, talk) for cid, talk in items)
         cache_control.now_talk_data = new_data
         cache_control.now_select_id = items[target_idx][0]
@@ -131,14 +154,8 @@ def move_to_down(self):
         if target_idx < move_idx:
             target_idx += 1
         items.insert(target_idx, item)
-        # 只调整受影响区间的cid，区间内编号递增
-        affected_start = min(move_idx, target_idx)
-        affected_end = max(move_idx, target_idx)
-        min_cid = min(int(items[i][0]) for i in range(affected_start, affected_end+1))
-        for offset, idx in enumerate(range(affected_start, affected_end+1)):
-            new_cid = str(min_cid + offset)
-            items[idx][1].cid = new_cid
-            items[idx] = (new_cid, items[idx][1])
+        # 只调整受影响区间的cid，区间内编号递增，其它区间编号不变
+        renumber_talk_range(items, min(move_idx, target_idx), max(move_idx, target_idx))
         new_data = OrderedDict((cid, talk) for cid, talk in items)
         cache_control.now_talk_data = new_data
         cache_control.now_select_id = items[target_idx][0]
@@ -205,19 +222,9 @@ def on_rows_moved(self, parent, start, end, dest, row):
         self.undo_stack.append({'type': 'event_move', 'order': order})
     if cache_control.now_edit_type_flag == 0:
         # 口上模式
-        new_order = []
-        for i in range(self.list_widget.count()):
-            item = self.list_widget.item(i)
-            new_order.append(item.uid)
-        new_data = {uid: cache_control.now_talk_data[uid] for uid in new_order}
-        cache_control.now_talk_data = new_data
+        cache_control.now_talk_data = merge_visible_order(cache_control.now_talk_data, self.list_widget)
     elif cache_control.now_edit_type_flag == 1:
         # 事件模式
-        new_order = []
-        for i in range(self.list_widget.count()):
-            item = self.list_widget.item(i)
-            new_order.append(item.uid)
-        new_data = {uid: cache_control.now_event_data[uid] for uid in new_order}
-        cache_control.now_event_data = new_data
+        cache_control.now_event_data = merge_visible_order(cache_control.now_event_data, self.list_widget)
     # 刷新界面
     self.update()
