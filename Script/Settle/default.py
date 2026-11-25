@@ -1588,8 +1588,8 @@ def handle_hypnosis_cancel(
     # 结算异常flag
     handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 5)
     handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 6)
-    # 结算二段行为
-    handle_npc_ai_in_h.settle_unconscious_semen_and_cloth(character_id)
+    # 结算被催眠者在催眠期间被射上的精液与被偷走的衣物（恢复意识的是交互对象，不是发起解除的博士）
+    handle_npc_ai_in_h.settle_unconscious_semen_and_cloth(character_data.target_character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_INCREASE_BODY_SENSITIVITY_ON)

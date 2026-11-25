@@ -1367,4 +1367,26 @@ stage_text = pregnancy_panel.get_stage_info_text(SOFT_HATCH_MOTHER_ID, pregnancy
 check("怀孕总览里孵化中的卵（带壳与无壳共用）写「预计某日孵化」，不写「破壳」", "破壳" not in stage_text and "孵化" in stage_text, stage_text)
 remove_character(SOFT_HATCH_MOTHER_ID)
 
+section("解除催眠时，被催眠的干员结算催眠期间被射上的精液与被偷走的衣物（此前传成了博士自己）")
+from Script.Settle import default as settle_default  # noqa: E402
+
+HYPNOSIS_NPC_ID = 9460
+""" 被博士催眠、即将被解除催眠的干员 """
+hypnosis_npc = make_character(HYPNOSIS_NPC_ID, "被催眠者")
+hypnosis_npc.sp_flag.unconscious_h = 6
+# 催眠期间被射在口腔（身体部位 2）、内裤被偷走
+hypnosis_npc.dirty.body_semen_in_unconscious = [2]
+hypnosis_npc.cloth.stolen_panties_in_unconscious = True
+pl.target_character_id = HYPNOSIS_NPC_ID
+settle_default.handle_hypnosis_cancel(0, 1, game_type.CharacterStatusChange(), cache.game_time)
+check("解除催眠后被催眠者恢复意识", hypnosis_npc.sp_flag.unconscious_h == 0, hypnosis_npc.sp_flag.unconscious_h)
+check("被催眠者获得「无意识中被射在口腔」与「无意识中内裤被偷」的二段行为",
+      hypnosis_npc.second_behavior.get("in_unconscious_cum_on_body_2") == 1 and hypnosis_npc.second_behavior.get("in_unconscious_stolen_panty") == 1,
+      {k: v for k, v in hypnosis_npc.second_behavior.items() if k.startswith("in_unconscious") and v})
+check("被催眠者的无意识精液与失窃记录结算后清空，不会留到下次醒来再被发现",
+      not hypnosis_npc.dirty.body_semen_in_unconscious and not hypnosis_npc.cloth.stolen_panties_in_unconscious,
+      (hypnosis_npc.dirty.body_semen_in_unconscious, hypnosis_npc.cloth.stolen_panties_in_unconscious))
+pl.target_character_id = 0
+remove_character(HYPNOSIS_NPC_ID)
+
 finish()
