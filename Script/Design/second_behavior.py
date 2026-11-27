@@ -190,13 +190,18 @@ def second_behavior_effect(
     if not any(character_data.second_behavior.values()):
         return
 
-    # 高潮结算调用时，先按部位统计本次待结算的部位绝顶行为，记录每个部位的最高绝顶程度
+    # 高潮结算调用时，先按部位统计本次待结算的部位绝顶行为，记录每个部位的最高绝顶程度及其行为id，并找出待结算的多重绝顶行为
     part_max_degree_dict = {}
+    part_max_behavior_dict = {}
+    plural_behavior_id_list = []
     if orgasm_settle_flag:
         for second_behavior_id, behavior_data in character_data.second_behavior.items():
             if behavior_data == 0:
                 continue
             if second_behavior_list and second_behavior_id not in second_behavior_list:
+                continue
+            if second_behavior_id.startswith("plural_orgasm_"):
+                plural_behavior_id_list.append(second_behavior_id)
                 continue
             orgasm_part, orgasm_degree = orgasm_settle.get_orgasm_part_and_degree(second_behavior_id)
             # 跳过非部位绝顶行为
@@ -204,6 +209,11 @@ def second_behavior_effect(
                 continue
             if orgasm_degree > part_max_degree_dict.get(orgasm_part, -1):
                 part_max_degree_dict[orgasm_part] = orgasm_degree
+                part_max_behavior_dict[orgasm_part] = second_behavior_id
+
+    # 多重绝顶时，各部位绝顶与多重绝顶本身不再各自触发文本，改为一次组合文本
+    plural_talk_flag = len(plural_behavior_id_list) > 0 and len(part_max_behavior_dict) >= 2
+    plural_talk_done = False
 
     # 遍历二段行为id，进行结算
     for second_behavior_id, behavior_data in character_data.second_behavior.items():
@@ -211,10 +221,20 @@ def second_behavior_effect(
             if second_behavior_list and second_behavior_id not in second_behavior_list:
                 continue
             talk_flag = True
-            # 高潮结算时，同一部位内非最高程度的绝顶行为仅结算效果，不触发口上
             if part_max_degree_dict:
                 orgasm_part, orgasm_degree = orgasm_settle.get_orgasm_part_and_degree(second_behavior_id)
-                if orgasm_part is not None and orgasm_degree < part_max_degree_dict.get(orgasm_part, -1):
+                # 组合文本：本组的行为都不单独出文本，在本组第一个行为的位置统一出一次组合文本，效果照常逐个结算
+                if plural_talk_flag and (orgasm_part is not None or second_behavior_id in plural_behavior_id_list):
+                    talk_flag = False
+                    if not plural_talk_done:
+                        plural_talk_done = True
+                        # 多重绝顶行为同时有多个时（几乎不会发生），取部位数最多的那个
+                        plural_behavior_id = max(plural_behavior_id_list, key=lambda now_id: int(now_id.split("_")[-1]))
+                        # 部位按固定顺序（皮肤、胸部、阴蒂、阴道、肛肠、尿道、子宫、口喉、兽部、心理）排列
+                        part_behavior_id_list = [part_max_behavior_dict[part] for part in orgasm_settle.orgasm_part_to_state_id if part in part_max_behavior_dict]
+                        talk.handle_plural_orgasm_talk(character_id, plural_behavior_id, part_behavior_id_list)
+                # 高潮结算时，同一部位内非最高程度的绝顶行为仅结算效果，不触发口上
+                elif orgasm_part is not None and orgasm_degree < part_max_degree_dict.get(orgasm_part, -1):
                     talk_flag = False
             # 触发二段行为的口上
             if talk_flag:

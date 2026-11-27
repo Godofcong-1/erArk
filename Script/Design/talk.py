@@ -1,5 +1,6 @@
 import random
 import re
+from contextlib import contextmanager
 from types import FunctionType
 
 from Script.Core import cache_control, game_type, value_handle, get_text, constant, rich_text
@@ -270,8 +271,6 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
     second_behavior_id -- 二段行为id，默认为""
     common_behavior_id -- 选择器生成纸娃娃地文时的行为ID，默认为None
     """
-    from Script.Design import handle_chat_ai
-
     character_data: game_type.Character = cache.character_data[character_id]
     # 二段结算前会单独绘制一个信息文本
     if second_behavior_id != "":
@@ -299,106 +298,124 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
         tem_text, special_code = special_code_judge(talk_text)
         # 检测并绘制图片
         talk_text = talk_image.draw_image_in_talk(talk_text)
-        now_draw = draw.LineFeedWaitDraw()
-        # 跳过每次的等待
-        if special_code[0]:
-            now_draw = draw.NormalDraw()
         # 获取最终输出文本
         now_talk_text = code_text_to_draw_text(talk_text, character_id, common_behavior_id is not None)
-        now_draw.text = now_talk_text
-        now_draw.width = normal_config.config_normal.text_width
-        # 角色口上
-        final_color = "standard"
-        if unusual_talk_flag:
-            # 首选当前口上所对应的角色id的文本颜色
-            talk_character_data = cache.character_data[unusual_talk_flag]
-            if talk_character_data.text_color:
-                now_draw.style = talk_character_data.name
-                final_color = talk_character_data.name
-            # 如果没有，则根据当前角色与交互对象来决定文本颜色
-            else:
-                # 口上文本的，角色文本颜色
-                text_color = character_data.text_color
-                # 优先选角色自己
-                if text_color:
-                    now_draw.style = character_data.name
-                    final_color = character_data.name
-                # 如果还没有则选择交互对象
-                else:
-                    target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
-                    tar_text_color = target_character_data.text_color
-                    if tar_text_color:
-                        now_draw.style = target_character_data.name
-                        final_color = target_character_data.name
-            # 翻译口上
-            if normal_config.config_normal.language != "zh_CN" and cache.ai_setting.ai_chat_translator_setting == 2:
-                now_talk_text = handle_chat_ai.judge_use_text_ai(character_id, now_behavior_id, now_talk_text, translator=True)
-                now_draw.text = now_talk_text
-        # 地文
+        draw_talk_text(character_id, now_talk_text, special_code[0], now_behavior_id, unusual_talk_flag)
+
+
+def draw_talk_text(character_id: int, now_talk_text: str, no_wait_flag: bool, now_behavior_id: str, unusual_talk_flag: int):
+    """
+    绘制已转换好的口上或地文：决定文本颜色、按需翻译或交给文本生成AI，再按Tk或Web模式输出
+    Keyword arguments:
+    character_id -- 触发文本的角色id
+    now_talk_text -- 已经过 code_text_to_draw_text 转换的最终文本
+    no_wait_flag -- 是否不在文本后等待玩家输入（文本里带 <jump> 时为True）
+    now_behavior_id -- 文本所属的行为id，供翻译与文本生成AI使用
+    unusual_talk_flag -- 角色口上所属的角色adv，0为地文
+    Return arguments:
+    无
+    """
+    from Script.Design import handle_chat_ai
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_draw = draw.LineFeedWaitDraw()
+    # 跳过每次的等待
+    if no_wait_flag:
+        now_draw = draw.NormalDraw()
+    now_draw.text = now_talk_text
+    now_draw.width = normal_config.config_normal.text_width
+    # 角色口上
+    final_color = "standard"
+    if unusual_talk_flag:
+        # 首选当前口上所对应的角色id的文本颜色
+        talk_character_data = cache.character_data[unusual_talk_flag]
+        if talk_character_data.text_color:
+            now_draw.style = talk_character_data.name
+            final_color = talk_character_data.name
+        # 如果没有，则根据当前角色与交互对象来决定文本颜色
         else:
-            cache.ai_setting.ai_chat_setting.setdefault(1, 0)
-            # 地文翻译
-            if normal_config.config_normal.language != "zh_CN" and cache.ai_setting.ai_chat_translator_setting >= 1:
-                now_talk_text = handle_chat_ai.judge_use_text_ai(character_id, now_behavior_id, now_talk_text, translator=True)
-                now_draw.text = now_talk_text
-            # 如果启用了文本生成ai
-            elif cache.ai_setting.ai_chat_setting[1]:
-                now_draw = draw.LineFeedWaitDraw()
-                now_talk_text = handle_chat_ai.judge_use_text_ai(character_id, now_behavior_id, now_talk_text)
-                now_draw.width = normal_config.config_normal.text_width
-                now_draw.text = now_talk_text
-        
-        # ========== Web模式处理 ==========
-        # 在Web模式下，将口上对话文本发送到对话框区域显示，同时记录到文本回溯缓存
-        if hasattr(cache, 'web_mode') and cache.web_mode:
-            # 将描述文本添加到Web指令文本缓存，用于文本回溯功能
-            if now_talk_text:
-                cache.web_instruct_texts.append(now_talk_text)
-                # 实时推送文本到前端
-                emit_realtime_text(now_talk_text, "instruct")
-            from Script.System.Web_Draw_System.dialog_box import add_dialog_text
-            # 获取说话者名称
-            speaker_name = character_data.name
-            # 不需要等待的情况（如跳过模式）
-            wait_input = not special_code[0]
-            
-            # 判断是否为当前交互对象
-            # 玩家(0)的交互对象 或 玩家自己 显示在主对话框
-            # 其他角色显示在头像下方的小对话框
-            player_data = cache.character_data[0]
-            target_character_id = player_data.target_character_id
-            
-            if character_id == 0 or character_id == target_character_id:
-                # 主对话框：显示当前交互对象或玩家的台词
-                # 获取当前角色的交互对象ID
-                # 注意：target_character_id 为 0 时表示交互对象是玩家，需要保留，不能用 if x 判断
-                current_target_id = character_data.target_character_id if character_data.target_character_id != character_data.cid else -1
-                add_dialog_text(speaker_name, now_talk_text, final_color, wait_input, target_character_id=current_target_id)
+            # 口上文本的，角色文本颜色
+            text_color = character_data.text_color
+            # 优先选角色自己
+            if text_color:
+                now_draw.style = character_data.name
+                final_color = character_data.name
+            # 如果还没有则选择交互对象
             else:
-                # 其他角色：显示在头像下方的小对话框
-                # 获取该角色当时的交互对象ID，用于切换到该角色时正确显示
-                # 注意：target_character_id 为 0 时表示交互对象是玩家，需要保留，不能用 if x 判断
-                other_char_target_id = character_data.target_character_id if character_data.target_character_id != character_data.cid else -1
-                add_dialog_text(speaker_name, now_talk_text, final_color, wait_input=False, is_minor=True, character_id=character_id, target_character_id=other_char_target_id)
-            return
-        # ==========================================
+                target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+                tar_text_color = target_character_data.text_color
+                if tar_text_color:
+                    now_draw.style = target_character_data.name
+                    final_color = target_character_data.name
+        # 翻译口上
+        if normal_config.config_normal.language != "zh_CN" and cache.ai_setting.ai_chat_translator_setting == 2:
+            now_talk_text = handle_chat_ai.judge_use_text_ai(character_id, now_behavior_id, now_talk_text, translator=True)
+            now_draw.text = now_talk_text
+    # 地文
+    else:
+        cache.ai_setting.ai_chat_setting.setdefault(1, 0)
+        # 地文翻译
+        if normal_config.config_normal.language != "zh_CN" and cache.ai_setting.ai_chat_translator_setting >= 1:
+            now_talk_text = handle_chat_ai.judge_use_text_ai(character_id, now_behavior_id, now_talk_text, translator=True)
+            now_draw.text = now_talk_text
+        # 如果启用了文本生成ai
+        elif cache.ai_setting.ai_chat_setting[1]:
+            now_draw = draw.LineFeedWaitDraw()
+            now_talk_text = handle_chat_ai.judge_use_text_ai(character_id, now_behavior_id, now_talk_text)
+            now_draw.width = normal_config.config_normal.text_width
+            now_draw.text = now_talk_text
+    
+    # ========== Web模式处理 ==========
+    # 在Web模式下，将口上对话文本发送到对话框区域显示，同时记录到文本回溯缓存
+    if hasattr(cache, 'web_mode') and cache.web_mode:
+        # 将描述文本添加到Web指令文本缓存，用于文本回溯功能
+        if now_talk_text:
+            cache.web_instruct_texts.append(now_talk_text)
+            # 实时推送文本到前端
+            emit_realtime_text(now_talk_text, "instruct")
+        from Script.System.Web_Draw_System.dialog_box import add_dialog_text
+        # 获取说话者名称
+        speaker_name = character_data.name
+        # 不需要等待的情况（如跳过模式）
+        wait_input = not no_wait_flag
         
-        # 进行原文本的绘制，现已被富文本绘制替代
-        # now_draw.draw()
-        # 先绘制一个空白的换行
-        line_feed_draw = draw.NormalDraw()
-        line_feed_draw.text = "\n"
-        line_feed_draw.draw()
-        # 进行富文本的绘制
-        rich_text_draw_list = rich_text.get_rich_text_draw_list(now_talk_text, base_style=final_color, wait_flag=True)
-        for rich_text_draw in rich_text_draw_list:
-            rich_text_draw.width = normal_config.config_normal.text_width
-            rich_text_draw.draw()
-        # 在最后进行一次换行和等待
-        if special_code[0]:
-            wait_draw = draw.LineFeedWaitDraw()
-            wait_draw.text = " \n"
-            wait_draw.draw()
+        # 判断是否为当前交互对象
+        # 玩家(0)的交互对象 或 玩家自己 显示在主对话框
+        # 其他角色显示在头像下方的小对话框
+        player_data = cache.character_data[0]
+        target_character_id = player_data.target_character_id
+        
+        if character_id == 0 or character_id == target_character_id:
+            # 主对话框：显示当前交互对象或玩家的台词
+            # 获取当前角色的交互对象ID
+            # 注意：target_character_id 为 0 时表示交互对象是玩家，需要保留，不能用 if x 判断
+            current_target_id = character_data.target_character_id if character_data.target_character_id != character_data.cid else -1
+            add_dialog_text(speaker_name, now_talk_text, final_color, wait_input, target_character_id=current_target_id)
+        else:
+            # 其他角色：显示在头像下方的小对话框
+            # 获取该角色当时的交互对象ID，用于切换到该角色时正确显示
+            # 注意：target_character_id 为 0 时表示交互对象是玩家，需要保留，不能用 if x 判断
+            other_char_target_id = character_data.target_character_id if character_data.target_character_id != character_data.cid else -1
+            add_dialog_text(speaker_name, now_talk_text, final_color, wait_input=False, is_minor=True, character_id=character_id, target_character_id=other_char_target_id)
+        return
+    # ==========================================
+    
+    # 进行原文本的绘制，现已被富文本绘制替代
+    # now_draw.draw()
+    # 先绘制一个空白的换行
+    line_feed_draw = draw.NormalDraw()
+    line_feed_draw.text = "\n"
+    line_feed_draw.draw()
+    # 进行富文本的绘制
+    rich_text_draw_list = rich_text.get_rich_text_draw_list(now_talk_text, base_style=final_color, wait_flag=True)
+    for rich_text_draw in rich_text_draw_list:
+        rich_text_draw.width = normal_config.config_normal.text_width
+        rich_text_draw.draw()
+    # 在最后进行一次换行和等待
+    if no_wait_flag:
+        wait_draw = draw.LineFeedWaitDraw()
+        wait_draw.text = " \n"
+        wait_draw.draw()
 
 
 def must_show_talk_check(character_id: int):
@@ -428,12 +445,59 @@ def must_show_talk_check(character_id: int):
     character_data.must_show_second_behavior_id_list = []
 
 
-def second_behavior_info_text(character_id: int, second_behavior_id: str):
+def get_npc_orgasm_name(second_behavior_id: str) -> tuple:
+    """
+    取NPC部位绝顶类二段行为在提示行里的部位名与绝顶程度名
+    Keyword arguments:
+    second_behavior_id -- 二段行为id，如 v_orgasm_strong、b_orgasm_edge
+    Return arguments:
+    tuple -- (部位名str, 绝顶程度名str)，首字母不是已知部位时部位名为空串
+    """
+    # 获取部位名称
+    orgasm_name = ""
+    if second_behavior_id[0] == "n":
+        orgasm_name = _("通用")
+    elif second_behavior_id[0] == "b":
+        orgasm_name = _("胸部")
+    elif second_behavior_id[0] == "c":
+        orgasm_name = _("阴蒂")
+    elif second_behavior_id[0] == "v":
+        orgasm_name = _("阴道")
+    elif second_behavior_id[0] == "a":
+        orgasm_name = _("肛肠")
+    elif second_behavior_id[0] == "u":
+        orgasm_name = _("尿道")
+    elif second_behavior_id[0] == "w":
+        orgasm_name = _("子宫")
+    elif second_behavior_id[0] == "s":
+        orgasm_name = _("皮肤")
+    elif second_behavior_id[0] == "m":
+        orgasm_name = _("口喉")
+    elif second_behavior_id[0] == "f":
+        orgasm_name = _("兽部")
+    elif second_behavior_id[0] == "h":
+        orgasm_name = _("心理")
+    # 绝顶程度
+    if "normal" in second_behavior_id:
+        orgasm_degree = _("绝顶")
+    elif "strong" in second_behavior_id:
+        orgasm_degree = _("强绝顶")
+    elif "super" in second_behavior_id:
+        orgasm_degree = _("超强绝顶")
+    elif "edge" in second_behavior_id:
+        orgasm_degree = _("绝顶寸止")
+    else:
+        orgasm_degree = _("小绝顶")
+    return orgasm_name, orgasm_degree
+
+
+def second_behavior_info_text(character_id: int, second_behavior_id: str, plural_part_behavior_id_list: list | None = None):
     """
     二段行为结算的信息文本
     Keyword arguments:
     character_id -- 角色id
     second_behavior_id -- 二段行为id
+    plural_part_behavior_id_list -- 多重绝顶组合文本时参与的各部位绝顶行为id（每部位取最高程度），给出时把各部位的程度合并进多重绝顶的提示行，默认为None
     """
     character_data: game_type.Character = cache.character_data[character_id]
     chara_name = character_data.name
@@ -446,6 +510,10 @@ def second_behavior_info_text(character_id: int, second_behavior_id: str):
         count_int =  int(second_behavior_id.split("plural_orgasm_")[-1])
         count_name = count_name_list[count_int - 2]
         info_text = _("\n{0}{1}绝顶\n").format(chara_name, count_name)
+        # 组合文本时把各部位的绝顶程度合并进同一行，替代各部位各自的提示行
+        if plural_part_behavior_id_list:
+            part_text_list = ["".join(get_npc_orgasm_name(part_behavior_id)) for part_behavior_id in plural_part_behavior_id_list]
+            info_text = _("\n{0}{1}绝顶（{2}）\n").format(chara_name, count_name, _("、").join(part_text_list))
     # 饮精绝顶
     elif second_behavior_id == "semen_drinking_climax":
         info_text = _("\n{0}饮精绝顶\n").format(chara_name)
@@ -466,41 +534,7 @@ def second_behavior_info_text(character_id: int, second_behavior_id: str):
             info_draw.style = "semen"
         # NPC
         else:
-            # 获取部位名称
-            if second_behavior_id[0] == "n":
-                orgasm_name = _("通用")
-            elif second_behavior_id[0] == "b":
-                orgasm_name = _("胸部")
-            elif second_behavior_id[0] == "c":
-                orgasm_name = _("阴蒂")
-            elif second_behavior_id[0] == "v":
-                orgasm_name = _("阴道")
-            elif second_behavior_id[0] == "a":
-                orgasm_name = _("肛肠")
-            elif second_behavior_id[0] == "u":
-                orgasm_name = _("尿道")
-            elif second_behavior_id[0] == "w":
-                orgasm_name = _("子宫")
-            elif second_behavior_id[0] == "s":
-                orgasm_name = _("皮肤")
-            elif second_behavior_id[0] == "m":
-                orgasm_name = _("口喉")
-            elif second_behavior_id[0] == "f":
-                orgasm_name = _("兽部")
-            elif second_behavior_id[0] == "h":
-                orgasm_name = _("心理")
-            # 绝顶程度
-            if "normal" in second_behavior_id:
-                orgasm_degree = _("绝顶")
-            elif "strong" in second_behavior_id:
-                orgasm_degree = _("强绝顶")
-            elif "super" in second_behavior_id:
-                orgasm_degree = _("超强绝顶")
-            elif "edge" in second_behavior_id:
-                orgasm_degree = _("绝顶寸止")
-            else:
-                orgasm_degree = _("小绝顶")
-            # 最后文本
+            orgasm_name, orgasm_degree = get_npc_orgasm_name(second_behavior_id)
             info_text = _("\n{0}{1}{2}\n").format(chara_name, orgasm_name, orgasm_degree)
     # 一般刻印
     elif "mark" in second_behavior_id:
@@ -676,8 +710,7 @@ def talk_common_judge_one_pass(now_talk: str, character_id: int) -> str:
     返回:
         str: 替换一遍后的文本
     """
-    # 固定为玩家触发
-    pl_character_id = 0
+    # 固定为玩家触发（前提在 get_talk_common_weight_data 里按玩家求值）
     pl_character_data: game_type.Character = cache.character_data[0]
     # 已计算过的前提字典
     calculated_premise_dict = {}
@@ -735,26 +768,10 @@ def talk_common_judge_one_pass(now_talk: str, character_id: int) -> str:
                                 draw_part_list.append(random.choice(extra_part_list))
                         # 高档：不做裁剪，保持三段全出
                     for part in draw_part_list:
-                        now_talk_data: dict = {}
-                        talk_common_cid_list = part_dict[part]
-                        for talk_common_cid in talk_common_cid_list:
-                            # 读取前提配置
-                            premise_set = game_config.config_talk_common_premise_data[talk_common_cid]
-                            # 判断是部位类还是动作类，部位类则跳过无意识判断
-                            body_part_flag = True
-                            type_id = game_config.config_talk_common_data[talk_common_cid].type_id
-                            if 'action' in type_id:
-                                body_part_flag = False
-                            # 计算权重
-                            weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(
-                                premise_set, pl_character_id, calculated_premise_dict, weight_all_to_1_flag=True, unconscious_pass_flag=body_part_flag
-                            )
-                            if weight:
-                                now_talk_data.setdefault(weight, []).append(talk_common_cid)
+                        now_talk_data, calculated_premise_dict = get_talk_common_weight_data(part_dict[part], calculated_premise_dict)
                         # 如果有可替换的候选文本
                         if now_talk_data:
-                            w = value_handle.get_rand_value_for_value_region(list(now_talk_data.keys()))
-                            cid = random.choice(now_talk_data[w])
+                            cid = choice_id_from_weight_data(now_talk_data)
                             part_str += game_config.config_talk_common_data[cid].context
                             # 如果是动作类，则添加换行符
                             if 'action' in game_config.config_talk_common_data[cid].type_id:
@@ -766,22 +783,8 @@ def talk_common_judge_one_pass(now_talk: str, character_id: int) -> str:
                 now_talk = pattern.sub(_part_replacer, now_talk)
             # 否则为非部位占位符
             else:
-                # 构建权重字典：weight -> set(cid)
-                now_talk_data: dict = {}
-                for talk_common_cid in cid_list:
-                    # 读取前提配置
-                    premise_set = game_config.config_talk_common_premise_data[talk_common_cid]
-                    # 判断是部位类还是动作类，部位类则跳过无意识判断
-                    body_part_flag = True
-                    type_id = game_config.config_talk_common_data[talk_common_cid].type_id
-                    if 'action' in type_id:
-                        body_part_flag = False
-                    # 计算权重
-                    weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(
-                        premise_set, pl_character_id, calculated_premise_dict, weight_all_to_1_flag=True, unconscious_pass_flag=body_part_flag
-                    )
-                    if weight:
-                        now_talk_data.setdefault(weight, []).append(talk_common_cid)
+                # 构建权重字典：weight -> [cid]
+                now_talk_data, calculated_premise_dict = get_talk_common_weight_data(cid_list, calculated_premise_dict)
                 # 如果有可替换的候选文本
                 if now_talk_data:
                     # 定义替换函数：每次匹配都随机挑选一条文本
@@ -794,12 +797,240 @@ def talk_common_judge_one_pass(now_talk: str, character_id: int) -> str:
                         返回:
                             str: 替换后的文本
                         """
-                        w = value_handle.get_rand_value_for_value_region(list(now_talk_data.keys()))
-                        cid = random.choice(now_talk_data[w])
+                        cid = choice_id_from_weight_data(now_talk_data)
                         return game_config.config_talk_common_data[cid].context
                     # 使用 sub 回调逐个替换相同的占位符
                     now_talk = pattern.sub(_replacer, now_talk)
     return now_talk
+
+
+def get_talk_common_weight_data(cid_list: list, calculated_premise_dict: dict) -> tuple:
+    """
+    计算一组纸娃娃地文候选的权重：前提固定以玩家为主体求值（交互对象即文本描写的干员），动作类文本照常做无意识判定，部位短词跳过
+    Keyword arguments:
+    cid_list -- 纸娃娃地文cid列表
+    calculated_premise_dict -- 已计算过的前提字典（同一主体与交互对象下可复用）
+    Return arguments:
+    tuple -- (权重->cid列表的dict（不含权重为0的候选）, 更新后的已计算前提字典)
+    """
+    now_talk_data: dict = {}
+    for talk_common_cid in cid_list:
+        # 读取前提配置
+        premise_set = game_config.config_talk_common_premise_data[talk_common_cid]
+        # 判断是部位类还是动作类，部位类则跳过无意识判断
+        body_part_flag = "action" not in game_config.config_talk_common_data[talk_common_cid].type_id
+        # 计算权重
+        weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(
+            premise_set, 0, calculated_premise_dict, weight_all_to_1_flag=True, unconscious_pass_flag=body_part_flag
+        )
+        if weight:
+            now_talk_data.setdefault(weight, []).append(talk_common_cid)
+    return now_talk_data, calculated_premise_dict
+
+
+def choice_id_from_weight_data(weight_data: dict) -> str:
+    """
+    从权重->id集合的候选里按权重抽一个id：先按权重值抽权重档，再在该档内等概率抽取
+    Keyword arguments:
+    weight_data -- 权重->id列表或集合的dict，不能为空
+    Return arguments:
+    str -- 抽中的id
+    """
+    now_weight = value_handle.get_rand_value_for_value_region(list(weight_data.keys()))
+    return random.choice(list(weight_data[now_weight]))
+
+
+@contextmanager
+def player_target_as(character_id: int):
+    """
+    临时把玩家的交互对象设为指定的干员，退出时还原：纸娃娃地文的前提与人称都以玩家为主体、交互对象为文本描写的干员
+    Keyword arguments:
+    character_id -- 文本描写的干员id，为0时不改动
+    Return arguments:
+    无（上下文管理器）
+    """
+    player_data: game_type.Character = cache.character_data[0]
+    original_target_character_id = player_data.target_character_id
+    if character_id != 0:
+        player_data.target_character_id = character_id
+    try:
+        yield
+    finally:
+        player_data.target_character_id = original_target_character_id
+
+
+PLURAL_ORGASM_COMBINE_ADULT_TALENT_SET = {105, 106, 107}
+""" 组合文本要求的成年阶段素质（大姐姐 / 熟女 / 人妻）：游戏没有年龄字段，年龄只由阶段素质表示，没有成年阶段素质的一律视为年龄不明 """
+PLURAL_ORGASM_COMBINE_EXCLUDE_AREA_SET = {"教", "关押"}
+""" 不使用组合文本的区域：教育区（课堂与实践教室）、关押区 """
+PLURAL_ORGASM_COMBINE_SEGMENT_ORDER = {"A": 0, "B": 1, "C": 2}
+""" 组合文本里各段的分组顺序：先拼全部 A 段，再拼 B 段，最后拼 C 段 """
+
+
+def get_ancestor_id_set(character_id: int) -> set:
+    """
+    沿父母链向上收集该角色本人及全部已知祖先的id（玩家为0）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    set -- 本人与祖先的id集合
+    """
+    ancestor_id_set = set()
+    pending_id_list = [character_id]
+    while pending_id_list:
+        now_id = pending_id_list.pop()
+        # 跳过已收集的角色，防止数据里成环
+        if now_id in ancestor_id_set:
+            continue
+        ancestor_id_set.add(now_id)
+        if now_id not in cache.character_data:
+            continue
+        relationship = cache.character_data[now_id].relationship
+        for parent_id in (relationship.father_id, relationship.mother_id):
+            if parent_id >= 0:
+                pending_id_list.append(parent_id)
+    return ancestor_id_set
+
+
+def judge_plural_orgasm_combine_talk(character_id: int) -> bool:
+    """
+    判断该干员的多重绝顶能否使用组合纸娃娃地文；不能时按原流程逐部位出文本、再出多重绝顶的地文
+    Keyword arguments:
+    character_id -- 绝顶的干员id
+    Return arguments:
+    bool -- 可以使用组合文本时为True
+    功能: 只有明确成年、清醒、未受胁迫、与在场的H参与者没有血缘时才使用组合文本，以下任一情形都不用：
+          年龄：有未成年素质或婴儿 / 幼女 / 萝莉 / 少女阶段，或没有大姐姐 / 熟女 / 人妻阶段素质（年龄不明）；
+          校园：学生岗位，或身在教育区；
+          血缘：是玩家的后代，或同一场景里在H中的其他角色与她有共同祖先（母女、姐妹等）；
+          意识：任何无意识状态（睡眠、醉酒、时停、平然 / 空气 / 体控 / 心控催眠），或身上仍有催眠子状态；
+          胁迫：时停解放、被监禁、正在逃跑、被装袋搬运、身在关押区、对博士生气
+    """
+    from Script.System.Education_System import education_constant
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    hypnosis_data = character_data.hypnosis
+    # 年龄
+    if not handle_premise.handle_self_adult(character_id):
+        return False
+    if not any(character_data.talent.get(talent_id, 0) for talent_id in PLURAL_ORGASM_COMBINE_ADULT_TALENT_SET):
+        return False
+    # 校园
+    if character_data.work.work_type == education_constant.STUDENT_WORK_TYPE:
+        return False
+    if character_data.position and character_data.position[0] in PLURAL_ORGASM_COMBINE_EXCLUDE_AREA_SET:
+        return False
+    # 血缘
+    ancestor_id_set = get_ancestor_id_set(character_id)
+    if 0 in ancestor_id_set:
+        return False
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    if scene_path_str in cache.scene_data:
+        for other_id in cache.scene_data[scene_path_str].character_list:
+            if other_id in {0, character_id} or other_id not in cache.character_data:
+                continue
+            if not cache.character_data[other_id].sp_flag.is_h:
+                continue
+            if ancestor_id_set & get_ancestor_id_set(other_id):
+                return False
+    # 意识
+    if handle_premise.handle_unconscious_flag_ge_1(character_id) or character_data.sp_flag.sleep_h_awake:
+        return False
+    if (
+        hypnosis_data.blockhead
+        or hypnosis_data.active_h
+        or hypnosis_data.roleplay
+        or hypnosis_data.pain_as_pleasure
+        or hypnosis_data.increase_body_sensitivity
+        or hypnosis_data.force_ovulation
+    ):
+        return False
+    # 胁迫
+    if handle_premise.handle_self_time_stop_orgasm_relase(character_id):
+        return False
+    if character_data.sp_flag.imprisonment or character_data.sp_flag.escaping or character_data.sp_flag.be_bagged:
+        return False
+    if character_data.sp_flag.angry_with_player:
+        return False
+    return True
+
+
+def handle_plural_orgasm_talk(character_id: int, plural_behavior_id: str, part_behavior_id_list: list):
+    """
+    多重绝顶的组合文本：一行合并的提示行，然后一段组合纸娃娃地文，最后是有角色口上的部位各自的口上
+    组合文本逐部位取一段：有符合条件的纸娃娃地文时从该部位该程度的 A/B/C 全部分段里合并抽一条，
+    没有时从该部位原本的单部位地文里抽一条补位；有符合条件的角色口上的部位不进组合，改为单独显示口上
+    取好的各段先按 A→B→C 分组、组内再按部位顺序排列后拼接（补位的单部位地文是完整的一段描写，归入 A 组）
+    Keyword arguments:
+    character_id -- 绝顶的干员id
+    plural_behavior_id -- 多重绝顶的二段行为id，如 plural_orgasm_3
+    part_behavior_id_list -- 参与的各部位绝顶行为id（每部位取最高程度），已按部位顺序排列
+    Return arguments:
+    无
+    """
+    # 收藏模式下只显示收藏角色的文本（同 handle_second_talk）
+    if cache.is_collection and character_id:
+        if character_id not in cache.character_data[0].collection_character:
+            return
+    # 合并的提示行
+    second_behavior_info_text(character_id, plural_behavior_id, part_behavior_id_list)
+    use_common_talk_flag = cache.all_system_setting.draw_setting[2] == 1
+    calculated_premise_dict = {}
+    common_calculated_premise_dict = {}
+    segment_list = []  # 组合文本的各段：(分段序号, 部位序号, 原文本, 是否为纸娃娃地文)
+    adv_talk_id_list = []  # 单独显示的角色口上id
+    for part_index, part_behavior_id in enumerate(part_behavior_id_list):
+        # 该部位原本的口上与地文候选（以绝顶的干员为主体求值）
+        now_talk_data, calculated_premise_dict = handle_talk_sub(character_id, part_behavior_id, calculated_premise_dict)
+        adv_talk_data = {}
+        common_talk_data = {}
+        for talk_weight, talk_id_set in now_talk_data.items():
+            for talk_id in talk_id_set:
+                if game_config.config_talk[talk_id].adv_id:
+                    adv_talk_data.setdefault(talk_weight, []).append(talk_id)
+                else:
+                    common_talk_data.setdefault(talk_weight, []).append(talk_id)
+        # 有角色口上的部位单独显示口上
+        if adv_talk_data:
+            adv_talk_id_list.append(choice_id_from_weight_data(adv_talk_data))
+            continue
+        # 纸娃娃地文：该部位该程度的 A/B/C 分段都登记在同一个类型下，合并抽一条
+        if use_common_talk_flag and part_behavior_id in game_config.config_talk_common_cid_list_by_type:
+            with player_target_as(character_id):
+                talk_common_data, common_calculated_premise_dict = get_talk_common_weight_data(
+                    game_config.config_talk_common_cid_list_by_type[part_behavior_id], common_calculated_premise_dict
+                )
+            if talk_common_data:
+                talk_common_cid = choice_id_from_weight_data(talk_common_data)
+                talk_common_config = game_config.config_talk_common_data[talk_common_cid]
+                # 分段字母取类型名的末位（同 game_config.load_talk_common），不分段的整段文本按 A 段处理
+                segment_part = talk_common_config.type_id[-1] if "part" in talk_common_config.type_id else "A"
+                segment_list.append((PLURAL_ORGASM_COMBINE_SEGMENT_ORDER.get(segment_part, 0), part_index, talk_common_config.context, True))
+                continue
+        # 没有纸娃娃地文时，用该部位原本的单部位地文补位，归入 A 组
+        if common_talk_data:
+            talk_id = choice_id_from_weight_data(common_talk_data)
+            segment_list.append((PLURAL_ORGASM_COMBINE_SEGMENT_ORDER["A"], part_index, game_config.config_talk[talk_id].context, False))
+    # 组合文本：先按 A→B→C 分组、组内按部位顺序排列，各段按各自的视角转换后拼接，整段一次输出
+    if segment_list:
+        segment_list.sort(key=lambda segment: (segment[0], segment[1]))
+        no_wait_flag = False
+        combine_text = ""
+        for _segment_order, _part_index, segment_text, common_flag in segment_list:
+            segment_text, special_code = special_code_judge(segment_text)
+            no_wait_flag = no_wait_flag or special_code[0]
+            segment_text = talk_image.draw_image_in_talk(segment_text)
+            # 纸娃娃地文以玩家为主体、交互对象为该干员；单部位地文以该干员为主体
+            if common_flag:
+                with player_target_as(character_id):
+                    combine_text += code_text_to_draw_text(segment_text, character_id, True)
+            else:
+                combine_text += code_text_to_draw_text(segment_text, character_id)
+            combine_text += "\n"
+        draw_talk_text(character_id, combine_text, no_wait_flag, plural_behavior_id, 0)
+    # 有角色口上的部位，口上在组合文本之后逐条显示
+    for talk_id in adv_talk_id_list:
+        handle_talk_draw(character_id, game_config.config_talk[talk_id].context, talk_id)
 
 def get_wear_cloth_name(character_data: game_type.Character, clothing_type: int) -> str:
     """
