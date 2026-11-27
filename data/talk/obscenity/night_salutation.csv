@@ -3,18 +3,6 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,night_salutation_1,0,high_1,{Name}催促{TargetName}赶快睡觉，已经很晚了
-1,night_salutation_1,0,high_1,{Name}告诉{TargetName}，现在是睡觉的时间了，回去休息吧
-2,night_salutation_1,0,high_1,{Name}轻声对{TargetName}说：“夜深了，快去休息吧，明天还有很多事情要做呢。”
-3,night_salutation_1,0,high_1,{Name}温柔地拍了拍{TargetName}的肩膀，提醒道：“该睡觉了，晚安。”
-4,night_salutation_1,0,high_1,{Name}看着{TargetName}疲惫的样子，关切地说：“早点休息吧，别熬夜了。”
-5,night_salutation_1,0,high_1,{Name}走到{TargetName}身边，轻声说道：“夜已经很深了，快去睡觉吧。”
-6,night_salutation_1,0,high_1,{Name}微笑着对{TargetName}说：“时间不早了，早点休息，养足精神。”
-7,night_salutation_1,0,high_1,{Name}轻轻拥抱了{TargetName}，柔声说道：“该睡觉了，晚安，好梦。”
-8,night_salutation_1,0,high_1,{Name}轻声提醒{TargetName}：“夜深了，快去休息吧，明天还要早起呢。”
-9,night_salutation_1,0,high_1,{Name}温柔地对{TargetName}说：“早点睡吧，保持好的作息习惯。”
-10,night_salutation_1,0,high_1,{Name}轻轻拍了拍{TargetName}的背，柔声说道：“该休息了，晚安。”
-11,night_salutation_1,0,high_1,{Name}看着{TargetName}，关心地说：“夜已经很深了，快去睡觉吧，晚安。”
 
 100,night_salutation_2,0,high_1,{Name}轻轻走到{TargetName}身边，温柔地抚摸着{TargetName}的脸颊，深情地看着对方的眼睛，慢慢靠近，轻轻地在{TargetName}的嘴唇上印下一个晚安吻。\n亲吻之后，{Name}微笑着看着{TargetName}，轻声说道：“晚安，好梦。”
 101,night_salutation_2,0,pl_action_sleep,{Name}关上卧室的灯，只留下一盏小夜灯投射出柔和的光晕。{Name}蹑手蹑脚地走到床边，轻轻掀开被子的一角，钻了进去。\n{Name}将手臂环绕在{TargetName}的腰间，将头靠在{TargetName}的肩上，深深地吸了一口气，然后在{TargetName}的嘴唇上印下了一个温柔的吻。\n闭上眼睛的那一刻，{Name}的心中充满了满足感。
