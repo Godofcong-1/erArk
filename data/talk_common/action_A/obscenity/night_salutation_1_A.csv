@@ -48,13 +48,13 @@ str,str,int,str,str
 1308,action_part_night_salutation_1_A,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1,{TargetName}来到{Name}身边，见他还醒着，便在他身侧跪坐下来，安静地等他开口
 1309,action_part_night_salutation_1_A,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1,{TargetName}把就寝要用的东西都准备好后才来找{Name}，小声向他汇报，又小声请他休息
 
-1400,action_part_night_salutation_1_A,0,CVP_A2_G_LE_-3,{TargetName}跪着爬到{Name}的脚边，把脸贴在他的腿上，乞求主人早点休息
+1400,action_part_night_salutation_1_A,0,CVP_A2_G_LE_-3,{TargetName}跪着爬到{Name}身边，把脸贴在他的手臂上，乞求主人早点休息
 1401,action_part_night_salutation_1_A,0,CVP_A2_G_LE_-3,夜深了，{TargetName}只穿着一件单薄的睡衣跪在{Name}面前，等着主人允许她服侍就寝
 1402,action_part_night_salutation_1_A,0,CVP_A2_G_LE_-3,{TargetName}伏在{Name}身旁，用脸颊蹭着他的手，小声说主人再不睡，她会心疼的
 1403,action_part_night_salutation_1_A,0,CVP_A2_G_LE_-3,{TargetName}早已把床铺暖好，跪在{Name}身边，请主人去享用她暖好的被窝
 1404,action_part_night_salutation_1_A,0,CVP_A2_G_LE_-3,{TargetName}捧着{Name}的睡衣来到他面前，跪坐着仰起脸，等他接过去
-1405,action_part_night_salutation_1_A,0,CVP_A2_G_LE_-3,{TargetName}安静地跪在{Name}脚边，额头抵着他的脚尖，一下下轻声催他
+1405,action_part_night_salutation_1_A,0,CVP_A2_G_LE_-3,{TargetName}安静地跪在{Name}身侧，额头抵着他的手背，一下下轻声催他
 1406,action_part_night_salutation_1_A,0,CVP_A2_G_LE_-3,{TargetName}捧着热毛巾跪到{Name}面前，请求让她先替主人擦脸，再服侍他去睡
-1407,action_part_night_salutation_1_A,0,CVP_A2_G_LE_-3,{TargetName}跪在{Name}脚边抱住他的腿，用湿润的眼睛仰望着他，求他去睡觉
+1407,action_part_night_salutation_1_A,0,CVP_A2_G_LE_-3,{TargetName}跪在{Name}面前握住他的手，用湿润的眼睛仰望着他，求他去睡觉
 1408,action_part_night_salutation_1_A,0,CVP_A2_G_LE_-3,夜里，{TargetName}准时跪候在{Name}身边，像一只等主人一起入睡的宠物
 1409,action_part_night_salutation_1_A,0,CVP_A2_G_LE_-3,{TargetName}牵起{Name}的衣角，跪着仰起头，求主人让她今晚睡在他的床边守着他

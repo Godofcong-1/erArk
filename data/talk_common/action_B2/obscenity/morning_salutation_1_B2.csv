@@ -11,7 +11,7 @@ str,str,int,str,str
 1004,action_part_morning_salutation_1_B,0,CVP_A2_G_E_0&pl_action_sleep,{TargetName}看了眼表，告诉{Name}早餐时间快过了，再不起来就只能饿着肚子去开会
 1005,action_part_morning_salutation_1_B,0,CVP_A2_G_E_0&pl_action_sleep,{TargetName}把今天要用的文件夹放在床边，一边整理一边催{Name}动作快一点
 1006,action_part_morning_salutation_1_B,0,CVP_A2_G_E_0&pl_action_sleep,{TargetName}推开窗户换气，清晨的凉风灌了进来，冲散了屋里慵懒的气息，她转身请{Name}起床
-1007,action_part_morning_salutation_1_B,0,CVP_A2_G_E_0&pl_action_sleep,{TargetName}把熨平的衣服搭在椅背上，又把拖鞋摆到床边，示意{Name}可以起来了
+1007,action_part_morning_salutation_1_B,0,CVP_A2_G_E_0&pl_action_sleep,{TargetName}把熨平的衣服搭在椅背上，又把外套挂到床头，示意{Name}可以起来了
 1008,action_part_morning_salutation_1_B,0,CVP_A2_G_E_0&pl_action_sleep,{TargetName}轻敲床头，一字一句地说道：“博士，该起床了，今天的工作已经在等着您了。”
 1009,action_part_morning_salutation_1_B,0,CVP_A2_G_E_0&pl_action_sleep,{TargetName}把闹钟从床底捡回来放好，平静地提醒{Name}，它今天已经被按掉三次了
 1010,action_part_morning_salutation_1_B,0,CVP_A2_G_E_0&pl_action_not_sleep,{TargetName}把今天上午的几项安排按时间顺序报了一遍，语气平稳，条理分明
@@ -68,7 +68,7 @@ str,str,int,str,str
 1219,action_part_morning_salutation_1_B,0,CVP_A2_G_GE_3&pl_action_not_sleep,{TargetName}把一缕头发绕在指尖，蹭着{Name}的下巴，说今天要早点来见她
 
 1300,action_part_morning_salutation_1_B,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1&pl_action_sleep,{TargetName}低着头把衣服捧到{Name}面前，等他伸手来拿，大气也不敢出
-1301,action_part_morning_salutation_1_B,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1&pl_action_sleep,{TargetName}跪在床边替{Name}摆好拖鞋，又小心地把鞋尖朝向他下床的方向
+1301,action_part_morning_salutation_1_B,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1&pl_action_sleep,{TargetName}跪在床边把叠好的衣服放到{Name}手边，又小心地把领口朝向他伸手的方向
 1302,action_part_morning_salutation_1_B,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1&pl_action_sleep,{TargetName}拉开窗帘时动作放得很轻，生怕声音太大惹{Name}不快，然后才回到床边轻声请他起床
 1303,action_part_morning_salutation_1_B,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1&pl_action_sleep,{TargetName}把温水和早餐端到床头，双手垂在身前，等着{Name}吩咐下一步
 1304,action_part_morning_salutation_1_B,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1&pl_action_sleep,{TargetName}小心翼翼地掀开被角，一边观察{Name}的脸色，一边一点点往下拉
@@ -88,21 +88,21 @@ str,str,int,str,str
 1318,action_part_morning_salutation_1_B,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1&pl_action_not_sleep,{TargetName}小声问{Name}早饭想吃什么，说完又补了一句“只要您吩咐”
 1319,action_part_morning_salutation_1_B,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1&pl_action_not_sleep,{TargetName}鼓起勇气提醒{Name}今天的第一项安排，说完就立刻低下头等他回应
 
-1400,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}跪在床边捧起{Name}的脚，替他套上袜子，又把脸贴上他的脚背蹭了蹭，求他起床
+1400,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}跪在床边捧起{Name}的手，一根根吻过他的手指，又把脸贴进他的掌心蹭了蹭，求他起床
 1401,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}爬上床，用舌尖轻舔{Name}的指尖，像宠物讨主人起来喂食一样催他起身
 1402,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}伏在{Name}的胸口，把耳朵贴上去听他的心跳，一遍遍低声唤着他，求他睁眼看看自己
 1403,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}跪着把衣服一件件捧到{Name}面前，问主人今天想让她先替他穿哪一件
 1404,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}把自己的脸垫在{Name}的手下，用脸颊轻轻托着他的手，催他起来
 1405,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}趴在床边，把下巴搁在{Name}的膝头，仰着脸用湿漉漉的眼睛望着他
 1406,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}用嘴叼着被角一点点往下拽，又低头在{Name}的手背上落下一个吻
-1407,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}蜷在{Name}腿边，用身体温着他的脚，小声央求他起来后摸摸自己的头
+1407,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}蜷在{Name}身边，用身体温着他的手臂，小声央求他起来后摸摸自己的头
 1408,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}跪在床前，把今天的日程一条条报给{Name}听，每报一条就低一下头，求主人起身
 1409,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}把盛着温水的杯子举过头顶跪在床边，等着{Name}起来接过去，手臂酸了也不敢放下
-1410,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}跪在{Name}脚边，把脸贴上他的脚背蹭了蹭，求主人赐给她今天的第一个命令
+1410,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}跪在{Name}面前，仰着脸望着他，求主人赐给她今天的第一个命令
 1411,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}用脸颊蹭着{Name}的掌心，喉咙里发出满足的轻哼，向主人讨要早上的抚摸
-1412,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}跪着替{Name}理好裤脚，做完才仰起脸等他夸奖
+1412,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}跪着替{Name}理好衣摆，做完才仰起脸等他夸奖
 1413,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}跪着问{Name}今天想让她怎样服侍，眼睛亮晶晶的
-1414,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}跪在{Name}脚边，双手交叠放在膝上，安静地等着主人开口
+1414,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}跪在{Name}身侧，双手交叠放在膝上，安静地等着主人开口
 1415,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}抱住{Name}的腿，把脸颊贴上去，小声说昨晚梦见了主人
 1416,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}低头在{Name}的手背上落下一个吻，又一下下蹭着他的手腕
 1417,action_part_morning_salutation_1_B,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}小声央求{Name}今天也让她跟在身边，哪怕只是替他拿东西也好

@@ -54,7 +54,7 @@ str,str,int,str,str
 1205,action_part_morning_salutation_1_A,0,CVP_A2_G_GE_3&pl_action_sleep,晨光里，{TargetName}把脸埋在熟睡的{Name}颈窝里蹭了蹭，闻着他的气味，慢慢开始叫他
 1206,action_part_morning_salutation_1_A,0,CVP_A2_G_GE_3&pl_action_sleep,{TargetName}从背后抱住还在熟睡的{Name}，胸口紧紧贴着他的后背，在他耳边轻声唤他起床
 1207,action_part_morning_salutation_1_A,0,CVP_A2_G_GE_3&pl_action_sleep,熟睡的{Name}被{TargetName}捏住了鼻子，她笑盈盈地看着他憋气的样子，这就是她的叫起床方式
-1208,action_part_morning_salutation_1_A,0,CVP_A2_G_GE_3&pl_action_sleep,对{TargetName}来说，叫{Name}起床早就成了两个人的私密时光，她钻进被窝，把冰凉的脚贴上了他的小腿
+1208,action_part_morning_salutation_1_A,0,CVP_A2_G_GE_3&pl_action_sleep,对{TargetName}来说，叫{Name}起床早就成了两个人的私密时光，她钻进被窝，把冰凉的手贴上了他的后背
 1209,action_part_morning_salutation_1_A,0,CVP_A2_G_GE_3&pl_action_sleep,{Name}睡得正沉，{TargetName}在他的额头上轻轻落下一吻，然后才开始真正地叫他起床
 1210,action_part_morning_salutation_1_A,0,CVP_A2_G_GE_3&pl_action_not_sleep,见{Name}已经醒了，{TargetName}扑过去抱住了他，笑着抱怨他怎么不等自己来叫
 1211,action_part_morning_salutation_1_A,0,CVP_A2_G_GE_3&pl_action_not_sleep,{TargetName}找到{Name}时，他早就醒着了，她便直接挽住他的胳膊，靠在他肩上道了早安
@@ -89,22 +89,22 @@ str,str,int,str,str
 1319,action_part_morning_salutation_1_A,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1&pl_action_not_sleep,{TargetName}在{Name}身侧跪坐下来，低着头说自己来迟了，请他责罚
 
 1400,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}天没亮就跪在了{Name}的床边，一直等到起床的时间，才敢用脸颊轻轻蹭他垂在床沿的手
-1401,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}像只小动物一样爬上床尾，蜷在熟睡的{Name}脚边，等着用自己的方式叫醒主人
+1401,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}像只小动物一样爬上床，蜷在熟睡的{Name}身侧，等着用自己的方式叫醒主人
 1402,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_sleep,叫醒{Name}是{TargetName}每天最重要的职责，她跪在床边，额头抵着床沿，轻声唤他起床
 1403,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_sleep,{Name}还在熟睡，{TargetName}从床尾钻进被子，一点点爬到他身边，用身体贴着他等他醒来
-1404,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}赤着脚跪在{Name}的床边，捧起他的手贴在自己脸上，以此作为叫醒他的开始
+1404,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}早早跪在{Name}的床边，捧起他的手贴在自己脸上，以此作为叫醒他的开始
 1405,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_sleep,天亮了，{TargetName}早已在床边跪候多时，见时间到了，才低头用嘴唇轻碰{Name}的指尖
-1406,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}趴在{Name}的脚边，像宠物一样蹭着他的脚背，想把他从梦里唤醒
+1406,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}趴在{Name}的枕边，像宠物一样蹭着他的手臂，想把他从梦里唤醒
 1407,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_sleep,{Name}睡得正沉，{TargetName}跪在床前，双手交叠放在膝上，满怀期待地等着为他开始新的一天
 1408,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}把自己的脸埋进{Name}的掌心，用温热的呼吸一下下呵着，就这样叫他起床
 1409,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}悄无声息地跪到{Name}的枕边，仰着脸看他的睡颜，用最轻的声音呼唤着他
 1410,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}一找到{Name}就跪了下来，满眼欢喜地向他问早，像等了一整夜的宠物终于见到了主人
-1411,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_not_sleep,见{Name}已经醒了，{TargetName}立刻膝行到他脚边，把脸贴上他的手背，等待着他的第一句命令
+1411,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_not_sleep,见{Name}已经醒了，{TargetName}立刻膝行到他面前，把脸贴上他的手背，等待着他的第一句命令
 1412,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}来到{Name}面前便立即跪下，额头贴地，向他问候早安
-1413,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}跪在{Name}脚边仰着脸，像是在等主人夸奖自己今天来得早
+1413,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}跪在{Name}面前仰着脸，像是在等主人夸奖自己今天来得早
 1414,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_not_sleep,看{Name}已经醒了，{TargetName}慌忙跪下，为自己没能亲手叫醒他而请求惩罚
 1415,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}把头凑到{Name}的手下，求主人摸一摸她的头，算作今天的第一个命令
 1416,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}跪在{Name}面前，双手捧着今天的日程，低声请主人过目
 1417,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}伏在{Name}的腿边蹭了蹭，算是向醒着的主人道了早安
-1418,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}跪坐在{Name}脚边，用脸颊蹭着他的脚背，向主人问早
+1418,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}跪坐在{Name}身前，捧着他的手蹭了蹭自己的脸颊，向主人问早
 1419,action_part_morning_salutation_1_A,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}仰着脸跪在{Name}面前，小声问没能叫醒主人的自己，今天是不是就没有用处了

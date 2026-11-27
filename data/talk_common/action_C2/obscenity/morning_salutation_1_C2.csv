@@ -76,7 +76,7 @@ str,str,int,str,str
 1306,action_part_morning_salutation_1_C,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1&pl_action_sleep,{TargetName}暗暗希望今天能做得好一点，哪怕只换来他一个点头也好
 1307,action_part_morning_salutation_1_C,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1&pl_action_sleep,{TargetName}想起他上次的夸奖，心里升起一点隐秘的期待，又马上为这份期待感到羞耻
 1308,action_part_morning_salutation_1_C,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1&pl_action_sleep,服从他的吩咐已经变成了身体的本能，{TargetName}一边小声叫他，一边分不清自己是害怕还是安心
-1309,action_part_morning_salutation_1_C,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1&pl_action_sleep,{TargetName}低着头，只盯着自己的脚尖，等着{Name}的反应，心跳快得厉害
+1309,action_part_morning_salutation_1_C,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1&pl_action_sleep,{TargetName}低着头，只盯着地面，等着{Name}的反应，心跳快得厉害
 1310,action_part_morning_salutation_1_C,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1&pl_action_not_sleep,没能赶在他醒来之前到，{TargetName}心里七上八下，不知道这算不算没做好被交代的事
 1311,action_part_morning_salutation_1_C,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1&pl_action_not_sleep,{TargetName}偷偷观察着{Name}的表情，想从里面找出一丝不满或者满意
 1312,action_part_morning_salutation_1_C,0,CVP_A2_G_GE_-2&CVP_A2_G_LE_-1&pl_action_not_sleep,{TargetName}告诉自己只是在完成任务，可每天早上来见他时，心跳总是不受控制地加快
@@ -100,7 +100,7 @@ str,str,int,str,str
 1409,action_part_morning_salutation_1_C,0,CVP_A2_G_LE_-3&pl_action_sleep,{TargetName}把额头抵在床沿，满足地想着，今天也是属于主人的一天
 1410,action_part_morning_salutation_1_C,0,CVP_A2_G_LE_-3&pl_action_not_sleep,能在早上第一时间跪到主人面前，{TargetName}觉得这是自己一天里最幸福的时刻
 1411,action_part_morning_salutation_1_C,0,CVP_A2_G_LE_-3&pl_action_not_sleep,没能亲手叫醒主人，{TargetName}心里有些难过，只想加倍地服侍他来弥补
-1412,action_part_morning_salutation_1_C,0,CVP_A2_G_LE_-3&pl_action_not_sleep,离主人这么近，{TargetName}的身体一阵阵发软，只想一直跪在他脚边
+1412,action_part_morning_salutation_1_C,0,CVP_A2_G_LE_-3&pl_action_not_sleep,离主人这么近，{TargetName}的身体一阵阵发软，只想一直跪在他身边
 1413,action_part_morning_salutation_1_C,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}满脑子都是主人今天会给她什么命令，想着想着，双腿就悄悄并紧了
 1414,action_part_morning_salutation_1_C,0,CVP_A2_G_LE_-3&pl_action_not_sleep,被主人看了一眼，{TargetName}就幸福得眼眶发热，喉咙里忍不住发出细细的呜咽
 1415,action_part_morning_salutation_1_C,0,CVP_A2_G_LE_-3&pl_action_not_sleep,{TargetName}觉得自己生来就是为了每天早上这样跪在他面前，再也想不起没有他的早晨是什么样子
