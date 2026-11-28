@@ -59,6 +59,17 @@ str,str,int,str,str
 1408,action_part_hat_job_C,0,CVP_A2_G_LE_-3&t_unconscious_flag_0,只要主人愿意，头顶、嘴巴、身体，{TargetName}什么都可以献上，她一边想着一边更卖力地蹭着{penis_s}
 1409,action_part_hat_job_C,0,CVP_A2_G_LE_-3&t_unconscious_flag_0,{TargetName}呼吸急促，嘴里不停念着主人，每一次让{TargetHatName}蹭过{penis_s}都像在向神明祈祷
 
+1500,action_part_hat_job_C,0,t_unconscious_flag_0,{penis_s}的热度透过{TargetHatName}传到头顶，{TargetName}的脸颊不知不觉地热了起来
+1501,action_part_hat_job_C,0,t_unconscious_flag_0,{TargetName}闻着{TargetHatName}上越来越浓的气味，下腹慢慢泛起一阵热意
+1502,action_part_hat_job_C,0,t_unconscious_flag_0,头顶被{penis_s}一下下压着，{TargetName}的心跳也跟着乱了节奏
+1503,action_part_hat_job_C,0,t_unconscious_flag_0,{TargetName}看不见头顶的情形，只能凭着触感想象{penis_s}在{TargetHatName}上留下的痕迹
+1504,action_part_hat_job_C,0,t_unconscious_flag_0,平时戴惯了的{TargetHatName}此刻正被{penis_s}磨蹭着，{TargetName}心里涌起说不清的感觉
+1505,action_part_hat_job_C,0,t_unconscious_flag_0,{penis_s}擦过耳边时，{TargetName}的肩膀轻轻一缩，腿间也悄悄湿了
+1506,action_part_hat_job_C,0,t_unconscious_flag_0,{TargetName}感觉到{TargetHatName}被蹭得微微歪了，却没有伸手去扶，只是把头垂得更低
+1507,action_part_hat_job_C,0,t_unconscious_flag_0,发丝被前液黏在{TargetHatName}上，{TargetName}的呼吸也变得又轻又乱
+1508,action_part_hat_job_C,0,t_unconscious_flag_0,{TargetName}想着待会儿还要戴着这样的{TargetHatName}，脸上一阵发烫
+1509,action_part_hat_job_C,0,t_unconscious_flag_0,{penis_s}在头顶跳得越来越急，{TargetName}隐约察觉到他快要忍不住了
+
 2000,action_part_hat_job_C,0,t_unconscious_flag_1&target_not_sleep_h_awake_but_pretend_sleep,睡梦中的{TargetName}隐约觉得{TargetHatName}上有什么热乎乎的东西在动，眉头轻轻蹙起，却没有醒来
 2001,action_part_hat_job_C,0,t_unconscious_flag_1&target_not_sleep_h_awake_but_pretend_sleep,一股陌生又熟悉的气味从{TargetHatName}上飘来，梦里的{TargetName}鼻翼轻轻翕动，脸颊泛起淡淡的红晕
 2002,action_part_hat_job_C,0,t_unconscious_flag_1&target_not_sleep_h_awake_but_pretend_sleep,头上的{TargetHatName}被一下下压着，熟睡的{TargetName}在梦中发出一声细弱的呻吟

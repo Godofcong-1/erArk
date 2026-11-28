@@ -59,6 +59,17 @@ str,str,int,str,str
 1408,action_part_hat_job_B,0,CVP_A2_G_LE_-3&t_unconscious_flag_0,{Name}停下来不动，{TargetName}就急得用{TargetHatName}去蹭{penis_s}，嘴里哀求着主人别停
 1409,action_part_hat_job_B,0,CVP_A2_G_LE_-3&t_unconscious_flag_0,{Name}加快了在{TargetHatName}上挺动{penis_s}的速度，{TargetName}双手合十跪得端端正正，等着主人的赏赐
 
+1500,action_part_hat_job_B,0,t_unconscious_flag_0,{Name}按住{TargetName}的头，让{penis_s}贴着{TargetHatName}从后往前一路碾过
+1501,action_part_hat_job_B,0,t_unconscious_flag_0,{Name}握着{penis_s}在{TargetHatName}上快速摩擦，龟头不时滑进{TargetName}的发间
+1502,action_part_hat_job_B,0,t_unconscious_flag_0,{Name}用{penis_s}的顶端抵着{TargetHatName}慢慢打圈，把渗出的前液抹得到处都是
+1503,action_part_hat_job_B,0,t_unconscious_flag_0,{Name}托着{TargetName}的下巴调整角度，让{penis_s}正好压在{TargetHatName}的正中
+1504,action_part_hat_job_B,0,t_unconscious_flag_0,{Name}拿{penis_s}在{TargetHatName}上一下下拍打，看着{TargetName}的头随之轻轻一颤
+1505,action_part_hat_job_B,0,t_unconscious_flag_0,{Name}让{penis_s}卡在{TargetHatName}的边缘来回刮蹭，冠沟被刮得一阵阵发麻
+1506,action_part_hat_job_B,0,t_unconscious_flag_0,{Name}把{penis_s}埋进{TargetHatName}旁的发丝里抽送，又抽出来压回{TargetHatName}上
+1507,action_part_hat_job_B,0,t_unconscious_flag_0,{Name}扶着{TargetName}的后脑挺腰，{penis_s}在{TargetHatName}上蹭出黏腻的声响
+1508,action_part_hat_job_B,0,t_unconscious_flag_0,{Name}故意放慢速度，让{penis_s}一寸寸地碾过{TargetHatName}，{TargetName}的呼吸也跟着放轻了
+1509,action_part_hat_job_B,0,t_unconscious_flag_0,{Name}用{penis_s}把被蹭歪的{TargetHatName}顶回原位，接着又是一阵用力的磨蹭
+
 2000,action_part_hat_job_B,0,t_unconscious_flag_1&target_not_sleep_h_awake_but_pretend_sleep,{Name}一手托着{TargetName}的后脑，一手握着{penis_s}在{TargetHatName}上慢慢碾过，留下黏亮的水痕
 2001,action_part_hat_job_B,0,t_unconscious_flag_1&target_not_sleep_h_awake_but_pretend_sleep,{Name}放轻动作，让{penis_s}从{TargetHatName}的边缘滑进{TargetName}的发间，再一点点抽出来
 2002,action_part_hat_job_B,0,t_unconscious_flag_1&target_not_sleep_h_awake_but_pretend_sleep,{Name}用{penis_s}在{TargetHatName}上轻轻拍打，每拍一下都屏息看一眼{TargetName}有没有醒
