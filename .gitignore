@@ -28,7 +28,10 @@ dist
 data/data_from_game
 
 # AI
-tools/AI
+tools/AI/*
+!tools/AI/纸娃娃指令地文
+tools/AI/纸娃娃指令地文/src
+tools/AI/纸娃娃指令地文/dedup_plan
 ai_chat_api_key.txt
 ai_chat_api_key.csv
 data/talk/ai
