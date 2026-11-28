@@ -1345,7 +1345,9 @@ class MedicalPlayerDiagnosePanel:
             "已完成诊疗，诊断收益 {diag} 龙门币，药费收益 {med} 龙门币。"
         ).format(diag=outcome.get("diagnose_income", 0), med=outcome.get("medicine_income", 0))
 
-        if not outcome.get("medicine_success"):
+        if outcome.get("state") == medical_constant.MedicalPatientState.HOSPITALIZED.value:
+            base_message += "\n" + _("该重症病人已住院")
+        elif not outcome.get("medicine_success"):
             inventory_snapshot = self._resolve_inventory_snapshot()
             shortage_lines = self._collect_patient_medicine_shortages(inventory_snapshot)
             if shortage_lines:
@@ -1363,7 +1365,7 @@ class MedicalPlayerDiagnosePanel:
         # 如果需要继续接诊且有下一位病人，则打印反馈并准备新会话
         if continue_after and next_patient is not None:
             # 先打印反馈信息，再准备新病人会话
-            self.feedback_text = base_message + _("已为博士安排下一位病人，请继续诊疗。")
+            self.feedback_text = base_message + "\n" + _("已为博士安排下一位病人，请继续诊疗。")
             self._draw_feedback()
             self._prepare_new_patient_session(next_patient)
             return
