@@ -43,12 +43,12 @@ str,str,int,str,str
 1186,body_part_common_s_A,0,CVP_A2_T|107_E_1,淫荡
 1187,body_part_common_s_A,0,CVP_A2_T|107_E_1,放荡
 
-1200,body_part_armpit_s_A,0,t_is_assistant,助理
-1201,body_part_armpit_s_A,0,t_is_assistant,秘书
-1202,body_part_armpit_s_A,0,t_is_assistant,服务
-1203,body_part_armpit_s_A,0,t_is_assistant,义务
+1200,body_part_common_s_A,0,t_is_assistant,助理
+1201,body_part_common_s_A,0,t_is_assistant,秘书
+1202,body_part_common_s_A,0,t_is_assistant,服务
+1203,body_part_common_s_A,0,t_is_assistant,义务
 
-1210,body_part_armpit_s_A,0,target_visitor_flag_1,访客
+1210,body_part_common_s_A,0,target_visitor_flag_1,访客
 
 2000,body_part_common_s_A,0,t_unconscious_flag,无意识
 
